@@ -1,0 +1,52 @@
+@import '../../styles/global.scss';
+
+.top-navigation {
+  display: flex;
+  width: 100vw;
+  background-color: $ACCENT_900;
+  padding: $SPACING_2 $SPACING_3;
+  border-bottom: 2px solid $ACCENT_700;
+}
+
+.top-navigation-logo-container {
+  display: flex;
+  transition: $TRANSITION_BASE;
+  color: $FONT_COLOR;
+
+  &:hover {
+    cursor: pointer;
+    color: $PRIMARY_500;
+  }
+}
+
+.top-navigation-logo {
+  width: 55px;
+  height: 55px;
+}
+
+.top-navigation-logo-text {
+  font-size: $FONT_2XL;
+  font-weight: $WEIGHT_BOLD;
+  display: flex;
+  align-items: center;
+  margin-left: $SPACING_2;
+}
+
+.top-navigation-right-container {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.top-navigation-right-username {
+  font-size: $FONT_XL;
+  font-weight: bold;
+  color: $FONT_COLOR;
+  transition: $TRANSITION_BASE;
+
+  &:hover {
+    cursor: pointer;
+    color: $PRIMARY_500;
+  }
+}

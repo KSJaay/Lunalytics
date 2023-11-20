@@ -1,0 +1,16 @@
+.navigation-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.navigation-content {
+  display: flex;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
