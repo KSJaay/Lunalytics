@@ -5,6 +5,7 @@ async function Axios(method = 'GET', url, data = {}, headers = {}) {
     method,
     url,
     data,
+    baseURL: import.meta.env.VITE_API_URL,
     headers: {
       ...headers,
     },

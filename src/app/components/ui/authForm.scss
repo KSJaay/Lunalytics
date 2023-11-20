@@ -70,3 +70,11 @@
     background-color: $BLUE_700;
   }
 }
+
+.auth-form-error {
+  color: $RED_600;
+  font-size: $FONT_XL;
+  font-weight: $WEIGHT_SEMIBOLD;
+  margin-top: $SPACING_3;
+  text-align: center;
+}

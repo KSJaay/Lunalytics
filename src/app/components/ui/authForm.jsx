@@ -1,14 +1,15 @@
 // import styles
 import './authForm.scss';
 
-const Form = ({ button, path, title, isLogin, children }) => {
+const Form = ({ title, isLogin, error, children, ...props }) => {
   return (
     <div className="auth-form-container">
-      <form className="auth-form" method="POST" action={path}>
+      <form className="auth-form" {...props}>
         <div className="auth-form-title">{title}</div>
+        {error && <div className="auth-form-error">{error}</div>}
         <div>{children}</div>
         <button type="submit" className="auth-button">
-          {button}
+          {title}
         </button>
         {isLogin && (
           <a href="/register" className="auth-button-register">
