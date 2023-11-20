@@ -15,7 +15,6 @@
 # misc
 .DS_Store
 *.pem
-/src/config.json
 
 # debug
 npm-debug.log*
@@ -23,7 +22,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env
 
 # typescript
 *.tsbuildinfo
