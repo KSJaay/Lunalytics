@@ -1,6 +1,7 @@
 // Import node_modules
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -33,7 +34,26 @@ async function init() {
     )
     .use(cookieParser());
 
+  if (process.env.MODE === 'production') {
+    app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
+  }
+
   app.use(async (request, response, next) => {
+    const { userToken } = request.cookies;
+
+    if (userToken) {
+      const userExistsInDatabase = await userExists(userToken);
+
+      if (userExistsInDatabase) {
+        if (
+          request.url.startsWith('/login') ||
+          request.url.startsWith('/register')
+        ) {
+          return response.redirect('/');
+        }
+      }
+    }
+
     if (
       request.url.startsWith('/login') ||
       request.url.startsWith('/register')
@@ -41,15 +61,11 @@ async function init() {
       return next();
     }
 
-    const userToken = request.cookies.userToken;
     if (!userToken) {
       return response.redirect('/login');
     }
 
-    const userExistsInDatabase = await userExists(userToken);
-    if (!userExistsInDatabase) {
-      return response.redirect('/login');
-    }
+    return next();
   });
 
   app.post('/login', async (request, response) => {
@@ -90,9 +106,11 @@ async function init() {
     }
   });
 
-  app.get('/', (request, response) => {
-    response.send('Hello World!');
-  });
+  if (process.env.MODE === 'production') {
+    app.get('*', function (request, response) {
+      response.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
+    });
+  }
 
   // Start the server
   const server_port = process.env.PORT || 5050;

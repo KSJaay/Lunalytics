@@ -20,13 +20,13 @@ const Register = () => {
       const username = e.target.username.value;
       const password = e.target.password.value;
 
-      if (!validators.username(username) && !validators.email(email)) {
-        setError('Username or email is invalid');
-        return;
-      }
+      const isInvalidInput =
+        validators.email(email) ||
+        validators.username(username) ||
+        validators.password(password);
 
-      if (!validators.password(password)) {
-        setError('Password must include at least 8 characters');
+      if (isInvalidInput) {
+        setError(isInvalidInput);
         return;
       }
 

@@ -5,8 +5,25 @@
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Uptime Lunar</title>
+    <style>
+      .js-disabled-message {
+        font-size: 24px;
+        text-align: center;
+        padding: 8px 12px;
+        margin: 0 auto;
+      }
+    </style>
   </head>
   <body>
+    <noscript>
+      <div class="js-disabled-message">
+        This website requires JavaScript to run. Please enable JavaScript in
+        your browser settings. <br />
+        <br />
+        Thank you!
+      </div>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/app/main.jsx"></script>
   </body>
