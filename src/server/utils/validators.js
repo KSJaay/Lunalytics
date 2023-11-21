@@ -1,16 +1,28 @@
 const email = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
+  if (!regex.test(email)) {
+    return 'Email is not valid';
+  }
+
+  return false;
 };
 
 const username = (username) => {
   const regex = /^[a-zA-Z0-9]+$/;
-  return regex.test(username);
+  if (!regex.test(username)) {
+    return 'Username is not valid';
+  }
+
+  return false;
 };
 
 const password = (password) => {
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-  return regex.test(password);
+  const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+  if (!regex.test(password)) {
+    return 'Password is not valid';
+  }
+
+  return false;
 };
 
 module.exports = { email, username, password };

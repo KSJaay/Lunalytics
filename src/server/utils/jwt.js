@@ -1,3 +1,9 @@
+// import node_modules
+const jwt = require('jsonwebtoken');
+
+// import local files
+const logger = require('../utils/logger');
+
 const verifyCookie = (value) => {
   try {
     let token = jwt.verify(value, process.env.JWT_SECRET, {

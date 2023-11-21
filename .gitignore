@@ -23,6 +23,7 @@ yarn-error.log*
 
 # local env files
 .env
+/src/server/database/sqlite/lunar.db
 
 # typescript
 *.tsbuildinfo

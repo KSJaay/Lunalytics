@@ -34,5 +34,6 @@ const handleError = (error, response) => {
 
 module.exports = {
   AuthorizationError,
+  UnprocessableError,
   handleError,
 };
