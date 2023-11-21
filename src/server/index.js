@@ -12,7 +12,11 @@ const { signInUser, userExists, registerUser } = require('./database/queries');
 const SQLite = require('./database/sqlite/setup');
 const Logger = require('./utils/logger');
 const { handleError, UnprocessableError } = require('./utils/errors');
-const { setServerSideCookie } = require('./utils/cookies');
+const {
+  setServerSideCookie,
+  setClientSideCookie,
+  deleteCookie,
+} = require('./utils/cookies');
 
 const app = express();
 
@@ -74,11 +78,18 @@ async function init() {
 
       const isInvalidEmail = validate.email(username);
 
-      const userToken = await signInUser(username, password, isInvalidEmail);
-      setServerSideCookie(response, 'userToken', userToken);
+      const { jwt, user } = await signInUser(
+        username,
+        password,
+        isInvalidEmail
+      );
+
+      setServerSideCookie(response, 'userToken', jwt);
+      setClientSideCookie(response, 'user', JSON.stringify(user));
 
       return response.sendStatus(200);
     } catch (error) {
+      console.log(error);
       return handleError(error, response);
     }
   });
@@ -97,10 +108,22 @@ async function init() {
         );
       }
 
-      const userToken = await registerUser(email, username, password);
-      setServerSideCookie(response, 'userToken', userToken);
+      const { jwt, user } = await registerUser(email, username, password);
+      setServerSideCookie(response, 'userToken', jwt);
+      setClientSideCookie(response, 'user', JSON.stringify(user));
 
       return response.sendStatus(200);
+    } catch (error) {
+      return handleError(error, response);
+    }
+  });
+
+  app.get('/logout', async (request, response) => {
+    try {
+      deleteCookie(response, 'userToken');
+      deleteCookie(response, 'user');
+
+      return response.redirect('/login');
     } catch (error) {
       return handleError(error, response);
     }

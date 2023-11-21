@@ -10,7 +10,12 @@ const passwordMatches = (user, password) => {
     throw new AuthorizationError('Password does not match');
   }
 
-  return signCookie({ username: user.username.toLowerCase() });
+  const username = user.username.toLowerCase();
+
+  return {
+    jwt: signCookie({ username }),
+    user: { username, displayName: user.displayName, avatar: null },
+  };
 };
 
 const signInUser = async (username, password, isInvalidEmail) => {
@@ -59,7 +64,14 @@ const registerUser = async (email, username, password) => {
     avatar: null,
   });
 
-  return signCookie({ username: username.toLowerCase() });
+  return {
+    jwt: signCookie({ username: username.toLowerCase() }),
+    user: {
+      username: username.toLowerCase(),
+      displayName: username,
+      avatar: null,
+    },
+  };
 };
 
 const userExists = async (userToken) => {

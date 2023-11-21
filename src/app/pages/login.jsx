@@ -19,14 +19,18 @@ const Login = () => {
       const username = e.target.username.value;
       const password = e.target.password.value;
 
-      if (!validators.username(username) && !validators.email(username)) {
-        setError('Username or email is invalid');
-        return;
+      const isEmail = new RegExp(/@/g).test(username);
+      const isInvalidUsername = isEmail
+        ? validators.email(username)
+        : validators.username(username);
+
+      if (isInvalidUsername) {
+        return setError(isInvalidUsername);
       }
 
-      if (!validators.password(password)) {
-        setError('Password must include at least 8 characters');
-        return;
+      const isInvalidPassword = validators.password(password);
+      if (isInvalidPassword) {
+        return setError(isInvalidPassword);
       }
 
       await Axios('POST', '/login', { username, password });
