@@ -1,0 +1,52 @@
+@import './pxToRem.scss';
+
+$BREAKPOINT_1: pxToRem(480);
+$BREAKPOINT_2: pxToRem(768);
+$BREAKPOINT_3: pxToRem(1024);
+$BREAKPOINT_4: pxToRem(1200);
+$BREAKPOINT_5: pxToRem(1440);
+$BREAKPOINT_6: pxToRem(1920);
+$HALF_WIDTH: 50%;
+$FULL_WIDTH: 100%;
+
+@mixin desktop() {
+  @media (max-width: $BREAKPOINT_6) {
+    @content;
+  }
+}
+
+@mixin laptop() {
+  @media (max-width: $BREAKPOINT_4) {
+    @content;
+  }
+}
+
+@mixin tablet() {
+  @media (max-width: $BREAKPOINT_3) {
+    @content;
+  }
+}
+
+@mixin mobile() {
+  @media (max-width: $BREAKPOINT_2) {
+    @content;
+  }
+}
+
+@mixin Container() {
+  display: flex;
+  margin: auto;
+  max-width: $BREAKPOINT_6;
+
+  @media (max-width: $BREAKPOINT_6) {
+    max-width: 1500px;
+  }
+
+  @media (max-width: $BREAKPOINT_4) {
+    max-width: $BREAKPOINT_3;
+  }
+
+  @media (max-width: $BREAKPOINT_3) {
+    max-width: 968px;
+  }
+}

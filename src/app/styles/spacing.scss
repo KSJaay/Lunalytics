@@ -1,0 +1,17 @@
+@import "./pxToRem.scss";
+
+$SPACING_0: 0;
+$SPACING_1: pxToRem(2);
+$SPACING_2: pxToRem(4);
+$SPACING_3: pxToRem(8);
+$SPACING_4: pxToRem(12);
+$SPACING_5: pxToRem(16);
+$SPACING_6: pxToRem(24);
+$SPACING_7: pxToRem(32);
+$SPACING_8: pxToRem(40);
+$SPACING_9: pxToRem(48);
+$SPACING_10: pxToRem(56);
+$SPACING_11: pxToRem(64);
+$SPACING_12: pxToRem(72);
+$SPACING_13: pxToRem(80);
+$SPACING_14: pxToRem(120);

@@ -1,0 +1,50 @@
+@import '../../styles/global.scss';
+
+.left-navigation {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: $ACCENT_900;
+  padding: 0 $SPACING_3;
+}
+
+.left-actions {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: $SPACING_4;
+}
+
+.navigation-left-top-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: pxToRem(8) pxToRem(16);
+  transition: $TRANSITION_BASE;
+  color: $FONT_COLOR;
+  border-radius: $RADIUS_SM;
+  margin-bottom: $SPACING_3;
+
+  &:hover {
+    cursor: pointer;
+    color: $PRIMARY_500;
+    background-color: $ACCENT_700;
+  }
+}
+
+.navigation-left-top-action-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: pxToRem(8) pxToRem(16);
+  transition: $TRANSITION_BASE;
+  color: $FONT_COLOR;
+  background-color: $ACCENT_700;
+  border-radius: $RADIUS_SM;
+  color: $PRIMARY_500;
+  margin-bottom: $SPACING_3;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

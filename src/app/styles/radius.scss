@@ -1,0 +1,12 @@
+@import "./pxToRem.scss";
+
+$RADIUS_XS: pxToRem(5);
+$RADIUS_SM: pxToRem(8);
+$RADIUS_MD: pxToRem(12);
+$RADIUS_LG: pxToRem(18);
+$RADIUS_XL: pxToRem(24);
+$RADIUS_2XL: pxToRem(32);
+$RADIUS_BASE: pxToRem(14); // Default
+$RADIUS_SQUARED: 33%;
+$RADIUS_ROUNDED: 50%;
+$RADIUS_PILL: 100%;
