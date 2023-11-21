@@ -6,8 +6,8 @@ async function Axios(method = 'GET', url, data = {}, headers = {}) {
     url,
     data,
     baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true,
     headers: {
-      'Access-Control-Allow-Credentials': true,
       ...headers,
     },
     timeout: 5000,

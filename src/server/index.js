@@ -1,12 +1,13 @@
 // Import node_modules
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 
 // import local files
 const validate = require('./utils/validators');
-const { signInUser, registerUser } = require('./database/queries');
+const { signInUser, userExists, registerUser } = require('./database/queries');
 const SQLite = require('./database/sqlite/setup');
 const Logger = require('./utils/logger');
 const { handleError, UnprocessableError } = require('./utils/errors');
@@ -29,7 +30,27 @@ async function init() {
         origin: [process.env.APP_URL],
         credentials: true,
       })
-    );
+    )
+    .use(cookieParser());
+
+  app.use(async (request, response, next) => {
+    if (
+      request.url.startsWith('/login') ||
+      request.url.startsWith('/register')
+    ) {
+      return next();
+    }
+
+    const userToken = request.cookies.userToken;
+    if (!userToken) {
+      return response.redirect('/login');
+    }
+
+    const userExistsInDatabase = await userExists(userToken);
+    if (!userExistsInDatabase) {
+      return response.redirect('/login');
+    }
+  });
 
   app.post('/login', async (request, response) => {
     try {
@@ -38,7 +59,6 @@ async function init() {
       const isInvalidEmail = validate.email(username);
 
       const userToken = await signInUser(username, password, isInvalidEmail);
-
       setServerSideCookie(response, 'userToken', userToken);
 
       return response.sendStatus(200);
@@ -62,12 +82,10 @@ async function init() {
       }
 
       const userToken = await registerUser(email, username, password);
-
       setServerSideCookie(response, 'userToken', userToken);
 
       return response.sendStatus(200);
     } catch (error) {
-      console.log(error);
       return handleError(error, response);
     }
   });
