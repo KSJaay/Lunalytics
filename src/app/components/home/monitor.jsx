@@ -1,4 +1,5 @@
 // import local files
+import FaEllipsisVertical from '../icons/faEllipsisVertical';
 import Pill from '../ui/pill';
 
 // import styles
@@ -13,9 +14,20 @@ const Monitor = ({ monitor }) => {
 
   return (
     <div className="home-monitor-container">
-      <div className="home-monitor-type">Website</div>
+      <div className="home-monitor-type">
+        <div>Website</div>
+        <span>
+          <FaEllipsisVertical width={20} height={20} />
+        </span>
+      </div>
       <div className="home-monitor-name">KSJaay</div>
-      <div className="home-monitor-url">https://ksjaay.com/status</div>
+      <a
+        className="home-monitor-url"
+        href="https://ksjaay.com/status"
+        target="_blank"
+      >
+        https://ksjaay.com/status
+      </a>
       <div className="home-monitor-uptime-container">
         <div className="home-monitor-uptime">
           <h1>Ping</h1>

@@ -15,6 +15,10 @@
     .home-monitor-name {
       color: $PRIMARY_500;
     }
+
+    .home-monitor-type span {
+      display: flex;
+    }
   }
 }
 
@@ -23,6 +27,25 @@
   font-size: $FONT_XL;
   font-weight: $WEIGHT_BOLD;
   margin-bottom: $SPACING_2;
+  display: flex;
+  align-items: center;
+  transition: $TRANSITION_BASE;
+
+  div {
+    flex: 1;
+  }
+
+  span {
+    display: none;
+    color: $ACCENT_100;
+    font-size: $FONT_MD;
+    font-weight: $WEIGHT_MEDIUM;
+    transition: $TRANSITION_BASE;
+
+    &:hover {
+      color: $ACCENT_400;
+    }
+  }
 }
 
 .home-monitor-name {
@@ -33,9 +56,13 @@
 
 .home-monitor-url {
   color: $ACCENT_100;
-  font-size: $FONT_SM;
+  font-size: $FONT_MD;
   font-weight: $WEIGHT_MEDIUM;
   margin-bottom: $SPACING_2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
 
   &:hover {
     color: $ACCENT_200;
