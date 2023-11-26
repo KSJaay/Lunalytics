@@ -6,9 +6,10 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Navigation from './components/navigation';
 import Home from './pages/home';
+import MonitorRouter from './routes/monitor';
 
 const routes = {
-  test: (params) => <div>Route exists</div>,
+  monitor: (params) => <MonitorRouter params={params} />,
 };
 
 function App() {
