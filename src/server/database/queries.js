@@ -1,6 +1,6 @@
 const SQLite = require('./sqlite/setup');
 const { generateHash, verifyPassword } = require('../utils/hashPassword');
-const { signCookie } = require('../utils/jwt');
+const { signCookie, verifyCookie } = require('../utils/jwt');
 const { AuthorizationError } = require('../utils/errors');
 
 const passwordMatches = (user, password) => {
@@ -10,12 +10,12 @@ const passwordMatches = (user, password) => {
     throw new AuthorizationError('Password does not match');
   }
 
-  return signCookie({
-    email: user.email,
-    username: user.username,
-    displayName: user.displayName,
-    avatar: user.avatar,
-  });
+  const username = user.username.toLowerCase();
+
+  return {
+    jwt: signCookie({ username }),
+    user: { username, displayName: user.displayName, avatar: null },
+  };
 };
 
 const signInUser = async (username, password, isInvalidEmail) => {
@@ -64,15 +64,23 @@ const registerUser = async (email, username, password) => {
     avatar: null,
   });
 
-  return signCookie({
-    email: email.toLowerCase(),
-    username: username.toLowerCase(),
-    displayName: username,
-    avatar: null,
-  });
+  return {
+    jwt: signCookie({ username: username.toLowerCase() }),
+    user: {
+      username: username.toLowerCase(),
+      displayName: username,
+      avatar: null,
+    },
+  };
+};
+
+const userExists = async (userToken) => {
+  const user = verifyCookie(userToken);
+  return SQLite.client('user').where({ username: user.username }).first();
 };
 
 module.exports = {
   signInUser,
   registerUser,
+  userExists,
 };

@@ -12,6 +12,7 @@
   display: flex;
   transition: $TRANSITION_BASE;
   color: $FONT_COLOR;
+  user-select: none;
 
   &:hover {
     cursor: pointer;

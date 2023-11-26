@@ -22,7 +22,7 @@ const setServerSideCookie = (res, name, value) => {
 };
 
 const deleteCookie = (res, name) => {
-  return res.cookie(name, {
+  return res.cookie(name, '', {
     domain: process.env.APP_HOST || 'localhost',
     expires: -1,
     maxAge: -1,

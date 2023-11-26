@@ -1,0 +1,80 @@
+@import '../../../styles/global.scss';
+
+.auth-form-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(0deg, $ACCENT_800, $ACCENT_900);
+}
+
+.auth-form {
+  background-color: $ACCENT_800;
+  padding: $SPACING_6 $SPACING_9;
+  border-radius: $RADIUS_LG;
+  box-shadow: $SHADOW_SM;
+  max-width: pxToRem(500);
+  width: 100%;
+  padding-bottom: $SPACING_9;
+}
+
+.auth-form-title {
+  font-size: $FONT_4XL;
+  font-weight: $WEIGHT_BOLD;
+  color: $FONT_COLOR;
+  text-align: center;
+  margin-bottom: $SPACING_5;
+}
+
+.auth-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: pxToRem(50);
+  background-color: $ACCENT_900;
+  border-radius: $RADIUS_SM;
+  color: $FONT_COLOR;
+  font-size: $FONT_LG;
+  font-weight: $WEIGHT_SEMIBOLD;
+  margin-top: $SPACING_9;
+  cursor: pointer;
+  transition: $TRANSITION_BASE;
+
+  &:hover {
+    transition: $TRANSITION_BASE;
+    background-color: $PRIMARY_800;
+  }
+}
+
+.auth-button-register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: pxToRem(50);
+  background-color: $ACCENT_900;
+  border-radius: $RADIUS_SM;
+  color: $FONT_COLOR;
+  font-size: $FONT_LG;
+  font-weight: $WEIGHT_SEMIBOLD;
+  margin-top: $SPACING_6;
+  cursor: pointer;
+  text-decoration: none;
+  transition: $TRANSITION_BASE;
+
+  &:hover {
+    transition: $TRANSITION_BASE;
+    background-color: $BLUE_700;
+  }
+}
+
+.auth-form-error {
+  color: $RED_600;
+  font-size: $FONT_XL;
+  font-weight: $WEIGHT_SEMIBOLD;
+  margin-top: $SPACING_3;
+  text-align: center;
+}

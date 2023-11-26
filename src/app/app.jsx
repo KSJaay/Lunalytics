@@ -2,29 +2,19 @@
 import { useParams } from 'react-router-dom';
 
 // import local files
-import Auth from './auth';
 import Login from './pages/login';
 import Register from './pages/register';
 import Navigation from './components/navigation';
 import Home from './pages/home';
+import MonitorRouter from './routes/monitor';
 
 const routes = {
-  test: (params) => <div>Route exists</div>,
+  monitor: (params) => <MonitorRouter params={params} />,
 };
 
 function App() {
   const query = useParams();
   const [page, ...params] = query['*']?.toLowerCase().split('/');
-
-  if (!page) {
-    return (
-      <Auth>
-        <Navigation>
-          <Home />
-        </Navigation>
-      </Auth>
-    );
-  }
 
   if (page === 'login') {
     return <Login />;
@@ -34,14 +24,18 @@ function App() {
     return <Register />;
   }
 
+  if (!page) {
+    return (
+      <Navigation>
+        <Home />
+      </Navigation>
+    );
+  }
+
   const routeExists = routes[page];
 
   if (routeExists) {
-    return (
-      <Auth>
-        <Navigation>{routeExists(params)}</Navigation>
-      </Auth>
-    );
+    return <Navigation>{routeExists(params)}</Navigation>;
   }
 }
 

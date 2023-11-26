@@ -1,0 +1,11 @@
+@import '../styles/global.scss';
+
+.home-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: $SPACING_4;
+  gap: $SPACING_5;
+  overflow-y: auto;
+  margin-bottom: $SPACING_12;
+}

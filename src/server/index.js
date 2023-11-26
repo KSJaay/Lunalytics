@@ -1,16 +1,22 @@
 // Import node_modules
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 
 // import local files
 const validate = require('./utils/validators');
-const { signInUser, registerUser } = require('./database/queries');
+const { signInUser, userExists, registerUser } = require('./database/queries');
 const SQLite = require('./database/sqlite/setup');
 const Logger = require('./utils/logger');
 const { handleError, UnprocessableError } = require('./utils/errors');
-const { setServerSideCookie } = require('./utils/cookies');
+const {
+  setServerSideCookie,
+  setClientSideCookie,
+  deleteCookie,
+} = require('./utils/cookies');
 
 const app = express();
 
@@ -29,7 +35,42 @@ async function init() {
         origin: [process.env.APP_URL],
         credentials: true,
       })
-    );
+    )
+    .use(cookieParser());
+
+  if (process.env.MODE === 'production') {
+    app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
+  }
+
+  app.use(async (request, response, next) => {
+    const { userToken } = request.cookies;
+
+    if (userToken) {
+      const userExistsInDatabase = await userExists(userToken);
+
+      if (userExistsInDatabase) {
+        if (
+          request.url.startsWith('/login') ||
+          request.url.startsWith('/register')
+        ) {
+          return response.redirect('/');
+        }
+      }
+    }
+
+    if (
+      request.url.startsWith('/login') ||
+      request.url.startsWith('/register')
+    ) {
+      return next();
+    }
+
+    if (!userToken) {
+      return response.redirect('/login');
+    }
+
+    return next();
+  });
 
   app.post('/login', async (request, response) => {
     try {
@@ -37,12 +78,18 @@ async function init() {
 
       const isInvalidEmail = validate.email(username);
 
-      const userToken = await signInUser(username, password, isInvalidEmail);
+      const { jwt, user } = await signInUser(
+        username,
+        password,
+        isInvalidEmail
+      );
 
-      setServerSideCookie(response, 'userToken', userToken);
+      setServerSideCookie(response, 'userToken', jwt);
+      setClientSideCookie(response, 'user', JSON.stringify(user));
 
       return response.sendStatus(200);
     } catch (error) {
+      console.log(error);
       return handleError(error, response);
     }
   });
@@ -61,20 +108,32 @@ async function init() {
         );
       }
 
-      const userToken = await registerUser(email, username, password);
-
-      setServerSideCookie(response, 'userToken', userToken);
+      const { jwt, user } = await registerUser(email, username, password);
+      setServerSideCookie(response, 'userToken', jwt);
+      setClientSideCookie(response, 'user', JSON.stringify(user));
 
       return response.sendStatus(200);
     } catch (error) {
-      console.log(error);
       return handleError(error, response);
     }
   });
 
-  app.get('/', (request, response) => {
-    response.send('Hello World!');
+  app.get('/logout', async (request, response) => {
+    try {
+      deleteCookie(response, 'userToken');
+      deleteCookie(response, 'user');
+
+      return response.redirect('/login');
+    } catch (error) {
+      return handleError(error, response);
+    }
   });
+
+  if (process.env.MODE === 'production') {
+    app.get('*', function (request, response) {
+      response.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
+    });
+  }
 
   // Start the server
   const server_port = process.env.PORT || 5050;

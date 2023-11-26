@@ -1,0 +1,108 @@
+@import '../../styles/global.scss';
+
+.home-monitor-container {
+  width: pxToRem(250);
+  height: pxToRem(250);
+  background-color: $ACCENT_900;
+  padding: $SPACING_3;
+  border-radius: $RADIUS_MD;
+  transition: $TRANSITION_BASE;
+
+  &:hover {
+    cursor: pointer;
+    margin: -5px 0 -5px 0;
+
+    .home-monitor-name {
+      color: $PRIMARY_500;
+    }
+
+    .home-monitor-type span {
+      display: flex;
+    }
+  }
+}
+
+.home-monitor-type {
+  color: $FONT_COLOR;
+  font-size: $FONT_XL;
+  font-weight: $WEIGHT_BOLD;
+  margin-bottom: $SPACING_2;
+  display: flex;
+  align-items: center;
+  transition: $TRANSITION_BASE;
+
+  div {
+    flex: 1;
+  }
+
+  span {
+    display: none;
+    color: $ACCENT_100;
+    font-size: $FONT_MD;
+    font-weight: $WEIGHT_MEDIUM;
+    transition: $TRANSITION_BASE;
+
+    &:hover {
+      color: $ACCENT_400;
+    }
+  }
+}
+
+.home-monitor-name {
+  color: $FONT_COLOR;
+  font-size: $FONT_MD;
+  font-weight: $WEIGHT_MEDIUM;
+}
+
+.home-monitor-url {
+  color: $ACCENT_100;
+  font-size: $FONT_MD;
+  font-weight: $WEIGHT_MEDIUM;
+  margin-bottom: $SPACING_2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+
+  &:hover {
+    color: $ACCENT_200;
+    text-decoration: underline;
+  }
+}
+
+.home-monitor-uptime-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $SPACING_2;
+}
+
+.home-monitor-uptime {
+  flex: 1;
+  color: $FONT_COLOR;
+
+  h1 {
+    font-size: $FONT_XL;
+    font-weight: $WEIGHT_BOLD;
+  }
+
+  div {
+    font-size: $FONT_LG;
+    font-weight: $WEIGHT_MEDIUM;
+  }
+}
+
+.home-monitor-status {
+  color: $FONT_COLOR;
+  margin-top: $SPACING_3;
+
+  h1 {
+    font-size: $FONT_XL;
+    font-weight: $WEIGHT_BOLD;
+    margin-bottom: $SPACING_2;
+  }
+
+  div {
+    display: flex;
+  }
+}

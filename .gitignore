@@ -5,12 +5,13 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+/src/server/database/sqlite/lunar.db
 
 # testing
 /coverage
 
 # production
-/build
+/dist
 
 # misc
 .DS_Store
@@ -23,7 +24,6 @@ yarn-error.log*
 
 # local env files
 .env
-/src/server/database/sqlite/lunar.db
 
 # typescript
 *.tsbuildinfo
