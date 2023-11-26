@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import Form from '../components/ui/authForm';
+import Form from '../components/ui/form/auth';
 import TextInput from '../components/ui/input';
 import Axios from '../services/axios';
-import validators from '../utils/validators';
+import * as validators from '../utils/validators';
 
 const Register = () => {
   const [error, setError] = useState(null);
@@ -20,14 +20,10 @@ const Register = () => {
       const username = e.target.username.value;
       const password = e.target.password.value;
 
-      const isInvalidInput =
-        validators.email(email) ||
-        validators.username(username) ||
-        validators.password(password);
+      const hasInvalidData = validators.auth(username, password, email);
 
-      if (isInvalidInput) {
-        setError(isInvalidInput);
-        return;
+      if (hasInvalidData) {
+        return setError(hasInvalidData);
       }
 
       await Axios('POST', '/register', { email, username, password });
