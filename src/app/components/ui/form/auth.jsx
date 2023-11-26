@@ -1,7 +1,7 @@
 // import styles
-import './authForm.scss';
+import './auth.scss';
 
-const Form = ({ title, isLogin, error, children, ...props }) => {
+const AuthForm = ({ title, isLogin, error, children, ...props }) => {
   return (
     <div className="auth-form-container">
       <form className="auth-form" {...props}>
@@ -21,4 +21,4 @@ const Form = ({ title, isLogin, error, children, ...props }) => {
   );
 };
 
-export default Form;
+export default AuthForm;

@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import Form from '../components/ui/authForm';
+import Form from '../components/ui/form/auth';
 import TextInput from '../components/ui/input';
 import Axios from '../services/axios';
-import validators from '../utils/validators';
+import * as validators from '../utils/validators';
 
 const Login = () => {
   const [error, setError] = useState(null);
@@ -19,18 +19,10 @@ const Login = () => {
       const username = e.target.username.value;
       const password = e.target.password.value;
 
-      const isEmail = new RegExp(/@/g).test(username);
-      const isInvalidUsername = isEmail
-        ? validators.email(username)
-        : validators.username(username);
+      const hasInvalidData = validators.auth(username, password);
 
-      if (isInvalidUsername) {
-        return setError(isInvalidUsername);
-      }
-
-      const isInvalidPassword = validators.password(password);
-      if (isInvalidPassword) {
-        return setError(isInvalidPassword);
+      if (hasInvalidData) {
+        return setError(hasInvalidData);
       }
 
       await Axios('POST', '/login', { username, password });
