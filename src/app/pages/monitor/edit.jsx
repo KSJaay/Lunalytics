@@ -6,6 +6,7 @@
 // Acceptable Status Codes (200-299, 300-399, 400-499, 500-599, or select a specific one) (Dropdown)
 // Method - GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS (Dropdown)
 // Headers - Textarea (JSON format)
+
 // import node_modules
 import { useState } from 'react';
 
@@ -14,7 +15,7 @@ import TextInput from '../../components/ui/input';
 import * as validators from '../../utils/validators';
 import MonitorForm from '../../components/ui/form/monitor';
 
-const AddMonitor = () => {
+const EditMonitor = ({ monitor = {} }) => {
   const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
@@ -40,28 +41,39 @@ const AddMonitor = () => {
   };
 
   return (
-    <MonitorForm
-      onSubmit={handleSubmit}
-      error={error}
-      title={'Add New Monitor'}
-    >
-      <TextInput label="Name" id="name" type="text" />
-      <TextInput label="URL" id="name" defaultValue="https://" type="text" />
-      <TextInput label="Interval" defaultValue={30} id="name" type="number" />
+    <MonitorForm onSubmit={handleSubmit} error={error} title={'Update Monitor'}>
+      <TextInput
+        label="Name"
+        id="name"
+        type="text"
+        defaultValue={monitor.name || ''}
+      />
+      <TextInput
+        label="URL"
+        id="url"
+        type="text"
+        defaultValue={monitor.url || 'https://'}
+      />
+      <TextInput
+        label="Interval"
+        id="interval"
+        type="number"
+        defaultValue={monitor.interval || 30}
+      />
       <TextInput
         label="Retry Interval"
-        defaultValue={60}
-        id="name"
+        id="retryInterval"
         type="number"
+        defaultValue={monitor.retryInterval || 60}
       />
       <TextInput
         label="Request timout"
-        id="name"
-        defaultValue={30}
+        id="requestTimeout"
         type="number"
+        defaultValue={monitor.requestTimeout || 30}
       />
     </MonitorForm>
   );
 };
 
-export default AddMonitor;
+export default EditMonitor;
