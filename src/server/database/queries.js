@@ -2,6 +2,7 @@ const SQLite = require('./sqlite/setup');
 const { generateHash, verifyPassword } = require('../utils/hashPassword');
 const { signCookie, verifyCookie } = require('../utils/jwt');
 const { AuthorizationError } = require('../utils/errors');
+const randomId = require('../utils/randomId');
 
 const passwordMatches = (user, password) => {
   const passwordMatches = verifyPassword(password, user.password);
@@ -79,8 +80,42 @@ const userExists = async (userToken) => {
   return SQLite.client('user').where({ username: user.username }).first();
 };
 
+const monitorExists = async (monitorId) => {
+  return SQLite.client('monitor').where({ id: monitorId }).first();
+};
+
+const createMonitor = async (
+  user,
+  name,
+  url,
+  interval,
+  retryInterval,
+  requestTimeout
+) => {
+  const monitorId = randomId();
+
+  if (!user) {
+    throw new AuthorizationError('User does not exist');
+  }
+
+  await SQLite.client('monitor').insert({
+    monitorId,
+    name,
+    url,
+    interval,
+    retryInterval,
+    requestTimeout,
+    method: 'GET',
+    username: user?.username,
+  });
+
+  return monitorId;
+};
+
 module.exports = {
   signInUser,
   registerUser,
   userExists,
+  monitorExists,
+  createMonitor,
 };

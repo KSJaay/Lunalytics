@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 // import local files
 import Form from '../components/ui/form/auth';
 import TextInput from '../components/ui/input';
-import Axios from '../services/axios';
-import * as validators from '../utils/validators';
+import { createPostRequest } from '../services/axios';
+import * as validators from '../../shared/validators';
 
 const Register = () => {
   const [error, setError] = useState(null);
@@ -26,7 +26,11 @@ const Register = () => {
         return setError(hasInvalidData);
       }
 
-      await Axios('POST', '/register', { email, username, password });
+      await createPostRequest('/register', {
+        email,
+        username,
+        password,
+      });
 
       navigate('/');
     } catch (error) {

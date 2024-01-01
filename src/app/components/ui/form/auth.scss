@@ -11,7 +11,7 @@
 }
 
 .auth-form {
-  background-color: $ACCENT_800;
+  background-color: $ACCENT_900;
   padding: $SPACING_6 $SPACING_9;
   border-radius: $RADIUS_LG;
   box-shadow: $SHADOW_SM;
@@ -34,7 +34,7 @@
   align-items: center;
   width: 100%;
   height: pxToRem(50);
-  background-color: $ACCENT_900;
+  background-color: $ACCENT_700;
   border-radius: $RADIUS_SM;
   color: $FONT_COLOR;
   font-size: $FONT_LG;
@@ -55,7 +55,7 @@
   align-items: center;
   width: 100%;
   height: pxToRem(50);
-  background-color: $ACCENT_900;
+  background-color: $ACCENT_700;
   border-radius: $RADIUS_SM;
   color: $FONT_COLOR;
   font-size: $FONT_LG;

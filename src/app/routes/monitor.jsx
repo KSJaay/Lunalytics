@@ -3,7 +3,7 @@ import AddMonitor from '../pages/monitor/add';
 import EditMonitor from '../pages/monitor/edit';
 
 const MonitorRouter = ({ params }) => {
-  const [page, ...rest] = params;
+  const [page] = params;
 
   if (page === 'add') {
     return <AddMonitor />;

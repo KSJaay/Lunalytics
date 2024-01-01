@@ -7,8 +7,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // import local files
-const validate = require('./utils/validators');
-const { signInUser, userExists, registerUser } = require('./database/queries');
+const validate = require('../shared/validators');
+const {
+  signInUser,
+  userExists,
+  registerUser,
+  createMonitor,
+} = require('./database/queries');
 const SQLite = require('./database/sqlite/setup');
 const Logger = require('./utils/logger');
 const { handleError, UnprocessableError } = require('./utils/errors');
@@ -17,6 +22,7 @@ const {
   setClientSideCookie,
   deleteCookie,
 } = require('./utils/cookies');
+const { verifyCookie } = require('./utils/jwt');
 
 const app = express();
 
@@ -98,14 +104,10 @@ async function init() {
     try {
       const { email, username, password } = request.body;
 
-      const isInvalidEmail = validate.email(email);
-      const isInvalidUsername = validate.username(username);
-      const isInvalidPassword = validate.password(password);
+      const isInvalidAuth = validate.auth(username, password, email);
 
-      if (isInvalidEmail || isInvalidUsername || isInvalidPassword) {
-        throw new UnprocessableError(
-          isInvalidEmail || isInvalidUsername || isInvalidPassword
-        );
+      if (isInvalidAuth) {
+        throw new UnprocessableError(isInvalidAuth);
       }
 
       const { jwt, user } = await registerUser(email, username, password);
@@ -113,6 +115,40 @@ async function init() {
       setClientSideCookie(response, 'user', JSON.stringify(user));
 
       return response.sendStatus(200);
+    } catch (error) {
+      return handleError(error, response);
+    }
+  });
+
+  app.post('/monitor/add', async (request, response) => {
+    try {
+      const { name, url, interval, retryInterval, requestTimeout } =
+        request.body;
+
+      const isInvalidMonitor = validate.monitor(
+        name,
+        url,
+        interval,
+        retryInterval,
+        requestTimeout
+      );
+
+      if (isInvalidMonitor) {
+        throw new UnprocessableError(isInvalidMonitor);
+      }
+
+      const user = JSON.parse(request.cookies.user);
+
+      const monitorId = await createMonitor(
+        user,
+        name,
+        url,
+        interval,
+        retryInterval,
+        requestTimeout
+      );
+
+      return response.json({ monitorId: monitorId });
     } catch (error) {
       return handleError(error, response);
     }

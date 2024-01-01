@@ -41,6 +41,25 @@ class SQLite {
         table.string('avatar');
       });
     }
+
+    const monitorExists = await this.client.schema.hasTable('monitor');
+
+    if (!monitorExists) {
+      await this.client.schema.createTable('monitor', (table) => {
+        table.increments('id').primary();
+        table.string('monitorId').notNullable();
+        table.string('name').notNullable();
+        table.string('url').notNullable();
+        table.integer('interval').notNullable();
+        table.integer('retryInterval').notNullable();
+        table.integer('requestTimeout').notNullable();
+        table.string('method').notNullable();
+        table.text('headers');
+        table.text('body');
+        table.text('valid_status_codes').defaultTo('["200-299"]');
+        table.string('username').notNullable();
+      });
+    }
   }
 }
 

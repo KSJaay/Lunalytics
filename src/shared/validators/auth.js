@@ -31,4 +31,4 @@ const auth = (username, password, email) => {
   return false;
 };
 
-export default auth;
+module.exports = auth;

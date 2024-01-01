@@ -1,27 +1,42 @@
-// name
-// URL
-// interval
-// Retry interval
-// Timeout
+const validMethods = [
+  'DELETE',
+  'GET',
+  'HEAD',
+  'OPTIONS',
+  'PATCH',
+  'POST',
+  'PUT',
+];
 
-const monitor = (name, url, interval, retryInterval, requestTimeout) => {
-  // name should only include letters, numbers and -
+const monitor = (
+  name,
+  url,
+  method,
+  interval,
+  retryInterval,
+  requestTimeout
+) => {
   if (!name || !/^[a-zA-Z0-9-]+$/.test(name)) {
     return 'Please enter a valid name. Only letters, numbers and - are allowed.';
   }
 
-  // is url valid
   const urlRegex = /^(http|https):\/\/[^ "]+$/;
 
-  if (!url || !urlRegex.test(values.url)) {
+  if (!url || !urlRegex.test(url)) {
     return 'Please enter a valid URL.';
+  }
+
+  console.log('method', method, validMethods.includes(method));
+
+  if (!method || !validMethods.includes(method)) {
+    return 'Please select a valid method.';
   }
 
   if (!interval) {
     return 'Please enter a valid interval.';
   }
 
-  if (values.interval < 20 || values.interval > 600) {
+  if (interval < 20 || interval > 600) {
     return 'Please enter a valid interval. Interval should be between 20 and 600 seconds.';
   }
 
@@ -29,23 +44,15 @@ const monitor = (name, url, interval, retryInterval, requestTimeout) => {
     return 'Please enter a valid retry interval.';
   }
 
-  if (values.retryInterval < 20 || values.retryInterval > 600) {
+  if (retryInterval < 20 || retryInterval > 600) {
     return 'Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds.';
-  }
-
-  if (!timeout) {
-    return 'Please enter a valid timeout.';
-  }
-
-  if (values.timeout < 20 || values.timeout > 600) {
-    return 'Please enter a valid timeout. Timeout should be between 20 and 600 seconds.';
   }
 
   if (!requestTimeout) {
     return 'Please enter a valid request timeout.';
   }
 
-  if (values.requestTimeout < 20 || values.requestTimeout > 600) {
+  if (requestTimeout < 20 || requestTimeout > 600) {
     return 'Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds.';
   }
 

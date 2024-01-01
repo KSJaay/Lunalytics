@@ -15,6 +15,8 @@ class UnprocessableError extends Error {
 }
 
 const handleError = (error, response) => {
+  console.log(error);
+
   if (error instanceof AuthorizationError) {
     return response.status(401).send({
       message: error.error,
