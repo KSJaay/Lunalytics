@@ -26,7 +26,7 @@ const Register = () => {
         return setError(hasInvalidData);
       }
 
-      await createPostRequest('/register', {
+      await createPostRequest('/auth/register', {
         email,
         username,
         password,

@@ -12,7 +12,7 @@ const routes = {
   monitor: (params) => <MonitorRouter params={params} />,
 };
 
-function App() {
+const App = () => {
   const query = useParams();
   const [page, ...params] = query['*']?.toLowerCase().split('/');
 
@@ -37,6 +37,6 @@ function App() {
   if (routeExists) {
     return <Navigation>{routeExists(params)}</Navigation>;
   }
-}
+};
 
 export default App;
