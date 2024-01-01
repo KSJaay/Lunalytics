@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import TextInput from '../../components/ui/input';
 import MonitorForm from '../../components/ui/form/monitor';
 import Dropdown from '../../components/ui/dropdown';
-import * as validators from '../../../shared/validators';
+import * as validators from '../../utils/validators';
 import { createPostRequest } from '../../services/axios';
 
 const AddMonitor = () => {

@@ -9,7 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "prepare": "husky install",
     "preview": "vite preview",
-    "server:watch": "nodemon --delay 2 --watch src/server ./src/server/index.js"
+    "server:watch": "nodemon --delay 2 --watch server ./server/index.js"
   },
   "dependencies": {
     "axios": "^1.6.2",

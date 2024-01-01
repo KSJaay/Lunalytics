@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Form from '../components/ui/form/auth';
 import TextInput from '../components/ui/input';
 import { createPostRequest } from '../services/axios';
-import * as validators from '../../shared/validators';
+import * as validators from '../utils/validators';
 
 const Login = () => {
   const [error, setError] = useState(null);

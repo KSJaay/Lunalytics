@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 // import local files
 import TextInput from '../../components/ui/input';
-import * as validators from '../../../shared/validators';
+import * as validators from '../../utils/validators';
 import MonitorForm from '../../components/ui/form/monitor';
 
 const EditMonitor = ({ monitor = {} }) => {

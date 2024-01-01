@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 
 // import local files
-const logger = require('../utils/logger');
+const logger = require('./logger');
 
 const verifyCookie = (value) => {
   try {

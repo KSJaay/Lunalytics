@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // import local files
-const validate = require('../shared/validators');
+const validate = require('./utils/validators');
 const {
   signInUser,
   userExists,
