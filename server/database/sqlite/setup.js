@@ -77,7 +77,8 @@ class SQLite {
         table.integer('status').notNullable();
         table.integer('latency').notNullable();
         table.timestamp('date').notNullable();
-        table.boolean('isDown').defaultTo(false);
+        table.boolean('isDown').defaultTo(0);
+        table.text('message').notNullable();
 
         table.index('monitorId');
         table.index(['monitorId', 'date']);

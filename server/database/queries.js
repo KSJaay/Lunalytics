@@ -124,22 +124,29 @@ const fetchMonitors = async () => {
       .orderBy('date', 'desc')
       .limit(12);
 
-    const sortedHeartbeats = monitorHeartbeats.sort((a, b) => b.date - a.date);
+    // const sortedHeartbeats = monitorHeartbeats.sort((a, b) => b.date - a.date);
 
     monitorWithHeartbeats.push({
       ...monitor,
-      heartbeats: sortedHeartbeats,
+      heartbeats: monitorHeartbeats,
     });
   }
 
   return monitorWithHeartbeats;
 };
 
-const createHeartbeat = (monitorId, status, latency, isDown = false) => {
+const createHeartbeat = (
+  monitorId,
+  status,
+  latency,
+  message,
+  isDown = false
+) => {
   return SQLite.client('heartbeat').insert({
     monitorId,
     status,
     latency,
+    message,
     isDown,
     date: Date.now(),
   });
