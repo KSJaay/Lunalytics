@@ -112,10 +112,45 @@ const createMonitor = async (
   return monitorId;
 };
 
+const fetchMonitors = async () => {
+  const mointors = await SQLite.client('monitor').select();
+
+  const monitorWithHeartbeats = [];
+
+  for (const monitor of mointors) {
+    const monitorHeartbeats = await SQLite.client('heartbeat')
+      .select()
+      .where('monitorId', monitor.monitorId)
+      .orderBy('date', 'desc')
+      .limit(12);
+
+    const sortedHeartbeats = monitorHeartbeats.sort((a, b) => b.date - a.date);
+
+    monitorWithHeartbeats.push({
+      ...monitor,
+      heartbeats: sortedHeartbeats,
+    });
+  }
+
+  return monitorWithHeartbeats;
+};
+
+const createHeartbeat = (monitorId, status, latency, isDown = false) => {
+  return SQLite.client('heartbeat').insert({
+    monitorId,
+    status,
+    latency,
+    isDown,
+    date: Date.now(),
+  });
+};
+
 module.exports = {
   signInUser,
   registerUser,
   userExists,
   monitorExists,
   createMonitor,
+  fetchMonitors,
+  createHeartbeat,
 };

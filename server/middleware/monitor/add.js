@@ -6,11 +6,13 @@ const validate = require('../../utils/validators');
 
 const monitorAdd = async (request, response) => {
   try {
-    const { name, url, interval, retryInterval, requestTimeout } = request.body;
+    const { name, url, method, interval, retryInterval, requestTimeout } =
+      request.body;
 
     const isInvalidMonitor = validate.monitor(
       name,
       url,
+      method,
       interval,
       retryInterval,
       requestTimeout

@@ -60,6 +60,29 @@ class SQLite {
         table.string('username').notNullable();
       });
     }
+
+    const heartbeatExists = await this.client.schema.hasTable('heartbeat');
+
+    if (!heartbeatExists) {
+      await this.client.schema.createTable('heartbeat', (table) => {
+        table.increments('id');
+        table
+          .string('monitorId')
+          .notNullable()
+          .references('monitorId')
+          .inTable('monitor')
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE');
+
+        table.integer('status').notNullable();
+        table.integer('latency').notNullable();
+        table.timestamp('date').notNullable();
+        table.boolean('isDown').defaultTo(false);
+
+        table.index('monitorId');
+        table.index(['monitorId', 'date']);
+      });
+    }
   }
 }
 
