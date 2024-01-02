@@ -1,0 +1,37 @@
+@import '../../styles/global.scss';
+
+.status-bar-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.status-bar {
+  display: inline-block;
+  width: 6px;
+  height: 18px;
+  margin: 2px;
+  border-radius: $RADIUS_SM;
+  font-size: $FONT_XS;
+  font-weight: $WEIGHT_MEDIUM;
+  text-transform: uppercase;
+  background-color: $ACCENT_600;
+
+  &:hover {
+    cursor: pointer;
+    margin: 0;
+    width: 10px;
+    height: 22px;
+  }
+
+  &.status-bar-healthy {
+    background-color: $GREEN_600;
+  }
+
+  &.status-bar-alert {
+    background-color: $RED_600;
+  }
+
+  &.status-bar-unknown {
+    background-color: $GRAY_600;
+  }
+}

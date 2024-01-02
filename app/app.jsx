@@ -7,6 +7,7 @@ import Register from './pages/register';
 import Navigation from './components/navigation';
 import Home from './pages/home';
 import MonitorRouter from './routes/monitor';
+import MonitorsLayout from './layout/monitors';
 
 const routes = {
   monitor: (params) => <MonitorRouter params={params} />,
@@ -26,16 +27,22 @@ const App = () => {
 
   if (!page) {
     return (
-      <Navigation>
-        <Home />
-      </Navigation>
+      <MonitorsLayout>
+        <Navigation>
+          <Home />
+        </Navigation>
+      </MonitorsLayout>
     );
   }
 
   const routeExists = routes[page];
 
   if (routeExists) {
-    return <Navigation>{routeExists(params)}</Navigation>;
+    return (
+      <MonitorsLayout>
+        <Navigation>{routeExists(params)}</Navigation>
+      </MonitorsLayout>
+    );
   }
 };
 

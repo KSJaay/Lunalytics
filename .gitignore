@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-/src/server/database/sqlite/lunar.db
+/server/database/sqlite/lunar.db
 
 # testing
 /coverage

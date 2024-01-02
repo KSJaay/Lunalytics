@@ -5,6 +5,7 @@ export default class ModalStore {
     this.monitors = [];
     makeObservable(this, {
       monitors: observable,
+      setMonitors: action,
       addMonitor: action,
       removeMonitor: action,
     });
@@ -14,7 +15,7 @@ export default class ModalStore {
     this.monitors = monitors;
   };
 
-  addMinitor = (monitor) => {
+  addMonitor = (monitor) => {
     this.monitors.push(monitor);
   };
 

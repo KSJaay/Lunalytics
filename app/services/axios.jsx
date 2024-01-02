@@ -15,7 +15,6 @@ const createGetRequest = async (path, params, headers = {}) => {
   return axios({
     method: 'GET',
     url,
-    data,
     withCredentials: true,
     headers: {
       ...headers,

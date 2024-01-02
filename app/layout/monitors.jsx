@@ -3,14 +3,15 @@ import { useContext, useEffect } from 'react';
 import ContextStore from '../context';
 import { createGetRequest } from '../services/axios';
 
-const AuthLayout = ({ children }) => {
+const MonitorsLayout = ({ children }) => {
   const {
     globalStore: { setMonitors },
   } = useContext(ContextStore);
 
   const fetchMontiors = async () => {
-    const query = await createGetRequest('/api/monitor');
-    const data = query.data;
+    const query = await createGetRequest('/user/monitors');
+    const data = query?.data || [];
+
     setMonitors(data);
   };
 
@@ -21,4 +22,4 @@ const AuthLayout = ({ children }) => {
   return children;
 };
 
-export default observer(AuthLayout);
+export default observer(MonitorsLayout);
