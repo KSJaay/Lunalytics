@@ -1,0 +1,30 @@
+@import '../../styles/global.scss';
+
+.monitor-status-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  background-color: $ACCENT_900;
+  border-radius: pxToRem(16);
+}
+
+.monitor-status-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.monitor-status-title {
+  font-size: $FONT_3XL;
+  font-weight: $WEIGHT_BOLD;
+}
+
+.monitor-status-subtitle {
+  font-size: $FONT_XL;
+  font-weight: $WEIGHT_MEDIUM;
+  color: $ACCENT_200;
+}
+
+.montior-status-text {
+  font-size: $FONT_2XL;
+}

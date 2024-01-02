@@ -1,16 +1,22 @@
 // import local files
+import { useNavigate } from 'react-router-dom';
 import FaEllipsisVertical from '../icons/faEllipsisVertical';
 import StatusBar from '../ui/statusBar';
 
 // import styles
 import './monitor.scss';
 
-const Monitor = ({ monitor, heartbeat = [] }) => {
+const Monitor = ({ monitor }) => {
+  const navigate = useNavigate();
+
   const { name, url, uptime = '0', heartbeats = [] } = monitor;
   const lastHeartbeat = heartbeats[heartbeats.length - 1];
 
   return (
-    <div className="home-monitor-container">
+    <div
+      className="home-monitor-container"
+      onClick={() => navigate(`/monitor/${monitor.monitorId}`)}
+    >
       <div className="home-monitor-type">
         <div>{name}</div>
         <span>
@@ -26,19 +32,17 @@ const Monitor = ({ monitor, heartbeat = [] }) => {
           <div>
             {!!lastHeartbeat?.latency
               ? `${lastHeartbeat?.latency} ms`
-              : 'Unknown'}{' '}
+              : 'Unknown'}
           </div>
         </div>
         <div className="home-monitor-uptime">
           <h1>Uptime</h1>
           <div>{uptime}%</div>
         </div>
-      </div>
+      </div>=
       <div className="home-monitor-status">
         <h1>Status</h1>
-        <div>
-          <StatusBar heartbeats={heartbeats} />
-        </div>
+        <StatusBar heartbeats={heartbeats} />
       </div>
     </div>
   );

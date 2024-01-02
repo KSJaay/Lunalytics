@@ -3,14 +3,16 @@
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 .navigation-content {
   display: flex;
-  height: 100%;
+  height: calc(100vh - 65px);
 }
 
 .content {
   display: flex;
   flex: 1;
+  overflow: auto;
 }

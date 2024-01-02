@@ -1,19 +1,20 @@
 // import local files
+import Monitor from '../pages/monitor';
 import AddMonitor from '../pages/monitor/add';
 import EditMonitor from '../pages/monitor/edit';
 
 const MonitorRouter = ({ params }) => {
-  const [page] = params;
+  const [pageId] = params;
 
-  if (page === 'add') {
+  if (pageId === 'add') {
     return <AddMonitor />;
   }
 
-  if (page === 'edit') {
+  if (pageId === 'edit') {
     return <EditMonitor />;
   }
 
-  // redirect to 404
+  return <Monitor />;
 };
 
 export default MonitorRouter;
