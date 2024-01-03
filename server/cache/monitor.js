@@ -77,25 +77,17 @@ class Monitor {
     return true;
   }
 
-  addHeartbeat(heartbeat) {
-    for (let i = 0; i < this.monitors.length; i++) {
-      if (this.monitors[i].monitorId === heartbeat.monitorId) {
-        this.monitors[i].heartbeats.push(heartbeat);
-        this.monitors[i].heartbeats.sort((a, b) => b.date - a.date);
-
-        if (this.monitors[i].heartbeats.length > 12) {
-          this.monitors[i].heartbeats.pop();
-        }
-
-        break;
-      }
-    }
-  }
-
   async addMonitor(monitor) {
     const monitorId = await createMonitor(monitor);
 
-    const monitorData = { ...monitor, monitorId, heartbeats: [], uptime: 0 };
+    const monitorData = {
+      ...monitor,
+      monitorId,
+      heartbeats: [],
+      uptimePercentage: 0,
+      averageHeartbeatLatency: 0,
+    };
+
     this.monitors.push(monitorData);
 
     this.checkMonitorStatus(monitorId);
@@ -136,15 +128,19 @@ class Monitor {
       const isDown = query.status >= 400;
       const latency = endTime - startTime;
 
-      const heartbeat = await createHeartbeat(
-        monitorId,
-        query.status,
-        latency,
-        message,
-        isDown
+      await createHeartbeat(monitorId, query.status, latency, message, isDown);
+
+      const newMonitorData = await fetchMonitor(monitorId);
+
+      const monitorIndex = this.monitors.findIndex(
+        (monitor) => monitor.monitorId === monitorId
       );
 
-      this.addHeartbeat(heartbeat);
+      if (monitorIndex === -1) {
+        this.monitors.push(newMonitorData);
+      } else {
+        this.monitors[monitorIndex] = newMonitorData;
+      }
 
       clearTimeout(this.timeouts[monitorId]);
       delete this.timeouts[monitorId];
