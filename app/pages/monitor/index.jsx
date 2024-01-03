@@ -10,6 +10,7 @@ import MonitorGraph from '../../components/monitor/graph';
 import MonitorUptime from '../../components/monitor/uptime';
 import ContextStore from '../../context';
 import Spacer from '../../components/ui/spacer';
+import { toJS } from 'mobx';
 
 const Monitor = ({ monitorId }) => {
   const {
@@ -21,6 +22,8 @@ const Monitor = ({ monitorId }) => {
   if (!monitor) {
     return null;
   }
+
+  console.log('monitor', toJS(monitor));
 
   return (
     <div className="monitor-container">

@@ -17,7 +17,9 @@ const StatusBar = ({ heartbeats = {}, maxHeartbeats = 12 }) => {
         ></div>
       );
     } else {
-      heartbeatList.push(<div className="status-bar status-bar-unknown"></div>);
+      heartbeatList.push(
+        <div key={i} className="status-bar status-bar-unknown"></div>
+      );
     }
   }
 

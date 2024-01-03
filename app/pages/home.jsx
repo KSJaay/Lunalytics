@@ -16,7 +16,7 @@ const Home = () => {
   } = useContext(ContextStore);
 
   const monitorsList = monitors.map((monitor) => (
-    <Monitor key={monitor.id} monitor={monitor} />
+    <Monitor key={monitor.monitorId} monitor={monitor} />
   ));
 
   return (

@@ -30,9 +30,9 @@ const Monitor = ({ monitor }) => {
 
   return (
     <div className="home-monitor-container">
-      <div className="home-monitor-type" onClick={handleDelete}>
+      <div className="home-monitor-type">
         <div>{name}</div>
-        <span>
+        <span onClick={handleDelete}>
           <FaTrash width={20} height={20} />
         </span>
       </div>

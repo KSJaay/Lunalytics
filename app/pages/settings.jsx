@@ -1,7 +1,15 @@
-import React from "react";
+import './settings.scss';
+import React from 'react';
+import SettingsTab from '../components/settings/tab';
+import SettingsGeneral from '../components/settings/general';
 
 const Settings = () => {
-  return <h1>Settings</h1>;
+  return (
+    <div className="settings-content">
+      <SettingsTab />
+      <SettingsGeneral />
+    </div>
+  );
 };
 
 export default Settings;

@@ -8,6 +8,7 @@ import Navigation from './components/navigation';
 import Home from './pages/home';
 import MonitorRouter from './routes/monitor';
 import MonitorsLayout from './layout/monitors';
+import Setttings from './pages/settings';
 
 const routes = {
   monitor: (params) => <MonitorRouter params={params} />,
@@ -30,6 +31,16 @@ const App = () => {
       <MonitorsLayout>
         <Navigation>
           <Home />
+        </Navigation>
+      </MonitorsLayout>
+    );
+  }
+
+  if (page === 'settings') {
+    return (
+      <MonitorsLayout>
+        <Navigation>
+          <Setttings />
         </Navigation>
       </MonitorsLayout>
     );
