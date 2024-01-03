@@ -1,8 +1,7 @@
 // import local files
-
-const { createMonitor } = require('../../database/queries');
 const { handleError, UnprocessableError } = require('../../utils/errors');
 const validate = require('../../utils/validators');
+const cache = require('../../cache');
 
 const monitorAdd = async (request, response) => {
   try {
@@ -24,16 +23,21 @@ const monitorAdd = async (request, response) => {
 
     const user = JSON.parse(request.cookies.user);
 
-    const monitorId = await createMonitor(
-      user,
+    if (!user) {
+      throw new UnprocessableError('Unable to find valid user cookies');
+    }
+
+    const monitor = await cache.monitor.addMonitor({
       name,
       url,
+      method,
       interval,
       retryInterval,
-      requestTimeout
-    );
+      requestTimeout,
+      username: user.username,
+    });
 
-    return response.json({ monitorId: monitorId });
+    return response.json(monitor);
   } catch (error) {
     return handleError(error, response);
   }

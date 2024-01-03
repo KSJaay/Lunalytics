@@ -26,8 +26,6 @@ const monitor = (
     return 'Please enter a valid URL.';
   }
 
-  console.log('method', method, validMethods.includes(method));
-
   if (!method || !validMethods.includes(method)) {
     return 'Please select a valid method.';
   }

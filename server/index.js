@@ -11,6 +11,7 @@ const SQLite = require('./database/sqlite/setup');
 const Logger = require('./utils/logger');
 const authorization = require('./middleware/authorization');
 const initialiseRoutes = require('./routes');
+const cache = require('./cache');
 
 const app = express();
 
@@ -18,6 +19,7 @@ const init = async () => {
   // connect to database and setup database tables
   await SQLite.connect();
   await SQLite.setup();
+  await cache.monitor.getMonitors();
 
   app
     .use(express.json())

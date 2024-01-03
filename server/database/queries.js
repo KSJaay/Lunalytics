@@ -3,6 +3,7 @@ const { generateHash, verifyPassword } = require('../utils/hashPassword');
 const { signCookie, verifyCookie } = require('../utils/jwt');
 const { AuthorizationError } = require('../utils/errors');
 const randomId = require('../utils/randomId');
+const { timeToMs } = require('../utils/ms');
 
 const passwordMatches = (user, password) => {
   const passwordMatches = verifyPassword(password, user.password);
@@ -84,32 +85,61 @@ const monitorExists = async (monitorId) => {
   return SQLite.client('monitor').where({ id: monitorId }).first();
 };
 
-const createMonitor = async (
-  user,
-  name,
-  url,
-  interval,
-  retryInterval,
-  requestTimeout
-) => {
+const createMonitor = async (monitor) => {
   const monitorId = randomId();
 
-  if (!user) {
-    throw new AuthorizationError('User does not exist');
-  }
-
-  await SQLite.client('monitor').insert({
-    monitorId,
-    name,
-    url,
-    interval,
-    retryInterval,
-    requestTimeout,
-    method: 'GET',
-    username: user?.username,
-  });
+  await SQLite.client('monitor').insert({ ...monitor, monitorId });
 
   return monitorId;
+};
+
+const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
+  const time = Date.now() - timeToMs(duration, type);
+
+  const heartbeats = await SQLite.client('heartbeat')
+    .select()
+    .where('monitorId', monitorId)
+    .andWhere('date', '>', time);
+
+  const totalHeartbeats = heartbeats.length;
+  const downHeartbeats = heartbeats.filter((h) => h.isDown).length;
+  const averageHeartbeatLatency =
+    heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats;
+  const uptimePercentage =
+    ((totalHeartbeats - downHeartbeats) / totalHeartbeats) * 100;
+  return {
+    uptimePercentage: uptimePercentage.toFixed(0),
+    averageHeartbeatLatency,
+  };
+};
+
+const fetchMonitorUptime = async (monitorId) => {
+  const lastDownHeartbeat = await SQLite.client('heartbeat')
+    .select()
+    .where('monitorId', monitorId)
+    .andWhere('isDown', true)
+    .orderBy('date', 'desc')
+    .first();
+
+  if (!lastDownHeartbeat) {
+    const firstEverHeartbeat = await SQLite.client('heartbeat')
+      .select()
+      .where('monitorId', monitorId)
+      .orderBy('date', 'asc')
+      .first();
+
+    return !firstEverHeartbeat ? 0 : firstEverHeartbeat.date;
+  }
+
+  const newestUptimeHeartbeat = await SQLite.client('heartbeat')
+    .select()
+    .where('monitorId', monitorId)
+    .andWhere('isDown', false)
+    .andWhere('date', '>', lastDownHeartbeat.date)
+    .orderBy('date', 'asc')
+    .first();
+
+  return !newestUptimeHeartbeat ? 0 : newestUptimeHeartbeat.date;
 };
 
 const fetchMonitors = async () => {
@@ -118,31 +148,62 @@ const fetchMonitors = async () => {
   const monitorWithHeartbeats = [];
 
   for (const monitor of mointors) {
-    const monitorHeartbeats = await SQLite.client('heartbeat')
+    const heartbeats = await SQLite.client('heartbeat')
       .select()
       .where('monitorId', monitor.monitorId)
       .orderBy('date', 'desc')
       .limit(12);
 
-    // const sortedHeartbeats = monitorHeartbeats.sort((a, b) => b.date - a.date);
+    const uptime = await fetchUptimePercentage(monitor.monitorId);
 
     monitorWithHeartbeats.push({
       ...monitor,
-      heartbeats: monitorHeartbeats,
+      heartbeats,
+      ...uptime,
     });
   }
 
   return monitorWithHeartbeats;
 };
 
-const createHeartbeat = (
+const fetchMonitor = async (monitorId) => {
+  const monitor = await SQLite.client('monitor').where({ monitorId }).first();
+
+  if (!monitor) {
+    throw new Error('Monitor does not exist');
+  }
+
+  const heartbeats = await SQLite.client('heartbeat')
+    .where({ monitorId })
+    .orderBy('date', 'desc')
+    .limit(12);
+
+  const uptime = await fetchUptimePercentage(monitorId);
+
+  return {
+    ...monitor,
+    heartbeats,
+    ...uptime,
+  };
+};
+
+const deleteMonitor = async (monitorId) => {
+  await SQLite.client('monitor').where({ monitorId }).del();
+  await SQLite.client('heartbeat').where({ monitorId }).del();
+
+  return true;
+};
+
+const createHeartbeat = async (
   monitorId,
   status,
   latency,
   message,
   isDown = false
 ) => {
-  return SQLite.client('heartbeat').insert({
+  const date = Date.now();
+
+  const query = await SQLite.client('heartbeat').insert({
     monitorId,
     status,
     latency,
@@ -150,6 +211,16 @@ const createHeartbeat = (
     isDown,
     date: Date.now(),
   });
+
+  return {
+    id: query[0],
+    monitorId,
+    status,
+    latency,
+    message,
+    isDown,
+    date,
+  };
 };
 
 module.exports = {
@@ -159,5 +230,9 @@ module.exports = {
   monitorExists,
   createMonitor,
   fetchMonitors,
+  fetchMonitor,
+  deleteMonitor,
   createHeartbeat,
+  fetchUptimePercentage,
+  fetchMonitorUptime,
 };
