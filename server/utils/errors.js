@@ -1,3 +1,5 @@
+const Logger = require('./logger');
+
 class AuthorizationError extends Error {
   constructor(error) {
     super();
@@ -15,7 +17,7 @@ class UnprocessableError extends Error {
 }
 
 const handleError = (error, response) => {
-  console.log(error);
+  Logger.error('Handler', error);
 
   if (error instanceof AuthorizationError) {
     return response.status(401).send({
