@@ -18,6 +18,7 @@
 
     .home-monitor-type span {
       display: flex;
+      color: $RED_700;
     }
   }
 }
@@ -64,10 +65,10 @@
   white-space: nowrap;
   text-decoration: none;
 
-  &:hover {
-    color: $ACCENT_200;
-    text-decoration: underline;
-  }
+  // &:hover {
+  //   color: $ACCENT_200;
+  //   text-decoration: underline;
+  // }
 }
 
 .home-monitor-uptime-container {

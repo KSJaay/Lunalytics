@@ -3,10 +3,6 @@ import './status.scss';
 const MonitorStatus = ({ monitor }) => {
   const [lastHeartbeat] = monitor.heartbeats;
 
-  const averageResponseTime =
-    monitor.heartbeats.reduce((acc, curr) => acc + curr.latency, 0) /
-    monitor.heartbeats.length;
-
   return (
     <div className="monitor-status-container">
       <div className="monitor-status-content">
@@ -18,7 +14,7 @@ const MonitorStatus = ({ monitor }) => {
         <div className="monitor-status-title">Avg Response</div>
         <div className="monitor-status-subtitle">(24 Hours)</div>
         <div className="montior-status-text">
-          {monitor.averageHeartbeatLatency}ms
+          {monitor.averageHeartbeatLatency?.toFixed(0)}ms
         </div>
       </div>
       <div className="monitor-status-content">

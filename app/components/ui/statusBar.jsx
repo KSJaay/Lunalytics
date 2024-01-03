@@ -8,6 +8,7 @@ const StatusBar = ({ heartbeats = {}, maxHeartbeats = 12 }) => {
     if (heartbeat) {
       heartbeatList.push(
         <div
+          key={heartbeat.id}
           className={
             heartbeat.isDown
               ? 'status-bar status-bar-alert'

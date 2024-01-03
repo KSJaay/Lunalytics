@@ -15,7 +15,6 @@ import {
 import { Chart } from 'react-chartjs-2';
 
 import 'chartjs-adapter-dayjs-3';
-import dayjs from 'dayjs';
 
 ChartJs.register(
   LineController,
@@ -84,12 +83,12 @@ const MonitorGraph = ({ heartbeats, maxValue }) => {
             x: {
               type: 'time',
               time: {
-                minUnit: 'second',
+                minUnit: 'minute',
                 round: 'second',
                 tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
                 displayFormats: {
-                  minute: 'HH:mm:ss',
-                  hour: 'MM-DD HH:mm:ss',
+                  minute: 'HH:mm',
+                  hour: 'MM-DD HH:mm',
                 },
               },
               ticks: {

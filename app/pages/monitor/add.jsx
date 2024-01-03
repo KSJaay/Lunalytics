@@ -7,7 +7,7 @@
 // Method - GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS (Dropdown)
 // Headers - Textarea (JSON format)
 // import node_modules
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
@@ -16,9 +16,14 @@ import MonitorForm from '../../components/ui/form/monitor';
 import Dropdown from '../../components/ui/dropdown';
 import * as validators from '../../utils/validators';
 import { createPostRequest } from '../../services/axios';
+import { observer } from 'mobx-react-lite';
+import ContextStore from '../../context';
 
 const AddMonitor = () => {
   const [error, setError] = useState(null);
+  const {
+    globalStore: { addMonitor },
+  } = useContext(ContextStore);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -58,6 +63,8 @@ const AddMonitor = () => {
       setError(query.data.message);
       return;
     }
+
+    addMonitor(query.data);
 
     navigate('/');
   };
@@ -110,4 +117,4 @@ const AddMonitor = () => {
   );
 };
 
-export default AddMonitor;
+export default observer(AddMonitor);
