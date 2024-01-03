@@ -9,7 +9,7 @@ import './monitor.scss';
 const Monitor = ({ monitor }) => {
   const navigate = useNavigate();
 
-  const { name, url, uptime = '0', heartbeats = [] } = monitor;
+  const { name, url, uptimePercentage = '0', heartbeats = [] } = monitor;
   const lastHeartbeat = heartbeats[heartbeats.length - 1];
 
   return (
@@ -37,9 +37,9 @@ const Monitor = ({ monitor }) => {
         </div>
         <div className="home-monitor-uptime">
           <h1>Uptime</h1>
-          <div>{uptime}%</div>
+          <div>{uptimePercentage}%</div>
         </div>
-      </div>=
+      </div>
       <div className="home-monitor-status">
         <h1>Status</h1>
         <StatusBar heartbeats={heartbeats} />

@@ -1,4 +1,5 @@
 // import local files
+import { useNavigate } from 'react-router-dom';
 import { FaCog, FaHome, FaSignOutAlt } from '../icons';
 
 // import styles
@@ -7,12 +8,14 @@ import './left.scss';
 const actionTabs = [
   {
     name: 'Home',
-    url: '',
+    url: '/',
     logo: <FaHome width={28} height={28} />,
   },
 ];
 
 const LeftNavigation = ({ activeUrl = '' }) => {
+  const navigate = useNavigate();
+
   const actions = actionTabs.map((action) => {
     const { name, url, logo } = action;
 
@@ -22,6 +25,7 @@ const LeftNavigation = ({ activeUrl = '' }) => {
           activeUrl === url ? '-active' : ''
         }`}
         key={name}
+        onClick={() => navigate(url)}
       >
         {logo}
       </div>
@@ -39,6 +43,7 @@ const LeftNavigation = ({ activeUrl = '' }) => {
             className={`navigation-left-top-action${
               activeUrl === 'settings' ? '-active' : ''
             }`}
+            onClick={() => navigate('/settings')}
           >
             <FaCog width={28} height={28} />
           </div>

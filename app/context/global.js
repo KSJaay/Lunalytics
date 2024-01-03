@@ -22,4 +22,8 @@ export default class ModalStore {
   removeMonitor = (monitorId) => {
     this.monitors = this.monitors.filter((m) => m.monitorId !== monitorId);
   };
+
+  getMonitor = (monitorId) => {
+    return this.monitors.find((m) => m.monitorId === monitorId);
+  };
 }

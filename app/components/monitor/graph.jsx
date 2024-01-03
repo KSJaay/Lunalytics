@@ -30,56 +30,19 @@ ChartJs.register(
   CategoryScale
 );
 
-const MonitorGraph = ({ maxValue }) => {
+const MonitorGraph = ({ heartbeats, maxValue }) => {
+  const labels = heartbeats.map((heartbeat) => heartbeat.date);
+  const data = heartbeats.map((heartbeat) => heartbeat.latency);
+
   return (
     <div className="monitor-chart-container">
       <Chart
         type={'line'}
         data={{
-          labels: [
-            dayjs('2022-01-01').valueOf(),
-            dayjs('2022-01-02').valueOf(),
-            dayjs('2022-01-03').valueOf(),
-            dayjs('2022-01-04').valueOf(),
-            dayjs('2022-01-05').valueOf(),
-            dayjs('2022-01-06').valueOf(),
-            dayjs('2022-01-07').valueOf(),
-            dayjs('2022-01-08').valueOf(),
-            dayjs('2022-01-09').valueOf(),
-            dayjs('2022-01-10').valueOf(),
-            dayjs('2022-01-11').valueOf(),
-            dayjs('2022-01-12').valueOf(),
-            dayjs('2022-01-13').valueOf(),
-            dayjs('2022-01-14').valueOf(),
-            dayjs('2022-01-14').valueOf(),
-            dayjs('2022-01-15').valueOf(),
-            dayjs('2022-01-16').valueOf(),
-            dayjs('2022-01-17').valueOf(),
-            dayjs('2022-01-18').valueOf(),
-            dayjs('2022-01-19').valueOf(),
-            dayjs('2022-01-20').valueOf(),
-            dayjs('2022-01-21').valueOf(),
-            dayjs('2022-01-22').valueOf(),
-            dayjs('2022-01-23').valueOf(),
-            dayjs('2022-01-24').valueOf(),
-            dayjs('2022-01-25').valueOf(),
-            dayjs('2022-01-26').valueOf(),
-            dayjs('2022-01-27').valueOf(),
-            dayjs('2022-01-28').valueOf(),
-            dayjs('2022-02-01').valueOf(),
-            dayjs('2022-02-02').valueOf(),
-            dayjs('2022-02-03').valueOf(),
-            dayjs('2022-02-04').valueOf(),
-            dayjs('2022-02-05').valueOf(),
-            dayjs('2022-02-06').valueOf(),
-          ],
+          labels,
           datasets: [
             {
-              data: [
-                65, 59, 80, 81, 26, 55, 40, 65, 59, 80, 81, 26, 55, 40, 65, 59,
-                80, 81, 26, 55, 40, 65, 59, 80, 81, 26, 55, 40, 65, 59, 80, 81,
-                26, 55, 40,
-              ],
+              data,
               borderColor: '#3ba55c',
               backgroundColor: '#3ba55d28',
               yAxisID: 'y',
@@ -121,12 +84,12 @@ const MonitorGraph = ({ maxValue }) => {
             x: {
               type: 'time',
               time: {
-                minUnit: 'minute',
+                minUnit: 'second',
                 round: 'second',
                 tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
                 displayFormats: {
-                  minute: 'HH:mm',
-                  hour: 'MM-DD HH:mm',
+                  minute: 'HH:mm:ss',
+                  hour: 'MM-DD HH:mm:ss',
                 },
               },
               ticks: {

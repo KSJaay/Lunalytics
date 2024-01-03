@@ -14,7 +14,7 @@ const MonitorRouter = ({ params }) => {
     return <EditMonitor />;
   }
 
-  return <Monitor />;
+  return <Monitor monitorId={pageId} />;
 };
 
 export default MonitorRouter;

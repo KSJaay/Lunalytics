@@ -1,23 +1,35 @@
+import './style.scss';
+
+// import node_modules
+import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+
+// import local files
 import MonitorStatus from '../../components/monitor/status';
 import MonitorGraph from '../../components/monitor/graph';
 import MonitorUptime from '../../components/monitor/uptime';
+import ContextStore from '../../context';
+import Spacer from '../../components/ui/spacer';
 
-const Monitor = () => {
+const Monitor = ({ monitorId }) => {
+  const {
+    globalStore: { getMonitor },
+  } = useContext(ContextStore);
+
+  const monitor = getMonitor(monitorId);
+
+  if (!monitor) {
+    return null;
+  }
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        padding: '10px',
-        gap: '20px',
-      }}
-    >
-      <MonitorStatus />
-      <MonitorGraph />
-      <MonitorUptime />
+    <div className="monitor-container">
+      <MonitorStatus monitor={monitor} />
+      <MonitorGraph heartbeats={monitor.heartbeats} />
+      <MonitorUptime heartbeats={monitor.heartbeats} />
+      <Spacer size={18} />
     </div>
   );
 };
 
-export default Monitor;
+export default observer(Monitor);

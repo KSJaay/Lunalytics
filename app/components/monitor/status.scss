@@ -5,6 +5,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   background-color: $ACCENT_900;
   border-radius: pxToRem(16);
+  padding: pxToRem(8) 0;
 }
 
 .monitor-status-content {
