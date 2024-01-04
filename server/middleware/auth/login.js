@@ -5,15 +5,14 @@ const {
   setClientSideCookie,
 } = require('../../utils/cookies');
 const { handleError } = require('../../utils/errors');
-const validate = require('../../utils/validators');
 
 const login = async (request, response) => {
   try {
     const { username, password } = request.body;
 
-    const isInvalidEmail = validate.email(username);
+    const isInvalidEmail = new RegExp(/@/g).test(username);
 
-    const { jwt, user } = await signInUser(username, password, isInvalidEmail);
+    const { jwt, user } = await signInUser(username, password, !isInvalidEmail);
 
     setServerSideCookie(response, 'userToken', jwt);
     setClientSideCookie(response, 'user', JSON.stringify(user));

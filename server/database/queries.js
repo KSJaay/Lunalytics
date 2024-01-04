@@ -93,6 +93,14 @@ const createMonitor = async (monitor) => {
   return monitorId;
 };
 
+const updateMonitor = async (monitor) => {
+  await SQLite.client('monitor')
+    .where({ monitorId: monitor.monitorId })
+    .update(monitor);
+
+  return true;
+};
+
 const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
   const time = Date.now() - timeToMs(duration, type);
 
@@ -223,16 +231,24 @@ const createHeartbeat = async (
   };
 };
 
+const updateUser = (username, displayName, avatar) => {
+  return SQLite.client('user')
+    .where({ username })
+    .update({ displayName, avatar });
+};
+
 module.exports = {
   signInUser,
   registerUser,
   userExists,
   monitorExists,
   createMonitor,
+  updateMonitor,
   fetchMonitors,
   fetchMonitor,
   deleteMonitor,
   createHeartbeat,
   fetchUptimePercentage,
   fetchMonitorUptime,
+  updateUser,
 };

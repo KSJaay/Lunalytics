@@ -5,6 +5,7 @@ const {
   createHeartbeat,
   deleteMonitor,
   createMonitor,
+  updateMonitor,
 } = require('../database/queries');
 // const { checkCertificate } = require('../utils/checkCertificate');
 
@@ -97,6 +98,28 @@ class Monitor {
     );
 
     return monitorData;
+  }
+
+  async editMonitor(monitor) {
+    // Check if monitor exists (if it doesn't exist throws error)
+    await this.getMonitor(monitor.monitorId);
+
+    const monitorIndex = this.monitors.findIndex(
+      (monitor) => monitor.monitorId === monitor.monitorId
+    );
+
+    await updateMonitor(monitor);
+
+    this.monitors[monitorIndex] = monitor;
+
+    clearTimeout(this.timeouts[monitor.monitorId]);
+
+    this.checkMonitorStatus(monitor.monitorId);
+
+    this.timeouts[monitor.monitorId] = setTimeout(
+      () => this.checkMonitorStatus(monitor.monitorId),
+      monitor.interval * 1000
+    );
   }
 
   async checkMonitorStatus(monitorId) {
