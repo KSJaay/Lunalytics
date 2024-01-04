@@ -117,4 +117,6 @@ const AddMonitor = () => {
   );
 };
 
+AddMonitor.displayName = 'AddMonitor';
+
 export default observer(AddMonitor);

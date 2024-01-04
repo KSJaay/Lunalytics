@@ -16,7 +16,7 @@ const routes = {
 
 const App = () => {
   const query = useParams();
-  const [page, ...params] = query['*']?.toLowerCase().split('/');
+  const [page, ...params] = query['*']?.toLowerCase().split('/') || [];
 
   if (page === 'login') {
     return <Login />;
@@ -39,7 +39,7 @@ const App = () => {
   if (page === 'settings') {
     return (
       <MonitorsLayout>
-        <Navigation>
+        <Navigation activeUrl="settings">
           <Setttings />
         </Navigation>
       </MonitorsLayout>

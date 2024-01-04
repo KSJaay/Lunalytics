@@ -1,0 +1,14 @@
+[
+  { "value": "DD/MM/YYYY", "name": "DD/MM/YYYY" },
+  { "value": "MM/DD/YYYY", "name": "MM/DD/YYYY" },
+  { "value": "YYYY/MM/DD", "name": "YYYY/MM/DD" },
+  { "value": "DD-MM-YYYY", "name": "DD-MM-YYYY" },
+  { "value": "MM-DD-YYYY", "name": "MM-DD-YYYY" },
+  { "value": "YYYY-MM-DD", "name": "YYYY-MM-DD" },
+  { "value": "DD/MM/YY", "name": "DD/MM/YY" },
+  { "value": "MM/DD/YY", "name": "MM/DD/YY" },
+  { "value": "YY/MM/DD", "name": "YY/MM/DD" },
+  { "value": "DD-MM-YY", "name": "DD-MM-YY" },
+  { "value": "MM-DD-YY", "name": "MM-DD-YY" },
+  { "value": "YY-MM-DD", "name": "YY-MM-DD" }
+]

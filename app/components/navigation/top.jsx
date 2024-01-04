@@ -1,5 +1,3 @@
-// import node_modules
-
 // import styles
 import './top.scss';
 import { parseUserCookie } from '../../utils/cookies';

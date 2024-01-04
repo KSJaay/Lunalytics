@@ -1,5 +1,5 @@
 // import node_modules
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 
 // import local files
 import Monitor from '../components/home/monitor';
@@ -26,5 +26,7 @@ const Home = () => {
     </div>
   );
 };
+
+Home.displayName = 'Home';
 
 export default observer(Home);

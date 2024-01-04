@@ -14,6 +14,11 @@ const StatusBar = ({ heartbeats = {}, maxHeartbeats = 12 }) => {
               ? 'status-bar status-bar-alert'
               : 'status-bar status-bar-healthy'
           }
+          title={
+            heartbeat.isDown
+              ? 'Unknown'
+              : `${new Date().toUTCString()} - ${heartbeat.latency} ms`
+          }
         ></div>
       );
     } else {

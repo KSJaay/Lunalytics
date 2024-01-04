@@ -24,4 +24,6 @@ const MonitorsLayout = ({ children }) => {
   return children;
 };
 
+MonitorsLayout.displayName = 'MonitorsLayout';
+
 export default observer(MonitorsLayout);

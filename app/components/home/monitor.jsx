@@ -11,7 +11,7 @@ import { useContext } from 'react';
 import ContextStore from '../../context';
 import FaTrash from '../icons/faTrash';
 
-const Monitor = ({ monitor }) => {
+const Monitor = ({ monitor = {} }) => {
   const navigate = useNavigate();
 
   const { name, url, uptimePercentage = '0', heartbeats = [] } = monitor;
@@ -44,7 +44,7 @@ const Monitor = ({ monitor }) => {
         <div className="home-monitor-uptime">
           <h1>Ping</h1>
           <div>
-            {!!heartbeat?.latency ? `${heartbeat?.latency} ms` : 'Unknown'}
+            {heartbeat?.latency ? `${heartbeat?.latency} ms` : 'Unknown'}
           </div>
         </div>
         <div className="home-monitor-uptime">
@@ -59,5 +59,7 @@ const Monitor = ({ monitor }) => {
     </div>
   );
 };
+
+Monitor.displayName = 'Monitor';
 
 export default observer(Monitor);

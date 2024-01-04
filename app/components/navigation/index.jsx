@@ -5,12 +5,12 @@ import LeftNavigation from './left';
 // import styles
 import './index.scss';
 
-const Navigation = ({ children }) => {
+const Navigation = ({ children, activeUrl = '/' }) => {
   return (
     <div className="navigation-container">
       <TopNavigation />
       <div className="navigation-content">
-        <LeftNavigation />
+        <LeftNavigation activeUrl={activeUrl} />
         <div className="content">{children}</div>
       </div>
     </div>

@@ -25,7 +25,7 @@ const Login = () => {
         return setError(hasInvalidData);
       }
 
-      await createPostRequest('/auth/login', { username, password });
+      await createPostRequest('/login', { username, password });
 
       navigate('/');
     } catch (error) {

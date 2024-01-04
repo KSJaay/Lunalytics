@@ -12,6 +12,7 @@
   justify-content: center;
   transition: $TRANSITION_BASE;
   user-select: none;
+  box-shadow: $SHADOW_MD;
 
   &:hover {
     cursor: pointer;

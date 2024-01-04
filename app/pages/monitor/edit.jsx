@@ -76,4 +76,6 @@ const EditMonitor = ({ monitor = {} }) => {
   );
 };
 
+EditMonitor.displayName = 'EditMonitor';
+
 export default EditMonitor;

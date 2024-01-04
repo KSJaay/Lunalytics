@@ -32,6 +32,7 @@ ChartJs.register(
 const MonitorGraph = ({ heartbeats, maxValue }) => {
   const labels = heartbeats.map((heartbeat) => heartbeat.date);
   const data = heartbeats.map((heartbeat) => heartbeat.latency);
+  const theme = 'dark';
 
   return (
     <div className="monitor-chart-container">
@@ -97,7 +98,7 @@ const MonitorGraph = ({ heartbeats, maxValue }) => {
               },
               grid: {
                 color:
-                  'dark' === 'light'
+                  theme === 'light'
                     ? 'rgba(0,0,0,0.1)'
                     : 'rgba(255,255,255,0.1)',
                 offset: false,
@@ -112,7 +113,7 @@ const MonitorGraph = ({ heartbeats, maxValue }) => {
               offset: true,
               grid: {
                 color:
-                  'dark' === 'light'
+                  theme === 'light'
                     ? 'rgba(0,0,0,0.1)'
                     : 'rgba(255,255,255,0.1)',
               },
