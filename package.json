@@ -6,7 +6,8 @@
     "dev": "concurrently \"yarn watch\" \"yarn server:watch\"",
     "watch": "vite --port 3000",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:app": "eslint app --ext js,jsx",
+    "lint:server": "eslint server --ext js",
     "prepare": "husky install",
     "preview": "vite preview",
     "server:watch": "nodemon --delay 2 --watch server ./server/index.js"
@@ -48,5 +49,10 @@
     "nodemon": "^3.0.1",
     "sass": "^1.69.5",
     "vite": "^5.0.10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint:app && yarn lint:server"
+    }
   }
 }
