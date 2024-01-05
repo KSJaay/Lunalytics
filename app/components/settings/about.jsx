@@ -6,16 +6,16 @@ const SetttingAbout = () => {
   return (
     <div className="settings-about-container">
       <img src="/logo.svg" className="settings-about-logo" />
-      <div className="settings-about-title">Uptime Lunar</div>
+      <div className="settings-about-title">Lunalytics</div>
       <div className="settings-about-version">Version {version}</div>
       <div>
         <a
-          href="https://github.com/KSJaay/uptime-lunar"
+          href="https://github.com/KSJaay/lunalytics"
           target="_blank"
           rel="noreferrer"
           className="settings-about-link"
         >
-          Help us keep developing/creating new features for Lunar
+          Help us develop/create new features for Lunalytics
         </a>
         <div></div>
         <div></div>

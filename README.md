@@ -1,4 +1,4 @@
-# Uptime Lunar
+# Lunalytics
 
 A self hosted monitoring tool developed for companies/teams.
 

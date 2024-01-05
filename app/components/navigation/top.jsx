@@ -14,7 +14,7 @@ const TopNavigation = () => {
         onClick={() => navigate('/')}
       >
         <img src="/logo.svg" className="top-navigation-logo" />
-        <div className="top-navigation-logo-text">Uptime Lunar</div>
+        <div className="top-navigation-logo-text">Lunalytics</div>
       </div>
       <div className="top-navigation-right-container">
         <div className="top-navigation-right-username">{user.displayName}</div>
