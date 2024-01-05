@@ -1,0 +1,36 @@
+@import '../../styles/global.scss';
+
+.settings-about-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.settings-about-logo {
+  width: pxToRem(250);
+}
+
+.settings-about-title {
+  font-size: $FONT_4XL;
+  font-weight: 600;
+  color: $PRIMARY_600;
+}
+
+.settings-about-version {
+  font-size: $FONT_LG;
+  font-weight: 600;
+  color: $GRAY_400;
+}
+
+.settings-about-link {
+  font-size: $FONT_MD;
+  font-weight: 600;
+  color: $ACCENT_200;
+  margin-top: pxToRem(20);
+  display: block;
+  &:hover {
+    color: $PRIMARY_800;
+  }
+}

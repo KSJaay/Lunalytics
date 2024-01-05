@@ -1,0 +1,29 @@
+@import '../../styles/global.scss';
+
+.text-input {
+  width: 100%;
+  height: pxToRem(50);
+  background-color: $ACCENT_800;
+  border: none;
+  outline: none;
+  color: $FONT_COLOR;
+  padding: 0 $SPACING_3;
+  font-size: $FONT_MD;
+  font-weight: $WEIGHT_MEDIUM;
+  border-radius: $RADIUS_MD;
+  margin-top: $SPACING_2;
+  border-color: $PRIMARY_700;
+  border: 2px solid #ffffff00;
+
+  &:focus {
+    border: 2px solid $PRIMARY_700;
+  }
+}
+
+.text-input-label {
+  display: block;
+  font-size: $FONT_MD;
+  font-weight: $WEIGHT_SEMIBOLD;
+  color: $FONT_COLOR;
+  margin: $SPACING_5 0 $SPACING_2 $SPACING_2;
+}

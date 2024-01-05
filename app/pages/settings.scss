@@ -1,0 +1,11 @@
+@import '../styles/global.scss';
+
+.settings-content {
+  display: flex;
+  flex: 1;
+  background-color: $ACCENT_900;
+  margin: pxToRem(16);
+  border-radius: pxToRem(24);
+  overflow: hidden;
+  box-shadow: $SHADOW_MD;
+}

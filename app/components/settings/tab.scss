@@ -1,0 +1,39 @@
+@import '../../styles/global.scss';
+
+.settings-tab {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  background-color: $ACCENT_800;
+  padding: pxToRem(4);
+}
+
+.settings-tab-title {
+  padding: pxToRem(12);
+  color: $ACCENT_100;
+  font-size: $FONT_2XL;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: pxToRem(3) solid $ACCENT_600;
+  margin-bottom: pxToRem(12);
+}
+
+.settings-tab-text {
+  color: $ACCENT_100;
+  font-size: $FONT_2XL;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin: pxToRem(4);
+  padding: pxToRem(8) pxToRem(16);
+  border-radius: pxToRem(12);
+
+  &:hover {
+    background-color: $ACCENT_900;
+  }
+
+  &.active {
+    background-color: $ACCENT_900;
+    color: $PRIMARY_500;
+  }
+}

@@ -1,0 +1,34 @@
+@import '../../styles/global.scss';
+
+.settings-general-container {
+  padding: pxToRem(4);
+  flex: 1;
+}
+
+.settings-general-content {
+  display: flex;
+  gap: pxToRem(8);
+}
+
+.settings-general-profile {
+  flex: 1;
+  margin-left: pxToRem(8);
+}
+
+.settings-general-date {
+  flex: 1;
+  margin-right: pxToRem(8);
+}
+
+.settings-general-title {
+  color: $FONT_COLOR;
+  font-size: $FONT_2XL;
+  font-weight: 700;
+}
+
+.settings-general-subtitle {
+  color: $ACCENT_200;
+  font-size: $FONT_LG;
+  font-weight: 500;
+  margin-bottom: pxToRem(12);
+}

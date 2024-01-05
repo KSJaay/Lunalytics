@@ -1,0 +1,78 @@
+@import '../../styles/global.scss';
+
+.monitor-uptime-container {
+  background-color: $ACCENT_900;
+  border-radius: pxToRem(16);
+  padding: pxToRem(16);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: pxToRem(16) 0;
+}
+
+.monitor-uptime-content {
+  display: grid;
+  grid-template-columns: 125px 1fr 1fr;
+  background-color: $ACCENT_800;
+  padding: pxToRem(12) 0 pxToRem(12) pxToRem(12);
+  border-radius: pxToRem(8);
+
+  &:hover {
+    cursor: pointer;
+    background-color: $ACCENT_700;
+  }
+}
+
+.monitor-uptime-header-container {
+  display: grid;
+  grid-template-columns: 125px 1fr 1fr;
+}
+
+.monitor-uptime-header {
+  color: $WHITE;
+  font-size: $FONT_LG;
+  font-weight: 600;
+  text-align: left;
+  border-bottom: 1px solid $ACCENT_700;
+  padding-bottom: pxToRem(8);
+}
+
+.monitor-uptime-info {
+  color: $WHITE;
+  font-size: $FONT_MD;
+  display: flex;
+  align-items: center;
+  font-weight: $WEIGHT_MEDIUM;
+}
+
+.monitor-uptime-info-button {
+  color: $WHITE;
+  font-size: $FONT_MD;
+  border: none;
+  background-color: $PRIMARY_800;
+  border-radius: pxToRem(8);
+  padding: pxToRem(8) 0;
+  text-align: center;
+  cursor: pointer;
+  width: 100px;
+  font-weight: $WEIGHT_BOLD;
+
+  &:hover {
+    background-color: $PRIMARY_700;
+  }
+
+  &.monitor-uptime-info-button-active {
+    background-color: $PRIMARY_800;
+
+    &:hover {
+      background-color: $PRIMARY_700;
+    }
+  }
+
+  &.monitor-uptime-info-button-inactive {
+    background-color: $RED_800;
+
+    &:hover {
+      background-color: $RED_700;
+    }
+  }
+}

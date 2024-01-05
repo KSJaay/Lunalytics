@@ -1,0 +1,8 @@
+@import '../../styles/global.scss';
+
+.monitor-container {
+  display: grid;
+  width: 100%;
+  gap: pxToRem(16);
+  margin: pxToRem(16);
+}

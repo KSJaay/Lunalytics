@@ -1,0 +1,34 @@
+@import '../../styles/global.scss';
+
+.status-bar-container {
+  display: grid;
+  direction: rtl;
+  gap: pxToRem(8);
+  margin: 0 pxToRem(8) pxToRem(8) 0;
+}
+
+.status-bar {
+  background-color: red;
+  width: 100%;
+  border-radius: pxToRem(12);
+  height: pxToRem(25);
+  background-color: $ACCENT_600;
+
+  &:hover {
+    cursor: pointer;
+    margin: 0;
+    border-radius: pxToRem(4);
+  }
+
+  &.status-bar-healthy {
+    background-color: $GREEN_600;
+  }
+
+  &.status-bar-alert {
+    background-color: $RED_600;
+  }
+
+  &.status-bar-unknown {
+    background-color: $GRAY_600;
+  }
+}

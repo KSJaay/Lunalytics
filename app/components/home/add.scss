@@ -1,0 +1,35 @@
+@import '../../styles/global.scss';
+
+.home-add-monitor-container {
+  width: pxToRem(250);
+  height: pxToRem(250);
+  background-color: $ACCENT_900;
+  padding: $SPACING_3;
+  border-radius: $RADIUS_MD;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: $TRANSITION_BASE;
+  user-select: none;
+  box-shadow: $SHADOW_MD;
+
+  &:hover {
+    cursor: pointer;
+    margin: -5px 0 5px 0;
+    color: $PRIMARY_500;
+  }
+}
+
+.home-add-monitor-icon {
+  color: $FONT_COLOR;
+  font-size: $FONT_XL;
+  margin-bottom: $SPACING_2;
+}
+
+.home-add-monitor-title {
+  color: $FONT_COLOR;
+  font-size: $FONT_XL;
+  font-weight: $WEIGHT_BOLD;
+  margin-bottom: $SPACING_2;
+}
