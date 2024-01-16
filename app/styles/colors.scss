@@ -1,4 +1,4 @@
-$FONT_COLOR: #ffffff;
+$FONT_COLOR: #f3f6fb;
 $WHITE: #ffffff;
 $BLACK: #000000;
 
@@ -120,3 +120,9 @@ $ACCENT_600: $GRAY_600;
 $ACCENT_700: $GRAY_700;
 $ACCENT_800: $GRAY_800;
 $ACCENT_900: $GRAY_900;
+
+@mixin glassmorphism {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}

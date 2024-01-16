@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 
 // import local files
-import Monitor from '../components/home/monitor';
+import { Monitor } from '../components/home/monitor';
 import AddMonitor from '../components/home/add';
 
 // import styles

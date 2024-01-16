@@ -2,6 +2,12 @@
 import './top.scss';
 import { parseUserCookie } from '../../utils/cookies';
 import { useNavigate } from 'react-router-dom';
+import {
+  DropdownContainer,
+  DropdownTrigger,
+  DropdownList,
+  DropdownItem,
+} from '../ui/details';
 
 const TopNavigation = () => {
   const user = parseUserCookie(window?.document?.cookie);
@@ -17,7 +23,22 @@ const TopNavigation = () => {
         <div className="top-navigation-logo-text">Lunalytics</div>
       </div>
       <div className="top-navigation-right-container">
-        <div className="top-navigation-right-username">{user.displayName}</div>
+        <DropdownContainer>
+          <DropdownTrigger>
+            <div className="top-navigation-right-username">
+              {user.displayName}
+            </div>
+          </DropdownTrigger>
+
+          <DropdownList position="right">
+            <DropdownItem onClick={() => navigate('/settings')}>
+              Settings
+            </DropdownItem>
+            <DropdownItem onClick={() => navigate('/logout')}>
+              Logout
+            </DropdownItem>
+          </DropdownList>
+        </DropdownContainer>
       </div>
     </div>
   );
