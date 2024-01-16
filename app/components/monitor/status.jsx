@@ -1,7 +1,7 @@
 import './status.scss';
 
 const MonitorStatus = ({ monitor }) => {
-  const [lastHeartbeat] = monitor.heartbeats;
+  const [lastHeartbeat = {}] = monitor.heartbeats;
 
   return (
     <div className="monitor-status-container">

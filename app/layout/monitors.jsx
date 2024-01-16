@@ -25,7 +25,7 @@ const MonitorsLayout = ({ children }) => {
 
   return (
     <>
-      {isOpen && <AlertBox.Container>{content}</AlertBox.Container>}
+      {isOpen && <AlertBox.Container glassmorph>{content}</AlertBox.Container>}
       {children}
     </>
   );

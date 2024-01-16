@@ -14,7 +14,7 @@ const UptimeInfo = ({ heartbeat }) => (
     <div className="monitor-uptime-info">
       {new Date(heartbeat.date).toString()}
     </div>
-    <div className="monitor-uptime-info">200 - OK</div>
+    <div className="monitor-uptime-info">{heartbeat.message || 'Unknown'}</div>
   </div>
 );
 
