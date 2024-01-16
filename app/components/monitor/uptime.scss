@@ -1,7 +1,7 @@
 @import '../../styles/global.scss';
 
 .monitor-uptime-container {
-  background-color: $ACCENT_900;
+  background-color: var(--accent-900);
   border-radius: pxToRem(16);
   padding: pxToRem(16);
   display: grid;
@@ -12,13 +12,13 @@
 .monitor-uptime-content {
   display: grid;
   grid-template-columns: 125px 1fr 1fr;
-  background-color: $ACCENT_800;
+  background-color: var(--accent-800);
   padding: pxToRem(12) 0 pxToRem(12) pxToRem(12);
   border-radius: pxToRem(8);
 
   &:hover {
     cursor: pointer;
-    background-color: $ACCENT_700;
+    background-color: var(--accent-700);
   }
 }
 
@@ -28,51 +28,56 @@
 }
 
 .monitor-uptime-header {
-  color: $WHITE;
-  font-size: $FONT_LG;
+  color: var(--white);
+  font-size: var(--font-lg);
   font-weight: 600;
   text-align: left;
-  border-bottom: 1px solid $ACCENT_700;
+  border-bottom: 1px solid var(--accent-700);
   padding-bottom: pxToRem(8);
 }
 
 .monitor-uptime-info {
-  color: $WHITE;
-  font-size: $FONT_MD;
+  color: var(--white);
+  font-size: var(--font-md);
   display: flex;
   align-items: center;
-  font-weight: $WEIGHT_MEDIUM;
+  font-weight: var(--weight-medium);
 }
 
 .monitor-uptime-info-button {
-  color: $WHITE;
-  font-size: $FONT_MD;
+  color: var(--white);
+  font-size: var(--font-md);
   border: none;
-  background-color: $PRIMARY_800;
+  background-color: var(--primary-800);
   border-radius: pxToRem(8);
   padding: pxToRem(8) 0;
   text-align: center;
   cursor: pointer;
   width: 100px;
-  font-weight: $WEIGHT_BOLD;
+  font-weight: var(--weight-bold);
+  height: min-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
 
   &:hover {
-    background-color: $PRIMARY_700;
+    background-color: var(--primary-700);
   }
 
   &.monitor-uptime-info-button-active {
-    background-color: $PRIMARY_800;
+    background-color: var(--primary-800);
 
     &:hover {
-      background-color: $PRIMARY_700;
+      background-color: var(--primary-700);
     }
   }
 
   &.monitor-uptime-info-button-inactive {
-    background-color: $RED_800;
+    background-color: var(--red-800);
 
     &:hover {
-      background-color: $RED_700;
+      background-color: var(--red-700);
     }
   }
 }

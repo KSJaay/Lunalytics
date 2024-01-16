@@ -1,0 +1,29 @@
+@import './pxToRem.scss';
+
+:root {
+  --font-xs: #{pxToRem(12)};
+  --font-sm: #{pxToRem(14)};
+  --font-md: #{pxToRem(16)};
+  --font-lg: #{pxToRem(18)};
+  --font-xl: #{pxToRem(20)};
+  --font-2xl: #{pxToRem(24)};
+  --font-3xl: #{pxToRem(30)};
+  --font-4xl: #{pxToRem(36)};
+  --font-5xl: #{pxToRem(48)};
+  --font-6xl: #{pxToRem(60)};
+  --font-7xl: #{pxToRem(72)};
+  --font-8xl: #{pxToRem(96)};
+  --font-9xl: #{pxToRem(128)};
+
+  --weight-hairline: 100;
+  --weight-thin: 200;
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+  --weight-black: 900;
+
+  --font-family: 'Montserrat', Helvetica, Arial, 'Roboto', sans-serif;
+}

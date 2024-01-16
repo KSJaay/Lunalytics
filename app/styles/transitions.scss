@@ -1,5 +1,7 @@
-$TRANSITION_SLOWEST: all 1s ease-in-out;
-$TRANSITION_SLOW: all 0.5s ease-in-out;
-$TRANSITION_BASE: all 0.3s ease-in-out;
-$TRANSITION_FAST: all 0.1s ease-in-out;
-$TRANSITION_FASTEST: all 0.05s ease-in-out;
+:root {
+  --transition-slowest: all 1s ease-in-out;
+  --transition-slow: all 0.5s ease-in-out;
+  --transition-base: all 0.3s ease-in-out;
+  --transition-fast: all 0.1s ease-in-out;
+  --transition-fastest: all 0.05s ease-in-out;
+}

@@ -4,8 +4,8 @@
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  padding: $SPACING_4;
-  gap: $SPACING_5;
+  padding: pxToRem(12);
+  gap: pxToRem(16);
   overflow-y: auto;
-  margin-bottom: $SPACING_12;
+  margin-bottom: pxToRem(72);
 }

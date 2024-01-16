@@ -21,9 +21,9 @@
 }
 
 .modal-alert-content {
-  background-color: $ACCENT_800;
-  border: 2px solid $ACCENT_700;
-  color: $FONT_COLOR;
+  background-color: var(--accent-800);
+  border: 2px solid var(--accent-700);
+  color: var(--font-color);
   padding: pxToRem(8) pxToRem(12) pxToRem(12) pxToRem(12);
   border-radius: pxToRem(12);
   min-width: pxToRem(300);
@@ -33,15 +33,15 @@
 }
 
 .modal-alert-title {
-  font-size: $FONT_XL;
+  font-size: var(--font-xl);
   font-weight: 600;
   margin-bottom: pxToRem(10);
 }
 
 .modal-alert-message {
-  font-size: $FONT_SM;
+  font-size: var(--font-sm);
   margin-bottom: pxToRem(10);
-  color: $ACCENT_100;
+  color: var(--accent-100);
 }
 
 .modal-alert-actions {
@@ -55,81 +55,81 @@
   justify-content: flex-end;
   margin-top: pxToRem(10);
 
-  background-color: $GRAY_600;
-  color: $FONT_COLOR;
+  background-color: var(--gray-600);
+  color: var(--font-color);
   border: none;
   border-radius: pxToRem(10);
   padding: 6px 14px;
-  font-size: $FONT_MD;
+  font-size: var(--font-md);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: $GRAY_700;
+    background-color: var(--gray-700);
   }
 }
 
 .modal-alert-button--primary {
-  background-color: $PRIMARY_800;
+  background-color: var(--primary-800);
 
   &:hover {
-    background-color: $PRIMARY_700;
+    background-color: var(--primary-700);
   }
 }
 
 .modal-alert-button--blue {
-  background-color: $BLUE_800;
+  background-color: var(--blue-800);
 
   &:hover {
-    background-color: $BLUE_700;
+    background-color: var(--blue-700);
   }
 }
 
 .modal-alert-button--purple {
-  background-color: $PURPLE_800;
+  background-color: var(--purple-800);
 
   &:hover {
-    background-color: $PURPLE_700;
+    background-color: var(--purple-700);
   }
 }
 
 .modal-alert-button--green {
-  background-color: $GREEN_800;
+  background-color: var(--green-800);
 
   &:hover {
-    background-color: $GREEN_700;
+    background-color: var(--green-700);
   }
 }
 
 .modal-alert-button--yellow {
-  background-color: $YELLOW_800;
+  background-color: var(--yellow-800);
 
   &:hover {
-    background-color: $YELLOW_700;
+    background-color: var(--yellow-700);
   }
 }
 
 .modal-alert-button--red {
-  background-color: $RED_800;
+  background-color: var(--red-800);
 
   &:hover {
-    background-color: $RED_700;
+    background-color: var(--red-700);
   }
 }
 
 .modal-alert-button--cyan {
-  background-color: $CYAN_800;
+  background-color: var(--cyan-800);
 
   &:hover {
-    background-color: $CYAN_700;
+    background-color: var(--cyan-700);
   }
 }
 
 .modal-alert-button--pink {
-  background-color: $PINK_800;
+  background-color: var(--pink-800);
 
   &:hover {
-    background-color: $PINK_700;
+    background-color: var(--pink_700);
   }
 }

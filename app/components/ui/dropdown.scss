@@ -3,30 +3,30 @@
 .dropdown-group {
   display: flex;
   flex-direction: column;
-  margin-top: $SPACING_2;
+  margin-top: pxToRem(4);
 }
 
 .dropdown-label {
   display: block;
-  font-size: $FONT_MD;
-  font-weight: $WEIGHT_SEMIBOLD;
-  color: $FONT_COLOR;
-  margin: $SPACING_5 0 $SPACING_2 $SPACING_2;
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+  color: var(--font-color);
+  margin: pxToRem(16) 0 pxToRem(4) pxToRem(4);
 }
 
 .dropdown-control {
   width: 100%;
   height: pxToRem(50);
-  background-color: $ACCENT_800;
+  background-color: var(--accent-800);
   border: none;
   outline: none;
-  color: $FONT_COLOR;
-  padding: 0 $SPACING_5 0 $SPACING_3;
-  font-size: $FONT_MD;
-  font-weight: $WEIGHT_MEDIUM;
-  border-radius: $RADIUS_MD;
-  margin-top: $SPACING_2;
-  border-color: $PRIMARY_700;
+  color: var(--font-color);
+  padding: 0 pxToRem(16) 0 pxToRem(8);
+  font-size: var(--font-md);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  margin-top: pxToRem(4);
+  border-color: var(--primary-700);
   border: 2px solid #ffffff00;
 
   &::placeholder {
@@ -34,20 +34,20 @@
   }
 
   &:focus {
-    border: 2px solid $PRIMARY_700;
+    border: 2px solid var(--primary-700);
   }
 }
 
 option {
-  background-color: $ACCENT_800;
-  color: $FONT_COLOR;
-  font-size: $FONT_XL;
-  font-weight: $WEIGHT_MEDIUM;
-  border-radius: $RADIUS_MD;
+  background-color: var(--accent-800);
+  color: var(--font-color);
+  font-size: var(--font-xl);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
   border: none;
   outline: none;
-  padding: $SPACING_3;
-  margin: $SPACING_2 0;
+  padding: pxToRem(8);
+  margin: pxToRem(4) 0;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }

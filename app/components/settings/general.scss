@@ -21,14 +21,14 @@
 }
 
 .settings-general-title {
-  color: $FONT_COLOR;
-  font-size: $FONT_2XL;
+  color: var(--font-color);
+  font-size: var(--font-2xl);
   font-weight: 700;
 }
 
 .settings-general-subtitle {
-  color: $ACCENT_200;
-  font-size: $FONT_LG;
+  color: var(--accent-200);
+  font-size: var(--font-lg);
   font-weight: 500;
   margin-bottom: pxToRem(12);
 }

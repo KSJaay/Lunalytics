@@ -12,7 +12,7 @@
   width: 100%;
   border-radius: pxToRem(12);
   height: pxToRem(25);
-  background-color: $ACCENT_600;
+  background-color: var(--accent-600);
 
   &:hover {
     cursor: pointer;
@@ -21,14 +21,14 @@
   }
 
   &.status-bar-healthy {
-    background-color: $GREEN_600;
+    background-color: var(--green-600);
   }
 
   &.status-bar-alert {
-    background-color: $RED_600;
+    background-color: var(--red-600);
   }
 
   &.status-bar-unknown {
-    background-color: $GRAY_600;
+    background-color: var(--gray-600);
   }
 }

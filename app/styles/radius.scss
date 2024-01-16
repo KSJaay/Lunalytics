@@ -1,12 +1,13 @@
-@import "./pxToRem.scss";
+@import './pxToRem.scss';
 
-$RADIUS_XS: pxToRem(5);
-$RADIUS_SM: pxToRem(8);
-$RADIUS_MD: pxToRem(12);
-$RADIUS_LG: pxToRem(18);
-$RADIUS_XL: pxToRem(24);
-$RADIUS_2XL: pxToRem(32);
-$RADIUS_BASE: pxToRem(14); // Default
-$RADIUS_SQUARED: 33%;
-$RADIUS_ROUNDED: 50%;
-$RADIUS_PILL: 100%;
+:root {
+  --radius-xs: #{pxToRem(5)};
+  --radius-sm: #{pxToRem(8)};
+  --radius-md: #{pxToRem(12)};
+  --radius-lg: #{pxToRem(18)};
+  --radius-xl: #{pxToRem(24)};
+  --radius-2xl: #{pxToRem(32)};
+  --radius-squared: 33%;
+  --radius-rounded: 50%;
+  --radius-pill: 100%;
+}

@@ -14,6 +14,9 @@
   list-style: none;
   list-style-type: none;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dropdown > summary::-webkit-details-marker {
@@ -89,7 +92,7 @@
   padding: 10px 0.8rem;
   width: 100%;
   box-sizing: border-box;
-  color: $FONT_COLOR;
+  color: var(--font-color);
   text-decoration: none;
 }
 
@@ -102,8 +105,8 @@
 }
 
 .dropdown ul li:hover {
-  background-color: $PRIMARY_800;
-  color: $FONT_COLOR;
+  background-color: var(--primary-800);
+  color: var(--font-color);
   cursor: pointer;
 }
 
