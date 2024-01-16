@@ -1,4 +1,4 @@
-@import '../../styles/global.scss';
+@import '../../../styles/global.scss';
 
 .home-monitor-container {
   width: pxToRem(250);
@@ -7,7 +7,7 @@
   padding: $SPACING_3;
   border-radius: $RADIUS_MD;
   transition: $TRANSITION_BASE;
-  box-shadow: $SHADOW_MD;
+  box-shadow: $SHADOW_SM;
 
   &:hover {
     cursor: pointer;
@@ -19,7 +19,7 @@
 
     .home-monitor-type span {
       display: flex;
-      color: $RED_700;
+      color: $PRIMARY_700;
     }
   }
 }
