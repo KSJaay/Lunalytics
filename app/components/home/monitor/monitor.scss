@@ -19,6 +19,9 @@
 
     .home-monitor-type span {
       display: flex;
+    }
+
+    .home-monitor-type span:hover {
       color: var(--primary-700);
     }
   }

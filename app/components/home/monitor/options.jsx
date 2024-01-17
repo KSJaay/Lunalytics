@@ -13,6 +13,7 @@ import ContextStore from '../../../context';
 import AlertBox from '../../ui/modal/alert';
 import FaEllipsisVertical from '../../icons/faEllipsisVertical';
 import { createGetRequest } from '../../../services/axios';
+import { toast } from 'sonner';
 
 const MonitorAlertBox = ({ monitorId, handleClose, handleConfirm }) => {
   return (
@@ -52,6 +53,8 @@ const MonitorOptions = ({ monitorId }) => {
     });
 
     removeMonitor(monitorId);
+
+    toast.success('Monitor deleted successfully!');
 
     closeAlertBox();
   };

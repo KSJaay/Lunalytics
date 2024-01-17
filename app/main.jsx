@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 // import local files
 import App from './app';
@@ -11,6 +12,7 @@ import './styles/styles.scss';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Toaster position="top-right" richColors />
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<App />} />
