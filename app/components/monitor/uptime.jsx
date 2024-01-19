@@ -1,22 +1,33 @@
 import './uptime.scss';
+import moment from 'moment';
+import 'moment-timezone';
+import useTime from '../../hooks/useTime';
 
-const UptimeInfo = ({ heartbeat }) => (
-  <div className="monitor-uptime-content">
-    <div
-      className={
-        heartbeat?.isDown
-          ? 'monitor-uptime-info-button monitor-uptime-info-button-inactive'
-          : 'monitor-uptime-info-button monitor-uptime-info-button-active'
-      }
-    >
-      {heartbeat?.isDown ? 'DOWN' : 'UP'}
+const UptimeInfo = ({ heartbeat }) => {
+  const { dateformat, timeformat, timezone } = useTime();
+
+  return (
+    <div className="monitor-uptime-content">
+      <div
+        className={
+          heartbeat?.isDown
+            ? 'monitor-uptime-info-button monitor-uptime-info-button-inactive'
+            : 'monitor-uptime-info-button monitor-uptime-info-button-active'
+        }
+      >
+        {heartbeat?.isDown ? 'DOWN' : 'UP'}
+      </div>
+      <div className="monitor-uptime-info">
+        {moment(heartbeat.date)
+          .tz(timezone)
+          .format(`${dateformat} ${timeformat}`)}
+      </div>
+      <div className="monitor-uptime-info">
+        {heartbeat.message || 'Unknown'}
+      </div>
     </div>
-    <div className="monitor-uptime-info">
-      {new Date(heartbeat.date).toString()}
-    </div>
-    <div className="monitor-uptime-info">{heartbeat.message || 'Unknown'}</div>
-  </div>
-);
+  );
+};
 
 const MonitorUptime = ({ heartbeats = [] }) => {
   const heartbeatList = heartbeats.map((heartbeat) => (
