@@ -10,6 +10,7 @@ import Dropdown from '../../components/ui/dropdown';
 import * as validators from '../../utils/validators';
 import { createPostRequest } from '../../services/axios';
 import ContextStore from '../../context';
+import { toast } from 'sonner';
 
 const methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'];
 
@@ -65,6 +66,8 @@ const AddMonitor = () => {
     }
 
     addMonitor(query.data);
+
+    toast.success('Monitor added successfully!');
 
     navigate('/');
   };
