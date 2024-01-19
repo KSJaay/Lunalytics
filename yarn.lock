@@ -3300,6 +3300,18 @@ mobx@^6.12.0:
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-6.12.0.tgz#72b2685ca5af031aaa49e77a4d76ed67fcbf9135"
   integrity sha512-Mn6CN6meXEnMa0a5u6a5+RKrqRedHBhZGd15AWLk9O6uFY4KYHzImdt8JI8WODo1bjTSRnwXhJox+FCUZhCKCQ==
 
+moment-timezone@^0.5.44:
+  version "0.5.44"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.44.tgz#a64a4e47b68a43deeab5ae4eb4f82da77cdf595f"
+  integrity sha512-nv3YpzI/8lkQn0U6RkLd+f0W/zy/JnoR5/EyPz/dNkPTBjA2jNLCVxaiQ8QpeLymhSZvX0wCL5s27NQWdOPwAw==
+  dependencies:
+    moment "^2.29.4"
+
+moment@^2.29.4, moment@^2.30.1:
+  version "2.30.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.30.1.tgz#f8c91c07b7a786e30c59926df530b4eac96974ae"
+  integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
