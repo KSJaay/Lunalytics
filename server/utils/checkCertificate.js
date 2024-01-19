@@ -1,33 +1,75 @@
+const https = require('https');
+const { default: axios } = require('axios');
+const logger = require('./logger');
+
+async function getCertInfo(url) {
+  try {
+    const response = await axios.request({
+      url,
+      method: 'HEAD',
+      port: 443,
+      httpAgent: new https.Agent({
+        enableTrace: true,
+      }),
+    });
+
+    return checkCertificate(response);
+  } catch (error) {
+    logger.error('getCertInfo', error);
+
+    return {
+      isValid: false,
+    };
+  }
+}
+
 const checkCertificate = (res) => {
-  if (!res.request.res.socket) {
+  if (!res.request.socket) {
+    logger.error('checkCertificate', 'Socket not found');
     throw new Error('Socket not found');
   }
 
-  const info = res.request.res.socket.getPeerCertificate(true);
-  const valid = res.request.res.socket.authorized || false;
+  const info = res.request.socket.getPeerCertificate(true);
+  const valid = res.request.socket.authorized || false;
 
   const parsedInfo = parseCert(info);
 
   return {
-    valid: valid,
-    certInfo: parsedInfo,
+    isValid: valid,
+    ...parsedInfo,
   };
 };
 
+const getDaysBetween = (validFrom, validTo) =>
+  Math.round(Math.abs(+validFrom - +validTo) / 8.64e7);
+
+const getDaysRemaining = (validFrom, validTo) => {
+  const daysRemaining = getDaysBetween(validFrom, validTo);
+  if (new Date(validTo).getTime() < new Date().getTime()) {
+    return -daysRemaining;
+  }
+  return daysRemaining;
+};
+
 const parseCert = (cert) => {
+  const validOn = cert.subjectaltname
+    ?.replace(/DNS:|IP Address:/g, '')
+    .split(', ');
+
+  const validTo = new Date(cert.valid_to);
+  const daysRemaining = getDaysRemaining(new Date(), validTo);
+
   const parsedInfo = {
-    issuer: cert.issuer,
-    subject: cert.subject,
-    valid_from: cert.valid_from,
-    valid_to: cert.valid_to,
-    fingerprint: cert.fingerprint,
-    serialNumber: cert.serialNumber,
-    raw: cert.raw,
+    issuer: JSON.stringify(cert.issuer),
+    validFrom: cert.valid_from,
+    validTill: cert.valid_to,
+    validOn: JSON.stringify(validOn),
+    daysRemaining,
   };
 
   return parsedInfo;
 };
 
 module.exports = {
-  checkCertificate,
+  getCertInfo,
 };

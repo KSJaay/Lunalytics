@@ -6,9 +6,10 @@ const {
   deleteMonitor,
   createMonitor,
   updateMonitor,
+  updateCertificate,
 } = require('../database/queries');
-const Logger = require('../utils/logger');
-// const { checkCertificate } = require('../utils/checkCertificate');
+const logger = require('../utils/logger');
+const { getCertInfo } = require('../utils/checkCertificate');
 
 class Monitor {
   constructor() {
@@ -166,6 +167,17 @@ class Monitor {
         this.monitors[monitorIndex] = newMonitorData;
       }
 
+      if (!monitor.cert?.nextCheck || monitor.cert.nextCheck > Date.now()) {
+        const cert = await getCertInfo(monitor.url);
+
+        if (cert) {
+          await updateCertificate(monitorId, cert);
+
+          // Set next check to 24 hours from now
+          monitor.cert = { ...cert, nextCheck: Date.now() + 86400000 };
+        }
+      }
+
       clearTimeout(this.timeouts[monitorId]);
       delete this.timeouts[monitorId];
       this.timeouts[monitorId] = setTimeout(
@@ -209,7 +221,7 @@ class Monitor {
         );
       }
 
-      Logger.error(
+      logger.error(
         'Monitor Cache',
         `Issue checking monitor ${monitorId}: ${error.message} `
       );
