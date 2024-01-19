@@ -35,6 +35,6 @@ class LogMethods {
   }
 }
 
-const Logger = new LogMethods();
+const logger = new LogMethods();
 
-module.exports = Logger;
+module.exports = logger;
