@@ -2,13 +2,7 @@
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-
-import {
-  DropdownContainer,
-  DropdownItem,
-  DropdownList,
-  DropdownTrigger,
-} from '../../ui/details';
+import Dropdown from '../../ui/dropdown/index';
 import ContextStore from '../../../context';
 import AlertBox from '../../ui/modal/alert';
 import FaEllipsisVertical from '../../icons/faEllipsisVertical';
@@ -72,15 +66,15 @@ const MonitorOptions = ({ monitorId }) => {
   };
 
   return (
-    <DropdownContainer position="center">
-      <DropdownTrigger>
+    <Dropdown.Container position="center">
+      <Dropdown.Trigger>
         <FaEllipsisVertical width={20} height={20} />
-      </DropdownTrigger>
-      <DropdownList>
-        <DropdownItem onClick={handleOpen}>Open</DropdownItem>
-        <DropdownItem onClick={handleDelete}>Delete</DropdownItem>
-      </DropdownList>
-    </DropdownContainer>
+      </Dropdown.Trigger>
+      <Dropdown.List>
+        <Dropdown.Item onClick={handleOpen}>Open</Dropdown.Item>
+        <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
+      </Dropdown.List>
+    </Dropdown.Container>
   );
 };
 
