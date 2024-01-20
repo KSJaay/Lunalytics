@@ -3,20 +3,20 @@
 .top-navigation {
   display: flex;
   width: 100vw;
-  background-color: $ACCENT_900;
-  padding: $SPACING_2 $SPACING_3;
-  border-bottom: 2px solid $ACCENT_700;
+  background-color: var(--accent-900);
+  padding: pxToRem(4) pxToRem(8);
+  border-bottom: 2px solid var(--accent-700);
 }
 
 .top-navigation-logo-container {
   display: flex;
-  transition: $TRANSITION_BASE;
-  color: $FONT_COLOR;
+  transition: var(--transition-base);
+  color: var(--font-color);
   user-select: none;
 
   &:hover {
     cursor: pointer;
-    color: $PRIMARY_500;
+    color: var(--primary-500);
   }
 }
 
@@ -26,11 +26,11 @@
 }
 
 .top-navigation-logo-text {
-  font-size: $FONT_2XL;
-  font-weight: $WEIGHT_BOLD;
+  font-size: var(--font-2xl);
+  font-weight: var(--weight-bold);
   display: flex;
   align-items: center;
-  margin-left: $SPACING_2;
+  margin-left: pxToRem(4);
 }
 
 .top-navigation-right-container {
@@ -41,13 +41,13 @@
 }
 
 .top-navigation-right-username {
-  font-size: $FONT_XL;
+  font-size: var(--font-xl);
   font-weight: bold;
-  color: $FONT_COLOR;
-  transition: $TRANSITION_BASE;
+  color: var(--font-color);
+  transition: var(--transition-base);
 
   &:hover {
     cursor: pointer;
-    color: $PRIMARY_500;
+    color: var(--primary-500);
   }
 }

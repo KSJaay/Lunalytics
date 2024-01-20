@@ -1,7 +1,7 @@
 import './status.scss';
 
 const MonitorStatus = ({ monitor }) => {
-  const [lastHeartbeat] = monitor.heartbeats;
+  const [lastHeartbeat = {}] = monitor.heartbeats;
 
   return (
     <div className="monitor-status-container">
@@ -25,7 +25,9 @@ const MonitorStatus = ({ monitor }) => {
       <div className="monitor-status-content">
         <div className="monitor-status-title">Cert expiry</div>
         <div className="monitor-status-subtitle">(Days Left)</div>
-        <div className="montior-status-text">46</div>
+        <div className="montior-status-text">
+          {monitor.cert?.isValid ? `${monitor.cert?.isValid}` : 'Expired'}
+        </div>
       </div>
     </div>
   );

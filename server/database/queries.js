@@ -150,6 +150,35 @@ const fetchMonitorUptime = async (monitorId) => {
   return !newestUptimeHeartbeat ? 0 : newestUptimeHeartbeat.date;
 };
 
+const fetchCertificate = async (monitorId) => {
+  const certificate = await SQLite.client('certificate')
+    .where({ monitorId })
+    .first();
+
+  if (!certificate) {
+    return { isValid: false };
+  }
+
+  return certificate;
+};
+
+const updateCertificate = async (monitorId, certificate) => {
+  const cert = await SQLite.client('certificate').where({ monitorId }).first();
+
+  if (!cert) {
+    await SQLite.client('certificate').insert({
+      monitorId,
+      ...certificate,
+    });
+  } else {
+    await SQLite.client('certificate')
+      .where({ monitorId })
+      .update({ ...certificate });
+  }
+
+  return true;
+};
+
 const fetchMonitors = async () => {
   const mointors = await SQLite.client('monitor').select();
 
@@ -163,10 +192,12 @@ const fetchMonitors = async () => {
       .limit(12);
 
     const uptime = await fetchUptimePercentage(monitor.monitorId);
+    const cert = await fetchCertificate(monitor.monitorId);
 
     monitorWithHeartbeats.push({
       ...monitor,
       heartbeats,
+      cert,
       ...uptime,
     });
   }
@@ -245,6 +276,8 @@ module.exports = {
   createMonitor,
   updateMonitor,
   fetchMonitors,
+  fetchCertificate,
+  updateCertificate,
   fetchMonitor,
   deleteMonitor,
   createHeartbeat,

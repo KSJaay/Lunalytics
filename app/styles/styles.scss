@@ -1,0 +1,37 @@
+@import './colors.scss';
+@import './font.scss';
+@import './radius.scss';
+@import './reset.scss';
+@import './shadows.scss';
+@import './themes.scss';
+@import './transitions.scss';
+
+body {
+  font-size: var(--font-md);
+  font-weight: var(--weight-medium);
+  line-height: 1.5;
+  color: var(--font-color);
+  background-color: var(--accent-800);
+  overflow: hidden;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: pxToRem(10);
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--accent-500);
+  border-radius: var(--radius-xs);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-900);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-900);
+}

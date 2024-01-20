@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const createURL = (path, params) => {
-  if (path.startsWith('http')) return new URL(path);
+  if (!path) return path;
+  if (path?.startsWith('http')) return new URL(path);
   if (!params) return new URL(`${import.meta.env.VITE_API_URL}${path}`);
 
   const searchParams = new URLSearchParams(params).toString();

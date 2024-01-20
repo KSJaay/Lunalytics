@@ -10,11 +10,21 @@ import MonitorRouter from './routes/monitor';
 import MonitorsLayout from './layout/monitors';
 import Setttings from './pages/settings';
 
+import useTheme from './hooks/useTheme';
+import { useLayoutEffect } from 'react';
+
 const routes = {
   monitor: (params) => <MonitorRouter params={params} />,
 };
 
 const App = () => {
+  const { theme } = useTheme();
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = theme.type;
+    document.documentElement.dataset.color = theme.color;
+  }, []);
+
   const query = useParams();
   const [page, ...params] = query['*']?.toLowerCase().split('/') || [];
 

@@ -4,25 +4,25 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  margin: $SPACING_5 $SPACING_6;
+  margin: pxToRem(16) pxToRem(24);
 }
 
 .monitor-form {
-  background-color: $ACCENT_900;
-  padding: $SPACING_4 $SPACING_6;
-  border-radius: $RADIUS_LG;
-  box-shadow: $SHADOW_SM;
-  padding-bottom: $SPACING_8;
+  background-color: var(--accent-900);
+  padding: pxToRem(12) pxToRem(24);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding-bottom: pxToRem(40);
   flex: 1;
   height: min-content;
 }
 
 .monitor-form-title {
-  font-size: $FONT_4XL;
-  font-weight: $WEIGHT_BOLD;
-  color: $FONT_COLOR;
+  font-size: var(--font-4xl);
+  font-weight: var(--weight-bold);
+  color: var(--font-color);
   text-align: center;
-  margin-bottom: $SPACING_5;
+  margin-bottom: pxToRem(16);
 }
 
 .monitor-button {
@@ -31,18 +31,18 @@
   align-items: center;
   width: 100%;
   height: pxToRem(50);
-  background-color: $ACCENT_800;
-  border-radius: $RADIUS_SM;
-  color: $FONT_COLOR;
-  font-size: $FONT_LG;
-  font-weight: $WEIGHT_SEMIBOLD;
-  margin-top: $SPACING_9;
+  background-color: var(--accent-800);
+  border-radius: var(--radius-md);
+  color: var(--font-color);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  margin-top: pxToRem(48);
   cursor: pointer;
-  transition: $TRANSITION_BASE;
+  transition: var(--transition-base);
 
   &:hover {
-    transition: $TRANSITION_BASE;
-    background-color: $PRIMARY_800;
+    transition: var(--transition-base);
+    background-color: var(--primary-800);
   }
 }
 
@@ -52,26 +52,26 @@
   align-items: center;
   width: 100%;
   height: pxToRem(50);
-  background-color: $ACCENT_900;
-  border-radius: $RADIUS_SM;
-  color: $FONT_COLOR;
-  font-size: $FONT_LG;
-  font-weight: $WEIGHT_SEMIBOLD;
-  margin-top: $SPACING_6;
+  background-color: var(--accent-900);
+  border-radius: var(--radius-sm);
+  color: var(--font-color);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  margin-top: pxToRem(24);
   cursor: pointer;
   text-decoration: none;
-  transition: $TRANSITION_BASE;
+  transition: var(--transition-base);
 
   &:hover {
-    transition: $TRANSITION_BASE;
-    background-color: $BLUE_700;
+    transition: var(--transition-base);
+    background-color: var(--blue-700);
   }
 }
 
 .monitor-form-error {
-  color: $RED_600;
-  font-size: $FONT_XL;
-  font-weight: $WEIGHT_SEMIBOLD;
-  margin-top: $SPACING_3;
+  color: var(--red-600);
+  font-size: var(--font-xl);
+  font-weight: var(--weight-semibold);
+  margin-top: pxToRem(8);
   text-align: center;
 }

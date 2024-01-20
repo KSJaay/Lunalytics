@@ -3,7 +3,7 @@
 .monitor-status-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  background-color: $ACCENT_900;
+  background-color: var(--accent-900);
   border-radius: pxToRem(16);
   padding: pxToRem(8) 0;
 }
@@ -16,16 +16,16 @@
 }
 
 .monitor-status-title {
-  font-size: $FONT_3XL;
-  font-weight: $WEIGHT_BOLD;
+  font-size: var(--font-3xl);
+  font-weight: var(--weight-bold);
 }
 
 .monitor-status-subtitle {
-  font-size: $FONT_XL;
-  font-weight: $WEIGHT_MEDIUM;
-  color: $ACCENT_200;
+  font-size: var(--font-xl);
+  font-weight: var(--weight-medium);
+  color: var(--accent-200);
 }
 
 .montior-status-text {
-  font-size: $FONT_2XL;
+  font-size: var(--font-2xl);
 }

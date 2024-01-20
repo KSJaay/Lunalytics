@@ -1,4 +1,7 @@
 import './graph.scss';
+
+// import dependencies
+import 'chartjs-adapter-dayjs-3';
 import {
   BarController,
   BarElement,
@@ -14,7 +17,8 @@ import {
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 
-import 'chartjs-adapter-dayjs-3';
+// import local files
+import useTime from '../../hooks/useTime';
 
 ChartJs.register(
   LineController,
@@ -30,6 +34,8 @@ ChartJs.register(
 );
 
 const MonitorGraph = ({ heartbeats, maxValue }) => {
+  const { dateformat, timeformat } = useTime();
+
   const labels = heartbeats.map((heartbeat) => heartbeat.date);
   const data = heartbeats.map((heartbeat) => heartbeat.latency);
   const theme = 'dark';
@@ -86,7 +92,7 @@ const MonitorGraph = ({ heartbeats, maxValue }) => {
               time: {
                 minUnit: 'minute',
                 round: 'second',
-                tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
+                tooltipFormat: `${dateformat} ${timeformat}`,
                 displayFormats: {
                   minute: 'HH:mm',
                   hour: 'MM-DD HH:mm',

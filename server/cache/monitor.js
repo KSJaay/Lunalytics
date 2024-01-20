@@ -6,8 +6,10 @@ const {
   deleteMonitor,
   createMonitor,
   updateMonitor,
+  updateCertificate,
 } = require('../database/queries');
-// const { checkCertificate } = require('../utils/checkCertificate');
+const logger = require('../utils/logger');
+const { getCertInfo } = require('../utils/checkCertificate');
 
 class Monitor {
   constructor() {
@@ -123,26 +125,26 @@ class Monitor {
   }
 
   async checkMonitorStatus(monitorId) {
+    const monitor = this.monitors.find(
+      (monitor) => monitor.monitorId === monitorId
+    );
+
+    if (!monitor) {
+      clearTimeout(this.timeouts[monitorId]);
+      delete this.timeouts[monitorId];
+      return;
+    }
+
+    const options = {
+      method: monitor.method,
+      url: monitor.url,
+      timeout: monitor.requestTimeout * 1000,
+      signal: AbortSignal.timeout((monitor.requestTimeout + 10) * 1000),
+    };
+
+    const startTime = Date.now();
+
     try {
-      const monitor = this.monitors.find(
-        (monitor) => monitor.monitorId === monitorId
-      );
-
-      if (!monitor) {
-        clearTimeout(this.timeouts[monitorId]);
-        delete this.timeouts[monitorId];
-        return;
-      }
-
-      const options = {
-        method: monitor.method,
-        url: monitor.url,
-        timeout: monitor.requestTimeout * 1000,
-        signal: AbortSignal.timeout((monitor.requestTimeout + 10) * 1000),
-      };
-
-      const startTime = Date.now();
-
       const query = await axios.request(options);
 
       const endTime = Date.now();
@@ -165,6 +167,17 @@ class Monitor {
         this.monitors[monitorIndex] = newMonitorData;
       }
 
+      if (!monitor.cert?.nextCheck || monitor.cert.nextCheck > Date.now()) {
+        const cert = await getCertInfo(monitor.url);
+
+        if (cert) {
+          await updateCertificate(monitorId, cert);
+
+          // Set next check to 24 hours from now
+          monitor.cert = { ...cert, nextCheck: Date.now() + 86400000 };
+        }
+      }
+
       clearTimeout(this.timeouts[monitorId]);
       delete this.timeouts[monitorId];
       this.timeouts[monitorId] = setTimeout(
@@ -172,7 +185,46 @@ class Monitor {
         monitor.interval * 1000
       );
     } catch (error) {
-      console.log(error);
+      const endTime = Date.now();
+
+      if (error.response) {
+        const failedResponse = error.response;
+        const message = `${failedResponse.status} - ${failedResponse.statusText}`;
+        const isDown = failedResponse.status >= 400;
+        const latency = endTime - startTime;
+
+        await createHeartbeat(
+          monitorId,
+          failedResponse.status,
+          latency,
+          message,
+          isDown
+        );
+
+        const newMonitorData = await fetchMonitor(monitorId);
+
+        const monitorIndex = this.monitors.findIndex(
+          (monitor) => monitor.monitorId === monitorId
+        );
+
+        if (monitorIndex === -1) {
+          this.monitors.push(newMonitorData);
+        } else {
+          this.monitors[monitorIndex] = newMonitorData;
+        }
+
+        clearTimeout(this.timeouts[monitorId]);
+        delete this.timeouts[monitorId];
+        this.timeouts[monitorId] = setTimeout(
+          () => this.checkMonitorStatus(monitorId),
+          monitor.interval * 1000
+        );
+      }
+
+      logger.error(
+        'Monitor Cache',
+        `Issue checking monitor ${monitorId}: ${error.message} `
+      );
     }
   }
 }

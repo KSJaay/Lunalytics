@@ -1,0 +1,113 @@
+@import '../../../styles/global.scss';
+
+.home-monitor-container {
+  width: pxToRem(250);
+  height: pxToRem(225);
+  background-color: var(--accent-900);
+  padding: pxToRem(8) pxToRem(12);
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    cursor: pointer;
+    margin: -5px 0 -5px 0;
+
+    .home-monitor-name {
+      color: var(--primary-500);
+    }
+
+    .home-monitor-type span {
+      display: flex;
+    }
+
+    .home-monitor-type span:hover {
+      color: var(--primary-700);
+    }
+  }
+}
+
+.home-monitor-type {
+  color: var(--font-color);
+  font-size: var(--font-xl);
+  font-weight: var(--weight-bold);
+  margin-bottom: pxToRem(4);
+  display: flex;
+  align-items: center;
+  transition: var(--transition-base);
+
+  div {
+    flex: 1;
+  }
+
+  span {
+    display: none;
+    color: var(--accent-100);
+    font-size: var(--font-md);
+    font-weight: var(--weight-medium);
+    transition: var(--transition-base);
+
+    &:hover {
+      color: var(--accent-400);
+    }
+  }
+}
+
+.home-monitor-name {
+  color: var(--font-color);
+  font-size: var(--font-md);
+  font-weight: var(--weight-medium);
+}
+
+.home-monitor-url {
+  color: var(--accent-100);
+  font-size: var(--font-md);
+  font-weight: var(--weight-medium);
+  margin-bottom: pxToRem(4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+
+  // &:hover {
+  //   color: var(--accent-200);
+  //   text-decoration: underline;
+  // }
+}
+
+.home-monitor-uptime-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: pxToRem(4);
+}
+
+.home-monitor-uptime {
+  flex: 1;
+  color: var(--font-color);
+
+  h1 {
+    font-size: var(--font-xl);
+    font-weight: var(--weight-bold);
+  }
+
+  div {
+    font-size: var(--font-lg);
+    font-weight: var(--weight-medium);
+  }
+}
+
+.home-monitor-status {
+  color: var(--font-color);
+  margin-top: pxToRem(8);
+
+  h1 {
+    font-size: var(--font-xl);
+    font-weight: var(--weight-bold);
+    margin-bottom: pxToRem(4);
+  }
+
+  div {
+    display: flex;
+  }
+}

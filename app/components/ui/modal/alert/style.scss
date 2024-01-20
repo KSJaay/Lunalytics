@@ -1,0 +1,135 @@
+@import '../../../../styles/global.scss';
+
+.modal-alert-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-alert-container--no-glassmorph {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-alert-container--glassmorph {
+  @include glassmorphism;
+}
+
+.modal-alert-content {
+  background-color: var(--accent-800);
+  border: 2px solid var(--accent-700);
+  color: var(--font-color);
+  padding: pxToRem(8) pxToRem(12) pxToRem(12) pxToRem(12);
+  border-radius: pxToRem(12);
+  min-width: pxToRem(300);
+  max-width: 95%;
+  max-height: 95%;
+  overflow: auto;
+}
+
+.modal-alert-title {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  margin-bottom: pxToRem(10);
+}
+
+.modal-alert-message {
+  font-size: var(--font-sm);
+  margin-bottom: pxToRem(10);
+  color: var(--accent-100);
+}
+
+.modal-alert-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: pxToRem(10);
+}
+
+.modal-alert-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: pxToRem(10);
+
+  background-color: var(--gray-600);
+  color: var(--font-color);
+  border: none;
+  border-radius: pxToRem(10);
+  padding: 6px 14px;
+  font-size: var(--font-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: var(--gray-700);
+  }
+}
+
+.modal-alert-button--primary {
+  background-color: var(--primary-800);
+
+  &:hover {
+    background-color: var(--primary-700);
+  }
+}
+
+.modal-alert-button--blue {
+  background-color: var(--blue-800);
+
+  &:hover {
+    background-color: var(--blue-700);
+  }
+}
+
+.modal-alert-button--purple {
+  background-color: var(--purple-800);
+
+  &:hover {
+    background-color: var(--purple-700);
+  }
+}
+
+.modal-alert-button--green {
+  background-color: var(--green-800);
+
+  &:hover {
+    background-color: var(--green-700);
+  }
+}
+
+.modal-alert-button--yellow {
+  background-color: var(--yellow-800);
+
+  &:hover {
+    background-color: var(--yellow-700);
+  }
+}
+
+.modal-alert-button--red {
+  background-color: var(--red-800);
+
+  &:hover {
+    background-color: var(--red-700);
+  }
+}
+
+.modal-alert-button--cyan {
+  background-color: var(--cyan-800);
+
+  &:hover {
+    background-color: var(--cyan-700);
+  }
+}
+
+.modal-alert-button--pink {
+  background-color: var(--pink-800);
+
+  &:hover {
+    background-color: var(--pink_700);
+  }
+}

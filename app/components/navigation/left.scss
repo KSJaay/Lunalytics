@@ -4,15 +4,15 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $ACCENT_900;
-  padding: 0 $SPACING_3;
+  background-color: var(--accent-900);
+  padding: 0 pxToRem(8);
 }
 
 .left-actions {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-top: $SPACING_4;
+  margin-top: pxToRem(12);
 }
 
 .navigation-left-top-action {
@@ -20,15 +20,15 @@
   align-items: center;
   justify-content: center;
   padding: pxToRem(8) pxToRem(16);
-  transition: $TRANSITION_BASE;
-  color: $FONT_COLOR;
-  border-radius: $RADIUS_SM;
-  margin-bottom: $SPACING_3;
+  transition: var(--transition-base);
+  color: var(--font-color);
+  border-radius: var(--radius-sm);
+  margin-bottom: pxToRem(8);
 
   &:hover {
     cursor: pointer;
-    color: $PRIMARY_500;
-    background-color: $ACCENT_700;
+    color: var(--primary-500);
+    background-color: var(--accent-700);
   }
 }
 
@@ -37,12 +37,12 @@
   align-items: center;
   justify-content: center;
   padding: pxToRem(8) pxToRem(16);
-  transition: $TRANSITION_BASE;
-  color: $FONT_COLOR;
-  background-color: $ACCENT_700;
-  border-radius: $RADIUS_SM;
-  color: $PRIMARY_500;
-  margin-bottom: $SPACING_3;
+  transition: var(--transition-base);
+  color: var(--font-color);
+  background-color: var(--accent-700);
+  border-radius: var(--radius-sm);
+  color: var(--primary-500);
+  margin-bottom: pxToRem(8);
 
   &:hover {
     cursor: pointer;

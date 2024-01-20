@@ -8,7 +8,7 @@ dotenv.config();
 
 // import local files
 const SQLite = require('./database/sqlite/setup');
-const Logger = require('./utils/logger');
+const logger = require('./utils/logger');
 const authorization = require('./middleware/authorization');
 const initialiseRoutes = require('./routes');
 const cache = require('./cache');
@@ -39,11 +39,11 @@ const init = async () => {
   }
 
   app.use(authorization);
-  Logger.info('Express', 'Initialising routes');
+  logger.info('Express', 'Initialising routes');
   initialiseRoutes(app);
 
   if (process.env.MODE === 'production') {
-    Logger.info('Express', 'Serving production static files');
+    logger.info('Express', 'Serving production static files');
     app.get('*', function (request, response) {
       response.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
     });
@@ -52,7 +52,7 @@ const init = async () => {
   // Start the server
   const server_port = process.env.PORT || 5050;
   app.listen(server_port, () => {
-    Logger.info('Express', `Server is running on port ${server_port}`);
+    logger.info('Express', `Server is running on port ${server_port}`);
   });
 };
 

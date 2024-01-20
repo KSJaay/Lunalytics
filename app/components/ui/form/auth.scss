@@ -7,25 +7,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(0deg, $ACCENT_800, $ACCENT_900);
+  background: linear-gradient(0deg, var(--accent-800), var(--accent-900));
 }
 
 .auth-form {
-  background-color: $ACCENT_900;
-  padding: $SPACING_6 $SPACING_9;
-  border-radius: $RADIUS_LG;
-  box-shadow: $SHADOW_SM;
+  background-color: var(--accent-900);
+  padding: pxToRem(24) pxToRem(48);
+  border-radius: var(--radius-ld);
+  box-shadow: var(--shadow-sm);
   max-width: pxToRem(500);
   width: 100%;
-  padding-bottom: $SPACING_9;
+  padding-bottom: pxToRem(48);
 }
 
 .auth-form-title {
-  font-size: $FONT_4XL;
-  font-weight: $WEIGHT_BOLD;
-  color: $FONT_COLOR;
+  font-size: var(--font-4xl);
+  font-weight: var(--weight-bold);
+  color: var(--font-color);
   text-align: center;
-  margin-bottom: $SPACING_5;
+  margin-bottom: pxToRem(16);
 }
 
 .auth-button {
@@ -34,18 +34,18 @@
   align-items: center;
   width: 100%;
   height: pxToRem(50);
-  background-color: $ACCENT_700;
-  border-radius: $RADIUS_SM;
-  color: $FONT_COLOR;
-  font-size: $FONT_LG;
-  font-weight: $WEIGHT_SEMIBOLD;
-  margin-top: $SPACING_9;
+  background-color: var(--accent-700);
+  border-radius: var(--radius-sm);
+  color: var(--font-color);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  margin-top: pxToRem(48);
   cursor: pointer;
-  transition: $TRANSITION_BASE;
+  transition: var(--transition-base);
 
   &:hover {
-    transition: $TRANSITION_BASE;
-    background-color: $PRIMARY_800;
+    transition: var(--transition-base);
+    background-color: var(--primary-800);
   }
 }
 
@@ -55,26 +55,26 @@
   align-items: center;
   width: 100%;
   height: pxToRem(50);
-  background-color: $ACCENT_700;
-  border-radius: $RADIUS_SM;
-  color: $FONT_COLOR;
-  font-size: $FONT_LG;
-  font-weight: $WEIGHT_SEMIBOLD;
-  margin-top: $SPACING_6;
+  background-color: var(--accent-700);
+  border-radius: var(--radius-sm);
+  color: var(--font-color);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  margin-top: pxToRem(24);
   cursor: pointer;
   text-decoration: none;
-  transition: $TRANSITION_BASE;
+  transition: var(--transition-base);
 
   &:hover {
-    transition: $TRANSITION_BASE;
-    background-color: $BLUE_700;
+    transition: var(--transition-base);
+    background-color: var(--blue-700);
   }
 }
 
 .auth-form-error {
-  color: $RED_600;
-  font-size: $FONT_XL;
-  font-weight: $WEIGHT_SEMIBOLD;
-  margin-top: $SPACING_3;
+  color: var(--red-600);
+  font-size: var(--font-xl);
+  font-weight: var(--weight-semibold);
+  margin-top: pxToRem(8);
   text-align: center;
 }

@@ -13,24 +13,24 @@
 }
 
 .settings-about-title {
-  font-size: $FONT_4XL;
+  font-size: var(--font-4xl);
   font-weight: 600;
-  color: $PRIMARY_600;
+  color: var(--primary-600);
 }
 
 .settings-about-version {
-  font-size: $FONT_LG;
+  font-size: var(--font-lg);
   font-weight: 600;
-  color: $GRAY_400;
+  color: var(--gray-400);
 }
 
 .settings-about-link {
-  font-size: $FONT_MD;
+  font-size: var(--font-md);
   font-weight: 600;
-  color: $ACCENT_200;
+  color: var(--accent-200);
   margin-top: pxToRem(20);
   display: block;
   &:hover {
-    color: $PRIMARY_800;
+    color: var(--primary-800);
   }
 }

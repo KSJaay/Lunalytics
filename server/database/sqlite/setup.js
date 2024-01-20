@@ -1,7 +1,7 @@
 const fs = require('fs');
 const knex = require('knex');
 
-const Logger = require('../../utils/logger');
+const logger = require('../../utils/logger');
 
 class SQLite {
   constructor() {
@@ -24,7 +24,7 @@ class SQLite {
       useNullAsDefault: true,
     });
 
-    Logger.info('SQLite', 'Connected to SQLite database');
+    logger.info('SQLite', 'Connected to SQLite database');
 
     return this.client;
   }
@@ -82,6 +82,30 @@ class SQLite {
 
         table.index('monitorId');
         table.index(['monitorId', 'date']);
+      });
+    }
+
+    const certificateExists = await this.client.schema.hasTable('certificate');
+
+    if (!certificateExists) {
+      await this.client.schema.createTable('certificate', (table) => {
+        table.increments('id');
+        table
+          .string('monitorId')
+          .notNullable()
+          .references('monitorId')
+          .inTable('monitor')
+          .onDelete('CASCADE')
+          .onUpdate('CASCADE');
+
+        table.boolean('isValid').defaultTo(0);
+        table.string('issuer');
+        table.timestamp('validFrom');
+        table.timestamp('validTill');
+        table.string('validOn');
+        table.integer('daysRemaining').defaultTo(0);
+
+        table.index('monitorId');
       });
     }
   }

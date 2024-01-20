@@ -1,14 +1,7 @@
-// Name
-// URL
-// Interval
-// Retry Interval
-// Request Timeout
-// Acceptable Status Codes (200-299, 300-399, 400-499, 500-599, or select a specific one) (Dropdown)
-// Method - GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS (Dropdown)
-// Headers - Textarea (JSON format)
 // import node_modules
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import TextInput from '../../components/ui/input';
@@ -16,22 +9,30 @@ import MonitorForm from '../../components/ui/form/monitor';
 import Dropdown from '../../components/ui/dropdown';
 import * as validators from '../../utils/validators';
 import { createPostRequest } from '../../services/axios';
-import { observer } from 'mobx-react-lite';
 import ContextStore from '../../context';
+import { toast } from 'sonner';
+
+const methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'];
 
 const AddMonitor = () => {
   const [error, setError] = useState(null);
+  const [method, setMethod] = useState(null);
   const {
     globalStore: { addMonitor },
   } = useContext(ContextStore);
   const navigate = useNavigate();
+
+  const methodOptions = methods.map((method) => (
+    <Dropdown.Item key={method} onClick={() => setMethod(method)}>
+      {method}
+    </Dropdown.Item>
+  ));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const name = e.target.name?.value;
     const url = e.target.url?.value;
-    const method = e.target.method?.value;
     const interval = e.target.interval?.value;
     const retryInterval = e.target.retryInterval?.value;
     const requestTimeout = e.target.requestTimeout?.value;
@@ -66,6 +67,8 @@ const AddMonitor = () => {
 
     addMonitor(query.data);
 
+    toast.success('Monitor added successfully!');
+
     navigate('/');
   };
 
@@ -82,19 +85,13 @@ const AddMonitor = () => {
         placeholder="Monitor Name"
       />
       <TextInput label="URL" id="url" defaultValue="https://" type="text" />
-      <Dropdown
-        id="method"
-        label="Method"
-        options={[
-          { value: 'DELETE', name: 'DELETE' },
-          { value: 'GET', name: 'GET' },
-          { value: 'HEAD', name: 'HEAD' },
-          { value: 'OPTIONS', name: 'OPTIONS' },
-          { value: 'PATCH', name: 'PATCH' },
-          { value: 'POST', name: 'POST' },
-          { value: 'PUT', name: 'PUT' },
-        ]}
-      />
+      <label className="text-input-label">Method</label>
+      <Dropdown.Container id="method" position="center">
+        <Dropdown.Trigger asInput>
+          {method || 'Select a method'}
+        </Dropdown.Trigger>
+        <Dropdown.List fullWidth>{methodOptions}</Dropdown.List>
+      </Dropdown.Container>
       <TextInput
         label="Interval"
         defaultValue={30}

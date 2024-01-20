@@ -1,6 +1,6 @@
 @import '../../styles/global.scss';
 
 .monitor-chart-container {
-  background-color: $ACCENT_900;
+  background-color: var(--accent-900);
   border-radius: pxToRem(16);
 }
