@@ -2,32 +2,12 @@
 import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import Dropdown from '../../ui/dropdown/index';
 import ContextStore from '../../../context';
-import AlertBox from '../../ui/modal/alert';
 import FaEllipsisVertical from '../../icons/faEllipsisVertical';
 import { createGetRequest } from '../../../services/axios';
-import { toast } from 'sonner';
-
-const MonitorAlertBox = ({ monitorId, handleClose, handleConfirm }) => {
-  return (
-    <>
-      <AlertBox.Title>Are you absolutely sure?</AlertBox.Title>
-      <AlertBox.Message style={{ width: '400px' }}>
-        By continuing you will be deleting{' '}
-        <span style={{ fontWeight: '600' }}>{monitorId} monitor</span> and all
-        the data related with this monitor.{' '}
-        <span style={{ fontWeight: '600' }}>This action cannot be undone.</span>
-      </AlertBox.Message>
-      <AlertBox.Actions>
-        <AlertBox.Button onClick={handleClose}>Cancel</AlertBox.Button>
-        <AlertBox.Button color="red" onClick={handleConfirm}>
-          Confirm
-        </AlertBox.Button>
-      </AlertBox.Actions>
-    </>
-  );
-};
+import MonitorAlertBox from './alertBox';
 
 const MonitorOptions = ({ monitorId }) => {
   const {
