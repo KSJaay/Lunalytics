@@ -13,16 +13,14 @@
   transition: var(--transition-base);
   color: var(--font-color);
   user-select: none;
+  height: 55px;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     cursor: pointer;
     color: var(--primary-500);
   }
-}
-
-.top-navigation-logo {
-  width: 55px;
-  height: 55px;
 }
 
 .top-navigation-logo-text {

@@ -3,6 +3,7 @@ import './top.scss';
 import { parseUserCookie } from '../../utils/cookies';
 import { useNavigate } from 'react-router-dom';
 import Dropdown from '../ui/dropdown/index';
+import Logo from '../icons/logo';
 
 const TopNavigation = () => {
   const user = parseUserCookie(window?.document?.cookie);
@@ -14,7 +15,7 @@ const TopNavigation = () => {
         className="top-navigation-logo-container"
         onClick={() => navigate('/')}
       >
-        <img src="/logo.svg" className="top-navigation-logo" />
+        <Logo size={50} />
         <div className="top-navigation-logo-text">Lunalytics</div>
       </div>
       <div className="top-navigation-right-container">
