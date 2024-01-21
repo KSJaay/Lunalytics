@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
