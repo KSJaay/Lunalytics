@@ -12,7 +12,7 @@ import './styles/styles.scss';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Toaster position="top-right" richColors />
+    <Toaster position="top-right" richColors closeButton />
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<App />} />

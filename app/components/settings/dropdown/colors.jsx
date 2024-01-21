@@ -16,7 +16,7 @@ const ColorsDropdown = () => {
     <>
       <label className="text-input-label">Color</label>
       <Dropdown.Container position="center">
-        <Dropdown.Trigger asInput>{theme}</Dropdown.Trigger>
+        <Dropdown.Trigger asInput>{theme.color}</Dropdown.Trigger>
         <Dropdown.List fullWidth>{colorsList}</Dropdown.List>
       </Dropdown.Container>
     </>

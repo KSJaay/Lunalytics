@@ -20,7 +20,9 @@ const MonitorStatus = ({ monitor }) => {
       <div className="monitor-status-content">
         <div className="monitor-status-title">Uptime</div>
         <div className="monitor-status-subtitle">(24 Hours)</div>
-        <div className="montior-status-text">{monitor.uptimePercentage}%</div>
+        <div className="montior-status-text">
+          {monitor.uptimePercentage || 0}%
+        </div>
       </div>
       <div className="monitor-status-content">
         <div className="monitor-status-title">Cert expiry</div>
