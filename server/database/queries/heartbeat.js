@@ -17,7 +17,7 @@ const createHeartbeat = async (monitorId, status, latency, message, isDown) => {
 
   const data = { monitorId, status, latency, message, isDown, date };
 
-  const query = await SQLite.client('heartbeat').insert({ data });
+  const query = await SQLite.client('heartbeat').insert(data);
 
   return { id: query[0], ...data };
 };
