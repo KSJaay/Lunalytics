@@ -33,8 +33,9 @@ const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
 
   const totalHeartbeats = heartbeats.length;
   const downHeartbeats = heartbeats.filter((h) => h.isDown).length;
-  const averageHeartbeatLatency =
-    heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats;
+  const averageHeartbeatLatency = (
+    heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats
+  ).toFixed(0);
 
   const uptimePercentage = (
     ((totalHeartbeats - downHeartbeats) / totalHeartbeats) *
