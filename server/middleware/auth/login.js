@@ -19,7 +19,6 @@ const login = async (request, response) => {
 
     return response.sendStatus(200);
   } catch (error) {
-    console.log(error);
     return handleError(error, response);
   }
 };

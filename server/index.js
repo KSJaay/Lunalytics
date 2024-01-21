@@ -19,7 +19,7 @@ const init = async () => {
   // connect to database and setup database tables
   await SQLite.connect();
   await SQLite.setup();
-  await cache.monitor.getMonitors();
+  await cache.initialise();
 
   app
     .use(express.json())
@@ -35,6 +35,7 @@ const init = async () => {
     .use(cookieParser());
 
   if (process.env.MODE === 'production') {
+    logger.info('Express', 'Serving production static files');
     app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
   }
 

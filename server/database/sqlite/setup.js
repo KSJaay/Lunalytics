@@ -39,6 +39,10 @@ class SQLite {
         table.string('displayName').notNullable().unique();
         table.string('password').notNullable();
         table.string('avatar');
+        table.timestamp('createdAt').defaultTo(this.client.fn.now());
+
+        table.index('email');
+        table.index('username');
       });
     }
 
@@ -58,6 +62,8 @@ class SQLite {
         table.text('body');
         table.text('valid_status_codes').defaultTo('["200-299"]');
         table.string('username').notNullable();
+
+        table.index('monitorId');
       });
     }
 

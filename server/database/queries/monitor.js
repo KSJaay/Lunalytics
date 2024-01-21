@@ -1,7 +1,6 @@
 const SQLite = require('../sqlite/setup');
 const randomId = require('../../utils/randomId');
 const { timeToMs } = require('../../utils/ms');
-const { fetchCertificate } = require('./certificate');
 
 const monitorExists = async (monitorId) => {
   return SQLite.client('monitor').where({ id: monitorId }).first();
@@ -10,9 +9,12 @@ const monitorExists = async (monitorId) => {
 const createMonitor = async (monitor) => {
   const monitorId = randomId();
 
-  await SQLite.client('monitor').insert({ ...monitor, monitorId });
+  // insert and return row
+  const data = await SQLite.client('monitor')
+    .insert({ ...monitor, monitorId })
+    .returning('*');
 
-  return monitorId;
+  return data[0];
 };
 
 const updateMonitor = async (monitor) => {
@@ -33,6 +35,7 @@ const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
 
   const totalHeartbeats = heartbeats.length;
   const downHeartbeats = heartbeats.filter((h) => h.isDown).length;
+
   const averageHeartbeatLatency = (
     heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats
   ).toFixed(0);
@@ -80,21 +83,9 @@ const fetchMonitors = async () => {
   const monitorWithHeartbeats = [];
 
   for (const monitor of mointors) {
-    const heartbeats = await SQLite.client('heartbeat')
-      .select()
-      .where('monitorId', monitor.monitorId)
-      .orderBy('date', 'desc')
-      .limit(12);
-
     const uptime = await fetchUptimePercentage(monitor.monitorId);
-    const cert = await fetchCertificate(monitor.monitorId);
 
-    monitorWithHeartbeats.push({
-      ...monitor,
-      heartbeats,
-      cert,
-      ...uptime,
-    });
+    monitorWithHeartbeats.push({ ...monitor, ...uptime });
   }
 
   return monitorWithHeartbeats;
@@ -107,21 +98,9 @@ const fetchMonitor = async (monitorId) => {
     throw new Error('Monitor does not exist');
   }
 
-  const heartbeats = await SQLite.client('heartbeat')
-    .where({ monitorId })
-    .orderBy('date', 'desc')
-    .limit(12);
-
-  const cert = await fetchCertificate(monitor.monitorId);
-
   const uptime = await fetchUptimePercentage(monitorId);
 
-  return {
-    ...monitor,
-    heartbeats,
-    cert,
-    ...uptime,
-  };
+  return { ...monitor, ...uptime };
 };
 
 const deleteMonitor = async (monitorId) => {

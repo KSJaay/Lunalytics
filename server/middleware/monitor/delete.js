@@ -6,7 +6,10 @@ const monitorDelete = async (request, response) => {
   try {
     const { monitorId } = request.query;
 
-    await cache.monitor.removeMonitor(monitorId);
+    await cache.monitors.delete(monitorId);
+    await cache.heartbeats.delete(monitorId);
+    await cache.certificates.delete(monitorId);
+
     return response.sendStatus(200);
   } catch (error) {
     return handleError(error, response);
