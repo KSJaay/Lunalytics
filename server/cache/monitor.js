@@ -1,15 +1,18 @@
 const { default: axios } = require('axios');
+const logger = require('../utils/logger');
+const { getCertInfo } = require('../utils/checkCertificate');
 const {
   fetchMonitor,
   fetchMonitors,
-  createHeartbeat,
   deleteMonitor,
   createMonitor,
   updateMonitor,
-  updateCertificate,
-} = require('../database/queries');
-const logger = require('../utils/logger');
-const { getCertInfo } = require('../utils/checkCertificate');
+} = require('../database/queries/monitor');
+const {
+  createHeartbeat,
+  fetchHeartbeats,
+} = require('../database/queries/heartbeat');
+const { updateCertificate } = require('../database/queries/certificate');
 
 class Monitor {
   constructor() {
@@ -125,7 +128,7 @@ class Monitor {
   }
 
   async checkMonitorStatus(monitorId) {
-    const monitor = this.monitors.find(
+    let monitor = this.monitors.find(
       (monitor) => monitor.monitorId === monitorId
     );
 
@@ -155,19 +158,11 @@ class Monitor {
 
       await createHeartbeat(monitorId, query.status, latency, message, isDown);
 
-      const newMonitorData = await fetchMonitor(monitorId);
+      const heartbeats = await fetchHeartbeats(monitorId);
 
-      const monitorIndex = this.monitors.findIndex(
-        (monitor) => monitor.monitorId === monitorId
-      );
+      monitor = { ...monitor, ...heartbeats };
 
-      if (monitorIndex === -1) {
-        this.monitors.push(newMonitorData);
-      } else {
-        this.monitors[monitorIndex] = newMonitorData;
-      }
-
-      if (!monitor.cert?.nextCheck || monitor.cert.nextCheck > Date.now()) {
+      if (!monitor.cert?.nextCheck || monitor.cert.nextCheck <= Date.now()) {
         const cert = await getCertInfo(monitor.url);
 
         if (cert) {
@@ -176,6 +171,16 @@ class Monitor {
           // Set next check to 24 hours from now
           monitor.cert = { ...cert, nextCheck: Date.now() + 86400000 };
         }
+      }
+
+      const monitorIndex = this.monitors.findIndex(
+        (monitor) => monitor.monitorId === monitorId
+      );
+
+      if (monitorIndex === -1) {
+        this.monitors.push(monitor);
+      } else {
+        this.monitors[monitorIndex] = monitor;
       }
 
       clearTimeout(this.timeouts[monitorId]);
@@ -201,16 +206,18 @@ class Monitor {
           isDown
         );
 
-        const newMonitorData = await fetchMonitor(monitorId);
+        const heartbeats = await fetchHeartbeats(monitorId);
+
+        monitor = { ...monitor, ...heartbeats };
 
         const monitorIndex = this.monitors.findIndex(
           (monitor) => monitor.monitorId === monitorId
         );
 
         if (monitorIndex === -1) {
-          this.monitors.push(newMonitorData);
+          this.monitors.push(heartbeats);
         } else {
-          this.monitors[monitorIndex] = newMonitorData;
+          this.monitors[monitorIndex] = heartbeats;
         }
 
         clearTimeout(this.timeouts[monitorId]);
