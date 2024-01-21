@@ -1,7 +1,7 @@
 const express = require('express');
 const cache = require('../cache');
-const { updateUser } = require('../database/queries');
 const { setClientSideCookie } = require('../utils/cookies');
+const { updateUser } = require('../database/queries/user');
 const router = express.Router();
 
 router.get('/monitors', async (request, response) => {

@@ -59,7 +59,7 @@
   color: var(--font-color);
   border: none;
   border-radius: pxToRem(10);
-  padding: 6px 14px;
+  padding: pxToRem(6) pxToRem(14);
   font-size: var(--font-md);
   font-weight: 600;
   cursor: pointer;

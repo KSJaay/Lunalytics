@@ -14,7 +14,7 @@ const MonitorStatus = ({ monitor }) => {
         <div className="monitor-status-title">Avg Response</div>
         <div className="monitor-status-subtitle">(24 Hours)</div>
         <div className="montior-status-text">
-          {monitor.averageHeartbeatLatency?.toFixed(0)}ms
+          {monitor.averageHeartbeatLatency || 0}ms
         </div>
       </div>
       <div className="monitor-status-content">
@@ -26,7 +26,7 @@ const MonitorStatus = ({ monitor }) => {
         <div className="monitor-status-title">Cert expiry</div>
         <div className="monitor-status-subtitle">(Days Left)</div>
         <div className="montior-status-text">
-          {monitor.cert?.isValid ? `${monitor.cert?.isValid}` : 'Expired'}
+          {monitor.cert?.isValid ? `${monitor.cert.daysRemaining}` : 'Expired'}
         </div>
       </div>
     </div>

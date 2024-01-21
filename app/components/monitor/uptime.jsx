@@ -2,21 +2,19 @@ import './uptime.scss';
 import moment from 'moment';
 import 'moment-timezone';
 import useTime from '../../hooks/useTime';
+import classNames from 'classnames';
 
 const UptimeInfo = ({ heartbeat }) => {
   const { dateformat, timeformat, timezone } = useTime();
 
+  const classes = classNames('monitor-uptime-info-button', {
+    'monitor-uptime-info-button-inactive': heartbeat?.isDown,
+    'monitor-uptime-info-button-active': !heartbeat?.isDown,
+  });
+
   return (
     <div className="monitor-uptime-content">
-      <div
-        className={
-          heartbeat?.isDown
-            ? 'monitor-uptime-info-button monitor-uptime-info-button-inactive'
-            : 'monitor-uptime-info-button monitor-uptime-info-button-active'
-        }
-      >
-        {heartbeat?.isDown ? 'DOWN' : 'UP'}
-      </div>
+      <div className={classes}>{heartbeat?.isDown ? 'DOWN' : 'UP'}</div>
       <div className="monitor-uptime-info">
         {moment(heartbeat.date)
           .tz(timezone)

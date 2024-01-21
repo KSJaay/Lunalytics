@@ -12,14 +12,11 @@ const ColorsDropdown = () => {
     </Dropdown.Item>
   ));
 
-  const colorName =
-    theme.color?.charAt(0).toUpperCase() + theme.color?.slice(1);
-
   return (
     <>
       <label className="text-input-label">Color</label>
       <Dropdown.Container position="center">
-        <Dropdown.Trigger asInput>{colorName}</Dropdown.Trigger>
+        <Dropdown.Trigger asInput>{theme}</Dropdown.Trigger>
         <Dropdown.List fullWidth>{colorsList}</Dropdown.List>
       </Dropdown.Container>
     </>

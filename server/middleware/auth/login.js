@@ -1,5 +1,5 @@
 // import local files
-const { signInUser } = require('../../database/queries');
+const { signInUser } = require('../../database/queries/user');
 const {
   setServerSideCookie,
   setClientSideCookie,

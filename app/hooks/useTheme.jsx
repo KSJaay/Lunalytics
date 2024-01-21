@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const useTheme = () => {
   const initialTheme = localStorage.getItem('theme') || 'dark';
-  const initialColor = localStorage.getItem('color') || 'green';
+  const initialColor = localStorage.getItem('color') || 'Green';
 
   const [theme, updateTheme] = useState({
     type: initialTheme,

@@ -1,4 +1,4 @@
-const { userExists } = require('../database/queries');
+const { userExists } = require('../database/queries/user');
 const { createURL } = require('../utils/url');
 
 const authorization = async (request, response, next) => {
