@@ -1,5 +1,4 @@
 const SQLite = require('../sqlite/setup');
-const { fetchUptimePercentage } = require('./monitor');
 
 const fetchHeartbeats = async (monitorId) => {
   const heartbeats = await SQLite.client('heartbeat')
@@ -7,19 +6,19 @@ const fetchHeartbeats = async (monitorId) => {
     .orderBy('date', 'desc')
     .limit(12);
 
-  const uptime = await fetchUptimePercentage(monitorId);
-
-  return { heartbeats, ...uptime };
+  return heartbeats;
 };
 
-const createHeartbeat = async (monitorId, status, latency, message, isDown) => {
+const createHeartbeat = async (data) => {
   const date = Date.now();
 
-  const data = { monitorId, status, latency, message, isDown, date };
+  const query = await SQLite.client('heartbeat').insert({ date, ...data });
 
-  const query = await SQLite.client('heartbeat').insert(data);
-
-  return { id: query[0], ...data };
+  return { id: query[0], date, ...data };
 };
 
-module.exports = { fetchHeartbeats, createHeartbeat };
+const deleteHeartbeats = async (monitorId) => {
+  await SQLite.client('heartbeat').where({ monitorId }).del();
+};
+
+module.exports = { fetchHeartbeats, createHeartbeat, deleteHeartbeats };

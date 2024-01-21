@@ -27,7 +27,7 @@ const monitorAdd = async (request, response) => {
       throw new UnprocessableError('Unable to find valid user cookies');
     }
 
-    const monitor = await cache.monitor.addMonitor({
+    const data = await cache.monitors.add({
       name,
       url,
       method,
@@ -36,6 +36,17 @@ const monitorAdd = async (request, response) => {
       requestTimeout,
       username: user.username,
     });
+
+    await cache.setTimeout(data.monitorId, data.interval);
+
+    const heartbeats = await cache.heartbeats.get(data.monitorId);
+    const cert = await cache.certificates.get(data.monitorId);
+
+    const monitor = {
+      ...data,
+      heartbeats,
+      cert,
+    };
 
     return response.json(monitor);
   } catch (error) {

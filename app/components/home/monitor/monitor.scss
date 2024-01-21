@@ -68,6 +68,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   text-decoration: none;
+  display: block;
+  width: 100%;
 
   // &:hover {
   //   color: var(--accent-200);

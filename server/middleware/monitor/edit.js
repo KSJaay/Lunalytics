@@ -27,7 +27,7 @@ const monitorEdit = async (request, response) => {
       throw new UnprocessableError('Unable to find valid user cookies');
     }
 
-    const monitor = await cache.monitor.editMonitor({
+    const monitor = await cache.monitors.edit({
       name,
       url,
       method,

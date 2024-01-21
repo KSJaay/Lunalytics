@@ -5,7 +5,18 @@ const { updateUser } = require('../database/queries/user');
 const router = express.Router();
 
 router.get('/monitors', async (request, response) => {
-  const query = await cache.monitor.getMonitors();
+  const monitors = await cache.monitors.getAll();
+  const query = [];
+
+  for (const monitor of monitors) {
+    const heartbeats = await cache.heartbeats.get(monitor.monitorId);
+    const cert = await cache.certificates.get(monitor.monitorId);
+    monitor.heartbeats = heartbeats;
+    monitor.cert = cert;
+
+    query.push(monitor);
+  }
+
   return response.send(query);
 });
 

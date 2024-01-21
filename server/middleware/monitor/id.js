@@ -9,7 +9,15 @@ const fetchMonitorUsingId = async (request, response) => {
       return response.status(400).json({ error: 'No monitorId provided' });
     }
 
-    const monitor = await cache.monitor.getMonitor(monitorId);
+    const data = await cache.monitors.get(monitorId);
+    const heartbeats = await cache.heartbeats.get(data.monitorId);
+    const cert = await cache.certificates.get(data.monitorId);
+
+    const monitor = {
+      ...data,
+      heartbeats,
+      cert,
+    };
 
     return response.json(monitor);
   } catch (error) {

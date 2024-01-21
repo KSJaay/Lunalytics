@@ -18,12 +18,14 @@ const updateCertificate = async (monitorId, certificate) => {
   if (!cert) {
     await SQLite.client('certificate').insert({ monitorId, ...certificate });
   } else {
-    await SQLite.client('certificate')
-      .where({ monitorId })
-      .update({ ...certificate });
+    await SQLite.client('certificate').where({ monitorId }).update(certificate);
   }
 
   return true;
 };
 
-module.exports = { fetchCertificate, updateCertificate };
+const deleteCertificate = async (monitorId) => {
+  await SQLite.client('certificate').where({ monitorId }).del();
+};
+
+module.exports = { fetchCertificate, updateCertificate, deleteCertificate };
