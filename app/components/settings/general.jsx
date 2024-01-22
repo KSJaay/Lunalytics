@@ -17,7 +17,7 @@ const SettingsGeneral = () => {
 
   const handleUpdate = async (e, type) => {
     if (type === 'displayName') {
-      await createPostRequest('/user/update', {
+      await createPostRequest('/api/user/update', {
         displayName: e.target.value,
       });
 
@@ -25,7 +25,7 @@ const SettingsGeneral = () => {
     }
 
     if (type === 'avatar') {
-      await createPostRequest('/user/update', {
+      await createPostRequest('/api/user/update', {
         avatar: e.target.value,
       });
 
