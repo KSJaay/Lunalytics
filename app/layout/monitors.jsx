@@ -12,7 +12,7 @@ const MonitorsLayout = ({ children }) => {
   } = useContext(ContextStore);
 
   const fetchMontiors = async () => {
-    const query = await createGetRequest('/user/monitors');
+    const query = await createGetRequest('/api/user/monitors');
     const data = query?.data || [];
 
     setMonitors(data);

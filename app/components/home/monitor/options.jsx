@@ -22,7 +22,7 @@ const MonitorOptions = ({ monitorId }) => {
   };
 
   const handleConfirm = async () => {
-    await createGetRequest('/monitor/delete', {
+    await createGetRequest('/api/monitor/delete', {
       monitorId,
     });
 

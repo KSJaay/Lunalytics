@@ -51,7 +51,7 @@ const AddMonitor = () => {
       return;
     }
 
-    const query = await createPostRequest('/monitor/add', {
+    const query = await createPostRequest('/api/monitor/add', {
       name,
       url,
       method,
