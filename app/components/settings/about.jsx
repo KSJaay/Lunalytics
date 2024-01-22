@@ -1,4 +1,3 @@
-import Logo from '../icons/logo';
 import './about.scss';
 
 const SetttingAbout = () => {
@@ -6,7 +5,7 @@ const SetttingAbout = () => {
 
   return (
     <div className="settings-about-container">
-      <Logo size={250} />
+      <img src="/logo.svg" style={{ width: '250px' }} />
 
       <div className="settings-about-title">Lunalytics</div>
       <div className="settings-about-version">Version {version}</div>
