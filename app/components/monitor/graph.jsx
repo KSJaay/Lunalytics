@@ -63,14 +63,22 @@ const MonitorGraph = ({ heartbeats, maxValue }) => {
           maintainAspectRatio: false,
           onResize: (chart) => {
             chart.canvas.parentNode.style.position = 'relative';
-            if (window.screen.width < 576) {
+
+            if (window.innerWidth < 576) {
+              chart.canvas.parentNode.style.height = '225px';
+              chart.canvas.style.height = '225px';
+            } else if (window.innerWidth < 768) {
               chart.canvas.parentNode.style.height = '275px';
-            } else if (window.screen.width < 768) {
-              chart.canvas.parentNode.style.height = '320px';
-            } else if (window.screen.width < 992) {
+              chart.canvas.style.height = '275px';
+            } else if (window.innerWidth < 1200) {
               chart.canvas.parentNode.style.height = '300px';
+              chart.canvas.style.height = '300px';
+            } else if (window.innerWidth < 1920) {
+              chart.canvas.parentNode.style.height = '320px';
+              chart.canvas.style.height = '320px';
             } else {
-              chart.canvas.parentNode.style.height = '250px';
+              chart.canvas.parentNode.style.height = '400px';
+              chart.canvas.style.height = '400px';
             }
           },
           layout: {

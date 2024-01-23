@@ -5,13 +5,13 @@ const {
   setClientSideCookie,
 } = require('../../utils/cookies');
 const { handleError, UnprocessableError } = require('../../utils/errors');
-const validate = require('../../utils/validators');
+const validators = require('../../utils/validators');
 
 const register = async (request, response) => {
   try {
     const { email, username, password } = request.body;
 
-    const isInvalidAuth = validate.auth(username, password, email);
+    const isInvalidAuth = validators.auth(username, password, email);
 
     if (isInvalidAuth) {
       throw new UnprocessableError(isInvalidAuth);

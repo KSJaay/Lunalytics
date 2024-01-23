@@ -1,4 +1,7 @@
 const auth = require('./auth');
 const monitor = require('./monitor');
+const user = require('./user');
 
-module.exports = { auth, monitor };
+const validators = { auth, monitor, user };
+
+module.exports = validators;
