@@ -1,6 +1,6 @@
 // import local files
 const { handleError, UnprocessableError } = require('../../utils/errors');
-const validate = require('../../utils/validators');
+const validators = require('../../utils/validators');
 const cache = require('../../cache');
 
 const monitorAdd = async (request, response) => {
@@ -8,7 +8,7 @@ const monitorAdd = async (request, response) => {
     const { name, url, method, interval, retryInterval, requestTimeout } =
       request.body;
 
-    const isInvalidMonitor = validate.monitor(
+    const isInvalidMonitor = validators.monitor(
       name,
       url,
       method,

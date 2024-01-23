@@ -79,15 +79,18 @@ const userExists = async (userToken) => {
   return SQLite.client('user').where({ username: user.username }).first();
 };
 
-const updateUser = (username, displayName, avatar) => {
-  return SQLite.client('user')
-    .where({ username })
-    .update({ displayName, avatar });
+const updateUserDisplayname = (username, displayName) => {
+  return SQLite.client('user').where({ username }).update({ displayName });
+};
+
+const updateUserAvatar = (username, avatar) => {
+  return SQLite.client('user').where({ username }).update({ avatar });
 };
 
 module.exports = {
   signInUser,
   registerUser,
   userExists,
-  updateUser,
+  updateUserDisplayname,
+  updateUserAvatar,
 };

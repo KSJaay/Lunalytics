@@ -16,17 +16,24 @@ const SettingsGeneral = () => {
   const user = parseUserCookie(window?.document?.cookie);
 
   const handleUpdate = async (e, type) => {
-    if (type === 'displayName') {
-      await createPostRequest('/api/user/update', {
+    if (
+      type === 'displayName' &&
+      user.displayName !== e.target?.value?.trim()
+    ) {
+      if (!e.target?.value?.trim()) {
+        return;
+      }
+
+      await createPostRequest('/api/user/update/username', {
         displayName: e.target.value,
       });
 
       return;
     }
 
-    if (type === 'avatar') {
-      await createPostRequest('/api/user/update', {
-        avatar: e.target.value,
+    if (type === 'avatar' && user.avatar !== e) {
+      await createPostRequest('/api/user/update/avatar', {
+        avatar: e,
       });
 
       return;
