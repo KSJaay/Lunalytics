@@ -7,12 +7,12 @@ import Dropdown from '../../ui/dropdown/index';
 import ContextStore from '../../../context';
 import FaEllipsisVertical from '../../icons/faEllipsisVertical';
 import { createGetRequest } from '../../../services/axios';
-import MonitorAlertBox from './alertBox';
+import MonitorModal from './modal';
 
 const MonitorOptions = ({ monitorId }) => {
   const {
     globalStore: { removeMonitor, getMonitor },
-    alertBoxStore: { openAlertBox, closeAlertBox },
+    modalStore: { openModal, closeModal },
   } = useContext(ContextStore);
 
   const navigate = useNavigate();
@@ -30,17 +30,17 @@ const MonitorOptions = ({ monitorId }) => {
 
     toast.success('Monitor deleted successfully!');
 
-    closeAlertBox();
+    closeModal();
   };
 
   const handleDelete = () => {
     const monitor = getMonitor(monitorId);
 
-    openAlertBox(
-      <MonitorAlertBox
+    openModal(
+      <MonitorModal
         monitorId={monitor.name}
         handleConfirm={handleConfirm}
-        handleClose={closeAlertBox}
+        handleClose={closeModal}
       />
     );
   };

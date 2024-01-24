@@ -2,11 +2,11 @@ import { createContext } from 'react';
 
 // Global stores
 import GlobalStore from './global';
-import AlertBoxStore from './alert';
+import ModalStore from './modal';
 
 const store = {
   globalStore: new GlobalStore(),
-  alertBoxStore: new AlertBoxStore(),
+  modalStore: new ModalStore(),
 };
 
 const ContextStore = createContext(store);

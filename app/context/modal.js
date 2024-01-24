@@ -1,22 +1,22 @@
 import { action, makeObservable, observable } from 'mobx';
 
-export default class AlertBoxStore {
+export default class ModalStore {
   constructor() {
     this.isOpen = false;
     this.content = null;
     makeObservable(this, {
       isOpen: observable,
-      openAlertBox: action,
-      closeAlertBox: action,
+      openModal: action,
+      closeModal: action,
     });
   }
 
-  openAlertBox = (content) => {
+  openModal = (content) => {
     this.isOpen = true;
     this.content = content;
   };
 
-  closeAlertBox = () => {
+  closeModal = () => {
     this.isOpen = false;
     this.content = null;
   };

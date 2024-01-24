@@ -3,11 +3,11 @@ import { useContext, useEffect } from 'react';
 import ContextStore from '../context';
 import { createGetRequest } from '../services/axios';
 import { fetchMonitorById } from '../services/monitor/fetch';
-import AlertBox from '../components/ui/modal/alert';
+import Modal from '../components/ui/modal';
 
 const MonitorsLayout = ({ children }) => {
   const {
-    alertBoxStore: { isOpen, content },
+    modalStore: { isOpen, content },
     globalStore: { setMonitors, setTimeouts },
   } = useContext(ContextStore);
 
@@ -25,7 +25,7 @@ const MonitorsLayout = ({ children }) => {
 
   return (
     <>
-      {isOpen && <AlertBox.Container glassmorph>{content}</AlertBox.Container>}
+      {isOpen && <Modal.Container glassmorph>{content}</Modal.Container>}
       {children}
     </>
   );

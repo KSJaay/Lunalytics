@@ -50,7 +50,7 @@ const Container = ({ children, glassmorph, ...props }) => {
   );
 };
 
-const AlertBox = {
+const Modal = {
   Actions,
   Button,
   Container,
@@ -58,4 +58,4 @@ const AlertBox = {
   Title,
 };
 
-export default AlertBox;
+export default Modal;
