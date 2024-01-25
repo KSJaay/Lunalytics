@@ -13,6 +13,7 @@ const MonitorOptions = ({ monitorId }) => {
   const {
     globalStore: { removeMonitor, getMonitor },
     modalStore: { openModal, closeModal },
+    userStore: { user },
   } = useContext(ContextStore);
 
   const navigate = useNavigate();
@@ -44,6 +45,8 @@ const MonitorOptions = ({ monitorId }) => {
       />
     );
   };
+
+  if (!user.canEdit) return null;
 
   return (
     <Dropdown.Container position="center">
