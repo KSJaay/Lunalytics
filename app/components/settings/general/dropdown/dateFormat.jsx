@@ -1,6 +1,6 @@
-import Dropdown from '../../ui/dropdown/index';
-import timeformats from '../../../constant/dateformats.json';
-import useTime from '../../../hooks/useTime';
+import Dropdown from '../../../ui/dropdown/index';
+import timeformats from '../../../../constant/dateformats.json';
+import useTime from '../../../../hooks/useTime';
 
 const DateFormatDropdown = () => {
   const { dateformat, setDateformat } = useTime();

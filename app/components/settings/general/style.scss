@@ -1,4 +1,4 @@
-@import '../../styles/global.scss';
+@import '../../../styles/global.scss';
 
 .settings-general-container {
   padding: pxToRem(4);
@@ -31,4 +31,23 @@
   font-size: var(--font-lg);
   font-weight: 500;
   margin-bottom: pxToRem(12);
+}
+
+.avatar-input {
+  width: 100%;
+  height: pxToRem(50);
+  background-color: var(--accent-800);
+  color: var(--font-color);
+  padding: 0 pxToRem(8);
+  font-size: var(--font-md);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  margin-top: pxToRem(4);
+  border: 2px solid #ffffff00;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

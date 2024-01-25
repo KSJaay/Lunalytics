@@ -1,5 +1,5 @@
-import useTheme from '../../../hooks/useTheme';
-import Dropdown from '../../ui/dropdown/index';
+import useTheme from '../../../../hooks/useTheme';
+import Dropdown from '../../../ui/dropdown/index';
 
 const colors = ['Blue', 'Cyan', 'Green', 'Pink', 'Purple', 'Red', 'Yellow'];
 

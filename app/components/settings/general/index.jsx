@@ -1,9 +1,14 @@
-import './tab.scss';
-import './general.scss';
-import TextInput from '../ui/input';
-import { createPostRequest } from '../../services/axios';
-import { parseUserCookie } from '../../utils/cookies';
+// import styles
+import '../tab.scss';
+import './style.scss';
 
+// import dependencies
+import { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+
+// import local files
+import TextInput from '../../ui/input';
+import { createPostRequest } from '../../../services/axios';
 import {
   TimezoneDropdown,
   DateformatDropdown,
@@ -11,30 +16,27 @@ import {
   ColorsDropdown,
   ThemesDropdown,
 } from './dropdown';
+import AvatarSelect from './avatars';
+import ContextStore from '../../../context';
 
 const SettingsGeneral = () => {
-  const user = parseUserCookie(window?.document?.cookie);
+  const {
+    userStore: { user, setUser },
+  } = useContext(ContextStore);
 
-  const handleUpdate = async (e, type) => {
-    if (
-      type === 'displayName' &&
-      user.displayName !== e.target?.value?.trim()
-    ) {
-      if (!e.target?.value?.trim()) {
-        return;
-      }
+  const handleUpdate = async (e) => {
+    const value = e.target?.value?.trim();
 
-      await createPostRequest('/api/user/update/username', {
-        displayName: e.target.value,
-      });
-
+    if (!value) {
       return;
     }
 
-    if (type === 'avatar' && user.avatar !== e) {
-      await createPostRequest('/api/user/update/avatar', {
-        avatar: e,
+    if (user.displayName !== value) {
+      await createPostRequest('/api/user/update/username', {
+        displayName: value,
       });
+
+      setUser({ ...user, displayName: value });
 
       return;
     }
@@ -54,10 +56,10 @@ const SettingsGeneral = () => {
           <TextInput
             label="Username"
             defaultValue={user.displayName}
-            onBlur={(e) => {
-              handleUpdate(e, 'displayName');
-            }}
+            onBlur={handleUpdate}
           />
+
+          <AvatarSelect />
 
           <ThemesDropdown />
           <ColorsDropdown />
@@ -77,4 +79,4 @@ const SettingsGeneral = () => {
   );
 };
 
-export default SettingsGeneral;
+export default observer(SettingsGeneral);

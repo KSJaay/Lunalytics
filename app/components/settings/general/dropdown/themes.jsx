@@ -1,5 +1,5 @@
-import useTheme from '../../../hooks/useTheme';
-import Dropdown from '../../ui/dropdown/index';
+import useTheme from '../../../../hooks/useTheme';
+import Dropdown from '../../../ui/dropdown/index';
 
 const themes = { dark: 'Dark', light: 'Light' };
 
