@@ -47,7 +47,7 @@ const LeftNavigation = ({ activeUrl = '' }) => {
           >
             <FaCog width={28} height={28} />
           </div>
-          <a className="navigation-left-top-action" href="/auth/logout">
+          <a className="navigation-left-top-action" href="/logout">
             <FaSignOutAlt width={28} height={28} />
           </a>
         </div>
