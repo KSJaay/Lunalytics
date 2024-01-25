@@ -4,6 +4,7 @@ export default class ModalStore {
   constructor() {
     this.isOpen = false;
     this.content = null;
+    this.glassmorph = true;
     makeObservable(this, {
       isOpen: observable,
       openModal: action,
@@ -11,13 +12,15 @@ export default class ModalStore {
     });
   }
 
-  openModal = (content) => {
+  openModal = (content, glassmorph = true) => {
     this.isOpen = true;
     this.content = content;
+    this.glassmorph = glassmorph;
   };
 
   closeModal = () => {
     this.isOpen = false;
     this.content = null;
+    this.glassmorph = true;
   };
 }
