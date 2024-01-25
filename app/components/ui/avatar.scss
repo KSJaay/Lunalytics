@@ -1,0 +1,29 @@
+@import '../../styles/global.scss';
+
+.avatar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--font-color);
+
+  &:hover {
+    cursor: pointer;
+    color: var(--primary-500);
+  }
+}
+
+.avatar {
+  width: pxToRem(40);
+  height: pxToRem(40);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: pxToRem(6);
+}
+
+.avatar-username {
+  font-size: var(--font-xl);
+  font-weight: bold;
+  transition: var(--transition-base);
+}
