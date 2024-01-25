@@ -42,6 +42,7 @@
   font-size: var(--font-sm);
   margin-bottom: pxToRem(10);
   color: var(--accent-100);
+  max-width: 100%;
 }
 
 .modal-alert-actions {
