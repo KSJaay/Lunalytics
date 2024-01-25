@@ -1,9 +1,6 @@
 // import local files
 const { signInUser } = require('../../database/queries/user');
-const {
-  setServerSideCookie,
-  setClientSideCookie,
-} = require('../../utils/cookies');
+const { setServerSideCookie } = require('../../utils/cookies');
 const { handleError } = require('../../utils/errors');
 
 const login = async (request, response) => {
@@ -12,10 +9,9 @@ const login = async (request, response) => {
 
     const isInvalidEmail = new RegExp(/@/g).test(username);
 
-    const { jwt, user } = await signInUser(username, password, !isInvalidEmail);
+    const jwt = await signInUser(username, password, !isInvalidEmail);
 
-    setServerSideCookie(response, 'userToken', jwt);
-    setClientSideCookie(response, 'user', JSON.stringify(user));
+    setServerSideCookie(response, 'access_token', jwt);
 
     return response.sendStatus(200);
   } catch (error) {

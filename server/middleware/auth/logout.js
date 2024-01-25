@@ -4,8 +4,7 @@ const { createURL } = require('../../utils/url');
 
 const logout = (request, response) => {
   try {
-    deleteCookie(response, 'userToken');
-    deleteCookie(response, 'user');
+    deleteCookie(response, 'access_token');
 
     return response.redirect(createURL('/login'));
   } catch (error) {
