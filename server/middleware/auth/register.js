@@ -30,7 +30,7 @@ const register = async (request, response) => {
       const jwt = await registerUser(data);
       setServerSideCookie(response, 'access_token', jwt);
 
-      return response.sendStatus(200);
+      return response.redirect('/');
     }
 
     const data = {
@@ -42,9 +42,10 @@ const register = async (request, response) => {
     };
 
     const jwt = await registerUser(data);
+
     setServerSideCookie(response, 'access_token', jwt);
 
-    return response.sendStatus(200);
+    return response.redirect('/verify');
   } catch (error) {
     return handleError(error, response);
   }

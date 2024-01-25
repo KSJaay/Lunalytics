@@ -40,7 +40,7 @@ const signInUser = async (username, password, isInvalidEmail) => {
 };
 
 const registerUser = async (data) => {
-  const { email, username, password, displayName } = data;
+  const { email, username, password } = data;
 
   const user = await SQLite.client('user').where({ username }).first();
   const userEmail = await SQLite.client('user').where({ email }).first();
@@ -57,10 +57,7 @@ const registerUser = async (data) => {
 
   await SQLite.client('user').insert(data);
 
-  return {
-    jwt: signCookie({ email }),
-    user: { displayName, avatar: null },
-  };
+  return signCookie({ email });
 };
 
 const userExists = async (access_token) => {

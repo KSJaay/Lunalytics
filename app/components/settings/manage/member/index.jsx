@@ -1,8 +1,3 @@
-// Name
-// Email/username
-// Permissions
-// Approve/decline user
-//
 import './style.scss';
 
 import MemberTableRow from './row';

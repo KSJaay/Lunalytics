@@ -13,7 +13,7 @@ const login = async (request, response) => {
 
     setServerSideCookie(response, 'access_token', jwt);
 
-    return response.sendStatus(200);
+    return response.redirect('/');
   } catch (error) {
     return handleError(error, response);
   }
