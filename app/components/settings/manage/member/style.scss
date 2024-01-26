@@ -1,0 +1,53 @@
+@import '../../../../styles/global.scss';
+
+.members-table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.members-table-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr pxToRem(115);
+  grid-gap: 1rem;
+
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--font-color);
+  border-bottom: 1px solid var(--accent-400);
+}
+
+.members-table-header-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0 pxToRem(8) pxToRem(5);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary-700);
+  }
+}
+
+.member-table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr pxToRem(115);
+  grid-gap: 1rem;
+  background-color: var(--accent-800);
+  padding: pxToRem(10) 0 pxToRem(10) pxToRem(10);
+  border-radius: var(--radius-md);
+  transition: var(--transition-fast);
+  margin-bottom: pxToRem(12);
+
+  &:hover {
+    transition: var(--transition-fast);
+    cursor: pointer;
+    background-color: var(--accent-700);
+  }
+}
+
+.members-table-body-item {
+  display: flex;
+  align-items: center;
+  gap: pxToRem(10);
+}

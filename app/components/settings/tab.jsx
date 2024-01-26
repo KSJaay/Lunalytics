@@ -2,6 +2,7 @@ import './tab.scss';
 
 const tabs = [
   { name: 'general', text: 'General' },
+  { name: 'manage', text: 'Manage Team' },
   { name: 'about', text: 'About' },
 ];
 

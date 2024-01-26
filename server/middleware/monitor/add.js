@@ -2,6 +2,7 @@
 const { handleError, UnprocessableError } = require('../../utils/errors');
 const validators = require('../../utils/validators');
 const cache = require('../../cache');
+const { userExists } = require('../../database/queries/user');
 
 const monitorAdd = async (request, response) => {
   try {
@@ -21,11 +22,7 @@ const monitorAdd = async (request, response) => {
       throw new UnprocessableError(isInvalidMonitor);
     }
 
-    const user = JSON.parse(request.cookies.user);
-
-    if (!user) {
-      throw new UnprocessableError('Unable to find valid user cookies');
-    }
+    const user = await userExists(request.cookies.access_token);
 
     const data = await cache.monitors.add({
       name,
@@ -34,7 +31,7 @@ const monitorAdd = async (request, response) => {
       interval,
       retryInterval,
       requestTimeout,
-      username: user.username,
+      email: user.email,
     });
 
     await cache.setTimeout(data.monitorId, data.interval);

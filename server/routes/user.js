@@ -1,12 +1,35 @@
 const express = require('express');
-const cache = require('../cache');
-const { setClientSideCookie } = require('../utils/cookies');
-const {
-  updateUserDisplayname,
-  updateUserAvatar,
-} = require('../database/queries/user');
-const validators = require('../utils/validators');
 const router = express.Router();
+
+const cache = require('../cache');
+const hasAdminPermissions = require('../middleware/user/hasAdmin');
+const accessDeclineMiddleware = require('../middleware/user/access/declineUser');
+const accessApproveMiddleware = require('../middleware/user/access/approveUser');
+const accessRemoveMiddleware = require('../middleware/user/access/removeUser');
+const permissionUpdateMiddleware = require('../middleware/user/permission/update');
+const teamMembersListMiddleware = require('../middleware/user/team/members');
+const userUpdateAvatar = require('../middleware/user/update/avatar');
+const userUpdateUsername = require('../middleware/user/update/username');
+const { userExists } = require('../database/queries/user');
+
+router.get('/', async (request, response) => {
+  const { access_token } = request.cookies;
+  const user = await userExists(access_token);
+
+  const userInfo = {
+    username: user.username,
+    displayName: user.displayName,
+    avatar: user.avatar,
+    email: user.email,
+    isVerified: user.isVerified,
+    permission: user.permission,
+  };
+
+  userInfo.canEdit = [1, 2, 3].includes(user.permission);
+  userInfo.canManage = [1, 2].includes(user.permission);
+
+  return response.send(userInfo);
+});
 
 router.get('/monitors', async (request, response) => {
   const monitors = await cache.monitors.getAll();
@@ -24,82 +47,18 @@ router.get('/monitors', async (request, response) => {
   return response.send(query);
 });
 
-router.post('/update/username', async (request, response) => {
-  const userCookie = request.cookies.user;
+router.post('/update/username', userUpdateUsername);
 
-  if (!userCookie) {
-    return response.sendStatus(401);
-  }
+router.post('/update/avatar', userUpdateAvatar);
 
-  const {
-    username,
-    displayName: cookieDisplayName,
-    avatar: cookieAvatar,
-  } = JSON.parse(userCookie);
-  const { displayName } = request.body;
+router.get('/team', teamMembersListMiddleware);
 
-  if (!displayName || cookieDisplayName === displayName) {
-    return response.sendStatus(200);
-  }
+router.post('/access/decline', hasAdminPermissions, accessDeclineMiddleware);
 
-  const isValidUsername = validators.user.isUsername(username);
+router.post('/access/approve', hasAdminPermissions, accessApproveMiddleware);
 
-  if (isValidUsername) {
-    return response.status(400).send(isValidUsername);
-  }
+router.post('/access/remove', hasAdminPermissions, accessRemoveMiddleware);
 
-  await updateUserDisplayname(username, displayName);
-
-  setClientSideCookie(
-    response,
-    'user',
-    JSON.stringify({
-      ...JSON.parse(userCookie),
-      displayName,
-      avatar: cookieAvatar,
-    })
-  );
-
-  return response.sendStatus(200);
-});
-
-router.post('/update/avatar', async (request, response) => {
-  const userCookie = request.cookies.user;
-
-  if (!userCookie) {
-    return response.sendStatus(401);
-  }
-
-  const {
-    username,
-    avatar: cookieAvatar,
-    displayName: cookieDisplayName,
-  } = JSON.parse(userCookie);
-  const { avatar } = request.body;
-
-  if (!avatar || cookieAvatar === avatar) {
-    return response.sendStatus(200);
-  }
-
-  const isValidAvatar = validators.user.isAvatar(avatar);
-
-  if (isValidAvatar) {
-    return response.status(400).send(isValidAvatar);
-  }
-
-  await updateUserAvatar(username, avatar);
-
-  setClientSideCookie(
-    response,
-    'user',
-    JSON.stringify({
-      ...JSON.parse(userCookie),
-      displayName: cookieDisplayName,
-      avatar,
-    })
-  );
-
-  return response.sendStatus(200);
-});
+router.post('/permission/update', permissionUpdateMiddleware);
 
 module.exports = router;

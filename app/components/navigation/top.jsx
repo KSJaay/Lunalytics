@@ -1,12 +1,15 @@
 // import styles
 import './top.scss';
-import { parseUserCookie } from '../../utils/cookies';
+
+// import dependencies
 import { useNavigate } from 'react-router-dom';
+
+// import local files
 import Dropdown from '../ui/dropdown/index';
-import Logo from '../icons/logo';
+import StatusLogo from '../icons/logo';
+import Avatar from '../ui/avatar';
 
 const TopNavigation = () => {
-  const user = parseUserCookie(window?.document?.cookie);
   const navigate = useNavigate();
 
   return (
@@ -15,15 +18,13 @@ const TopNavigation = () => {
         className="top-navigation-logo-container"
         onClick={() => navigate('/')}
       >
-        <Logo size={50} />
+        <StatusLogo size={50} />
         <div className="top-navigation-logo-text">Lunalytics</div>
       </div>
       <div className="top-navigation-right-container">
         <Dropdown.Container>
           <Dropdown.Trigger>
-            <div className="top-navigation-right-username">
-              {user.displayName}
-            </div>
+            <Avatar />
           </Dropdown.Trigger>
 
           <Dropdown.List position="right">

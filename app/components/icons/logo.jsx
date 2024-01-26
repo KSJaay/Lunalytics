@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import ContextStore from '../../context';
 
-const Logo = ({ size = '250' }) => {
+const StatusLogo = ({ size = '250' }) => {
   const {
     globalStore: { monitors },
   } = useContext(ContextStore);
@@ -78,4 +78,4 @@ const Logo = ({ size = '250' }) => {
   );
 };
 
-export default observer(Logo);
+export default observer(StatusLogo);

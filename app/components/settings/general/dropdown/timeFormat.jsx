@@ -1,5 +1,5 @@
-import useTime from '../../../hooks/useTime';
-import Dropdown from '../../ui/dropdown/index';
+import useTime from '../../../../hooks/useTime';
+import Dropdown from '../../../ui/dropdown/index';
 
 const times = {
   'HH:mm:ss': '23:59:59',

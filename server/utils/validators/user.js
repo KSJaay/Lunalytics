@@ -1,4 +1,22 @@
-const defaultAvatars = [];
+const defaultAvatars = [
+  'Ape',
+  'Bear',
+  'Cat',
+  'Dog',
+  'Doggo',
+  'Duck',
+  'Eagle',
+  'Fox',
+  'Gerbil',
+  'Hamster',
+  'Hedgehog',
+  'Koala',
+  'Ostrich',
+  'Panda',
+  'Rabbit',
+  'Rocket',
+  'Tiger',
+];
 
 const isUsername = (username) => {
   const regex = /^[a-zA-Z0-9_-]{3,16}$/;

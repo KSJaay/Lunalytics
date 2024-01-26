@@ -1,9 +1,6 @@
 // import local files
-const { registerUser } = require('../../database/queries/user');
-const {
-  setServerSideCookie,
-  setClientSideCookie,
-} = require('../../utils/cookies');
+const { registerUser, fetchMembers } = require('../../database/queries/user');
+const { setServerSideCookie } = require('../../utils/cookies');
 const { handleError, UnprocessableError } = require('../../utils/errors');
 const validators = require('../../utils/validators');
 
@@ -17,11 +14,38 @@ const register = async (request, response) => {
       throw new UnprocessableError(isInvalidAuth);
     }
 
-    const { jwt, user } = await registerUser(email, username, password);
-    setServerSideCookie(response, 'userToken', jwt);
-    setClientSideCookie(response, 'user', JSON.stringify(user));
+    const members = await fetchMembers();
 
-    return response.sendStatus(200);
+    if (members.length === 0) {
+      const data = {
+        email: email.toLowerCase(),
+        username: username.toLowerCase(),
+        displayName: username,
+        password,
+        avatar: null,
+        permission: 1,
+        isVerified: true,
+      };
+
+      const jwt = await registerUser(data);
+      setServerSideCookie(response, 'access_token', jwt);
+
+      return response.redirect('/');
+    }
+
+    const data = {
+      email: email.toLowerCase(),
+      username: username.toLowerCase(),
+      displayName: username,
+      password,
+      avatar: null,
+    };
+
+    const jwt = await registerUser(data);
+
+    setServerSideCookie(response, 'access_token', jwt);
+
+    return response.redirect('/verify');
   } catch (error) {
     return handleError(error, response);
   }

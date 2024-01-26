@@ -37,15 +37,3 @@
   justify-content: flex-end;
   align-items: center;
 }
-
-.top-navigation-right-username {
-  font-size: var(--font-xl);
-  font-weight: bold;
-  color: var(--font-color);
-  transition: var(--transition-base);
-
-  &:hover {
-    cursor: pointer;
-    color: var(--primary-500);
-  }
-}

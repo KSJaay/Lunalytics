@@ -10,12 +10,9 @@ const passwordMatches = (user, password) => {
     throw new AuthorizationError('Password does not match');
   }
 
-  const username = user.email.toLowerCase();
+  const email = user.email.toLowerCase();
 
-  return {
-    jwt: signCookie({ username }),
-    user: { username, displayName: user.displayName, avatar: null },
-  };
+  return signCookie({ email });
 };
 
 const signInUser = async (username, password, isInvalidEmail) => {
@@ -42,10 +39,10 @@ const signInUser = async (username, password, isInvalidEmail) => {
   return passwordMatches(user, password);
 };
 
-const registerUser = async (email, username, password) => {
-  const user = await SQLite.client('user')
-    .where({ username: username.toLowerCase() })
-    .first();
+const registerUser = async (data) => {
+  const { email, username, password } = data;
+
+  const user = await SQLite.client('user').where({ username }).first();
   const userEmail = await SQLite.client('user').where({ email }).first();
 
   if (user || userEmail) {
@@ -56,35 +53,62 @@ const registerUser = async (email, username, password) => {
 
   const hashedPassword = generateHash(password);
 
-  await SQLite.client('user').insert({
-    email: email.toLowerCase(),
-    username: username.toLowerCase(),
-    displayName: username,
-    password: hashedPassword,
-    avatar: null,
-  });
+  data.password = hashedPassword;
 
-  return {
-    jwt: signCookie({ username: username.toLowerCase() }),
-    user: {
-      username: username.toLowerCase(),
-      displayName: username,
-      avatar: null,
-    },
-  };
+  await SQLite.client('user').insert(data);
+
+  return signCookie({ email });
 };
 
-const userExists = async (userToken) => {
-  const user = verifyCookie(userToken);
-  return SQLite.client('user').where({ username: user.username }).first();
+const userExists = async (access_token) => {
+  const user = verifyCookie(access_token);
+  return SQLite.client('user').where({ email: user.email }).first();
 };
 
-const updateUserDisplayname = (username, displayName) => {
-  return SQLite.client('user').where({ username }).update({ displayName });
+const updateUserDisplayname = (email, displayName) => {
+  return SQLite.client('user').where({ email }).update({ displayName });
 };
 
-const updateUserAvatar = (username, avatar) => {
-  return SQLite.client('user').where({ username }).update({ avatar });
+const updateUserAvatar = (email, avatar) => {
+  return SQLite.client('user').where({ email }).update({ avatar });
+};
+
+const fetchMembers = () => {
+  return SQLite.client('user').select(
+    'email',
+    'username',
+    'displayName',
+    'avatar',
+    'isVerified',
+    'permission',
+    'createdAt'
+  );
+};
+
+const declineAccess = (email) => {
+  return SQLite.client('user').where({ email }).del();
+};
+
+const approveAccess = (email) => {
+  // check user using email and update isVerified to true
+
+  const userExists = SQLite.client('user').where({ email }).first();
+
+  if (!userExists) {
+    throw new AuthorizationError('User does not exist');
+  }
+
+  return SQLite.client('user').where({ email }).update({ isVerified: true });
+};
+
+const updateUserPermission = (email, permission) => {
+  const userExists = SQLite.client('user').where({ email }).first();
+
+  if (!userExists) {
+    throw new AuthorizationError('User does not exist');
+  }
+
+  return SQLite.client('user').where({ email }).update({ permission });
 };
 
 module.exports = {
@@ -93,4 +117,8 @@ module.exports = {
   userExists,
   updateUserDisplayname,
   updateUserAvatar,
+  fetchMembers,
+  declineAccess,
+  approveAccess,
+  updateUserPermission,
 };

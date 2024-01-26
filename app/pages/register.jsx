@@ -32,7 +32,7 @@ const Register = () => {
         password,
       });
 
-      navigate('/');
+      navigate('/verify');
     } catch (error) {
       setError(error?.response?.data?.message);
     }

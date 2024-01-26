@@ -1,6 +1,6 @@
-import Dropdown from '../../ui/dropdown/index';
-import timezones from '../../../constant/timeformats.json';
-import useTime from '../../../hooks/useTime';
+import Dropdown from '../../../ui/dropdown/index';
+import timezones from '../../../../constant/timeformats.json';
+import useTime from '../../../../hooks/useTime';
 
 const TimezoneDropdown = () => {
   const { timezone, setTimezone } = useTime();

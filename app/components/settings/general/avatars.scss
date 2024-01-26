@@ -1,0 +1,50 @@
+@import '../../../styles/global.scss';
+
+.modal-avatar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: pxToRem(20) 0px;
+}
+
+.modal-avatar-image {
+  width: pxToRem(200);
+  height: pxToRem(200);
+  border-radius: 50%;
+}
+
+.modal-avatar-options-container {
+  display: flex;
+  gap: pxToRem(10);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-avatar-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75px;
+  height: 45px;
+  background-color: var(--accent-900);
+  border-radius: 5px;
+  border: 1px solid var(--accent-500);
+  color: var(--font-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+.modal-avatar-name {
+  flex: 1;
+  height: 45px;
+  background-color: var(--accent-900);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--accent-500);
+  color: var(--primary-500);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
