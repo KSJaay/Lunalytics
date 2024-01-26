@@ -12,6 +12,7 @@ import Setttings from './pages/settings';
 
 import useTheme from './hooks/useTheme';
 import { useLayoutEffect } from 'react';
+import Verify from './pages/verify';
 
 const routes = {
   monitor: (params) => <MonitorRouter params={params} />,
@@ -34,6 +35,10 @@ const App = () => {
 
   if (page === 'register') {
     return <Register />;
+  }
+
+  if (page === 'verify') {
+    return <Verify />;
   }
 
   if (!page) {
