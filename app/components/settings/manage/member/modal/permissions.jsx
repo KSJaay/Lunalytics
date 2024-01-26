@@ -1,42 +1,24 @@
-import { useState } from 'react';
+import './permissions.scss';
+
 import { toast } from 'sonner';
+import { useState } from 'react';
+import classNames from 'classnames';
 import { createPostRequest } from '../../../../../services/axios';
 import Modal from '../../../../ui/modal';
 
 const MemeberPermission = ({ title, description, isActive, ...props }) => {
+  const containerClasses = classNames('permissions-container', {
+    'permissions-container-active': isActive,
+  });
+
+  const titleClasses = classNames('permissions-title', {
+    'permissions-title-active': isActive,
+  });
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        border: isActive
-          ? '2px solid var(--green-500)'
-          : '2px solid var(--accent-600)',
-        padding: '5px 8px',
-        borderRadius: '8px',
-        backgroundColor: 'var(--accent-700)',
-        boxShadow: 'var(--shadow-sm)',
-      }}
-      {...props}
-    >
-      <div
-        style={{
-          fontSize: '1.2rem',
-          fontWeight: '600',
-          marginBottom: '5px',
-          color: isActive ? 'var(--green-600)' : 'var(--font-color)',
-        }}
-      >
-        {title}
-      </div>
-      <div
-        style={{
-          fontSize: '14px',
-          color: 'var(--accent-100)',
-        }}
-      >
-        {description}
-      </div>
+    <div className={containerClasses} {...props}>
+      <div className={titleClasses}>{title}</div>
+      <div className="permissions-description">{description}</div>
     </div>
   );
 };
@@ -69,13 +51,7 @@ const MemberPermissionsModal = ({ member, onClose }) => {
     <>
       <Modal.Title>Change Permissions</Modal.Title>
       <Modal.Message style={{ width: '475px' }}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '15px',
-          }}
-        >
+        <div className="member-permissions-message-container">
           <MemeberPermission
             title={'Admin'}
             description={

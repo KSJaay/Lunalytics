@@ -1,0 +1,39 @@
+@import '../../../../../styles/global.scss';
+
+.permissions-container {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--accent-600);
+  padding: 5px 8px;
+  border-radius: 8px;
+  background-color: var(--accent-700);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.permissions-container-active {
+  border: 2px solid var(--green-500);
+}
+
+.permissions-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--font-color);
+}
+
+.permissions-title-active {
+  color: var(--green-600);
+}
+
+.permissions-description {
+  font-size: pxToRem(14);
+  color: var(--font-color);
+}
+
+.member-permissions-message-container {
+  display: flex;
+  flex-direction: column;
+  gap: pxToRem(15);
+}

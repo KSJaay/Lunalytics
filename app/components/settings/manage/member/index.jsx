@@ -8,7 +8,7 @@ const MembersTable = ({ user = {}, members = [] }) => {
   ));
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+    <div className="members-table">
       <div className="members-table-header">
         <div className="members-table-header-item">Name</div>
         <div className="members-table-header-item">Joined</div>

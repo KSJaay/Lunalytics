@@ -1,5 +1,11 @@
 @import '../../../../styles/global.scss';
 
+.members-table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .members-table-header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr pxToRem(115);
