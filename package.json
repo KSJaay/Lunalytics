@@ -12,12 +12,14 @@
   "scripts": {
     "dev": "concurrently \"yarn watch\" \"yarn server:watch\"",
     "watch": "vite --port 3000",
-    "build": "vite build",
+    "build": "vite build --config ./vite.config.mjs",
+    "lint": "yarn lint:app && yarn lint:server",
     "lint:app": "eslint app --ext js,jsx",
     "lint:server": "eslint server --ext js",
     "prepare": "husky install",
     "preview": "vite preview",
-    "server:watch": "nodemon --delay 2 --watch server ./server/index.js"
+    "server:watch": "nodemon --delay 2 --watch server ./server/index.js",
+    "start": "cross-env NODE_ENV=production node server/index.js"
   },
   "dependencies": {
     "axios": "^1.6.2",
@@ -53,6 +55,7 @@
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.1",
     "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -60,7 +63,9 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
     "nodemon": "^3.0.1",
+    "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.69.5",
-    "vite": "^5.0.10"
+    "vite": "^5.0.10",
+    "vite-plugin-compression2": "^0.11.0"
   }
 }
