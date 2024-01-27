@@ -1,49 +1,128 @@
-// import node_modules
+import './register.scss';
+
+// import dependencies
+import { toast } from 'sonner';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // import local files
-import Form from '../components/ui/form/auth';
-import TextInput from '../components/ui/input';
 import { createPostRequest } from '../services/axios';
 import * as validators from '../utils/validators';
+import RegisterEmailForm from '../components/register/email';
+import RegisterPasswordForm from '../components/register/password';
+import RegisterVerify from '../components/register/verify';
 
 const Register = () => {
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [page, setPage] = useState('email');
+  const [errors, setErrors] = useState({});
+  const [inputs, setInputs] = useState({});
+
+  const handlePageChange = async (page) => {
+    if (page === 'password') {
+      const isInvalidEmail = validators.auth.email(inputs['email']);
+      const isInvalidUsername = validators.auth.username(inputs['username']);
+
+      if (isInvalidEmail || isInvalidUsername) {
+        return setErrors((prev) => ({
+          ...prev,
+          email: isInvalidEmail,
+          username: isInvalidUsername,
+        }));
+      }
+
+      try {
+        const emailExists = await createPostRequest('/api/user/exists', {
+          email: inputs['email'],
+        });
+
+        if (emailExists.data) {
+          return setErrors((prev) => ({
+            ...prev,
+            email: 'Someone else is already using this email.',
+          }));
+        }
+      } catch (error) {
+        return toast.error('Error occurred while checking if email exists.');
+      }
+    }
+
+    return setPage(page);
+  };
+
+  const setPassword = (event) => {
+    setInputs((prev) => ({ ...prev, password: event.target.value?.trim() }));
+  };
+
+  const handleInput = async (e) => {
+    const { id, value } = e.target;
+
+    if (validators.auth[id]) {
+      const isInvalid = validators.auth[id](value);
+
+      if (isInvalid) {
+        setErrors((prev) => ({ ...prev, [id]: isInvalid }));
+      } else {
+        setErrors((prev) => ({ ...prev, [id]: '' }));
+      }
+
+      return setInputs((prev) => ({ ...prev, [id]: value?.trim() }));
+    }
+
+    if (id === 'confirmPassword') {
+      if (value !== inputs['password']) {
+        setErrors((prev) => ({
+          ...prev,
+          [id]: 'Passwords do not match',
+        }));
+      } else {
+        setErrors((prev) => ({ ...prev, [id]: '' }));
+      }
+
+      return setInputs((prev) => ({ ...prev, [id]: value?.trim() }));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const email = e.target.email.value;
-      const username = e.target.username.value;
-      const password = e.target.password.value;
+      const { email, username, password } = inputs;
 
-      const hasInvalidData = validators.auth(username, password, email);
-
-      if (hasInvalidData) {
-        return setError(hasInvalidData);
-      }
-
-      await createPostRequest('/register', {
-        email,
-        username,
-        password,
-      });
-
-      navigate('/verify');
+      await createPostRequest('/register', { email, username, password });
+      toast.success('You have been successfully registered!');
+      setPage('verify');
     } catch (error) {
-      setError(error?.response?.data?.message);
+      if (error?.response?.data?.message) {
+        setErrors((prev) => ({
+          ...prev,
+          ...error?.response?.data?.message,
+        }));
+      }
     }
   };
 
   return (
-    <Form title="Register" error={error} onSubmit={handleSubmit}>
-      <TextInput label="Email" id="email" type="text" />
-      <TextInput label="Username" id="username" type="text" />
-      <TextInput label="Password" id="password" type="password" />
-    </Form>
+    <div className="auth-form-container">
+      <div className="auth-form">
+        {page === 'email' && (
+          <RegisterEmailForm
+            handleInput={handleInput}
+            handlePageChange={handlePageChange}
+            inputs={inputs}
+            errors={errors}
+          />
+        )}
+        {page === 'password' && (
+          <RegisterPasswordForm
+            handleInput={handleInput}
+            handleSubmit={handleSubmit}
+            setPassword={setPassword}
+            inputs={inputs}
+            errors={errors}
+          />
+        )}
+        {page === 'verify' && <RegisterVerify />}
+      </div>
+    </div>
   );
 };
 
