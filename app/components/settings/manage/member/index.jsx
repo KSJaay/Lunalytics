@@ -2,9 +2,9 @@ import './style.scss';
 
 import MemberTableRow from './row';
 
-const MembersTable = ({ user = {}, members = [] }) => {
+const MembersTable = ({ members = [] }) => {
   const membersList = members.map((member, index) => (
-    <MemberTableRow key={index} currentUser={user} member={member} />
+    <MemberTableRow key={index} member={member} />
   ));
 
   return (
