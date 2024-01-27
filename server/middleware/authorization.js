@@ -1,6 +1,5 @@
 const { userExists } = require('../database/queries/user');
 const { deleteCookie } = require('../utils/cookies');
-const { createURL } = require('../utils/url');
 
 const authorization = async (request, response, next) => {
   const { access_token } = request.cookies;
@@ -9,8 +8,13 @@ const authorization = async (request, response, next) => {
     const userExistsInDatabase = await userExists(access_token);
 
     if (userExistsInDatabase) {
+      // if user is trying to access `/api/user/verfied` and is already logged in, send user data
+      if (request.url.startsWith('/api/user/verfied')) {
+        return response.send(userExistsInDatabase);
+      }
+
       if (!userExistsInDatabase.isVerified) {
-        return response.redirect(createURL('/verify'));
+        return response.sendStatus(403);
       }
 
       // if user is trying to access login or register page and is already logged in, redirect to home page
@@ -18,22 +22,18 @@ const authorization = async (request, response, next) => {
         request.url.startsWith('/login') ||
         request.url.startsWith('/register')
       ) {
-        return response.redirect(createURL('/'));
+        return response.redirect('/');
       }
     }
 
     if (!userExistsInDatabase) {
       deleteCookie(response, 'access_token');
-      return response.redirect(createURL('/login'));
+      return response.sendStatus(401);
     }
   }
 
-  if (request.url.startsWith('/login') || request.url.startsWith('/register')) {
-    return next();
-  }
-
-  if (!access_token) {
-    return response.redirect(createURL('/login'));
+  if (request.url.startsWith('/api') && !access_token) {
+    return response.sendStatus(401);
   }
 
   return next();
