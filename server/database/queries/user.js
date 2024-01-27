@@ -1,7 +1,7 @@
 const SQLite = require('../sqlite/setup');
 const { generateHash, verifyPassword } = require('../../utils/hashPassword');
 const { signCookie, verifyCookie } = require('../../utils/jwt');
-const { AuthorizationError } = require('../../utils/errors');
+const { AuthorizationError, ConflictError } = require('../../utils/errors');
 
 const passwordMatches = (user, password) => {
   const passwordMatches = verifyPassword(password, user.password);
@@ -12,25 +12,11 @@ const passwordMatches = (user, password) => {
 
   const email = user.email.toLowerCase();
 
-  return signCookie({ email });
+  return { jwt: signCookie({ email }), user };
 };
 
-const signInUser = async (username, password, isInvalidEmail) => {
-  if (isInvalidEmail) {
-    const user = await SQLite.client('user')
-      .where({ username: username.toLowerCase() })
-      .first();
-
-    if (!user) {
-      throw new AuthorizationError('User does not exist');
-    }
-
-    return passwordMatches(user, password);
-  }
-
-  const user = await SQLite.client('user')
-    .where({ email: username.toLowerCase() })
-    .first();
+const signInUser = async (email, password) => {
+  const user = await SQLite.client('user').where({ email }).first();
 
   if (!user) {
     throw new AuthorizationError('User does not exist');
@@ -40,14 +26,13 @@ const signInUser = async (username, password, isInvalidEmail) => {
 };
 
 const registerUser = async (data) => {
-  const { email, username, password } = data;
+  const { email, password } = data;
 
-  const user = await SQLite.client('user').where({ username }).first();
   const userEmail = await SQLite.client('user').where({ email }).first();
 
-  if (user || userEmail) {
-    throw new AuthorizationError(
-      'Another user already exists with this email or usernmae'
+  if (userEmail) {
+    throw new ConflictError(
+      'Another user already exists with this email or username'
     );
   }
 
@@ -65,6 +50,10 @@ const userExists = async (access_token) => {
   return SQLite.client('user').where({ email: user.email }).first();
 };
 
+const emailExists = async (email) => {
+  return SQLite.client('user').where({ email }).first();
+};
+
 const updateUserDisplayname = (email, displayName) => {
   return SQLite.client('user').where({ email }).update({ displayName });
 };
@@ -76,7 +65,6 @@ const updateUserAvatar = (email, avatar) => {
 const fetchMembers = () => {
   return SQLite.client('user').select(
     'email',
-    'username',
     'displayName',
     'avatar',
     'isVerified',
@@ -115,6 +103,7 @@ module.exports = {
   signInUser,
   registerUser,
   userExists,
+  emailExists,
   updateUserDisplayname,
   updateUserAvatar,
   fetchMembers,

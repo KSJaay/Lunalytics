@@ -8,7 +8,10 @@ const register = async (request, response) => {
   try {
     const { email, username, password } = request.body;
 
-    const isInvalidAuth = validators.auth(username, password, email);
+    const isInvalidAuth =
+      validators.auth.email(email) ||
+      validators.auth.username(username) ||
+      validators.auth.password(password);
 
     if (isInvalidAuth) {
       throw new UnprocessableError(isInvalidAuth);
@@ -19,7 +22,6 @@ const register = async (request, response) => {
     if (members.length === 0) {
       const data = {
         email: email.toLowerCase(),
-        username: username.toLowerCase(),
         displayName: username,
         password,
         avatar: null,
@@ -35,7 +37,6 @@ const register = async (request, response) => {
 
     const data = {
       email: email.toLowerCase(),
-      username: username.toLowerCase(),
       displayName: username,
       password,
       avatar: null,
@@ -45,7 +46,7 @@ const register = async (request, response) => {
 
     setServerSideCookie(response, 'access_token', jwt);
 
-    return response.redirect('/verify');
+    return response.sendStatus(200);
   } catch (error) {
     return handleError(error, response);
   }
