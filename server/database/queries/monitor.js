@@ -1,6 +1,7 @@
 const SQLite = require('../sqlite/setup');
 const randomId = require('../../utils/randomId');
 const { timeToMs } = require('../../utils/ms');
+const { UnprocessableError } = require('../../utils/errors');
 
 const monitorExists = async (monitorId) => {
   return SQLite.client('monitor').where({ id: monitorId }).first();
@@ -95,7 +96,7 @@ const fetchMonitor = async (monitorId) => {
   const monitor = await SQLite.client('monitor').where({ monitorId }).first();
 
   if (!monitor) {
-    throw new Error('Monitor does not exist');
+    throw new UnprocessableError('Monitor does not exist');
   }
 
   const uptime = await fetchUptimePercentage(monitorId);
