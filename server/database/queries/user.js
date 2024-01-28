@@ -31,9 +31,7 @@ const registerUser = async (data) => {
   const userEmail = await SQLite.client('user').where({ email }).first();
 
   if (userEmail) {
-    throw new ConflictError(
-      'Another user already exists with this email or username'
-    );
+    throw new ConflictError('Another user already exists with this email');
   }
 
   const hashedPassword = generateHash(password);
