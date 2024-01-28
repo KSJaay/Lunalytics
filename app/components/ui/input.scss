@@ -25,5 +25,12 @@
   font-size: var(--font-md);
   font-weight: var(--weight-semibold);
   color: var(--font-color);
-  margin: pxToRem(16) 0 pxToRem(4) pxToRem(4);
+  margin: pxToRem(12) 0 pxToRem(4) pxToRem(4);
+}
+
+.text-input-error {
+  color: var(--red-700);
+  font-size: var(--font-sm);
+  margin: pxToRem(4);
+  display: block;
 }

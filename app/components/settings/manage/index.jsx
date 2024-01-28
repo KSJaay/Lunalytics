@@ -1,14 +1,17 @@
 import './style.scss';
+
+// import dependencies
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+
+// import local files
 import { createGetRequest } from '../../../services/axios';
 import MembersTable from './member';
 
 const ManageTeam = () => {
-  const [team, setTeam] = useState({ currentUser: {}, members: [] });
+  const [team, setTeam] = useState([]);
 
-  const sortedMembers = team.members?.sort(
-    (a, b) => a.permission - b.permission
-  );
+  const sortedMembers = team?.sort((a, b) => a?.permission - b?.permission);
 
   const fetchTeam = async () => {
     try {
@@ -16,7 +19,7 @@ const ManageTeam = () => {
 
       setTeam(query.data);
     } catch (error) {
-      console.log(error);
+      toast.error("Couldn't fetch team members");
     }
   };
 
@@ -34,7 +37,7 @@ const ManageTeam = () => {
       }}
     >
       <div style={{ display: 'flex' }}>
-        <MembersTable user={team.currentUser} members={sortedMembers} />
+        <MembersTable members={sortedMembers} />
       </div>
     </div>
   );

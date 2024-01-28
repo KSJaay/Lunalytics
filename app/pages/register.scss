@@ -1,4 +1,4 @@
-@import '../../../styles/global.scss';
+@import '../styles/global.scss';
 
 .auth-form-container {
   width: 100vw;
@@ -21,11 +21,24 @@
 }
 
 .auth-form-title {
-  font-size: var(--font-4xl);
+  font-size: var(--font-3xl);
   font-weight: var(--weight-bold);
   color: var(--font-color);
   text-align: center;
-  margin-bottom: pxToRem(16);
+}
+
+.auth-form-subtitle {
+  font-size: var(--font-md);
+  color: var(--accent-100);
+  text-align: center;
+  margin-bottom: pxToRem(24);
+}
+
+.auth-form-verify-text {
+  font-size: var(--font-md);
+  color: var(--accent-100);
+  text-align: center;
+  margin: pxToRem(32) 0;
 }
 
 .auth-button {
@@ -39,7 +52,7 @@
   color: var(--font-color);
   font-size: var(--font-lg);
   font-weight: var(--weight-semibold);
-  margin-top: pxToRem(48);
+  margin: pxToRem(32) 0 pxToRem(20) 0;
   cursor: pointer;
   transition: var(--transition-base);
 
@@ -76,5 +89,11 @@
   font-size: var(--font-xl);
   font-weight: var(--weight-semibold);
   margin-top: pxToRem(8);
+  text-align: center;
+}
+
+.auth-form-footer {
+  font-size: var(--font-md);
+  color: var(--font-color);
   text-align: center;
 }

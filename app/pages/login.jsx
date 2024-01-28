@@ -1,43 +1,111 @@
-// import node_modules
+import './register.scss';
+
+// import dependencies
+import { toast } from 'sonner';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import Form from '../components/ui/form/auth';
 import TextInput from '../components/ui/input';
 import { createPostRequest } from '../services/axios';
 import * as validators from '../utils/validators';
 
 const Login = () => {
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [inputs, setInputs] = useState({});
   const navigate = useNavigate();
+
+  const handleInput = (e) => {
+    const { id, value } = e.target;
+
+    if (validators.auth[id]) {
+      const isInvalid = validators.auth[id](value);
+
+      if (isInvalid) {
+        return setErrors((prev) => ({ ...prev, [id]: isInvalid }));
+      } else {
+        setErrors((prev) => ({ ...prev, [id]: null }));
+      }
+    }
+
+    return setInputs((prev) => ({ ...prev, [id]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const username = e.target.username.value;
-      const password = e.target.password.value;
+      const { email, password } = inputs;
 
-      const hasInvalidData = validators.auth(username, password);
+      const hasInvalidData =
+        validators.auth.email(email) || validators.auth.password(password);
 
       if (hasInvalidData) {
-        return setError(hasInvalidData);
+        return setErrors(hasInvalidData);
       }
 
-      await createPostRequest('/login', { username, password });
+      const query = await createPostRequest('/login', { email, password });
 
-      navigate('/verify');
+      if (query.status === 200) {
+        return navigate('/');
+      }
     } catch (error) {
-      setError(error?.response?.data?.message);
+      if (error?.response?.status === 418) {
+        return navigate('/verify');
+      }
+
+      if (error?.response?.data?.message) {
+        return setErrors(error?.response?.data?.message);
+      }
+
+      toast.error('Something went wrong');
     }
   };
 
   return (
-    <Form title="Login" isLogin={true} error={error} onSubmit={handleSubmit}>
-      <TextInput label="Email or username" id="username" type="text" />
-      <TextInput label="Password" id="password" type="password" />
-    </Form>
+    <div className="auth-form-container">
+      <div className="auth-form">
+        <div className="auth-form-title">Create your account</div>
+        <div className="auth-form-subtitle">
+          Please provide your name and email
+        </div>
+        <div>
+          <TextInput
+            type="text"
+            id="email"
+            label="Email"
+            error={errors['email']}
+            defaultValue={inputs['email']}
+            onBlur={handleInput}
+          />
+          <TextInput
+            type="password"
+            id="password"
+            label="Password"
+            error={errors['password']}
+            defaultValue={inputs['password']}
+            onBlur={handleInput}
+          />
+        </div>
+        <button className="auth-button" onClick={handleSubmit}>
+          Signin
+        </button>
+
+        <div className="auth-form-footer">
+          Don&#39;t have an account?{' '}
+          <a
+            style={{
+              fontWeight: 'bold',
+              color: 'var(--primary-500)',
+              textDecoration: 'underline',
+            }}
+            href="/register"
+          >
+            Register
+          </a>
+        </div>
+      </div>
+    </div>
   );
 };
 

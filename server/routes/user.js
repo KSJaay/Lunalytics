@@ -10,14 +10,14 @@ const permissionUpdateMiddleware = require('../middleware/user/permission/update
 const teamMembersListMiddleware = require('../middleware/user/team/members');
 const userUpdateAvatar = require('../middleware/user/update/avatar');
 const userUpdateUsername = require('../middleware/user/update/username');
-const { userExists } = require('../database/queries/user');
+const { userExists, emailExists } = require('../database/queries/user');
 
 router.get('/', async (request, response) => {
   const { access_token } = request.cookies;
+
   const user = await userExists(access_token);
 
   const userInfo = {
-    username: user.username,
     displayName: user.displayName,
     avatar: user.avatar,
     email: user.email,
@@ -29,6 +29,16 @@ router.get('/', async (request, response) => {
   userInfo.canManage = [1, 2].includes(user.permission);
 
   return response.send(userInfo);
+});
+
+router.post('/exists', async (request, response) => {
+  const { email } = request.body;
+  if (!email) return response.status(400).send('No email provided');
+
+  const user = await emailExists(email);
+  if (!user) return response.send(false);
+
+  return response.send(true);
 });
 
 router.get('/monitors', async (request, response) => {

@@ -9,7 +9,8 @@ const Verify = () => {
         <Logo size="275" />
       </div>
       <div className="verify-description">
-        Please contact the owner of this dashboard to verify your account.
+        Please contact the owner/admins of this dashboard to verify your
+        account.
       </div>
     </div>
   );

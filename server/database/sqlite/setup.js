@@ -35,15 +35,15 @@ class SQLite {
     if (!userExists) {
       await this.client.schema.createTable('user', (table) => {
         table.string('email', 255).primary().notNullable().unique();
-        table.string('username').notNullable().unique();
         table.string('displayName').notNullable();
         table.string('password').notNullable();
         table.string('avatar');
         table.boolean('isVerified').defaultTo(0);
         table.integer('permission').defaultTo(4);
         table.timestamp('createdAt').defaultTo(this.client.fn.now());
+
         table.index('email');
-        table.index('username');
+        table.index('isVerified');
       });
     }
 

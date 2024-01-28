@@ -15,7 +15,7 @@ const userUpdateUsername = async (request, response) => {
     return response.sendStatus(200);
   }
 
-  const isInvalidUsername = validators.user.isUsername(displayName);
+  const isInvalidUsername = validators.auth.username(displayName);
 
   if (isInvalidUsername) {
     return response.status(400).send(isInvalidUsername);

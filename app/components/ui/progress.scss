@@ -1,0 +1,22 @@
+.progress-section {
+  width: 25px;
+  max-width: 85px;
+  height: 10px;
+  border-radius: 8px;
+  background-color: var(--accent-500);
+}
+
+.progress-section-active {
+  flex: 1;
+  max-width: 85px;
+  height: 10px;
+  border-radius: 8px;
+  background-color: var(--primary-600);
+}
+
+.progress-section-complete {
+  width: 25px;
+  height: 10px;
+  border-radius: 8px;
+  background-color: var(--primary-600);
+}

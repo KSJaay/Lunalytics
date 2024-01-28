@@ -4,7 +4,7 @@ const setClientSideCookie = (res, name, value) => {
   return res.cookie(name, value, {
     expires: new Date(Date.now() + thirtyDaysInMilliseconds),
     maxAge: thirtyDaysInMilliseconds,
-    secure: process.env.MODE === 'production',
+    secure: process.env.NODE_ENV === 'production',
     domain: process.env.APP_HOST || 'localhost',
     sameSite: 'strict',
   });
@@ -14,7 +14,7 @@ const setServerSideCookie = (res, name, value) => {
   return res.cookie(name, value, {
     expires: new Date(Date.now() + thirtyDaysInMilliseconds),
     maxAge: thirtyDaysInMilliseconds,
-    secure: process.env.MODE === 'production',
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     domain: process.env.APP_HOST || 'localhost',
     sameSite: 'strict',

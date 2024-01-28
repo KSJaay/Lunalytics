@@ -3,9 +3,12 @@ import './row.scss';
 
 // import dependencies
 import moment from 'moment';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import MemberRowActions from './actions';
+import { useContext } from 'react';
+import ContextStore from '../../../../context';
 
 const positions = {
   1: 'Owner',
@@ -14,14 +17,19 @@ const positions = {
   4: 'Guest',
 };
 
-const MemberTableRow = ({ member = {}, currentUser = {} }) => {
+const MemberTableRow = ({ member = {} }) => {
   // Only user can manage is if the user is an admin or owner,
   // the member is not the current user,
   // and the member has a lower permission level
+
+  const {
+    userStore: { user },
+  } = useContext(ContextStore);
+
   const canManage =
-    currentUser.canManage &&
-    currentUser.email !== member.email &&
-    member.permission > currentUser.permission;
+    user.canManage &&
+    user.email !== member.email &&
+    member.permission > user.permission;
 
   const memberPermission = !member.isVerified
     ? 'Unverified'
@@ -53,4 +61,4 @@ const MemberTableRow = ({ member = {}, currentUser = {} }) => {
   );
 };
 
-export default MemberTableRow;
+export default observer(MemberTableRow);

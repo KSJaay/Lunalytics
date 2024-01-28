@@ -12,6 +12,7 @@
 
 # production
 /dist
+/stats
 
 # misc
 .DS_Store

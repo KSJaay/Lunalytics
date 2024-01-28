@@ -1,7 +1,5 @@
 const createURL = (path = '', params) => {
-  const appUrl = process.env.MODE === 'production' ? '' : process.env.APP_URL;
-
-  if (!path || !params) return `${appUrl}${path}`;
+  if (!path || !params) return path;
 
   if (path.includes('?')) {
     const [pathWithoutQuery, queries] = path.split('?');
@@ -17,12 +15,12 @@ const createURL = (path = '', params) => {
       ...params,
     }).toString();
 
-    return `${appUrl}${pathWithoutQuery}?${searchParams}`;
+    return `${pathWithoutQuery}?${searchParams}`;
   }
 
   const searchParams = new URLSearchParams(params).toString();
 
-  return `${appUrl}${path}?${searchParams}`;
+  return `${path}?${searchParams}`;
 };
 
 module.exports = { createURL };

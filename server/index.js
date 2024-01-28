@@ -34,19 +34,19 @@ const init = async () => {
     )
     .use(cookieParser());
 
-  if (process.env.MODE === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     logger.info('Express', 'Serving production static files');
-    app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
+    app.use(express.static(path.join(process.cwd(), 'dist')));
   }
 
   app.use(authorization);
   logger.info('Express', 'Initialising routes');
   initialiseRoutes(app);
 
-  if (process.env.MODE === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     logger.info('Express', 'Serving production static files');
     app.get('*', function (request, response) {
-      response.sendFile(path.join(__dirname, '..', '..', 'dist', 'index.html'));
+      response.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
     });
   }
 
@@ -54,6 +54,14 @@ const init = async () => {
   const server_port = process.env.PORT || 5050;
   app.listen(server_port, () => {
     logger.info('Express', `Server is running on port ${server_port}`);
+  });
+
+  process.on('uncaughtException', async (error) => {
+    logger.error('Express Exception', error);
+  });
+
+  process.on('unhandledRejection', async (error) => {
+    logger.error('Express Rejection', error);
   });
 };
 
