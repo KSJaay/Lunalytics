@@ -24,7 +24,7 @@
 
 - Response status `302` only occurs when the user is the first user to register (assigned as owner)
 
-### Endpoint: /login
+### Endpoint: /auth/login
 
 **Method:** POST
 
@@ -49,7 +49,7 @@
 - Response status `302` to `/verify` only occurs when the user is not verified
 - Response status `302` to `/` only occurs when the user is verified
 
-### Endpoint: /logout
+### Endpoint: /auth/logout
 
 **Method:** GET
 
@@ -128,7 +128,7 @@ Status code 302 with redirect to /login
 | 403    | User is unverified                 |                             |
 | 200    | OK                                 | [User Obejct](#user-object) |
 
-### Endpoint: /api/user/exists
+### Endpoint: /auth/user/exists
 
 **Method:** POST
 
