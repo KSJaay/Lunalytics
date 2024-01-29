@@ -8,9 +8,16 @@ import { useNavigate } from 'react-router-dom';
 import Dropdown from '../ui/dropdown/index';
 import StatusLogo from '../icons/logo';
 import Avatar from '../ui/avatar';
+import useDropdown from '../../hooks/useDropdown';
 
 const TopNavigation = () => {
+  const { dropdownIsOpen, toggleDropdown } = useDropdown(true);
   const navigate = useNavigate();
+
+  const handleNavigate = (path = '/') => {
+    navigate(path);
+    toggleDropdown();
+  };
 
   return (
     <div className="top-navigation">
@@ -22,16 +29,22 @@ const TopNavigation = () => {
         <div className="top-navigation-logo-text">Lunalytics</div>
       </div>
       <div className="top-navigation-right-container">
-        <Dropdown.Container>
-          <Dropdown.Trigger>
+        <Dropdown.Container
+          isOpen={dropdownIsOpen}
+          toggleDropdown={toggleDropdown}
+        >
+          <Dropdown.Trigger
+            isOpen={dropdownIsOpen}
+            toggleDropdown={toggleDropdown}
+          >
             <Avatar />
           </Dropdown.Trigger>
 
-          <Dropdown.List position="right">
-            <Dropdown.Item onClick={() => navigate('/settings')}>
+          <Dropdown.List position="right" isOpen={dropdownIsOpen}>
+            <Dropdown.Item onClick={() => handleNavigate('/settings')}>
               Settings
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => navigate('/logout')}>
+            <Dropdown.Item onClick={() => handleNavigate('/logout')}>
               Logout
             </Dropdown.Item>
           </Dropdown.List>

@@ -32,7 +32,7 @@ const avatars = [
   'Tiger',
 ];
 
-const ModalAvatarSelect = ({ user, onClose, handleSumbit }) => {
+const ModalAvatarSelect = ({ user = {}, onClose, handleSumbit }) => {
   const [avatarIndex, setAvatarIndex] = useState(0);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const ModalAvatarSelect = ({ user, onClose, handleSumbit }) => {
     } else {
       setAvatarIndex(index);
     }
-  }, []);
+  }, [user.avatar]);
 
   return (
     <>

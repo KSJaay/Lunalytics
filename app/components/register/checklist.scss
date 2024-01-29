@@ -55,11 +55,14 @@
 .check svg path {
   stroke-dasharray: 60;
   stroke-dashoffset: 0;
+  transition: all 0.3s linear;
+  transition-delay: 0.15s;
 }
 
 .check svg polyline {
   stroke-dasharray: 22;
   stroke-dashoffset: 66;
+  transition: all 0.2s linear;
 }
 
 #cbx2:checked + .check svg {
