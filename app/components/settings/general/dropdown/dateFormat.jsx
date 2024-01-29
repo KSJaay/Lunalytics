@@ -1,22 +1,43 @@
 import Dropdown from '../../../ui/dropdown/index';
 import timeformats from '../../../../constant/dateformats.json';
 import useTime from '../../../../hooks/useTime';
+import useDropdown from '../../../../hooks/useDropdown';
 
 const DateFormatDropdown = () => {
   const { dateformat, setDateformat } = useTime();
 
-  const dateFormatsList = timeformats.map((dateformat) => (
-    <Dropdown.Item key={dateformat} onClick={() => setDateformat(dateformat)}>
-      {dateformat}
+  const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
+
+  const dateFormatsList = timeformats.map((format) => (
+    <Dropdown.Item
+      key={format}
+      onClick={() => setDateformat(format)}
+      showDot
+      isSelected={dateformat === format}
+    >
+      {format}
     </Dropdown.Item>
   ));
 
   return (
     <>
       <label className="text-input-label">Date Format</label>
-      <Dropdown.Container position="center">
-        <Dropdown.Trigger asInput>{dateformat}</Dropdown.Trigger>
-        <Dropdown.List fullWidth>{dateFormatsList}</Dropdown.List>
+      <Dropdown.Container
+        position="center"
+        isOpen={dropdownIsOpen}
+        toggleDropdown={toggleDropdown}
+      >
+        <Dropdown.Trigger
+          asInput
+          showIcon
+          isOpen={dropdownIsOpen}
+          toggleDropdown={toggleDropdown}
+        >
+          {dateformat}
+        </Dropdown.Trigger>
+        <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
+          {dateFormatsList}
+        </Dropdown.List>
       </Dropdown.Container>
     </>
   );

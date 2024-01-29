@@ -12,6 +12,7 @@ import { createGetRequest } from '../../../services/axios';
 
 // import icons
 import FaEllipsisVertical from '../../icons/faEllipsisVertical';
+import useDropdown from '../../../hooks/useDropdown';
 
 const MonitorOptions = ({ monitorId }) => {
   const {
@@ -19,6 +20,8 @@ const MonitorOptions = ({ monitorId }) => {
     modalStore: { openModal, closeModal },
     userStore: { user },
   } = useContextStore();
+
+  const { dropdownIsOpen, toggleDropdown } = useDropdown(true);
 
   const navigate = useNavigate();
 
@@ -53,11 +56,15 @@ const MonitorOptions = ({ monitorId }) => {
   if (!user.canEdit) return null;
 
   return (
-    <Dropdown.Container position="center">
-      <Dropdown.Trigger>
+    <Dropdown.Container
+      position="center"
+      isOpen={dropdownIsOpen}
+      toggleDropdown={toggleDropdown}
+    >
+      <Dropdown.Trigger toggleDropdown={toggleDropdown}>
         <FaEllipsisVertical width={20} height={20} />
       </Dropdown.Trigger>
-      <Dropdown.List>
+      <Dropdown.List isOpen={dropdownIsOpen}>
         <Dropdown.Item onClick={handleOpen}>Open</Dropdown.Item>
         <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
       </Dropdown.List>

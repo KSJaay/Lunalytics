@@ -11,20 +11,29 @@ import Dropdown from '../../components/ui/dropdown';
 import * as validators from '../../utils/validators';
 import { createPostRequest } from '../../services/axios';
 import useContextStore from '../../context';
+import useDropdown from '../../hooks/useDropdown';
 
 const methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'];
 
 const AddMonitor = () => {
   const [error, setError] = useState(null);
-  const [method, setMethod] = useState(null);
   const {
     globalStore: { addMonitor },
   } = useContextStore();
+
   const navigate = useNavigate();
 
-  const methodOptions = methods.map((method) => (
-    <Dropdown.Item key={method} onClick={() => setMethod(method)}>
-      {method}
+  const { selectedId, dropdownIsOpen, toggleDropdown, handleDropdownSelect } =
+    useDropdown(true);
+
+  const methodOptions = methods.map((methodName) => (
+    <Dropdown.Item
+      key={methodName}
+      onClick={() => handleDropdownSelect(methodName)}
+      showDot
+      isSelected={selectedId === methodName}
+    >
+      {methodName}
     </Dropdown.Item>
   ));
 
@@ -40,7 +49,7 @@ const AddMonitor = () => {
     const hasInvalidData = validators.monitor(
       name,
       url,
-      method,
+      selectedId,
       interval,
       retryInterval,
       requestTimeout
@@ -54,7 +63,7 @@ const AddMonitor = () => {
     const query = await createPostRequest('/api/monitor/add', {
       name,
       url,
-      method,
+      method: selectedId,
       interval,
       retryInterval,
       requestTimeout,
@@ -86,11 +95,23 @@ const AddMonitor = () => {
       />
       <TextInput label="URL" id="url" defaultValue="https://" type="text" />
       <label className="text-input-label">Method</label>
-      <Dropdown.Container id="method" position="center">
-        <Dropdown.Trigger asInput>
-          {method || 'Select a method'}
+      <Dropdown.Container
+        id="method"
+        position="center"
+        isOpen={dropdownIsOpen}
+        toggleDropdown={toggleDropdown}
+      >
+        <Dropdown.Trigger
+          asInput
+          showIcon
+          isOpen={dropdownIsOpen}
+          toggleDropdown={toggleDropdown}
+        >
+          {selectedId || 'Select a method'}
         </Dropdown.Trigger>
-        <Dropdown.List fullWidth>{methodOptions}</Dropdown.List>
+        <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
+          {methodOptions}
+        </Dropdown.List>
       </Dropdown.Container>
       <TextInput
         label="Interval"
