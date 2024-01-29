@@ -10,129 +10,125 @@
   -webkit-user-select: none;
 }
 
-.dropdown summary {
-  list-style: none;
-  list-style-type: none;
+.dropdown-trigger {
   cursor: pointer;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
-.dropdown > summary::-webkit-details-marker {
-  display: none;
-}
-
-.dropdown summary:focus {
-  outline: none;
-}
-
-.dropdown summary:focus {
-  outline: none;
-}
-
-.dropdown ul {
+.dropdown-body {
   position: absolute;
-  margin: 20px 0 0 0;
+  margin: 8px 0 0 0;
   min-width: 150px;
+  height: 0;
+  max-height: 300px;
+  overflow-y: auto;
   width: max-content;
   box-sizing: border-box;
   z-index: 2;
   border-radius: 6px;
-  list-style: none;
   border-radius: 10px;
-
   @include glassmorphism;
+
+  transition: all 0.2s ease-in-out;
 }
 
-.dropdown-list {
-  max-height: 300px;
-  overflow-y: auto;
+.dropdown-body-open {
+  transition: all 0.2s ease-in-out;
+  height: auto;
 }
 
-.dropdown-list-full-width {
-  width: 100% !important;
-}
-
-/* Dropdown triangle */
-// .dropdown ul::before {
-//   content: ' ';
-//   position: absolute;
-//   width: 0;
-//   height: 0;
-//   top: -10px;
-//   left: 25px;
-//   margin-left: -10px;
-//   border-style: solid;
-//   border-width: 0 10px 10px 10px;
-//   border-color: transparent transparent rgba(0, 0, 0, 0.3) transparent;
-// }
-
-.dropdown-position--left ul {
-  right: 0;
-}
-
-.dropdown-position--right ul {
-  left: 0;
-}
-
-.dropdown-position--center ul {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.dropdown-position--top ul {
-  margin: 0;
-  padding: 0;
-  top: -100%;
-  bottom: auto;
-}
-
-.dropdown-position--top ul li:first-child {
-  border-radius: 0 0 10px 10px;
-}
-
-.dropdown-position--top ul li:last-child {
-  border-radius: 10px 10px 0 0;
-}
-
-.dropdown ul li {
+.dropdown-item {
   margin: 0;
   padding: 10px 0.8rem;
   width: 100%;
   box-sizing: border-box;
-  color: var(--font-color);
   text-decoration: none;
+  color: var(--font-color);
 }
 
-.dropdown ul li:first-child {
-  border-radius: 10px 10px 0 0;
-}
-
-.dropdown ul li:last-child {
-  border-radius: 0 0 10px 10px;
-}
-
-.dropdown ul li:hover {
+.dropdown-item:hover {
   background-color: var(--primary-800);
   color: var(--font-color);
   cursor: pointer;
 }
 
-/* Close the dropdown with outside clicks */
-.dropdown > summary::before {
-  display: none;
+.dropdown-item-dot {
+  opacity: 0;
+  color: var(--accent-200);
+  transition: all 0.2s ease-in-out;
 }
 
-.dropdown[open] > summary::before {
-  content: ' ';
-  display: block;
-  position: fixed;
-  top: 0;
+.dropdown-item-dot--blue {
+  color: var(--blue-700);
+}
+
+.dropdown-item-dot--cyan {
+  color: var(--cyan-700);
+}
+
+.dropdown-item-dot--gray {
+  color: var(--gray-700);
+}
+
+.dropdown-item-dot--green {
+  color: var(--green-700);
+}
+
+.dropdown-item-dot--pink {
+  color: var(--pink-700);
+}
+
+.dropdown-item-dot--primary {
+  color: var(--primary-700);
+}
+
+.dropdown-item-dot--purple {
+  color: var(--purple-700);
+}
+
+.dropdown-item-dot--red {
+  color: var(--red-700);
+}
+
+.dropdown-item-dot--yellow {
+  color: var(--yellow-700);
+}
+
+.dropdown-item-selected {
+  opacity: 1;
+}
+
+.dropdown-trigger-icon {
+  font-size: 13px;
+  color: var(--font-color);
+  transform: rotate(0deg);
+  transition: all 0.15s ease-in-out;
+}
+
+.dropdown-trigger-icon.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-position--left .dropdown-body {
   right: 0;
+}
+
+.dropdown-position--right .dropdown-body {
   left: 0;
-  bottom: 0;
-  z-index: 1;
+}
+
+.dropdown-position--center .dropdown-body {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dropdown-position--top .dropdown-body {
+  margin: 0;
+  padding: 0;
+  top: -100%;
+  bottom: auto;
 }
 
 .dropdown-trigger-input {
@@ -148,13 +144,12 @@
   margin-top: pxToRem(4);
   border-color: var(--primary-700);
   border: 2px solid #ffffff00;
-  justify-content: flex-start !important;
 
   &:focus {
     border: 2px solid var(--primary-700);
   }
 }
 
-.dropdown-trigger-input[open] > summary::after > ul li:hover {
-  display: none;
+.dropdown-list-full-width {
+  width: 100%;
 }
