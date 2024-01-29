@@ -24,7 +24,7 @@ const App = () => {
   useLayoutEffect(() => {
     document.documentElement.dataset.theme = theme.type;
     document.documentElement.dataset.color = theme.color;
-  }, []);
+  }, [theme.color, theme.type]);
 
   const query = useParams();
   const [page, ...params] = query['*']?.toLowerCase().split('/') || [];
