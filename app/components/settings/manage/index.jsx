@@ -1,7 +1,7 @@
 import './style.scss';
 
 // import dependencies
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 // import local files
