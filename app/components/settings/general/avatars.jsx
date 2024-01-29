@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import Modal from '../../ui/modal';
 import useContextStore from '../../../context';
 import { createPostRequest } from '../../../services/axios';
+import { userPropType } from '../../../utils/propTypes';
 
 const avatars = [
   'Ape',
@@ -144,7 +145,7 @@ const AvatarSelect = () => {
 AvatarSelect.displayName = 'AvatarSelect';
 
 ModalAvatarSelect.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: userPropType.isRequired,
   onClose: PropTypes.func.isRequired,
   handleSumbit: PropTypes.func.isRequired,
 };

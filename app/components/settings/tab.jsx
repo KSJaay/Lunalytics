@@ -34,7 +34,10 @@ const SettingsTab = ({ tab, handleTabUpdate }) => {
 SettingsTab.displayName = 'SettingsTab';
 
 SettingsTab.propTypes = {
-  tab: PropTypes.string.isRequired,
+  tab: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }).isRequired,
   handleTabUpdate: PropTypes.func.isRequired,
 };
 

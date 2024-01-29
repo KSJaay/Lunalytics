@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import useTime from '../../hooks/useTime';
 import { heartbeatPropType } from '../../utils/propTypes';
 
-const UptimeInfo = ({ heartbeat }) => {
+const UptimeInfo = ({ heartbeat = {} }) => {
   const { dateformat, timeformat, timezone } = useTime();
 
   const classes = classNames('monitor-uptime-info-button', {

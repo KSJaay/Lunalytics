@@ -102,6 +102,8 @@ MemberPermissionsModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
+MemeberPermission.displayName = 'MemeberPermission';
+
 MemeberPermission.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
