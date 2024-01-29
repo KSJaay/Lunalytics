@@ -1,6 +1,7 @@
 import './style.scss';
 
 // import dependencies
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -32,5 +33,9 @@ const Monitor = ({ monitorId }) => {
 };
 
 Monitor.displayName = 'MonitorPage';
+
+Monitor.propTypes = {
+  monitorId: PropTypes.string.isRequired,
+};
 
 export default observer(Monitor);

@@ -1,6 +1,9 @@
 // import styles
 import './monitor.scss';
 
+// import dependencies
+import PropTypes from 'prop-types';
+
 const MonitorForm = ({ title, error, children, ...props }) => {
   return (
     <div className="monitor-form-container">
@@ -14,6 +17,14 @@ const MonitorForm = ({ title, error, children, ...props }) => {
       </form>
     </div>
   );
+};
+
+MonitorForm.displayName = 'MonitorForm';
+
+MonitorForm.propTypes = {
+  title: PropTypes.string,
+  error: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default MonitorForm;

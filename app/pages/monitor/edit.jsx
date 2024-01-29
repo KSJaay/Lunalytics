@@ -5,6 +5,7 @@ import { useState } from 'react';
 import TextInput from '../../components/ui/input';
 import * as validators from '../../utils/validators';
 import MonitorForm from '../../components/ui/form/monitor';
+import { monitorPropType } from '../../utils/propTypes';
 
 const EditMonitor = ({ monitor = {} }) => {
   const [error, setError] = useState(null);
@@ -68,5 +69,9 @@ const EditMonitor = ({ monitor = {} }) => {
 };
 
 EditMonitor.displayName = 'EditMonitor';
+
+EditMonitor.propTypes = {
+  monitor: monitorPropType.isRequired,
+};
 
 export default EditMonitor;

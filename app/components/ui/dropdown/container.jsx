@@ -1,4 +1,5 @@
-// Import dependencies
+// import dependencies
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const Container = ({ children, position = 'left', ...props }) => {
@@ -14,6 +15,13 @@ const Container = ({ children, position = 'left', ...props }) => {
       {children}
     </details>
   );
+};
+
+Container.displayName = 'Dropdown.Container';
+
+Container.propTypes = {
+  children: PropTypes.node,
+  position: PropTypes.oneOf(['left', 'right', 'center', 'top']),
 };
 
 export default Container;

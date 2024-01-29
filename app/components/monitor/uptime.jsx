@@ -1,31 +1,12 @@
 import './uptime.scss';
-import moment from 'moment';
+
+// import dependencies
 import 'moment-timezone';
-import useTime from '../../hooks/useTime';
-import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
-const UptimeInfo = ({ heartbeat }) => {
-  const { dateformat, timeformat, timezone } = useTime();
-
-  const classes = classNames('monitor-uptime-info-button', {
-    'monitor-uptime-info-button-inactive': heartbeat?.isDown,
-    'monitor-uptime-info-button-active': !heartbeat?.isDown,
-  });
-
-  return (
-    <div className="monitor-uptime-content">
-      <div className={classes}>{heartbeat?.isDown ? 'DOWN' : 'UP'}</div>
-      <div className="monitor-uptime-info">
-        {moment(heartbeat.date)
-          .tz(timezone)
-          .format(`${dateformat} ${timeformat}`)}
-      </div>
-      <div className="monitor-uptime-info">
-        {heartbeat.message || 'Unknown'}
-      </div>
-    </div>
-  );
-};
+// import local files
+import { heartbeatPropType } from '../../utils/propTypes';
+import UptimeInfo from './updateInfo';
 
 const MonitorUptime = ({ heartbeats = [] }) => {
   const heartbeatList = heartbeats.map((heartbeat) => (
@@ -42,6 +23,12 @@ const MonitorUptime = ({ heartbeats = [] }) => {
       {heartbeatList}
     </div>
   );
+};
+
+MonitorUptime.displayName = 'MonitorUptime';
+
+MonitorUptime.propTypes = {
+  heartbeats: PropTypes.arrayOf(heartbeatPropType).isRequired,
 };
 
 export default MonitorUptime;

@@ -2,6 +2,7 @@
 import './avatar.scss';
 
 // import dependencies
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -22,6 +23,13 @@ const Avatar = ({ showUsername = true, showAvatar = true }) => {
       )}
     </div>
   );
+};
+
+Avatar.displayName = 'Avatar';
+
+Avatar.propTypes = {
+  showUsername: PropTypes.bool,
+  showAvatar: PropTypes.bool,
 };
 
 export default observer(Avatar);

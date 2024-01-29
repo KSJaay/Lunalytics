@@ -1,6 +1,7 @@
 import './avatars.scss';
 
 // import dependencies
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { toast } from 'sonner';
@@ -138,6 +139,14 @@ const AvatarSelect = () => {
       </div>
     </>
   );
+};
+
+AvatarSelect.displayName = 'AvatarSelect';
+
+ModalAvatarSelect.propTypes = {
+  user: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  handleSumbit: PropTypes.func.isRequired,
 };
 
 export default observer(AvatarSelect);

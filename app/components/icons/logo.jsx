@@ -1,4 +1,5 @@
 // import dependencies
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -78,6 +79,12 @@ const StatusLogo = ({ size = '250' }) => {
       </g>
     </svg>
   );
+};
+
+StatusLogo.displayName = 'StatusLogo';
+
+StatusLogo.propTypes = {
+  size: PropTypes.string,
 };
 
 export default observer(StatusLogo);

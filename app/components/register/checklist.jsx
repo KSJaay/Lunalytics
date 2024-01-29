@@ -1,5 +1,8 @@
 import './checklist.scss';
 
+// import dependencies
+import PropTypes from 'prop-types';
+
 const RegisterChecklist = ({ password = '' }) => {
   const handEightCharacters = password.length >= 8;
   const hasLetter = /[a-zA-Z]+/.test(password);
@@ -65,6 +68,12 @@ const RegisterChecklist = ({ password = '' }) => {
       </div>
     </div>
   );
+};
+
+RegisterChecklist.displayName = 'RegisterChecklist';
+
+RegisterChecklist.propTypes = {
+  password: PropTypes.string,
 };
 
 export default RegisterChecklist;

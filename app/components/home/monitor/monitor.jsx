@@ -5,6 +5,7 @@ import StatusBar from '../../ui/statusBar';
 // import styles
 import './monitor.scss';
 import MonitorOptions from './options';
+import { monitorPropType } from '../../../utils/propTypes';
 
 const Monitor = ({ monitor = {} }) => {
   const navigate = useNavigate();
@@ -44,5 +45,9 @@ const Monitor = ({ monitor = {} }) => {
 };
 
 Monitor.displayName = 'Monitor';
+
+Monitor.propTypes = {
+  monitor: monitorPropType.isRequired,
+};
 
 export default Monitor;

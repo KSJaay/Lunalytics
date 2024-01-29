@@ -1,9 +1,12 @@
+// import styles
+import './index.scss';
+
+// import dependencies
+import PropTypes from 'prop-types';
+
 // import local files
 import TopNavigation from './top';
 import LeftNavigation from './left';
-
-// import styles
-import './index.scss';
 
 const Navigation = ({ children, activeUrl = '/' }) => {
   return (
@@ -15,6 +18,13 @@ const Navigation = ({ children, activeUrl = '/' }) => {
       </div>
     </div>
   );
+};
+
+Navigation.displayName = 'Navigation';
+
+Navigation.propTypes = {
+  children: PropTypes.node,
+  activeUrl: PropTypes.string,
 };
 
 export default Navigation;

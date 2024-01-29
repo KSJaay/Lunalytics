@@ -1,4 +1,8 @@
+import { heartbeatPropType } from '../../utils/propTypes';
 import './statusBar.scss';
+
+// import dependencies
+import PropTypes from 'prop-types';
 
 const StatusBar = ({ heartbeats = {}, maxHeartbeats = 12 }) => {
   const heartbeatList = [];
@@ -36,6 +40,13 @@ const StatusBar = ({ heartbeats = {}, maxHeartbeats = 12 }) => {
       {heartbeatList}
     </div>
   );
+};
+
+StatusBar.displayName = 'StatusBar';
+
+StatusBar.propTypes = {
+  heartbeats: PropTypes.arrayOf(heartbeatPropType).isRequired,
+  maxHeartbeats: PropTypes.number,
 };
 
 export default StatusBar;

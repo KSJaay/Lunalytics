@@ -1,7 +1,12 @@
+// import dependencies
+import PropTypes from 'prop-types';
 import { toast } from 'sonner';
+
+// import local files
 import { createPostRequest } from '../../../../../services/axios';
 import Modal from '../../../../ui/modal';
 import useTeamContext from '../../../../../context/team';
+import { userPropType } from '../../../../../utils/propTypes';
 
 const MemberDeleteModal = ({ member, onClose }) => {
   const { removeUser } = useTeamContext();
@@ -38,6 +43,13 @@ const MemberDeleteModal = ({ member, onClose }) => {
       </Modal.Actions>
     </>
   );
+};
+
+MemberDeleteModal.displayName = 'MemberDeleteModal';
+
+MemberDeleteModal.propTypes = {
+  member: userPropType.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default MemberDeleteModal;

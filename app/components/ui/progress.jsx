@@ -1,5 +1,8 @@
-import classNames from 'classnames';
 import './progress.scss';
+
+// import dependencies
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 const ProgressBar = ({ sections = 1, progress = 1 }) => {
   // create an array of divs that match the number of sections
@@ -26,6 +29,13 @@ const ProgressBar = ({ sections = 1, progress = 1 }) => {
       {sectionsArray}
     </div>
   );
+};
+
+ProgressBar.displayName = 'ProgressBar';
+
+ProgressBar.propTypes = {
+  sections: PropTypes.number,
+  progress: PropTypes.number,
 };
 
 export default ProgressBar;

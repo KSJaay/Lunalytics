@@ -17,8 +17,8 @@ const Trigger = ({ asInput, children, ...props }) => {
 Trigger.displayName = 'DropdownTrigger';
 
 Trigger.propTypes = {
+  asInput: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  position: PropTypes.oneOf(['left', 'right', 'center', 'top']),
 };
 
 export default Trigger;
