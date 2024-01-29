@@ -1,4 +1,5 @@
 // import dependencies
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -65,5 +66,9 @@ const MonitorOptions = ({ monitorId }) => {
 };
 
 MonitorOptions.displayName = 'MonitorOptions';
+
+MonitorOptions.propTypes = {
+  monitorId: PropTypes.string.isRequired,
+};
 
 export default observer(MonitorOptions);

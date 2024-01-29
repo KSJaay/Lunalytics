@@ -1,6 +1,9 @@
 // import styles
 import './input.scss';
 
+// import dependencies
+import PropTypes from 'prop-types';
+
 const TextInput = ({ label, id, error, ...props }) => {
   return (
     <>
@@ -9,6 +12,14 @@ const TextInput = ({ label, id, error, ...props }) => {
       {error && <label className="text-input-error">{error}</label>}
     </>
   );
+};
+
+TextInput.displayName = 'TextInput';
+
+TextInput.propTypes = {
+  label: PropTypes.string,
+  id: PropTypes.string,
+  error: PropTypes.string,
 };
 
 export default TextInput;

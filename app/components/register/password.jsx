@@ -1,3 +1,6 @@
+// import dependencies
+import PropTypes from 'prop-types';
+
 // import local files
 import TextInput from '../../components/ui/input';
 import ProgressBar from '../../components/ui/progress';
@@ -56,6 +59,16 @@ const RegisterPasswordForm = ({
       <ProgressBar sections={3} progress={2} />
     </>
   );
+};
+
+RegisterPasswordForm.displayName = 'RegisterPasswordForm';
+
+RegisterPasswordForm.propTypes = {
+  handleInput: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  setPassword: PropTypes.func.isRequired,
+  inputs: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 export default RegisterPasswordForm;

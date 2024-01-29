@@ -1,4 +1,5 @@
 // import dependencies
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
@@ -53,5 +54,9 @@ const MonitorsLayout = ({ children }) => {
 };
 
 MonitorsLayout.displayName = 'MonitorsLayout';
+
+MonitorsLayout.propTypes = {
+  children: PropTypes.node,
+};
 
 export default observer(MonitorsLayout);

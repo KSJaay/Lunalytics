@@ -1,6 +1,9 @@
 import './status.scss';
 
-const MonitorStatus = ({ monitor }) => {
+// import local files
+import { fullMonitorPropType } from '../../utils/propTypes';
+
+const MonitorStatus = ({ monitor = [] }) => {
   const [lastHeartbeat = {}] = monitor.heartbeats;
 
   return (
@@ -33,6 +36,12 @@ const MonitorStatus = ({ monitor }) => {
       </div>
     </div>
   );
+};
+
+MonitorStatus.displayName = 'MonitorStatus';
+
+MonitorStatus.propTypes = {
+  monitor: fullMonitorPropType.isRequired,
 };
 
 export default MonitorStatus;

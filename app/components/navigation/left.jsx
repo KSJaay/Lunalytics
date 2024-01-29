@@ -1,9 +1,12 @@
+// import styles
+import './left.scss';
+
+// import dependencies
+import PropTypes from 'prop-types';
+
 // import local files
 import { useNavigate } from 'react-router-dom';
 import { FaCog, FaHome, FaSignOutAlt } from '../icons';
-
-// import styles
-import './left.scss';
 
 const actionTabs = [
   {
@@ -54,6 +57,12 @@ const LeftNavigation = ({ activeUrl = '' }) => {
       </div>
     </div>
   );
+};
+
+LeftNavigation.displayName = 'LeftNavigation';
+
+LeftNavigation.propTypes = {
+  activeUrl: PropTypes.string,
 };
 
 export default LeftNavigation;

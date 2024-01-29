@@ -46,4 +46,6 @@ const ManageTeam = () => {
   );
 };
 
+ManageTeam.displayName = 'ManageTeam';
+
 export default observer(ManageTeam);

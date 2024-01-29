@@ -71,51 +71,11 @@
   }
 }
 
-.modal-alert-button--primary {
-  background-color: var(--primary-800);
-
-  &:hover {
-    background-color: var(--primary-700);
-  }
-}
-
 .modal-alert-button--blue {
   background-color: var(--blue-800);
 
   &:hover {
     background-color: var(--blue-700);
-  }
-}
-
-.modal-alert-button--purple {
-  background-color: var(--purple-800);
-
-  &:hover {
-    background-color: var(--purple-700);
-  }
-}
-
-.modal-alert-button--green {
-  background-color: var(--green-800);
-
-  &:hover {
-    background-color: var(--green-700);
-  }
-}
-
-.modal-alert-button--yellow {
-  background-color: var(--yellow-800);
-
-  &:hover {
-    background-color: var(--yellow-700);
-  }
-}
-
-.modal-alert-button--red {
-  background-color: var(--red-800);
-
-  &:hover {
-    background-color: var(--red-700);
   }
 }
 
@@ -127,10 +87,57 @@
   }
 }
 
+.modal-alert-button--gray {
+  background-color: var(--gray-800);
+
+  &:hover {
+    background-color: var(--gray-700);
+  }
+}
+
+.modal-alert-button--green {
+  background-color: var(--green-800);
+
+  &:hover {
+    background-color: var(--green-700);
+  }
+}
 .modal-alert-button--pink {
   background-color: var(--pink-800);
 
   &:hover {
     background-color: var(--pink_700);
+  }
+}
+
+.modal-alert-button--primary {
+  background-color: var(--primary-800);
+
+  &:hover {
+    background-color: var(--primary_700);
+  }
+}
+
+.modal-alert-button--purple {
+  background-color: var(--purple-800);
+
+  &:hover {
+    background-color: var(--purple-700);
+  }
+}
+
+.modal-alert-button--red {
+  background-color: var(--red-800);
+
+  &:hover {
+    background-color: var(--red-700);
+  }
+}
+
+.modal-alert-button--yellow {
+  background-color: var(--yellow-800);
+
+  &:hover {
+    background-color: var(--yellow-700);
   }
 }

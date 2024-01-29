@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 // import local files
 import MemberRowActions from './actions';
 import useContextStore from '../../../../context';
+import { userPropType } from '../../../../utils/propTypes';
 
 const positions = {
   1: 'Owner',
@@ -58,6 +59,12 @@ const MemberTableRow = ({ member = {} }) => {
       </div>
     </div>
   );
+};
+
+MemberTableRow.displayName = 'MemberTableRow';
+
+MemberTableRow.propTypes = {
+  member: userPropType.isRequired,
 };
 
 export default observer(MemberTableRow);

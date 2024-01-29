@@ -1,8 +1,12 @@
 import './permissions.scss';
 
+// import dependencies
+import PropTypes from 'prop-types';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import classNames from 'classnames';
+
+// import local files
 import { createPostRequest } from '../../../../../services/axios';
 import Modal from '../../../../ui/modal';
 import useTeamContext from '../../../../../context/team';
@@ -89,6 +93,21 @@ const MemberPermissionsModal = ({ member, onClose }) => {
       </Modal.Actions>
     </>
   );
+};
+
+MemberPermissionsModal.displayName = 'MemberPermissionsModal';
+
+MemberPermissionsModal.propTypes = {
+  member: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+MemeberPermission.displayName = 'MemeberPermission';
+
+MemeberPermission.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };
 
 export default MemberPermissionsModal;

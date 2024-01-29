@@ -1,6 +1,7 @@
 import './avatars.scss';
 
 // import dependencies
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { toast } from 'sonner';
@@ -9,6 +10,7 @@ import { toast } from 'sonner';
 import Modal from '../../ui/modal';
 import useContextStore from '../../../context';
 import { createPostRequest } from '../../../services/axios';
+import { userPropType } from '../../../utils/propTypes';
 
 const avatars = [
   'Ape',
@@ -138,6 +140,14 @@ const AvatarSelect = () => {
       </div>
     </>
   );
+};
+
+AvatarSelect.displayName = 'AvatarSelect';
+
+ModalAvatarSelect.propTypes = {
+  user: userPropType.isRequired,
+  onClose: PropTypes.func.isRequired,
+  handleSumbit: PropTypes.func.isRequired,
 };
 
 export default observer(AvatarSelect);

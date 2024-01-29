@@ -1,6 +1,7 @@
 import './graph.scss';
 
 // import dependencies
+import PropTypes from 'prop-types';
 import 'chartjs-adapter-dayjs-3';
 import {
   BarController,
@@ -20,6 +21,7 @@ import { Chart } from 'react-chartjs-2';
 // import local files
 import useTime from '../../hooks/useTime';
 import useTheme from '../../hooks/useTheme';
+import { heartbeatPropType } from '../../utils/propTypes';
 
 ChartJs.register(
   LineController,
@@ -34,7 +36,7 @@ ChartJs.register(
   CategoryScale
 );
 
-const MonitorGraph = ({ heartbeats, maxValue }) => {
+const MonitorGraph = ({ heartbeats = [], maxValue }) => {
   const { dateformat, timeformat } = useTime();
 
   const labels = heartbeats.map((heartbeat) => heartbeat.date);
@@ -140,6 +142,13 @@ const MonitorGraph = ({ heartbeats, maxValue }) => {
       />
     </div>
   );
+};
+
+MonitorGraph.displayName = 'MonitorGraph';
+
+MonitorGraph.propTypes = {
+  heartbeats: PropTypes.arrayOf(heartbeatPropType).isRequired,
+  maxValue: PropTypes.number.isRequired,
 };
 
 export default MonitorGraph;

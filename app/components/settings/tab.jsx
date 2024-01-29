@@ -1,5 +1,8 @@
 import './tab.scss';
 
+// import dependencies
+import PropTypes from 'prop-types';
+
 const tabs = [
   { name: 'general', text: 'General' },
   { name: 'manage', text: 'Manage Team' },
@@ -26,6 +29,16 @@ const SettingsTab = ({ tab, handleTabUpdate }) => {
       {tabsList}
     </div>
   );
+};
+
+SettingsTab.displayName = 'SettingsTab';
+
+SettingsTab.propTypes = {
+  tab: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }).isRequired,
+  handleTabUpdate: PropTypes.func.isRequired,
 };
 
 export default SettingsTab;

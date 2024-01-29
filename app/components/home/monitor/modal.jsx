@@ -1,3 +1,7 @@
+// import dependencies
+import PropTypes from 'prop-types';
+
+// import local files
 import Modal from '../../ui/modal';
 
 const MonitorModal = ({ monitorId, handleClose, handleConfirm }) => {
@@ -18,6 +22,14 @@ const MonitorModal = ({ monitorId, handleClose, handleConfirm }) => {
       </Modal.Actions>
     </>
   );
+};
+
+MonitorModal.displayName = 'MonitorModal';
+
+MonitorModal.propTypes = {
+  monitorId: PropTypes.string.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  handleConfirm: PropTypes.func.isRequired,
 };
 
 export default MonitorModal;
