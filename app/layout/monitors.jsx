@@ -1,11 +1,11 @@
 // import dependencies
+import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import ContextStore from '../context';
 import Modal from '../components/ui/modal';
+import useContextStore from '../context';
 import { createGetRequest } from '../services/axios';
 import { fetchMonitorById } from '../services/monitor/fetch';
 
@@ -14,7 +14,7 @@ const MonitorsLayout = ({ children }) => {
     modalStore: { isOpen, content, glassmorph },
     globalStore: { setMonitors, setTimeouts },
     userStore: { setUser },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   const navigate = useNavigate();
 

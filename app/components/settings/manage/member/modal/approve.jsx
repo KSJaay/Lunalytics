@@ -1,19 +1,27 @@
+// import dependencies
 import { toast } from 'sonner';
+import { observer } from 'mobx-react-lite';
+
+// import local files
 import { createPostRequest } from '../../../../../services/axios';
 import Modal from '../../../../ui/modal';
+import useTeamContext from '../../../../../context/team';
 
 const MemberApproveModal = ({ member, onClose }) => {
+  const { updateUserVerified } = useTeamContext();
+
   const handleConfirm = async () => {
     try {
       await createPostRequest('/api/user/access/approve', {
         email: member.email,
       });
 
-      toast.success('User request declined successfully.');
+      updateUserVerified(member.email);
 
+      toast.success('User request approved successfully.');
       onClose();
     } catch (error) {
-      toast.error("Error declining user's request.");
+      toast.error("Error approving user's request.");
     }
   };
 
@@ -36,4 +44,4 @@ const MemberApproveModal = ({ member, onClose }) => {
   );
 };
 
-export default MemberApproveModal;
+export default observer(MemberApproveModal);

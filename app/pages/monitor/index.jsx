@@ -1,20 +1,19 @@
 import './style.scss';
 
-// import node_modules
-import { useContext } from 'react';
+// import dependencies
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import MonitorStatus from '../../components/monitor/status';
 import MonitorGraph from '../../components/monitor/graph';
 import MonitorUptime from '../../components/monitor/uptime';
-import ContextStore from '../../context';
 import Spacer from '../../components/ui/spacer';
+import useContextStore from '../../context';
 
 const Monitor = ({ monitorId }) => {
   const {
     globalStore: { getMonitor },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   const monitor = getMonitor(monitorId);
 

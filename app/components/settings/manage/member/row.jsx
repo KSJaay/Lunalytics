@@ -7,8 +7,7 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import MemberRowActions from './actions';
-import { useContext } from 'react';
-import ContextStore from '../../../../context';
+import useContextStore from '../../../../context';
 
 const positions = {
   1: 'Owner',
@@ -24,7 +23,7 @@ const MemberTableRow = ({ member = {} }) => {
 
   const {
     userStore: { user },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   const canManage =
     user.canManage &&

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { createPostRequest } from '../../../../../services/axios';
 import Modal from '../../../../ui/modal';
+import useTeamContext from '../../../../../context/team';
 
 const MemeberPermission = ({ title, description, isActive, ...props }) => {
   const containerClasses = classNames('permissions-container', {
@@ -25,6 +26,7 @@ const MemeberPermission = ({ title, description, isActive, ...props }) => {
 
 const MemberPermissionsModal = ({ member, onClose }) => {
   const [permission, setPermission] = useState(member?.permission);
+  const { updateUserPermission } = useTeamContext();
 
   const handleConfirm = async () => {
     try {
@@ -33,9 +35,10 @@ const MemberPermissionsModal = ({ member, onClose }) => {
         permission,
       });
 
-      onClose();
+      updateUserPermission(member.email, permission);
 
       toast.success('User permissions updated successfully.');
+      onClose();
     } catch (error) {
       if (error.response?.status === 400) {
         return toast.error(

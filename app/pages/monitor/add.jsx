@@ -1,7 +1,8 @@
-// import node_modules
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import dependencies
+import { toast } from 'sonner';
+import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 
 // import local files
 import TextInput from '../../components/ui/input';
@@ -9,8 +10,7 @@ import MonitorForm from '../../components/ui/form/monitor';
 import Dropdown from '../../components/ui/dropdown';
 import * as validators from '../../utils/validators';
 import { createPostRequest } from '../../services/axios';
-import ContextStore from '../../context';
-import { toast } from 'sonner';
+import useContextStore from '../../context';
 
 const methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'];
 
@@ -19,7 +19,7 @@ const AddMonitor = () => {
   const [method, setMethod] = useState(null);
   const {
     globalStore: { addMonitor },
-  } = useContext(ContextStore);
+  } = useContextStore();
   const navigate = useNavigate();
 
   const methodOptions = methods.map((method) => (

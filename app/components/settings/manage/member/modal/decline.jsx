@@ -1,13 +1,18 @@
 import { toast } from 'sonner';
 import { createPostRequest } from '../../../../../services/axios';
 import Modal from '../../../../ui/modal';
+import useTeamContext from '../../../../../context/team';
 
 const MemberDeclineModal = ({ member, onClose }) => {
+  const { removeUser } = useTeamContext();
+
   const handleConfirm = async () => {
     try {
       await createPostRequest('/api/user/access/decline', {
         email: member.email,
       });
+
+      removeUser(member.email);
 
       toast.success('User request declined successfully.');
       onClose();

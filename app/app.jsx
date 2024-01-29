@@ -1,4 +1,4 @@
-// import node_modules
+// import dependencies
 import { useParams } from 'react-router-dom';
 
 // import local files

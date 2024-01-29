@@ -1,4 +1,4 @@
-// import node_modules
+// import dependencies
 const jwt = require('jsonwebtoken');
 
 // import local files

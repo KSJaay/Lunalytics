@@ -1,8 +1,9 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 
 // Global stores
 import GlobalStore from './global';
 import ModalStore from './modal';
+
 import UserStore from './user';
 
 const store = {
@@ -12,5 +13,6 @@ const store = {
 };
 
 const ContextStore = createContext(store);
+const useContextStore = () => useContext(ContextStore);
 
-export default ContextStore;
+export default useContextStore;

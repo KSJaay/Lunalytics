@@ -1,11 +1,13 @@
+// import dependencies
 import { observer } from 'mobx-react-lite';
-import { useContext } from 'react';
-import ContextStore from '../../context';
+
+// import local files
+import useContextStore from '../../context';
 
 const StatusLogo = ({ size = '250' }) => {
   const {
     globalStore: { monitors },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   const totalMonitors = monitors.length;
   const offlineMonitors = monitors.filter(

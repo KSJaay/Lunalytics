@@ -1,15 +1,18 @@
 import './style.scss';
 
 // import dependencies
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 // import local files
 import { createGetRequest } from '../../../services/axios';
 import MembersTable from './member';
+import useTeamContext from '../../../context/team';
+import { observer } from 'mobx-react-lite';
 
 const ManageTeam = () => {
-  const [team, setTeam] = useState([]);
+  const { getTeam, setTeam } = useTeamContext();
+  const team = getTeam();
 
   const sortedMembers = team?.sort((a, b) => a?.permission - b?.permission);
 
@@ -43,4 +46,4 @@ const ManageTeam = () => {
   );
 };
 
-export default ManageTeam;
+export default observer(ManageTeam);
