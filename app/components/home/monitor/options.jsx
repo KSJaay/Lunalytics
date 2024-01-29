@@ -1,20 +1,23 @@
-// import node_modules
-import { useContext } from 'react';
+// import dependencies
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import Dropdown from '../../ui/dropdown/index';
-import ContextStore from '../../../context';
-import FaEllipsisVertical from '../../icons/faEllipsisVertical';
-import { createGetRequest } from '../../../services/axios';
+
+// import local files
 import MonitorModal from './modal';
+import Dropdown from '../../ui/dropdown/index';
+import useContextStore from '../../../context';
+import { createGetRequest } from '../../../services/axios';
+
+// import icons
+import FaEllipsisVertical from '../../icons/faEllipsisVertical';
 
 const MonitorOptions = ({ monitorId }) => {
   const {
     globalStore: { removeMonitor, getMonitor },
     modalStore: { openModal, closeModal },
     userStore: { user },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   const navigate = useNavigate();
 

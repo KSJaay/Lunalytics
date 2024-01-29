@@ -1,13 +1,4 @@
-// Name
-// URL
-// Interval
-// Retry Interval
-// Request Timeout
-// Acceptable Status Codes (200-299, 300-399, 400-499, 500-599, or select a specific one) (Dropdown)
-// Method - GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS (Dropdown)
-// Headers - Textarea (JSON format)
-
-// import node_modules
+// import dependencies
 import { useState } from 'react';
 
 // import local files

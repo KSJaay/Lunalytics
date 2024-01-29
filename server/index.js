@@ -1,4 +1,4 @@
-// Import node_modules
+// Import dependencies
 const express = require('express');
 const cors = require('cors');
 const path = require('path');

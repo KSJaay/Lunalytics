@@ -3,7 +3,6 @@ import './style.scss';
 import './row.scss';
 
 // import dependencies
-import { useContext } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 
@@ -18,7 +17,7 @@ import MemberApproveModal from './modal/approve';
 import MemberDeclineModal from './modal/decline';
 import MemberDeleteModal from './modal/delete';
 import MemberPermissionsModal from './modal/permissions';
-import ContextStore from '../../../../context';
+import useContextStore from '../../../../context';
 
 const MemberRowActions = ({ member = {}, canManage = false }) => {
   const classes = classNames({
@@ -27,7 +26,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
 
   const {
     modalStore: { openModal, closeModal },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   if (!member.isVerified && canManage) {
     return (

@@ -1,19 +1,21 @@
-// import local files
+import './add.scss';
+
+// import dependencies
 import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+
+// import icons
 import FaPlus from '../icons/faPlus';
 
-// import styles
-import './add.scss';
-import { observer } from 'mobx-react-lite';
-import { useContext } from 'react';
-import ContextStore from '../../context';
+// import local files
+import useContextStore from '../../context';
 
 const AddMonitor = () => {
   const navigate = useNavigate();
 
   const {
     userStore: { user },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   if (!user.canEdit) return null;
 

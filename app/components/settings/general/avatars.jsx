@@ -1,11 +1,14 @@
 import './avatars.scss';
 
-import { useContext, useEffect, useState } from 'react';
+// import dependencies
+import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { toast } from 'sonner';
-import ContextStore from '../../../context';
-import { createPostRequest } from '../../../services/axios';
+
+// import local files
 import Modal from '../../ui/modal';
+import useContextStore from '../../../context';
+import { createPostRequest } from '../../../services/axios';
 
 const avatars = [
   'Ape',
@@ -100,7 +103,7 @@ const AvatarSelect = () => {
   const {
     modalStore: { openModal, closeModal },
     userStore: { user, setUser },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   const handleSumbit = async (avatar) => {
     if (user.avatar !== avatar) {

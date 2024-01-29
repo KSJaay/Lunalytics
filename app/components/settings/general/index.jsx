@@ -3,7 +3,6 @@ import '../tab.scss';
 import './style.scss';
 
 // import dependencies
-import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -17,12 +16,12 @@ import {
   ThemesDropdown,
 } from './dropdown';
 import AvatarSelect from './avatars';
-import ContextStore from '../../../context';
+import useContextStore from '../../../context';
 
 const SettingsGeneral = () => {
   const {
     userStore: { user, setUser },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   const handleUpdate = async (e) => {
     const value = e.target?.value?.trim();

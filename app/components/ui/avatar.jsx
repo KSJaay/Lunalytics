@@ -3,15 +3,14 @@ import './avatar.scss';
 
 // import dependencies
 import { observer } from 'mobx-react-lite';
-import { useContext } from 'react';
 
 // import local files
-import ContextStore from '../../context';
+import useContextStore from '../../context';
 
 const Avatar = ({ showUsername = true, showAvatar = true }) => {
   const {
     userStore: { user },
-  } = useContext(ContextStore);
+  } = useContextStore();
 
   return (
     <div className="avatar-container">
