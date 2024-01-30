@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { toast } from 'sonner';
 
 // import local files
-import { createPostRequest } from '../../../../../services/axios';
-import Modal from '../../../../ui/modal';
-import useTeamContext from '../../../../../context/team';
-import { userPropType } from '../../../../../utils/propTypes';
+import { createPostRequest } from '../../../../services/axios';
+import Modal from '../../../ui/modal';
+import useTeamContext from '../../../../context/team';
+import { userPropType } from '../../../../utils/propTypes';
 
 const MemberDeclineModal = ({ member, onClose }) => {
   const { removeUser } = useTeamContext();

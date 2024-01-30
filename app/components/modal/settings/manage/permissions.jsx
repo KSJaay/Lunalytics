@@ -7,9 +7,10 @@ import { useState } from 'react';
 import classNames from 'classnames';
 
 // import local files
-import { createPostRequest } from '../../../../../services/axios';
-import Modal from '../../../../ui/modal';
-import useTeamContext from '../../../../../context/team';
+import { createPostRequest } from '../../../../services/axios';
+import Modal from '../../../ui/modal';
+import useTeamContext from '../../../../context/team';
+import { userPropType } from '../../../../utils/propTypes';
 
 const MemeberPermission = ({ title, description, isActive, ...props }) => {
   const containerClasses = classNames('permissions-container', {
@@ -98,7 +99,7 @@ const MemberPermissionsModal = ({ member, onClose }) => {
 MemberPermissionsModal.displayName = 'MemberPermissionsModal';
 
 MemberPermissionsModal.propTypes = {
-  member: PropTypes.object.isRequired,
+  member: userPropType.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
