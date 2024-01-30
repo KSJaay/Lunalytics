@@ -1,27 +1,92 @@
 // import local files
-import { Monitor } from '../components/home/monitor';
-import AddMonitor from '../components/home/add';
+import {
+  MonitorCard,
+  MonitorList,
+  MonitorCompact,
+} from '../components/home/monitor';
 
 // import styles
 import './home.scss';
+
+// import dependencies
+import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
+
+// import local files
 import useContextStore from '../context';
+import HomeMenu from '../components/home/menu';
+import MonitorTable from '../components/home/monitor/layout/table';
+import useLocalStorageContext from '../hooks/useLocalstorage';
 
 const Home = () => {
   const {
     globalStore: { getAllMonitors },
   } = useContextStore();
 
+  const [search, setSearch] = useState('');
+  const { layout, status } = useLocalStorageContext();
+
   const monitors = getAllMonitors();
 
-  const monitorsList = monitors.map((monitor) => (
-    <Monitor key={monitor.monitorId} monitor={monitor} />
-  ));
+  const monitorsList = monitors
+    .filter((monitor = {}) => {
+      const matchesSearch =
+        monitor.name?.toLowerCase().includes(search.toLowerCase()) ||
+        monitor.url?.toLowerCase().includes(search.toLowerCase());
+
+      if (!matchesSearch) {
+        return false;
+      }
+
+      if (status === 'all') {
+        return true;
+      }
+
+      if (status === 'down') {
+        const [lastHeartbeat = {}] = monitor.heartbeats;
+
+        return lastHeartbeat.isDown;
+      }
+
+      if (status === 'up') {
+        const [lastHeartbeat = {}] = monitor.heartbeats;
+
+        return !lastHeartbeat.isDown;
+      }
+
+      return true;
+    })
+    .map((monitor, index) => {
+      if (layout === 'list') {
+        return (
+          <MonitorList key={monitor.monitorId + index} monitor={monitor} />
+        );
+      }
+
+      if (layout === 'compact') {
+        return (
+          <MonitorCompact key={monitor.monitorId + index} monitor={monitor} />
+        );
+      }
+
+      return <MonitorCard key={monitor.monitorId + index} monitor={monitor} />;
+    });
+
+  if (layout === 'cards') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <HomeMenu setSearch={(e) => setSearch(e.target.value)} />
+
+        <div className="home-container">{monitorsList}</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="home-container">
-      {monitorsList}
-      <AddMonitor />
+    <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <HomeMenu setSearch={(e) => setSearch(e.target.value)} />
+
+      <MonitorTable layout={layout}>{monitorsList}</MonitorTable>
     </div>
   );
 };
