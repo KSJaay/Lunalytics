@@ -24,7 +24,12 @@ const Home = () => {
   } = useContextStore();
 
   const [search, setSearch] = useState('');
-  const { layout, status } = useLocalStorageContext();
+  const { layout, status, setStatus } = useLocalStorageContext();
+
+  const handleReset = () => {
+    setSearch('');
+    setStatus('all');
+  };
 
   const monitors = getAllMonitors();
 
@@ -42,15 +47,12 @@ const Home = () => {
         return true;
       }
 
+      const [lastHeartbeat = {}] = monitor.heartbeats;
       if (status === 'down') {
-        const [lastHeartbeat = {}] = monitor.heartbeats;
-
         return lastHeartbeat.isDown;
       }
 
       if (status === 'up') {
-        const [lastHeartbeat = {}] = monitor.heartbeats;
-
         return !lastHeartbeat.isDown;
       }
 
@@ -75,7 +77,10 @@ const Home = () => {
   if (layout === 'cards') {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <HomeMenu setSearch={(e) => setSearch(e.target.value)} />
+        <HomeMenu
+          handleReset={handleReset}
+          setSearch={(e) => setSearch(e.target.value)}
+        />
 
         <div className="home-container">{monitorsList}</div>
       </div>
@@ -84,7 +89,10 @@ const Home = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-      <HomeMenu setSearch={(e) => setSearch(e.target.value)} />
+      <HomeMenu
+        handleReset={handleReset}
+        setSearch={(e) => setSearch(e.target.value)}
+      />
 
       <MonitorTable layout={layout}>{monitorsList}</MonitorTable>
     </div>

@@ -14,7 +14,7 @@ import MenuStatusDropdown from './status';
 import SearchBar from '../../ui/searchBar';
 import { useNavigate } from 'react-router-dom';
 
-const HomeMenu = ({ setSearch }) => {
+const HomeMenu = ({ handleReset, setSearch }) => {
   const navigate = useNavigate();
 
   return (
@@ -30,7 +30,10 @@ const HomeMenu = ({ setSearch }) => {
       <SearchBar onChange={setSearch} placeholder="Search..." />
 
       <div style={{ display: 'flex', gap: '10px' }}>
-        <Button iconLeft={<FaReload width={20} height={20} />} />
+        <Button
+          iconLeft={<FaReload width={20} height={20} />}
+          onClick={handleReset}
+        />
         <MenuStatusDropdown />
 
         <MenuLayoutDropdown />
@@ -50,6 +53,7 @@ const HomeMenu = ({ setSearch }) => {
 HomeMenu.displayName = 'HomeMenu';
 
 HomeMenu.propTypes = {
+  handleReset: PropTypes.func,
   setSearch: PropTypes.func,
 };
 
