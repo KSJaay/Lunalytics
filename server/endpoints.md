@@ -396,6 +396,7 @@ Status code 302 with redirect to /login
 | body               | String  |
 | valid_status_codes | String  |
 | email              | String  |
+| nextCheck          | Number  |
 
 ## Certificate Object
 
