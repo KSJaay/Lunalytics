@@ -1,0 +1,66 @@
+import './styles.scss';
+
+// import local files
+import useDropdown from '../../../hooks/useDropdown';
+import Dropdown from '../../ui/dropdown';
+import Button from '../../ui/button';
+
+// import icons
+import BsTable from '../../icons/BsTable';
+import IoGrid from '../../icons/IoGrid';
+import PiListFill from '../../icons/PiListFill';
+import FiLayout from '../../icons/FiLayout';
+import useLocalStorageContext from '../../../hooks/useLocalstorage';
+
+const views = [
+  {
+    text: 'Cards',
+    id: 'cards',
+    icon: <IoGrid width={20} height={20} />,
+  },
+  {
+    text: 'List',
+    id: 'list',
+    icon: <BsTable width={20} height={20} />,
+  },
+  {
+    text: 'Compact',
+    id: 'compact',
+    icon: <PiListFill width={20} height={20} />,
+  },
+];
+
+const MenuLayoutDropdown = () => {
+  const { dropdownIsOpen, toggleDropdown } = useDropdown();
+
+  const { layout, setLayout } = useLocalStorageContext();
+
+  const dropdownItems = views.map((view) => (
+    <Dropdown.Item
+      key={view.id}
+      onClick={() => setLayout(view.id)}
+      showDot
+      isSelected={layout === view.id}
+    >
+      <div className="layout-option">
+        {view.icon}
+        {view.text}
+      </div>
+    </Dropdown.Item>
+  ));
+
+  return (
+    <Dropdown.Container
+      position="center"
+      isOpen={dropdownIsOpen}
+      toggleDropdown={toggleDropdown}
+    >
+      <Dropdown.Trigger isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
+        <Button iconLeft={<FiLayout width={20} height={20} />}>Layout</Button>
+      </Dropdown.Trigger>
+      <Dropdown.List isOpen={dropdownIsOpen}>{dropdownItems}</Dropdown.List>
+    </Dropdown.Container>
+  );
+};
+
+export default MenuLayoutDropdown;
