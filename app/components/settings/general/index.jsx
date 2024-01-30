@@ -15,7 +15,7 @@ import {
   ColorsDropdown,
   ThemesDropdown,
 } from './dropdown';
-import AvatarSelect from './avatars';
+import AvatarSelect from '../../modal/settings/avatar';
 import useContextStore from '../../../context';
 
 const SettingsGeneral = () => {
