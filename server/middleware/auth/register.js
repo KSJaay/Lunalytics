@@ -32,7 +32,7 @@ const register = async (request, response) => {
       const jwt = await registerUser(data);
       setServerSideCookie(response, 'access_token', jwt);
 
-      return response.redirect('/');
+      return response.sendStatus(201);
     }
 
     const data = {

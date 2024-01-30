@@ -5,11 +5,11 @@ const userPropType = PropTypes.shape({
   email: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
   avatar: PropTypes.string,
-  isVerified: PropTypes.bool.isRequired,
+  isVerified: PropTypes.number.isRequired,
   permission: PropTypes.number.isRequired,
   createdAt: PropTypes.string.isRequired,
-  canEdit: PropTypes.bool.isRequired,
-  canManage: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool,
+  canManage: PropTypes.bool,
 });
 
 const monitorPropType = PropTypes.shape({
@@ -23,8 +23,8 @@ const monitorPropType = PropTypes.shape({
   method: PropTypes.string.isRequired,
   headers: PropTypes.string,
   body: PropTypes.string,
-  validStatusCodes: PropTypes.string.isRequired,
-  email: userPropType.isRequired,
+  valid_status_codes: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
   nextCheck: PropTypes.number.isRequired,
 });
 
@@ -34,7 +34,7 @@ const heartbeatPropType = PropTypes.shape({
   status: PropTypes.number.isRequired,
   latency: PropTypes.number.isRequired,
   date: PropTypes.number.isRequired,
-  isDown: PropTypes.number.isRequired,
+  isDown: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
 });
 
@@ -43,8 +43,8 @@ const certPropType = PropTypes.shape({
   monitorId: PropTypes.string.isRequired,
   isValid: PropTypes.bool.isRequired,
   issuer: PropTypes.string.isRequired,
-  validFrom: PropTypes.number.isRequired,
-  vaildTill: PropTypes.number.isRequired,
+  validFrom: PropTypes.string.isRequired,
+  validTill: PropTypes.string.isRequired,
   validOn: PropTypes.string.isRequired,
   daysRemaining: PropTypes.number.isRequired,
 });
@@ -60,8 +60,8 @@ const fullMonitorPropType = PropTypes.shape({
   method: PropTypes.string.isRequired,
   headers: PropTypes.string,
   body: PropTypes.string,
-  validStatusCodes: PropTypes.string.isRequired,
-  email: userPropType.isRequired,
+  valid_status_codes: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
   cert: certPropType,
   heartbeats: PropTypes.arrayOf(heartbeatPropType),
 });
