@@ -19,9 +19,8 @@ import {
 import { Chart } from 'react-chartjs-2';
 
 // import local files
-import useTime from '../../hooks/useTime';
-import useTheme from '../../hooks/useTheme';
 import { heartbeatPropType } from '../../utils/propTypes';
+import useLocalStorageContext from '../../hooks/useLocalstorage';
 
 ChartJs.register(
   LineController,
@@ -37,11 +36,10 @@ ChartJs.register(
 );
 
 const MonitorGraph = ({ heartbeats = [], maxValue }) => {
-  const { dateformat, timeformat } = useTime();
+  const { dateformat, timeformat, theme } = useLocalStorageContext();
 
   const labels = heartbeats.map((heartbeat) => heartbeat.date);
   const data = heartbeats.map((heartbeat) => heartbeat.latency);
-  const { theme } = useTheme();
 
   return (
     <div className="monitor-chart-container">
@@ -148,7 +146,7 @@ MonitorGraph.displayName = 'MonitorGraph';
 
 MonitorGraph.propTypes = {
   heartbeats: PropTypes.arrayOf(heartbeatPropType).isRequired,
-  maxValue: PropTypes.number.isRequired,
+  maxValue: PropTypes.number,
 };
 
 export default MonitorGraph;

@@ -1,10 +1,10 @@
-import Dropdown from '../../../ui/dropdown/index';
 import timeformats from '../../../../constant/dateformats.json';
-import useTime from '../../../../hooks/useTime';
 import useDropdown from '../../../../hooks/useDropdown';
+import useLocalStorageContext from '../../../../hooks/useLocalstorage';
+import Dropdown from '../../../ui/dropdown/index';
 
 const DateFormatDropdown = () => {
-  const { dateformat, setDateformat } = useTime();
+  const { dateformat, setDateformat } = useLocalStorageContext();
 
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
 

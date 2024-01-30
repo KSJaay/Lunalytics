@@ -1,11 +1,11 @@
 import useDropdown from '../../../../hooks/useDropdown';
-import useTheme from '../../../../hooks/useTheme';
+import useLocalStorageContext from '../../../../hooks/useLocalstorage';
 import Dropdown from '../../../ui/dropdown/index';
 
 const themes = { dark: 'Dark', light: 'Light' };
 
 const ThemesDropdown = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useLocalStorageContext();
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
 
   return (
@@ -22,7 +22,7 @@ const ThemesDropdown = () => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          {themes[theme.type]}
+          {themes[theme]}
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           <Dropdown.Item onClick={() => setTheme('dark')}>Dark</Dropdown.Item>

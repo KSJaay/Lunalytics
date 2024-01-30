@@ -6,11 +6,11 @@ import moment from 'moment';
 import classNames from 'classnames';
 
 // import local files
-import useTime from '../../hooks/useTime';
 import { heartbeatPropType } from '../../utils/propTypes';
+import useLocalStorageContext from '../../hooks/useLocalstorage';
 
 const UptimeInfo = ({ heartbeat = {} }) => {
-  const { dateformat, timeformat, timezone } = useTime();
+  const { dateformat, timeformat, timezone } = useLocalStorageContext();
 
   const classes = classNames('monitor-uptime-info-button', {
     'monitor-uptime-info-button-inactive': heartbeat?.isDown,

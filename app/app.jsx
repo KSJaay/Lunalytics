@@ -7,11 +7,8 @@ import Register from './pages/register';
 import Navigation from './components/navigation';
 import Home from './pages/home';
 import MonitorRouter from './routes/monitor';
-import MonitorsLayout from './layout/monitors';
+import GlobalLayout from './layout/global';
 import Setttings from './pages/settings';
-
-import useTheme from './hooks/useTheme';
-import { useLayoutEffect } from 'react';
 import Verify from './pages/verify';
 
 const routes = {
@@ -19,13 +16,6 @@ const routes = {
 };
 
 const App = () => {
-  const { theme } = useTheme();
-
-  useLayoutEffect(() => {
-    document.documentElement.dataset.theme = theme.type;
-    document.documentElement.dataset.color = theme.color;
-  }, [theme.color, theme.type]);
-
   const query = useParams();
   const [page, ...params] = query['*']?.toLowerCase().split('/') || [];
 
@@ -43,21 +33,21 @@ const App = () => {
 
   if (!page) {
     return (
-      <MonitorsLayout>
+      <GlobalLayout>
         <Navigation>
           <Home />
         </Navigation>
-      </MonitorsLayout>
+      </GlobalLayout>
     );
   }
 
   if (page === 'settings') {
     return (
-      <MonitorsLayout>
+      <GlobalLayout>
         <Navigation activeUrl="settings">
           <Setttings />
         </Navigation>
-      </MonitorsLayout>
+      </GlobalLayout>
     );
   }
 
@@ -65,9 +55,9 @@ const App = () => {
 
   if (routeExists) {
     return (
-      <MonitorsLayout>
+      <GlobalLayout>
         <Navigation>{routeExists(params)}</Navigation>
-      </MonitorsLayout>
+      </GlobalLayout>
     );
   }
 };
