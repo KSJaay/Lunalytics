@@ -9,8 +9,10 @@ import useContextStore from '../context';
 
 const Home = () => {
   const {
-    globalStore: { monitors },
+    globalStore: { getAllMonitors },
   } = useContextStore();
+
+  const monitors = getAllMonitors();
 
   const monitorsList = monitors.map((monitor) => (
     <Monitor key={monitor.monitorId} monitor={monitor} />

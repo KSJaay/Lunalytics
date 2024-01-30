@@ -1,10 +1,11 @@
 import { action, makeObservable, observable } from 'mobx';
 import { fetchMonitorById } from '../services/monitor/fetch';
 
-export default class ModalStore {
+class GlobalStore {
   constructor() {
-    this.monitors = [];
-    this.timeouts = {};
+    this.monitors = new Map();
+    this.timeouts = new Map();
+
     makeObservable(this, {
       monitors: observable,
       setMonitors: action,
@@ -15,36 +16,35 @@ export default class ModalStore {
   }
 
   setMonitors = (monitors) => {
-    this.monitors = monitors;
+    for (const monitor of monitors) {
+      this.monitors.set(monitor.monitorId, monitor);
+    }
   };
 
   setMonitor = (data, func) => {
-    const index = this.monitors.findIndex(
-      (m) => m.monitorId === data.monitorId
-    );
+    if (this.timeouts.has(data.monitorId)) {
+      clearTimeout(this.timeouts.get(data.monitorId));
+      this.timeouts.delete(data.monitorId);
+    }
 
-    if (index === -1) {
-      this.monitors.push(data);
+    this.monitors.set(data.monitorId, data);
 
-      if (this.timeouts[data.monitorId]) {
-        delete this.timeouts[data.monitorId];
-      }
+    const nextTimeout = data.nextCheck - Date.now();
 
-      this.timeouts[data.monitorId] = setTimeout(
-        () => func(data.monitorId, this.setMonitor),
-        data.interval * 1000
+    if (nextTimeout > 0) {
+      this.timeouts.set(
+        data.monitorId,
+        setTimeout(() => func(data.monitorId, this.setMonitor), nextTimeout)
       );
-
       return true;
     }
 
-    this.monitors[index] = data;
-    if (this.timeouts[data.monitorId]) {
-      delete this.timeouts[data.monitorId];
-    }
-    this.timeouts[data.monitorId] = setTimeout(
-      () => func(data.monitorId, this.setMonitor),
-      data.interval * 1000
+    this.timeouts.set(
+      data.monitorId,
+      setTimeout(
+        () => func(data.monitorId, this.setMonitor),
+        data.interval * 1000
+      )
     );
 
     return true;
@@ -52,33 +52,54 @@ export default class ModalStore {
 
   setTimeouts = (monitors, func) => {
     for (const monitor of monitors) {
-      if (!this.timeouts[monitor.monitorId]) {
-        this.timeouts[monitor.monitorId] = setTimeout(
-          () => func(monitor.monitorId, this.setMonitor),
-          monitor.interval * 1000
+      if (!this.timeouts.has(monitor.monitorId)) {
+        const nextTimeout = monitor.nextCheck - Date.now();
+        const timeoutInterval =
+          nextTimeout > 0 ? nextTimeout : monitor.interval * 1000;
+
+        this.timeouts.set(
+          monitor.monitorId,
+          setTimeout(
+            () => func(monitor.monitorId, this.setMonitor),
+            timeoutInterval
+          )
         );
       }
     }
   };
 
   addMonitor = (monitor) => {
-    this.monitors.push(monitor);
+    this.monitors.set(monitor.monitorId, monitor);
 
-    this.timeouts[monitor.monitorId] = setTimeout(
-      () => fetchMonitorById(monitor.monitorId, this.setMonitor),
-      monitor.interval * 1000
+    const nextTimeout = monitor.nextCheck - Date.now();
+    const timeoutInterval =
+      nextTimeout > 0 ? nextTimeout : monitor.interval * 1000;
+
+    this.timeouts.set(
+      monitor.monitorId,
+      setTimeout(
+        () => fetchMonitorById(monitor.monitorId, this.setMonitor),
+        timeoutInterval
+      )
     );
   };
 
+  getAllMonitors = () => {
+    return Array.from(this.monitors.values()) || [];
+  };
+
   removeMonitor = (monitorId) => {
-    this.monitors = this.monitors.filter((m) => m.monitorId !== monitorId);
-    if (this.timeouts[monitorId]) {
-      clearTimeout(this.timeouts[monitorId]);
-      delete this.timeouts[monitorId];
+    if (this.timeouts.has(monitorId)) {
+      clearTimeout(this.timeouts.get(monitorId));
+      this.timeouts.delete(monitorId);
     }
+
+    this.monitors.delete(monitorId);
   };
 
   getMonitor = (monitorId) => {
-    return this.monitors.find((m) => m.monitorId === monitorId);
+    return this.monitors.get(monitorId);
   };
 }
+
+export default GlobalStore;
