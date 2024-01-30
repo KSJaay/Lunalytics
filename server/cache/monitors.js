@@ -75,6 +75,10 @@ class Monitor {
     return monitor;
   }
 
+  setInCache(monitorId, monitor) {
+    this.monitors.set(monitorId, monitor);
+  }
+
   async delete(monitorId) {
     await deleteMonitor(monitorId);
     this.monitors.delete(monitorId);

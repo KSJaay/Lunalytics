@@ -44,7 +44,7 @@ const TopNavigation = () => {
             <Dropdown.Item onClick={() => handleNavigate('/settings')}>
               Settings
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleNavigate('/logout')}>
+            <Dropdown.Item onClick={() => handleNavigate('/auth/logout')}>
               Logout
             </Dropdown.Item>
           </Dropdown.List>

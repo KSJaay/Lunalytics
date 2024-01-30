@@ -25,6 +25,7 @@ const monitorPropType = PropTypes.shape({
   body: PropTypes.string,
   validStatusCodes: PropTypes.string.isRequired,
   email: userPropType.isRequired,
+  nextCheck: PropTypes.number.isRequired,
 });
 
 const heartbeatPropType = PropTypes.shape({
@@ -33,7 +34,7 @@ const heartbeatPropType = PropTypes.shape({
   status: PropTypes.number.isRequired,
   latency: PropTypes.number.isRequired,
   date: PropTypes.number.isRequired,
-  isDown: PropTypes.bool.isRequired,
+  isDown: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
 });
 
