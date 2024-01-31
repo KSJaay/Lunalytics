@@ -1,0 +1,15 @@
+.monitor-view-menu-container {
+  display: flex;
+  gap: 10px;
+  background-color: var(--accent-900);
+  padding: 10px;
+  border-radius: var(--radius-md);
+}
+
+.monitor-view-menu-name {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-2xl);
+  font-weight: bold;
+}

@@ -10,6 +10,7 @@ import MonitorGraph from '../../components/monitor/graph';
 import MonitorUptime from '../../components/monitor/uptime';
 import Spacer from '../../components/ui/spacer';
 import useContextStore from '../../context';
+import MonitorMenu from '../../components/monitor/menu';
 
 const Monitor = ({ monitorId }) => {
   const {
@@ -24,6 +25,7 @@ const Monitor = ({ monitorId }) => {
 
   return (
     <div className="monitor-container">
+      <MonitorMenu monitorId={monitor.monitorId} name={monitor.name} />
       <MonitorStatus monitor={monitor} />
       <MonitorGraph heartbeats={monitor.heartbeats} />
       <MonitorUptime heartbeats={monitor.heartbeats} />
