@@ -78,6 +78,7 @@ const Home = () => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         <HomeMenu
+          search={search}
           handleReset={handleReset}
           setSearch={(e) => setSearch(e.target.value)}
         />
@@ -90,6 +91,7 @@ const Home = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <HomeMenu
+        search={search}
         handleReset={handleReset}
         setSearch={(e) => setSearch(e.target.value)}
       />
