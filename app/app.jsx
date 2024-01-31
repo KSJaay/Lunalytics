@@ -56,7 +56,7 @@ const App = () => {
   if (routeExists) {
     return (
       <GlobalLayout>
-        <Navigation>{routeExists(params)}</Navigation>
+        <Navigation activeUrl="monitor">{routeExists(params)}</Navigation>
       </GlobalLayout>
     );
   }

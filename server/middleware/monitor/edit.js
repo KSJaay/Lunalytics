@@ -6,8 +6,15 @@ const { userExists } = require('../../database/queries/user');
 
 const monitorEdit = async (request, response) => {
   try {
-    const { name, url, method, interval, retryInterval, requestTimeout } =
-      request.body;
+    const {
+      monitorId,
+      name,
+      url,
+      method,
+      interval,
+      retryInterval,
+      requestTimeout,
+    } = request.body;
 
     const isInvalidMonitor = validators.monitor(
       name,
@@ -24,7 +31,8 @@ const monitorEdit = async (request, response) => {
 
     const user = await userExists(request.cookies.access_token);
 
-    const monitor = await cache.monitors.edit({
+    const data = await cache.monitors.edit({
+      monitorId,
       name,
       url,
       method,
@@ -33,6 +41,17 @@ const monitorEdit = async (request, response) => {
       requestTimeout,
       email: user.email,
     });
+
+    await cache.setTimeout(data.monitorId, data.interval);
+
+    const heartbeats = await cache.heartbeats.get(data.monitorId);
+    const cert = await cache.certificates.get(data.monitorId);
+
+    const monitor = {
+      ...data,
+      heartbeats,
+      cert,
+    };
 
     return response.json(monitor);
   } catch (error) {
