@@ -1,20 +1,21 @@
-// import local files
+import './card.scss';
+
+// import dependencies
 import { useNavigate } from 'react-router-dom';
-import StatusBar from '../../ui/statusBar';
 
-// import styles
-import './monitor.scss';
-import MonitorOptions from './options';
-import { monitorPropType } from '../../../utils/propTypes';
+// import local files
+import StatusBar from '../../../ui/statusBar';
+import MonitorOptions from '../options';
+import { monitorPropType } from '../../../../utils/propTypes';
 
-const Monitor = ({ monitor = {} }) => {
+const MonitorCard = ({ monitor = {} }) => {
   const navigate = useNavigate();
 
   const { name, url, uptimePercentage = '0', heartbeats = [] } = monitor;
-  const [heartbeat] = heartbeats;
+  const [heartbeat = {}] = heartbeats;
 
   return (
-    <div className="home-monitor-container">
+    <div className={'home-monitor-container'}>
       <div className="home-monitor-type">
         <div>{name}</div>
         <span>
@@ -27,7 +28,7 @@ const Monitor = ({ monitor = {} }) => {
           <div className="home-monitor-uptime">
             <h1>Ping</h1>
             <div>
-              {heartbeat?.latency ? `${heartbeat?.latency} ms` : 'Unknown'}
+              {heartbeat.latency ? `${heartbeat.latency} ms` : 'Unknown'}
             </div>
           </div>
           <div className="home-monitor-uptime">
@@ -44,10 +45,10 @@ const Monitor = ({ monitor = {} }) => {
   );
 };
 
-Monitor.displayName = 'Monitor';
+MonitorCard.displayName = 'MonitorCard';
 
-Monitor.propTypes = {
+MonitorCard.propTypes = {
   monitor: monitorPropType.isRequired,
 };
 
-export default Monitor;
+export default MonitorCard;

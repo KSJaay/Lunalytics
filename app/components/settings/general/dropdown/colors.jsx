@@ -1,11 +1,11 @@
 import useDropdown from '../../../../hooks/useDropdown';
-import useTheme from '../../../../hooks/useTheme';
+import useLocalStorageContext from '../../../../hooks/useLocalstorage';
 import Dropdown from '../../../ui/dropdown/index';
 
 const colors = ['Blue', 'Cyan', 'Green', 'Pink', 'Purple', 'Red', 'Yellow'];
 
 const ColorsDropdown = () => {
-  const { theme, setColor } = useTheme();
+  const { color: stateColor, setColor } = useLocalStorageContext();
 
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
 
@@ -15,7 +15,7 @@ const ColorsDropdown = () => {
       onClick={() => setColor(color)}
       showDot
       dotColor={color.toLowerCase()}
-      isSelected={theme.color === color}
+      isSelected={stateColor === color}
     >
       {color}
     </Dropdown.Item>
@@ -35,7 +35,7 @@ const ColorsDropdown = () => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          {theme.color}
+          {stateColor}
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           {colorsList}

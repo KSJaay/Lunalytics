@@ -1,10 +1,10 @@
-import Dropdown from '../../../ui/dropdown/index';
 import timezones from '../../../../constant/timeformats.json';
-import useTime from '../../../../hooks/useTime';
 import useDropdown from '../../../../hooks/useDropdown';
+import useLocalStorageContext from '../../../../hooks/useLocalstorage';
+import Dropdown from '../../../ui/dropdown/index';
 
 const TimezoneDropdown = () => {
-  const { timezone, setTimezone } = useTime();
+  const { timezone, setTimezone } = useLocalStorageContext();
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
 
   const timezoneList = timezones.map((time) => (

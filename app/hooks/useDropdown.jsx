@@ -1,10 +1,10 @@
 // import dependencies
 import { useState } from 'react';
 
-const useDropdown = (closeOnSelect) => {
+const useDropdown = (closeOnSelect, defaultValue = null) => {
   const [values, setValues] = useState({
     isOpen: false,
-    selectedId: null,
+    selectedId: defaultValue,
   });
 
   const toggleDropdown = () => {

@@ -14,10 +14,10 @@ import FaCheck from '../../../icons/faCheck';
 import FaClose from '../../../icons/faClose';
 
 // import local files
-import MemberApproveModal from './modal/approve';
-import MemberDeclineModal from './modal/decline';
-import MemberDeleteModal from './modal/delete';
-import MemberPermissionsModal from './modal/permissions';
+import MemberApproveModal from '../../../modal/settings/manage/approve';
+import MemberDeclineModal from '../../../modal/settings/manage/decline';
+import MemberDeleteModal from '../../../modal/settings/manage/delete';
+import MemberPermissionsModal from '../../../modal/settings/manage/permissions';
 import useContextStore from '../../../../context';
 import { userPropType } from '../../../../utils/propTypes';
 

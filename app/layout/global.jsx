@@ -9,8 +9,12 @@ import Modal from '../components/ui/modal';
 import useContextStore from '../context';
 import { createGetRequest } from '../services/axios';
 import { fetchMonitorById } from '../services/monitor/fetch';
+import {
+  LocalStorageStateProvider,
+  useLocalStorageState,
+} from '../hooks/useLocalstorage';
 
-const MonitorsLayout = ({ children }) => {
+const GlobalLayout = ({ children }) => {
   const {
     modalStore: { isOpen, content, glassmorph },
     globalStore: { setMonitors, setTimeouts },
@@ -18,6 +22,8 @@ const MonitorsLayout = ({ children }) => {
   } = useContextStore();
 
   const navigate = useNavigate();
+
+  const localStorageState = useLocalStorageState();
 
   const fetchMontiors = async () => {
     try {
@@ -44,19 +50,19 @@ const MonitorsLayout = ({ children }) => {
   }, []);
 
   return (
-    <>
+    <LocalStorageStateProvider value={localStorageState}>
       {isOpen && (
         <Modal.Container glassmorph={glassmorph}>{content}</Modal.Container>
       )}
       {children}
-    </>
+    </LocalStorageStateProvider>
   );
 };
 
-MonitorsLayout.displayName = 'MonitorsLayout';
+GlobalLayout.displayName = 'GlobalLayout';
 
-MonitorsLayout.propTypes = {
+GlobalLayout.propTypes = {
   children: PropTypes.node,
 };
 
-export default observer(MonitorsLayout);
+export default observer(GlobalLayout);

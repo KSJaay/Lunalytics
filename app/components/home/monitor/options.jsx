@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 // import local files
-import MonitorModal from './modal';
+import MonitorModal from '../../modal/monitor/delete';
 import Dropdown from '../../ui/dropdown/index';
 import useContextStore from '../../../context';
 import { createGetRequest } from '../../../services/axios';
@@ -61,7 +61,7 @@ const MonitorOptions = ({ monitorId }) => {
       isOpen={dropdownIsOpen}
       toggleDropdown={toggleDropdown}
     >
-      <Dropdown.Trigger toggleDropdown={toggleDropdown}>
+      <Dropdown.Trigger toggleDropdown={toggleDropdown} isOpen={dropdownIsOpen}>
         <FaEllipsisVertical width={20} height={20} />
       </Dropdown.Trigger>
       <Dropdown.List isOpen={dropdownIsOpen}>

@@ -29,9 +29,9 @@
   z-index: 2;
   border-radius: 6px;
   border-radius: 10px;
-  @include glassmorphism;
-
   transition: all 0.2s ease-in-out;
+
+  @include glassmorphism;
 }
 
 .dropdown-body-open {
@@ -40,15 +40,19 @@
 }
 
 .dropdown-item {
+  display: flex;
+  align-items: center;
   margin: 0;
   padding: 10px 0.8rem;
-  width: 100%;
   box-sizing: border-box;
   text-decoration: none;
   color: var(--font-color);
+  gap: 8px;
+  transition: all 0.25s ease-in-out;
 }
 
 .dropdown-item:hover {
+  transition: all 0.25s ease-in-out;
   background-color: var(--primary-800);
   color: var(--font-color);
   cursor: pointer;

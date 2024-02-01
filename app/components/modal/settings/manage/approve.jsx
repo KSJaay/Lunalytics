@@ -4,10 +4,10 @@ import { toast } from 'sonner';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import { createPostRequest } from '../../../../../services/axios';
-import Modal from '../../../../ui/modal';
-import useTeamContext from '../../../../../context/team';
-import { userPropType } from '../../../../../utils/propTypes';
+import { createPostRequest } from '../../../../services/axios';
+import Modal from '../../../ui/modal';
+import useTeamContext from '../../../../context/team';
+import { userPropType } from '../../../../utils/propTypes';
 
 const MemberApproveModal = ({ member, onClose }) => {
   const { updateUserVerified } = useTeamContext();

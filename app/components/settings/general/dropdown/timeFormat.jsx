@@ -1,5 +1,5 @@
 import useDropdown from '../../../../hooks/useDropdown';
-import useTime from '../../../../hooks/useTime';
+import useLocalStorageContext from '../../../../hooks/useLocalstorage';
 import Dropdown from '../../../ui/dropdown/index';
 
 const times = {
@@ -10,7 +10,7 @@ const times = {
 };
 
 const TimeFormatDropdown = () => {
-  const { timeformat, setTimeformat } = useTime();
+  const { timeformat, setTimeformat } = useLocalStorageContext();
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
 
   const timeFormatList = [
