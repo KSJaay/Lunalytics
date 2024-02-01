@@ -18,24 +18,16 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
   const navigate = useNavigate();
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '20px',
-        margin: '10px 10px 0px 10px',
-      }}
-    >
+    <div className="home-menu">
       <SearchBar onChange={setSearch} value={search} placeholder="Search..." />
 
-      <div style={{ display: 'flex', gap: '10px' }}>
+      <div className="home-menu-buttons">
         <Button
           iconLeft={<FaReload width={20} height={20} />}
           onClick={handleReset}
         />
-        <MenuStatusDropdown />
 
+        <MenuStatusDropdown />
         <MenuLayoutDropdown />
 
         <Button

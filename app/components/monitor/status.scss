@@ -19,6 +19,7 @@
 .monitor-status-title {
   font-size: var(--font-3xl);
   font-weight: var(--weight-bold);
+  text-align: center;
 }
 
 .monitor-status-subtitle {
@@ -29,4 +30,16 @@
 
 .montior-status-text {
   font-size: var(--font-2xl);
+}
+
+@include tablet {
+  .monitor-status-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@include mobile {
+  .monitor-status-container {
+    grid-template-columns: 1fr;
+  }
 }
