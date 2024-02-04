@@ -1,5 +1,3 @@
-import './styles.scss';
-
 // import local files
 import useDropdown from '../../../hooks/useDropdown';
 import Dropdown from '../../ui/dropdown';
@@ -54,6 +52,7 @@ const MenuLayoutDropdown = () => {
       position="center"
       isOpen={dropdownIsOpen}
       toggleDropdown={toggleDropdown}
+      id="home-menu-layout"
     >
       <Dropdown.Trigger isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
         <Button iconLeft={<FiLayout width={20} height={20} />}>Layout</Button>

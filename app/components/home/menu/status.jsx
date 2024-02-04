@@ -1,5 +1,3 @@
-import './styles.scss';
-
 // import local files
 import useDropdown from '../../../hooks/useDropdown';
 import Dropdown from '../../ui/dropdown';
@@ -53,6 +51,7 @@ const MenuStatusDropdown = () => {
       position="center"
       isOpen={dropdownIsOpen}
       toggleDropdown={toggleDropdown}
+      id="home-menu-status"
     >
       <Dropdown.Trigger isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
         <Button iconLeft={<HiStatusOnline width={20} height={20} />}>

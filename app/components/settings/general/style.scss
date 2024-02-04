@@ -3,21 +3,24 @@
 .settings-general-container {
   padding: pxToRem(4);
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .settings-general-content {
+  flex: 1;
   display: flex;
-  gap: pxToRem(8);
+  gap: pxToRem(12);
+  padding: 0 pxToRem(8) pxToRem(20) pxToRem(8);
+  overflow-y: auto;
 }
 
 .settings-general-profile {
   flex: 1;
-  margin-left: pxToRem(8);
 }
 
 .settings-general-date {
   flex: 1;
-  margin-right: pxToRem(8);
 }
 
 .settings-general-title {
@@ -49,5 +52,11 @@
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+@include tablet {
+  .settings-general-content {
+    flex-direction: column;
   }
 }

@@ -9,3 +9,17 @@
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
+
+@include tablet {
+  .settings-content {
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .settings-tab {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+  }
+}
