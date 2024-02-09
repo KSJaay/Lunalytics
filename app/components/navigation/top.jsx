@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import local files
 import Dropdown from '../ui/dropdown/index';
-import StatusLogo from '../icons/logo';
+import StatusLogo from '../icons/statusLogo';
 import Avatar from '../ui/avatar';
 import useDropdown from '../../hooks/useDropdown';
 

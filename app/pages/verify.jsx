@@ -1,6 +1,6 @@
 import './verify.scss';
 
-import Logo from '../components/icons/logo';
+import Logo from '../components/icons/statusLogo';
 
 const Verify = () => {
   return (
