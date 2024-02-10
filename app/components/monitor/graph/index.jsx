@@ -19,8 +19,10 @@ import {
 import { Chart } from 'react-chartjs-2';
 
 // import local files
-import { heartbeatPropType } from '../../utils/propTypes';
-import useLocalStorageContext from '../../hooks/useLocalstorage';
+import useLocalStorageContext from '../../../hooks/useLocalstorage';
+import GraphMenu from './menu';
+import useGraphStatus from '../../../hooks/useGraphStatus';
+import { fullMonitorPropType } from '../../../utils/propTypes';
 
 ChartJs.register(
   LineController,
@@ -35,14 +37,20 @@ ChartJs.register(
   CategoryScale
 );
 
-const MonitorGraph = ({ heartbeats = [], maxValue }) => {
+const MonitorGraph = ({ monitor, maxValue }) => {
   const { dateformat, timeformat, theme } = useLocalStorageContext();
 
-  const labels = heartbeats.map((heartbeat) => heartbeat.date);
-  const data = heartbeats.map((heartbeat) => heartbeat.latency);
+  const { statusType, statusHeartbeats, setStatusType } =
+    useGraphStatus(monitor);
+
+  const labels = statusHeartbeats.map((heartbeat = {}) => heartbeat.date);
+  const data = statusHeartbeats.map((heartbeat = {}) => heartbeat.latency);
+  const gridColor =
+    theme.type === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
 
   return (
     <div className="monitor-chart-container">
+      <GraphMenu statusType={statusType} setStatusType={setStatusType} />
       <Chart
         type={'line'}
         data={{
@@ -62,39 +70,20 @@ const MonitorGraph = ({ heartbeats = [], maxValue }) => {
           responsive: true,
           maintainAspectRatio: false,
           onResize: (chart) => {
-            chart.canvas.parentNode.style.position = 'relative';
-
             if (window.innerWidth < 576) {
-              chart.canvas.parentNode.style.height = '225px';
               chart.canvas.style.height = '225px';
             } else if (window.innerWidth < 768) {
-              chart.canvas.parentNode.style.height = '275px';
               chart.canvas.style.height = '275px';
             } else if (window.innerWidth < 1200) {
-              chart.canvas.parentNode.style.height = '300px';
               chart.canvas.style.height = '300px';
             } else if (window.innerWidth < 1920) {
-              chart.canvas.parentNode.style.height = '320px';
               chart.canvas.style.height = '320px';
             } else {
-              chart.canvas.parentNode.style.height = '400px';
               chart.canvas.style.height = '400px';
             }
           },
-          layout: {
-            padding: {
-              left: 10,
-              right: 30,
-              top: 30,
-              bottom: 10,
-            },
-          },
-          elements: {
-            point: {
-              radius: 0,
-              hitRadius: 100,
-            },
-          },
+          layout: { padding: { left: 10, right: 30, top: 30, bottom: 10 } },
+          elements: { point: { radius: 0, hitRadius: 100 } },
           scales: {
             x: {
               type: 'time',
@@ -102,36 +91,16 @@ const MonitorGraph = ({ heartbeats = [], maxValue }) => {
                 minUnit: 'minute',
                 round: 'second',
                 tooltipFormat: `${dateformat} ${timeformat}`,
-                displayFormats: {
-                  minute: 'HH:mm',
-                  hour: 'MM-DD HH:mm',
-                },
+                displayFormats: { minute: 'HH:mm', hour: 'MM-DD HH:mm' },
               },
-              ticks: {
-                maxRotation: 0,
-                autoSkipPadding: 30,
-              },
-              grid: {
-                color:
-                  theme.type === 'light'
-                    ? 'rgba(0,0,0,0.1)'
-                    : 'rgba(255,255,255,0.1)',
-                offset: false,
-              },
+              ticks: { maxRotation: 0, autoSkipPadding: 30 },
+              grid: { color: gridColor, offset: false },
             },
             y: {
               type: 'linear',
-              title: {
-                display: true,
-                text: 'respTime (ms)',
-              },
+              title: { display: true, text: 'respTime (ms)' },
               offset: true,
-              grid: {
-                color:
-                  theme.type === 'light'
-                    ? 'rgba(0,0,0,0.1)'
-                    : 'rgba(255,255,255,0.1)',
-              },
+              grid: { color: gridColor },
               min: 0,
               max: maxValue,
             },
@@ -145,7 +114,7 @@ const MonitorGraph = ({ heartbeats = [], maxValue }) => {
 MonitorGraph.displayName = 'MonitorGraph';
 
 MonitorGraph.propTypes = {
-  heartbeats: PropTypes.arrayOf(heartbeatPropType).isRequired,
+  monitor: fullMonitorPropType.isRequired,
   maxValue: PropTypes.number,
 };
 

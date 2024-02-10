@@ -1,0 +1,32 @@
+@import '../../../styles/global.scss';
+
+.monitor-chart-container {
+  background-color: var(--accent-900);
+  border-radius: pxToRem(16);
+}
+
+.monitor-chart-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: pxToRem(10);
+  padding: pxToRem(10) pxToRem(10) 0 0;
+}
+
+.monitor-chart-dropdown-container {
+  display: none;
+}
+
+@include mobile {
+  .monitor-chart-buttons-container {
+    display: none;
+  }
+
+  .monitor-chart-dropdown-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: pxToRem(10);
+    padding: pxToRem(10) pxToRem(10) 0 0;
+  }
+}
