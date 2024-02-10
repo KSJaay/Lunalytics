@@ -4,10 +4,10 @@ import Dropdown from '../../ui/dropdown';
 import Button from '../../ui/button';
 
 // import icons
-import BsTable from '../../icons/BsTable';
-import IoGrid from '../../icons/IoGrid';
-import PiListFill from '../../icons/PiListFill';
-import FiLayout from '../../icons/FiLayout';
+import BsTable from '../../icons/bsTable';
+import IoGrid from '../../icons/ioGrid';
+import PiListFill from '../../icons/piListFill';
+import FiLayout from '../../icons/fiLayout';
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
 
 const views = [

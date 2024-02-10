@@ -27,7 +27,7 @@ const Monitor = ({ monitorId }) => {
     <div className="monitor-container">
       <MonitorMenu monitorId={monitor.monitorId} name={monitor.name} />
       <MonitorStatus monitor={monitor} />
-      <MonitorGraph heartbeats={monitor.heartbeats} />
+      <MonitorGraph monitor={monitor} />
       <MonitorUptime heartbeats={monitor.heartbeats} />
       <Spacer size={18} />
     </div>

@@ -22,12 +22,12 @@ const handleLogin = async (inputs, setErrors, navigate) => {
       return navigate('/');
     }
   } catch (error) {
-    if (error?.response?.status === 418) {
+    if (error.response?.status === 418) {
       return navigate('/verify');
     }
 
-    if (error?.response?.data?.message) {
-      return setErrors(error?.response?.data?.message);
+    if (error.response?.data?.message) {
+      return setErrors(error.response?.data?.message);
     }
 
     toast.error('Something went wrong');

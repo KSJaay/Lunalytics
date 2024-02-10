@@ -4,9 +4,9 @@ import Dropdown from '../../ui/dropdown';
 import Button from '../../ui/button';
 
 // import icons
-import HiStatusOffline from '../../icons/HiStatusOffline';
-import HiStatusOnline from '../../icons/HiStatusOnline';
-import PiListFill from '../../icons/PiListFill';
+import HiStatusOffline from '../../icons/hiStatusOffline';
+import HiStatusOnline from '../../icons/hiStatusOnline';
+import PiListFill from '../../icons/piListFill';
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
 
 const statusOptions = [

@@ -20,6 +20,10 @@ const Login = () => {
         <div className="auth-form-subtitle">
           Please provide your name and email
         </div>
+
+        {errors['general'] && (
+          <div className="text-input-error">{errors['general']}</div>
+        )}
         <div>
           <TextInput
             type="text"

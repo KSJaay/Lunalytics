@@ -6,7 +6,10 @@ const logger = require('./logger');
 
 const verifyCookie = (value) => {
   try {
-    let token = jwt.verify(value, process.env.JWT_SECRET, {
+    const jwtSecret =
+      process.env.JWT_SECRET || 'lunalyticsJwtSecretKeyHerePlease';
+
+    let token = jwt.verify(value, jwtSecret, {
       algorithms: ['HS256'],
     });
     return token;
@@ -21,7 +24,10 @@ const verifyCookie = (value) => {
 
 const signCookie = (value) => {
   try {
-    let token = jwt.sign(value, process.env.JWT_SECRET, {
+    const jwtSecret =
+      process.env.JWT_SECRET || 'lunalyticsJwtSecretKeyHerePlease';
+
+    let token = jwt.sign(value, jwtSecret, {
       expiresIn: 2592000,
     });
     return token;

@@ -30,11 +30,10 @@ const monitorPropType = PropTypes.shape({
 
 const heartbeatPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  monitorId: PropTypes.string.isRequired,
   status: PropTypes.number.isRequired,
   latency: PropTypes.number.isRequired,
   date: PropTypes.number.isRequired,
-  isDown: PropTypes.bool.isRequired,
+  isDown: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
 });
 
