@@ -5,7 +5,6 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-/server/database/sqlite/lunalytics.db
 
 # testing
 /coverage
@@ -13,6 +12,9 @@
 # production
 /dist
 /stats
+/server/database/sqlite/lunalytics.db
+/app/pages/icons.jsx
+/app/components/icons/list.jsx
 
 # misc
 .DS_Store
