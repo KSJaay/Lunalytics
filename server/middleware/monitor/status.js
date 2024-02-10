@@ -1,7 +1,7 @@
 const cache = require('../../cache');
 const validTypes = ['latest', 'day', 'week', 'month'];
 
-const fetchMonitorStatus = (request, response) => {
+const fetchMonitorStatus = async (request, response) => {
   const { monitorId, type } = request.query;
 
   if (!monitorId) {
@@ -16,7 +16,9 @@ const fetchMonitorStatus = (request, response) => {
     });
   }
 
-  if (!cache.monitors.get(monitorId)) {
+  const monitorExists = await cache.monitors.get(monitorId);
+
+  if (!monitorExists) {
     return response.status(404).json({
       message: 'Monitor not found',
     });
@@ -24,10 +26,6 @@ const fetchMonitorStatus = (request, response) => {
 
   if (type === 'latest') {
     const heartbeats = cache.heartbeats.getRealtime(monitorId);
-
-    if (heartbeats.length < 2) {
-      return response.sendStatus(416);
-    }
 
     return response.json(heartbeats);
   }
