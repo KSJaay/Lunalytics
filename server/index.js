@@ -7,11 +7,12 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // import local files
-const SQLite = require('./database/sqlite/setup');
-const logger = require('./utils/logger');
-const authorization = require('./middleware/authorization');
-const initialiseRoutes = require('./routes');
 const cache = require('./cache');
+const logger = require('./utils/logger');
+const initialiseRoutes = require('./routes');
+const SQLite = require('./database/sqlite/setup');
+const initialiseCronJobs = require('./utils/cron');
+const authorization = require('./middleware/authorization');
 
 const app = express();
 
@@ -20,19 +21,20 @@ const init = async () => {
   await SQLite.connect();
   await SQLite.setup();
   await cache.initialise();
+  const monitors = await cache.monitors.getAll();
+  await cache.heartbeats.loadHeartbeats(monitors);
+  await initialiseCronJobs();
 
   app
     .use(express.json())
     .use(express.urlencoded({ extended: true }))
     .disable('x-powered-by')
     .set('trust proxy', 1)
-    .use(
-      cors({
-        origin: [process.env.APP_URL],
-        credentials: true,
-      })
-    )
     .use(cookieParser());
+
+  if (process.env.NODE_ENV !== 'production') {
+    app.use(cors({ origin: [process.env.APP_URL], credentials: true }));
+  }
 
   if (process.env.NODE_ENV === 'production') {
     logger.info('Express', 'Serving production static files');
@@ -51,7 +53,7 @@ const init = async () => {
   }
 
   // Start the server
-  const server_port = process.env.PORT || 5050;
+  const server_port = process.env.PORT || 2308;
   app.listen(server_port, () => {
     logger.info('Express', `Server is running on port ${server_port}`);
   });
