@@ -68,13 +68,13 @@ class Master {
 
       const message = `${query.status} - ${query.statusText}`;
 
-      const isDown = query.status >= 400;
+      const isDown = query.status >= 400 ? 1 : 0;
       const latency = endTime - startTime;
       const status = query.status;
 
       const heartbeat = { monitorId, status, latency, message, isDown };
 
-      await this.heartbeats.add(heartbeat);
+      await this.heartbeats.addHeartbeat(heartbeat);
 
       if (monitor.url?.startsWith('https://')) {
         const certificate = await this.certificates.get(monitorId);
@@ -102,14 +102,14 @@ class Master {
 
         const heartbeat = { monitorId, status, latency, message, isDown };
 
-        await this.heartbeats.add(heartbeat);
+        await this.heartbeats.addHeartbeat(heartbeat);
       } else {
-        await this.heartbeats.add({
+        await this.heartbeats.addHeartbeat({
           monitorId,
           status: 0,
           latency: 0,
           message: error.message,
-          isDown: true,
+          isDown: 1,
         });
       }
 

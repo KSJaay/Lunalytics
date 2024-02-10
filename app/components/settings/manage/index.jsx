@@ -16,17 +16,17 @@ const ManageTeam = () => {
 
   const sortedMembers = team?.sort((a, b) => a?.permission - b?.permission);
 
-  const fetchTeam = async () => {
-    try {
-      const query = await createGetRequest('/api/user/team');
-
-      setTeam(query.data);
-    } catch (error) {
-      toast.error("Couldn't fetch team members");
-    }
-  };
-
   useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const query = await createGetRequest('/api/user/team');
+
+        setTeam(query.data);
+      } catch (error) {
+        toast.error("Couldn't fetch team members");
+      }
+    };
+
     fetchTeam();
   }, []);
 

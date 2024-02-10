@@ -37,14 +37,13 @@ const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
   const totalHeartbeats = heartbeats.length;
   const downHeartbeats = heartbeats.filter((h) => h.isDown).length;
 
-  const averageHeartbeatLatency = (
+  const averageHeartbeatLatency = Math.round(
     heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats
-  ).toFixed(0);
+  );
 
-  const uptimePercentage = (
-    ((totalHeartbeats - downHeartbeats) / totalHeartbeats) *
-    100
-  ).toFixed(0);
+  const uptimePercentage = Math.round(
+    ((totalHeartbeats - downHeartbeats) / totalHeartbeats) * 100
+  );
 
   return { uptimePercentage, averageHeartbeatLatency };
 };
@@ -106,8 +105,6 @@ const fetchMonitor = async (monitorId) => {
 
 const deleteMonitor = async (monitorId) => {
   await SQLite.client('monitor').where({ monitorId }).del();
-  await SQLite.client('heartbeat').where({ monitorId }).del();
-  await SQLite.client('certificate').where({ monitorId }).del();
 
   return true;
 };
