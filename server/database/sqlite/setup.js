@@ -5,7 +5,7 @@ const logger = require('../../utils/logger');
 
 class SQLite {
   constructor() {
-    this.path = `${__dirname}/${process.env.DATABASE_NAME || 'lunalytics.db'}`;
+    this.path = `${__dirname}/lunalytics.db`;
     this.client = null;
   }
 

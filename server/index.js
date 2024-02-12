@@ -1,3 +1,5 @@
+require('../scripts/loadEnv');
+
 // Import dependencies
 const express = require('express');
 const cors = require('cors');
@@ -33,7 +35,7 @@ const init = async () => {
     .use(cookieParser());
 
   if (process.env.NODE_ENV !== 'production') {
-    app.use(cors({ origin: [process.env.APP_URL], credentials: true }));
+    app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
   }
 
   if (process.env.NODE_ENV === 'production') {
