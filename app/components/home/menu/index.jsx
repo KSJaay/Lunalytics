@@ -2,6 +2,7 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import Button from '../../ui/button';
@@ -13,9 +14,13 @@ import MenuLayoutDropdown from './layout';
 import MenuStatusDropdown from './status';
 import SearchBar from '../../ui/searchBar';
 import { useNavigate } from 'react-router-dom';
+import useContextStore from '../../../context';
 
 const HomeMenu = ({ handleReset, search, setSearch }) => {
   const navigate = useNavigate();
+  const {
+    userStore: { user },
+  } = useContextStore();
 
   return (
     <div className="home-menu">
@@ -30,13 +35,15 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
         <MenuStatusDropdown />
         <MenuLayoutDropdown />
 
-        <Button
-          onClick={() => navigate('/monitor/add')}
-          iconLeft={<FaPlus width={20} height={20} />}
-          color={'primary'}
-        >
-          New
-        </Button>
+        {user.canEdit ? (
+          <Button
+            onClick={() => navigate('/monitor/add')}
+            iconLeft={<FaPlus width={20} height={20} />}
+            color={'primary'}
+          >
+            New
+          </Button>
+        ) : null}
       </div>
     </div>
   );
@@ -50,4 +57,4 @@ HomeMenu.propTypes = {
   setSearch: PropTypes.func,
 };
 
-export default HomeMenu;
+export default observer(HomeMenu);

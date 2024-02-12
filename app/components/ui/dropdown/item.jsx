@@ -10,6 +10,7 @@ const Item = ({
   showDot = false,
   isSelected = false,
   children,
+  type: Wrapper = 'div',
   ...props
 }) => {
   const classes = classNames('dropdown-item-dot', {
@@ -18,10 +19,10 @@ const Item = ({
   });
 
   return (
-    <div className="dropdown-item" {...props}>
+    <Wrapper className="dropdown-item" {...props}>
       {showDot && <span className={classes}>• </span>}
       {children}
-    </div>
+    </Wrapper>
   );
 };
 
@@ -32,6 +33,7 @@ Item.propTypes = {
   showDot: PropTypes.bool,
   isSelected: PropTypes.bool,
   children: PropTypes.node,
+  type: PropTypes.elementType,
 };
 
 export default Item;

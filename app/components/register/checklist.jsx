@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const RegisterChecklist = ({ password = '' }) => {
   const handEightCharacters = password.length >= 8;
   const hasLetter = /[a-zA-Z]+/.test(password);
-  const hasNumberOrSymbol = /[0-9!@#$%^&*()-_+=]+/.test(password);
+  const hasNumberOrSymbol = /[0-9!@#$%^&*~_\-+=]+/.test(password);
 
   return (
     <div style={{ margin: '15px 0 15px 3px' }}>

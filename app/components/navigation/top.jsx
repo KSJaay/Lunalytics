@@ -14,11 +14,6 @@ const TopNavigation = () => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown(true);
   const navigate = useNavigate();
 
-  const handleNavigate = (path = '/') => {
-    navigate(path);
-    toggleDropdown();
-  };
-
   return (
     <div className="top-navigation">
       <div
@@ -41,10 +36,10 @@ const TopNavigation = () => {
           </Dropdown.Trigger>
 
           <Dropdown.List position="right" isOpen={dropdownIsOpen}>
-            <Dropdown.Item onClick={() => handleNavigate('/settings')}>
+            <Dropdown.Item type="a" href="/settings">
               Settings
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleNavigate('/auth/logout')}>
+            <Dropdown.Item type="a" href="/auth/logout">
               Logout
             </Dropdown.Item>
           </Dropdown.List>

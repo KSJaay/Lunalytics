@@ -4,6 +4,7 @@ const {
   createMonitor,
   updateMonitor,
   deleteMonitor,
+  fetchUptimePercentage,
 } = require('../database/queries/monitor');
 
 class Monitor {
@@ -73,6 +74,20 @@ class Monitor {
     this.monitors.set(monitor.monitorId, monitor);
 
     return monitor;
+  }
+
+  async updateUptimePercentage(monitorId, monitor) {
+    if (!monitor) {
+      return;
+    }
+
+    const { uptimePercentage, averageHeartbeatLatency } =
+      await fetchUptimePercentage(monitorId);
+
+    monitor.uptimePercentage = uptimePercentage;
+    monitor.averageHeartbeatLatency = averageHeartbeatLatency;
+
+    this.monitors.set(monitorId, monitor);
   }
 
   setInCache(monitorId, monitor) {
