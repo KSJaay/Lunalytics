@@ -4,9 +4,15 @@ const createURL = (path, params) => {
   if (!path) return path;
   if (path?.startsWith('http')) return new URL(path);
 
-  const apiUrl = import.meta.env.PROD
-    ? ''
-    : import.meta.env.VITE_API_URL || 'http://localhost:2308';
+  if (import.meta.env.PROD) {
+    if (!params) return path;
+
+    const searchParams = new URLSearchParams(params).toString();
+
+    return `${path}?${searchParams}`;
+  }
+
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:2308';
 
   if (!params) return new URL(`${apiUrl}${path}`);
 
@@ -21,10 +27,8 @@ const createGetRequest = async (path, params, headers = {}) => {
   return axios({
     method: 'GET',
     url,
+    headers,
     withCredentials: true,
-    headers: {
-      ...headers,
-    },
     timeout: 5000,
     signal: AbortSignal.timeout(5000),
   });
@@ -37,10 +41,8 @@ const createPostRequest = async (path, data = {}, headers = {}) => {
     method: 'POST',
     url,
     data,
+    headers,
     withCredentials: true,
-    headers: {
-      ...headers,
-    },
     timeout: 5000,
     signal: AbortSignal.timeout(5000),
   });

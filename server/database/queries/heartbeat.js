@@ -57,8 +57,8 @@ const fetchDailyHeartbeats = async (monitorId) => {
     .orderBy('date', 'desc');
 
   // get the first heartbeat of the day
-  const firstHeartbeat = heartbeats[heartbeats.length - 1];
-  let firstHeartbeatDate = firstHeartbeat.date;
+  const firstHeartbeat = heartbeats[heartbeats.length - 1] || {};
+  let firstHeartbeatDate = firstHeartbeat.date || Date.now();
   // next 5th minute
   let nextHeartbeat =
     firstHeartbeatDate - (firstHeartbeatDate % 300000) + 300000;

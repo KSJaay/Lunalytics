@@ -1,5 +1,5 @@
 class LogMethods {
-  log(section, msg, level) {
+  log(section, msg, level, withDate = true) {
     let importance = {
       INFO: '\x1b[96m[INFO]\x1b[39m',
       WARN: '\x1b[33m[WARN]\x1b[39m',
@@ -7,7 +7,7 @@ class LogMethods {
     };
     const message = `${
       typeof msg === 'string'
-        ? `${new Date().toISOString()} [${section}] ${
+        ? `${withDate ? new Date().toISOString() : ''} [${section}] ${
             importance[level]
           }: ${msg}`
         : msg
