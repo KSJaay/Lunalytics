@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/KSJaay/Lunalytics/main/public/LogoWithName.png" width="150px" alt="Lunalytics logo" />
+  <img src="https://raw.githubusercontent.com/KSJaay/Lunalytics/main/public/LogoWithName.png" width="300px" alt="Lunalytics logo" />
 </div>
 
 <h2 align="center">Open source monitoring tool built with Node.js</h2>
