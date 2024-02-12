@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/KSJaay/Lunalytics/main/public/LogoWithName.png" width="300px" alt="Lunalytics logo" />
 </div>
 
-<h2 align="center">Open source monitoring tool built with Node.js</h2>
+<h2 align="center">Open source monitoring tool built with Node.js & React</h2>
 
 ## ⭐ Features
 
