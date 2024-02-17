@@ -48,3 +48,40 @@
     cursor: pointer;
   }
 }
+
+@include mobile {
+  .content {
+    margin-bottom: pxToRem(64);
+  }
+  .left-navigation {
+    position: absolute;
+    bottom: 0;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    gap: 20px;
+    overflow-x: auto;
+    justify-content: space-evenly;
+  }
+
+  .left-actions {
+    flex: 0;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .left-actions-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+  }
+
+  .navigation-left-top-action {
+    flex: 1;
+  }
+
+  .navigation-left-signout-button {
+    display: none;
+  }
+}
