@@ -6,7 +6,7 @@ const themes = { dark: 'Dark', light: 'Light' };
 
 const ThemesDropdown = () => {
   const { theme, setTheme } = useLocalStorageContext();
-  const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
+  const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (
     <>

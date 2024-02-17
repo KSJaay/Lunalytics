@@ -7,7 +7,7 @@ const colors = ['Blue', 'Cyan', 'Green', 'Pink', 'Purple', 'Red', 'Yellow'];
 const ColorsDropdown = () => {
   const { color: stateColor, setColor } = useLocalStorageContext();
 
-  const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
+  const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const colorsList = colors.map((color) => (
     <Dropdown.Item
