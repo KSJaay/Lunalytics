@@ -17,7 +17,7 @@ class SQLite {
     }
 
     this.client = knex({
-      client: 'sqlite3',
+      client: 'better-sqlite3',
       connection: {
         filename: this.path,
       },
