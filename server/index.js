@@ -44,6 +44,9 @@ const init = async () => {
   }
 
   app.use(authorization);
+  app.get('/status', (req, res) => {
+    res.sendStatus(200);
+  });
   logger.info('Express', 'Initialising routes');
   initialiseRoutes(app);
 
