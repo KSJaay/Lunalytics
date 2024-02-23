@@ -55,6 +55,9 @@ npm install pm2 -g
 # Start the server
 pm2 start server/index.js --name Lunalytics
 
+# Start the server using script
+pm2 start npm --name "Lunalytics" -- run start
+
 # Optional
 pm2 save
 pm2 startup
@@ -68,6 +71,12 @@ pm2 monit
 There's a lot of monitoring applications out there and I personally love using uptime-kuma. But, one of the main issues with Uptime-kuma is the ability to share with my friends/colleagues. And for the services that do allow me to share with others, they either have an outdated UI from the 90s or are so expensive I can't justify paying for it.
 
 So I've decided to create my own application that's focused on a developer first experience for teams and individual users.
+
+## Contributors
+
+<a href="https://github.com/KSJaay/Lunalytics/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=KSJaay/Lunalytics" />
+</a>
 
 ## License
 
