@@ -51,3 +51,13 @@
   align-items: center;
   gap: pxToRem(10);
 }
+
+@include mobile {
+  .members-table-header {
+    grid-template-columns: 3fr 1fr pxToRem(115);
+  }
+
+  .member-table-row {
+    grid-template-columns: 3fr 1fr pxToRem(115);
+  }
+}

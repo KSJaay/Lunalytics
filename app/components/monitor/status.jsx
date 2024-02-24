@@ -31,7 +31,11 @@ const MonitorStatus = ({ monitor = [] }) => {
         <div className="monitor-status-title">Cert expiry</div>
         <div className="monitor-status-subtitle">(Days Left)</div>
         <div className="montior-status-text">
-          {monitor.cert?.isValid ? `${monitor.cert.daysRemaining}` : 'Expired'}
+          {monitor.url?.startsWith('http://')
+            ? 'Invalid'
+            : monitor.cert?.isValid
+            ? `${monitor.cert.daysRemaining}`
+            : 'Expired'}
         </div>
       </div>
     </div>

@@ -17,14 +17,22 @@ const questions = [
     message: 'Enter JWT Secret Key: ',
     default: uuidv4(),
   },
+  {
+    type: 'list',
+    name: 'setupType',
+    message:
+      'Select migration type (If automatic it will automatically migrate the database to the newest version on start up):',
+    choices: ['automatic', 'manual'],
+    default: 'automatic',
+  },
 ];
 
 inquirer
   .prompt(questions)
   .then((answers) => {
-    const { port, jwtSecret } = answers;
+    const { port, jwtSecret, setupType } = answers;
 
-    if (!port || !jwtSecret) {
+    if (!port || !jwtSecret || !setupType) {
       logger.log('SETUP', 'Invalid input. Please try again.', 'ERROR', false);
       return;
     }
@@ -53,6 +61,7 @@ inquirer
     const config = {
       port,
       jwtSecret,
+      setupType,
       version: require('../package.json').version,
     };
 

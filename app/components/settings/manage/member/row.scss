@@ -120,3 +120,13 @@
   font-size: pxToRem(12);
   color: var(--accent-200);
 }
+
+@include mobile {
+  .member-row-timestamp {
+    display: none;
+  }
+
+  .joined {
+    display: none;
+  }
+}

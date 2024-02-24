@@ -75,3 +75,9 @@
   margin-top: pxToRem(8);
   text-align: center;
 }
+
+@include mobile {
+  .monitor-form-container {
+    margin: pxToRem(12) pxToRem(6);
+  }
+}

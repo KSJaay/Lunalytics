@@ -5,7 +5,7 @@ import Dropdown from '../../../ui/dropdown/index';
 
 const TimezoneDropdown = () => {
   const { timezone, setTimezone } = useLocalStorageContext();
-  const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
+  const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const timezoneList = timezones.map((time) => (
     <Dropdown.Item

@@ -10,7 +10,7 @@ const Item = ({
   showDot = false,
   isSelected = false,
   children,
-  type: Wrapper = 'div',
+  as: Wrapper = 'div',
   ...props
 }) => {
   const classes = classNames('dropdown-item-dot', {
@@ -33,7 +33,7 @@ Item.propTypes = {
   showDot: PropTypes.bool,
   isSelected: PropTypes.bool,
   children: PropTypes.node,
-  type: PropTypes.elementType,
+  as: PropTypes.elementType,
 };
 
 export default Item;

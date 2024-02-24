@@ -36,10 +36,10 @@ const TopNavigation = () => {
           </Dropdown.Trigger>
 
           <Dropdown.List position="right" isOpen={dropdownIsOpen}>
-            <Dropdown.Item type="a" href="/settings">
+            <Dropdown.Item as="a" href="/settings">
               Settings
             </Dropdown.Item>
-            <Dropdown.Item type="a" href="/auth/logout">
+            <Dropdown.Item as="a" href="/auth/logout">
               Logout
             </Dropdown.Item>
           </Dropdown.List>

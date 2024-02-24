@@ -13,6 +13,7 @@ const Button = ({
   iconRight,
   color,
   fullWidth,
+  as: Wrapper = 'div',
   ...props
 }) => {
   const classes = classNames('button', {
@@ -21,11 +22,11 @@ const Button = ({
   });
 
   return (
-    <div className={classes} {...props}>
+    <Wrapper className={classes} {...props}>
       {iconLeft}
       {children && <div className="button-content">{children}</div>}
       {iconRight}
-    </div>
+    </Wrapper>
   );
 };
 
@@ -37,6 +38,7 @@ Button.propTypes = {
   iconRight: PropTypes.node,
   color: colorPropType,
   fullWidth: PropTypes.bool,
+  as: PropTypes.elementType,
 };
 
 export default Button;

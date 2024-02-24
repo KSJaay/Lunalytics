@@ -11,7 +11,7 @@ const times = {
 
 const TimeFormatDropdown = () => {
   const { timeformat, setTimeformat } = useLocalStorageContext();
-  const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
+  const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const timeFormatList = [
     { name: '23:59:59', value: 'HH:mm:ss' },

@@ -6,7 +6,7 @@ import Dropdown from '../../../ui/dropdown/index';
 const DateFormatDropdown = () => {
   const { dateformat, setDateformat } = useLocalStorageContext();
 
-  const { dropdownIsOpen, toggleDropdown } = useDropdown(false);
+  const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const dateFormatsList = timeformats.map((format) => (
     <Dropdown.Item

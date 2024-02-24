@@ -15,6 +15,7 @@ import MenuStatusDropdown from './status';
 import SearchBar from '../../ui/searchBar';
 import { useNavigate } from 'react-router-dom';
 import useContextStore from '../../../context';
+import HomeMenuMobile from './mobile';
 
 const HomeMenu = ({ handleReset, search, setSearch }) => {
   const navigate = useNavigate();
@@ -44,6 +45,9 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
             New
           </Button>
         ) : null}
+      </div>
+      <div className="home-menu-buttons-mobile">
+        <HomeMenuMobile handleReset={handleReset} />
       </div>
     </div>
   );
