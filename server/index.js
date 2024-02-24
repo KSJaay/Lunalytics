@@ -5,8 +5,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const dotenv = require('dotenv');
-dotenv.config();
 
 // import local files
 const cache = require('./cache');
@@ -15,6 +13,7 @@ const initialiseRoutes = require('./routes');
 const SQLite = require('./database/sqlite/setup');
 const initialiseCronJobs = require('./utils/cron');
 const authorization = require('./middleware/authorization');
+const migrateDatabase = require('../scripts/migrate');
 
 const app = express();
 
@@ -23,6 +22,7 @@ const init = async () => {
   await SQLite.connect();
   await SQLite.setup();
   await cache.initialise();
+  await migrateDatabase();
   const monitors = await cache.monitors.getAll();
   await cache.heartbeats.loadHeartbeats(monitors);
   await initialiseCronJobs();
