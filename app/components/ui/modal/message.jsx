@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const Message = ({ children, ...props }) => {
   return (
-    <div className="modal-alert-message" {...props}>
+    <div className="modal-message" {...props}>
       {children}
     </div>
   );

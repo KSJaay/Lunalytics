@@ -1,6 +1,6 @@
 @import '../../../styles/global.scss';
 
-.modal-alert-container {
+.modal-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,17 +12,17 @@
   align-items: center;
 }
 
-.modal-alert-container--no-glassmorph {
+.modal-container--no-glassmorph {
   background: rgba(0, 0, 0, 0.3);
 }
 
-.modal-alert-container--glassmorph {
+.modal-container--glassmorph {
   @include glassmorphism;
 }
 
-.modal-alert-content {
-  background-color: var(--accent-800);
-  border: 2px solid var(--accent-700);
+.modal-content {
+  background-color: var(--accent-900);
+  border: 2px solid var(--accent-800);
   color: var(--font-color);
   padding: pxToRem(8) pxToRem(12) pxToRem(12) pxToRem(12);
   border-radius: pxToRem(12);
@@ -30,28 +30,43 @@
   max-width: 95%;
   max-height: 95%;
   overflow: auto;
+  position: relative;
 }
 
-.modal-alert-title {
+.modal-close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px;
+  cursor: pointer;
+  color: var(--accent-300);
+
+  &:hover svg {
+    transform: scale(1.05);
+    color: var(--accent-600);
+  }
+}
+
+.modal-title {
   font-size: var(--font-xl);
   font-weight: 600;
   margin-bottom: pxToRem(10);
 }
 
-.modal-alert-message {
+.modal-message {
   font-size: var(--font-sm);
   margin-bottom: pxToRem(10);
   color: var(--accent-100);
   max-width: 100%;
 }
 
-.modal-alert-actions {
+.modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: pxToRem(10);
 }
 
-.modal-alert-button {
+.modal-button {
   display: flex;
   justify-content: flex-end;
   margin-top: pxToRem(10);
@@ -71,7 +86,7 @@
   }
 }
 
-.modal-alert-button--blue {
+.modal-button--blue {
   background-color: var(--blue-800);
 
   &:hover {
@@ -79,7 +94,7 @@
   }
 }
 
-.modal-alert-button--cyan {
+.modal-button--cyan {
   background-color: var(--cyan-800);
 
   &:hover {
@@ -87,7 +102,7 @@
   }
 }
 
-.modal-alert-button--gray {
+.modal-button--gray {
   background-color: var(--gray-800);
 
   &:hover {
@@ -95,14 +110,14 @@
   }
 }
 
-.modal-alert-button--green {
+.modal-button--green {
   background-color: var(--green-800);
 
   &:hover {
     background-color: var(--green-700);
   }
 }
-.modal-alert-button--pink {
+.modal-button--pink {
   background-color: var(--pink-800);
 
   &:hover {
@@ -110,7 +125,7 @@
   }
 }
 
-.modal-alert-button--primary {
+.modal-button--primary {
   background-color: var(--primary-800);
 
   &:hover {
@@ -118,7 +133,7 @@
   }
 }
 
-.modal-alert-button--purple {
+.modal-button--purple {
   background-color: var(--purple-800);
 
   &:hover {
@@ -126,7 +141,7 @@
   }
 }
 
-.modal-alert-button--red {
+.modal-button--red {
   background-color: var(--red-800);
 
   &:hover {
@@ -134,7 +149,7 @@
   }
 }
 
-.modal-alert-button--yellow {
+.modal-button--yellow {
   background-color: var(--yellow-800);
 
   &:hover {

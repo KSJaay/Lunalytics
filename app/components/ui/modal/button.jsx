@@ -6,8 +6,8 @@ import classNames from 'classnames';
 import { colorPropType } from '../../../utils/propTypes';
 
 const Button = ({ children, color, ...props }) => {
-  const classes = classNames('modal-alert-button', {
-    [`modal-alert-button--${color}`]: color,
+  const classes = classNames('modal-button', {
+    [`modal-button--${color}`]: color,
   });
 
   return (
