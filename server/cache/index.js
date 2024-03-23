@@ -121,7 +121,8 @@ class Master {
 
     clearTimeout(this.timeouts.get(monitorId));
 
-    monitor.nextCheck = Date.now() + monitor.interval * 1000;
+    monitor.lastCheck = Date.now();
+    monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
     await this.monitors.updateUptimePercentage(monitorId, monitor);
 
     this.timeouts.set(

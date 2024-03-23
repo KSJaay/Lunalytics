@@ -24,13 +24,13 @@ class Certificates {
   }
 
   async update(monitorId, certificate) {
-    if (certificate?.nextCheck) {
-      delete certificate.nextCheck;
-    }
+    delete certificate.lastCheck;
+    delete certificate.nextCheck;
 
     await updateCertificate(monitorId, certificate);
 
-    certificate.nextCheck = Date.now() + 86400000;
+    certificate.lastCheck = Date.now();
+    certificate.nextCheck = certificate.lastCheck + 86400000;
 
     this.certificates.set(monitorId, certificate);
   }
