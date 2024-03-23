@@ -13,14 +13,15 @@ import FaReload from '../../icons/faReload';
 import MenuLayoutDropdown from './layout';
 import MenuStatusDropdown from './status';
 import SearchBar from '../../ui/searchBar';
-import { useNavigate } from 'react-router-dom';
 import useContextStore from '../../../context';
 import HomeMenuMobile from './mobile';
+import MonitorConfigureModal from '../../modal/monitor/configure';
 
 const HomeMenu = ({ handleReset, search, setSearch }) => {
-  const navigate = useNavigate();
   const {
     userStore: { user },
+    modalStore: { openModal, closeModal },
+    globalStore: { addMonitor },
   } = useContextStore();
 
   return (
@@ -38,7 +39,15 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
 
         {user.canEdit ? (
           <Button
-            onClick={() => navigate('/monitor/add')}
+            onClick={() =>
+              openModal(
+                <MonitorConfigureModal
+                  closeModal={closeModal}
+                  handleMonitorSubmit={addMonitor}
+                />,
+                false
+              )
+            }
             iconLeft={<FaPlus width={20} height={20} />}
             color={'primary'}
           >
