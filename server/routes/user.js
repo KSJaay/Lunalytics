@@ -11,6 +11,7 @@ const teamMembersListMiddleware = require('../middleware/user/team/members');
 const userUpdateAvatar = require('../middleware/user/update/avatar');
 const userUpdateUsername = require('../middleware/user/update/username');
 const { userExists, emailExists } = require('../database/queries/user');
+const { cleanMonitor } = require('../class/monitor');
 
 router.get('/', async (request, response) => {
   const { access_token } = request.cookies;
@@ -51,7 +52,7 @@ router.get('/monitors', async (request, response) => {
     monitor.heartbeats = heartbeats;
     monitor.cert = cert;
 
-    query.push(monitor);
+    query.push(cleanMonitor(monitor));
   }
 
   return response.send(query);

@@ -1,3 +1,4 @@
+const cleanCertificate = require('../class/certificate');
 const {
   fetchCertificate,
   updateCertificate,
@@ -18,7 +19,7 @@ class Certificates {
 
     const query = await fetchCertificate(monitorId);
 
-    this.certificates.set(monitorId, query);
+    this.certificates.set(monitorId, cleanCertificate(query));
 
     return query;
   }
