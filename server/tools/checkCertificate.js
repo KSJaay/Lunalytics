@@ -1,8 +1,8 @@
 const https = require('https');
 const { default: axios } = require('axios');
-const logger = require('./logger');
+const logger = require('../utils/logger');
 
-async function getCertInfo(url) {
+const getCertInfo = async (url) => {
   try {
     const response = await axios.request({
       url,
@@ -21,7 +21,7 @@ async function getCertInfo(url) {
       isValid: false,
     };
   }
-}
+};
 
 const checkCertificate = (res) => {
   if (!res.request.socket) {
@@ -70,6 +70,4 @@ const parseCert = (cert) => {
   return parsedInfo;
 };
 
-module.exports = {
-  getCertInfo,
-};
+module.exports = getCertInfo;
