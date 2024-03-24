@@ -1,29 +1,19 @@
 // import local files
 const { handleError, UnprocessableError } = require('../../utils/errors');
-const validators = require('../../utils/validators');
+const validators = require('../../utils/validators/monitor');
 const cache = require('../../cache');
 const { userExists } = require('../../database/queries/user');
+const { cleanMonitor } = require('../../class/monitor');
 
 const monitorEdit = async (request, response) => {
   try {
-    const {
-      monitorId,
-      name,
-      url,
-      method,
-      interval,
-      retryInterval,
-      requestTimeout,
-    } = request.body;
+    const { type } = request.body;
 
-    const isInvalidMonitor = validators.monitor(
-      name,
-      url,
-      method,
-      interval,
-      retryInterval,
-      requestTimeout
-    );
+    const isHttp = type === 'http';
+
+    const validator = isHttp ? validators.http : validators.tcp;
+
+    const isInvalidMonitor = validator(request.body);
 
     if (isInvalidMonitor) {
       throw new UnprocessableError(isInvalidMonitor);
@@ -31,27 +21,23 @@ const monitorEdit = async (request, response) => {
 
     const user = await userExists(request.cookies.access_token);
 
-    const data = await cache.monitors.edit({
-      monitorId,
-      name,
-      url,
-      method,
-      interval,
-      retryInterval,
-      requestTimeout,
-      email: user.email,
-    });
+    const data = await cache.monitors.addOrEdit(
+      request.body,
+      user.email,
+      isHttp,
+      true
+    );
 
     await cache.setTimeout(data.monitorId, data.interval);
 
     const heartbeats = await cache.heartbeats.get(data.monitorId);
     const cert = await cache.certificates.get(data.monitorId);
 
-    const monitor = {
+    const monitor = cleanMonitor({
       ...data,
       heartbeats,
       cert,
-    };
+    });
 
     return response.json(monitor);
   } catch (error) {
