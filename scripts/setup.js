@@ -19,7 +19,7 @@ const questions = [
   },
   {
     type: 'list',
-    name: 'setupType',
+    name: 'migrationType',
     message:
       'Select migration type (If automatic it will automatically migrate the database to the newest version on start up):',
     choices: ['automatic', 'manual'],
@@ -30,9 +30,9 @@ const questions = [
 inquirer
   .prompt(questions)
   .then((answers) => {
-    const { port, jwtSecret, setupType } = answers;
+    const { port, jwtSecret, migrationType } = answers;
 
-    if (!port || !jwtSecret || !setupType) {
+    if (!port || !jwtSecret || !migrationType) {
       logger.log('SETUP', 'Invalid input. Please try again.', 'ERROR', false);
       return;
     }
@@ -61,7 +61,7 @@ inquirer
     const config = {
       port,
       jwtSecret,
-      setupType,
+      migrationType,
       version: require('../package.json').version,
     };
 

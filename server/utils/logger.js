@@ -7,7 +7,7 @@ class LogMethods {
     };
     const message = `${
       typeof msg === 'string'
-        ? `${withDate ? new Date().toISOString() : ''} [${section}] ${
+        ? `${withDate ? `${new Date().toISOString()} ` : ''}[${section}] ${
             importance[level]
           }: ${msg}`
         : msg
