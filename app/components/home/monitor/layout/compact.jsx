@@ -20,7 +20,7 @@ const MonitorList = ({ monitor = {} }) => {
       <div className="home-monitor-name-compact">{name}</div>
 
       <div className="home-monitor-uptime-compact">
-        {heartbeat.latency ? `${heartbeat.latency} ms` : 'Unknown'}
+        {heartbeat.latency ? `${heartbeat.latency} ms` : '0ms'}
       </div>
 
       <div className="home-monitor-uptime-compact">{uptimePercentage}%</div>

@@ -14,6 +14,8 @@ const MonitorCard = ({ monitor = {} }) => {
   const { name, url, uptimePercentage = '0', heartbeats = [] } = monitor;
   const [heartbeat = {}] = heartbeats;
 
+  const address = monitor.type === 'tcp' ? `${url}:${monitor.port}` : url;
+
   return (
     <div className={'home-monitor-container'}>
       <div className="home-monitor-type">
@@ -23,12 +25,12 @@ const MonitorCard = ({ monitor = {} }) => {
         </span>
       </div>
       <span onClick={() => navigate(`/monitor/${monitor.monitorId}`)}>
-        <a className="home-monitor-url">{url}</a>
+        <a className="home-monitor-url">{address}</a>
         <div className="home-monitor-uptime-container">
           <div className="home-monitor-uptime">
             <h1>Ping</h1>
             <div>
-              {heartbeat.latency ? `${heartbeat.latency} ms` : 'Unknown'}
+              {heartbeat.latency ? `${heartbeat.latency} ms` : '0ms'}
             </div>
           </div>
           <div className="home-monitor-uptime">

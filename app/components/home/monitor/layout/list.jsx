@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import local files
 import StatusBar from '../../../ui/statusBar';
+
 import { monitorPropType } from '../../../../utils/propTypes';
 
 const MonitorList = ({ monitor = {} }) => {
@@ -12,6 +13,7 @@ const MonitorList = ({ monitor = {} }) => {
 
   const { name, url, uptimePercentage = '0', heartbeats = [] } = monitor;
   const [heartbeat = {}] = heartbeats;
+  const address = monitor.type === 'tcp' ? `${url}:${monitor.port}` : url;
 
   return (
     <div
@@ -21,11 +23,11 @@ const MonitorList = ({ monitor = {} }) => {
       <div className="home-monitor-type-list">
         <div className="home-monitor-name-list">{name}</div>
 
-        <a className="home-monitor-url">{url}</a>
+        <a className="home-monitor-url">{address}</a>
       </div>
 
-      <div className="home-monitor-uptime-list">
-        {heartbeat.latency ? `${heartbeat.latency} ms` : 'Unknown'}
+      <div className="home-monitor-uptime-ping">
+        {heartbeat.latency ? `${heartbeat.latency} ms` : '0ms'}
       </div>
 
       <div className="home-monitor-uptime-list">{uptimePercentage}%</div>
