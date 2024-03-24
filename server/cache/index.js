@@ -1,14 +1,10 @@
-// import dependencies
-const { default: axios } = require('axios');
-
-// import local files
-const logger = require('../utils/logger');
-
 // import classes
 const Certificates = require('./certificates');
 const Heartbeats = require('./heartbeats');
 const Monitor = require('./monitors');
-const { getCertInfo } = require('../utils/checkCertificate');
+const getCertInfo = require('../tools/checkCertificate');
+const httpStatusCheck = require('../tools/httpStatus');
+const tcpStatusCheck = require('../tools/tcpPing');
 
 class Master {
   constructor() {
@@ -41,6 +37,24 @@ class Master {
     );
   }
 
+  async updateTcpStatus(monitor, heartbeat) {
+    await this.heartbeats.addHeartbeat(heartbeat);
+
+    clearTimeout(this.timeouts.get(monitor.monitorId));
+
+    monitor.lastCheck = Date.now();
+    monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
+    await this.monitors.updateUptimePercentage(monitor);
+
+    this.timeouts.set(
+      monitor.monitorId,
+      setTimeout(
+        () => this.checkStatus(monitor.monitorId),
+        monitor.interval * 1000
+      )
+    );
+  }
+
   async checkStatus(monitorId) {
     const monitor = await this.monitors.get(monitorId).catch(() => false);
 
@@ -52,28 +66,8 @@ class Master {
       return;
     }
 
-    const options = {
-      method: monitor.method,
-      url: monitor.url,
-      timeout: monitor.requestTimeout * 1000,
-      signal: AbortSignal.timeout((monitor.requestTimeout + 10) * 1000),
-    };
-
-    const startTime = Date.now();
-
-    try {
-      const query = await axios.request(options);
-
-      const endTime = Date.now();
-
-      const message = `${query.status} - ${query.statusText}`;
-
-      const isDown = query.status >= 400 ? 1 : 0;
-      const latency = endTime - startTime;
-      const status = query.status;
-
-      const heartbeat = { monitorId, status, latency, message, isDown };
-
+    if (monitor.type === 'http') {
+      const heartbeat = await httpStatusCheck(monitor);
       await this.heartbeats.addHeartbeat(heartbeat);
 
       if (monitor.url?.startsWith('https://')) {
@@ -90,48 +84,23 @@ class Master {
           }
         }
       }
-    } catch (error) {
-      const endTime = Date.now();
 
-      if (error.response) {
-        const failedResponse = error.response;
-        const message = `${failedResponse.status} - ${failedResponse.statusText}`;
-        const isDown = failedResponse.status >= 400;
-        const latency = endTime - startTime;
-        const status = failedResponse.status;
+      monitor.lastCheck = Date.now();
+      monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
+      await this.monitors.updateUptimePercentage(monitor);
 
-        const heartbeat = { monitorId, status, latency, message, isDown };
-
-        await this.heartbeats.addHeartbeat(heartbeat);
-      } else {
-        await this.heartbeats.addHeartbeat({
-          monitorId,
-          status: 0,
-          latency: 0,
-          message: error.message,
-          isDown: 1,
-        });
-      }
-
-      logger.error(
-        'Monitor Cache',
-        `Issue checking monitor ${monitorId}: ${error.message} `
+      this.timeouts.set(
+        monitorId,
+        setTimeout(() => this.checkStatus(monitorId), monitor.interval * 1000)
       );
     }
 
-    clearTimeout(this.timeouts.get(monitorId));
-
-    monitor.lastCheck = Date.now();
-    monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
-    await this.monitors.updateUptimePercentage(monitorId, monitor);
-
-    this.timeouts.set(
-      monitorId,
-      setTimeout(
-        () => this.checkStatus(monitor.monitorId),
-        monitor.interval * 1000
-      )
-    );
+    if (monitor.type === 'tcp') {
+      const updateHeartbeat = (monitor, heartbeat) =>
+        this.updateTcpStatus(monitor, heartbeat);
+      tcpStatusCheck(monitor, updateHeartbeat);
+      clearTimeout(this.timeouts.get(monitorId));
+    }
   }
 }
 
