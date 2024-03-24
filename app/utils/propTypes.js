@@ -13,7 +13,6 @@ const userPropType = PropTypes.shape({
 });
 
 const monitorPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
   monitorId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
@@ -23,7 +22,7 @@ const monitorPropType = PropTypes.shape({
   method: PropTypes.string.isRequired,
   headers: PropTypes.string,
   body: PropTypes.string,
-  valid_status_codes: PropTypes.string.isRequired,
+  valid_status_codes: PropTypes.array.isRequired,
   email: PropTypes.string.isRequired,
   nextCheck: PropTypes.number.isRequired,
 });
@@ -49,7 +48,6 @@ const certPropType = PropTypes.shape({
 });
 
 const fullMonitorPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
   monitorId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
@@ -59,7 +57,7 @@ const fullMonitorPropType = PropTypes.shape({
   method: PropTypes.string.isRequired,
   headers: PropTypes.string,
   body: PropTypes.string,
-  valid_status_codes: PropTypes.string.isRequired,
+  valid_status_codes: PropTypes.array.isRequired,
   email: PropTypes.string.isRequired,
   cert: certPropType,
   heartbeats: PropTypes.arrayOf(heartbeatPropType),
