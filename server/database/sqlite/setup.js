@@ -58,10 +58,12 @@ class SQLite {
         table.string('monitorId').notNullable().primary();
         table.string('name').notNullable();
         table.string('url').notNullable();
-        table.integer('interval').notNullable();
-        table.integer('retryInterval').notNullable();
-        table.integer('requestTimeout').notNullable();
-        table.string('method').notNullable();
+        table.integer('port').defaultTo(null);
+        table.string('type').defaultTo('http');
+        table.integer('interval').defaultTo(30);
+        table.integer('retryInterval').defaultTo(30);
+        table.integer('requestTimeout').defaultTo(30);
+        table.string('method').defaultTo(null);
         table.text('headers');
         table.text('body');
         table.text('valid_status_codes').defaultTo('["200-299"]');
