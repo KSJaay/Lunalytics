@@ -13,10 +13,11 @@ import { createGetRequest } from '../../../services/axios';
 // import icons
 import FaEllipsisVertical from '../../icons/faEllipsisVertical';
 import useDropdown from '../../../hooks/useDropdown';
+import MonitorConfigureModal from '../../modal/monitor/configure';
 
 const MonitorOptions = ({ monitorId }) => {
   const {
-    globalStore: { removeMonitor, getMonitor },
+    globalStore: { removeMonitor, editMonitor, getMonitor },
     modalStore: { openModal, closeModal },
     userStore: { user },
   } = useContextStore();
@@ -39,6 +40,20 @@ const MonitorOptions = ({ monitorId }) => {
     toast.success('Monitor deleted successfully!');
 
     closeModal();
+  };
+
+  const handleEdit = () => {
+    const monitor = getMonitor(monitorId);
+
+    openModal(
+      <MonitorConfigureModal
+        monitor={monitor}
+        closeModal={closeModal}
+        handleMonitorSubmit={editMonitor}
+        isEdit
+      />,
+      false
+    );
   };
 
   const handleDelete = () => {
@@ -66,6 +81,7 @@ const MonitorOptions = ({ monitorId }) => {
       </Dropdown.Trigger>
       <Dropdown.List isOpen={dropdownIsOpen}>
         <Dropdown.Item onClick={handleOpen}>Open</Dropdown.Item>
+        <Dropdown.Item onClick={handleEdit}>Edit</Dropdown.Item>
         <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
       </Dropdown.List>
     </Dropdown.Container>

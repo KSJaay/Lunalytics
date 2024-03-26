@@ -1,4 +1,5 @@
 const cache = require('../../cache');
+const { cleanMonitor } = require('../../class/monitor');
 const { handleError } = require('../../utils/errors');
 
 const fetchMonitorUsingId = async (request, response) => {
@@ -13,15 +14,14 @@ const fetchMonitorUsingId = async (request, response) => {
     const heartbeats = await cache.heartbeats.get(data.monitorId);
     const cert = await cache.certificates.get(data.monitorId);
 
-    const monitor = {
+    const monitor = cleanMonitor({
       ...data,
       heartbeats,
       cert,
-    };
+    });
 
     return response.json(monitor);
   } catch (error) {
-    console.log(error);
     handleError(error, response);
   }
 };

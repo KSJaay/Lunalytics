@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const Actions = ({ children, ...props }) => {
   return (
-    <div className="modal-alert-actions" {...props}>
+    <div className="modal-actions" {...props}>
       {children}
     </div>
   );

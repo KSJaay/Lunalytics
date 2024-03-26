@@ -22,7 +22,7 @@ const StatusBar = ({ heartbeats = {}, maxHeartbeats = 12 }) => {
           }
           title={
             heartbeat.isDown
-              ? 'Unknown'
+              ? '0ms'
               : `${new Date().toUTCString()} - ${heartbeat.latency} ms`
           }
         ></div>

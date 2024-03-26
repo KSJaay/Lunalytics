@@ -1,3 +1,4 @@
+const cleanCertificate = require('../class/certificate');
 const {
   fetchCertificate,
   updateCertificate,
@@ -18,19 +19,19 @@ class Certificates {
 
     const query = await fetchCertificate(monitorId);
 
-    this.certificates.set(monitorId, query);
+    this.certificates.set(monitorId, cleanCertificate(query));
 
     return query;
   }
 
   async update(monitorId, certificate) {
-    if (certificate?.nextCheck) {
-      delete certificate.nextCheck;
-    }
+    delete certificate.lastCheck;
+    delete certificate.nextCheck;
 
     await updateCertificate(monitorId, certificate);
 
-    certificate.nextCheck = Date.now() + 86400000;
+    certificate.lastCheck = Date.now();
+    certificate.nextCheck = certificate.lastCheck + 86400000;
 
     this.certificates.set(monitorId, certificate);
   }

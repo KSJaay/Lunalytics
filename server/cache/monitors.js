@@ -1,3 +1,4 @@
+const { cleanPartialMonitor } = require('../class/monitor');
 const {
   fetchMonitor,
   fetchMonitors,
@@ -34,7 +35,7 @@ class Monitor {
     const query = await fetchMonitors();
 
     for (const monitor of query) {
-      this.monitors.set(monitor.monitorId, monitor);
+      this.monitors.set(monitor.monitorId, cleanPartialMonitor(monitor));
     }
 
     return query;
@@ -54,40 +55,90 @@ class Monitor {
     return this.monitors.keys();
   }
 
-  async add(monitor) {
-    const data = await createMonitor(monitor);
+  async addOrEdit(body, email, isHttp, isEdit) {
+    const databaseFunction = isEdit ? updateMonitor : createMonitor;
 
-    const monitorData = {
-      ...data,
-      uptimePercentage: 0,
-      averageHeartbeatLatency: 0,
-    };
+    if (isHttp) {
+      const {
+        name,
+        url,
+        method,
+        valid_status_codes,
+        interval,
+        retryInterval,
+        requestTimeout,
+      } = body;
 
-    this.monitors.set(data.monitorId, monitorData);
+      const monitor = {
+        name,
+        url,
+        method,
+        interval,
+        retryInterval,
+        requestTimeout,
+        valid_status_codes: JSON.stringify(valid_status_codes),
+        email,
+        type: 'http',
+      };
 
-    return monitorData;
+      if (isEdit) {
+        monitor.monitorId = body.monitorId;
+      }
+
+      const data = await databaseFunction(monitor);
+      const monitorData = {
+        ...data,
+        uptimePercentage: 0,
+        averageHeartbeatLatency: 0,
+      };
+
+      this.monitors.set(data.monitorId, monitorData);
+
+      return monitorData;
+    } else {
+      const { name, url, port, interval, retryInterval, requestTimeout } = body;
+
+      const monitor = {
+        name,
+        url,
+        port,
+        interval,
+        retryInterval,
+        requestTimeout,
+        valid_status_codes: '',
+        email,
+        type: 'tcp',
+      };
+
+      if (isEdit) {
+        monitor.monitorId = body.monitorId;
+      }
+
+      const data = await databaseFunction(monitor);
+      const monitorData = {
+        ...data,
+        uptimePercentage: 0,
+        averageHeartbeatLatency: 0,
+      };
+
+      this.monitors.set(data.monitorId, monitorData);
+
+      return monitorData;
+    }
   }
 
-  async edit(monitor) {
-    await updateMonitor(monitor);
-
-    this.monitors.set(monitor.monitorId, monitor);
-
-    return monitor;
-  }
-
-  async updateUptimePercentage(monitorId, monitor) {
+  async updateUptimePercentage(monitor) {
     if (!monitor) {
       return;
     }
 
     const { uptimePercentage, averageHeartbeatLatency } =
-      await fetchUptimePercentage(monitorId);
+      await fetchUptimePercentage(monitor.monitorId);
 
     monitor.uptimePercentage = uptimePercentage;
     monitor.averageHeartbeatLatency = averageHeartbeatLatency;
 
-    this.monitors.set(monitorId, monitor);
+    this.monitors.set(monitor.monitorId, monitor);
   }
 
   setInCache(monitorId, monitor) {

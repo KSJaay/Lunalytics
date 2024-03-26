@@ -23,7 +23,7 @@ const updateMonitor = async (monitor) => {
     .where({ monitorId: monitor.monitorId })
     .update(monitor);
 
-  return true;
+  return monitor;
 };
 
 const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
@@ -37,13 +37,14 @@ const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
   const totalHeartbeats = heartbeats.length;
   const downHeartbeats = heartbeats.filter((h) => h.isDown).length;
 
-  const averageHeartbeatLatency = Math.round(
-    heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats
-  );
+  const averageHeartbeatLatency =
+    Math.round(
+      heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats
+    ) || 0;
 
-  const uptimePercentage = Math.round(
-    ((totalHeartbeats - downHeartbeats) / totalHeartbeats) * 100
-  );
+  const uptimePercentage =
+    Math.round(((totalHeartbeats - downHeartbeats) / totalHeartbeats) * 100) ||
+    0;
 
   return { uptimePercentage, averageHeartbeatLatency };
 };

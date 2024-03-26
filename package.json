@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.3.13",
+  "version": "0.4.0",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -50,8 +50,6 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.2",
-    "@commitlint/config-conventional": "^18.4.2",
     "@vitejs/plugin-react": "^4.2.1",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
@@ -61,6 +59,7 @@
     "eslint-plugin-react-refresh": "^0.4.4",
     "husky": "^8.0.3",
     "inquirer": "^8.0.0",
+    "lightningcss": "^1.24.0",
     "lint-staged": "^15.1.0",
     "nodemon": "^3.0.1",
     "rollup-plugin-visualizer": "^5.12.0",

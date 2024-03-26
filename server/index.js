@@ -43,10 +43,11 @@ const init = async () => {
     app.use(express.static(path.join(process.cwd(), 'dist')));
   }
 
-  app.use(authorization);
-  app.get('/status', (req, res) => {
-    res.sendStatus(200);
+  app.get('/api/status', (req, res) => {
+    return res.status(200).send('Everything looks good :D');
   });
+
+  app.use(authorization);
   logger.info('Express', 'Initialising routes');
   initialiseRoutes(app);
 

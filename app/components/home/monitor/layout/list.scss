@@ -47,7 +47,8 @@
   width: 100%;
 }
 
-.home-monitor-uptime-list {
+.home-monitor-uptime-list,
+.home-monitor-uptime-ping {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -61,4 +62,38 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.home-monitor-options-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@include tablet {
+  .home-monitor-container-list {
+    grid-template-columns: 1fr 100px 100px;
+  }
+
+  .home-monitor-list-heartbeats {
+    display: none;
+  }
+}
+
+@include mobile {
+  .home-monitor-container-list {
+    grid-template-columns: 1fr 100px;
+  }
+
+  .home-monitor-list-heartbeats {
+    display: none;
+  }
+
+  .home-monitor-uptime-ping {
+    display: none;
+  }
+
+  .home-monitor-url {
+    display: none;
+  }
 }

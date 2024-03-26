@@ -101,13 +101,13 @@ class GlobalStore {
     return this.monitors.get(monitorId);
   };
 
-  editMonitor = (monitorId, monitor) => {
-    if (this.monitors.has(monitorId)) {
-      if (this.timeouts.has(monitorId)) {
-        clearTimeout(this.timeouts.get(monitorId));
-        this.timeouts.delete(monitorId);
+  editMonitor = (monitor) => {
+    if (this.monitors.has(monitor.monitorId)) {
+      if (this.timeouts.has(monitor.monitorId)) {
+        clearTimeout(this.timeouts.get(monitor.monitorId));
+        this.timeouts.delete(monitor.monitorId);
       }
-      this.monitors.delete(monitorId, monitor);
+      this.monitors.delete(monitor.monitorId);
     }
 
     this.addMonitor(monitor);

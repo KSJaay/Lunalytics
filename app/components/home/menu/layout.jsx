@@ -39,6 +39,7 @@ const MenuLayoutDropdown = () => {
       onClick={() => setLayout(view.id)}
       showDot
       isSelected={layout === view.id}
+      dotColor="primary"
     >
       <div className="layout-option">
         {view.icon}

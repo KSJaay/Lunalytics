@@ -31,8 +31,8 @@ const MonitorTable = ({ layout, children }) => {
       <div className={classes}>
         <div className="home-monitor-table-header">Name</div>
         <div className="home-monitor-table-header">Ping</div>
-        <div className="home-monitor-table-header">Uptime</div>
-        <div className="home-monitor-table-header">Status</div>
+        <div className="home-monitor-table-header-uptime">Uptime</div>
+        <div className="home-monitor-table-header-status">Status</div>
       </div>
       <div className="home-monitor-table-content">{children}</div>
     </div>

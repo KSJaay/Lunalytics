@@ -26,7 +26,7 @@ const useGraphStatus = (monitor = {}) => {
     };
 
     fetchMonitorHeartbeats();
-  }, [statusType]);
+  }, [statusType, monitor]);
 
   const setStatusType = (statusType) => {
     setStatus(statusType);

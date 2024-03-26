@@ -7,7 +7,7 @@
 ## ⭐ Features
 
 - Easy to self-host
-- Monitor uptime for HTTP(s)
+- Monitor uptime for HTTP(s)/TCP
 - Support for multiple users
 - Role based access control
 - Clean and easy to use UX/UI
@@ -20,7 +20,7 @@
 
 Make sure you have the following applications installed before starting:
 
-- [Nodejs](https://nodejs.org/en/download/) (v20.9.0 or higher)
+- [Nodejs](https://nodejs.org/en/download/) (v18 or higher)
 - Npm or [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 - [Git](https://git-scm.com/)
 
@@ -55,7 +55,7 @@ npm install pm2 -g
 # Start the server
 pm2 start server/index.js --name Lunalytics
 
-# Start the server using script
+# Or start the server using script
 pm2 start npm --name "Lunalytics" -- run start
 
 # Optional
@@ -70,9 +70,11 @@ pm2 monit
 
 There's a lot of monitoring applications out there and I personally love using uptime-kuma. But, one of the main issues with Uptime-kuma is the ability to share with my friends/colleagues. And for the services that do allow me to share with others, they either have an outdated UI from the 90s or are so expensive I can't justify paying for it.
 
-So I've decided to create my own application that's focused on a developer first experience for teams and individual users.
+So I've decided to create my own application that's focused on a developer first experience with support for multiple users.
 
 ## Contributors
+
+Just me for now I guess :(
 
 <a href="https://github.com/KSJaay/Lunalytics/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=KSJaay/Lunalytics" />

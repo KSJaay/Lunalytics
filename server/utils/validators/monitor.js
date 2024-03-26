@@ -8,14 +8,22 @@ const validMethods = [
   'PUT',
 ];
 
-const monitor = (
+const validTypes = ['http', 'tcp'];
+
+const http = ({
   name,
+  type,
   url,
   method,
+  valid_status_codes,
   interval,
   retryInterval,
-  requestTimeout
-) => {
+  requestTimeout,
+}) => {
+  if (!type || !validTypes.includes(type)) {
+    return 'Please select a valid monitor type.';
+  }
+
   if (!name || !/^[a-zA-Z0-9-]+$/.test(name)) {
     return 'Please enter a valid name. Only letters, numbers and - are allowed.';
   }
@@ -28,6 +36,9 @@ const monitor = (
 
   if (!method || !validMethods.includes(method)) {
     return 'Please select a valid method.';
+  }
+  if (!valid_status_codes || !valid_status_codes.length) {
+    return 'Please select at least one status code.';
   }
 
   if (!interval) {
@@ -53,8 +64,58 @@ const monitor = (
   if (requestTimeout < 20 || requestTimeout > 600) {
     return 'Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds.';
   }
-
-  return null;
 };
 
-module.exports = monitor;
+const tcp = ({
+  type,
+  name,
+  host,
+  port,
+  interval,
+  retryInterval,
+  requestTimeout,
+}) => {
+  if (!type || !validTypes.includes(type)) {
+    return 'Please select a valid monitor type.';
+  }
+
+  if (!name || !/^[a-zA-Z0-9-]+$/.test(name)) {
+    return 'Please enter a valid name. Only letters, numbers and - are allowed.';
+  }
+
+  const isIpv4 = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
+
+  if (!host || !isIpv4.test(host)) {
+    return 'Please enter a valid host (Only IPv4 is valid).';
+  }
+
+  if (!port || port < 1 || port > 65535) {
+    return 'Please enter a valid port.';
+  }
+
+  if (!interval) {
+    return 'Please enter a valid interval.';
+  }
+
+  if (interval < 20 || interval > 600) {
+    return 'Please enter a valid interval. Interval should be between 20 and 600 seconds.';
+  }
+
+  if (!retryInterval) {
+    return 'Please enter a valid retry interval.';
+  }
+
+  if (retryInterval < 20 || retryInterval > 600) {
+    return 'Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds.';
+  }
+
+  if (!requestTimeout) {
+    return 'Please enter a valid request timeout.';
+  }
+
+  if (requestTimeout < 20 || requestTimeout > 600) {
+    return 'Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds.';
+  }
+};
+
+module.exports = { http, tcp };
