@@ -6,7 +6,7 @@ import TextInput from '../../../ui/input';
 
 const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
   return (
-    <div style={{ minHeight: '300px', width: '400px' }}>
+    <div className="monitor-configure-container">
       <TextInput
         type="number"
         label="Interval"

@@ -12,7 +12,7 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
   };
 
   return (
-    <div style={{ minHeight: '300px', width: '400px' }}>
+    <div className="monitor-configure-container">
       <TextInput
         label="URL"
         value={inputs.url}

@@ -6,12 +6,12 @@ import TextInput from '../../../ui/input';
 
 const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
   return (
-    <div style={{ minHeight: '300px', width: '400px' }}>
+    <div className="monitor-configure-container">
       <TextInput
         label="Host"
-        value={inputs.host}
-        error={errors.host}
-        onChange={(e) => handleInput('host', e.target.value)}
+        value={inputs.url}
+        error={errors.url}
+        onChange={(e) => handleInput('url', e.target.value)}
       />
 
       <TextInput

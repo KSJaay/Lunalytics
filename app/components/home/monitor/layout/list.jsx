@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 // import local files
 import StatusBar from '../../../ui/statusBar';
-
 import { monitorPropType } from '../../../../utils/propTypes';
 
 const MonitorList = ({ monitor = {} }) => {

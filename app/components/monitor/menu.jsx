@@ -8,16 +8,19 @@ import { useNavigate } from 'react-router-dom';
 
 // import local files
 import Button from '../ui/button';
-import FaTrash from '../icons/faTrash';
-import MdEdit from '../icons/mdEdit';
 import useContextStore from '../../context';
 import MonitorModal from '../modal/monitor/delete';
 import { createGetRequest } from '../../services/axios';
+import MonitorConfigureModal from '../modal/monitor/configure';
+
+// import icons
+import FaTrash from '../icons/faTrash';
+import MdEdit from '../icons/mdEdit';
 
 const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
   const {
     modalStore: { openModal, closeModal },
-    globalStore: { removeMonitor },
+    globalStore: { getMonitor, editMonitor, removeMonitor },
   } = useContextStore();
   const navigate = useNavigate();
 
@@ -32,6 +35,20 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
 
     closeModal();
     navigate('/');
+  };
+
+  const handleEdit = () => {
+    const monitor = getMonitor(monitorId);
+
+    openModal(
+      <MonitorConfigureModal
+        monitor={monitor}
+        closeModal={closeModal}
+        handleMonitorSubmit={editMonitor}
+        isEdit
+      />,
+      false
+    );
   };
 
   const handleDelete = () => {
@@ -49,10 +66,7 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
       <div className="monitor-view-menu-name">{name}</div>
       {/* <Button iconLeft={<FaTrash width={20} height={20} />}>Pause</Button> */}
       {/* <Button iconLeft={<FaTrash width={20} height={20} />}>Duplicate</Button> */}
-      <Button
-        iconLeft={<MdEdit width={20} height={20} />}
-        onClick={() => navigate(`/monitor/edit?monitorId=${monitorId}`)}
-      >
+      <Button iconLeft={<MdEdit width={20} height={20} />} onClick={handleEdit}>
         Edit
       </Button>
       <Button

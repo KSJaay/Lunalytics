@@ -22,7 +22,6 @@ const fetchMonitorUsingId = async (request, response) => {
 
     return response.json(monitor);
   } catch (error) {
-    console.log(error);
     handleError(error, response);
   }
 };

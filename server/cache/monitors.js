@@ -96,12 +96,11 @@ class Monitor {
 
       return monitorData;
     } else {
-      const { name, host, port, interval, retryInterval, requestTimeout } =
-        body;
+      const { name, url, port, interval, retryInterval, requestTimeout } = body;
 
       const monitor = {
         name,
-        url: host,
+        url,
         port,
         interval,
         retryInterval,
