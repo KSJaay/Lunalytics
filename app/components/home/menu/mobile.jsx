@@ -1,11 +1,11 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import useDropdown from '../../../hooks/useDropdown';
 import { FaEllipsisVertical } from '../../icons';
 import Dropdown from '../../ui/dropdown';
-import { observer } from 'mobx-react-lite';
 import useContextStore from '../../../context';
 import MonitorConfigureModal from '../../modal/monitor/configure';
 

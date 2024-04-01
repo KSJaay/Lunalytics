@@ -129,7 +129,7 @@ const useRegister = () => {
   const setErrors = (errors) => {
     return setValues((prev) => ({
       ...prev,
-      errors,
+      errors: { ...prev.errors, ...errors },
     }));
   };
 
