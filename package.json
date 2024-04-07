@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -18,6 +18,7 @@
     "lint:server": "eslint server --ext js",
     "prepare": "husky install",
     "preview": "vite preview",
+    "reset:password": "node ./scripts/reset.js",
     "server:watch": "nodemon --delay 2 --watch server ./server/index.js",
     "setup": "npm install && node ./scripts/setup.js && npm run build",
     "start": "cross-env NODE_ENV=production node server/index.js"
