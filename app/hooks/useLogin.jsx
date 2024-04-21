@@ -36,7 +36,10 @@ const useLogin = () => {
   };
 
   const setErrors = (error) => {
-    return setValues((prev) => ({ ...prev, errors: error }));
+    return setValues((prev) => ({
+      ...prev,
+      errors: { ...prev.errors, ...error },
+    }));
   };
 
   return {

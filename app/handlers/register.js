@@ -22,10 +22,7 @@ const handleRegister = async (inputs, setErrors, setPage, navigate) => {
     setPage('verify');
   } catch (error) {
     if (error?.response?.data?.message) {
-      setErrors((prev) => ({
-        ...prev,
-        ...error?.response?.data?.message,
-      }));
+      return setErrors(error?.response?.data?.message);
     }
 
     toast.error('Something went wrong!');

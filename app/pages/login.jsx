@@ -22,7 +22,7 @@ const Login = () => {
         </div>
 
         {errors['general'] && (
-          <div className="text-input-error">{errors['general']}</div>
+          <div className="text-input-error-general">{errors['general']}</div>
         )}
         <div>
           <TextInput

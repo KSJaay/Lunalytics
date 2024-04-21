@@ -27,7 +27,7 @@ const handleLogin = async (inputs, setErrors, navigate) => {
     }
 
     if (error.response?.data?.message) {
-      return setErrors(error.response?.data?.message);
+      return setErrors({ general: error.response?.data?.message });
     }
 
     toast.error('Something went wrong');

@@ -34,3 +34,11 @@
   margin: pxToRem(4);
   display: block;
 }
+
+.text-input-error-general {
+  color: var(--red-700);
+  font-size: var(--font-md);
+  margin: pxToRem(4);
+  display: block;
+  text-align: center;
+}
