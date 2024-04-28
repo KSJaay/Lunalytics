@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -21,7 +21,10 @@
     "reset:password": "node ./scripts/reset.js",
     "server:watch": "nodemon --delay 2 --watch server ./server/index.js",
     "setup": "npm install && node ./scripts/setup.js && npm run build",
-    "start": "cross-env NODE_ENV=production node server/index.js"
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "axios": "^1.6.2",
@@ -66,6 +69,7 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.69.5",
     "vite": "^5.0.10",
-    "vite-plugin-compression2": "^1.0.0"
+    "vite-plugin-compression2": "^1.0.0",
+    "vitepress": "^1.1.3"
   }
 }
