@@ -7,8 +7,8 @@ hero:
   text: 'Open Source Monitoring Tool'
   tagline: Open source monitoring tool with support for multiple users
   image:
-    dark: /images/header.png
-    light: /images/header.png
+    dark: /header.png
+    light: /header.png
     alt: Lunalytics logo
   actions:
     - theme: brand
