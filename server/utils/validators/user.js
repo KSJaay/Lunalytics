@@ -26,4 +26,4 @@ const isAvatar = (avatar) => {
   return false;
 };
 
-module.exports = { isAvatar };
+export { isAvatar };

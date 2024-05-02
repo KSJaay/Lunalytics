@@ -1,8 +1,8 @@
 // import dependencies
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 // import local files
-const logger = require('./logger');
+import logger from './logger.js';
 
 const verifyCookie = (value) => {
   try {
@@ -40,7 +40,4 @@ const signCookie = (value) => {
   }
 };
 
-module.exports = {
-  verifyCookie,
-  signCookie,
-};
+export { verifyCookie, signCookie };

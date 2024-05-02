@@ -1,4 +1,4 @@
-const logger = require('./logger');
+import logger from './logger.js';
 
 class AuthorizationError extends Error {
   constructor(error) {
@@ -52,9 +52,4 @@ const handleError = (error, response) => {
   }
 };
 
-module.exports = {
-  AuthorizationError,
-  ConflictError,
-  UnprocessableError,
-  handleError,
-};
+export { AuthorizationError, ConflictError, UnprocessableError, handleError };

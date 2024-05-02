@@ -1,7 +1,7 @@
-const auth = require('./auth');
-const monitor = require('./monitor');
-const user = require('./user');
+import auth from './auth.js';
+import * as monitor from './monitor.js';
+import * as user from './user.js';
 
 const validators = { auth, monitor, user };
 
-module.exports = validators;
+export default validators;

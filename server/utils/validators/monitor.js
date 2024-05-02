@@ -118,4 +118,4 @@ const tcp = ({
   }
 };
 
-module.exports = { http, tcp };
+export { http, tcp };

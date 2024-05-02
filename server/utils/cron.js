@@ -1,13 +1,13 @@
 // import dependencies
-const CronJob = require('cron').CronJob;
+import { CronJob } from 'cron';
 
 // import local files
-const cache = require('../cache');
-const logger = require('./logger');
-const {
+import cache from '../cache/index.js';
+import logger from './logger.js';
+import {
   fetchHeartbeatsByDate,
   fetchLastDailyHeartbeat,
-} = require('../database/queries/heartbeat');
+} from '../database/queries/heartbeat.js';
 
 // fetch all monitors
 // fetch only heartbeats that are up for each monitor
@@ -91,4 +91,4 @@ async function initialiseCronJobs() {
   );
 }
 
-module.exports = initialiseCronJobs;
+export default initialiseCronJobs;

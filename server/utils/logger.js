@@ -37,4 +37,4 @@ class LogMethods {
 
 const logger = new LogMethods();
 
-module.exports = logger;
+export default logger;
