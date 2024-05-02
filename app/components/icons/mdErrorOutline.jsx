@@ -5,7 +5,7 @@ const MdErrorOutline = ({ width = 25, height = 25 }) => (
   <svg
     stroke="currentColor"
     fill="currentColor"
-    stroke-width="0"
+    strokeWidth="0"
     viewBox="0 0 24 24"
     height={`${height}px`}
     width={`${width}px`}

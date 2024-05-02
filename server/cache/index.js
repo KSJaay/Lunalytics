@@ -1,10 +1,10 @@
 // import classes
-const Certificates = require('./certificates');
-const Heartbeats = require('./heartbeats');
-const Monitor = require('./monitors');
-const getCertInfo = require('../tools/checkCertificate');
-const httpStatusCheck = require('../tools/httpStatus');
-const tcpStatusCheck = require('../tools/tcpPing');
+import Certificates from './certificates.js';
+import Heartbeats from './heartbeats.js';
+import Monitor from './monitors.js';
+import getCertInfo from '../tools/checkCertificate.js';
+import httpStatusCheck from '../tools/httpStatus.js';
+import tcpStatusCheck from '../tools/tcpPing.js';
 
 class Master {
   constructor() {
@@ -106,4 +106,4 @@ class Master {
 
 const cache = new Master();
 
-module.exports = cache;
+export default cache;

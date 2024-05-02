@@ -1,5 +1,5 @@
-const SQLite = require('../database/sqlite/setup');
-const logger = require('../utils/logger');
+import SQLite from '../database/sqlite/setup.js';
+import logger from '../utils/logger.js';
 
 const infomation = {
   title: 'Support for TCP pings',
@@ -24,4 +24,4 @@ const migrate = async () => {
   logger.info('Migrations', '0.4.0 has been applied');
 };
 
-module.exports = { infomation, migrate };
+export { infomation, migrate };

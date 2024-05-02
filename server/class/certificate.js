@@ -17,4 +17,4 @@ const cleanCertificate = (certificate) => ({
   nextCheck: certificate.nextCheck,
 });
 
-module.exports = cleanCertificate;
+export default cleanCertificate;

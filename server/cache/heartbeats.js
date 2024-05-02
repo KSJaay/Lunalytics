@@ -3,14 +3,14 @@
 // weekly (Last 7 days (Total of 168 monitors))
 // monthly (Last 30 days (Total of 720 monitors))
 
-const {
+import {
   fetchHeartbeats,
   fetchHourlyHeartbeats,
   fetchDailyHeartbeats,
   createHeartbeat,
   deleteHeartbeats,
   createHourlyHeartbeat,
-} = require('../database/queries/heartbeat');
+} from '../database/queries/heartbeat.js';
 
 class Heartbeats {
   constructor() {
@@ -124,4 +124,4 @@ class Heartbeats {
   }
 }
 
-module.exports = Heartbeats;
+export default Heartbeats;

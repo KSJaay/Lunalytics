@@ -1,9 +1,9 @@
-const cleanCertificate = require('../class/certificate');
-const {
+import cleanCertificate from '../class/certificate.js';
+import {
   fetchCertificate,
   updateCertificate,
   deleteCertificate,
-} = require('../database/queries/certificate');
+} from '../database/queries/certificate.js';
 
 class Certificates {
   constructor() {
@@ -42,4 +42,4 @@ class Certificates {
   }
 }
 
-module.exports = Certificates;
+export default Certificates;
