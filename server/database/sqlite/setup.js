@@ -1,19 +1,19 @@
-const fs = require('fs');
-const knex = require('knex');
+import { existsSync, closeSync, openSync } from 'fs';
+import knex from 'knex';
 
-const logger = require('../../utils/logger');
+import logger from '../../utils/logger.js';
 
 class SQLite {
   constructor() {
-    this.path = `${__dirname}/lunalytics.db`;
+    this.path = `${process.cwd()}/server/database/sqlite/lunalytics.db`;
     this.client = null;
   }
 
   async connect() {
     if (this.client) return this.client;
 
-    if (!fs.existsSync(this.path)) {
-      fs.closeSync(fs.openSync(this.path, 'w'));
+    if (!existsSync(this.path)) {
+      closeSync(openSync(this.path, 'w'));
     }
 
     this.client = knex({
@@ -147,4 +147,6 @@ class SQLite {
   }
 }
 
-module.exports = new SQLite();
+const client = new SQLite();
+
+export default client;

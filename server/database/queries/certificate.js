@@ -1,6 +1,6 @@
-const SQLite = require('../sqlite/setup');
+import SQLite from '../sqlite/setup.js';
 
-const fetchCertificate = async (monitorId) => {
+export const fetchCertificate = async (monitorId) => {
   const certificate = await SQLite.client('certificate')
     .where({ monitorId })
     .first();
@@ -12,7 +12,7 @@ const fetchCertificate = async (monitorId) => {
   return certificate;
 };
 
-const updateCertificate = async (monitorId, certificate) => {
+export const updateCertificate = async (monitorId, certificate) => {
   const cert = await SQLite.client('certificate').where({ monitorId }).first();
 
   if (!cert) {
@@ -24,8 +24,6 @@ const updateCertificate = async (monitorId, certificate) => {
   return true;
 };
 
-const deleteCertificate = async (monitorId) => {
+export const deleteCertificate = async (monitorId) => {
   await SQLite.client('certificate').where({ monitorId }).del();
 };
-
-module.exports = { fetchCertificate, updateCertificate, deleteCertificate };

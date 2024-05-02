@@ -1,7 +1,7 @@
-const SQLite = require('../sqlite/setup');
-const randomId = require('../../utils/randomId');
-const { timeToMs } = require('../../utils/ms');
-const { UnprocessableError } = require('../../utils/errors');
+import SQLite from '../sqlite/setup.js';
+import randomId from '../../utils/randomId.js';
+import { timeToMs } from '../../utils/ms.js';
+import { UnprocessableError } from '../../utils/errors.js';
 
 const monitorExists = async (monitorId) => {
   return SQLite.client('monitor').where({ id: monitorId }).first();
@@ -110,7 +110,7 @@ const deleteMonitor = async (monitorId) => {
   return true;
 };
 
-module.exports = {
+export {
   createMonitor,
   monitorExists,
   updateMonitor,

@@ -1,7 +1,7 @@
-const SQLite = require('../sqlite/setup');
-const { generateHash, verifyPassword } = require('../../utils/hashPassword');
-const { signCookie, verifyCookie } = require('../../utils/jwt');
-const { AuthorizationError, ConflictError } = require('../../utils/errors');
+import SQLite from '../sqlite/setup.js';
+import { generateHash, verifyPassword } from '../../utils/hashPassword.js';
+import { signCookie, verifyCookie } from '../../utils/jwt.js';
+import { AuthorizationError, ConflictError } from '../../utils/errors.js';
 
 const passwordMatches = (user, password) => {
   const passwordMatches = verifyPassword(password, user.password);
@@ -97,7 +97,7 @@ const updateUserPermission = (email, permission) => {
   return SQLite.client('user').where({ email }).update({ permission });
 };
 
-module.exports = {
+export {
   signInUser,
   registerUser,
   userExists,
