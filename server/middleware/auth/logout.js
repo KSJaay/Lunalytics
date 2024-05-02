@@ -1,6 +1,6 @@
-const { deleteCookie } = require('../../utils/cookies');
-const { handleError } = require('../../utils/errors');
-const { createURL } = require('../../utils/url');
+import { deleteCookie } from '../../utils/cookies.js';
+import { handleError } from '../../utils/errors.js';
+import { createURL } from '../../utils/url.js';
 
 const logout = (request, response) => {
   try {
@@ -12,4 +12,4 @@ const logout = (request, response) => {
   }
 };
 
-module.exports = logout;
+export default logout;

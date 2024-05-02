@@ -1,6 +1,6 @@
-const SQLite = require('../sqlite/setup');
+import SQLite from '../sqlite/setup.js';
 
-const fetchHeartbeats = async (monitorId) => {
+export const fetchHeartbeats = async (monitorId) => {
   const heartbeats = await SQLite.client('heartbeat')
     .where({ monitorId })
     .select('id', 'status', 'latency', 'date', 'isDown', 'message')
@@ -10,7 +10,7 @@ const fetchHeartbeats = async (monitorId) => {
   return heartbeats;
 };
 
-const fetchHeartbeatsByDate = async (monitorId, date) => {
+export const fetchHeartbeatsByDate = async (monitorId, date) => {
   const heartbeats = await SQLite.client('heartbeat')
     .where({ monitorId })
     .select('id', 'status', 'latency', 'date', 'isDown', 'message')
@@ -20,7 +20,7 @@ const fetchHeartbeatsByDate = async (monitorId, date) => {
   return heartbeats;
 };
 
-const fetchLastDailyHeartbeat = async (monitorId) => {
+export const fetchLastDailyHeartbeat = async (monitorId) => {
   const currentDate = Date.now();
   const date = currentDate - (currentDate % 300000) - 300000;
 
@@ -48,7 +48,7 @@ const fetchLastDailyHeartbeat = async (monitorId) => {
   };
 };
 
-const fetchDailyHeartbeats = async (monitorId) => {
+export const fetchDailyHeartbeats = async (monitorId) => {
   const date = Date.now() - 86400000;
 
   const heartbeats = await SQLite.client('heartbeat')
@@ -93,7 +93,7 @@ const fetchDailyHeartbeats = async (monitorId) => {
   return dailyHeartbeats;
 };
 
-const fetchHourlyHeartbeats = async (monitorId) => {
+export const fetchHourlyHeartbeats = async (monitorId) => {
   const heartbeats = await SQLite.client('hourly_heartbeat')
     .where({ monitorId })
     .select('id', 'status', 'latency', 'date')
@@ -103,13 +103,13 @@ const fetchHourlyHeartbeats = async (monitorId) => {
   return heartbeats;
 };
 
-const createHourlyHeartbeat = async (data) => {
+export const createHourlyHeartbeat = async (data) => {
   const query = await SQLite.client('hourly_heartbeat').insert(data);
 
   return { id: query[0], ...data, monitorId: undefined };
 };
 
-const createHeartbeat = async (data) => {
+export const createHeartbeat = async (data) => {
   const date = Date.now();
 
   const query = await SQLite.client('heartbeat').insert({ date, ...data });
@@ -117,17 +117,6 @@ const createHeartbeat = async (data) => {
   return { id: query[0], date, ...data, monitorId: undefined };
 };
 
-const deleteHeartbeats = async (monitorId) => {
+export const deleteHeartbeats = async (monitorId) => {
   await SQLite.client('heartbeat').where({ monitorId }).del();
-};
-
-module.exports = {
-  fetchHeartbeats,
-  fetchHeartbeatsByDate,
-  fetchHourlyHeartbeats,
-  fetchDailyHeartbeats,
-  fetchLastDailyHeartbeat,
-  createHeartbeat,
-  createHourlyHeartbeat,
-  deleteHeartbeats,
 };

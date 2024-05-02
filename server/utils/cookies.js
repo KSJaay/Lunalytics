@@ -26,8 +26,4 @@ const deleteCookie = (res, name) => {
   });
 };
 
-module.exports = {
-  setClientSideCookie,
-  setServerSideCookie,
-  deleteCookie,
-};
+export { setClientSideCookie, setServerSideCookie, deleteCookie };

@@ -1,4 +1,4 @@
-const { userExists } = require('../../database/queries/user');
+import { userExists } from '../../database/queries/user.js';
 
 const hasEditorPermissions = async (request, response, next) => {
   const { access_token } = request.cookies;
@@ -20,4 +20,4 @@ const hasEditorPermissions = async (request, response, next) => {
   return next();
 };
 
-module.exports = hasEditorPermissions;
+export default hasEditorPermissions;

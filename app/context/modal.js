@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
-export default class ModalStore {
+class ModalStore {
   constructor() {
     this.isOpen = false;
     this.content = null;
@@ -24,3 +24,5 @@ export default class ModalStore {
     this.glassmorph = true;
   };
 }
+
+export default ModalStore;

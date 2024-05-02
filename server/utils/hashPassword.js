@@ -1,4 +1,4 @@
-const { hashSync, compareSync } = require('bcrypt');
+import { hashSync, compareSync } from 'bcrypt';
 const saltRounds = 10;
 
 /**
@@ -7,7 +7,7 @@ const saltRounds = 10;
  * @returns {string}
  */
 
-const generateHash = (password) => {
+export const generateHash = (password) => {
   return hashSync(password, saltRounds);
 };
 
@@ -18,8 +18,6 @@ const generateHash = (password) => {
  * @returns {boolean} Returns boolean if password matches
  */
 
-const verifyPassword = (password, hashPassword) => {
+export const verifyPassword = (password, hashPassword) => {
   return compareSync(password, hashPassword);
 };
-
-module.exports = { generateHash, verifyPassword };

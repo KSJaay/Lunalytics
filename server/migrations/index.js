@@ -1,7 +1,7 @@
-const { migrate: migrateTcpUpdate } = require('./tcpUpdate-0-4-0');
+import { migrate as migrateTcpUpdate } from './tcpUpdate-0-4-0.js';
 
 const migrationList = {
   '0.4.0': migrateTcpUpdate,
 };
 
-module.exports = migrationList;
+export default migrationList;

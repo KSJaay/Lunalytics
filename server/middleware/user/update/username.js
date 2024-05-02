@@ -1,8 +1,8 @@
-const {
+import {
   updateUserDisplayname,
   userExists,
-} = require('../../../database/queries/user');
-const validators = require('../../../utils/validators');
+} from '../../../database/queries/user.js';
+import validators from '../../../utils/validators/index.js';
 
 const userUpdateUsername = async (request, response) => {
   const { access_token } = request.cookies;
@@ -26,4 +26,4 @@ const userUpdateUsername = async (request, response) => {
   return response.sendStatus(200);
 };
 
-module.exports = userUpdateUsername;
+export default userUpdateUsername;

@@ -1,19 +1,19 @@
-require('../scripts/loadEnv');
+import '../scripts/loadEnv.js';
 
 // Import dependencies
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const cookieParser = require('cookie-parser');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import cookieParser from 'cookie-parser';
 
 // import local files
-const cache = require('./cache');
-const logger = require('./utils/logger');
-const initialiseRoutes = require('./routes');
-const SQLite = require('./database/sqlite/setup');
-const initialiseCronJobs = require('./utils/cron');
-const authorization = require('./middleware/authorization');
-const migrateDatabase = require('../scripts/migrate');
+import cache from './cache/index.js';
+import logger from './utils/logger.js';
+import initialiseRoutes from './routes/index.js';
+import SQLite from './database/sqlite/setup.js';
+import initialiseCronJobs from './utils/cron.js';
+import authorization from './middleware/authorization.js';
+import migrateDatabase from '../scripts/migrate.js';
 
 const app = express();
 

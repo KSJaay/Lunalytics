@@ -1,4 +1,4 @@
-const { fetchMembers } = require('../../../database/queries/user');
+import { fetchMembers } from '../../../database/queries/user.js';
 
 const teamMembersListMiddleware = async (request, response) => {
   const members = await fetchMembers();
@@ -6,4 +6,4 @@ const teamMembersListMiddleware = async (request, response) => {
   return response.send(members);
 };
 
-module.exports = teamMembersListMiddleware;
+export default teamMembersListMiddleware;

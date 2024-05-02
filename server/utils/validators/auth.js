@@ -46,4 +46,4 @@ const password = (password = '') => {
 
 const auth = { email, username, password };
 
-module.exports = auth;
+export default auth;

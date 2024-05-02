@@ -1,12 +1,12 @@
-const { cleanPartialMonitor } = require('../class/monitor');
-const {
+import { cleanPartialMonitor } from '../class/monitor.js';
+import {
   fetchMonitor,
   fetchMonitors,
   createMonitor,
   updateMonitor,
   deleteMonitor,
   fetchUptimePercentage,
-} = require('../database/queries/monitor');
+} from '../database/queries/monitor.js';
 
 class Monitor {
   constructor() {
@@ -151,4 +151,4 @@ class Monitor {
   }
 }
 
-module.exports = Monitor;
+export default Monitor;

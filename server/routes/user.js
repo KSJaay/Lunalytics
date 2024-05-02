@@ -1,17 +1,17 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const cache = require('../cache');
-const hasAdminPermissions = require('../middleware/user/hasAdmin');
-const accessDeclineMiddleware = require('../middleware/user/access/declineUser');
-const accessApproveMiddleware = require('../middleware/user/access/approveUser');
-const accessRemoveMiddleware = require('../middleware/user/access/removeUser');
-const permissionUpdateMiddleware = require('../middleware/user/permission/update');
-const teamMembersListMiddleware = require('../middleware/user/team/members');
-const userUpdateAvatar = require('../middleware/user/update/avatar');
-const userUpdateUsername = require('../middleware/user/update/username');
-const { userExists, emailExists } = require('../database/queries/user');
-const { cleanMonitor } = require('../class/monitor');
+import cache from '../cache/index.js';
+import hasAdminPermissions from '../middleware/user/hasAdmin.js';
+import accessDeclineMiddleware from '../middleware/user/access/declineUser.js';
+import accessApproveMiddleware from '../middleware/user/access/approveUser.js';
+import accessRemoveMiddleware from '../middleware/user/access/removeUser.js';
+import permissionUpdateMiddleware from '../middleware/user/permission/update.js';
+import teamMembersListMiddleware from '../middleware/user/team/members.js';
+import userUpdateAvatar from '../middleware/user/update/avatar.js';
+import userUpdateUsername from '../middleware/user/update/username.js';
+import { userExists, emailExists } from '../database/queries/user.js';
+import { cleanMonitor } from '../class/monitor.js';
 
 router.get('/', async (request, response) => {
   const { access_token } = request.cookies;
@@ -72,4 +72,4 @@ router.post('/access/remove', hasAdminPermissions, accessRemoveMiddleware);
 
 router.post('/permission/update', permissionUpdateMiddleware);
 
-module.exports = router;
+export default router;

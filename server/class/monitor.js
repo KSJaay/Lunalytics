@@ -1,4 +1,4 @@
-const cleanCertificate = require('./certificate');
+import cleanCertificate from './certificate.js';
 
 const parseJson = (str) => {
   try {
@@ -8,7 +8,7 @@ const parseJson = (str) => {
   }
 };
 
-const cleanPartialMonitor = (monitor) => ({
+export const cleanPartialMonitor = (monitor) => ({
   monitorId: monitor.monitorId,
   name: monitor.name,
   url: monitor.url,
@@ -26,7 +26,7 @@ const cleanPartialMonitor = (monitor) => ({
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
 });
 
-const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
+export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   monitorId: monitor.monitorId,
   name: monitor.name,
   url: monitor.url,
@@ -47,5 +47,3 @@ const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   cert: !cert?.isValid ? cert : cleanCertificate(cert),
   heartbeats,
 });
-
-module.exports = { cleanMonitor, cleanPartialMonitor };

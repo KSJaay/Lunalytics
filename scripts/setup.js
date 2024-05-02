@@ -1,8 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const inquirer = require('inquirer');
-const { v4: uuidv4 } = require('uuid');
-const logger = require('../server/utils/logger');
+import fs from 'fs';
+import path from 'path';
+import inquirer from 'inquirer';
+import { v4 as uuidv4 } from 'uuid';
+import logger from '../server/utils/logger.js';
+import {version as packageVersion} from '../package.json' assert { type: 'json' };
 
 const questions = [
   {
@@ -57,12 +58,12 @@ inquirer
     logger.log('SETUP', 'Setting up application...', 'INFO', false);
 
     // write to config.json file
-    const configPath = path.join(__dirname, '..', 'config.json');
+    const configPath = path.join(process.cwd(), 'config.json');
     const config = {
       port,
       jwtSecret,
       migrationType,
-      version: require('../package.json').version,
+      version: packageVersion,
     };
 
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2));

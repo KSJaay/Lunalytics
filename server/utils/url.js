@@ -23,4 +23,4 @@ const createURL = (path = '', params) => {
   return `${path}?${searchParams}`;
 };
 
-module.exports = { createURL };
+export { createURL };

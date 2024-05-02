@@ -1,4 +1,4 @@
-const { approveAccess } = require('../../../database/queries/user');
+import { approveAccess } from '../../../database/queries/user.js';
 
 const accessApproveMiddleware = async (request, response) => {
   const { email } = request.body;
@@ -12,4 +12,4 @@ const accessApproveMiddleware = async (request, response) => {
   return response.sendStatus(200);
 };
 
-module.exports = accessApproveMiddleware;
+export default accessApproveMiddleware;

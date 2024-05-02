@@ -10,4 +10,4 @@ const timeToMs = (duration, type = 'hours') => {
   return duration * types[type];
 };
 
-module.exports = { timeToMs };
+export { timeToMs };

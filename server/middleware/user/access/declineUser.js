@@ -1,4 +1,4 @@
-const { declineAccess } = require('../../../database/queries/user');
+import { declineAccess } from '../../../database/queries/user.js';
 
 const accessDeclineMiddleware = async (request, response) => {
   const { email } = request.body;
@@ -12,4 +12,4 @@ const accessDeclineMiddleware = async (request, response) => {
   return response.sendStatus(200);
 };
 
-module.exports = accessDeclineMiddleware;
+export default accessDeclineMiddleware;
