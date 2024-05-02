@@ -1,10 +1,11 @@
 {
   "name": "lunalytics",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/ksjaay/lunalytics.git"
