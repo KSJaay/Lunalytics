@@ -1,8 +1,8 @@
 // import dependencies
-const { default: axios } = require('axios');
+import axios from 'axios';
 
 // import local files
-const logger = require('../utils/logger');
+import logger from '../utils/logger.js';
 
 const httpStatusCheck = async (monitor) => {
   const options = {
@@ -63,4 +63,4 @@ const httpStatusCheck = async (monitor) => {
   }
 };
 
-module.exports = httpStatusCheck;
+export default httpStatusCheck;

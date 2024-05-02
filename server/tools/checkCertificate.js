@@ -1,6 +1,6 @@
-const https = require('https');
-const { default: axios } = require('axios');
-const logger = require('../utils/logger');
+import https from 'https';
+import axios from 'axios';
+import logger from '../utils/logger.js';
 
 const getCertInfo = async (url) => {
   try {
@@ -70,4 +70,4 @@ const parseCert = (cert) => {
   return parsedInfo;
 };
 
-module.exports = getCertInfo;
+export default getCertInfo;

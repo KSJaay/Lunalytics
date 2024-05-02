@@ -1,8 +1,8 @@
 // import dependencies
-const net = require('net');
+import net from 'net';
 
 // import local files
-const logger = require('../utils/logger');
+import logger from '../utils/logger.js';
 
 const tcpStatusCheck = async (monitor, callback) => {
   const socket = new net.Socket();
@@ -64,4 +64,4 @@ const tcpStatusCheck = async (monitor, callback) => {
   });
 };
 
-module.exports = tcpStatusCheck;
+export default tcpStatusCheck;
