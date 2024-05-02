@@ -1,7 +1,7 @@
-const inquirer = require('inquirer');
-const logger = require('../server/utils/logger');
-const SQLite = require('../server/database/sqlite/setup');
-const { generateHash } = require('../server/utils/hashPassword');
+import inquirer from 'inquirer';
+import logger from '../server/utils/logger.js';
+import SQLite from '../server/database/sqlite/setup.js';
+import { generateHash } from '../server/utils/hashPassword.js';
 
 const questions = [
   { type: 'input', name: 'email', message: 'Enter email added: ' },
@@ -24,8 +24,7 @@ const generatePassword = () => {
   return password;
 };
 
-inquirer
-  .prompt(questions)
+inquirer.prompt(questions)
   .then(async (answers) => {
     if (!answers?.email) {
       logger.log(

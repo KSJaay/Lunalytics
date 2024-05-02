@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const config = require('../config.json');
-const logger = require('../server/utils/logger');
-const migrationList = require('../server/migrations');
-const package = require('../package.json');
+import fs from 'fs';
+import path from 'path';
+import config from '../config.json' assert { type: 'json' };
+import logger from '../server/utils/logger.js';
+import migrationList from '../server/migrations/index.js';
+import packageJson from '../package.json' assert { type: 'json' };
 
 const migrateDatabase = async () => {
   const migrationListKeys = Object.keys(migrationList);
@@ -41,10 +41,10 @@ const migrateDatabase = async () => {
       );
     }
 
-    const configPath = path.join(__dirname, '..', 'config.json');
+    const configPath = path.join(process.cwd(), 'config.json');
     const newConfig = {
       ...config,
-      version: package.version,
+      version: packageJson.version,
     };
 
     fs.writeFileSync(configPath, JSON.stringify(newConfig, null, 2));
@@ -53,4 +53,4 @@ const migrateDatabase = async () => {
   }
 };
 
-module.exports = migrateDatabase;
+export default migrateDatabase;
