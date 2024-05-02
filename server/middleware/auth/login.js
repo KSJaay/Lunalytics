@@ -1,8 +1,8 @@
 // import local files
-const { signInUser } = require('../../database/queries/user');
-const { setServerSideCookie } = require('../../utils/cookies');
-const { handleError, UnprocessableError } = require('../../utils/errors');
-const validators = require('../../utils/validators');
+import { signInUser } from '../../database/queries/user.js';
+import { setServerSideCookie } from '../../utils/cookies.js';
+import { handleError, UnprocessableError } from '../../utils/errors.js';
+import validators from '../../utils/validators/index.js';
 
 const login = async (request, response) => {
   try {
@@ -29,4 +29,4 @@ const login = async (request, response) => {
   }
 };
 
-module.exports = login;
+export default login;

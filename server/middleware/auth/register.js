@@ -1,8 +1,8 @@
 // import local files
-const { registerUser, fetchMembers } = require('../../database/queries/user');
-const { setServerSideCookie } = require('../../utils/cookies');
-const { handleError, UnprocessableError } = require('../../utils/errors');
-const validators = require('../../utils/validators');
+import { registerUser, fetchMembers } from '../../database/queries/user.js';
+import { setServerSideCookie } from '../../utils/cookies.js';
+import { handleError, UnprocessableError } from '../../utils/errors.js';
+import validators from '../../utils/validators/index.js';
 
 const register = async (request, response) => {
   try {
@@ -52,4 +52,4 @@ const register = async (request, response) => {
   }
 };
 
-module.exports = register;
+export default register;

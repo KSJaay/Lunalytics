@@ -1,8 +1,8 @@
-const {
+import {
   userExists,
   updateUserAvatar,
-} = require('../../../database/queries/user');
-const validators = require('../../../utils/validators');
+} from '../../../database/queries/user.js';
+import validators from '../../../utils/validators/index.js';
 
 const userUpdateAvatar = async (request, response) => {
   const { access_token } = request.cookies;
@@ -26,4 +26,4 @@ const userUpdateAvatar = async (request, response) => {
   return response.sendStatus(200);
 };
 
-module.exports = userUpdateAvatar;
+export default userUpdateAvatar;

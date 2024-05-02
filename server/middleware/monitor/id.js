@@ -1,6 +1,6 @@
-const cache = require('../../cache');
-const { cleanMonitor } = require('../../class/monitor');
-const { handleError } = require('../../utils/errors');
+import cache from '../../cache/index.js';
+import { cleanMonitor } from '../../class/monitor.js';
+import { handleError } from '../../utils/errors.js';
 
 const fetchMonitorUsingId = async (request, response) => {
   try {
@@ -26,4 +26,4 @@ const fetchMonitorUsingId = async (request, response) => {
   }
 };
 
-module.exports = fetchMonitorUsingId;
+export default fetchMonitorUsingId;

@@ -1,5 +1,5 @@
-const { userExists } = require('../database/queries/user');
-const { deleteCookie } = require('../utils/cookies');
+import { userExists } from '../database/queries/user.js';
+import { deleteCookie } from '../utils/cookies.js';
 
 const authorization = async (request, response, next) => {
   const { access_token } = request.cookies;
@@ -39,4 +39,4 @@ const authorization = async (request, response, next) => {
   return next();
 };
 
-module.exports = authorization;
+export default authorization;

@@ -1,7 +1,7 @@
-const {
+import {
   userExists,
   updateUserPermission,
-} = require('../../../database/queries/user');
+} from '../../../database/queries/user.js';
 
 const permissionUpdateMiddleware = async (request, response) => {
   const { access_token } = request.cookies;
@@ -39,4 +39,4 @@ const permissionUpdateMiddleware = async (request, response) => {
   return response.sendStatus(200);
 };
 
-module.exports = permissionUpdateMiddleware;
+export default permissionUpdateMiddleware;

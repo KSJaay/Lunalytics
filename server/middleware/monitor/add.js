@@ -1,9 +1,9 @@
 // import local files
-const { handleError, UnprocessableError } = require('../../utils/errors');
-const validators = require('../../utils/validators/monitor');
-const cache = require('../../cache');
-const { userExists } = require('../../database/queries/user');
-const { cleanMonitor } = require('../../class/monitor');
+import { handleError, UnprocessableError } from '../../utils/errors.js';
+import * as validators from '../../utils/validators/monitor.js';
+import cache from '../../cache/index.js';
+import { userExists } from '../../database/queries/user.js';
+import { cleanMonitor } from '../../class/monitor.js';
 
 const monitorAdd = async (request, response) => {
   try {
@@ -44,4 +44,4 @@ const monitorAdd = async (request, response) => {
   }
 };
 
-module.exports = monitorAdd;
+export default monitorAdd;

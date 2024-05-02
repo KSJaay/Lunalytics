@@ -1,5 +1,5 @@
-const login = require('./login');
-const logout = require('./logout');
-const register = require('./register');
+import login from './login.js';
+import logout from './logout.js';
+import register from './register.js';
 
-module.exports = { login, logout, register };
+export { login, logout, register };

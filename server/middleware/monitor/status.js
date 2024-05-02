@@ -1,4 +1,4 @@
-const cache = require('../../cache');
+import cache from '../../cache/index.js';
 const validTypes = ['latest', 'day', 'week', 'month'];
 
 const fetchMonitorStatus = async (request, response) => {
@@ -63,4 +63,4 @@ const fetchMonitorStatus = async (request, response) => {
   return response.sendStatus(404);
 };
 
-module.exports = fetchMonitorStatus;
+export default fetchMonitorStatus;

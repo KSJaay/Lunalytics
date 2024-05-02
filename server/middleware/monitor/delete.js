@@ -1,6 +1,6 @@
 // import local files
-const cache = require('../../cache');
-const { handleError } = require('../../utils/errors');
+import cache from '../../cache/index.js';
+import { handleError } from '../../utils/errors.js';
 
 const monitorDelete = async (request, response) => {
   try {
@@ -16,4 +16,4 @@ const monitorDelete = async (request, response) => {
   }
 };
 
-module.exports = monitorDelete;
+export default monitorDelete;
