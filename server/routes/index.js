@@ -1,6 +1,6 @@
-const authRoutes = require('./auth');
-const monitorRoutes = require('./monitor');
-const userRoutes = require('./user');
+import authRoutes from './auth.js';
+import monitorRoutes from './monitor.js';
+import userRoutes from './user.js';
 
 const initialiseRoutes = async (app) => {
   app.use('/auth', authRoutes);
@@ -8,4 +8,4 @@ const initialiseRoutes = async (app) => {
   app.use('/api/user', userRoutes);
 };
 
-module.exports = initialiseRoutes;
+export default initialiseRoutes;

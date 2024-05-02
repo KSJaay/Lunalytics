@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const { register, login, logout } = require('../middleware/auth');
-const { emailExists } = require('../database/queries/user');
+import { register, login, logout } from '../middleware/auth/index.js';
+import { emailExists } from '../database/queries/user.js';
 
 router.post('/user/exists', async (request, response) => {
   const { email } = request.body;
@@ -18,4 +18,4 @@ router.post('/register', register);
 router.post('/login', login);
 router.get('/logout', logout);
 
-module.exports = router;
+export default router;

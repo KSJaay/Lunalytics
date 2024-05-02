@@ -1,14 +1,14 @@
 // import dependencies
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 // import local files
-const monitorAdd = require('../middleware/monitor/add');
-const monitorEdit = require('../middleware/monitor/edit');
-const monitorDelete = require('../middleware/monitor/delete');
-const fetchMonitorUsingId = require('../middleware/monitor/id');
-const hasEditorPermissions = require('../middleware/user/hasEditor');
-const fetchMonitorStatus = require('../middleware/monitor/status');
+import monitorAdd from '../middleware/monitor/add.js';
+import monitorEdit from '../middleware/monitor/edit.js';
+import monitorDelete from '../middleware/monitor/delete.js';
+import fetchMonitorUsingId from '../middleware/monitor/id.js';
+import hasEditorPermissions from '../middleware/user/hasEditor.js';
+import fetchMonitorStatus from '../middleware/monitor/status.js';
 
 router.post('/add', hasEditorPermissions, monitorAdd);
 router.post('/edit', hasEditorPermissions, monitorEdit);
@@ -16,4 +16,4 @@ router.get('/delete', hasEditorPermissions, monitorDelete);
 router.get('/status', fetchMonitorStatus);
 router.get('/id', fetchMonitorUsingId);
 
-module.exports = router;
+export default router;
