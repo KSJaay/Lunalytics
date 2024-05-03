@@ -13,7 +13,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /introduction
+      link: /intro
     - theme: alt
       text: Try the live demo
       link: https://demo.lunalytics.xyz
