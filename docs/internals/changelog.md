@@ -1,5 +1,47 @@
 # Previous updates
 
+## v0.4.3
+
+### Moving server to EcmaScript Modules (ESM)
+
+### Summary
+
+Moved all the server files from CommonJs to EcmaScript Modules. For anyone who doesn't know the difference between CommonJs and EcmaScript Modules (ESM), CommonJs is the legacy module system and esm is an update that uses new syntax for importing and exporting. The following are the main changes that `I` find the most important:
+
+### Variable exports/imports:
+
+- `module.exports.abc = 'abc';` >> `export const abc = 'abc'`
+- `const { abc } = require('./abc')` >> `import { abc } from './.js'`
+
+### Default exports/imports:
+
+- `module.exports = 'xyz'` >> `export default 'xyz'`
+- `const xyz = require('./xyz')` >> `import xyz from './xyz.js'`
+
+### Multiple variables exports/imports:
+
+- `module.export = { abc, xyz }` >> `export { abc, xyz }`
+- `const mod = require('./vars')` >> `import * as mod = require('./vars.js')`
+
+### Why esm instead of CommonJS
+
+I could have stayed with CommonJs for this project, but for the sake of consistency and the ability to share files between the server and the app I wanted to move the server to esm. Now I will be able to create a shared folder that will store all the duplicate files between the server and app.
+
+## v0.4.2
+
+### Adds alert box and start of docs
+
+Preparing for some future updates, this PR adds an alert box, some icons, and url support for avatars. Along with that, I've also started working on the documentation for Lunalytics, this will help users setup the application and also keep track of features.
+
+### Update
+
+- Adds some new icons
+- Adds url support for urls for avatars
+- Adds new alert messages
+- Adds Vitepress for documentation
+- Adds documentation for API endpoints (user and monitor)
+- Adds documentation containing all previous updates
+
 ## v0.4.1
 
 ### Fixes sign/register errors/adds reset password script
