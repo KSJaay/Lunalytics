@@ -39,7 +39,7 @@ const ManageTeam = () => {
         padding: '10px 20px',
       }}
     >
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', overflow: 'auto' }}>
         <MembersTable members={sortedMembers} />
       </div>
     </div>

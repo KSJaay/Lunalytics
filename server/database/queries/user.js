@@ -97,6 +97,23 @@ const updateUserPermission = (email, permission) => {
   return SQLite.client('user').where({ email }).update({ permission });
 };
 
+const getDemoUser = async () => {
+  const demoUser = await SQLite.client('user').where({ email: 'demo' }).first();
+
+  if (!demoUser) {
+    await SQLite.client('user').insert({
+      email: 'demo',
+      displayName: 'Demo User',
+      password: 'demo',
+      avatar: null,
+      permission: 4,
+      isVerified: true,
+    });
+  }
+
+  return signCookie({ email: 'demo' });
+};
+
 export {
   signInUser,
   registerUser,
@@ -108,4 +125,5 @@ export {
   declineAccess,
   approveAccess,
   updateUserPermission,
+  getDemoUser,
 };

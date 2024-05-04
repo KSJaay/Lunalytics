@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import logger from '../server/utils/logger.js';
 
-const configPath = path.join(process.cwd(),  'config.json');
+const configPath = path.join(process.cwd(), 'config.json');
 
 if (!existsSync(configPath)) {
   logger.log(
@@ -18,5 +18,6 @@ const config = JSON.parse(readFileSync(configPath, 'utf-8'));
 process.env.VITE_REACT_APP_VERSION = config.version;
 process.env.PORT = config.port;
 process.env.JWT_SECRET = config.jwtSecret;
+process.env.IS_DEMO = config.isDemo;
 
 logger.log('SETUP', 'Environment variables loaded successfully.', 'INFO');
