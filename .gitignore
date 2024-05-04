@@ -17,6 +17,7 @@
 /app/components/icons/list.jsx
 docs/.vitepress/dist
 docs/.vitepress/cache
+public/kanban.json
 
 # misc
 .DS_Store

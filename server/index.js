@@ -14,6 +14,7 @@ import SQLite from './database/sqlite/setup.js';
 import initialiseCronJobs from './utils/cron.js';
 import authorization from './middleware/authorization.js';
 import migrateDatabase from '../scripts/migrate.js';
+import isDemo from './middleware/demo.js';
 
 const app = express();
 
@@ -47,6 +48,11 @@ const init = async () => {
     return res.status(200).send('Everything looks good :D');
   });
 
+  app.get('/api/kanban', (req, res) => {
+    return res.sendFile(path.join(process.cwd(), '/public/kanban.json'));
+  });
+
+  app.use(isDemo);
   app.use(authorization);
   logger.info('Express', 'Initialising routes');
   initialiseRoutes(app);
