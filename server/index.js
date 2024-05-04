@@ -33,7 +33,8 @@ const init = async () => {
     .use(express.urlencoded({ extended: true }))
     .disable('x-powered-by')
     .set('trust proxy', 1)
-    .use(cookieParser());
+    .use(cookieParser())
+    .use(isDemo);
 
   if (process.env.NODE_ENV !== 'production') {
     app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
@@ -52,7 +53,6 @@ const init = async () => {
     return res.sendFile(path.join(process.cwd(), '/public/kanban.json'));
   });
 
-  app.use(isDemo);
   app.use(authorization);
   logger.info('Express', 'Initialising routes');
   initialiseRoutes(app);
