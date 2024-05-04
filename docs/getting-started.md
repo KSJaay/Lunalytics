@@ -4,6 +4,10 @@ outline: deep
 
 # 🚀 Getting Started
 
+## Try out the live demo
+
+You can try out the Lunalytics [live demo here](https://demo.lunalytics.xyz). You will be signed in as a guest user who has the ability to look through all sections of the application.
+
 ### Requirements
 
 Make sure you have the following applications installed before starting:

@@ -11,4 +11,4 @@ We currently have a basic permissions system. Users are able to assign either an
 
 ### Future of permissions
 
-Currently roles are pretty basic and limited. Users are currently able to view with any information within the application, in the future I'll be developing a system that allows admins to create their custom roles with specific permissions and limit the amount of access the user has to the application. This is currently not on the roadmap but maybe introduced before the 1.0.0 release.
+Currently roles are pretty basic and limited. Users are currently able to view any information within the application, in the future I'll be developing a system that allows admins to create their custom roles with specific permissions and limit the amount of access the user has to the application. This is currently not on the roadmap but maybe introduced before the 1.0.0 release.
