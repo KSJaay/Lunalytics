@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.4.3",
+  "version": "0.4.5",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "concurrently \"npm run watch\" \"npm run server:watch\"",
     "watch": "vite --port 3000",
-    "build": "vite build --config ./vite.config.mjs",
+    "build": "vite build --config ./vite.config.js",
     "lint": "npm run lint:app && npm run lint:server",
     "lint:app": "eslint app --ext js,jsx",
     "lint:server": "eslint server --ext js",
