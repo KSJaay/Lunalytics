@@ -3,7 +3,7 @@ import path from 'path';
 import inquirer from 'inquirer';
 import { v4 as uuidv4 } from 'uuid';
 import logger from '../server/utils/logger.js';
-import {version as packageVersion} from '../package.json' assert { type: 'json' };
+import packageJson from '../package.json' assert { type: 'json' };
 
 const questions = [
   {
@@ -63,7 +63,7 @@ inquirer
       port,
       jwtSecret,
       migrationType,
-      version: packageVersion,
+      version: packageJson.version,
     };
 
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
