@@ -1,0 +1,73 @@
+{
+  "username": "testuser",
+  "email": "test@lunalytics.xyz",
+  "password": "TestUser123",
+  "incorrectUsernames": [
+    { "value": "a", "error": "Username must be between 3 and 32 characters." },
+    {
+      "value": "ab",
+      "error": "Username must be between 3 and 32 characters."
+    },
+    {
+      "value": "ab#",
+      "error": "Username can only contain letters, numbers, underscores, and dashes."
+    },
+    {
+      "value": "ab@123",
+      "error": "Username can only contain letters, numbers, underscores, and dashes."
+    },
+    {
+      "value": "ab@123.",
+      "error": "Username can only contain letters, numbers, underscores, and dashes."
+    }
+  ],
+  "incorrectEmails": [
+    { "value": "a", "error": "Email must be between 3 and 254 characters." },
+    { "value": "ab", "error": "Email must be between 3 and 254 characters." },
+    { "value": "test@lunalytics", "error": "Email is not valid" },
+    { "value": "test@lunalytics.", "error": "Email is not valid" },
+    { "value": "lunalytics.xyz", "error": "Email is not valid" }
+  ],
+  "incorrectPasswords": [
+    {
+      "value": "incorrectPassword",
+      "error": "Password is not valid"
+    },
+    {
+      "value": "test123",
+      "error": "Password must be between 8 and 64 characters."
+    },
+    {
+      "value": "1234568900",
+      "error": "Password is not valid"
+    },
+    {
+      "value": "#########",
+      "error": "Password is not valid"
+    },
+    {
+      "value": "!£$%^$*()+_'./,[]",
+      "error": "Password is not valid"
+    }
+  ],
+  "ownerUser": {
+    "username": "owner",
+    "email": "owner@lunalytics.xyz",
+    "password": "TestUser123"
+  },
+  "adminUser": {
+    "username": "admin",
+    "email": "admin@lunalytics.xyz",
+    "password": "TestUser123"
+  },
+  "editorUser": {
+    "username": "editor",
+    "email": "editor@lunalytics.xyz",
+    "password": "TestUser123"
+  },
+  "viewerUser": {
+    "username": "viewer",
+    "email": "viewer@lunalytics.xyz",
+    "password": "TestUser123"
+  }
+}
