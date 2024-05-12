@@ -8,6 +8,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
   return (
     <div className="monitor-configure-container">
       <TextInput
+        id="input-interval"
         type="number"
         label="Interval"
         onChange={(e) => {
@@ -18,6 +19,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
       />
 
       <TextInput
+        id="input-retry-interval"
         type="number"
         label="Retry Interval"
         onChange={(e) => {
@@ -28,6 +30,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
       />
 
       <TextInput
+        id="input-request-timeout"
         type="number"
         label="Request Timeout"
         onChange={(e) => {

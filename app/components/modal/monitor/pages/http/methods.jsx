@@ -22,12 +22,14 @@ const MonitorHttpMethods = ({ handleSelect, selectValue = defaultValue }) => {
           asInput
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
+          id="http-method-dropdown"
         >
           {selectValue}
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           {methods.map((method) => (
             <Dropdown.Item
+              id={`http-method-${method}`}
               key={method}
               onClick={() => {
                 handleSelect(method);

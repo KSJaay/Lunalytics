@@ -39,6 +39,7 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
 
         {user.canEdit ? (
           <Button
+            id="home-add-monitor-button"
             onClick={() =>
               openModal(
                 <MonitorConfigureModal

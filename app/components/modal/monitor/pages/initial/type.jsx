@@ -18,11 +18,13 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
           asInput
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
+          id="type-dropdown"
         >
           {inputs.type?.toUpperCase() || 'Select Monitor Type'}
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           <Dropdown.Item
+            id="type-http"
             onClick={() => {
               handleInput('type', 'http');
               toggleDropdown();
@@ -31,6 +33,7 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
             HTTP
           </Dropdown.Item>
           <Dropdown.Item
+            id="type-tcp"
             onClick={() => {
               handleInput('type', 'tcp');
               toggleDropdown();
@@ -40,7 +43,11 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
           </Dropdown.Item>
         </Dropdown.List>
       </Dropdown.Container>
-      {errors.type && <label className="text-input-error">{errors.type}</label>}
+      {errors.type && (
+        <label id="text-input-error-input-type" className="text-input-error">
+          {errors.type}
+        </label>
+      )}
     </>
   );
 };

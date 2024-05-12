@@ -14,6 +14,7 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
   return (
     <div className="monitor-configure-container">
       <TextInput
+        id="input-url"
         label="URL"
         value={inputs.url}
         onChange={(event) => {
@@ -26,7 +27,7 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
         handleSelect={handleMethodSelect}
       />
       {errors.method && (
-        <label className="text-input-error">{errors.method}</label>
+        <label className="text-input-error" id="text-input-http-method-error">{errors.method}</label>
       )}
 
       <MonitorHttpStatusCodes

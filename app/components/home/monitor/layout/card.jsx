@@ -24,14 +24,15 @@ const MonitorCard = ({ monitor = {} }) => {
           <MonitorOptions monitorId={monitor.monitorId} />
         </span>
       </div>
-      <span onClick={() => navigate(`/monitor/${monitor.monitorId}`)}>
+      <span
+        onClick={() => navigate(`/monitor/${monitor.monitorId}`)}
+        id={`monitor-${monitor.name}`}
+      >
         <a className="home-monitor-url">{address}</a>
         <div className="home-monitor-uptime-container">
           <div className="home-monitor-uptime">
             <h1>Ping</h1>
-            <div>
-              {heartbeat.latency ? `${heartbeat.latency} ms` : '0ms'}
-            </div>
+            <div>{heartbeat.latency ? `${heartbeat.latency} ms` : '0ms'}</div>
           </div>
           <div className="home-monitor-uptime">
             <h1>Uptime</h1>

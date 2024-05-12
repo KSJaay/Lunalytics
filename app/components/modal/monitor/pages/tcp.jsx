@@ -8,6 +8,7 @@ const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
   return (
     <div className="monitor-configure-container">
       <TextInput
+        id="input-host"
         label="Host"
         value={inputs.url}
         error={errors.url}
@@ -15,6 +16,7 @@ const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
       />
 
       <TextInput
+        id="input-port"
         label="Port"
         value={inputs.port}
         error={errors.port}
