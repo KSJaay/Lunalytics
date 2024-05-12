@@ -3,23 +3,26 @@ import knex from 'knex';
 
 import logger from '../../utils/logger.js';
 
-class SQLite {
+export class SQLite {
   constructor() {
-    this.path = `${process.cwd()}/server/database/sqlite/lunalytics.db`;
     this.client = null;
   }
 
-  async connect() {
+  async connect(databaseName) {
     if (this.client) return this.client;
 
-    if (!existsSync(this.path)) {
-      closeSync(openSync(this.path, 'w'));
+    const path = `${process.cwd()}/server/database/sqlite/${
+      databaseName || process.env.DATABASE_NAME || 'lunalytics'
+    }.db`;
+
+    if (!existsSync(path)) {
+      closeSync(openSync(path, 'w'));
     }
 
     this.client = knex({
       client: 'better-sqlite3',
       connection: {
-        filename: this.path,
+        filename: path,
       },
       useNullAsDefault: true,
     });

@@ -1,6 +1,6 @@
 import '../scripts/loadEnv.js';
 
-// Import dependencies
+// import dependencies
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -36,11 +36,14 @@ const init = async () => {
     .use(cookieParser())
     .use(isDemo);
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    process.env.NODE_ENV !== 'test'
+  ) {
     app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
   }
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
     logger.info('Express', 'Serving production static files');
     app.use(express.static(path.join(process.cwd(), 'dist')));
   }
@@ -57,7 +60,7 @@ const init = async () => {
   logger.info('Express', 'Initialising routes');
   initialiseRoutes(app);
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
     logger.info('Express', 'Serving production static files');
     app.get('*', function (request, response) {
       response.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
