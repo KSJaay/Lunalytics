@@ -72,7 +72,10 @@ const useRegister = () => {
 
       if (isInvalid) {
         return setValues((prev) => ({
-          ...prev,
+          inputs: {
+            [id]: value,
+            ...prev.inputs,
+          },
           errors: {
             ...prev.errors,
             [id]: isInvalid,
@@ -80,7 +83,10 @@ const useRegister = () => {
         }));
       } else {
         setValues((prev) => ({
-          ...prev,
+          inputs: {
+            [id]: value,
+            ...prev.inputs,
+          },
           errors: {
             ...prev.errors,
             [id]: '',
@@ -103,7 +109,7 @@ const useRegister = () => {
           ...prev,
           errors: {
             ...prev.errors,
-            confirmPassword: 'Passwords must match',
+            confirmPassword: 'Passwords do not match',
           },
         }));
       } else {
