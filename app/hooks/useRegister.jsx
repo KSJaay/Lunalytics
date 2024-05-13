@@ -73,8 +73,8 @@ const useRegister = () => {
       if (isInvalid) {
         return setValues((prev) => ({
           inputs: {
-            [id]: value,
             ...prev.inputs,
+            [id]: value,
           },
           errors: {
             ...prev.errors,
@@ -84,8 +84,8 @@ const useRegister = () => {
       } else {
         setValues((prev) => ({
           inputs: {
-            [id]: value,
             ...prev.inputs,
+            [id]: value,
           },
           errors: {
             ...prev.errors,
