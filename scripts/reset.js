@@ -1,4 +1,9 @@
+import '../scripts/loadEnv.js';
+
+// import dependencies
 import inquirer from 'inquirer';
+
+// import local files
 import logger from '../server/utils/logger.js';
 import SQLite from '../server/database/sqlite/setup.js';
 import { generateHash } from '../server/utils/hashPassword.js';
@@ -24,7 +29,8 @@ const generatePassword = () => {
   return password;
 };
 
-inquirer.prompt(questions)
+inquirer
+  .prompt(questions)
   .then(async (answers) => {
     if (!answers?.email) {
       logger.log(

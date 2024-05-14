@@ -12,7 +12,7 @@
 # production
 /dist
 /stats
-/server/database/sqlite/lunalytics.db
+/server/database/sqlite/*.db
 /app/pages/icons.jsx
 /app/components/icons/list.jsx
 docs/.vitepress/dist
@@ -22,7 +22,6 @@ public/kanban.json
 # misc
 .DS_Store
 *.pem
-package-lock.json
 yarn.lock
 
 # debug

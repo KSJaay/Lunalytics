@@ -62,7 +62,11 @@ const MonitorConfigureModal = ({
 
       <Modal.Actions>
         {form.actions.map((action) => (
-          <Modal.Button key={action} onClick={handleActionButtons(action)}>
+          <Modal.Button
+            id={action}
+            key={action}
+            onClick={handleActionButtons(action)}
+          >
             {action}
           </Modal.Button>
         ))}

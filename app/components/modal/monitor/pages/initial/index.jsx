@@ -10,6 +10,7 @@ const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
     <div className="monitor-configure-container">
       <TextInput
         label="Name"
+        id="input-name"
         value={inputs.name || ''}
         onChange={(e) => handleInput('name', e.target.value)}
         error={errors.name}

@@ -20,7 +20,7 @@ const login = async (request, response) => {
     setServerSideCookie(response, 'access_token', jwt);
 
     if (!user.isVerified) {
-      return response.sendStatu(418);
+      return response.sendStatus(418);
     }
 
     return response.sendStatus(200);

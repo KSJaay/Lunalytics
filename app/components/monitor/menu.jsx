@@ -63,13 +63,20 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
 
   return (
     <div className="monitor-view-menu-container">
-      <div className="monitor-view-menu-name">{name}</div>
+      <div className="monitor-view-menu-name" id="monitor-view-menu-name">
+        {name}
+      </div>
       {/* <Button iconLeft={<FaTrash width={20} height={20} />}>Pause</Button> */}
       {/* <Button iconLeft={<FaTrash width={20} height={20} />}>Duplicate</Button> */}
-      <Button iconLeft={<MdEdit width={20} height={20} />} onClick={handleEdit}>
+      <Button
+        id="monitor-edit-button"
+        iconLeft={<MdEdit width={20} height={20} />}
+        onClick={handleEdit}
+      >
         Edit
       </Button>
       <Button
+        id="monitor-delete-button"
         iconLeft={<FaTrash width={20} height={20} />}
         onClick={handleDelete}
       >

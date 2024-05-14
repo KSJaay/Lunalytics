@@ -19,5 +19,16 @@ process.env.VITE_REACT_APP_VERSION = config.version;
 process.env.PORT = config.port;
 process.env.JWT_SECRET = config.jwtSecret;
 process.env.IS_DEMO = config.isDemo;
+process.env.DATABASE_NAME = config.database?.name;
+
+if (process.env.NODE_ENV === 'test') {
+  process.env.DATABASE_NAME = 'e2e-test';
+
+  logger.log(
+    'SETUP',
+    'Changed database name to "e2e-test" for testing purposes.',
+    'INFO'
+  );
+}
 
 logger.log('SETUP', 'Environment variables loaded successfully.', 'INFO');

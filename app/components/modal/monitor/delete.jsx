@@ -15,8 +15,14 @@ const MonitorModal = ({ monitorId, handleClose, handleConfirm }) => {
         <span style={{ fontWeight: '600' }}>This action cannot be undone.</span>
       </Modal.Message>
       <Modal.Actions>
-        <Modal.Button onClick={handleClose}>Cancel</Modal.Button>
-        <Modal.Button color="red" onClick={handleConfirm}>
+        <Modal.Button onClick={handleClose} id="monitor-delete-cancel-button">
+          Cancel
+        </Modal.Button>
+        <Modal.Button
+          color="red"
+          onClick={handleConfirm}
+          id="monitor-delete-confirm-button"
+        >
           Confirm
         </Modal.Button>
       </Modal.Actions>

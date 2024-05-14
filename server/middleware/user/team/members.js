@@ -1,9 +1,14 @@
 import { fetchMembers } from '../../../database/queries/user.js';
+import { handleError } from '../../../utils/errors.js';
 
 const teamMembersListMiddleware = async (request, response) => {
-  const members = await fetchMembers();
+  try {
+    const members = await fetchMembers();
 
-  return response.send(members);
+    return response.send(members);
+  } catch (error) {
+    handleError(error, response);
+  }
 };
 
 export default teamMembersListMiddleware;

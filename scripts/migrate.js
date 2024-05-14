@@ -1,9 +1,14 @@
+// import dependencies
 import fs from 'fs';
 import path from 'path';
-import config from '../config.json' assert { type: 'json' };
+
+// import local files
 import logger from '../server/utils/logger.js';
 import migrationList from '../server/migrations/index.js';
-import packageJson from '../package.json' assert { type: 'json' };
+import { loadJSON } from '../shared/parseJson.js';
+
+const config = loadJSON('../config.json');
+const packageJson = loadJSON('../package.json');
 
 const migrateDatabase = async () => {
   const migrationListKeys = Object.keys(migrationList);

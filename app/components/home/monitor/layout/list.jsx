@@ -18,6 +18,7 @@ const MonitorList = ({ monitor = {} }) => {
     <div
       className="home-monitor-container-list"
       onClick={() => navigate(`/monitor/${monitor.monitorId}`)}
+      id={`monitor-${monitor.name}`}
     >
       <div className="home-monitor-type-list">
         <div className="home-monitor-name-list">{name}</div>

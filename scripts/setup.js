@@ -1,9 +1,13 @@
+// import dependencies
 import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 import { v4 as uuidv4 } from 'uuid';
+
+// import local files
 import logger from '../server/utils/logger.js';
-import packageJson from '../package.json' assert { type: 'json' };
+import { loadJSON } from '../shared/parseJson.js';
+const packageJson = loadJSON('../package.json');
 
 const questions = [
   {
@@ -19,6 +23,12 @@ const questions = [
     default: uuidv4(),
   },
   {
+    type: 'input',
+    name: 'databaseName',
+    message: 'Enter Database Name: ',
+    default: 'Lunalytics',
+  },
+  {
     type: 'list',
     name: 'migrationType',
     message:
@@ -31,9 +41,9 @@ const questions = [
 inquirer
   .prompt(questions)
   .then((answers) => {
-    const { port, jwtSecret, migrationType } = answers;
+    const { port, jwtSecret, migrationType, databaseName } = answers;
 
-    if (!port || !jwtSecret || !migrationType) {
+    if (!port || !jwtSecret || !migrationType || !databaseName) {
       logger.log('SETUP', 'Invalid input. Please try again.', 'ERROR', false);
       return;
     }

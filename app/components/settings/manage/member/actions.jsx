@@ -35,6 +35,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
       <>
         <div
           className={`member-row-body-icon-close ${classes}`}
+          id={`decline-${member.displayName}`}
           onClick={() => {
             if (canManage) {
               openModal(
@@ -49,6 +50,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
         </div>
         <div
           className={`member-row-body-icon-check ${classes}`}
+          id={`accept-${member.displayName}`}
           onClick={() => {
             if (canManage) {
               openModal(

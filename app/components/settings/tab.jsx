@@ -15,6 +15,7 @@ const SettingsTab = ({ tab, handleTabUpdate }) => {
     return (
       <div
         key={name}
+        id={name}
         className={`settings-tab-text ${active ? 'active' : ''}`}
         onClick={() => handleTabUpdate(name)}
       >

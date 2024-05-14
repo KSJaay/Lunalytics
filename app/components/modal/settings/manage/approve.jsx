@@ -37,8 +37,14 @@ const MemberApproveModal = ({ member, onClose }) => {
         user will have access to view the monitors.
       </Modal.Message>
       <Modal.Actions>
-        <Modal.Button onClick={onClose}>Cancel</Modal.Button>
-        <Modal.Button color="green" onClick={handleConfirm}>
+        <Modal.Button id="manage-cancel-button" onClick={onClose}>
+          Cancel
+        </Modal.Button>
+        <Modal.Button
+          id="manage-approve-button"
+          color="green"
+          onClick={handleConfirm}
+        >
           Confirm
         </Modal.Button>
       </Modal.Actions>
