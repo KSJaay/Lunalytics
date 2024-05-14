@@ -61,6 +61,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "^1.6.0",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "cypress": "^13.8.1",
