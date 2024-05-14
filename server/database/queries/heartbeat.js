@@ -106,7 +106,9 @@ export const fetchHourlyHeartbeats = async (monitorId) => {
 export const createHourlyHeartbeat = async (data) => {
   const query = await SQLite.client('hourly_heartbeat').insert(data);
 
-  return { id: query[0], ...data, monitorId: undefined };
+  delete data.monitorId;
+
+  return { id: query[0], ...data };
 };
 
 export const createHeartbeat = async (data) => {
@@ -114,7 +116,9 @@ export const createHeartbeat = async (data) => {
 
   const query = await SQLite.client('heartbeat').insert({ date, ...data });
 
-  return { id: query[0], date, ...data, monitorId: undefined };
+  delete data.monitorId;
+
+  return { id: query[0], date, ...data };
 };
 
 export const deleteHeartbeats = async (monitorId) => {
