@@ -22,7 +22,6 @@ public/kanban.json
 # misc
 .DS_Store
 *.pem
-package-lock.json
 yarn.lock
 
 # debug
