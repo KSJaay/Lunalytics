@@ -33,6 +33,7 @@ const handleRegister = async (inputs, setErrors, setPage, navigate) => {
 
     setPage('verify');
   } catch (error) {
+    console.log(error);
     if (error?.response?.data?.message) {
       return setErrors(error?.response?.data?.message);
     }
