@@ -1,0 +1,16 @@
+@import '../../../../styles/global.scss';
+
+.settings-account-item-vertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: pxToRem(8);
+}
+
+.settings-account-item-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  width: fit-content;
+}
