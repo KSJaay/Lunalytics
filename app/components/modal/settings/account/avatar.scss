@@ -1,0 +1,36 @@
+@import '../../../../styles/global.scss';
+
+.settings-modal-avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.settings-modal-avatar-image {
+  width: pxToRem(100);
+  height: pxToRem(100);
+  border-radius: var(--radius-pill);
+}
+
+.settings-modal-avatars-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.settings-modal-avatar-option {
+  width: pxToRem(60);
+  height: pxToRem(60);
+  border: pxToRem(2) solid #00000000;
+
+  &:hover {
+    border: pxToRem(2) solid var(--primary-600);
+    cursor: pointer;
+  }
+}
+
+.settings-modal-avatar-option-select {
+  width: pxToRem(60);
+  height: pxToRem(60);
+  border: pxToRem(2) solid var(--primary-600);
+}
