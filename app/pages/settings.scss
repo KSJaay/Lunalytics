@@ -8,18 +8,61 @@
   border-radius: pxToRem(24);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  max-width: pxToRem(1400);
+  margin: pxToRem(16);
+  border: 1px solid var(--accent-700);
+  position: relative;
 }
 
-@include tablet {
+.settings-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.settings-close {
+  position: absolute;
+  top: pxToRem(12);
+  right: pxToRem(16);
+  border: 2px solid var(--accent-500);
+  display: flex;
+  padding: pxToRem(8);
+  border-radius: var(--radius-pill);
+  color: var(--accent-200);
+
+  &:hover {
+    cursor: pointer;
+    color: var(--accent-100);
+    border-color: var(--accent-200);
+  }
+}
+
+.settings-back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--accent-200);
+  padding: pxToRem(8);
+
+  &:hover {
+    cursor: pointer;
+    color: var(--accent-100);
+    border-color: var(--accent-200);
+  }
+}
+
+@include mobile {
   .settings-content {
-    flex-direction: column;
-    width: 100%;
-    overflow: auto;
+    display: block;
+    margin: 0;
+    border-radius: 0;
   }
 
-  .settings-tab {
-    display: flex;
-    flex-direction: column;
-    width: 100% !important;
+  .settings-close {
+    top: pxToRem(8);
+    right: pxToRem(8);
   }
 }
