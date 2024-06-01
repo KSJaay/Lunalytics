@@ -23,6 +23,7 @@ const ManageTeam = () => {
 
         setTeam(query.data);
       } catch (error) {
+        console.log(error);
         toast.error("Couldn't fetch team members");
       }
     };
@@ -33,15 +34,12 @@ const ManageTeam = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        padding: '10px 20px',
+        overflow: 'auto',
       }}
+      className="settings-account-container"
+      id="manage"
     >
-      <div style={{ display: 'flex', overflow: 'auto' }}>
-        <MembersTable members={sortedMembers} />
-      </div>
+      <MembersTable members={sortedMembers} />
     </div>
   );
 };

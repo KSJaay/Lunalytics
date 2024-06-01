@@ -10,11 +10,13 @@ import MemberRowActions from './actions';
 import useContextStore from '../../../../context';
 import { userPropType } from '../../../../utils/propTypes';
 
-const positions = {
-  1: 'Owner',
-  2: 'Admin',
-  3: 'Editor',
-  4: 'Guest',
+const positions = { 1: 'Owner', 2: 'Admin', 3: 'Editor', 4: 'Guest' };
+
+const isImageUrl = (url) => {
+  if (typeof url !== 'string') {
+    return false;
+  }
+  return url.match(/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/gim) !== null;
 };
 
 const MemberTableRow = ({ member = {} }) => {
@@ -38,12 +40,22 @@ const MemberTableRow = ({ member = {} }) => {
   const date = moment(member.createdAt).format('MMM DD, YYYY');
   const time = moment(member.createdAt).format('hh:mm A');
 
-  const avatar = member.avatar ? `/icons/${member.avatar}.png` : '/logo.svg';
+  const avatarUrl = isImageUrl(member.avatar)
+    ? member.avatar
+    : `/icons/${member.avatar}.png`;
+
+  const userAvatar = member.avatar ? (
+    <img src={avatarUrl} className="member-row-image" />
+  ) : (
+    <div className="member-row-image-default">
+      {member.displayName?.charAt(0)}
+    </div>
+  );
 
   return (
     <div className="member-table-row">
       <div className="member-row-name-container">
-        <img src={avatar} className="member-row-image" />
+        {userAvatar}
         <div className="member-row-details">
           <div className="member-row-display-name">{member.displayName}</div>
           <div className="member-row-email">{member.email}</div>

@@ -1,7 +1,7 @@
 import './about.scss';
 
 const SetttingAbout = () => {
-  const version = import.meta.env.VITE_REACT_APP_VERSION || '0.3.11';
+  const version = import.meta.env.VITE_REACT_APP_VERSION || '0.5.0';
 
   return (
     <div className="settings-about-container">

@@ -9,7 +9,20 @@
 .member-row-image {
   width: pxToRem(45);
   height: pxToRem(45);
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
+}
+
+.member-row-image-default {
+  width: pxToRem(45);
+  height: pxToRem(45);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: pxToRem(6);
+  background-color: var(--primary-700);
+  font-size: var(--font-xl);
+  color: var(--font-color);
 }
 
 .member-row-details {
