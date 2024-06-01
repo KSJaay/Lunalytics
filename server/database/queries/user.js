@@ -97,6 +97,14 @@ const updateUserPermission = (email, permission) => {
   return SQLite.client('user').where({ email }).update({ permission });
 };
 
+const updateUserPassword = (email, password) => {
+  const hashedPassword = generateHash(password);
+
+  return SQLite.client('user')
+    .where({ email })
+    .update({ password: hashedPassword });
+};
+
 const getDemoUser = async () => {
   const demoUser = await SQLite.client('user').where({ email: 'demo' }).first();
 
@@ -125,5 +133,6 @@ export {
   declineAccess,
   approveAccess,
   updateUserPermission,
+  updateUserPassword,
   getDemoUser,
 };

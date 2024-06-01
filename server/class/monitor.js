@@ -4,7 +4,7 @@ const parseJson = (str) => {
   try {
     return JSON.parse(str);
   } catch (e) {
-    return '';
+    return ['200-299'];
   }
 };
 

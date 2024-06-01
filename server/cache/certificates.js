@@ -28,7 +28,10 @@ class Certificates {
     delete certificate.lastCheck;
     delete certificate.nextCheck;
 
-    await updateCertificate(monitorId, certificate);
+    await updateCertificate(monitorId, {
+      ...certificate,
+      issuer: JSON.stringify(certificate.issuer),
+    });
 
     certificate.lastCheck = Date.now();
     certificate.nextCheck = certificate.lastCheck + 86400000;
