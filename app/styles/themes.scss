@@ -89,6 +89,55 @@
   --primary-900: var(--pink-900);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-color: #f3f6fb;
+
+    --accent-50: var(--gray-50);
+    --accent-100: var(--gray-100);
+    --accent-200: var(--gray-200);
+    --accent-300: var(--gray-300);
+    --accent-400: var(--gray-400);
+    --accent-500: var(--gray-500);
+    --accent-600: var(--gray-600);
+    --accent-700: var(--gray-700);
+    --accent-800: var(--gray-800);
+    --accent-900: var(--gray-900);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --font-color: #0c0c0c;
+
+    --accent-50: var(--white-900);
+    --accent-100: var(--white-800);
+    --accent-200: var(--white-700);
+    --accent-300: var(--white-600);
+    --accent-400: var(--white-500);
+    --accent-500: var(--white-400);
+    --accent-600: var(--white-300);
+    --accent-700: var(--white-200);
+    --accent-800: var(--white-100);
+    --accent-900: var(--white-50);
+  }
+}
+
+[data-theme='dark'] {
+  --font-color: #f3f6fb;
+
+  --accent-50: var(--gray-50);
+  --accent-100: var(--gray-100);
+  --accent-200: var(--gray-200);
+  --accent-300: var(--gray-300);
+  --accent-400: var(--gray-400);
+  --accent-500: var(--gray-500);
+  --accent-600: var(--gray-600);
+  --accent-700: var(--gray-700);
+  --accent-800: var(--gray-800);
+  --accent-900: var(--gray-900);
+}
+
 [data-theme='light'] {
   --font-color: #0c0c0c;
 
