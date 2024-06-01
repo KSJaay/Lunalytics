@@ -1,0 +1,73 @@
+@import '../../../../styles/global.scss';
+
+.settings-tab {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  background-color: var(--accent-900);
+  padding: pxToRem(4);
+  border-right: 3px solid var(--accent-700);
+}
+
+.settings-tab-title {
+  padding: pxToRem(12) 0 0 pxToRem(20);
+  color: var(--accent-200);
+  font-size: var(--font-sm);
+}
+
+.settings-tab-text {
+  color: var(--accent-100);
+  font-size: var(--font-xl);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin: pxToRem(4);
+  padding: pxToRem(8) pxToRem(16);
+  border-radius: pxToRem(12);
+
+  &:hover {
+    background-color: var(--accent-900);
+  }
+
+  &.active {
+    background-color: var(--accent-900);
+    color: var(--primary-500);
+  }
+}
+
+.settings-mobile-tab-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: var(--font-color);
+  padding: 10px 0;
+  border-bottom: 2px solid var(--accent-800);
+  gap: 10px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.settings-mobile-tab-title {
+  padding: 3px 8px;
+  color: var(--accent-200);
+  font-weight: var(--weight-semibold);
+}
+
+.settings-mobile-tab-items {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 8px;
+  padding: 10px;
+  background-color: var(--accent-900);
+  border-radius: var(--radius-md);
+}
+
+.settings-mobile-tabs {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
