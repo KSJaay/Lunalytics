@@ -14,7 +14,9 @@ const ManageTeam = () => {
   const { getTeam, setTeam } = useTeamContext();
   const team = getTeam();
 
-  const sortedMembers = team?.sort((a, b) => a?.permission - b?.permission);
+  const sortedMembers = team
+    ?.sort((a, b) => a?.permission - b?.permission)
+    .sort((a, b) => a?.isVerified - b?.isVerified);
 
   useEffect(() => {
     const fetchTeam = async () => {

@@ -26,7 +26,7 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
     useDropdown();
   const team = getTeam();
 
-  const sortedMembers = team?.sort((a, b) => a?.permission - b?.permission);
+  const sortedMembers = team?.sort((a, b) => a?.permission - b?.permission).filter((member) => member.isVerified);
 
   useEffect(() => {
     const fetchTeam = async () => {
