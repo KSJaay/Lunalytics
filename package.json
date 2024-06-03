@@ -22,6 +22,7 @@
     "test:e2e": "cypress open",
     "test:db": "node ./test/shared/setupDatabase.js",
     "test:server": "npm run test:db && cross-env NODE_ENV=test node server/index.js",
+    "migrate": "node ./scripts/migrate.js",
     "prepare": "husky install",
     "preview": "vite preview",
     "reset:password": "node ./scripts/reset.js",
