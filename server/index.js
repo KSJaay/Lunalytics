@@ -43,7 +43,10 @@ const init = async () => {
     app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
   }
 
-  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.NODE_ENV === 'test'
+  ) {
     logger.info('Express', 'Serving production static files');
     app.use(express.static(path.join(process.cwd(), 'dist')));
   }
@@ -52,15 +55,20 @@ const init = async () => {
     return res.status(200).send('Everything looks good :D');
   });
 
-  app.get('/api/kanban', (req, res) => {
-    return res.sendFile(path.join(process.cwd(), '/public/kanban.json'));
-  });
+  if (process.env.IS_DEMO === 'enabled') {
+    app.get('/api/kanban', (req, res) => {
+      return res.sendFile(path.join(process.cwd(), '/public/kanban.json'));
+    });
+  }
 
   app.use(authorization);
   logger.info('Express', 'Initialising routes');
   initialiseRoutes(app);
 
-  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.NODE_ENV === 'test'
+  ) {
     logger.info('Express', 'Serving production static files');
     app.get('*', function (request, response) {
       response.sendFile(path.join(process.cwd(), 'dist', 'index.html'));

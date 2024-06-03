@@ -38,6 +38,20 @@ const questions = [
   },
 ];
 
+const configExists = () => {
+  const configPath = path.join(process.cwd(), 'config.json');
+  return fs.existsSync(configPath);
+};
+
+if (configExists()) {
+  logger.log(
+    'SETUP',
+    'Configuration file already exists. Please manually edit to overwrite or delete the file.',
+    'ERROR'
+  );
+  process.exit(1);
+}
+
 inquirer
   .prompt(questions)
   .then((answers) => {

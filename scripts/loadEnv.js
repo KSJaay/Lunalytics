@@ -18,7 +18,7 @@ const config = JSON.parse(readFileSync(configPath, 'utf-8'));
 process.env.VITE_REACT_APP_VERSION = config.version;
 process.env.PORT = config.port;
 process.env.JWT_SECRET = config.jwtSecret;
-process.env.IS_DEMO = config.isDemo;
+process.env.IS_DEMO = config.isDemo ? 'enabled' : 'disabled';
 process.env.DATABASE_NAME = config.database?.name;
 
 if (process.env.NODE_ENV === 'test') {

@@ -19,6 +19,16 @@ const setServerSideCookie = (res, name, value) => {
   });
 };
 
+const setDemoCookie = (res, name, value) => {
+  return res.cookie(name, value, {
+    expires: 0,
+    maxAge: 0,
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+};
+
 const deleteCookie = (res, name) => {
   return res.cookie(name, '', {
     expires: -1,
@@ -26,4 +36,9 @@ const deleteCookie = (res, name) => {
   });
 };
 
-export { setClientSideCookie, setServerSideCookie, deleteCookie };
+export {
+  setClientSideCookie,
+  setServerSideCookie,
+  setDemoCookie,
+  deleteCookie,
+};
