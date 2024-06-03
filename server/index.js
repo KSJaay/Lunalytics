@@ -40,13 +40,19 @@ const init = async () => {
     process.env.NODE_ENV !== 'production' &&
     process.env.NODE_ENV !== 'test'
   ) {
-    app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
-  }
+    app.use(
+      cors({
+        credentials: true,
+        origin: process.env.CORS_LIST?.split(',') || ['http://localhost:3000'],
+      })
+    );
+  } else {
+    if (process.env.CORS_LIST) {
+      app.use(
+        cors({ credentials: true, origin: process.env.CORS_LIST?.split(',') })
+      );
+    }
 
-  if (
-    process.env.NODE_ENV === 'production' ||
-    process.env.NODE_ENV === 'test'
-  ) {
     logger.info('Express', 'Serving production static files');
     app.use(express.static(path.join(process.cwd(), 'dist')));
   }

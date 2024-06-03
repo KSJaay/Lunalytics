@@ -20,6 +20,7 @@ process.env.PORT = config.port;
 process.env.JWT_SECRET = config.jwtSecret;
 process.env.IS_DEMO = config.isDemo ? 'enabled' : 'disabled';
 process.env.DATABASE_NAME = config.database?.name;
+process.env.CORS_LIST = config.cors;
 
 if (process.env.NODE_ENV === 'test') {
   process.env.DATABASE_NAME = 'e2e-test';
