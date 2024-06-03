@@ -21,8 +21,6 @@ const setServerSideCookie = (res, name, value) => {
 
 const setDemoCookie = (res, name, value) => {
   return res.cookie(name, value, {
-    expires: 0,
-    maxAge: 0,
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     sameSite: 'strict',
