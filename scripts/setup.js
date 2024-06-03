@@ -49,7 +49,7 @@ if (configExists()) {
     'Configuration file already exists. Please manually edit to overwrite or delete the file.',
     'ERROR'
   );
-  process.exit(1);
+  process.exit(0);
 }
 
 inquirer
