@@ -122,6 +122,13 @@ const getDemoUser = async () => {
   return signCookie({ email: 'demo' });
 };
 
+const transferOwnership = async (email, newOwner) => {
+  await SQLite.client('user').where({ email }).update({ permission: 4 });
+  return SQLite.client('user')
+    .where({ email: newOwner })
+    .update({ permission: 1 });
+};
+
 export {
   signInUser,
   registerUser,
@@ -135,4 +142,5 @@ export {
   updateUserPermission,
   updateUserPassword,
   getDemoUser,
+  transferOwnership,
 };

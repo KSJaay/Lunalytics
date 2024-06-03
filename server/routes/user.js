@@ -12,6 +12,9 @@ import userUpdateAvatar from '../middleware/user/update/avatar.js';
 import userUpdateUsername from '../middleware/user/update/username.js';
 import { userExists, emailExists } from '../database/queries/user.js';
 import { cleanMonitor } from '../class/monitor.js';
+import userUpdatePassword from '../middleware/user/update/password.js';
+import transferOwnershipMiddleware from '../middleware/user/transferOwnership.js';
+import deleteAccountMiddleware from '../middleware/user/deleteAccount.js';
 
 router.get('/', async (request, response) => {
   const { access_token } = request.cookies;
@@ -48,9 +51,14 @@ router.get('/monitors', async (request, response) => {
 
   for (const monitor of monitors) {
     const heartbeats = await cache.heartbeats.get(monitor.monitorId);
-    const cert = await cache.certificates.get(monitor.monitorId);
     monitor.heartbeats = heartbeats;
-    monitor.cert = cert;
+
+    monitor.cert = { isValid: false };
+
+    if (monitor.type === 'http') {
+      const cert = await cache.certificates.get(monitor.monitorId);
+      monitor.cert = cert;
+    }
 
     query.push(cleanMonitor(monitor));
   }
@@ -59,6 +67,8 @@ router.get('/monitors', async (request, response) => {
 });
 
 router.post('/update/username', userUpdateUsername);
+
+router.post('/update/password', userUpdatePassword);
 
 router.post('/update/avatar', userUpdateAvatar);
 
@@ -71,5 +81,9 @@ router.post('/access/approve', hasAdminPermissions, accessApproveMiddleware);
 router.post('/access/remove', hasAdminPermissions, accessRemoveMiddleware);
 
 router.post('/permission/update', permissionUpdateMiddleware);
+
+router.post('/transfer/ownership', transferOwnershipMiddleware);
+
+router.post('/delete/account', deleteAccountMiddleware);
 
 export default router;
