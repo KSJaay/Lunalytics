@@ -47,6 +47,14 @@ describe('Fetch Monitor Using Id - Middleware', () => {
       expect(cache.monitors.get).toHaveBeenCalledWith(monitorId);
     });
 
+    it('should return 404 when monitor is not found', async () => {
+      cache.monitors.get.mockReturnValue(null);
+
+      await fetchMonitorUsingId(fakeRequest, fakeResponse);
+
+      expect(fakeResponse.statusCode).toEqual(404);
+    });
+
     it('should call cache.heartbeats.get with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
