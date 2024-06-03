@@ -51,7 +51,7 @@ const getDaysRemaining = (validFrom, validTo) => {
   return daysRemaining;
 };
 
-const parseCert = (cert) => {
+export const parseCert = (cert) => {
   const validOn = cert.subjectaltname
     ?.replace(/DNS:|IP Address:/g, '')
     .split(', ');

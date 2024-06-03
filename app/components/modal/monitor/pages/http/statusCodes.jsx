@@ -17,6 +17,8 @@ const MonitorHttpStatusCodes = ({
     code.includes(selectSearch)
   );
 
+  const monitorStatusCodes = Array.isArray(selectedIds) ? selectedIds : [];
+
   return (
     <>
       <label className="text-input-label">Accepted Status Codes</label>
@@ -26,7 +28,7 @@ const MonitorHttpStatusCodes = ({
           isOpen={selectIsOpen}
           toggleSelect={toggleSelect}
         >
-          {selectedIds.join(', ')}
+          {monitorStatusCodes?.join(', ')}
         </Select.Trigger>
         <Select.List
           fullWidth
@@ -39,7 +41,7 @@ const MonitorHttpStatusCodes = ({
               key={code}
               onClick={() => handleStatusCodeSelect(code)}
               showDot
-              isSelected={selectedIds.includes(code)}
+              isSelected={monitorStatusCodes.includes(code)}
             >
               {code}
             </Select.Item>
