@@ -36,10 +36,6 @@ describe('userUpdatePassword - Middleware', () => {
     };
   });
 
-  // Should return 401 when currentPassword and user.password aren't the same
-  // Should return 400 when password is invalid
-  // Should call updateUserPassword with email and newPassword and return 200
-
   afterEach(() => {
     vi.restoreAllMocks();
   });
