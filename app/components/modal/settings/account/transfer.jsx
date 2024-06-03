@@ -14,9 +14,14 @@ import { createGetRequest } from '../../../../services/axios';
 import useDropdown from '../../../../hooks/useDropdown';
 import Dropdown from '../../../ui/dropdown';
 import { AlertError } from '../../../ui/alert';
+import useContextStore from '../../../../context';
+import handleTransferAccount from '../../../../handlers/settings/account/transfer';
 
-const SettingsAccountTransferModal = ({ closeModal, handleSumbit }) => {
+const SettingsAccountTransferModal = ({ closeModal }) => {
   const { getTeam, setTeam } = useTeamContext();
+  const {
+    userStore: { user },
+  } = useContextStore();
   const { dropdownIsOpen, selectedId, toggleDropdown, handleDropdownSelect } =
     useDropdown();
   const team = getTeam();
@@ -28,7 +33,11 @@ const SettingsAccountTransferModal = ({ closeModal, handleSumbit }) => {
       try {
         const query = await createGetRequest('/api/user/team');
 
-        setTeam(query.data);
+        const filteredMembers = query.data?.filter(
+          (member) => member.email !== user.email
+        );
+
+        setTeam(filteredMembers);
       } catch (error) {
         console.log(error);
         toast.error("Couldn't fetch team members");
@@ -130,11 +139,10 @@ const SettingsAccountTransferModal = ({ closeModal, handleSumbit }) => {
             ).value;
 
             if (transferConfirm.toLowerCase().trim() !== 'transfer ownership') {
-              toast.error('Enter transfer ownership to confirm.');
-              return;
+              return toast.error('Enter transfer ownership to confirm.');
             }
 
-            handleSumbit(selectedId);
+            handleTransferAccount(selectedId, closeModal);
           }}
         >
           Confirm
@@ -148,7 +156,6 @@ SettingsAccountTransferModal.displayName = 'SettingsAccountTransferModal';
 
 SettingsAccountTransferModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  handleSumbit: PropTypes.func.isRequired,
 };
 
 export default observer(SettingsAccountTransferModal);

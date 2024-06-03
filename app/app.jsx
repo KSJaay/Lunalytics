@@ -44,9 +44,7 @@ const App = () => {
   if (page === 'settings') {
     return (
       <GlobalLayout>
-        <Navigation activeUrl="settings">
-          <Setttings />
-        </Navigation>
+        <Setttings />
       </GlobalLayout>
     );
   }
