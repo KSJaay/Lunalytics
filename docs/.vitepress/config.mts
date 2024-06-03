@@ -53,9 +53,9 @@ export default defineConfig({
       {
         text: 'Internals',
         items: [
-          { text: 'Overview', link: '/internals/overview' },
+          // { text: 'Overview', link: '/internals/overview' },
           { text: 'Changelog', link: '/internals/changelog' },
-          { text: 'Flows', link: '/internals/flows' },
+          // { text: 'Flows', link: '/internals/flows' },
           { text: 'Notifications', link: '/internals/notifications' },
           { text: 'Permissions', link: '/internals/permissions' },
           { text: 'Roadmap', link: '/internals/roadmap' },
@@ -65,11 +65,11 @@ export default defineConfig({
       {
         text: 'Contributing',
         items: [
-          { text: 'Overview', link: '/contributing/overview' },
-          { text: 'Code of Conduct', link: '/contributing/conduct' },
+          // { text: 'Overview', link: '/contributing/overview' },
+          // { text: 'Code of Conduct', link: '/contributing/conduct' },
           { text: 'Pull request', link: '/contributing/pull-request' },
           { text: 'Testing', link: '/contributing/testing' },
-          { text: 'Issues', link: '/contributing/issues' },
+          // { text: 'Issues', link: '/contributing/issues' },
         ],
         collapsed: false,
       },

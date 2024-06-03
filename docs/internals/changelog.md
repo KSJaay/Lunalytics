@@ -1,5 +1,19 @@
 # Previous updates
 
+## v0.4.7
+
+### Fixes issues with sonner css not loading
+
+### Summary
+
+While testing production builds, I came across an issue where CSS for Sonner wasn't loading properly. I've decided to import the CSS from their Github repo as a temporary fix until repo owners fix the problem.
+
+## v0.4.4
+
+### Adds middleware for demo mode and kanban endpoint
+
+I wanted to create a demo mode on the website that allows the user to log on without needing to create an account and be verified. Demo mode account has `viewer` permissions and is not able to edit any of the current information on the page. Along with that, I've also added a kanban endpoint for the docs, this isn't a fully customisable kanban endpoint but will still allow me to make it dynamic.
+
 ## v0.4.3
 
 ### Moving server to EcmaScript Modules (ESM)
