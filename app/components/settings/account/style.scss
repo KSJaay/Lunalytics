@@ -1,0 +1,64 @@
+@import '../../../styles/global.scss';
+
+.settings-account-container {
+  padding: 0.75rem 1.5rem 0.75rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: pxToRem(1050);
+  margin-top: pxToRem(15);
+}
+
+.settings-account-content {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: pxToRem(800);
+  flex-direction: column;
+}
+
+.settings-account-profile {
+  flex: 1;
+}
+
+.settings-account-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: pxToRem(8);
+}
+
+.settings-account-item-title {
+  font-weight: 600;
+  font-size: var(--font-md);
+  color: var(--accent-100);
+}
+
+.settings-account-item-description {
+  font-size: var(--font-xl);
+}
+
+.settings-account-item-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.settings-account-item-info {
+  font-size: var(--font-lg);
+}
+
+@include mobile {
+  .settings-account-container {
+    padding: 0;
+    margin: 0 pxToRem(8);
+  }
+
+  .settings-account-mobile-container {
+    flex: 1;
+    flex-direction: column;
+    background-color: var(--accent-800);
+    border-radius: var(--radius-md);
+  }
+}

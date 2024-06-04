@@ -25,7 +25,7 @@ describe('Verify User', () => {
       );
 
       cy.visit('/settings');
-      cy.contains('[id="manage"]', 'Manage Team').click();
+      cy.contains('[id="Manage-Team"]', 'Manage Team').click();
 
       cy.get(`[id="accept-${username}"]`).click();
 
@@ -48,7 +48,7 @@ describe('Verify User', () => {
 
       cy.visit('/settings');
 
-      cy.get('[id="manage"]').click();
+      cy.get('[id="Manage-Team"]').click();
       cy.get(`[id="decline-${secondUsername}"]`).click();
       cy.get('[id="manage-decline-button"]').click();
 

@@ -11,6 +11,11 @@ const fetchMonitorUsingId = async (request, response) => {
     }
 
     const data = await cache.monitors.get(monitorId);
+
+    if (!data) {
+      return response.status(404).json({ error: 'Monitor not found' });
+    }
+
     const heartbeats = await cache.heartbeats.get(data.monitorId);
     const cert = await cache.certificates.get(data.monitorId);
 

@@ -22,6 +22,8 @@ const handleLogin = async (inputs, setErrors, navigate) => {
       return navigate('/');
     }
   } catch (error) {
+    console.log(error);
+
     if (error.response?.status === 418) {
       return navigate('/verify');
     }

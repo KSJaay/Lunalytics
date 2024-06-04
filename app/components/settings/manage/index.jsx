@@ -14,7 +14,9 @@ const ManageTeam = () => {
   const { getTeam, setTeam } = useTeamContext();
   const team = getTeam();
 
-  const sortedMembers = team?.sort((a, b) => a?.permission - b?.permission);
+  const sortedMembers = team
+    ?.sort((a, b) => a?.permission - b?.permission)
+    .sort((a, b) => a?.isVerified - b?.isVerified);
 
   useEffect(() => {
     const fetchTeam = async () => {
@@ -23,6 +25,7 @@ const ManageTeam = () => {
 
         setTeam(query.data);
       } catch (error) {
+        console.log(error);
         toast.error("Couldn't fetch team members");
       }
     };
@@ -33,15 +36,12 @@ const ManageTeam = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        padding: '10px 20px',
+        overflow: 'auto',
       }}
+      className="settings-account-container"
+      id="manage"
     >
-      <div style={{ display: 'flex', overflow: 'auto' }}>
-        <MembersTable members={sortedMembers} />
-      </div>
+      <MembersTable members={sortedMembers} />
     </div>
   );
 };

@@ -1,10 +1,23 @@
 // import styles
+import classNames from 'classnames';
 import './input.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
 
-const TextInput = ({ label, id, error, ...props }) => {
+const TextInput = ({
+  label,
+  id,
+  error,
+  iconLeft,
+  iconRight,
+  tabIndex = 0,
+  ...props
+}) => {
+  const classes = classNames('text-input', {
+    'text-input-icon-left': iconLeft,
+    'text-input-icon-right': iconRight,
+  });
   return (
     <>
       {label && (
@@ -12,7 +25,17 @@ const TextInput = ({ label, id, error, ...props }) => {
           {label}
         </label>
       )}
-      <input type="text" className="text-input" id={id} {...props} />
+      <div className="text-input-container">
+        {iconLeft && <div className="text-left-icon">{iconLeft}</div>}
+        <input
+          type="text"
+          className={classes}
+          id={id}
+          tabIndex={tabIndex}
+          {...props}
+        />
+        {iconRight && <div className="text-right-icon">{iconRight}</div>}
+      </div>
       {error && (
         <label className="text-input-error" id={`text-input-error-${id}`}>
           {error}
@@ -28,6 +51,9 @@ TextInput.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string,
   error: PropTypes.string,
+  iconLeft: PropTypes.node,
+  iconRight: PropTypes.node,
+  tabIndex: PropTypes.number,
 };
 
 export default TextInput;

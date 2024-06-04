@@ -1,0 +1,99 @@
+@import '../../styles/global.scss';
+
+.tooltip-container {
+  position: relative;
+
+  &:hover .tooltip {
+    cursor: pointer;
+    display: block;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--accent-600);
+  color: var(--font-color);
+  padding: pxToRem(8);
+  font-size: var(--font-md);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease-in-out;
+  z-index: 99;
+  width: max-content;
+  text-align: center;
+  display: none;
+
+  &.tooltip--top {
+    transform: translate(-50%, -200%);
+  }
+
+  &.tooltip--bottom {
+    transform: translate(-50%, 100%);
+  }
+
+  &.tooltip--left {
+    transform: translate(-150%, -50%);
+  }
+
+  &.tooltip--right {
+    transform: translate(50%, -50%);
+  }
+
+  &.tooltip--top,
+  &.tooltip--bottom,
+  &.tooltip--left,
+  &.tooltip--right {
+    max-width: 200px;
+  }
+
+  &:hover {
+    display: block;
+  }
+}
+
+.tooltip--primary {
+  background-color: var(--primary-700);
+  color: var(--font-color);
+}
+
+.tooltip--blue {
+  background-color: var(--blue-700);
+  color: var(--font-color);
+}
+
+.tooltip--cyan {
+  background-color: var(--cyan-700);
+  color: var(--font-color);
+}
+.tooltip--green {
+  background-color: var(--green-700);
+  color: var(--font-color);
+}
+
+.tooltip--pink {
+  background-color: var(--pink-700);
+  color: var(--font-color);
+}
+
+.tooltip--purple {
+  background-color: var(--purple-700);
+  color: var(--font-color);
+}
+
+.tooltip--red {
+  background-color: var(--red-700);
+  color: var(--font-color);
+}
+
+.tooltip--yellow {
+  background-color: var(--yellow-700);
+  color: var(--font-color);
+}
+
+.tooltip--gray {
+  background-color: var(--gray-700);
+  color: var(--font-color);
+}

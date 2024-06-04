@@ -6,6 +6,7 @@ export default class UserStore {
     makeObservable(this, {
       user: observable,
       setUser: action,
+      updateUsingKey: action,
       updateUser: action,
     });
   }
@@ -16,5 +17,9 @@ export default class UserStore {
 
   updateUser = (data) => {
     this.user = data;
+  };
+
+  updateUsingKey = (key, value) => {
+    this.user[key] = value;
   };
 }

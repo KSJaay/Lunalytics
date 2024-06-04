@@ -76,8 +76,6 @@ describe('permissionUpdateMiddleware - Middleware', () => {
 
     await permissionUpdateMiddleware(fakeRequest, fakeResponse);
 
-    console.log(fakeResponse);
-
     expect(fakeResponse.statusCode).toEqual(400);
     expect(spy).toHaveBeenCalledWith('You cannot change this user permission.');
   });

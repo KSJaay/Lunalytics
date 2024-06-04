@@ -1,0 +1,49 @@
+@import '../../../../styles/global.scss';
+
+.settings-account-mobile-item {
+  display: flex;
+  padding: 12px 8px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid var(--accent-700);
+  user-select: none;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--accent-700);
+    border-radius: var(--radius-md);
+  }
+}
+
+.settings-account-mobile-item-title {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-semibold);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.settings-account-mobile-item:last-child {
+  border-bottom: none;
+}
+
+.settings-account-mobile-item-description {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-account-mobile-item-icon {
+  display: flex;
+  color: var(--accent-50);
+}
+
+@include mobile {
+  .settings-account-mobile-item-icon {
+    width: 25px;
+    justify-content: center;
+    align-items: center;
+  }
+}

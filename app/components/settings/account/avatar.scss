@@ -1,0 +1,61 @@
+@import '../../../styles/global.scss';
+
+.settings-account-avatar-container {
+  display: flex;
+  align-items: center;
+  gap: pxToRem(15);
+  margin-bottom: pxToRem(20);
+}
+
+.settings-account-avatar-image-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: pxToRem(150);
+  height: pxToRem(150);
+  border-radius: var(--radius-pill);
+  border: 3px solid var(--gray-600);
+  background-color: var(--primary-700);
+  font-size: var(--font-3xl);
+  color: var(--font-color);
+}
+
+.settings-account-avatar-image {
+  display: flex;
+  width: pxToRem(150);
+  height: pxToRem(150);
+  border-radius: var(--radius-pill);
+  border: 3px solid var(--gray-600);
+}
+
+.settings-account-avatar-button-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+@include tablet {
+  .settings-account-avatar-button-container {
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 20px;
+  }
+}
+
+@include mobile {
+  .settings-account-avatar-button-container {
+    flex-direction: row;
+    margin-top: 0;
+  }
+
+  .settings-account-avatar-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .settings-account-avatar-info {
+    text-align: center;
+  }
+}

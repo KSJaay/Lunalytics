@@ -36,6 +36,7 @@ const GlobalLayout = ({ children }) => {
         setMonitors(data);
         setTimeouts(data, fetchMonitorById);
       } catch (error) {
+        console.log(error);
         if (error.response?.status === 401) {
           return navigate('/login');
         }

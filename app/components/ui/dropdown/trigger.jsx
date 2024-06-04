@@ -12,6 +12,7 @@ const Trigger = ({
   showIcon,
   toggleDropdown,
   children,
+  tabIndex = 0,
   ...props
 }) => {
   const classes = classNames('dropdown-trigger', {
@@ -23,7 +24,12 @@ const Trigger = ({
   });
 
   return (
-    <div className={classes} onClick={toggleDropdown} {...props}>
+    <div
+      className={classes}
+      onClick={toggleDropdown}
+      tabIndex={tabIndex}
+      {...props}
+    >
       {children}
       {showIcon && (
         <div className={iconClasses}>
@@ -42,6 +48,7 @@ Trigger.propTypes = {
   icon: PropTypes.node,
   showIcon: PropTypes.bool,
   toggleDropdown: PropTypes.func.isRequired,
+  tabIndex: PropTypes.number,
   children: PropTypes.node.isRequired,
 };
 

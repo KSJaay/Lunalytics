@@ -9,7 +9,7 @@ import SQLite from '../server/database/sqlite/setup.js';
 import { generateHash } from '../server/utils/hashPassword.js';
 
 const questions = [
-  { type: 'input', name: 'email', message: 'Enter email added: ' },
+  { type: 'input', name: 'email', message: 'Enter email added:' },
 ];
 
 const generatePassword = () => {
@@ -45,7 +45,7 @@ inquirer
     const email = answers.email.toLowerCase().trim();
     const client = await SQLite.connect();
 
-    const emailExists = client('user').where({ email }).first();
+    const emailExists = await client('user').where({ email }).first();
 
     if (!emailExists) {
       logger.log(
@@ -54,7 +54,8 @@ inquirer
         'ERROR',
         false
       );
-      return;
+
+      process.exit(0);
     }
 
     const newPassword = generatePassword();
@@ -70,10 +71,9 @@ inquirer
     );
 
     await client.destroy();
-    process.exit(1);
+    process.exit(0);
   })
   .catch((error) => {
-    logger.log('', error, 'ERROR', false);
     logger.log(
       'RESET PASSWORD',
       'Error resetting password, please try again.',
@@ -81,5 +81,7 @@ inquirer
       false
     );
 
-    process.exit(1);
+    logger.log('', error, 'ERROR', false);
+
+    process.exit(0);
   });

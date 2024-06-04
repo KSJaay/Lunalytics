@@ -21,7 +21,7 @@ const userUpdateAvatar = async (request, response) => {
 
     const { avatar } = request.body;
 
-    if (!avatar || user.avatar === avatar) {
+    if (avatar !== null && (!avatar || user.avatar === avatar)) {
       return response.sendStatus(200);
     }
 

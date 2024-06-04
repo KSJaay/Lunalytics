@@ -1,5 +1,9 @@
 @import '../../styles/global.scss';
 
+.text-input-container {
+  position: relative;
+}
+
 .text-input {
   width: 100%;
   height: pxToRem(50);
@@ -18,6 +22,30 @@
   &:focus {
     border: 2px solid var(--primary-700);
   }
+}
+
+.text-input-icon-left {
+  padding-left: pxToRem(32);
+}
+
+.text-input-icon-right {
+  padding-right: pxToRem(32);
+}
+
+.text-left-icon {
+  position: absolute;
+  box-sizing: border-box;
+  left: 8px;
+  top: 34px;
+  transform: translateY(-50%);
+}
+
+.text-right-icon {
+  position: absolute;
+  box-sizing: border-box;
+  right: 8px;
+  top: 34px;
+  transform: translateY(-50%);
 }
 
 .text-input-label {
