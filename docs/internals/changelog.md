@@ -1,5 +1,41 @@
 # Previous updates
 
+## v0.5.0
+
+### Overhaul for settings page
+
+### Summary
+
+This has been a pretty big update, and took a lot longer than I thought it was going to. I decided to overhaul the whole settings page as it was pretty bad UX, and the mobile experience was pretty much unusable. The new UI now renders a different journey for PC and mobile. Both journeys now being a lot more user friendly and easier to use (at least in my opinion). While working on the settings page, I also decided to add a few new customisation features and fixed a few bugs I found.
+
+### New Features
+
+- Settings page overhaul
+- Account management and personalisation moved to their own pages
+- Users can now upload URls for avatars (Still able to select from preset avatars)
+- Ability to change user password
+- Ability to transfer ownership
+- Ability to delete your account (Won't delete monitors you've setup)
+- Added three new endpoints:
+  - `/api/user/update/password`
+  - `/api/user/transfer/ownership`
+  - `/api/user/delete/account`
+- Adds tooltip component
+- `useGoBack` hook to go back a page
+
+### Updates
+
+- Added search bar to status code input
+- Fixes issues with certs not being fetched on initial load
+- Fixes issues with fetching certs crashes server
+- Adds buttons with outlines only
+- Adds icons to text input (left and right side)
+- Reworks timezones files
+- Adds new icons
+- Setup test servers
+- Fixes issues CSS with UX components
+- Fixes issues with random issues on server side
+
 ## v0.4.7
 
 ### Fixes issues with sonner css not loading

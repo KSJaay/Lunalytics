@@ -16,7 +16,7 @@ const ManageTeam = () => {
 
   const sortedMembers = team
     ?.sort((a, b) => a?.permission - b?.permission)
-    .sort((a, b) => a?.isVerified - b?.isVerified);
+    .sort((a, b) => b?.isVerified - a?.isVerified);
 
   useEffect(() => {
     const fetchTeam = async () => {

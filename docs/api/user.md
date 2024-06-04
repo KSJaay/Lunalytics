@@ -244,7 +244,7 @@ Update the username for the current logged in user.
 | ----------- | ---------------------------------------------------------- |
 | 200         | Success, username has been updates                         |
 | 400         | Bad Request, displayName not provided or is invalid format |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)  |
+| 401         | Unauthorized (Missing `access_token` cookie)               |
 | 403         | User is unverified                                         |
 
 </template>
@@ -256,7 +256,6 @@ Update the username for the current logged in user.
 ```[cURL]
 curl -X POST
   -H "Content-Type:application/json"
-  -H "Authorization:API Token"
   --data '{"displayName":"Not KSJaay"}'
     "https://lunalytics.xyz/api/user/update/username"
 ```
@@ -265,11 +264,69 @@ curl -X POST
 axios('/api/user/update/username', {
   method: 'POST',
   headers: {
-    Authorization: 'API Token',
     'Content-Type': 'application/json',
   },
   data: {
     displayName: 'Not KSJaay',
+  },
+});
+```
+
+:::
+
+</template>
+</DividePage>
+
+<DividePage>
+
+## Update user password
+
+<template #left>
+
+### <Badge type="post" text="POST" /> /api/user/update/password
+
+Update the password for the current logged in user.
+
+### Payload
+
+```json
+{
+  "currentPassword": "ReallyOldPassword123",
+  "newPassword": "ReallySecurePassword123"
+}
+```
+
+### HTTP Response Codes
+
+| Status Code | Description                                                                   |
+| ----------- | ----------------------------------------------------------------------------- |
+| 200         | Success, username has been updates                                            |
+| 400         | Bad Request, currentPassword or newPassword not provided or is invalid format |
+| 401         | Unauthorized (Missing `access_token` cookie or user password is invalid)      |
+| 403         | User is unverified                                                            |
+
+</template>
+
+<template #right>
+
+::: code-group
+
+```[cURL]
+curl -X POST
+  -H "Content-Type:application/json"
+  --data '{"currentPassword": "ReallyOldPassword123", "newPassword": "ReallySecurePassword123"}'
+    "https://lunalytics.xyz/api/user/update/password"
+```
+
+```js [axios]
+axios('/api/user/update/password', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  data: {
+    currentPassword: 'ReallyOldPassword123',
+    newPassword: 'ReallySecurePassword123',
   },
 });
 ```
@@ -299,12 +356,12 @@ Update the avatar for the current logged in user.
 
 ### HTTP Response Codes
 
-| Status Code | Description                                               |
-| ----------- | --------------------------------------------------------- |
-| 200         | Success, avatar has been updates                          |
-| 400         | Bad Request, avatar not provided or is invalid format     |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token) |
-| 403         | User is unverified                                        |
+| Status Code | Description                                           |
+| ----------- | ----------------------------------------------------- |
+| 200         | Success, avatar has been updates                      |
+| 400         | Bad Request, avatar not provided or is invalid format |
+| 401         | Unauthorized (Missing `access_token` cookie)          |
+| 403         | User is unverified                                    |
 
 </template>
 
@@ -315,7 +372,6 @@ Update the avatar for the current logged in user.
 ```[cURL]
 curl -X POST
   -H "Content-Type:application/json"
-  -H "Authorization:API Token"
   --data '{"avatar":"https://lunalytics.xyz/icons/Gerbil.png"}'
     "https://lunalytics.xyz/api/user/update/avatar"
 ```
@@ -324,7 +380,6 @@ curl -X POST
 axios('/api/user/update/avatar', {
   method: 'POST',
   headers: {
-    Authorization: 'API Token',
     'Content-Type': 'application/json',
   },
   data: {
@@ -613,6 +668,107 @@ axios('/api/user/permission/update', {
   data: {
     email: 'KSJaay@lunalytics.xyz',
     permission: 1,
+  },
+});
+```
+
+:::
+
+</template>
+</DividePage>
+
+<DividePage>
+
+## Transfer Ownership
+
+<template #left>
+
+### <Badge type="post" text="POST" /> /api/user/transfer/ownership
+
+Transfer the ownership of to another user. Only the owner can access this endpoint, and the owners role will then be updated to a guest. This action is irreversible.
+
+### Payload
+
+```json
+{
+  "email": "KSJaay@lunalytics.xyz"
+}
+```
+
+### HTTP Response Codes
+
+| Status Code | Description                                                                |
+| ----------- | -------------------------------------------------------------------------- |
+| 200         | Success, ownership has been transferred                                    |
+| 400         | Bad Request, email not provided, user doesn't exist, or invalid permission |
+| 401         | Unauthorized (Missing `access_token` cookie, or user isn't an admin/owner) |
+| 403         | User is unverified                                                         |
+
+</template>
+
+<template #right>
+
+::: code-group
+
+```[cURL]
+curl -X POST
+  -H "Content-Type:application/json"
+  --data '{"email":"KSJaay@lunalytics.xyz"}'
+    "https://lunalytics.xyz/api/user/transfer/ownership"
+```
+
+```js [axios]
+axios('/api/user/transfer/ownership', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  data: {
+    email: 'KSJaay@lunalytics.xyz',
+  },
+});
+```
+
+:::
+
+</template>
+</DividePage>
+
+<DividePage>
+
+## Delete Account
+
+<template #left>
+
+### <Badge type="post" text="POST" /> /api/user/delete/account
+
+Delete the users account, user won't be able to do this unless they have transferred their ownership.
+
+### HTTP Response Codes
+
+| Status Code | Description                                                         |
+| ----------- | ------------------------------------------------------------------- |
+| 200         | Success, delete your account                                        |
+| 401         | Unauthorized (Missing `access_token` cookie, or user doesn't exist) |
+| 403         | User has ownership                                                  |
+
+</template>
+
+<template #right>
+
+::: code-group
+
+```[cURL]
+curl -X POST
+  -H "Content-Type:application/json"
+    "https://lunalytics.xyz/api/user/delete/account"
+```
+
+```js [axios]
+axios('/api/user/delete/account', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
   },
 });
 ```
