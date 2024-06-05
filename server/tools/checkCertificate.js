@@ -17,16 +17,14 @@ const getCertInfo = async (url) => {
   } catch (error) {
     logger.error('getCertInfo', error);
 
-    return {
-      isValid: false,
-    };
+    return { isValid: false };
   }
 };
 
 const checkCertificate = (res) => {
   if (!res.request.socket) {
     logger.error('checkCertificate', 'Socket not found');
-    throw new Error('Socket not found');
+    return { isValid: false };
   }
 
   const info = res.request.socket.getPeerCertificate(true);
@@ -34,10 +32,7 @@ const checkCertificate = (res) => {
 
   const parsedInfo = parseCert(info);
 
-  return {
-    isValid: valid,
-    ...parsedInfo,
-  };
+  return { isValid: valid, ...parsedInfo };
 };
 
 const getDaysBetween = (validFrom, validTo) =>
@@ -51,7 +46,7 @@ const getDaysRemaining = (validFrom, validTo) => {
   return daysRemaining;
 };
 
-export const parseCert = (cert) => {
+const parseCert = (cert) => {
   const validOn = cert.subjectaltname
     ?.replace(/DNS:|IP Address:/g, '')
     .split(', ');

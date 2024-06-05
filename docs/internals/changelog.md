@@ -2,6 +2,14 @@
 
 ## v0.5.1
 
+### Fixes issue with certificates not being updated
+
+### Summary
+
+There was an issue where certificates were not being saved to the database due to the value not being parsed as a string. This has been fixed now.
+
+## v0.5.1
+
 ### Replaces Sonner with React-Toastify
 
 ### Summary
