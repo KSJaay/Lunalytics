@@ -1,4 +1,7 @@
-import { toast } from 'sonner';
+// import dependencies
+import { toast } from 'react-toastify';
+
+// import local files
 import { createPostRequest } from '../services/axios';
 
 const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
@@ -37,6 +40,11 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
     return closeModal();
   } catch (error) {
     console.log(error);
+
+    if (error.response?.status === 422) {
+      return toast.error(error.response.data);
+    }
+
     toast.error('Something went wrong, please try again later.');
   }
 };

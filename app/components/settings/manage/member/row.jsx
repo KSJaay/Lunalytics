@@ -1,4 +1,3 @@
-// import stylesheets
 import './row.scss';
 
 // import dependencies

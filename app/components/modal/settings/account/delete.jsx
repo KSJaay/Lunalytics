@@ -2,13 +2,12 @@ import './avatar.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
 import Modal from '../../../ui/modal';
 import TextInput from '../../../ui/input';
-
 import { AlertError } from '../../../ui/alert';
 import { createPostRequest } from '../../../../services/axios';
 

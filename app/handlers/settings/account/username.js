@@ -1,5 +1,7 @@
-import { toast } from 'sonner';
+// import dependencies
+import { toast } from 'react-toastify';
 
+// import local files
 import * as validators from '../../../utils/validators';
 import { createPostRequest } from '../../../services/axios';
 

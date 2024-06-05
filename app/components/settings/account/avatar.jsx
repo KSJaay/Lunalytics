@@ -2,12 +2,12 @@ import './avatar.scss';
 
 // import dependencies
 import { observer } from 'mobx-react-lite';
+import { toast } from 'react-toastify';
 
 // import local files
 import useContextStore from '../../../context';
 import Button from '../../ui/button';
 import SettingsAccountAvatarModal from '../../modal/settings/account/avatar';
-import { toast } from 'sonner';
 import { createPostRequest } from '../../../services/axios';
 
 const userPermissionNames = { 1: 'Owner', 2: 'Admin', 3: 'Editor', 4: 'Guest' };

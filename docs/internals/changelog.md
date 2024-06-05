@@ -1,5 +1,18 @@
 # Previous updates
 
+## v0.5.1
+
+### Replaces Sonner with React-Toastify
+
+### Summary
+
+I've decided to replace Sonner with React-Toastify. Sonner looks really nice but the CSS has been causing issues, for some reason it doesn't get loadded into dist and when I build the application it doesn't get loaded properly.
+
+### Updates
+
+- Replaces Sonner with React-Toastify
+- Fixes issue with TCP monitor add/edit not working properly
+
 ## v0.5.0
 
 ### Overhaul for settings page

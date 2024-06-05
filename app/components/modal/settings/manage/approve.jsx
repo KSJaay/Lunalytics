@@ -1,6 +1,6 @@
 // import dependencies
 import PropTypes from 'prop-types';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 
 // import local files

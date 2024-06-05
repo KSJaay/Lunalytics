@@ -69,7 +69,7 @@ const http = ({
 const tcp = ({
   type,
   name,
-  host,
+  url,
   port,
   interval,
   retryInterval,
@@ -85,7 +85,7 @@ const tcp = ({
 
   const isIpv4 = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
 
-  if (!host || !isIpv4.test(host)) {
+  if (!url || !isIpv4.test(url)) {
     return 'Please enter a valid host (Only IPv4 is valid).';
   }
 

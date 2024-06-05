@@ -31,7 +31,7 @@ const tcpPages = {
   name: 'tcp',
   actions: ['Previous', 'Next'],
   inputs: [
-    { name: 'host', validator: monitorValidators.tcpHost },
+    { name: 'url', validator: monitorValidators.tcpHost },
     { name: 'port', validator: monitorValidators.tcpPort },
   ],
 };

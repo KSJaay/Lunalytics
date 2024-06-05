@@ -2,7 +2,7 @@ import './permissions.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useState } from 'react';
 import classNames from 'classnames';
 

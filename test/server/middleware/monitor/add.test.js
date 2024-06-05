@@ -169,7 +169,7 @@ describe('Add Monitor - Middleware', () => {
       fakeRequest.body = {
         type: 'tcp',
         name: 'test',
-        host: '127.0.0.1',
+        url: '127.0.0.1',
         interval: 60,
         email: 'KSJaay@lunalytics.xyz',
         valid_status_codes: null,
@@ -191,8 +191,8 @@ describe('Add Monitor - Middleware', () => {
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
-      it('should return 422 when host is invalid', async () => {
-        fakeRequest.body.host = '';
+      it('should return 422 when url is invalid', async () => {
+        fakeRequest.body.url = '';
 
         await monitorAdd(fakeRequest, fakeResponse);
 

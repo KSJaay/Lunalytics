@@ -2,13 +2,13 @@ import './style.scss';
 
 // import dependencies
 import { useEffect } from 'react';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import { createGetRequest } from '../../../services/axios';
 import MembersTable from './member';
 import useTeamContext from '../../../context/team';
-import { observer } from 'mobx-react-lite';
 
 const ManageTeam = () => {
   const { getTeam, setTeam } = useTeamContext();

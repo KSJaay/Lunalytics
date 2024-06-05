@@ -1,5 +1,5 @@
 // import dependencies
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 
 // import local files
 import { createPostRequest } from '../services/axios';

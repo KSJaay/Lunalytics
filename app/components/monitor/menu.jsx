@@ -1,7 +1,7 @@
 import './menu.scss';
 
 // import dependencies
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';

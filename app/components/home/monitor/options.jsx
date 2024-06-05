@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 
 // import local files
 import MonitorModal from '../../modal/monitor/delete';

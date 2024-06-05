@@ -4,7 +4,7 @@ import './avatars.scss';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 
 // import local files
 import Modal from '../../ui/modal';

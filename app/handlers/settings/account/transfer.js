@@ -1,5 +1,7 @@
-import { toast } from 'sonner';
+// import dependencies
+import { toast } from 'react-toastify';
 
+// import local files
 import { createPostRequest } from '../../../services/axios';
 
 const handleTransferAccount = async (email, closeModal) => {

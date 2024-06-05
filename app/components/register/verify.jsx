@@ -1,8 +1,10 @@
+// import dependencies
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 // import local files
-import { toast } from 'sonner';
 import ProgressBar from '../../components/ui/progress';
 import { createGetRequest } from '../../services/axios';
-import { useNavigate } from 'react-router-dom';
 
 const RegisterVerify = () => {
   const navigate = useNavigate();

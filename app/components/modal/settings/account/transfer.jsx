@@ -4,7 +4,7 @@ import './avatar.scss';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 
 // import local files
 import Modal from '../../../ui/modal';
@@ -26,7 +26,9 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
     useDropdown();
   const team = getTeam();
 
-  const sortedMembers = team?.sort((a, b) => a?.permission - b?.permission).filter((member) => member.isVerified);
+  const sortedMembers = team
+    ?.sort((a, b) => a?.permission - b?.permission)
+    .filter((member) => member.isVerified);
 
   useEffect(() => {
     const fetchTeam = async () => {

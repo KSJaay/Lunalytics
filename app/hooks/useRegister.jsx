@@ -1,10 +1,10 @@
 // import dependencies
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 // import local files
 import { createPostRequest } from '../services/axios';
 import * as validators from '../utils/validators';
-import { toast } from 'sonner';
 
 const useRegister = () => {
   const [values, setValues] = useState({

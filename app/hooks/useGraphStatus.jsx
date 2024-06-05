@@ -1,8 +1,8 @@
 // import dependencies
-import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 // import local files
-import { useEffect, useState } from 'react';
 import { createGetRequest } from '../services/axios';
 
 const useGraphStatus = (monitor = {}) => {
