@@ -2,7 +2,7 @@ import {
   userExists,
   updateUserPermission,
 } from '../../../database/queries/user.js';
-import { handleError } from '../../../utils/errors.js';
+import { handleError } from '../../../../shared/utils/errors.js';
 
 const permissionUpdateMiddleware = async (request, response) => {
   try {

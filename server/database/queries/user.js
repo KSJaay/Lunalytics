@@ -1,7 +1,13 @@
 import SQLite from '../sqlite/setup.js';
-import { generateHash, verifyPassword } from '../../utils/hashPassword.js';
-import { signCookie, verifyCookie } from '../../utils/jwt.js';
-import { AuthorizationError, ConflictError } from '../../utils/errors.js';
+import {
+  generateHash,
+  verifyPassword,
+} from '../../../shared/utils/hashPassword.js';
+import { signCookie, verifyCookie } from '../../../shared/utils/jwt.js';
+import {
+  AuthorizationError,
+  ConflictError,
+} from '../../../shared/utils/errors.js';
 
 const passwordMatches = (user, password) => {
   const passwordMatches = verifyPassword(password, user.password);

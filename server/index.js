@@ -8,10 +8,10 @@ import cookieParser from 'cookie-parser';
 
 // import local files
 import cache from './cache/index.js';
-import logger from './utils/logger.js';
+import logger from '../shared/utils/logger.js';
 import initialiseRoutes from './routes/index.js';
 import SQLite from './database/sqlite/setup.js';
-import initialiseCronJobs from './utils/cron.js';
+import initialiseCronJobs from './../shared/utils/cron.js';
 import authorization from './middleware/authorization.js';
 import migrateDatabase from '../scripts/migrate.js';
 import isDemo from './middleware/demo.js';

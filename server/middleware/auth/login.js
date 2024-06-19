@@ -1,8 +1,11 @@
 // import local files
 import { signInUser } from '../../database/queries/user.js';
-import { setServerSideCookie } from '../../utils/cookies.js';
-import { handleError, UnprocessableError } from '../../utils/errors.js';
-import validators from '../../utils/validators/index.js';
+import { setServerSideCookie } from '../../../shared/utils/cookies.js';
+import {
+  handleError,
+  UnprocessableError,
+} from '../../../shared/utils/errors.js';
+import validators from '../../../shared/validators/index.js';
 
 const login = async (request, response) => {
   try {

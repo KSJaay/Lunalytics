@@ -1,7 +1,7 @@
 import SQLite from '../sqlite/setup.js';
-import randomId from '../../utils/randomId.js';
-import { timeToMs } from '../../utils/ms.js';
-import { UnprocessableError } from '../../utils/errors.js';
+import randomId from '../../../shared/utils/randomId.js';
+import { timeToMs } from '../../../shared/utils/ms.js';
+import { UnprocessableError } from '../../../shared/utils/errors.js';
 
 const monitorExists = async (monitorId) => {
   return SQLite.client('monitor').where({ id: monitorId }).first();

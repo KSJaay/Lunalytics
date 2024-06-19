@@ -1,6 +1,9 @@
 // import local files
-import { handleError, UnprocessableError } from '../../utils/errors.js';
-import * as validators from '../../utils/validators/monitor.js';
+import {
+  handleError,
+  UnprocessableError,
+} from '../../../shared/utils/errors.js';
+import validators from '../../../shared/validators/monitor.js';
 import cache from '../../cache/index.js';
 import { userExists } from '../../database/queries/user.js';
 import { cleanMonitor } from '../../class/monitor.js';

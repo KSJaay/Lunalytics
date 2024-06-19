@@ -1,6 +1,6 @@
 // import local files
 import SQLite from '../database/sqlite/setup.js';
-import logger from '../utils/logger.js';
+import logger from '../../shared/utils/logger.js';
 
 const infomation = {
   title: 'Support for TCP pings',

@@ -2,7 +2,7 @@
 import net from 'net';
 
 // import local files
-import logger from '../utils/logger.js';
+import logger from '../../shared/utils/logger.js';
 
 const tcpStatusCheck = async (monitor, callback) => {
   const socket = new net.Socket();

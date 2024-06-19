@@ -1,5 +1,5 @@
 import { userExists } from '../database/queries/user.js';
-import { deleteCookie } from '../utils/cookies.js';
+import { deleteCookie } from '../../shared/utils/cookies.js';
 
 const authorization = async (request, response, next) => {
   const { access_token } = request.cookies;

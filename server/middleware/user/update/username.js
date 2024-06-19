@@ -2,8 +2,8 @@ import {
   updateUserDisplayname,
   userExists,
 } from '../../../database/queries/user.js';
-import { handleError } from '../../../utils/errors.js';
-import validators from '../../../utils/validators/index.js';
+import { handleError } from '../../../../shared/utils/errors.js';
+import validators from '../../../../shared/validators/index.js';
 
 const userUpdateUsername = async (request, response) => {
   try {

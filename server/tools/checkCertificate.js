@@ -1,6 +1,6 @@
 import https from 'https';
 import axios from 'axios';
-import logger from '../utils/logger.js';
+import logger from '../../shared/utils/logger.js';
 
 const getCertInfo = async (url) => {
   try {
