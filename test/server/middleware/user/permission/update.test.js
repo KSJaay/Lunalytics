@@ -4,7 +4,7 @@ import {
   userExists,
 } from '../../../../../server/database/queries/user';
 import permissionUpdateMiddleware from '../../../../../server/middleware/user/permission/update';
-import { AuthorizationError } from '../../../../../server/utils/errors';
+import { AuthorizationError } from '../../../../../shared/utils/errors';
 
 vi.mock('../../../../../server/database/queries/user');
 

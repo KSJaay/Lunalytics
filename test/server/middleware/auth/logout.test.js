@@ -1,9 +1,9 @@
 import { createRequest, createResponse } from 'node-mocks-http';
-import { deleteCookie } from '../../../../server/utils/cookies';
+import { deleteCookie } from '../../../../shared/utils/cookies';
 import logout from '../../../../server/middleware/auth/logout';
-import { createURL } from '../../../../server/utils/url';
+import { createURL } from '../../../../shared/utils/url';
 
-vi.mock('../../../../server/utils/cookies');
+vi.mock('../../../../shared/utils/cookies');
 
 describe('Logout - Middleware', () => {
   let fakeRequest;

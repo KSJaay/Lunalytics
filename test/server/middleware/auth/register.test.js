@@ -5,10 +5,10 @@ import {
   fetchMembers,
   registerUser,
 } from '../../../../server/database/queries/user';
-import { setServerSideCookie } from '../../../../server/utils/cookies';
+import { setServerSideCookie } from '../../../../shared/utils/cookies';
 
 vi.mock('../../../../server/database/queries/user');
-vi.mock('../../../../server/utils/cookies');
+vi.mock('../../../../shared/utils/cookies');
 
 describe('Register - Middleware', () => {
   let fakeRequest;
