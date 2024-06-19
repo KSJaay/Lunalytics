@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'fs';
 import path from 'path';
-import logger from '../server/utils/logger.js';
+import logger from '../shared/utils/logger.js';
 
 const configPath = path.join(process.cwd(), 'config.json');
 

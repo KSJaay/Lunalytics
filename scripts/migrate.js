@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 // import local files
-import logger from '../server/utils/logger.js';
+import logger from '../shared/utils/logger.js';
 import migrationList from '../server/migrations/index.js';
 import { loadJSON } from '../shared/parseJson.js';
 
