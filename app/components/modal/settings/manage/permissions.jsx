@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { createPostRequest } from '../../../../services/axios';
 import Modal from '../../../ui/modal';
 import useTeamContext from '../../../../context/team';
-import { userPropType } from '../../../../utils/propTypes';
+import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MemeberPermission = ({ title, description, isActive, ...props }) => {
   const containerClasses = classNames('permissions-container', {

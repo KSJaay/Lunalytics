@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 // import local files
 import MemberTableRow from './row';
-import { userPropType } from '../../../../utils/propTypes';
+import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MembersTable = ({ members = [] }) => {
   const membersList = members.map((member, index) => (

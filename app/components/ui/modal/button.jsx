@@ -3,7 +3,7 @@ import './style.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { colorPropType } from '../../../utils/propTypes';
+import { colorPropType } from '../../../../shared/utils/propTypes';
 
 const Button = ({ children, color, ...props }) => {
   const classes = classNames('modal-button', {

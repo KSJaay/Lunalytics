@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { createPostRequest } from '../../../../services/axios';
 import Modal from '../../../ui/modal';
 import useTeamContext from '../../../../context/team';
-import { userPropType } from '../../../../utils/propTypes';
+import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MemberApproveModal = ({ member, onClose }) => {
   const { updateUserVerified } = useTeamContext();

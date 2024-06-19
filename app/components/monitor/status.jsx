@@ -1,7 +1,7 @@
 import './status.scss';
 
 // import local files
-import { fullMonitorPropType } from '../../utils/propTypes';
+import { fullMonitorPropType } from '../../../shared/utils/propTypes';
 
 const MonitorStatus = ({ monitor = [] }) => {
   const [lastHeartbeat = {}] = monitor.heartbeats;

@@ -5,7 +5,7 @@ import 'moment-timezone';
 import PropTypes from 'prop-types';
 
 // import local files
-import { heartbeatPropType } from '../../utils/propTypes';
+import { heartbeatPropType } from '../../../shared/utils/propTypes';
 import UptimeInfo from './updateInfo';
 
 const MonitorUptime = ({ heartbeats = [] }) => {

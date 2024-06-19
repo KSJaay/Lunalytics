@@ -6,7 +6,7 @@ import moment from 'moment';
 import classNames from 'classnames';
 
 // import local files
-import { heartbeatPropType } from '../../utils/propTypes';
+import { heartbeatPropType } from '../../../shared/utils/propTypes';
 import useLocalStorageContext from '../../hooks/useLocalstorage';
 
 const UptimeInfo = ({ heartbeat = {} }) => {
