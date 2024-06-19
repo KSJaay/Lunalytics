@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // import local files
-import * as validators from '../utils/validators';
+import validators from '../../shared/validators';
 
 const useLogin = () => {
   const [values, setValues] = useState({
@@ -18,12 +18,18 @@ const useLogin = () => {
 
       if (isInvalid) {
         return setValues((prev) => ({
-          ...prev,
-          errors: { ...prev.errors, [id]: isInvalid },
+          inputs: {
+            ...prev.inputs,
+            [id]: value,
+          },
+          errors: { ...prev.errors, ...isInvalid },
         }));
       } else {
         setValues((prev) => ({
-          ...prev,
+          inputs: {
+            ...prev.inputs,
+            [id]: value,
+          },
           errors: { ...prev.errors, [id]: null },
         }));
       }

@@ -2,7 +2,7 @@
 import { toast } from 'react-toastify';
 
 // import local files
-import * as validators from '../../../utils/validators';
+import validators from '../../../../shared/validators';
 import { createPostRequest } from '../../../services/axios';
 
 const handleChangePassword = async ({
@@ -20,7 +20,7 @@ const handleChangePassword = async ({
     const isInvalid = validators.auth.password(newPassword);
 
     if (isInvalid) {
-      return handleErrors('new', isInvalid);
+      return handleErrors('new', isInvalid.password);
     }
 
     const query = await createPostRequest('/api/user/update/password', {

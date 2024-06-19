@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import handleMonitor from '../handlers/monitor';
-import monitorValidators from '../utils/validators/monitor';
+import monitorValidators from '../../shared/validators/monitor';
 
 const initialPage = {
   page: 1,

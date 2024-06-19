@@ -2,20 +2,15 @@
 import { toast } from 'react-toastify';
 
 // import local files
-import * as validators from '../../../utils/validators';
+import validators from '../../../../shared/validators';
 import { createPostRequest } from '../../../services/axios';
 
-const handleChangeUsername = async (
-  displayName,
-  setError,
-  closeModal,
-  handleErrors
-) => {
+const handleChangeUsername = async (displayName, handleError, closeModal) => {
   try {
     const isInvalid = validators.auth.username(displayName);
 
     if (isInvalid) {
-      return setError(isInvalid);
+      return handleError(isInvalid.username);
     }
 
     const query = await createPostRequest('/api/user/update/username', {
@@ -30,11 +25,11 @@ const handleChangeUsername = async (
     return true;
   } catch (error) {
     if (error.response?.data?.current) {
-      return handleErrors('current', error.response?.data?.current);
+      return handleError('current', error.response?.data?.current);
     }
 
     if (error?.response?.status === 400) {
-      return handleErrors('new', error.response.data?.message);
+      return handleError('new', error.response.data?.message);
     }
 
     toast.error('Something went wrong, please try again later.');
