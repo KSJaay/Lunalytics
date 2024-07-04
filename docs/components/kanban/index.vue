@@ -29,9 +29,9 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get('https://demo.lunalytics.xyz/api/kanban')
-      .then((response) => (this.columns = response));
+    axios.get('https://demo.lunalytics.xyz/api/kanban').then((response) => {
+      this.columns = response.data;
+    });
   },
 };
 </script>
