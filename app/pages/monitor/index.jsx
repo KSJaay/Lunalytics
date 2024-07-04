@@ -1,7 +1,6 @@
 import './style.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -11,11 +10,15 @@ import MonitorUptime from '../../components/monitor/uptime';
 import Spacer from '../../components/ui/spacer';
 import useContextStore from '../../context';
 import MonitorMenu from '../../components/monitor/menu';
+import { useParams } from 'react-router-dom';
 
-const Monitor = ({ monitorId }) => {
+const Monitor = () => {
   const {
     globalStore: { getMonitor },
   } = useContextStore();
+
+  const query = useParams();
+  const monitorId = query['monitor_id'];
 
   const monitor = getMonitor(monitorId);
 
@@ -35,9 +38,5 @@ const Monitor = ({ monitorId }) => {
 };
 
 Monitor.displayName = 'MonitorPage';
-
-Monitor.propTypes = {
-  monitorId: PropTypes.string.isRequired,
-};
 
 export default observer(Monitor);
