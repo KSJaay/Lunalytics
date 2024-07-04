@@ -2,6 +2,25 @@
 
 ## v0.5.1
 
+### Fixes issue with certificates and moves utils to shared folder
+
+### Summary
+
+There was a lot of duplicate code for utils in the server and app folders. I've decided to create a shared folder which now has all of the code. While moving the files, some of the validators also needed to be reworked so that they can now be used in both the front and backend code. Also, had to fix some issues with certificates not being updated properly.
+
+### Updates
+
+- Moves all utils from app and server to shared folder
+- Changes file paths from utils to shared folder
+- Fixes issues with certificates not being updated properly
+- Updates handlers to support updated validator responses
+
+### Summary
+
+There was an issue where certificates were not being saved to the database due to the value not being parsed as a string. This has been fixed now.
+
+## v0.5.05
+
 ### Replaces Sonner with React-Toastify
 
 ### Summary

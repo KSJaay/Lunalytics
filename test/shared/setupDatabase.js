@@ -3,8 +3,8 @@ import fs from 'fs';
 
 // import local files
 import { SQLite } from '../../server/database/sqlite/setup.js';
-import { generateHash } from '../../server/utils/hashPassword.js';
-import logger from '../../server/utils/logger.js';
+import { generateHash } from '../../shared/utils/hashPassword.js';
+import logger from '../../shared/utils/logger.js';
 import { loadJSON } from '../../shared/parseJson.js';
 
 const loginDetails = loadJSON('../test/e2e/setup/fixtures/login.json');

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 // import local files
-import { colorPropType } from '../../utils/propTypes';
+import { colorPropType } from '../../../shared/utils/propTypes';
 
 const Button = ({
   children,

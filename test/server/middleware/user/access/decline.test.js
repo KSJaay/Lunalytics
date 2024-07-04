@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import { declineAccess } from '../../../../../server/database/queries/user';
-import { AuthorizationError } from '../../../../../server/utils/errors';
+import { AuthorizationError } from '../../../../../shared/utils/errors';
 import accessDeclineMiddleware from '../../../../../server/middleware/user/access/declineUser';
 
 vi.mock('../../../../../server/database/queries/user');

@@ -28,12 +28,7 @@ const SettingsAccountUsernameModal = ({
 
   const submit = async () => {
     const value = document.getElementById(`settings-edit-${id}`).value;
-    const query = await handleChangeUsername(
-      value,
-      setError,
-      closeModal,
-      handleError
-    );
+    const query = await handleChangeUsername(value, handleError, closeModal);
 
     if (query === true) {
       updateUsingKey('displayName', value);

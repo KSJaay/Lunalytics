@@ -1,7 +1,7 @@
 import { existsSync, closeSync, openSync } from 'fs';
 import knex from 'knex';
 
-import logger from '../../utils/logger.js';
+import logger from '../../../shared/utils/logger.js';
 
 export class SQLite {
   constructor() {

@@ -4,7 +4,7 @@ import './compact.scss';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import { monitorPropType } from '../../../../utils/propTypes';
+import { monitorPropType } from '../../../../../shared/utils/propTypes';
 
 const MonitorList = ({ monitor = {} }) => {
   const navigate = useNavigate();

@@ -1,6 +1,9 @@
 // import local files
 import cache from '../../cache/index.js';
-import { UnprocessableError, handleError } from '../../utils/errors.js';
+import {
+  UnprocessableError,
+  handleError,
+} from '../../../shared/utils/errors.js';
 
 const monitorDelete = async (request, response) => {
   try {

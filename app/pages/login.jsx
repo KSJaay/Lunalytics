@@ -16,9 +16,9 @@ const Login = () => {
   return (
     <div className="auth-form-container">
       <div className="auth-form">
-        <div className="auth-form-title">Create your account</div>
+        <div className="auth-form-title">Signin to Lunalytics</div>
         <div className="auth-form-subtitle">
-          Please provide your name and email
+          Please provide your email and password
         </div>
 
         {errors['general'] && (

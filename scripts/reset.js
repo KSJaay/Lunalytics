@@ -4,9 +4,9 @@ import '../scripts/loadEnv.js';
 import inquirer from 'inquirer';
 
 // import local files
-import logger from '../server/utils/logger.js';
+import logger from '../shared/utils/logger.js';
 import SQLite from '../server/database/sqlite/setup.js';
-import { generateHash } from '../server/utils/hashPassword.js';
+import { generateHash } from '../shared/utils/hashPassword.js';
 
 const questions = [
   { type: 'input', name: 'email', message: 'Enter email added:' },

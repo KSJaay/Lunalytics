@@ -1,3 +1,15 @@
+const timeToMs = (duration, type = 'hours') => {
+  const types = {
+    months: 2592000000,
+    days: 86400000,
+    hours: 3600000,
+    minutes: 60000,
+    seconds: 1000,
+  };
+
+  return duration * types[type];
+};
+
 const msToTime = (duration) => {
   let seconds = Math.floor((duration / 1000) % 60);
   let minutes = Math.floor((duration / (1000 * 60)) % 60);
@@ -35,4 +47,4 @@ const msToTime = (duration) => {
   return 'Unknown';
 };
 
-export { msToTime };
+export { msToTime, timeToMs };

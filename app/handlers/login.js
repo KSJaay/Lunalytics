@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 // import local files
 import { createPostRequest } from '../services/axios';
-import * as validators from '../utils/validators';
+import validators from '../../shared/validators';
 
 const handleLogin = async (inputs, setErrors, navigate) => {
   try {

@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 // import local files
 import MemberRowActions from './actions';
 import useContextStore from '../../../../context';
-import { userPropType } from '../../../../utils/propTypes';
+import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const positions = { 1: 'Owner', 2: 'Admin', 3: 'Editor', 4: 'Guest' };
 

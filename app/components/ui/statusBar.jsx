@@ -4,7 +4,7 @@ import './statusBar.scss';
 import PropTypes from 'prop-types';
 
 // import local files
-import { heartbeatPropType } from '../../utils/propTypes';
+import { heartbeatPropType } from '../../../shared/utils/propTypes';
 
 const StatusBar = ({ heartbeats = {}, maxHeartbeats = 12 }) => {
   const heartbeatList = [];

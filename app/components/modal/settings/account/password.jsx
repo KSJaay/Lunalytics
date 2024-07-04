@@ -8,7 +8,7 @@ import RegisterChecklist from '../../../register/checklist';
 import { useState } from 'react';
 import { MdEye, MdEyeOff } from '../../../icons';
 import handleChangePassword from '../../../../handlers/settings/account/password';
-import validators from '../../../../../server/utils/validators';
+import validators from '../../../../../shared/validators';
 
 const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
   const [values, setValues] = useState({

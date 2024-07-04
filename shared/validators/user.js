@@ -32,7 +32,7 @@ const isAvatar = (avatar) => {
   }
 
   if (!defaultAvatars.includes(avatar) && !isImageUrl(avatar)) {
-    return 'Avatar must be a valid Imgur URL or one of the default avatars.';
+    return 'Avatar must be a valid image URL or one of the default avatars.';
   }
 
   return false;

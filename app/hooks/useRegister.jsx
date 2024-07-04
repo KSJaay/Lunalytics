@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 // import local files
 import { createPostRequest } from '../services/axios';
-import * as validators from '../utils/validators';
+import validators from '../../shared/validators';
 
 const useRegister = () => {
   const [values, setValues] = useState({
@@ -26,8 +26,8 @@ const useRegister = () => {
           ...prev,
           errors: {
             ...prev.errors,
-            email: isInvalidEmail,
-            username: isInvalidUsername,
+            ...isInvalidEmail,
+            ...isInvalidUsername,
           },
         }));
       }
@@ -79,7 +79,7 @@ const useRegister = () => {
           },
           errors: {
             ...prev.errors,
-            [id]: isInvalid,
+            ...isInvalid,
           },
         }));
       } else {

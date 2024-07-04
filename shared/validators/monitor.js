@@ -86,7 +86,7 @@ export const requestTimeout = (requestTimeout) => {
   }
 };
 
-const monitorValidators = {
+const validators = {
   type,
   name,
   httpUrl,
@@ -99,4 +99,61 @@ const monitorValidators = {
   requestTimeout,
 };
 
-export default monitorValidators;
+const httpValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'httpUrl'],
+  ['method', 'httpMethod'],
+  ['valid_status_codes', 'httpStatusCodes'],
+  ['interval', 'interval'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+];
+
+const tcpValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'tcpHost'],
+  ['port', 'tcpPort'],
+  ['interval', 'interval'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+];
+
+const http = (data) => {
+  const errors = httpValidators
+    .map((validator) => {
+      const error = validators[validator[1]](data[validator[0]]);
+      if (error) {
+        return error;
+      }
+    })
+    .filter(Boolean);
+
+  if (errors.length) {
+    return errors[0];
+  }
+
+  return false;
+};
+
+const tcp = (data) => {
+  const errors = tcpValidators
+    .map((validator) => {
+      const error = validators[validator[1]](data[validator[0]]);
+      if (error) {
+        return error;
+      }
+    })
+    .filter(Boolean);
+
+  console.log(errors);
+
+  if (errors.length) {
+    return errors[0];
+  }
+
+  return false;
+};
+
+export default { ...validators, http, tcp };

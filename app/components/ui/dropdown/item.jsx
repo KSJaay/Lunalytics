@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 // import local files
-import { colorPropType } from '../../../utils/propTypes';
+import { colorPropType } from '../../../../shared/utils/propTypes';
 
 const Item = ({
   dotColor,

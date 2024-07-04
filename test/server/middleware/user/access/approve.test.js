@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import { approveAccess } from '../../../../../server/database/queries/user';
 import accessApproveMiddleware from '../../../../../server/middleware/user/access/approveUser';
-import { AuthorizationError } from '../../../../../server/utils/errors';
+import { AuthorizationError } from '../../../../../shared/utils/errors';
 
 vi.mock('../../../../../server/database/queries/user');
 

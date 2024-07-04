@@ -19,7 +19,7 @@ import MemberDeclineModal from '../../../modal/settings/manage/decline';
 import MemberDeleteModal from '../../../modal/settings/manage/delete';
 import MemberPermissionsModal from '../../../modal/settings/manage/permissions';
 import useContextStore from '../../../../context';
-import { userPropType } from '../../../../utils/propTypes';
+import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MemberRowActions = ({ member = {}, canManage = false }) => {
   const classes = classNames({

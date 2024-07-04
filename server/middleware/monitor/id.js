@@ -1,6 +1,9 @@
 import cache from '../../cache/index.js';
 import { cleanMonitor } from '../../class/monitor.js';
-import { UnprocessableError, handleError } from '../../utils/errors.js';
+import {
+  UnprocessableError,
+  handleError,
+} from '../../../shared/utils/errors.js';
 
 const fetchMonitorUsingId = async (request, response) => {
   try {

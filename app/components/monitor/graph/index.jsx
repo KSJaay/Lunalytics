@@ -22,7 +22,7 @@ import { Chart } from 'react-chartjs-2';
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
 import GraphMenu from './menu';
 import useGraphStatus from '../../../hooks/useGraphStatus';
-import { fullMonitorPropType } from '../../../utils/propTypes';
+import { fullMonitorPropType } from '../../../../shared/utils/propTypes';
 
 ChartJs.register(
   LineController,

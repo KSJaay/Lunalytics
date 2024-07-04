@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import Modal from '../../ui/modal';
 import useContextStore from '../../../context';
 import { createPostRequest } from '../../../services/axios';
-import { userPropType } from '../../../utils/propTypes';
+import { userPropType } from '../../../../shared/utils/propTypes';
 
 const avatars = [
   'Ape',

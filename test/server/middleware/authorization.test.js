@@ -2,10 +2,10 @@ import { createRequest, createResponse } from 'node-mocks-http';
 import { afterEach, beforeEach, describe, it, vi } from 'vitest';
 import { userExists } from '../../../server/database/queries/user';
 import authorization from '../../../server/middleware/authorization';
-import { deleteCookie } from '../../../server/utils/cookies';
+import { deleteCookie } from '../../../shared/utils/cookies';
 
 vi.mock('../../../server/database/queries/user');
-vi.mock('../../../server/utils/cookies');
+vi.mock('../../../shared/utils/cookies');
 
 describe('Authorization - Middleware', () => {
   let fakeRequest;

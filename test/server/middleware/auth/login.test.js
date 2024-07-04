@@ -2,12 +2,12 @@ import { beforeEach, describe, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import SQLite from '../../../../server/database/sqlite/setup';
 import login from '../../../../server/middleware/auth/login';
-import { setServerSideCookie } from '../../../../server/utils/cookies';
+import { setServerSideCookie } from '../../../../shared/utils/cookies';
 import { signInUser } from '../../../../server/database/queries/user';
 
 vi.mock('../../../../server/database/sqlite/setup');
 vi.mock('../../../../server/database/queries/user');
-vi.mock('../../../../server/utils/cookies');
+vi.mock('../../../../shared/utils/cookies');
 
 describe('Login - Middleware', () => {
   const user = {

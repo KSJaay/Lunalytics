@@ -2,9 +2,9 @@ import {
   updateUserPassword,
   userExists,
 } from '../../../database/queries/user.js';
-import { handleError } from '../../../utils/errors.js';
-import { verifyPassword } from '../../../utils/hashPassword.js';
-import validators from '../../../utils/validators/index.js';
+import { handleError } from '../../../../shared/utils/errors.js';
+import { verifyPassword } from '../../../../shared/utils/hashPassword.js';
+import validators from '../../../../shared/validators/index.js';
 
 const userUpdatePassword = async (request, response) => {
   try {

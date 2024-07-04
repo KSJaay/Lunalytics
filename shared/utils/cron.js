@@ -2,12 +2,12 @@
 import { CronJob } from 'cron';
 
 // import local files
-import cache from '../cache/index.js';
+import cache from '../../server/cache/index.js';
 import logger from './logger.js';
 import {
   fetchHeartbeatsByDate,
   fetchLastDailyHeartbeat,
-} from '../database/queries/heartbeat.js';
+} from '../../server/database/queries/heartbeat.js';
 
 // fetch all monitors
 // fetch only heartbeats that are up for each monitor

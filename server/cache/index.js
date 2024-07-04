@@ -2,7 +2,7 @@
 import Certificates from './certificates.js';
 import Heartbeats from './heartbeats.js';
 import Monitor from './monitors.js';
-import getCertInfo, { parseCert } from '../tools/checkCertificate.js';
+import getCertInfo from '../tools/checkCertificate.js';
 import httpStatusCheck from '../tools/httpStatus.js';
 import tcpStatusCheck from '../tools/tcpPing.js';
 
@@ -70,21 +70,12 @@ class Master {
       const heartbeat = await httpStatusCheck(monitor);
       await this.heartbeats.addHeartbeat(heartbeat);
 
-      if (monitor.url?.startsWith('https://')) {
+      if (monitor.url?.toLowerCase().startsWith('https')) {
         const certificate = await this.certificates.get(monitorId);
 
         if (!certificate?.nextCheck || certificate.nextCheck <= Date.now()) {
           const cert = await getCertInfo(monitor.url);
-
-          if (cert) {
-            await this.certificates.update(
-              monitorId,
-              parseCert({
-                ...certificate,
-                ...cert,
-              })
-            );
-          }
+          await this.certificates.update(monitorId, cert);
         }
       }
 

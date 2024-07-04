@@ -5,7 +5,7 @@ import inquirer from 'inquirer';
 import { v4 as uuidv4 } from 'uuid';
 
 // import local files
-import logger from '../server/utils/logger.js';
+import logger from '../shared/utils/logger.js';
 import { loadJSON } from '../shared/parseJson.js';
 const packageJson = loadJSON('../package.json');
 

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 // import local files
 import { createPostRequest } from '../services/axios';
-import * as validators from '../utils/validators';
+import validators from '../../shared/validators';
 
 const handleRegister = async (inputs, setErrors, setPage, navigate) => {
   try {
@@ -12,7 +12,7 @@ const handleRegister = async (inputs, setErrors, setPage, navigate) => {
     const isInvalidPassword = validators.auth.password(password);
 
     if (isInvalidPassword) {
-      return setErrors({ password: isInvalidPassword });
+      return setErrors(isInvalidPassword);
     }
 
     if (password !== confirmPassword) {

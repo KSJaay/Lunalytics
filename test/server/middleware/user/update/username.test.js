@@ -4,10 +4,10 @@ import {
   userExists,
 } from '../../../../../server/database/queries/user';
 import userUpdateUsername from '../../../../../server/middleware/user/update/username';
-import validators from '../../../../../server/utils/validators';
+import validators from '../../../../../shared/validators';
 
 vi.mock('../../../../../server/database/queries/user');
-vi.mock('../../../../../server/utils/validators');
+vi.mock('../../../../../shared/validators');
 
 describe('userUpdateUsername - Middleware', () => {
   const user = {
