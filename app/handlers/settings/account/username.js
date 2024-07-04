@@ -24,12 +24,8 @@ const handleChangeUsername = async (displayName, handleError, closeModal) => {
 
     return true;
   } catch (error) {
-    if (error.response?.data?.current) {
-      return handleError('current', error.response?.data?.current);
-    }
-
-    if (error?.response?.status === 400) {
-      return handleError('new', error.response.data?.message);
+    if (error.response?.data?.username) {
+      return handleError(error.response?.data?.username);
     }
 
     toast.error('Something went wrong, please try again later.');
