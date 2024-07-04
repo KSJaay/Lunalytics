@@ -1,0 +1,46 @@
+@import '../styles/global.scss';
+
+.error-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.error-page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12rem;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--accent-500);
+}
+
+.error-page-header-image {
+  width: 12rem;
+  height: 12rem;
+}
+
+.error-page-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+@include mobile {
+  .error-page-header {
+    font-size: 8rem;
+  }
+
+  .error-page-header-image {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .error-page-subtitle {
+    font-size: 1.2rem;
+  }
+}

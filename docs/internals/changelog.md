@@ -1,5 +1,21 @@
 # Previous updates
 
+## v0.5.2
+
+### Moves to router and finally adds error page
+
+### Summary
+
+This one is a pretty small update, as I found some issues while working on some future updates. This update fixes issues with auth and user endpoints not handling errors properly, this was mainly because endpoints weren't using try catch statement. Also, not sure why I was checking paths using if statements but that's now been moved to react router and we're going to be using that going forward.
+
+### Updates
+
+- Adds show password button to the login page
+- Adds try catch statements to auth and user endpoints
+- Delete `access_token` cookie when authorization middleware throws error
+- Removes routes file for monitor
+- Adds a cool error page that I thought I had added 3 months ago :)
+
 ## v0.5.1
 
 ### Fixes issue with certificates and moves utils to shared folder

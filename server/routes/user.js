@@ -15,55 +15,68 @@ import { cleanMonitor } from '../class/monitor.js';
 import userUpdatePassword from '../middleware/user/update/password.js';
 import transferOwnershipMiddleware from '../middleware/user/transferOwnership.js';
 import deleteAccountMiddleware from '../middleware/user/deleteAccount.js';
+import { handleError } from '../../shared/utils/errors.js';
 
 router.get('/', async (request, response) => {
-  const { access_token } = request.cookies;
+  try {
+    const { access_token } = request.cookies;
 
-  const user = await userExists(access_token);
+    const user = await userExists(access_token);
 
-  const userInfo = {
-    displayName: user.displayName,
-    avatar: user.avatar,
-    email: user.email,
-    isVerified: user.isVerified,
-    permission: user.permission,
-  };
+    const userInfo = {
+      displayName: user.displayName,
+      avatar: user.avatar,
+      email: user.email,
+      isVerified: user.isVerified,
+      permission: user.permission,
+    };
 
-  userInfo.canEdit = [1, 2, 3].includes(user.permission);
-  userInfo.canManage = [1, 2].includes(user.permission);
+    userInfo.canEdit = [1, 2, 3].includes(user.permission);
+    userInfo.canManage = [1, 2].includes(user.permission);
 
-  return response.send(userInfo);
+    return response.send(userInfo);
+  } catch (error) {
+    handleError(error, response);
+  }
 });
 
 router.post('/exists', async (request, response) => {
-  const { email } = request.body;
-  if (!email) return response.status(400).send('No email provided');
+  try {
+    const { email } = request.body;
+    if (!email) return response.status(400).send('No email provided');
 
-  const user = await emailExists(email);
-  if (!user) return response.send(false);
+    const user = await emailExists(email);
+    if (!user) return response.send(false);
 
-  return response.send(true);
+    return response.send(true);
+  } catch (error) {
+    handleError(error, response);
+  }
 });
 
 router.get('/monitors', async (request, response) => {
-  const monitors = await cache.monitors.getAll();
-  const query = [];
+  try {
+    const monitors = await cache.monitors.getAll();
+    const query = [];
 
-  for (const monitor of monitors) {
-    const heartbeats = await cache.heartbeats.get(monitor.monitorId);
-    monitor.heartbeats = heartbeats;
+    for (const monitor of monitors) {
+      const heartbeats = await cache.heartbeats.get(monitor.monitorId);
+      monitor.heartbeats = heartbeats;
 
-    monitor.cert = { isValid: false };
+      monitor.cert = { isValid: false };
 
-    if (monitor.type === 'http') {
-      const cert = await cache.certificates.get(monitor.monitorId);
-      monitor.cert = cert;
+      if (monitor.type === 'http') {
+        const cert = await cache.certificates.get(monitor.monitorId);
+        monitor.cert = cert;
+      }
+
+      query.push(cleanMonitor(monitor));
     }
 
-    query.push(cleanMonitor(monitor));
+    return response.send(query);
+  } catch (error) {
+    handleError(error, response);
   }
-
-  return response.send(query);
 });
 
 router.post('/update/username', userUpdateUsername);

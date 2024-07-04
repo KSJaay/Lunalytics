@@ -7,11 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import TextInput from '../components/ui/input';
 import useLogin from '../hooks/useLogin';
 import handleLogin from '../handlers/login';
+import { MdEye, MdEyeOff } from '../components/icons';
+import { useState } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
 
   const { errors, inputs, handleInput, setErrors } = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="auth-form-container">
@@ -34,12 +37,20 @@ const Login = () => {
             onBlur={handleInput}
           />
           <TextInput
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             id="password"
             label="Password"
             error={errors['password']}
             defaultValue={inputs['password']}
             onBlur={handleInput}
+            iconRight={
+              <div
+                onClick={() => setShowPassword(!showPassword)}
+                className="auth-see-password"
+              >
+                {showPassword ? <MdEyeOff /> : <MdEye />}
+              </div>
+            }
           />
         </div>
         <button

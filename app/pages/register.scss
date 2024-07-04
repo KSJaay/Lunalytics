@@ -97,3 +97,12 @@
   color: var(--font-color);
   text-align: center;
 }
+
+.auth-see-password {
+  cursor: pointer;
+  transition: 0.2s all ease-in;
+
+  &:hover {
+    color: var(--primary-700);
+  }
+}
