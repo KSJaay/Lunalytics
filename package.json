@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -50,8 +50,6 @@
     "knex": "^3.0.1",
     "mobx": "^6.12.0",
     "mobx-react-lite": "^4.0.5",
-    "moment": "^2.30.1",
-    "moment-timezone": "^0.5.44",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

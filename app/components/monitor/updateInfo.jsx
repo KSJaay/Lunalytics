@@ -1,8 +1,7 @@
 import './uptime.scss';
 
 // import dependencies
-import 'moment-timezone';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import classNames from 'classnames';
 
 // import local files
@@ -21,9 +20,11 @@ const UptimeInfo = ({ heartbeat = {} }) => {
     <div className="monitor-uptime-content">
       <div className={classes}>{heartbeat?.isDown ? 'DOWN' : 'UP'}</div>
       <div className="monitor-uptime-info">
-        {moment(heartbeat.date)
-          .tz(timezone)
-          .format(`${dateformat} ${timeformat}`)}
+        {dayjs(
+          new Date(heartbeat.date).toLocaleString('en-US', {
+            timeZone: timezone,
+          })
+        ).format(`${dateformat} ${timeformat}`)}
       </div>
       <div className="monitor-uptime-info">
         {heartbeat.message || 'Unknown'}

@@ -1,7 +1,7 @@
 import './row.scss';
 
 // import dependencies
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -36,8 +36,8 @@ const MemberTableRow = ({ member = {} }) => {
     ? 'Unverified'
     : positions[member.permission];
 
-  const date = moment(member.createdAt).format('MMM DD, YYYY');
-  const time = moment(member.createdAt).format('hh:mm A');
+  const date = dayjs(member.createdAt).format('MMM DD, YYYY');
+  const time = dayjs(member.createdAt).format('hh:mm A');
 
   const avatarUrl = isImageUrl(member.avatar)
     ? member.avatar
