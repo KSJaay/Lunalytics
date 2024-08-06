@@ -4,23 +4,35 @@ import {
   FaChevronRight,
   FaUserCircle,
   IoColorPalette,
-  MdHelpCircle,
+  IoMdHelpCircle,
+  FaUsers,
 } from '../../../icons';
-import FaUsers from '../../../icons/faUsers';
 
 const tabs = [
   {
     title: 'General Settings',
     items: [
-      { name: 'Account', icon: <FaUserCircle /> },
-      { name: 'Appearance', icon: <IoColorPalette /> },
+      {
+        name: 'Account',
+        icon: <FaUserCircle style={{ width: '25px', height: '25px' }} />,
+      },
+      {
+        name: 'Appearance',
+        icon: <IoColorPalette style={{ width: '25px', height: '25px' }} />,
+      },
     ],
   },
   {
     title: 'Workspace Settings',
     items: [
-      { name: 'Manage Team', icon: <FaUsers /> },
-      { name: 'About', icon: <MdHelpCircle /> },
+      {
+        name: 'Manage Team',
+        icon: <FaUsers style={{ width: '25px', height: '25px' }} />,
+      },
+      {
+        name: 'About',
+        icon: <IoMdHelpCircle style={{ width: '25px', height: '25px' }} />,
+      },
     ],
   },
 ];
@@ -36,7 +48,7 @@ const SettingsMobileTabs = ({ handleTabChange }) => {
         >
           {item.icon}
           <div style={{ flex: 1 }}>{item.name}</div>
-          <FaChevronRight width={20} height={20} />
+          <FaChevronRight style={{ width: '20px', height: '20px' }} />
         </div>
       );
     });
