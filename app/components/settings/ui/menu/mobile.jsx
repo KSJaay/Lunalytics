@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 // import local files
-import IoArrowBack from '../../../icons/ioArrowBack';
+import { IoArrowBack } from '../../../icons';
 import SettingsMobileTabs from '../tab/mobile';
 import SettingsAccount from '../../account';
 import SettingsPersonalisation from '../../personalisation';
@@ -27,7 +27,7 @@ const SettingsMobile = ({ handleKeydown }) => {
             setPage('homepage');
           }}
         >
-          <IoArrowBack width={30} height={30} />
+          <IoArrowBack style={{ width: '30px', height: '30px' }} />
         </div>
         <div
           style={{

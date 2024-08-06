@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 // import local files
-import FaChevronUp from '../../icons/faChevronUp';
+import { FaChevronUp } from '../../icons';
 
 const Trigger = ({
   asInput,
@@ -27,7 +27,7 @@ const Trigger = ({
       {children}
       {showIcon && (
         <div className={iconClasses}>
-          {icon || <FaChevronUp width={18} height={18} />}
+          {icon || <FaChevronUp style={{ width: '18px', height: '18px' }} />}
         </div>
       )}
     </div>

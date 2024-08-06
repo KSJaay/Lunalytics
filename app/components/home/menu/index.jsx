@@ -6,10 +6,7 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import Button from '../../ui/button';
-
-// import icons
-import FaPlus from '../../icons/faPlus';
-import FaReload from '../../icons/faReload';
+import { FaPlus, IoReload } from '../../icons';
 import MenuLayoutDropdown from './layout';
 import MenuStatusDropdown from './status';
 import SearchBar from '../../ui/searchBar';
@@ -30,7 +27,7 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
 
       <div className="home-menu-buttons">
         <Button
-          iconLeft={<FaReload width={20} height={20} />}
+          iconLeft={<IoReload style={{ width: '20px', height: '20px' }} />}
           onClick={handleReset}
         />
 
@@ -49,7 +46,7 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
                 false
               )
             }
-            iconLeft={<FaPlus width={20} height={20} />}
+            iconLeft={<FaPlus style={{ width: '20px', height: '20px' }} />}
             color={'primary'}
           >
             New

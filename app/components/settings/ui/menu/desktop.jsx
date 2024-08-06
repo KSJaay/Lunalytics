@@ -7,13 +7,13 @@ import SettingsAccount from '../../account';
 import SettingsPersonalisation from '../../personalisation';
 import ManageTeam from '../../manage';
 import SettingsAbout from '../../about';
-import { FaClose } from '../../../icons';
+import { IoMdClose } from '../../../icons';
 
 const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
   return (
     <>
       <div className="settings-close" onClick={() => handleKeydown(null, true)}>
-        <FaClose width={20} height={20} />
+        <IoMdClose style={{ width: '20px', height: '20px' }} />
       </div>
       <SettingsTab tab={tab} handleTabUpdate={handleTabUpdate} />
       {tab === 'Account' && <SettingsAccount />}
