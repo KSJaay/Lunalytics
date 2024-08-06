@@ -1,5 +1,18 @@
 # Previous updates
 
+## v0.5.3
+
+### Moving away from moment and compressing images
+
+### Summary
+
+Realised that moment wasn't the best library for date/time manipulation and that it was bloating the bundle size. I've decided to move away from moment and use dayjs instead. Along with that I've also compressed and resized all the default avatars. Each avatar was taking up around 1.5MB, they are now taking all nearly under 100KB. Along with that I've also changed the size from 1024x1024 to 512x512. Planning on compressing/resizing further possibly in the future.
+
+### Updates
+
+- Moved from moment to dayjs
+- Compressed images
+
 ## v0.5.2
 
 ### Moves to router and finally adds error page

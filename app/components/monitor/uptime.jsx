@@ -1,7 +1,6 @@
 import './uptime.scss';
 
 // import dependencies
-import 'moment-timezone';
 import PropTypes from 'prop-types';
 
 // import local files
