@@ -2,9 +2,8 @@
 import PropTypes from 'prop-types';
 
 // import local files
-import FaCircleCheck from '../../icons/faCircleCheck';
+import { FaCircleCheck, LiaSyncSolid } from '../../icons';
 import Tooltip from '../../ui/tooltip';
-import { LiaSyncSolid } from '../../icons';
 
 const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
   return (
@@ -23,7 +22,7 @@ const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
           >
             {theme === 'light' && (
               <div className="settings-theme-icon">
-                <FaCircleCheck width={24} height={24} />
+                <FaCircleCheck style={{ width: '24px', height: '24px' }} />
               </div>
             )}
           </div>
@@ -39,7 +38,7 @@ const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
           >
             {theme === 'dark' && (
               <div className="settings-theme-icon">
-                <FaCircleCheck width={24} height={24} />
+                <FaCircleCheck style={{ width: '24px', height: '24px' }} />
               </div>
             )}
           </div>
@@ -55,11 +54,11 @@ const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
           >
             {theme === 'system' && (
               <div className="settings-theme-icon">
-                <FaCircleCheck width={24} height={24} />
+                <FaCircleCheck style={{ width: '24px', height: '24px' }} />
               </div>
             )}
             <div style={{ position: 'absolute', top: '20%', left: '20%' }}>
-              <LiaSyncSolid width={36} height={36} />
+              <LiaSyncSolid style={{ width: '36px', height: '36px' }} />
             </div>
           </div>
         </Tooltip>

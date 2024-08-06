@@ -2,28 +2,24 @@
 import useDropdown from '../../../hooks/useDropdown';
 import Dropdown from '../../ui/dropdown';
 import Button from '../../ui/button';
-
-// import icons
-import HiStatusOffline from '../../icons/hiStatusOffline';
-import HiStatusOnline from '../../icons/hiStatusOnline';
-import PiListFill from '../../icons/piListFill';
+import { HiStatusOffline, HiStatusOnline, FaBars } from '../../icons';
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
 
 const statusOptions = [
   {
     text: 'All',
     id: 'all',
-    icon: <PiListFill width={20} height={20} />,
+    icon: <FaBars style={{ width: '20px', height: '20px' }} />,
   },
   {
     text: 'Up',
     id: 'up',
-    icon: <HiStatusOnline width={20} height={20} />,
+    icon: <HiStatusOnline style={{ width: '20px', height: '20px' }} />,
   },
   {
     text: 'Down',
     id: 'down',
-    icon: <HiStatusOffline width={20} height={20} />,
+    icon: <HiStatusOffline style={{ width: '20px', height: '20px' }} />,
   },
 ];
 
@@ -54,7 +50,11 @@ const MenuStatusDropdown = () => {
       id="home-menu-status"
     >
       <Dropdown.Trigger isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
-        <Button iconLeft={<HiStatusOnline width={20} height={20} />}>
+        <Button
+          iconLeft={
+            <HiStatusOnline style={{ width: '20px', height: '20px' }} />
+          }
+        >
           Status
         </Button>
       </Dropdown.Trigger>

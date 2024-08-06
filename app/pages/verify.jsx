@@ -1,12 +1,12 @@
 import './verify.scss';
 
-import Logo from '../components/icons/statusLogo';
+import { StatusLogo } from '../components/icons';
 
 const Verify = () => {
   return (
     <div className="verify-container">
       <div style={{ marginBottom: '25px' }}>
-        <Logo size="275" />
+        <StatusLogo size="275" />
       </div>
       <div className="verify-description">
         Please contact the owner/admins of this dashboard to verify your

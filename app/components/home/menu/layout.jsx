@@ -2,29 +2,24 @@
 import useDropdown from '../../../hooks/useDropdown';
 import Dropdown from '../../ui/dropdown';
 import Button from '../../ui/button';
-
-// import icons
-import BsTable from '../../icons/bsTable';
-import IoGrid from '../../icons/ioGrid';
-import PiListFill from '../../icons/piListFill';
-import FiLayout from '../../icons/fiLayout';
+import { BsTable, IoGrid, FaBars, FiLayout } from '../../icons';
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
 
 const views = [
   {
     text: 'Cards',
     id: 'cards',
-    icon: <IoGrid width={20} height={20} />,
+    icon: <IoGrid style={{ width: '20px', height: '20px' }} />,
   },
   {
     text: 'List',
     id: 'list',
-    icon: <BsTable width={20} height={20} />,
+    icon: <BsTable style={{ width: '20px', height: '20px' }} />,
   },
   {
     text: 'Compact',
     id: 'compact',
-    icon: <PiListFill width={20} height={20} />,
+    icon: <FaBars style={{ width: '20px', height: '20px' }} />,
   },
 ];
 
@@ -56,7 +51,11 @@ const MenuLayoutDropdown = () => {
       id="home-menu-layout"
     >
       <Dropdown.Trigger isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
-        <Button iconLeft={<FiLayout width={20} height={20} />}>Layout</Button>
+        <Button
+          iconLeft={<FiLayout style={{ width: '20px', height: '20px' }} />}
+        >
+          Layout
+        </Button>
       </Dropdown.Trigger>
       <Dropdown.List isOpen={dropdownIsOpen}>{dropdownItems}</Dropdown.List>
     </Dropdown.Container>

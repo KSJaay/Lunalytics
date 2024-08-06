@@ -73,7 +73,7 @@ const SettingsAccountMobileItem = ({
 
         {canEdit && (
           <div className="settings-account-mobile-item-icon">
-            <FaChevronRight />
+            <FaChevronRight style={{ width: '25px', height: '25px' }} />
           </div>
         )}
       </div>

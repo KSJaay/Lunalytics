@@ -1,3 +1,5 @@
+// import styles
+import './styles/styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 // import dependencies
@@ -15,9 +17,6 @@ import Monitor from './pages/monitor';
 import GlobalLayout from './layout/global';
 import Setttings from './pages/settings';
 import Verify from './pages/verify';
-
-// import styles
-import './styles/styles.scss';
 import ErrorPage from './pages/error';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
