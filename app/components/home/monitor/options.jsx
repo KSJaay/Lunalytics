@@ -8,10 +8,12 @@ import { toast } from 'react-toastify';
 import MonitorModal from '../../modal/monitor/delete';
 import Dropdown from '../../ui/dropdown/index';
 import useContextStore from '../../../context';
-import useDropdown from '../../../hooks/useDropdown';
 import { createGetRequest } from '../../../services/axios';
+
+// import icons
+import FaEllipsisVertical from '../../icons/faEllipsisVertical';
+import useDropdown from '../../../hooks/useDropdown';
 import MonitorConfigureModal from '../../modal/monitor/configure';
-import { FaEllipsisVertical } from '../../icons';
 
 const MonitorOptions = ({ monitorId }) => {
   const {
@@ -75,7 +77,7 @@ const MonitorOptions = ({ monitorId }) => {
       toggleDropdown={toggleDropdown}
     >
       <Dropdown.Trigger toggleDropdown={toggleDropdown} isOpen={dropdownIsOpen}>
-        <FaEllipsisVertical style={{ width: '20px', height: '20px' }} />
+        <FaEllipsisVertical width={20} height={20} />
       </Dropdown.Trigger>
       <Dropdown.List isOpen={dropdownIsOpen}>
         <Dropdown.Item onClick={handleOpen}>Open</Dropdown.Item>

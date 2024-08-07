@@ -12,7 +12,10 @@ import useContextStore from '../../context';
 import MonitorModal from '../modal/monitor/delete';
 import { createGetRequest } from '../../services/axios';
 import MonitorConfigureModal from '../modal/monitor/configure';
-import { FaTrashCan, MdEdit } from '../icons';
+
+// import icons
+import FaTrash from '../icons/faTrash';
+import MdEdit from '../icons/mdEdit';
 
 const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
   const {
@@ -63,18 +66,18 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
       <div className="monitor-view-menu-name" id="monitor-view-menu-name">
         {name}
       </div>
-      {/* <Button iconLeft={<FaTrashCan width={20} height={20} />}>Pause</Button> */}
-      {/* <Button iconLeft={<FaTrashCan width={20} height={20} />}>Duplicate</Button> */}
+      {/* <Button iconLeft={<FaTrash width={20} height={20} />}>Pause</Button> */}
+      {/* <Button iconLeft={<FaTrash width={20} height={20} />}>Duplicate</Button> */}
       <Button
         id="monitor-edit-button"
-        iconLeft={<MdEdit style={{ width: '20px', height: '20px' }} />}
+        iconLeft={<MdEdit width={20} height={20} />}
         onClick={handleEdit}
       >
         Edit
       </Button>
       <Button
         id="monitor-delete-button"
-        iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}
+        iconLeft={<FaTrash width={20} height={20} />}
         onClick={handleDelete}
       >
         Delete

@@ -10,7 +10,6 @@ import useLocalStorageContext from '../../hooks/useLocalstorage';
 
 const UptimeInfo = ({ heartbeat = {} }) => {
   const { dateformat, timeformat, timezone } = useLocalStorageContext();
-  
 
   const classes = classNames('monitor-uptime-info-button', {
     'monitor-uptime-info-button-inactive': heartbeat?.isDown,

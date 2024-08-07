@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import viteCompression from 'vite-plugin-compression2';
 
@@ -18,7 +18,4 @@ export default defineConfig({
       filter: /\.(js|mjs|json|css|svg|html)$/i,
     }),
   ],
-  define: {
-    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
-  },
 });
