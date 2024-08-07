@@ -1,12 +1,12 @@
 // import dependencies
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 // import local files
 import Modal from '../../../ui/modal';
 import TextInput from '../../../ui/input';
 import RegisterChecklist from '../../../register/checklist';
-import { IoMdEye, IoMdEyeOff } from '../../../icons';
+import { useState } from 'react';
+import { MdEye, MdEyeOff } from '../../../icons';
 import handleChangePassword from '../../../../handlers/settings/account/password';
 import validators from '../../../../../shared/validators';
 
@@ -75,11 +75,7 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
                 handlePasswordChange('showPassword', !values.showPassword)
               }
             >
-              {values.showPassword ? (
-                <IoMdEyeOff style={{ width: '25px', height: '25px' }} />
-              ) : (
-                <IoMdEye style={{ width: '25px', height: '25px' }} />
-              )}
+              {values.showPassword ? <MdEyeOff /> : <MdEye />}
             </div>
           }
           error={values.errors.current}
@@ -97,11 +93,7 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
                 handlePasswordChange('showNewPassword', !values.showNewPassword)
               }
             >
-              {values.showNewPassword ? (
-                <IoMdEyeOff style={{ width: '25px', height: '25px' }} />
-              ) : (
-                <IoMdEye style={{ width: '25px', height: '25px' }} />
-              )}
+              {values.showNewPassword ? <MdEyeOff /> : <MdEye />}
             </div>
           }
           error={values.errors.new}

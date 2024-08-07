@@ -49,7 +49,7 @@ const GraphMenu = ({ statusType, setStatusType }) => {
             isOpen={dropdownIsOpen}
             toggleDropdown={toggleDropdown}
           >
-            <FaEllipsisVertical style={{ width: '25px', height: '25px' }} />
+            <FaEllipsisVertical />
           </Dropdown.Trigger>
           <Dropdown.List isOpen={dropdownIsOpen}>
             <Dropdown.Item

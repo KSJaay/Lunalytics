@@ -1,85 +1,112 @@
 import './graph.scss';
 
 // import dependencies
-import dayjs from 'dayjs';
-import CanvasJSReact from '@canvasjs/react-charts';
+import PropTypes from 'prop-types';
+import 'chartjs-adapter-dayjs-3';
+import {
+  BarController,
+  BarElement,
+  Chart as ChartJs,
+  Filler,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  TimeScale,
+  Tooltip,
+  CategoryScale,
+} from 'chart.js';
+import { Chart } from 'react-chartjs-2';
 
 // import local files
+import useLocalStorageContext from '../../../hooks/useLocalstorage';
 import GraphMenu from './menu';
 import useGraphStatus from '../../../hooks/useGraphStatus';
-import useLocalStorageContext from '../../../hooks/useLocalstorage';
 import { fullMonitorPropType } from '../../../../shared/utils/propTypes';
 
-const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+ChartJs.register(
+  LineController,
+  BarController,
+  LineElement,
+  PointElement,
+  TimeScale,
+  BarElement,
+  LinearScale,
+  Tooltip,
+  Filler,
+  CategoryScale
+);
 
-const MonitorGraph = ({ monitor }) => {
-  const {
-    dateformat,
-    theme,
-    timeformat,
-    timezone: timeZone,
-  } = useLocalStorageContext();
+const MonitorGraph = ({ monitor, maxValue }) => {
+  const { dateformat, timeformat, theme } = useLocalStorageContext();
+
   const { statusType, statusHeartbeats, setStatusType } =
     useGraphStatus(monitor);
 
-  const data = statusHeartbeats.map((heartbeat = {}) => {
-    const date = new Date(
-      new Date(heartbeat.date).toLocaleString('en-US', { timeZone })
-    );
-    return {
-      x: date,
-      y: heartbeat.latency,
-      toolTipContent: `<div style='"display: flex; flex-direction: column; gap: 5px;"'>   
-        <div>${dayjs(date).format(`${dateformat} ${timeformat}`)}</div>
-        <div>${heartbeat.latency}ms</div>
-        </div>`,
-      color: heartbeat.isDown ? '#b80a47' : '#13a452',
-    };
-  });
-
-  const options = {
-    theme: theme.type === 'light' ? 'light2' : 'dark2',
-    animationEnabled: true,
-    zoomEnabled: true,
-    backgroundColor: 'transparent',
-    toolTip: {
-      enabled: true,
-      animationEnabled: true,
-    },
-    axisX: {
-      lineColor: '#505b62',
-      tickColor: '#505b62',
-      tickLength: 5,
-    },
-    axisY: {
-      title: 'respTime (ms)',
-      titleFontSize: 18,
-      gridColor: '#505b62',
-      lineColor: '#505b62',
-      tickColor: '#505b62',
-      minimum: 0,
-    },
-    data: [
-      {
-        type: 'area',
-        lineThickness: 2,
-        // Render colors of chart based on user theme
-        color: '#10894466',
-        lineColor: '#13a452',
-        markerType: 'circle',
-        markerSize: 0,
-        xValueFormatString: 'MMM YYYY',
-        dataPoints: data,
-      },
-    ],
-  };
+  const labels = statusHeartbeats.map((heartbeat = {}) => heartbeat.date);
+  const data = statusHeartbeats.map((heartbeat = {}) => heartbeat.latency);
+  const gridColor =
+    theme.type === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
 
   return (
     <div className="monitor-chart-container">
       <GraphMenu statusType={statusType} setStatusType={setStatusType} />
-      <div style={{ padding: '10px 20px 20px 20px' }}>
-        <CanvasJSChart options={options} />
-      </div>
+      <Chart
+        type={'line'}
+        data={{
+          labels,
+          datasets: [
+            {
+              data,
+              borderColor: '#3ba55c',
+              backgroundColor: '#3ba55d28',
+              yAxisID: 'y',
+              fill: 'origin',
+              tension: 0.15,
+            },
+          ],
+        }}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+          onResize: (chart) => {
+            if (window.innerWidth < 576) {
+              chart.canvas.style.height = '225px';
+            } else if (window.innerWidth < 768) {
+              chart.canvas.style.height = '275px';
+            } else if (window.innerWidth < 1200) {
+              chart.canvas.style.height = '300px';
+            } else if (window.innerWidth < 1920) {
+              chart.canvas.style.height = '320px';
+            } else {
+              chart.canvas.style.height = '400px';
+            }
+          },
+          layout: { padding: { left: 10, right: 30, top: 30, bottom: 10 } },
+          elements: { point: { radius: 0, hitRadius: 100 } },
+          scales: {
+            x: {
+              type: 'time',
+              time: {
+                minUnit: 'minute',
+                round: 'second',
+                tooltipFormat: `${dateformat} ${timeformat}`,
+                displayFormats: { minute: 'HH:mm', hour: 'MM-DD HH:mm' },
+              },
+              ticks: { maxRotation: 0, autoSkipPadding: 30 },
+              grid: { color: gridColor, offset: false },
+            },
+            y: {
+              type: 'linear',
+              title: { display: true, text: 'respTime (ms)' },
+              offset: true,
+              grid: { color: gridColor },
+              min: 0,
+              max: maxValue,
+            },
+          },
+        }}
+      />
     </div>
   );
 };
@@ -88,6 +115,7 @@ MonitorGraph.displayName = 'MonitorGraph';
 
 MonitorGraph.propTypes = {
   monitor: fullMonitorPropType.isRequired,
+  maxValue: PropTypes.number,
 };
 
 export default MonitorGraph;

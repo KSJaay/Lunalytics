@@ -2,13 +2,13 @@
 import PropTypes from 'prop-types';
 
 // import local files
-import { MdErrorOutline } from '../../icons';
+import MdErrorOutline from '../../icons/mdErrorOutline';
 
 const AlertError = ({ title = 'Error', description }) => {
   return (
     <div className="alert-container alert-container-error">
       <div className="alert-icon-container alert-icon-container-error">
-        <MdErrorOutline style={{ width: '25px', height: '25px' }} />
+        <MdErrorOutline />
       </div>
       <div>
         <div className="alert-title alert-title-error">{title}</div>

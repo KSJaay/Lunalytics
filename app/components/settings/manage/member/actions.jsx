@@ -6,7 +6,12 @@ import './row.scss';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { FaTrashCan, MdEdit, FaCheck, IoMdClose } from '../../../icons';
+
+// import icons
+import FaTrash from '../../../icons/faTrash';
+import MdEdit from '../../../icons/mdEdit';
+import FaCheck from '../../../icons/faCheck';
+import FaClose from '../../../icons/faClose';
 
 // import local files
 import MemberApproveModal from '../../../modal/settings/manage/approve';
@@ -41,7 +46,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
             MemberDeclineModal;
           }}
         >
-          <IoMdClose style={{ width: '20px', height: '20px' }} />
+          <FaClose width={20} height={20} />
         </div>
         <div
           className={`member-row-body-icon-check ${classes}`}
@@ -55,7 +60,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
             }
           }}
         >
-          <FaCheck style={{ width: '20px', height: '20px' }} />
+          <FaCheck width={20} height={20} />
         </div>
       </>
     );
@@ -74,7 +79,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
           }
         }}
       >
-        <MdEdit style={{ width: '20px', height: '20px' }} />
+        <MdEdit width={20} height={20} />
       </div>
       <div
         className={`member-row-body-icon-trash ${classes}`}
@@ -87,7 +92,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
           }
         }}
       >
-        <FaTrashCan style={{ width: '20px', height: '20px' }} />
+        <FaTrash width={20} height={20} />
       </div>
     </>
   );
