@@ -23,12 +23,14 @@ const SettingsPersonalisationTimezone = ({ timezone, setTimezone }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          <Button fullWidth>{timezonesList[timezone]}</Button>
+          <Button fullWidth>
+            {timezone} (GMT{timezonesList[timezone]})
+          </Button>
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           {Object.keys(timezonesList).map((timezone) => (
             <Dropdown.Item key={timezone} onClick={() => setTimezone(timezone)}>
-              {timezonesList[timezone]}
+              {timezone} (GMT{timezonesList[timezone]})
             </Dropdown.Item>
           ))}
         </Dropdown.List>

@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 
 // import local files
-import FaCircleCheck from '../../icons/faCircleCheck';
+import { FaCircleCheck } from '../../icons';
 import classNames from 'classnames';
 
 const colors = ['Blue', 'Purple', 'Green', 'Yellow', 'Red', 'Cyan', 'Pink'];
@@ -35,7 +35,7 @@ const SettingsPersonalisationAccent = ({ color, setColor }) => {
             >
               {color === colorName && (
                 <div className="settings-theme-icon">
-                  <FaCircleCheck width={24} height={24} />
+                  <FaCircleCheck style={{ width: '24px', height: '24px' }} />
                 </div>
               )}
             </div>

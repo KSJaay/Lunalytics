@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import TextInput from '../components/ui/input';
 import useLogin from '../hooks/useLogin';
 import handleLogin from '../handlers/login';
-import { MdEye, MdEyeOff } from '../components/icons';
+import { IoMdEye, IoMdEyeOff } from '../components/icons';
 import { useState } from 'react';
 
 const Login = () => {
@@ -48,7 +48,11 @@ const Login = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="auth-see-password"
               >
-                {showPassword ? <MdEyeOff /> : <MdEye />}
+                {showPassword ? (
+                  <IoMdEyeOff style={{ width: '25px', height: '25px' }} />
+                ) : (
+                  <IoMdEye style={{ width: '25px', height: '25px' }} />
+                )}
               </div>
             }
           />

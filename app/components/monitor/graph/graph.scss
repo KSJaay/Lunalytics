@@ -3,6 +3,9 @@
 .monitor-chart-container {
   background-color: var(--accent-900);
   border-radius: pxToRem(16);
+  gap: pxToRem(10);
+  display: flex;
+  flex-direction: column;
 }
 
 .monitor-chart-buttons-container {

@@ -1,5 +1,21 @@
 # Previous updates
 
+## v0.5.4
+
+### Cleaning up and moving to canvasjs
+
+### Summary
+
+Originally I was planning on customising some of the icon components depending on user preferences, but for now I've decided to move away from that and just use react-icons library. The idea of custom icons may comeback in the future, but right now I want to focus on the core functionality of Lunalytics. Along with that I've also moved away from using `chart.js` and instead using `canvasjs` for the graphs. This allows a lot more customisation and features for the graphs.
+
+### New Features
+
+- Removed icons
+- Added `react-icons`
+- Graphs now use `canvasjs` instead of `chart.js`
+- You can now zoom in/out on the graphs
+- Reduced bundle size from 1.5MB to 410KB
+
 ## v0.5.3
 
 ### Moving away from moment and compressing images

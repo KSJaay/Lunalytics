@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 // import local files
-import FaClose from '../../icons/faClose';
+import { IoMdClose } from '../../icons';
 
 const Container = ({ children, glassmorph, closeButton, ...props }) => {
   const classes = classNames('modal-container', {
@@ -18,7 +18,7 @@ const Container = ({ children, glassmorph, closeButton, ...props }) => {
       <div className="modal-content">
         {closeButton && (
           <div className="modal-close-button" onClick={closeButton}>
-            <FaClose width={18} height={18} />
+            <IoMdClose style={{ width: '18px', height: '18px' }} />
           </div>
         )}
         {children}
