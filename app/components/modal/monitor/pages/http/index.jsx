@@ -27,7 +27,9 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
         handleSelect={handleMethodSelect}
       />
       {errors.method && (
-        <label className="text-input-error" id="text-input-http-method-error">{errors.method}</label>
+        <label className="input-error" id="text-input-http-method-error">
+          {errors.method}
+        </label>
       )}
 
       <MonitorHttpStatusCodes
@@ -42,7 +44,7 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
       />
 
       {errors.valid_status_codes && (
-        <label className="text-input-error">{errors.valid_status_codes}</label>
+        <label className="input-error">{errors.valid_status_codes}</label>
       )}
     </div>
   );

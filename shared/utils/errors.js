@@ -24,6 +24,15 @@ class ConflictError extends Error {
   }
 }
 
+class NotificationValidatorError extends Error {
+  constructor(key, error) {
+    super();
+    this.name = 'NotificationValidatorError';
+    this.key = key;
+    this.message = error;
+  }
+}
+
 const handleError = (error, response) => {
   logger.error('Error handler', error.message + error.stack);
 
@@ -52,4 +61,10 @@ const handleError = (error, response) => {
   }
 };
 
-export { AuthorizationError, ConflictError, UnprocessableError, handleError };
+export {
+  AuthorizationError,
+  ConflictError,
+  NotificationValidatorError,
+  UnprocessableError,
+  handleError,
+};

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class TeamStore {
   constructor() {
@@ -10,12 +10,13 @@ class TeamStore {
       updateUserPermission: action,
       updateUserVerified: action,
       removeUser: action,
+      getTeam: computed,
     });
   }
 
-  getTeam = () => {
+  get getTeam() {
     return Array.from(this.team.values());
-  };
+  }
 
   setTeam = (data) => {
     for (const user of data) {

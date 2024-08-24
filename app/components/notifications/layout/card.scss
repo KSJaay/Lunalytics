@@ -1,0 +1,54 @@
+@import '../../../styles/global.scss';
+
+.notification-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: pxToRem(250);
+  height: pxToRem(240);
+  background-color: var(--accent-900);
+  padding: pxToRem(8) pxToRem(12);
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+  box-shadow: var(--shadow-sm);
+  gap: pxToRem(10);
+  position: relative;
+}
+
+.notification-card-img {
+  width: pxToRem(100);
+  height: pxToRem(100);
+  transition: var(--transition-base);
+
+  &-disabled {
+    filter: grayscale(1);
+  }
+}
+
+.notification-card-title {
+  font-size: var(--font-xl);
+  font-weight: var(--weight-bold);
+  padding: pxToRem(5) 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
+}
+
+.notification-card-dropdown {
+  position: absolute;
+  right: pxToRem(10);
+  top: pxToRem(10);
+  color: var(--accent-100);
+}
+
+.notification-card-dropdown-trigger {
+  color: var(--accent-100);
+  transition: var(--transition-base);
+
+  &:hover {
+    color: var(--primary-600); 
+  }
+}

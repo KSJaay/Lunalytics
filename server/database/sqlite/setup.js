@@ -76,6 +76,27 @@ export class SQLite {
       });
     }
 
+    const notificationExists = await this.client.schema.hasTable(
+      'notifications'
+    );
+
+    if (!notificationExists) {
+      await this.client.schema.createTable('notifications', (table) => {
+        table.string('id').notNullable().primary();
+        table.string('platform').notNullable();
+        table.string('messageType').notNullable();
+        table.text('token').notNullable();
+        table.text('email').notNullable();
+        table.boolean('isEnabled').defaultTo(1);
+        table.text('content').defaultTo(null);
+        table.string('friendlyName');
+        table.text('data');
+        table.timestamp('createdAt').defaultTo(this.client.fn.now());
+
+        table.index('id');
+      });
+    }
+
     const heartbeatExists = await this.client.schema.hasTable('heartbeat');
 
     if (!heartbeatExists) {

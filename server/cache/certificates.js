@@ -1,3 +1,4 @@
+import Collection from '../../shared/utils/collection.js';
 import cleanCertificate from '../class/certificate.js';
 import {
   fetchCertificate,
@@ -7,7 +8,7 @@ import {
 
 class Certificates {
   constructor() {
-    this.certificates = new Map();
+    this.certificates = new Collection();
   }
 
   async get(monitorId) {

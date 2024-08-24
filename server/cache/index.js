@@ -2,19 +2,23 @@
 import Certificates from './certificates.js';
 import Heartbeats from './heartbeats.js';
 import Monitor from './monitors.js';
+import Notifications from './notifications.js';
 import getCertInfo from '../tools/checkCertificate.js';
 import httpStatusCheck from '../tools/httpStatus.js';
 import tcpStatusCheck from '../tools/tcpPing.js';
+import Collection from '../../shared/utils/collection.js';
 
 class Master {
   constructor() {
     this.heartbeats = new Heartbeats();
     this.certificates = new Certificates();
     this.monitors = new Monitor();
-    this.timeouts = new Map();
+    this.notifications = new Notifications();
+    this.timeouts = new Collection();
   }
 
   async initialise() {
+    await this.notifications.getAll();
     const monitors = await this.monitors.getAll();
 
     for (const monitor of monitors) {
