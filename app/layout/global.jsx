@@ -19,6 +19,7 @@ const GlobalLayout = ({ children }) => {
     modalStore: { isOpen, content, glassmorph },
     globalStore: { setMonitors, setTimeouts },
     userStore: { setUser },
+    notificationStore: { setNotifications },
   } = useContextStore();
 
   const navigate = useNavigate();
@@ -30,11 +31,13 @@ const GlobalLayout = ({ children }) => {
       try {
         const user = await createGetRequest('/api/user');
         const monitors = await createGetRequest('/api/user/monitors');
+        const notifications = await createGetRequest('/api/notifications');
         const data = monitors?.data || [];
 
         setUser(user?.data);
         setMonitors(data);
         setTimeouts(data, fetchMonitorById);
+        setNotifications(notifications?.data || []);
       } catch (error) {
         console.log(error);
         if (error.response?.status === 401) {

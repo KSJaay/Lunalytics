@@ -10,10 +10,8 @@ const StatusLogo = ({ size = 250 }) => {
     globalStore: { getAllMonitors },
   } = useContextStore();
 
-  const monitors = getAllMonitors();
-
-  const totalMonitors = monitors.length;
-  const offlineMonitors = monitors.filter(
+  const totalMonitors = getAllMonitors.length;
+  const offlineMonitors = getAllMonitors.filter(
     (monitor = {}) => monitor.heartbeats[0]?.isDown
   ).length;
 

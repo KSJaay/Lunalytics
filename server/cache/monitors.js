@@ -1,3 +1,4 @@
+import Collection from '../../shared/utils/collection.js';
 import { cleanPartialMonitor } from '../class/monitor.js';
 import {
   fetchMonitor,
@@ -10,7 +11,7 @@ import {
 
 class Monitor {
   constructor() {
-    this.monitors = new Map();
+    this.monitors = new Collection();
   }
 
   async get(monitorId) {
@@ -29,7 +30,7 @@ class Monitor {
 
   async getAll() {
     if (this.monitors.size) {
-      return this.monitors.values();
+      return this.monitors.toJSONValues();
     }
 
     const query = await fetchMonitors();

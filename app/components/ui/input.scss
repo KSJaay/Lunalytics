@@ -47,26 +47,3 @@
   top: 34px;
   transform: translateY(-50%);
 }
-
-.text-input-label {
-  display: block;
-  font-size: var(--font-md);
-  font-weight: var(--weight-semibold);
-  color: var(--font-color);
-  margin: pxToRem(12) 0 pxToRem(4) pxToRem(4);
-}
-
-.text-input-error {
-  color: var(--red-700);
-  font-size: var(--font-sm);
-  margin: pxToRem(4);
-  display: block;
-}
-
-.text-input-error-general {
-  color: var(--red-700);
-  font-size: var(--font-md);
-  margin: pxToRem(4);
-  display: block;
-  text-align: center;
-}

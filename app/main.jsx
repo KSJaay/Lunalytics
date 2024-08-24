@@ -18,6 +18,8 @@ import GlobalLayout from './layout/global';
 import Setttings from './pages/settings';
 import Verify from './pages/verify';
 import ErrorPage from './pages/error';
+import NotificationModal from './components/modal/notification';
+import Notifications from './pages/notifications';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -30,6 +32,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <GlobalLayout>
               <Navigation>
                 <Home />
+              </Navigation>
+            </GlobalLayout>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <GlobalLayout>
+              <Navigation activeUrl="/notifications">
+                <Notifications />
               </Navigation>
             </GlobalLayout>
           }
@@ -57,6 +69,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/verify" element={<Verify />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/404" element={<ErrorPage />} />
+        <Route path="/modal" element={<NotificationModal />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

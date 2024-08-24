@@ -1,10 +1,3 @@
-// import local files
-import {
-  MonitorCard,
-  MonitorList,
-  MonitorCompact,
-} from '../components/home/monitor';
-
 // import styles
 import './home.scss';
 
@@ -13,6 +6,11 @@ import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 // import local files
+import {
+  MonitorCard,
+  MonitorList,
+  MonitorCompact,
+} from '../components/home/monitor';
 import useContextStore from '../context';
 import HomeMenu from '../components/home/menu';
 import MonitorTable from '../components/home/monitor/layout/table';
@@ -31,9 +29,7 @@ const Home = () => {
     setStatus('all');
   };
 
-  const monitors = getAllMonitors();
-
-  const monitorsList = monitors
+  const monitorsList = getAllMonitors
     .filter((monitor = {}) => {
       const matchesSearch =
         monitor.name?.toLowerCase().includes(search.toLowerCase()) ||

@@ -59,7 +59,7 @@ const SettingsAccountAvatarModal = ({
           onChange={(e) => setAvatar(e.target.value)}
         />
 
-        <div className="text-input-label">Or select from below</div>
+        <div className="input-label">Or select from below</div>
         <div className="settings-modal-avatars-container">
           {avatars.map((avatarName) => (
             <img

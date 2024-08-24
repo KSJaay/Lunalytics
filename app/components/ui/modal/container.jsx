@@ -7,7 +7,13 @@ import classNames from 'classnames';
 // import local files
 import { IoMdClose } from '../../icons';
 
-const Container = ({ children, glassmorph, closeButton, ...props }) => {
+const Container = ({
+  children,
+  glassmorph,
+  closeButton,
+  contentProps = {},
+  ...props
+}) => {
   const classes = classNames('modal-container', {
     'modal-container--glassmorph': glassmorph,
     'modal-container--no-glassmorph': !glassmorph,
@@ -15,7 +21,7 @@ const Container = ({ children, glassmorph, closeButton, ...props }) => {
 
   return (
     <div className={classes} {...props}>
-      <div className="modal-content">
+      <div className="modal-content" {...contentProps}>
         {closeButton && (
           <div className="modal-close-button" onClick={closeButton}>
             <IoMdClose style={{ width: '18px', height: '18px' }} />
@@ -33,6 +39,7 @@ Container.propTypes = {
   children: PropTypes.node,
   glassmorph: PropTypes.bool,
   closeButton: PropTypes.func,
+  contentProps: PropTypes.object,
 };
 
 export default Container;

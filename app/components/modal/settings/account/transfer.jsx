@@ -24,9 +24,8 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
   } = useContextStore();
   const { dropdownIsOpen, selectedId, toggleDropdown, handleDropdownSelect } =
     useDropdown();
-  const team = getTeam();
 
-  const sortedMembers = team
+  const sortedMembers = getTeam
     ?.sort((a, b) => a?.permission - b?.permission)
     .filter((member) => member.isVerified);
 

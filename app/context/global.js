@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { fetchMonitorById } from '../services/monitor/fetch';
 
 class GlobalStore {
@@ -12,6 +12,7 @@ class GlobalStore {
       setMonitor: action,
       addMonitor: action,
       removeMonitor: action,
+      getAllMonitors: computed,
     });
   }
 
@@ -84,9 +85,9 @@ class GlobalStore {
     );
   };
 
-  getAllMonitors = () => {
+  get getAllMonitors() {
     return Array.from(this.monitors.values()) || [];
-  };
+  }
 
   removeMonitor = (monitorId) => {
     if (this.timeouts.has(monitorId)) {
