@@ -4,7 +4,7 @@ import path from 'path';
 
 // import local files
 import logger from '../shared/utils/logger.js';
-import migrationList from '../server/migrations/index.js';
+import migrationList from './migrations/index.js';
 import { loadJSON } from '../shared/parseJson.js';
 
 const config = loadJSON('../config.json');
