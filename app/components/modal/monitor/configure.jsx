@@ -9,6 +9,7 @@ import MonitorPageInitial from './pages/initial';
 import MonitorPageHttp from './pages/http';
 import MonitorPageTcp from './pages/tcp';
 import MonitorPageInterval from './pages/interval';
+import MonitorPageNotification from './pages/notification';
 import useMonitorForm from '../../../hooks/useMonitorForm';
 
 const MonitorConfigureModal = ({
@@ -53,6 +54,14 @@ const MonitorConfigureModal = ({
 
         {form.name === 'interval' && (
           <MonitorPageInterval
+            inputs={inputs}
+            errors={errors}
+            handleInput={handleInput}
+          />
+        )}
+
+        {form.name === 'notification' && (
+          <MonitorPageNotification
             inputs={inputs}
             errors={errors}
             handleInput={handleInput}

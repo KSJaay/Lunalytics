@@ -10,6 +10,8 @@ const validMethods = [
 
 const validTypes = ['http', 'tcp'];
 
+const notificationRegex = /^[aowr]+$/g;
+
 export const type = (type) => {
   if (!type || !validTypes.includes(type)) {
     return 'Please select a valid monitor type.';
@@ -86,6 +88,12 @@ export const requestTimeout = (requestTimeout) => {
   }
 };
 
+export const notificationType = (notification) => {
+  if (!notification || !notificationRegex.test(notification)) {
+    return 'Please select a valid notification type.';
+  }
+};
+
 const validators = {
   type,
   name,
@@ -97,6 +105,7 @@ const validators = {
   interval,
   retryInterval,
   requestTimeout,
+  notificationType,
 };
 
 const httpValidators = [
@@ -108,6 +117,7 @@ const httpValidators = [
   ['interval', 'interval'],
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
 ];
 
 const tcpValidators = [
@@ -118,6 +128,7 @@ const tcpValidators = [
   ['interval', 'interval'],
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
 ];
 
 const http = (data) => {
@@ -146,8 +157,6 @@ const tcp = (data) => {
       }
     })
     .filter(Boolean);
-
-  console.log(errors);
 
   if (errors.length) {
     return errors[0];

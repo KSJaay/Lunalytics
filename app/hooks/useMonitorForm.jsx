@@ -47,6 +47,13 @@ const intervalPage = {
   ],
 };
 
+const notificationForm = {
+  page: 4,
+  name: 'notification',
+  actions: ['Previous', 'Submit'],
+  inputs: [{ name: 'notification', validator: monitorValidators.notification }],
+};
+
 const defaultInputs = {
   valid_status_codes: ['200-299'],
   interval: 60,
@@ -101,6 +108,10 @@ const useMonitorForm = (
 
     if (form.page === 2) {
       setForm(intervalPage);
+    }
+
+    if (form.page === 3) {
+      setForm(notificationForm);
     }
 
     setErrors({});

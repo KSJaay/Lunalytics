@@ -11,6 +11,15 @@ const config = loadJSON('../config.json');
 const packageJson = loadJSON('../package.json');
 
 const migrateDatabase = async () => {
+  if (config.migrationType !== 'automatic') {
+    return logger.log(
+      'MIGRATION',
+      'Manual migration selected. Skipping migration checks...',
+      'INFO',
+      false
+    );
+  }
+
   const migrationListKeys = Object.keys(migrationList);
 
   const [version, patch] = config.version.split('.');
@@ -24,15 +33,6 @@ const migrateDatabase = async () => {
   });
 
   if (validMigrations.length > 0) {
-    if (config.migrationType !== 'automatic') {
-      return logger.log(
-        'MIGRATION',
-        'Manual migration selected. Skipping migration...',
-        'INFO',
-        false
-      );
-    }
-
     logger.log('MIGRATION', 'Starting automatic migration...', 'INFO', false);
 
     for (const migration of validMigrations) {

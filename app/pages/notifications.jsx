@@ -13,7 +13,7 @@ import { MdNotifications } from '../components/icons';
 
 const Notifications = () => {
   const {
-    notificationStore: { getAllNotifications },
+    notificationStore: { allNotifications },
   } = useContextStore();
 
   const [search, setSearch] = useState(null);
@@ -29,7 +29,7 @@ const Notifications = () => {
 
   const notifications = useMemo(
     () =>
-      getAllNotifications.filter((notification) => {
+      allNotifications.filter((notification) => {
         if (platform !== 'All' && notification.platform !== platform) {
           return false;
         }
@@ -44,7 +44,7 @@ const Notifications = () => {
         }
         return true;
       }),
-    [platform, search, getAllNotifications]
+    [platform, search, allNotifications]
   );
 
   return (
