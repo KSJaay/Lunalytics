@@ -31,7 +31,7 @@ const monitorEdit = async (request, response) => {
       true
     );
 
-    await cache.setTimeout(data.monitorId, data.interval);
+    await cache.checkStatus(data.monitorId);
 
     const heartbeats = await cache.heartbeats.get(data.monitorId);
     const cert = await cache.certificates.get(data.monitorId);

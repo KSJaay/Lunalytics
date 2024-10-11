@@ -28,7 +28,7 @@ const tcpStatusCheck = async (monitor, callback) => {
       status: 'TIMEOUT',
       latency,
       message: 'Ping timed out!',
-      isDown: 1,
+      isDown: true,
     });
   });
 
@@ -41,7 +41,7 @@ const tcpStatusCheck = async (monitor, callback) => {
       status: 'ALIVE',
       latency,
       message: 'Up and running!',
-      isDown: 0,
+      isDown: false,
     });
   });
 
@@ -59,7 +59,7 @@ const tcpStatusCheck = async (monitor, callback) => {
       status: 'ERROR',
       latency,
       message: error.message,
-      isDown: 1,
+      isDown: true,
     });
   });
 };

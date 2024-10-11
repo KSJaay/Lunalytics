@@ -30,7 +30,7 @@ const monitorAdd = async (request, response) => {
       isHttp
     );
 
-    await cache.setTimeout(data.monitorId, data.interval);
+    await cache.checkStatus(data.monitorId);
 
     const heartbeats = await cache.heartbeats.get(data.monitorId);
     const cert = await cache.certificates.get(data.monitorId);

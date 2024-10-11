@@ -11,7 +11,7 @@ class Telegram extends NotificationBase {
       const url = 'https://api.telegram.org/bot';
 
       const message =
-        TelegramTemplateMessages[notification.type] || notification.payload;
+        TelegramTemplateMessages[notification.messageType] || notification.payload;
 
       const params = {
         text: message,

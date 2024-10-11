@@ -7,6 +7,7 @@ import getCertInfo from '../tools/checkCertificate.js';
 import httpStatusCheck from '../tools/httpStatus.js';
 import tcpStatusCheck from '../tools/tcpPing.js';
 import Collection from '../../shared/utils/collection.js';
+import NotificationServices from '../notifications/index.js';
 
 class Master {
   constructor() {
@@ -28,21 +29,11 @@ class Master {
     }
   }
 
-  async setTimeout(monitorId, interval = 30) {
-    if (this.timeouts.has(monitorId)) {
-      clearTimeout(this.timeouts.get(monitorId));
-    }
-
-    await this.checkStatus(monitorId);
-
-    this.timeouts.set(
-      monitorId,
-      setTimeout(() => this.checkStatus(monitorId), interval * 1000)
-    );
-  }
-
   async updateTcpStatus(monitor, heartbeat) {
-    await this.heartbeats.addHeartbeat(heartbeat);
+    const [lastHeartbeat] = await this.heartbeats.getLastHeartbeat(
+      monitor.monitorId
+    );
+    await this.heartbeats.addHeartbeat(monitor.monitorId, heartbeat);
 
     clearTimeout(this.timeouts.get(monitor.monitorId));
 
@@ -50,12 +41,26 @@ class Master {
     monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
     await this.monitors.updateUptimePercentage(monitor);
 
+    if (!lastHeartbeat?.isDown && heartbeat.isDown) {
+      const notification = await this.notifications.getById(
+        monitor.notificationId
+      );
+
+      if (
+        notification.isEnabled &&
+        NotificationServices[notification.platform]
+      ) {
+        const service = new NotificationServices[notification.platform]();
+
+        service.send(notification, monitor, heartbeat);
+      }
+    }
+
+    const timeout = heartbeat.isDown ? monitor.retryInterval : monitor.interval;
+
     this.timeouts.set(
       monitor.monitorId,
-      setTimeout(
-        () => this.checkStatus(monitor.monitorId),
-        monitor.interval * 1000
-      )
+      setTimeout(() => this.checkStatus(monitor.monitorId), timeout * 1000)
     );
   }
 
@@ -70,9 +75,14 @@ class Master {
       return;
     }
 
+    if (this.timeouts.has(monitorId)) {
+      clearTimeout(this.timeouts.get(monitorId));
+    }
+
     if (monitor.type === 'http') {
+      const [lastHeartbeat] = await this.heartbeats.getLastHeartbeat(monitorId);
       const heartbeat = await httpStatusCheck(monitor);
-      await this.heartbeats.addHeartbeat(heartbeat);
+      await this.heartbeats.addHeartbeat(monitorId, heartbeat);
 
       if (monitor.url?.toLowerCase().startsWith('https')) {
         const certificate = await this.certificates.get(monitorId);
@@ -87,9 +97,69 @@ class Master {
       monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
       await this.monitors.updateUptimePercentage(monitor);
 
+      const notifyOutage =
+        monitor.notificationType === 'Outage' ||
+        monitor.notificationType === 'All';
+
+      if (lastHeartbeat) {
+        if (
+          !lastHeartbeat?.isDown &&
+          heartbeat.isDown &&
+          monitor.notificationId &&
+          notifyOutage
+        ) {
+          const notification = await this.notifications.getById(
+            monitor.notificationId
+          );
+
+          if (
+            notification?.isEnabled &&
+            NotificationServices[notification.platform]
+          ) {
+            const ServiceClass = NotificationServices[notification.platform];
+
+            if (ServiceClass) {
+              const service = new ServiceClass();
+              service.send(notification, monitor, heartbeat);
+            }
+          }
+        }
+
+        const notifyRecovery =
+          monitor.notificationType === 'Recovery' ||
+          monitor.notificationType === 'All';
+
+        if (
+          lastHeartbeat?.isDown &&
+          !heartbeat.isDown &&
+          monitor.notificationId &&
+          notifyRecovery
+        ) {
+          const notification = await this.notifications.getById(
+            monitor.notificationId
+          );
+
+          if (
+            notification?.isEnabled &&
+            NotificationServices[notification.platform]
+          ) {
+            const ServiceClass = NotificationServices[notification.platform];
+
+            if (ServiceClass) {
+              const service = new ServiceClass();
+              service.send(notification, monitor, heartbeat);
+            }
+          }
+        }
+      }
+
+      const timeout = heartbeat.isDown
+        ? monitor.retryInterval
+        : monitor.interval;
+
       this.timeouts.set(
         monitorId,
-        setTimeout(() => this.checkStatus(monitorId), monitor.interval * 1000)
+        setTimeout(() => this.checkStatus(monitorId), timeout * 1000)
       );
     }
 

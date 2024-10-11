@@ -23,6 +23,7 @@ const init = async () => {
   await SQLite.connect();
   await SQLite.setup();
   await cache.initialise();
+
   await migrateDatabase();
   const monitors = await cache.monitors.getAll();
   await cache.heartbeats.loadHeartbeats(monitors);

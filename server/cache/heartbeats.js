@@ -102,8 +102,12 @@ class Heartbeats {
     this.hourlyHeartbeats.set(monitorId, heartbeats);
   }
 
-  async addHeartbeat(heartbeat) {
-    const heartbeats = this.heartbeats.get(heartbeat.monitorId) || [];
+  async getLastHeartbeat(monitorId) {
+    return fetchHeartbeats(monitorId, 1);
+  }
+
+  async addHeartbeat(monitorId, heartbeat) {
+    const heartbeats = this.heartbeats.get(monitorId) || [];
 
     const databaseHeartbeat = await createHeartbeat(heartbeat);
 
@@ -116,7 +120,7 @@ class Heartbeats {
     // add the new heartbeat to the beginning of the array (newest)
     heartbeats.unshift(databaseHeartbeat);
 
-    this.heartbeats.set(heartbeat.monitorId, heartbeats);
+    this.heartbeats.set(monitorId, heartbeats);
   }
 
   async delete(monitorId) {

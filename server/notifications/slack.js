@@ -13,7 +13,7 @@ class Slack extends NotificationBase {
   async send(notification, monitor, heartbeat) {
     try {
       const payload =
-        SlackTemplateMessages[notification.type] || notification.payload;
+        SlackTemplateMessages[notification.messageType] || notification.payload;
 
       if (!payload) {
         throw new Error('Unable to find an payload');

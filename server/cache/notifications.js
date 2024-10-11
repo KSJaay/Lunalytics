@@ -1,5 +1,5 @@
 import Collection from '../../shared/utils/collection.js';
-import { UnprocessableError } from '../../shared/utils/errors.js';
+import logger from '../../shared/utils/logger.js';
 import {
   createNotification,
   deleteNotification,
@@ -29,6 +29,8 @@ class Notifications {
   }
 
   async getById(id) {
+    if (!id) return;
+
     const notification = this.notifications.get(id);
 
     if (notification) {
@@ -38,7 +40,8 @@ class Notifications {
     const query = await fetchNotificationById(id);
 
     if (!query) {
-      throw new UnprocessableError('Notification does not exist');
+      logger.error('Notification does not exist', { id });
+      return null;
     }
 
     this.notifications.set(id, query);
