@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // import local files
 import TextInput from '../../../../ui/input';
 import MonitorHttpMethods from './methods';
-import MonitorHttpStatusCodes from './statusCodes';
 
 const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
   const handleMethodSelect = (method) => {
@@ -12,7 +11,7 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
   };
 
   return (
-    <div className="monitor-configure-container">
+    <>
       <TextInput
         id="input-url"
         label="URL"
@@ -31,22 +30,7 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
           {errors.method}
         </label>
       )}
-
-      <MonitorHttpStatusCodes
-        selectedIds={inputs.valid_status_codes}
-        handleStatusCodeSelect={(code) => {
-          const { valid_status_codes = [] } = inputs;
-          const validStatusCodes = valid_status_codes.includes(code)
-            ? valid_status_codes.filter((id) => id !== code)
-            : valid_status_codes.concat(code);
-          handleInput('valid_status_codes', validStatusCodes);
-        }}
-      />
-
-      {errors.valid_status_codes && (
-        <label className="input-error">{errors.valid_status_codes}</label>
-      )}
-    </div>
+    </>
   );
 };
 

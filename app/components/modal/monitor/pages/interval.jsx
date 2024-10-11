@@ -6,7 +6,7 @@ import TextInput from '../../../ui/input';
 
 const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
   return (
-    <div className="monitor-configure-container">
+    <>
       <TextInput
         id="input-interval"
         type="number"
@@ -39,7 +39,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         value={inputs.requestTimeout}
         error={errors.requestTimeout}
       />
-    </div>
+    </>
   );
 };
 

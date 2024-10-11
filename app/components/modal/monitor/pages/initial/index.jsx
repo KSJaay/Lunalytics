@@ -7,7 +7,7 @@ import MonitorInitialDropdown from './type';
 
 const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
   return (
-    <div className="monitor-configure-container">
+    <>
       <TextInput
         label="Name"
         id="input-name"
@@ -31,7 +31,7 @@ const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
           readOnly
         />
       )}
-    </div>
+    </>
   );
 };
 

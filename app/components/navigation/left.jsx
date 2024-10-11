@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import { FaCog, FaHome, FaSignOutAlt } from '../icons';
+import { FaCog, FaHome, FaSignOutAlt, MdNotifications } from '../icons';
 
 const actionTabs = [
   {
@@ -15,11 +15,11 @@ const actionTabs = [
     url: '/',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
   },
-  // {
-  //   name: 'Notifications',
-  //   url: '/notifications',
-  //   logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
-  // },
+  {
+    name: 'Notifications',
+    url: '/notifications',
+    logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
+  },
 ];
 
 const LeftNavigation = ({ activeUrl = '' }) => {

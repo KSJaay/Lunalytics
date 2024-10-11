@@ -1,9 +1,13 @@
 import './error.scss';
 
+// import dependencies
+import { useNavigate } from 'react-router-dom';
+
 // import local files
 import Button from '../components/ui/button';
 
 const ErrorPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="error-page-container">
       <div className="error-page-header">
@@ -14,7 +18,7 @@ const ErrorPage = () => {
       <div className="error-page-subtitle">
         Sorry, couldn&#39;t find what you&#39;re looking for!
       </div>
-      <Button color={'gray'} as="a" href="/">
+      <Button color={'gray'} onClick={() => navigate('/')}>
         Go to homepage
       </Button>
     </div>
