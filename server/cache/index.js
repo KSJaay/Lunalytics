@@ -47,7 +47,7 @@ class Master {
       );
 
       if (
-        notification.isEnabled &&
+        notification?.isEnabled &&
         NotificationServices[notification.platform]
       ) {
         const service = new NotificationServices[notification.platform]();

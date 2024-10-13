@@ -1,5 +1,5 @@
 import { approveAccess } from '../../../database/queries/user.js';
-import { handleError } from '../../../../shared/utils/errors.js';
+import { handleError } from '../../../utils/errors.js';
 
 const accessApproveMiddleware = async (request, response) => {
   try {

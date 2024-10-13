@@ -1,5 +1,5 @@
 import { userExists } from '../../database/queries/user.js';
-import { handleError } from '../../../shared/utils/errors.js';
+import { handleError } from '../../utils/errors.js';
 
 const hasAdminPermissions = async (request, response, next) => {
   try {

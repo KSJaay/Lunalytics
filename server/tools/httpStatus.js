@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // import local files
-import logger from '../../shared/utils/logger.js';
+import logger from '../../server/utils/logger.js';
 
 const httpStatusCheck = async (monitor) => {
   const options = {
@@ -32,10 +32,9 @@ const httpStatusCheck = async (monitor) => {
   } catch (error) {
     const endTime = Date.now();
 
-    logger.error(
-      'HTTP Status Check',
-      `Issue checking monitor ${monitor.monitorId}: ${error.message}`
-    );
+    logger.error('HTTP Status Check', {
+      message: `Issue checking monitor ${monitor.monitorId}: ${error.message}`,
+    });
 
     if (error.response) {
       const failedResponse = error.response;
