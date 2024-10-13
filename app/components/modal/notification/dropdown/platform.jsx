@@ -32,6 +32,7 @@ const NotificationModalPlatform = ({ isEdit, setPlatform, platform }) => {
             isOpen={dropdownIsOpen}
             toggleDropdown={toggleDropdown}
             asInput
+            id="notification-type-dropdown"
           >
             <NotificationIcon
               name={notificationsIcons[platform].name}
@@ -46,6 +47,7 @@ const NotificationModalPlatform = ({ isEdit, setPlatform, platform }) => {
                   toggleDropdown();
                 }}
                 key={notification.name}
+                id={`notification-type-${notification.name}`}
               >
                 <img
                   src={`/notifications/${notification.icon}`}

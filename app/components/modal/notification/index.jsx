@@ -83,6 +83,7 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
         <Modal.Button
           color={'green'}
           onClick={() => handleSubmit(addNotification)}
+          id="notification-create-button"
         >
           {isEdit ? 'Update' : 'Create'}
         </Modal.Button>

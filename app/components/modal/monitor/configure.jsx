@@ -64,6 +64,7 @@ const MonitorConfigureModal = ({
                 'Setup advanced settings for the monitor, such as intervals, notifications, and others.'
               }
               value="Advance"
+              id="monitor-advanced-settings"
             >
               <MonitorPageNotification
                 inputs={inputs}
@@ -109,7 +110,7 @@ const MonitorConfigureModal = ({
           color="green"
           id="monitor-create-button"
         >
-          {isEdit ? 'Edit' : 'Create'}
+          {isEdit ? 'Update' : 'Create'}
         </Modal.Button>
       </Modal.Actions>
     </Modal.Container>
