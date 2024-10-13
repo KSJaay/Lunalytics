@@ -1,5 +1,5 @@
 import Collection from '../../shared/utils/collection.js';
-import logger from '../../shared/utils/logger.js';
+import logger from '../utils/logger.js';
 import {
   createNotification,
   deleteNotification,
@@ -40,7 +40,10 @@ class Notifications {
     const query = await fetchNotificationById(id);
 
     if (!query) {
-      logger.error('Notification does not exist', { id });
+      logger.error('Notification - getById', {
+        id,
+        message: 'Notification does not exist',
+      });
       return null;
     }
 

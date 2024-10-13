@@ -1,7 +1,7 @@
 import { existsSync, closeSync, openSync } from 'fs';
 import knex from 'knex';
 
-import logger from '../../../shared/utils/logger.js';
+import logger from '../../utils/logger.js';
 
 export class SQLite {
   constructor() {
@@ -27,7 +27,9 @@ export class SQLite {
       useNullAsDefault: true,
     });
 
-    logger.info('SQLite', 'Connected to SQLite database');
+    logger.info('SQLite - connect', {
+      message: 'Connected to SQLite database',
+    });
 
     return this.client;
   }

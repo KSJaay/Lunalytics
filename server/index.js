@@ -8,10 +8,10 @@ import cookieParser from 'cookie-parser';
 
 // import local files
 import cache from './cache/index.js';
-import logger from '../shared/utils/logger.js';
+import logger from './utils/logger.js';
 import initialiseRoutes from './routes/index.js';
 import SQLite from './database/sqlite/setup.js';
-import initialiseCronJobs from './../shared/utils/cron.js';
+import initialiseCronJobs from './utils/cron.js';
 import authorization from './middleware/authorization.js';
 import migrateDatabase from '../scripts/migrate.js';
 import isDemo from './middleware/demo.js';
@@ -54,7 +54,7 @@ const init = async () => {
       );
     }
 
-    logger.info('Express', 'Serving production static files');
+    logger.info('Express', { message: 'Serving production static files' });
     app.use(express.static(path.join(process.cwd(), 'dist')));
   }
 
@@ -69,14 +69,14 @@ const init = async () => {
   }
 
   app.use(authorization);
-  logger.info('Express', 'Initialising routes');
+  logger.info('Express', { message: 'Initialising routes' });
   initialiseRoutes(app);
 
   if (
     process.env.NODE_ENV === 'production' ||
     process.env.NODE_ENV === 'test'
   ) {
-    logger.info('Express', 'Serving production static files');
+    logger.info('Express', { message: 'Serving production static files' });
     app.get('*', function (request, response) {
       response.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
     });
@@ -85,15 +85,23 @@ const init = async () => {
   // Start the server
   const server_port = process.env.PORT || 2308;
   app.listen(server_port, () => {
-    logger.info('Express', `Server is running on port ${server_port}`);
+    logger.info('Express', {
+      message: `Server is running on port ${server_port}`,
+    });
   });
 
   process.on('uncaughtException', async (error) => {
-    logger.error('Express Exception', error);
+    logger.error('Express Exception', {
+      error: error.message,
+      stack: error.stack,
+    });
   });
 
   process.on('unhandledRejection', async (error) => {
-    logger.error('Express Rejection', error);
+    logger.error('Express Rejection', {
+      error: error.message,
+      stack: error.stack,
+    });
   });
 };
 
