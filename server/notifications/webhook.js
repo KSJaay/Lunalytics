@@ -33,6 +33,33 @@ class Webhook extends NotificationBase {
       this.handleError(error);
     }
   }
+
+  async sendRecovery(notification, monitor, heartbeat) {
+    try {
+      const template = WebhookTemplateMessages.recovery;
+
+      let content = NotificationReplacers(template, monitor, heartbeat);
+
+      let headers = {};
+
+      if (notification.requestType === 'form-data') {
+        // Change to form data from json
+        const form = new FormData();
+        form.append('data', JSON.stringify(content));
+        headers = form.getHeaders();
+        content = form;
+      }
+
+      if (notification.customHeaders) {
+        headers = { ...headers, ...notification.customHeaders };
+      }
+
+      await axios.post(notification.token, content, { headers });
+      return this.success;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
 }
 
 export default Webhook;

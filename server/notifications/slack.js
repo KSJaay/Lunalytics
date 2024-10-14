@@ -41,6 +41,32 @@ class Slack extends NotificationBase {
     }
   }
 
+  async sendRecovery(notification, monitor, heartbeat) {
+    try {
+      const template = SlackTemplateMessages.recovery;
+
+      const data = NotificationReplacers(template, monitor, heartbeat);
+
+      if (
+        !checkObjectAgainstSchema(data, SlackSchema) ||
+        !this.validateSlackBlocks(data.blocks)
+      ) {
+        throw new Error('Parsed payload is invalid format');
+      }
+
+      await axios.post(notification.token, {
+        text: notification.text,
+        channel: notification.channel,
+        username: notification.username,
+        attachments: [data],
+      });
+
+      return this.success;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   validateSlackBlocks = (blocks) => {
     if (!blocks?.length) {
       return false;

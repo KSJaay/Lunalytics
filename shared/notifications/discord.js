@@ -148,6 +148,15 @@ const DiscordTemplateMessages = {
       },
     ],
   },
+  recovery: {
+    embeds: [
+      {
+        color: 12061255,
+        title: 'Service {{service_name}} is back up!',
+        footer: { text: `{{date[YYYY-MM-DDTHH:mm:ssZ[Z]]}}` },
+      },
+    ],
+  },
 };
 
 export { DiscordSchema, DiscordTemplateMessages };

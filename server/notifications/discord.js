@@ -20,6 +20,19 @@ class Discord extends NotificationBase {
       this.handleError(error);
     }
   }
+
+  async sendRecovery(notification, monitor, heartbeat) {
+    try {
+      const template = DiscordTemplateMessages.recovery;
+
+      const embed = NotificationReplacers(template, monitor, heartbeat);
+
+      await axios.post(notification.token, { ...embed });
+      return this.success;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
 }
 
 export default Discord;
