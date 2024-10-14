@@ -13,7 +13,7 @@ const MonitorHttpMethods = ({ handleSelect, selectValue = defaultValue }) => {
 
   return (
     <>
-      <label className="text-input-label">Method</label>
+      <label className="input-label">Method</label>
       <Dropdown.Container
         isOpen={dropdownIsOpen}
         toggleDropdown={toggleDropdown}

@@ -7,13 +7,11 @@ import useContextStore from '../../context';
 
 const StatusLogo = ({ size = 250 }) => {
   const {
-    globalStore: { getAllMonitors },
+    globalStore: { allMonitors },
   } = useContextStore();
 
-  const monitors = getAllMonitors();
-
-  const totalMonitors = monitors.length;
-  const offlineMonitors = monitors.filter(
+  const totalMonitors = allMonitors.length;
+  const offlineMonitors = allMonitors.filter(
     (monitor = {}) => monitor.heartbeats[0]?.isDown
   ).length;
 

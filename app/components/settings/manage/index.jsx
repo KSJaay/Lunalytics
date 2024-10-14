@@ -11,10 +11,9 @@ import MembersTable from './member';
 import useTeamContext from '../../../context/team';
 
 const ManageTeam = () => {
-  const { getTeam, setTeam } = useTeamContext();
-  const team = getTeam();
+  const { teamMembers, setTeam } = useTeamContext();
 
-  const sortedMembers = team
+  const sortedMembers = teamMembers
     ?.sort((a, b) => a?.permission - b?.permission)
     .sort((a, b) => b?.isVerified - a?.isVerified);
 

@@ -1,0 +1,19 @@
+@import '../../styles/global.scss';
+
+.textarea {
+  width: 100%;
+  background-color: var(--accent-800);
+  border: none;
+  outline: none;
+  color: var(--font-color);
+  font-size: var(--font-md);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  border: 2px solid #ffffff00;
+  padding: pxToRem(8);
+  font-family: var(--font-family);
+
+  &:focus {
+    border: 2px solid var(--primary-700);
+  }
+}

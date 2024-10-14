@@ -3,6 +3,7 @@
 // weekly (Last 7 days (Total of 168 monitors))
 // monthly (Last 30 days (Total of 720 monitors))
 
+import Collection from '../../shared/utils/collection.js';
 import {
   fetchHeartbeats,
   fetchHourlyHeartbeats,
@@ -14,9 +15,9 @@ import {
 
 class Heartbeats {
   constructor() {
-    this.heartbeats = new Map();
-    this.dailyHeartbeats = new Map();
-    this.hourlyHeartbeats = new Map();
+    this.heartbeats = new Collection();
+    this.dailyHeartbeats = new Collection();
+    this.hourlyHeartbeats = new Collection();
   }
 
   async loadHeartbeats(monitors) {

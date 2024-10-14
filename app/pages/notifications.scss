@@ -1,0 +1,31 @@
+.notification-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  gap: 10px;
+  flex: 1;
+
+  &-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--accent-200);
+  }
+
+  &-text {
+    font-size: 1.5rem;
+    color: var(--primary-500);
+  }
+}
+
+.notification-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  margin: 10px 0;
+}

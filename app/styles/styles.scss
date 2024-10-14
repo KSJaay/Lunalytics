@@ -35,3 +35,36 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-900);
 }
+
+.input-label {
+  display: block;
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+  color: var(--font-color);
+  margin: 12px 0 4px 4px;
+}
+
+.input-error {
+  color: var(--red-700);
+  font-size: var(--font-sm);
+  margin: 4px;
+  display: block;
+}
+
+.input-error-general {
+  color: var(--red-700);
+  font-size: var(--font-md);
+  margin: 4px;
+  display: block;
+  text-align: center;
+}
+
+.input-description {
+  font-size: var(--font-sm);
+  margin: 8px 0 0 4px;
+}
+
+.input-required {
+  color: var(--red-600);
+  margin: 0 0 0 3px;
+}

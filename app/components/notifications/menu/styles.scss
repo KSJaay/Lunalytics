@@ -1,0 +1,43 @@
+@import '../../../styles/global.scss';
+
+.home-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: pxToRem(20);
+  margin: pxToRem(10) pxToRem(10) 0px pxToRem(10);
+}
+
+.home-menu-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.layout-option {
+  display: flex;
+  color: var(--white);
+  font-size: var(--font-md);
+  font-weight: 600;
+  gap: pxToRem(10);
+  align-items: center;
+}
+
+.home-menu-buttons-mobile {
+  display: none;
+}
+
+@include tablet {
+  #home-menu-status {
+    display: none;
+  }
+}
+
+@include mobile {
+  .home-menu-buttons {
+    display: none;
+  }
+
+  .home-menu-buttons-mobile {
+    display: flex;
+  }
+}

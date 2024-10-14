@@ -8,9 +8,11 @@ import PropTypes from 'prop-types';
 const TextInput = ({
   label,
   id,
+  description,
   error,
   iconLeft,
   iconRight,
+  isRequired,
   tabIndex = 0,
   ...props
 }) => {
@@ -21,8 +23,9 @@ const TextInput = ({
   return (
     <>
       {label && (
-        <label className="text-input-label" id={`text-input-label-${id}`}>
+        <label className="input-label" id={`text-input-label-${id}`}>
           {label}
+          {isRequired && <span className="input-required">*</span>}
         </label>
       )}
       <div className="text-input-container">
@@ -37,10 +40,11 @@ const TextInput = ({
         {iconRight && <div className="text-right-icon">{iconRight}</div>}
       </div>
       {error && (
-        <label className="text-input-error" id={`text-input-error-${id}`}>
+        <label className="input-error" id={`text-input-error-${id}`}>
           {error}
         </label>
       )}
+      {description && <div className="input-description">{description}</div>}
     </>
   );
 };
@@ -50,10 +54,12 @@ TextInput.displayName = 'TextInput';
 TextInput.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string,
+  description: PropTypes.string,
   error: PropTypes.string,
   iconLeft: PropTypes.node,
   iconRight: PropTypes.node,
   tabIndex: PropTypes.number,
+  isRequired: PropTypes.bool,
 };
 
 export default TextInput;

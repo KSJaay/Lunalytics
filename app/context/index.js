@@ -5,9 +5,11 @@ import GlobalStore from './global';
 import ModalStore from './modal';
 
 import UserStore from './user';
+import NotificationStore from './notifications';
 
 const store = {
   globalStore: new GlobalStore(),
+  notificationStore: new NotificationStore(),
   modalStore: new ModalStore(),
   userStore: new UserStore(),
 };

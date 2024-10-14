@@ -21,7 +21,7 @@ const MonitorHttpStatusCodes = ({
 
   return (
     <>
-      <label className="text-input-label">Accepted Status Codes</label>
+      <label className="input-label">Accepted Status Codes</label>
       <Select.Container isOpen={selectIsOpen} toggleSelect={toggleSelect}>
         <Select.Trigger
           asInput

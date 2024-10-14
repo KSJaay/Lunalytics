@@ -9,7 +9,7 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
   return (
     <>
-      <label className="text-input-label">Monitor Type</label>
+      <label className="input-label">Monitor Type</label>
       <Dropdown.Container
         isOpen={dropdownIsOpen}
         toggleDropdown={toggleDropdown}
@@ -44,7 +44,7 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
         </Dropdown.List>
       </Dropdown.Container>
       {errors.type && (
-        <label id="text-input-error-input-type" className="text-input-error">
+        <label id="text-input-error-input-type" className="input-error">
           {errors.type}
         </label>
       )}
