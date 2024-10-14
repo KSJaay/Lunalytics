@@ -18,6 +18,7 @@
 docs/.vitepress/dist
 docs/.vitepress/cache
 public/kanban.json
+/logs
 
 # misc
 .DS_Store

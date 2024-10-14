@@ -25,6 +25,7 @@ const NotificationModalWebhookInput = ({
       <TextInput
         label={'Friendly Name'}
         placeholder="Lunalytics"
+        id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName}
         onChange={(e) => {
@@ -49,6 +50,7 @@ const NotificationModalWebhookInput = ({
             </a>
           </>
         }
+        id="webhook-url"
         isRequired
         error={errors?.token}
         defaultValue={values.token}
@@ -65,7 +67,7 @@ const NotificationModalWebhookInput = ({
           asInput
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
-          id="http-method-dropdown"
+          id="http-form-dropdown"
         >
           {values.requestType || 'application/json'}
         </Dropdown.Trigger>
@@ -92,6 +94,7 @@ const NotificationModalWebhookInput = ({
       <div style={{ padding: '12px 0 3px 0' }}>
         <Checkbox
           label="Additional Headers"
+          id="additional-headers"
           checked={showAdditionalHeaders}
           onChange={(e) =>
             handleInput({
@@ -115,6 +118,7 @@ const NotificationModalWebhookInput = ({
                       value: e.target.value,
                     });
                   }}
+                  id="additional-headers-textarea"
                 >
                   {values.additionalHeaders}
                 </Textarea>

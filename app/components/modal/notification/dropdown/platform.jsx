@@ -4,13 +4,8 @@ import PropTypes from 'prop-types';
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
-
-const notifications = {
-  Discord: { name: 'Discord', icon: 'discord.svg' },
-  Slack: { name: 'Slack', icon: 'slack.svg' },
-  Telegram: { name: 'Telegram', icon: 'telegram.svg' },
-  Webhook: { name: 'Webhook', icon: 'webhook.svg' },
-};
+import NotificationIcon from './icon';
+import notificationsIcons from '../../../../constant/notifications.json';
 
 const NotificationModalPlatform = ({ isEdit, setPlatform, platform }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
@@ -20,13 +15,10 @@ const NotificationModalPlatform = ({ isEdit, setPlatform, platform }) => {
       <label className="input-label">Notification Type</label>
       {isEdit && (
         <Dropdown.Trigger asInput>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <img
-              src={`/notifications/${notifications[platform].icon}`}
-              style={{ width: '22px' }}
-            />
-            <div>{notifications[platform].name}</div>
-          </div>
+          <NotificationIcon
+            name={notificationsIcons[platform].name}
+            icon={notificationsIcons[platform].icon}
+          />
         </Dropdown.Trigger>
       )}
       {!isEdit && (
@@ -40,23 +32,22 @@ const NotificationModalPlatform = ({ isEdit, setPlatform, platform }) => {
             isOpen={dropdownIsOpen}
             toggleDropdown={toggleDropdown}
             asInput
+            id="notification-type-dropdown"
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <img
-                src={`/notifications/${notifications[platform].icon}`}
-                style={{ width: '22px' }}
-              />
-              <div>{notifications[platform].name}</div>
-            </div>
+            <NotificationIcon
+              name={notificationsIcons[platform].name}
+              icon={notificationsIcons[platform].icon}
+            />
           </Dropdown.Trigger>
           <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
-            {Object.values(notifications).map((notification) => (
+            {Object.values(notificationsIcons).map((notification) => (
               <Dropdown.Item
                 onClick={() => {
                   setPlatform({ key: 'platform', value: notification.name });
                   toggleDropdown();
                 }}
                 key={notification.name}
+                id={`notification-type-${notification.name}`}
               >
                 <img
                   src={`/notifications/${notification.icon}`}

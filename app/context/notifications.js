@@ -37,6 +37,10 @@ class NotificationStore {
     }
   };
 
+  getNotifciationById = (id) => {
+    return this.notifications.get(id);
+  };
+
   get allNotifications() {
     return Array.from(this.notifications.values()) || [];
   }

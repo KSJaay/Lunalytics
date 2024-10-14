@@ -1,6 +1,6 @@
 // import local files
 import SQLite from '../../server/database/sqlite/setup.js';
-import logger from '../../shared/utils/logger.js';
+import logger from '../../server/utils/logger.js';
 
 const infomation = {
   title: 'Support for TCP pings',
@@ -22,7 +22,7 @@ const migrate = async () => {
     table.string('method').defaultTo(null).alter();
   });
 
-  logger.info('Migrations', '0.4.0 has been applied');
+  logger.info('Migrations', { message: '0.4.0 has been applied' });
 };
 
 export { infomation, migrate };

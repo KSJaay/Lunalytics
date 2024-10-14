@@ -9,7 +9,8 @@ class Discord extends NotificationBase {
   async send(notification, monitor, heartbeat) {
     try {
       const template =
-        DiscordTemplateMessages[notification.type] || notification.payload;
+        DiscordTemplateMessages[notification.messageType] ||
+        notification.payload;
 
       const embed = NotificationReplacers(template, monitor, heartbeat);
 

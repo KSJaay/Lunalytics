@@ -19,6 +19,8 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
       retryInterval,
       requestTimeout,
       monitorId,
+      notificationId,
+      notificationType,
     } = form;
 
     const query = await createPostRequest(apiPath, {
@@ -32,6 +34,8 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
       retryInterval,
       requestTimeout,
       monitorId,
+      notificationId,
+      notificationType,
     });
 
     setMonitor(query.data);

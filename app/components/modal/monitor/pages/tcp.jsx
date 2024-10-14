@@ -6,7 +6,7 @@ import TextInput from '../../../ui/input';
 
 const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
   return (
-    <div className="monitor-configure-container">
+    <>
       <TextInput
         id="input-host"
         label="Host"
@@ -22,7 +22,7 @@ const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
         error={errors.port}
         onChange={(e) => handleInput('port', e.target.value)}
       />
-    </div>
+    </>
   );
 };
 

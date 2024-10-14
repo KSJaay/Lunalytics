@@ -10,6 +10,10 @@ Cypress.Commands.add('typeText', (id, value) => {
   return cy.get(id).type(value);
 });
 
+Cypress.Commands.add('clearText', (id) => {
+  return cy.get(id).clear();
+});
+
 Cypress.Commands.add('registerUser', (email, username, password) => {
   cy.visit('/register');
 
@@ -33,35 +37,76 @@ Cypress.Commands.add('loginUser', (email, password) => {
   cy.get('[class="auth-button"]').click();
 });
 
-Cypress.Commands.add(
-  'createMonitor',
-  (name, type, url, method, interval, retryInterval, timeout) => {
-    cy.visit('/');
-    cy.get('[id="home-add-monitor-button"]').click();
+Cypress.Commands.add('createMonitor', (details = {}) => {
+  cy.get('[id="home-add-monitor-button"]').click();
 
-    if (name && type) {
-      cy.typeText(name.id, name.value);
-      cy.get(type.id).click();
-      cy.get(type.value).click();
+  Object.keys(details).forEach((key) => {
+    const value = details[key];
+    const { id, value: elementValue, error, type, invalidValue } = value;
 
-      cy.get('[id="Next"]').click();
+    if (invalidValue) {
+      if (type === 'text') {
+        cy.typeText(id, invalidValue);
+      }
+
+      cy.get('[id="monitor-create-button"]').click();
+      cy.get(error.id).should('be.visible');
+      cy.equals(error.id, error.value);
     }
 
-    if (url && method) {
-      cy.typeText(url.id, url.value);
-
-      cy.get(method.id).click();
-      cy.get(method.value).click();
-
-      cy.get('[id="Next"]').click();
+    if (type === 'click') {
+      cy.get(id).click();
     }
 
-    if (interval && retryInterval && timeout) {
-      cy.typeText(interval.id, interval.value);
-      cy.typeText(retryInterval.id, retryInterval.value);
-      cy.typeText(timeout.id, timeout.value);
-
-      cy.get('[id="Submit"]').click();
+    if (elementValue) {
+      if (type === 'text') {
+        cy.clearText(id);
+        cy.typeText(id, elementValue);
+      } else if (type === 'dropdown') {
+        cy.get(id).click();
+        cy.get(elementValue).click();
+      }
     }
-  }
-);
+  });
+
+  cy.get('[id="monitor-create-button"]').click();
+});
+
+Cypress.Commands.add('createNotification', (details = {}) => {
+  cy.get('[id="home-add-notification-button"]').click();
+
+  Object.keys(details).forEach((key) => {
+    const value = details[key];
+    const { id, type, value: elementValue, error, invalidValue } = value;
+
+    if (invalidValue) {
+      if (type === 'text') {
+        cy.typeText(id, invalidValue);
+      } else if (type === 'dropdown') {
+        cy.get(id).click();
+        cy.get(invalidValue).click();
+      }
+
+      cy.get('[id="notification-create-button"]').click();
+
+      cy.get(error.id).should('be.visible');
+      cy.equals(error.id, error.value);
+    }
+
+    if (elementValue) {
+      if (type === 'text') {
+        cy.clearText(id);
+        cy.typeText(id, elementValue);
+      } else if (type === 'dropdown') {
+        cy.get(id).click();
+        cy.get(elementValue).click();
+      }
+    }
+
+    if (type === 'checkbox') {
+      cy.get(id).click();
+    }
+  });
+
+  cy.get('[id="notification-create-button"]').click();
+});

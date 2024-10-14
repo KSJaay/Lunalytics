@@ -7,7 +7,8 @@
   <a href="https://lunalytics.xyz">Documentation</a> ·
   <a href="https://demo.lunalytics.xyz">Try live demo</a> ·
   <a href="https://lunalytics.xyz/api/monitor">API Docs</a> ·
-  <a href="https://lunalytics.xyz/internal/roadmap">Roadmap</a>
+  <!-- <a href="https://lunalytics.xyz/internal/roadmap">Roadmap</a> -->
+  <a href="https://discord.gg/cjbGmmNdcd">Support</a>
 </div>
 
 ## ⭐ Features
@@ -19,6 +20,7 @@
 - Clean and easy to use UX/UI
 - Customizable themes/colors
 - Customizable user profiles
+- Support for notifications
 
 ## 🚀 Getting Started
 

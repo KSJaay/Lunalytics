@@ -9,7 +9,8 @@ class Webhook extends NotificationBase {
   async send(notification, monitor, heartbeat) {
     try {
       const message =
-        WebhookTemplateMessages[notification.type] || notification.payload;
+        WebhookTemplateMessages[notification.messageType] ||
+        notification.payload;
 
       let content = NotificationReplacers(message, monitor, heartbeat);
       let headers = {};

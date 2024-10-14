@@ -1,7 +1,7 @@
 import { existsSync, closeSync, openSync } from 'fs';
 import knex from 'knex';
 
-import logger from '../../../shared/utils/logger.js';
+import logger from '../../utils/logger.js';
 
 export class SQLite {
   constructor() {
@@ -27,7 +27,9 @@ export class SQLite {
       useNullAsDefault: true,
     });
 
-    logger.info('SQLite', 'Connected to SQLite database');
+    logger.info('SQLite - connect', {
+      message: 'Connected to SQLite database',
+    });
 
     return this.client;
   }
@@ -70,6 +72,8 @@ export class SQLite {
         table.text('headers');
         table.text('body');
         table.text('valid_status_codes').defaultTo('["200-299"]');
+        table.string('notificationId').defaultTo(null);
+        table.string('notificationType').defaultTo('All');
         table.string('email').notNullable();
 
         table.index('monitorId');
@@ -113,7 +117,7 @@ export class SQLite {
         table.integer('status').notNullable();
         table.integer('latency').notNullable();
         table.timestamp('date').notNullable();
-        table.boolean('isDown').defaultTo(0);
+        table.boolean('isDown').defaultTo(false);
         table.text('message').notNullable();
 
         table.index('monitorId');

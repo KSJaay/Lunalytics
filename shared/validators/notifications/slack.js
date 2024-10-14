@@ -7,10 +7,9 @@
 
 import { NotificationValidatorError } from '../../utils/errors.js';
 
-const channelRegex = /^#[a-zA-Z0-9_]{1,32}$/;
-const friendlyNameRegex = /^[a-zA-Z0-9_ ]+$/;
+const channelRegex = /^[a-z0-9][a-z0-9_-]{0,79}$/;
+const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];
-const textMessageRegex = /^[a-zA-Z0-9_ ]+$/;
 const tokenRegex =
   /^https:\/\/hooks.slack.com\/services\/[0-9a-zA-Z]+\/[0-9a-zA-Z]+\/[0-9a-zA-Z]+$/;
 const usernameRegex = /^[a-zA-Z0-9_]{1,32}$/;
@@ -26,7 +25,7 @@ const Slack = ({
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(
       'friendlyName',
-      'Invalid Friendly Name. Must be alphanumeric, Spaces, and underscores only.'
+      'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
     );
   }
 
@@ -36,10 +35,6 @@ const Slack = ({
 
   if (!messageTypes.includes(messageType)) {
     throw new NotificationValidatorError('messageType', 'Invalid Message Type');
-  }
-
-  if (textMessage && !textMessageRegex.test(textMessage)) {
-    throw new NotificationValidatorError('textMessage', 'Invalid Text Message');
   }
 
   if (!tokenRegex.test(token)) {

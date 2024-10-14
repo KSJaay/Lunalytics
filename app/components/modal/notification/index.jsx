@@ -25,13 +25,13 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
     closeModal
   );
 
-  const handleKeydown = (event) => {
-    if (event?.key === 'Escape' || event?.key === 'Esc') {
-      closeModal();
-    }
-  };
-
   useEffect(() => {
+    const handleKeydown = (event) => {
+      if (event?.key === 'Escape' || event?.key === 'Esc') {
+        closeModal();
+      }
+    };
+
     document.addEventListener('keydown', handleKeydown);
 
     return () => {
@@ -83,6 +83,7 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
         <Modal.Button
           color={'green'}
           onClick={() => handleSubmit(addNotification)}
+          id="notification-create-button"
         >
           {isEdit ? 'Update' : 'Create'}
         </Modal.Button>

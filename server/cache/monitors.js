@@ -68,6 +68,8 @@ class Monitor {
         interval,
         retryInterval,
         requestTimeout,
+        notificationId,
+        notificationType,
       } = body;
 
       const monitor = {
@@ -77,6 +79,8 @@ class Monitor {
         interval,
         retryInterval,
         requestTimeout,
+        notificationId,
+        notificationType,
         valid_status_codes: JSON.stringify(valid_status_codes),
         email,
         type: 'http',
@@ -87,17 +91,26 @@ class Monitor {
       }
 
       const data = await databaseFunction(monitor);
-      const monitorData = {
+      const monitorData = cleanPartialMonitor({
         ...data,
         uptimePercentage: 0,
         averageHeartbeatLatency: 0,
-      };
+      });
 
-      this.monitors.set(data.monitorId, monitorData);
+      this.monitors.set(monitorData.monitorId, monitorData);
 
       return monitorData;
     } else {
-      const { name, url, port, interval, retryInterval, requestTimeout } = body;
+      const {
+        name,
+        url,
+        port,
+        interval,
+        retryInterval,
+        requestTimeout,
+        notificationId,
+        notificationType,
+      } = body;
 
       const monitor = {
         name,
@@ -106,6 +119,8 @@ class Monitor {
         interval,
         retryInterval,
         requestTimeout,
+        notificationId,
+        notificationType,
         valid_status_codes: '',
         email,
         type: 'tcp',
@@ -116,13 +131,13 @@ class Monitor {
       }
 
       const data = await databaseFunction(monitor);
-      const monitorData = {
+      const monitorData = cleanPartialMonitor({
         ...data,
         uptimePercentage: 0,
         averageHeartbeatLatency: 0,
-      };
+      });
 
-      this.monitors.set(data.monitorId, monitorData);
+      this.monitors.set(monitorData.monitorId, monitorData);
 
       return monitorData;
     }

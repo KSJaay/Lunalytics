@@ -1,6 +1,6 @@
 import https from 'https';
 import axios from 'axios';
-import logger from '../../shared/utils/logger.js';
+import logger from '../utils/logger.js';
 
 const getCertInfo = async (url) => {
   try {
@@ -15,7 +15,10 @@ const getCertInfo = async (url) => {
 
     return checkCertificate(response);
   } catch (error) {
-    logger.error('getCertInfo', error);
+    logger.error('getCertInfo', {
+      error: error.message,
+      stack: error.stack,
+    });
 
     return { isValid: false };
   }
@@ -23,7 +26,9 @@ const getCertInfo = async (url) => {
 
 const checkCertificate = (res) => {
   if (!res.request.socket) {
-    logger.error('checkCertificate', 'Socket not found');
+    logger.error('checkCertificate', {
+      message: 'Socket not found',
+    });
     return { isValid: false };
   }
 

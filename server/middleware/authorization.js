@@ -1,6 +1,6 @@
 import { userExists } from '../database/queries/user.js';
 import { deleteCookie } from '../../shared/utils/cookies.js';
-import { handleError } from '../../shared/utils/errors.js';
+import { handleError } from '../utils/errors.js';
 
 const authorization = async (request, response, next) => {
   try {

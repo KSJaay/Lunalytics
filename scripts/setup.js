@@ -5,7 +5,7 @@ import inquirer from 'inquirer';
 import { v4 as uuidv4 } from 'uuid';
 
 // import local files
-import logger from '../shared/utils/logger.js';
+import logger from '../server/utils/logger.js';
 import { loadJSON } from '../shared/parseJson.js';
 const packageJson = loadJSON('../package.json');
 
@@ -44,11 +44,10 @@ const configExists = () => {
 };
 
 if (configExists()) {
-  logger.log(
-    'SETUP',
-    'Configuration file already exists. Please manually edit to overwrite or delete the file.',
-    'ERROR'
-  );
+  logger.error('SETUP', {
+    message:
+      'Configuration file already exists. Please manually edit to overwrite or delete the file.',
+  });
   process.exit(0);
 }
 
@@ -58,28 +57,25 @@ inquirer
     const { port, jwtSecret, migrationType, databaseName } = answers;
 
     if (!port || !jwtSecret || !migrationType || !databaseName) {
-      logger.log('SETUP', 'Invalid input. Please try again.', 'ERROR', false);
+      logger.error('SETUP', { message: 'Invalid input. Please try again.' });
       return;
     }
 
     const isIntRegex = /^\d+$/;
 
     if (!isIntRegex.test(port)) {
-      logger.log('SETUP', 'Invalid port. Please try again.', 'ERROR', false);
+      logger.error('SETUP', { message: 'Invalid port. Please try again.' });
       return;
     }
 
     if (jwtSecret.length < 10) {
-      logger.log(
-        'SETUP',
-        'JWT Secret Key must be at least 10 characters long.',
-        'ERROR',
-        false
-      );
+      logger.error('SETUP', {
+        message: 'JWT Secret Key must be at least 10 characters long.',
+      });
       return;
     }
 
-    logger.log('SETUP', 'Setting up application...', 'INFO', false);
+    logger.info('SETUP', { message: 'Setting up application...' });
 
     // write to config.json file
     const configPath = path.join(process.cwd(), 'config.json');
@@ -92,18 +88,16 @@ inquirer
 
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 
-    logger.log('SETUP', 'Application setup successfully.', 'INFO', false);
+    logger.info('SETUP', { message: 'Application setup successfully.' });
 
     process.exit(0);
   })
   .catch((error) => {
-    logger.log('', error, 'ERROR', false);
-    logger.log(
-      'SETUP',
-      'Enable to setup application. Please try again.',
-      'ERROR',
-      false
-    );
+    logger.error('SETUP', {
+      message: 'Enable to setup application. Please try again.',
+      error: error.message,
+      stack: error.stack,
+    });
 
     process.exit(1);
   });

@@ -2,7 +2,7 @@ import './about.scss';
 
 const SetttingAbout = () => {
   // eslint-disable-next-line no-undef
-  const version = __APP_VERSION__ || '0.5.0';
+  const version = __APP_VERSION__ || '0.6.0';
 
   return (
     <div className="settings-about-container">

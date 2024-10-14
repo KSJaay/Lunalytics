@@ -1,7 +1,5 @@
-import {
-  handleError,
-  UnprocessableError,
-} from '../../../shared/utils/errors.js';
+import { handleError } from '../../utils/errors.js';
+import { UnprocessableError } from '../../../shared/utils/errors.js';
 import NotificationValidators from '../../../shared/validators/notifications/index.js';
 import { userExists } from '../../database/queries/user.js';
 import cache from '../../cache/index.js';

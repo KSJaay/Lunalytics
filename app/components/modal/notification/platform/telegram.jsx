@@ -15,6 +15,7 @@ const NotificationModalTelegramInput = ({
       <TextInput
         label={'Friendly Name'}
         placeholder="Lunalytics"
+        id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName}
         onChange={(e) => {
@@ -38,6 +39,7 @@ const NotificationModalTelegramInput = ({
             </a>
           </>
         }
+        id="bot-token"
         isRequired
         error={errors?.token}
         defaultValue={values.token}
@@ -62,6 +64,7 @@ const NotificationModalTelegramInput = ({
             </a>
           </>
         }
+        id="chat-id"
         isRequired
         error={errors?.chatId}
         defaultValue={values.chatId}
@@ -73,6 +76,7 @@ const NotificationModalTelegramInput = ({
         <Checkbox
           label="Disable Notification"
           description="If enabled, users will recieve a notification without any sound."
+          id="disable-notification"
           error={errors?.disableNotification}
           checked={values.disableNotification}
           onChange={(e) => {
@@ -85,6 +89,7 @@ const NotificationModalTelegramInput = ({
         <Checkbox
           label="Protect Content"
           description="If enabled, users cannot forward or save the bots message."
+          id="protect-content"
           error={errors?.protectContent}
           checked={values.protectContent}
           onChange={(e) => {

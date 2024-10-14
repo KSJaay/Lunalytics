@@ -1,8 +1,6 @@
 import cache from '../../cache/index.js';
-import {
-  UnprocessableError,
-  handleError,
-} from '../../../shared/utils/errors.js';
+import { handleError } from '../../utils/errors.js';
+import { UnprocessableError } from '../../../shared/utils/errors.js';
 const validTypes = ['latest', 'day', 'week', 'month'];
 
 const fetchMonitorStatus = async (request, response) => {

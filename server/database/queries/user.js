@@ -1,9 +1,6 @@
 import SQLite from '../sqlite/setup.js';
-import {
-  generateHash,
-  verifyPassword,
-} from '../../../shared/utils/hashPassword.js';
-import { signCookie, verifyCookie } from '../../../shared/utils/jwt.js';
+import { generateHash, verifyPassword } from '../../utils/hashPassword.js';
+import { signCookie, verifyCookie } from '../../utils/jwt.js';
 import {
   AuthorizationError,
   ConflictError,

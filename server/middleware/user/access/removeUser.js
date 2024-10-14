@@ -1,5 +1,5 @@
 import { declineAccess } from '../../../database/queries/user.js';
-import { handleError } from '../../../../shared/utils/errors.js';
+import { handleError } from '../../../utils/errors.js';
 
 const accessRemoveMiddleware = async (request, response) => {
   try {

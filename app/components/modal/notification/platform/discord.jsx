@@ -14,6 +14,7 @@ const NotificationModalDiscordInput = ({
       <TextInput
         label={'Friendly Name'}
         placeholder="Lunalytics"
+        id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName}
         onChange={(e) => {
@@ -37,6 +38,7 @@ const NotificationModalDiscordInput = ({
             </a>
           </>
         }
+        id="webhook-url"
         isRequired
         error={errors?.token}
         defaultValue={values.token}
@@ -47,6 +49,7 @@ const NotificationModalDiscordInput = ({
       <TextInput
         label={'Webhook Username'}
         placeholder="Lunalytics"
+        id="webhook-username"
         error={errors?.username}
         defaultValue={values.username}
         onChange={(e) => {
@@ -56,6 +59,7 @@ const NotificationModalDiscordInput = ({
       <TextInput
         label={'Text Message'}
         placeholder="Alert @everyone"
+        id="text-messsage"
         error={errors?.textMessage}
         defaultValue={values.textMessage}
         onChange={(e) => {

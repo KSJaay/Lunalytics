@@ -1,4 +1,4 @@
-import { handleError } from '../../../shared/utils/errors.js';
+import { handleError } from '../../utils/errors.js';
 import cache from '../../cache/index.js';
 
 const NotificationGetUsingIdMiddleware = async (request, response) => {
