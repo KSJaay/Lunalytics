@@ -12,7 +12,7 @@ class GlobalStore {
       setMonitor: action,
       addMonitor: action,
       removeMonitor: action,
-      getAllMonitors: computed,
+      allMonitors: computed,
     });
   }
 
@@ -85,7 +85,7 @@ class GlobalStore {
     );
   };
 
-  get getAllMonitors() {
+  get allMonitors() {
     return Array.from(this.monitors.values()) || [];
   }
 

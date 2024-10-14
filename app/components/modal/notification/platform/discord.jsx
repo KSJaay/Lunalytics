@@ -25,7 +25,7 @@ const NotificationModalDiscordInput = ({
         placeholder="https://discord.com/api/webhooks"
         description={
           <>
-            For more information about how to create a discord webhoook checkout
+            For more information about how to create a Discord webhoook checkout
             this guide:{' '}
             <a
               style={{ color: 'var(--primary-700)' }}

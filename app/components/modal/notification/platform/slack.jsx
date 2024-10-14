@@ -29,11 +29,11 @@ const NotificationModalSlackInput = ({
             guide:{' '}
             <a
               style={{ color: 'var(--primary-700)' }}
-              href="https://lunalytics.xyz/guides/telegram/create-bot"
+              href="https://lunalytics.xyz/guides/slack/create-webhook"
               target="_blank"
               rel="noreferrer"
             >
-              https://lunalytics.xyz/guides/telegram/create-bot
+              https://lunalytics.xyz/guides/slack/create-webhook
             </a>
           </>
         }

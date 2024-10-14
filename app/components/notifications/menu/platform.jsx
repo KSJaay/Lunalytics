@@ -12,7 +12,6 @@ import { MdNotifications, RiStackFill } from '../../icons';
 const statusOptions = [
   {
     text: 'All',
-
     icon: (
       <div
         style={{

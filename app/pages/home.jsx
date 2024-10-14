@@ -18,7 +18,7 @@ import useLocalStorageContext from '../hooks/useLocalstorage';
 
 const Home = () => {
   const {
-    globalStore: { getAllMonitors },
+    globalStore: { allMonitors },
   } = useContextStore();
 
   const [search, setSearch] = useState('');
@@ -29,7 +29,7 @@ const Home = () => {
     setStatus('all');
   };
 
-  const monitorsList = getAllMonitors
+  const monitorsList = allMonitors
     .filter((monitor = {}) => {
       const matchesSearch =
         monitor.name?.toLowerCase().includes(search.toLowerCase()) ||

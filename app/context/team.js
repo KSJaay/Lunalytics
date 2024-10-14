@@ -10,11 +10,11 @@ class TeamStore {
       updateUserPermission: action,
       updateUserVerified: action,
       removeUser: action,
-      getTeam: computed,
+      teamMembers: computed,
     });
   }
 
-  get getTeam() {
+  get teamMembers() {
     return Array.from(this.team.values());
   }
 

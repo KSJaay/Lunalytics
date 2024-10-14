@@ -10,7 +10,7 @@ class NotificationStore {
       addNotification: action,
       deleteNotification: action,
       toggleNotification: action,
-      getAllNotifications: computed,
+      allNotifications: computed,
     });
   }
 
@@ -37,7 +37,7 @@ class NotificationStore {
     }
   };
 
-  get getAllNotifications() {
+  get allNotifications() {
     return Array.from(this.notifications.values()) || [];
   }
 }

@@ -45,7 +45,7 @@ const NotificationModalWebhookInput = ({
               target="_blank"
               rel="noreferrer"
             >
-              https://lunalytics.xyz/guides/blogs/create-webhook
+              https://lunalytics.xyz/guides/webhook/services
             </a>
           </>
         }
