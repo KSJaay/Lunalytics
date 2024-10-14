@@ -64,8 +64,6 @@ describe('Notification - Telegram', () => {
       cy.visit('/notifications');
     });
 
-    // Disable by clicking the three dots and then click disable
-
     it('should disable a notification', () => {
       const friendlyName = `${webhookNotification.friendlyName.value}Test`;
 

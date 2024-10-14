@@ -41,20 +41,7 @@ class Master {
     monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
     await this.monitors.updateUptimePercentage(monitor);
 
-    if (!lastHeartbeat?.isDown && heartbeat.isDown) {
-      const notification = await this.notifications.getById(
-        monitor.notificationId
-      );
-
-      if (
-        notification?.isEnabled &&
-        NotificationServices[notification.platform]
-      ) {
-        const service = new NotificationServices[notification.platform]();
-
-        service.send(notification, monitor, heartbeat);
-      }
-    }
+    await this.sendNotification(monitor, heartbeat, lastHeartbeat);
 
     const timeout = heartbeat.isDown ? monitor.retryInterval : monitor.interval;
 
@@ -97,61 +84,7 @@ class Master {
       monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
       await this.monitors.updateUptimePercentage(monitor);
 
-      const notifyOutage =
-        monitor.notificationType === 'Outage' ||
-        monitor.notificationType === 'All';
-
-      if (lastHeartbeat) {
-        if (
-          !lastHeartbeat?.isDown &&
-          heartbeat.isDown &&
-          monitor.notificationId &&
-          notifyOutage
-        ) {
-          const notification = await this.notifications.getById(
-            monitor.notificationId
-          );
-
-          if (
-            notification?.isEnabled &&
-            NotificationServices[notification.platform]
-          ) {
-            const ServiceClass = NotificationServices[notification.platform];
-
-            if (ServiceClass) {
-              const service = new ServiceClass();
-              service.send(notification, monitor, heartbeat);
-            }
-          }
-        }
-
-        const notifyRecovery =
-          monitor.notificationType === 'Recovery' ||
-          monitor.notificationType === 'All';
-
-        if (
-          lastHeartbeat?.isDown &&
-          !heartbeat.isDown &&
-          monitor.notificationId &&
-          notifyRecovery
-        ) {
-          const notification = await this.notifications.getById(
-            monitor.notificationId
-          );
-
-          if (
-            notification?.isEnabled &&
-            NotificationServices[notification.platform]
-          ) {
-            const ServiceClass = NotificationServices[notification.platform];
-
-            if (ServiceClass) {
-              const service = new ServiceClass();
-              service.send(notification, monitor, heartbeat);
-            }
-          }
-        }
-      }
+      await this.sendNotification(monitor, heartbeat, lastHeartbeat);
 
       const timeout = heartbeat.isDown
         ? monitor.retryInterval
@@ -168,6 +101,54 @@ class Master {
         this.updateTcpStatus(monitor, heartbeat);
       tcpStatusCheck(monitor, updateHeartbeat);
       clearTimeout(this.timeouts.get(monitorId));
+    }
+  }
+
+  async sendNotification(monitor, heartbeat, lastHeartbeat) {
+    try {
+      if (!lastHeartbeat) return;
+
+      const notifyOutage =
+        monitor.notificationType === 'All' ||
+        monitor.notificationType === 'Outage';
+
+      const notifyRecovery =
+        monitor.notificationType === 'All' ||
+        monitor.notificationType === 'Recovery';
+
+      const hasOutage =
+        notifyOutage && !lastHeartbeat?.isDown && heartbeat.isDown;
+
+      const hasRecovered =
+        notifyRecovery && lastHeartbeat?.isDown && !heartbeat.isDown;
+
+      if (!hasOutage && !hasRecovered) return;
+      if (!monitor.notificationId) return;
+
+      const notification = await this.notifications.getById(
+        monitor.notificationId
+      );
+
+      if (
+        !notification?.isEnabled ||
+        !NotificationServices[notification.platform]
+      ) {
+        return;
+      }
+
+      const ServiceClass = NotificationServices[notification.platform];
+
+      if (!ServiceClass) return;
+
+      const service = new ServiceClass();
+
+      if (notifyOutage) {
+        await service.send(notification, monitor, heartbeat);
+      } else {
+        await service.sendRecovery(notification, monitor, heartbeat);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }

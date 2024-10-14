@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // import local files
-import logger from '../../server/utils/logger.js';
+import logger from '../utils/logger.js';
 
 const httpStatusCheck = async (monitor) => {
   const options = {

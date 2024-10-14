@@ -72,35 +72,6 @@ Cypress.Commands.add('createMonitor', (details = {}) => {
   cy.get('[id="monitor-create-button"]').click();
 });
 
-Cypress.Commands.add(
-  'createInvalidMonitor',
-  (details = {}, showAdvance = false) => {
-    cy.visit('/');
-    cy.get('[id="home-add-monitor-button"]').click();
-
-    if (showAdvance) {
-      cy.get('[id="monitor-advanced-settings"]').click();
-    }
-
-    Object.keys(details).forEach((key) => {
-      const value = details[key];
-      const { id, type, value: elementValue, error, invalidValue } = value;
-
-      if (invalidValue && type === 'text') {
-        cy.typeText(id, invalidValue);
-        cy.get('[id="monitor-create-button"]').click();
-
-        cy.equals(error.id, error.value);
-      }
-
-      if (type === 'dropdown') {
-        cy.get(id).click();
-        cy.get(elementValue).click();
-      }
-    });
-  }
-);
-
 Cypress.Commands.add('createNotification', (details = {}) => {
   cy.get('[id="home-add-notification-button"]').click();
 

@@ -60,8 +60,6 @@ describe('Notification - Discord', () => {
       cy.visit('/notifications');
     });
 
-    // Disable by clicking the three dots and then click disable
-
     it('should disable a notification', () => {
       const friendlyName = `${discordNotification.friendlyName.value}Test`;
 
