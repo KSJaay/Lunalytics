@@ -28,6 +28,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Docs', link: '/intro' },
+      // { text: 'Guides', link: '/guides' },
       { text: 'API', link: '/api/monitor' },
       // { text: 'Blog', link: '/blog' },
     ],
@@ -46,6 +47,7 @@ export default defineConfig({
         text: 'API',
         items: [
           { text: 'Monitor', link: '/api/monitor' },
+          { text: 'Notification', link: '/api/notification' },
           { text: 'User', link: '/api/user' },
         ],
         collapsed: false,

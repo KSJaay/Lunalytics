@@ -239,6 +239,7 @@ Create a new [notification](#notification-structure) and returns the notificatio
 
 ```json [Discord]
 {
+  "platform": "Disord",
   "messageType": "pretty",
   "friendlyName": "Lunalytics",
   "textMessage": "Ping @everyone",
@@ -249,6 +250,7 @@ Create a new [notification](#notification-structure) and returns the notificatio
 
 ```json [Slack]
 {
+  "platform": "Slack",
   "channel": "XXXXXXXXXXXX",
   "friendlyName": "Lunalytics",
   "messageType": "pretty",
@@ -260,6 +262,7 @@ Create a new [notification](#notification-structure) and returns the notificatio
 
 ```json [Telegram]
 {
+  "platform": "Telegram",
   "chatId": "xxxxxxxxxx",
   "disableNotification": false,
   "friendlyName": "Lunalytics",
@@ -271,6 +274,7 @@ Create a new [notification](#notification-structure) and returns the notificatio
 
 ```json [Webhook]
 {
+  "platform": "Webhook",
   "friendlyName": "Lunalytics",
   "messageType": "pretty",
   "requestType": "application/json",
