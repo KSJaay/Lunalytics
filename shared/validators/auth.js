@@ -2,8 +2,8 @@
 const usernameRegex = /^[a-zA-Z0-9_\- ]{3,32}$/;
 // regex to check if email is valid
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,254}$/;
-// regex to check if one letter, one number or special character, atleast 8 characters long and max of 64 characters long
-const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9!@#$%^&*~_\-+=]).{8,64}$/;
+// regex to check if one letter, one number or special character, atleast 8 characters long and max of 48 characters long
+const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9!@#$%^&*~_\-+=]).{8,48}$/;
 
 const email = (email = '') => {
   if (email.length < 3 || email.length > 254) {
@@ -33,8 +33,8 @@ const username = (username = '') => {
 };
 
 const password = (password = '') => {
-  if (password.length < 8 || password.length > 64) {
-    return { password: 'Password must be between 8 and 64 characters.' };
+  if (password.length < 8 || password.length > 48) {
+    return { password: 'Password must be between 8 and 48 characters.' };
   }
 
   if (!passwordRegex.test(password)) {
