@@ -1,10 +1,10 @@
-@import './colors.scss';
-@import './font.scss';
-@import './radius.scss';
-@import './reset.scss';
-@import './shadows.scss';
-@import './themes.scss';
-@import './transitions.scss';
+@use './colors.scss' as *;
+@use './font.scss' as *;
+@use './radius.scss' as *;
+@use './reset.scss' as *;
+@use './shadows.scss' as *;
+@use './themes.scss' as *;
+@use './transitions.scss' as *;
 
 body {
   font-size: var(--font-md);

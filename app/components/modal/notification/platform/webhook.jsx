@@ -42,7 +42,6 @@ const NotificationModalWebhookInput = ({
             <a
               style={{ color: 'var(--primary-700)' }}
               href="https://lunalytics.xyz/guides/webhook/services"
-              // A list of services that are available for the user (ifttt, zapier, express, etc...)
               target="_blank"
               rel="noreferrer"
             >

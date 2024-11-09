@@ -1,4 +1,4 @@
-@import '../../../styles/global.scss';
+@use '../../../styles/pxToRem.scss' as *;
 
 .modal-container {
   position: fixed;
@@ -17,7 +17,9 @@
 }
 
 .modal-container--glassmorph {
-  @include glassmorphism;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
 }
 
 .modal-content {

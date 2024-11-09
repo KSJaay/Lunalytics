@@ -1,4 +1,4 @@
-@import '../../styles/global.scss';
+@use '../../styles/pxToRem.scss' as *;
 
 .checkbox-container {
   display: flex;

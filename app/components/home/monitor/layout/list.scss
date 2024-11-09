@@ -1,4 +1,5 @@
-@import '../../../../styles/global.scss';
+@use '../../../../styles/breakpoints.scss' as *;
+@use '../../../../styles/pxToRem.scss' as *;
 
 .home-monitor-container-list {
   width: 100%;

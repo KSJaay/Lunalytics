@@ -1,4 +1,4 @@
-@import './pxToRem.scss';
+@use './pxToRem.scss' as *;
 
 $BREAKPOINT_1: pxToRem(480);
 $BREAKPOINT_2: pxToRem(768);
@@ -48,5 +48,59 @@ $FULL_WIDTH: 100%;
 
   @media (max-width: $BREAKPOINT_3) {
     max-width: 968px;
+  }
+}
+
+.mobile-hidden {
+  @include mobile {
+    display: none;
+  }
+}
+
+.tablet-hidden {
+  @include tablet {
+    display: none;
+  }
+}
+
+.laptop-hidden {
+  @include laptop {
+    display: none;
+  }
+}
+
+.desktop-hidden {
+  @include desktop {
+    display: none;
+  }
+}
+
+.mobile-shown {
+  display: none;
+
+  @include mobile {
+    display: flex;
+  }
+}
+
+.tablet-shown {
+  display: none;
+
+  @include tablet {
+    display: flex;
+  }
+}
+
+.laptop-shown {
+  @include laptop {
+    display: none;
+  }
+}
+
+.desktop-shown {
+  display: none;
+
+  @include desktop {
+    display: flex;
   }
 }
