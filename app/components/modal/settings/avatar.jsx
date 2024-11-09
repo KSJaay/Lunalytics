@@ -122,7 +122,7 @@ const AvatarSelect = () => {
 
   return (
     <>
-      <label className="text-input-label">Avatar</label>
+      <label className="input-label">Avatar</label>
       <div
         className="avatar-input"
         onClick={() =>

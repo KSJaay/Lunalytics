@@ -18,15 +18,14 @@ import useContextStore from '../../../../context';
 import handleTransferAccount from '../../../../handlers/settings/account/transfer';
 
 const SettingsAccountTransferModal = ({ closeModal }) => {
-  const { getTeam, setTeam } = useTeamContext();
+  const { teamMembers, setTeam } = useTeamContext();
   const {
     userStore: { user },
   } = useContextStore();
   const { dropdownIsOpen, selectedId, toggleDropdown, handleDropdownSelect } =
     useDropdown();
-  const team = getTeam();
 
-  const sortedMembers = team
+  const sortedMembers = teamMembers
     ?.sort((a, b) => a?.permission - b?.permission)
     .filter((member) => member.isVerified);
 

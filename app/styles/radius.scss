@@ -1,4 +1,4 @@
-@import './pxToRem.scss';
+@use './pxToRem.scss' as *;
 
 :root {
   --radius-xs: #{pxToRem(5)};

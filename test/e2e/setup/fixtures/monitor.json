@@ -1,61 +1,139 @@
 {
-  "name": {
-    "id": "[id=\"input-name\"]",
-    "value": "test-monitor",
-    "error": {
-      "id": "[id=\"text-input-error-input-name\"]",
-      "value": "Please enter a valid name. Only letters, numbers and - are allowed."
+  "http": {
+    "name": {
+      "id": "[id=\"input-name\"]",
+      "value": "test-monitor",
+      "type": "text",
+      "invalidValue": "@#${}[]||<>",
+      "error": {
+        "id": "[id=\"text-input-error-input-name\"]",
+        "value": "Please enter a valid name. Only letters, numbers and - are allowed."
+      }
+    },
+    "type": {
+      "id": "[id=\"type-dropdown\"]",
+      "value": "[id=\"type-http\"]",
+      "type": "dropdown"
+    },
+    "url": {
+      "id": "[id=\"input-url\"]",
+      "value": "http://lunalytics.xyz/api/status",
+      "type": "text",
+      "invalidValue": "@#${}[]||<>",
+      "error": {
+        "id": "[id=\"text-input-error-input-url\"]",
+        "value": "Please enter a valid URL."
+      }
+    },
+    "advance": {
+      "id": "[id=\"monitor-advanced-settings\"]",
+      "type": "click"
+    },
+    "method": {
+      "id": "[id=\"http-method-dropdown\"]",
+      "value": "[id=\"http-method-GET\"]",
+      "type": "dropdown"
+    },
+    "interval": {
+      "id": "[id=\"input-interval\"]",
+      "value": "{backspace} {backspace} 45",
+      "invalidValue": 10,
+      "type": "text",
+      "error": {
+        "id": "[id=\"text-input-error-input-interval\"]",
+        "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
+      }
+    },
+    "retryInterval": {
+      "id": "[id=\"input-retry-interval\"]",
+      "value": "{backspace} {backspace} 45",
+      "invalidValue": 10,
+      "type": "text",
+      "error": {
+        "id": "[id=\"text-input-error-input-retry-interval\"]",
+        "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
+      }
+    },
+    "timeout": {
+      "id": "[id=\"input-request-timeout\"]",
+      "value": "{backspace} {backspace} 45",
+      "invalidValue": 10,
+      "type": "text",
+      "error": {
+        "id": "[id=\"text-input-error-input-request-timeout\"]",
+        "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
+      }
     }
   },
-  "type": {
-    "id": "[id=\"type-dropdown\"]",
-    "value": "[id=\"type-http\"]",
-    "error": {
-      "id": "[id=\"text-input-error-input-type\"]",
-      "value": "Please select a valid monitor type."
-    }
-  },
-  "url": {
-    "id": "[id=\"input-url\"]",
-    "value": "http://lunalytics.xyz/api/status",
-    "error": {
-      "id": "[id=\"text-input-error-input-url\"]",
-      "value": "Please enter a valid URL."
-    }
-  },
-  "method": {
-    "id": "[id=\"http-method-dropdown\"]",
-    "value": "[id=\"http-method-GET\"]",
-    "error": {
-      "id": "[id=\"text-input-http-method-error\"]",
-      "value": "Please select a valid method."
-    }
-  },
-  "interval": {
-    "id": "[id=\"input-interval\"]",
-    "value": "{backspace} {backspace} 45",
-    "invalidValue": 10,
-    "error": {
-      "id": "[id=\"text-input-error-input-interval\"]",
-      "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
-    }
-  },
-  "retryInterval": {
-    "id": "[id=\"input-retry-interval\"]",
-    "value": "{backspace} {backspace} 45",
-    "invalidValue": 10,
-    "error": {
-      "id": "[id=\"text-input-error-input-retry-interval\"]",
-      "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
-    }
-  },
-  "timeout": {
-    "id": "[id=\"input-request-timeout\"]",
-    "value": "{backspace} {backspace} 45",
-    "invalidValue": 10,
-    "error": {
-      "id": "[id=\"text-input-error-input-request-timeout\"]",
-      "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
+  "tcp": {
+    "name": {
+      "id": "[id=\"input-name\"]",
+      "value": "test-monitor",
+      "type": "text",
+      "invalidValue": "@#${}[]||<>",
+      "error": {
+        "id": "[id=\"text-input-error-input-name\"]",
+        "value": "Please enter a valid name. Only letters, numbers and - are allowed."
+      }
+    },
+    "type": {
+      "id": "[id=\"type-dropdown\"]",
+      "value": "[id=\"type-tcp\"]",
+      "type": "dropdown"
+    },
+    "host": {
+      "id": "[id=\"input-host\"]",
+      "value": "127.0.0.1",
+      "type": "text",
+      "invalidValue": "@#${}[]||<>",
+      "error": {
+        "id": "[id=\"text-input-error-input-host\"]",
+        "value": "Please enter a valid host (Only IPv4 is valid)."
+      }
+    },
+    "port": {
+      "id": "[id=\"input-port\"]",
+      "value": "2308",
+      "type": "text",
+      "invalidValue": "2308999",
+      "error": {
+        "id": "[id=\"text-input-error-input-port\"]",
+        "value": "Please enter a valid port."
+      }
+    },
+    "advance": {
+      "id": "[id=\"monitor-advanced-settings\"]",
+      "type": "click"
+    },
+    "interval": {
+      "id": "[id=\"input-interval\"]",
+      "value": "{backspace} {backspace} 45",
+      "invalidValue": 10,
+      "type": "text",
+      "error": {
+        "id": "[id=\"text-input-error-input-interval\"]",
+        "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
+      }
+    },
+    "retryInterval": {
+      "id": "[id=\"input-retry-interval\"]",
+      "value": "{backspace} {backspace} 45",
+      "invalidValue": 10,
+      "type": "text",
+      "error": {
+        "id": "[id=\"text-input-error-input-retry-interval\"]",
+        "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
+      }
+    },
+    "timeout": {
+      "id": "[id=\"input-request-timeout\"]",
+      "value": "{backspace} {backspace} 45",
+      "invalidValue": 10,
+      "type": "text",
+      "error": {
+        "id": "[id=\"text-input-error-input-request-timeout\"]",
+        "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
+      }
     }
   }
 }

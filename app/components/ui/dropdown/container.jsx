@@ -8,6 +8,7 @@ const Container = ({
   isOpen,
   toggleDropdown,
   children,
+  className = '',
   ...props
 }) => {
   const classes = classNames('dropdown', {
@@ -37,7 +38,7 @@ const Container = ({
   }, [containerRef, isOpen, toggleDropdown]);
 
   return (
-    <div className={classes} ref={containerRef} {...props}>
+    <div className={`${classes} ${className}`} ref={containerRef} {...props}>
       {children}
     </div>
   );
@@ -50,6 +51,7 @@ Container.propTypes = {
   position: PropTypes.oneOf(['left', 'right', 'center', 'top']),
   isOpen: PropTypes.bool.isRequired,
   toggleDropdown: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
 export default Container;

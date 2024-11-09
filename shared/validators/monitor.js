@@ -9,6 +9,8 @@ const validMethods = [
 ];
 
 const validTypes = ['http', 'tcp'];
+const notificationTypes = ['All', 'Outage', 'Recovery'];
+const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/;
 
 export const type = (type) => {
   if (!type || !validTypes.includes(type)) {
@@ -23,8 +25,6 @@ export const name = (name) => {
 };
 
 export const httpUrl = (url) => {
-  const urlRegex = /^(http|https):\/\/[^ "]+$/;
-
   if (!url || !urlRegex.test(url)) {
     return 'Please enter a valid URL.';
   }
@@ -81,8 +81,14 @@ export const requestTimeout = (requestTimeout) => {
     return 'Please enter a valid request timeout.';
   }
 
-  if (requestTimeout < 20 || requestTimeout > 600) {
+  if (requestTimeout < 5 || requestTimeout > 600) {
     return 'Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds.';
+  }
+};
+
+export const notificationType = (notification) => {
+  if (!notificationTypes.includes(notification)) {
+    return 'Please select a valid notification type.';
   }
 };
 
@@ -97,6 +103,7 @@ const validators = {
   interval,
   retryInterval,
   requestTimeout,
+  notificationType,
 };
 
 const httpValidators = [
@@ -108,6 +115,7 @@ const httpValidators = [
   ['interval', 'interval'],
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
 ];
 
 const tcpValidators = [
@@ -118,39 +126,37 @@ const tcpValidators = [
   ['interval', 'interval'],
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
 ];
 
 const http = (data) => {
-  const errors = httpValidators
-    .map((validator) => {
-      const error = validators[validator[1]](data[validator[0]]);
-      if (error) {
-        return error;
-      }
-    })
-    .filter(Boolean);
+  const errors = {};
 
-  if (errors.length) {
-    return errors[0];
+  httpValidators.forEach((validator) => {
+    const error = validators[validator[1]](data[validator[0]]);
+    if (error) {
+      errors[validator[0]] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
   }
 
   return false;
 };
 
 const tcp = (data) => {
-  const errors = tcpValidators
-    .map((validator) => {
-      const error = validators[validator[1]](data[validator[0]]);
-      if (error) {
-        return error;
-      }
-    })
-    .filter(Boolean);
+  const errors = {};
+  tcpValidators.forEach((validator) => {
+    const error = validators[validator[1]](data[validator[0]]);
+    if (error) {
+      errors[validator[0]] = error;
+    }
+  });
 
-  console.log(errors);
-
-  if (errors.length) {
-    return errors[0];
+  if (Object.keys(errors).length) {
+    return errors;
   }
 
   return false;

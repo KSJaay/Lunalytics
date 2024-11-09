@@ -1,4 +1,4 @@
-@import '../../../../styles/global.scss';
+@use '../../../../styles/pxToRem.scss' as *;
 
 .home-monitor-container {
   width: pxToRem(250);

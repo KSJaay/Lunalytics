@@ -1,0 +1,23 @@
+.json-format {
+  white-space: pre;
+  font-family: Consolas, monospace;
+  background-color: var(--accent-800);
+  padding: 8px 12px;
+  border-radius: 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+
+  .string {
+    color: #7bc36e;
+  }
+  .number {
+    color: #d19a66;
+  }
+  .boolean,
+  .null {
+    color: #56b6c2;
+  }
+  .key {
+    color: #e06c75;
+  }
+}

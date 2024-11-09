@@ -32,7 +32,7 @@ const heartbeatPropType = PropTypes.shape({
   status: PropTypes.number.isRequired,
   latency: PropTypes.number.isRequired,
   date: PropTypes.number.isRequired,
-  isDown: PropTypes.number.isRequired,
+  isDown: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
 });
 

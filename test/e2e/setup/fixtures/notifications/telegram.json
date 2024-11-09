@@ -1,0 +1,37 @@
+{
+  "type": {
+    "id": "[id=\"notification-type-dropdown\"]",
+    "value": "[id=\"notification-type-Telegram\"]",
+    "type": "dropdown"
+  },
+  "friendlyName": {
+    "id": "[id=\"friendly-name\"]",
+    "value": "Slack",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"text-input-error-friendly-name\"]",
+      "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
+    }
+  },
+  "url": {
+    "id": "[id=\"bot-token\"]",
+    "value": "123123123123123123",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"text-input-error-bot-token\"]",
+      "value": "Invalid Telegram Bot Token"
+    }
+  },
+  "chatId": {
+    "id": "[id=\"chat-id\"]",
+    "value": "123123123",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"text-input-error-chat-id\"]",
+      "value": "Invalid Chat ID"
+    }
+  }
+}

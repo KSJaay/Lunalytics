@@ -9,7 +9,10 @@ import MonitorPageInitial from './pages/initial';
 import MonitorPageHttp from './pages/http';
 import MonitorPageTcp from './pages/tcp';
 import MonitorPageInterval from './pages/interval';
+import MonitorPageNotification from './pages/notification';
 import useMonitorForm from '../../../hooks/useMonitorForm';
+import { Accordion, AccordionItem } from '../../ui/accordion';
+import MonitorHttpStatusCodes from './pages/http/statusCodes';
 
 const MonitorConfigureModal = ({
   closeModal,
@@ -17,8 +20,12 @@ const MonitorConfigureModal = ({
   handleMonitorSubmit,
   isEdit = false,
 }) => {
-  const { form, errors, inputs, handleActionButtons, handleInput } =
-    useMonitorForm(monitor, isEdit, closeModal, handleMonitorSubmit);
+  const { errors, inputs, handleActionButtons, handleInput } = useMonitorForm(
+    monitor,
+    isEdit,
+    closeModal,
+    handleMonitorSubmit
+  );
 
   return (
     <Modal.Container closeButton={closeModal}>
@@ -26,50 +33,85 @@ const MonitorConfigureModal = ({
         {isEdit ? 'Edit Monitor' : 'Add Monitor'}
       </Modal.Title>
       <Modal.Message>
-        {form.name === 'initial' && (
+        <div className="monitor-configure-container">
           <MonitorPageInitial
             inputs={inputs}
             errors={errors}
             handleInput={handleInput}
             isEdit={isEdit}
           />
-        )}
 
-        {form.name === 'http' && (
-          <MonitorPageHttp
-            inputs={inputs}
-            errors={errors}
-            handleInput={handleInput}
-          />
-        )}
+          {inputs.type === 'http' && (
+            <MonitorPageHttp
+              inputs={inputs}
+              errors={errors}
+              handleInput={handleInput}
+            />
+          )}
 
-        {form.name === 'tcp' && (
-          <MonitorPageTcp
-            inputs={inputs}
-            errors={errors}
-            handleInput={handleInput}
-          />
-        )}
+          {inputs.type === 'tcp' && (
+            <MonitorPageTcp
+              inputs={inputs}
+              errors={errors}
+              handleInput={handleInput}
+            />
+          )}
+          <br />
+          <Accordion dark>
+            <AccordionItem
+              title="Advanced Settings"
+              subtitle={
+                'Setup advanced settings for the monitor, such as intervals, notifications, and others.'
+              }
+              value="Advance"
+              id="monitor-advanced-settings"
+            >
+              <MonitorPageNotification
+                inputs={inputs}
+                errors={errors}
+                handleInput={handleInput}
+              />
 
-        {form.name === 'interval' && (
-          <MonitorPageInterval
-            inputs={inputs}
-            errors={errors}
-            handleInput={handleInput}
-          />
-        )}
+              <MonitorHttpStatusCodes
+                selectedIds={inputs.valid_status_codes}
+                handleStatusCodeSelect={(code) => {
+                  const { valid_status_codes = [] } = inputs;
+                  const validStatusCodes = valid_status_codes.includes(code)
+                    ? valid_status_codes.filter((id) => id !== code)
+                    : valid_status_codes.concat(code);
+                  handleInput('valid_status_codes', validStatusCodes);
+                }}
+              />
+
+              {errors.valid_status_codes && (
+                <label className="input-error">
+                  {errors.valid_status_codes}
+                </label>
+              )}
+
+              <MonitorPageInterval
+                inputs={inputs}
+                errors={errors}
+                handleInput={handleInput}
+              />
+
+              <br />
+            </AccordionItem>
+          </Accordion>
+        </div>
       </Modal.Message>
 
       <Modal.Actions>
-        {form.actions.map((action) => (
-          <Modal.Button
-            id={action}
-            key={action}
-            onClick={handleActionButtons(action)}
-          >
-            {action}
-          </Modal.Button>
-        ))}
+        <Modal.Button onClick={handleActionButtons('Cancel')}>
+          Cancel
+        </Modal.Button>
+        <Modal.Button
+          onClick={handleActionButtons('Create')}
+          color="green"
+          id="monitor-create-button"
+        >
+          {isEdit ? 'Update' : 'Create'}
+        </Modal.Button>
       </Modal.Actions>
     </Modal.Container>
   );

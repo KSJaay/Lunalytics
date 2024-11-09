@@ -1,15 +1,14 @@
 import { existsSync, readFileSync } from 'fs';
 import path from 'path';
-import logger from '../shared/utils/logger.js';
+import logger from '../server/utils/logger.js';
 
 const configPath = path.join(process.cwd(), 'config.json');
 
 if (!existsSync(configPath)) {
-  logger.log(
-    'SETUP',
-    'Configuration file not found. Please run "npm run setup" (or "yarn setup") to create it.',
-    'ERROR'
-  );
+  logger.info('SETUP', {
+    message:
+      'Configuration file not found. Please run "npm run setup" (or "yarn setup") to create it.',
+  });
   process.exit(1);
 }
 
@@ -24,11 +23,9 @@ process.env.CORS_LIST = config.cors;
 if (process.env.NODE_ENV === 'test') {
   process.env.DATABASE_NAME = 'e2e-test';
 
-  logger.log(
-    'SETUP',
-    'Changed database name to "e2e-test" for testing purposes.',
-    'INFO'
-  );
+  logger.info('SETUP', {
+    message: 'Changed database name to "e2e-test" for testing purposes.',
+  });
 }
 
-logger.log('SETUP', 'Environment variables loaded successfully.', 'INFO');
+logger.info('SETUP', { message: 'Environment variables loaded successfully.' });

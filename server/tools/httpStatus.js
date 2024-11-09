@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // import local files
-import logger from '../../shared/utils/logger.js';
+import logger from '../utils/logger.js';
 
 const httpStatusCheck = async (monitor) => {
   const options = {
@@ -19,7 +19,7 @@ const httpStatusCheck = async (monitor) => {
 
     const latency = Date.now() - startTime;
     const message = `${query.status} - ${query.statusText}`;
-    const isDown = query.status >= 400 ? 1 : 0;
+    const isDown = query.status >= 400 ? true : false;
     const status = query.status;
 
     return {
@@ -32,10 +32,9 @@ const httpStatusCheck = async (monitor) => {
   } catch (error) {
     const endTime = Date.now();
 
-    logger.error(
-      'HTTP Status Check',
-      `Issue checking monitor ${monitor.monitorId}: ${error.message}`
-    );
+    logger.error('HTTP Status Check', {
+      message: `Issue checking monitor ${monitor.monitorId}: ${error.message}`,
+    });
 
     if (error.response) {
       const failedResponse = error.response;
@@ -58,7 +57,7 @@ const httpStatusCheck = async (monitor) => {
       status: 0,
       latency: endTime - startTime,
       message: error.message,
-      isDown: 1,
+      isDown: true,
     };
   }
 };

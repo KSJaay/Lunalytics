@@ -15,7 +15,7 @@ import { FiLayout } from 'react-icons/fi';
 import { HiStatusOffline, HiStatusOnline } from 'react-icons/hi';
 import { IoMdEyeOff, IoMdEye, IoMdClose, IoMdHelpCircle } from 'react-icons/io';
 import { LiaSyncSolid } from 'react-icons/lia';
-import { MdEdit, MdErrorOutline } from 'react-icons/md';
+import { MdEdit, MdErrorOutline, MdNotifications } from 'react-icons/md';
 import {
   FaCircleCheck,
   FaEllipsisVertical,
@@ -24,6 +24,7 @@ import {
   FaTrashCan,
 } from 'react-icons/fa6';
 import { IoArrowBack, IoColorPalette, IoGrid, IoReload } from 'react-icons/io5';
+import { RiStackFill } from 'react-icons/ri';
 import StatusLogo from './statusLogo';
 
 export {
@@ -57,5 +58,7 @@ export {
   LiaSyncSolid,
   MdEdit,
   MdErrorOutline,
+  MdNotifications,
+  RiStackFill,
   StatusLogo,
 };

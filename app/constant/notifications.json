@@ -1,0 +1,6 @@
+{
+  "Discord": { "name": "Discord", "icon": "discord.svg" },
+  "Slack": { "name": "Slack", "icon": "slack.svg" },
+  "Telegram": { "name": "Telegram", "icon": "telegram.svg" },
+  "Webhook": { "name": "Webhook", "icon": "webhook.svg" }
+}

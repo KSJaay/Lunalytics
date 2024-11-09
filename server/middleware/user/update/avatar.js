@@ -2,7 +2,7 @@ import {
   userExists,
   updateUserAvatar,
 } from '../../../database/queries/user.js';
-import { handleError } from '../../../../shared/utils/errors.js';
+import { handleError } from '../../../utils/errors.js';
 import validators from '../../../../shared/validators/index.js';
 
 const userUpdateAvatar = async (request, response) => {

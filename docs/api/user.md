@@ -23,7 +23,7 @@ There are various restrictions applied to the user data. The following are some 
 
 #### Password
 
-- Password must be between 8 and 64 characters
+- Password must be between 8 and 48 characters
 - Password must contain one letter, one number or special character
 - Passwords can contain the following special characters: !@#$%^&\*~\_-+=
 
@@ -76,9 +76,9 @@ There are various restrictions applied to the user data. The following are some 
 
 # API Endpoints
 
-<DividePage>
-
 ## Get current user
+
+<DividePage>
 
 <template #left>
 
@@ -122,9 +122,9 @@ axios('/api/user', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Check user exists
+
+<DividePage>
 
 <template #left>
 
@@ -173,9 +173,9 @@ axios('/api/user/exists', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Get user monitors
+
+<DividePage>
 
 <template #left>
 
@@ -220,9 +220,9 @@ axios('/api/user/monitors', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Update user display name
+
+<DividePage>
 
 <template #left>
 
@@ -277,9 +277,9 @@ axios('/api/user/update/username', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Update user password
+
+<DividePage>
 
 <template #left>
 
@@ -336,9 +336,9 @@ axios('/api/user/update/password', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Update user avatar
+
+<DividePage>
 
 <template #left>
 
@@ -393,9 +393,9 @@ axios('/api/user/update/avatar', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Get team members
+
+<DividePage>
 
 <template #left>
 
@@ -439,9 +439,9 @@ axios('/api/user/team', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Decline member
+
+<DividePage>
 
 <template #left>
 
@@ -498,9 +498,9 @@ axios('/api/user/access/decline', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Approve member
+
+<DividePage>
 
 <template #left>
 
@@ -557,9 +557,9 @@ axios('/api/user/access/approve', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Remove Member
+
+<DividePage>
 
 <template #left>
 
@@ -616,9 +616,9 @@ axios('/api/user/access/remove', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Update User Permissions
+
+<DividePage>
 
 <template #left>
 
@@ -677,9 +677,9 @@ axios('/api/user/permission/update', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Transfer Ownership
+
+<DividePage>
 
 <template #left>
 
@@ -734,9 +734,9 @@ axios('/api/user/transfer/ownership', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Delete Account
+
+<DividePage>
 
 <template #left>
 

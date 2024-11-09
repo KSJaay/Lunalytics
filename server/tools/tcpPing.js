@@ -2,7 +2,7 @@
 import net from 'net';
 
 // import local files
-import logger from '../../shared/utils/logger.js';
+import logger from '../utils/logger.js';
 
 const tcpStatusCheck = async (monitor, callback) => {
   const socket = new net.Socket();
@@ -18,17 +18,16 @@ const tcpStatusCheck = async (monitor, callback) => {
     const latency = Date.now() - startTime;
     socket.destroy();
 
-    logger.error(
-      'TCP Status Check',
-      `Issue checking monitor ${monitor.monitorId}: TIMED OUT`
-    );
+    logger.error('TCP Status Check', {
+      message: `Issue checking monitor ${monitor.monitorId}: TIMED OUT`,
+    });
 
     callback(monitor, {
       monitorId: monitor.monitorId,
       status: 'TIMEOUT',
       latency,
       message: 'Ping timed out!',
-      isDown: 1,
+      isDown: true,
     });
   });
 
@@ -41,7 +40,7 @@ const tcpStatusCheck = async (monitor, callback) => {
       status: 'ALIVE',
       latency,
       message: 'Up and running!',
-      isDown: 0,
+      isDown: false,
     });
   });
 
@@ -49,17 +48,16 @@ const tcpStatusCheck = async (monitor, callback) => {
     const latency = Date.now() - startTime;
     socket.destroy();
 
-    logger.error(
-      'TCP Status Check',
-      `Issue checking monitor ${monitor.monitorId}: ${error.message} `
-    );
+    logger.error('TCP Status Check', {
+      message: `Issue checking monitor ${monitor.monitorId}: ${error.message}`,
+    });
 
     callback(monitor, {
       monitorId: monitor.monitorId,
       status: 'ERROR',
       latency,
       message: error.message,
-      isDown: 1,
+      isDown: true,
     });
   });
 };

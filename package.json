@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -26,7 +26,7 @@
     "prepare": "husky install",
     "preview": "vite preview",
     "reset:password": "node ./scripts/reset.js",
-    "server:watch": "nodemon --delay 2 --watch server ./server/index.js",
+    "server:watch": "nodemon --delay 2 --watch server --watch shared ./server/index.js",
     "setup": "npm install && node ./scripts/setup.js && npm run build",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "docs:dev": "vitepress dev docs",
@@ -34,10 +34,11 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
-    "@canvasjs/react-charts": "^1.0.2",
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "better-sqlite3": "^9.4.1",
+    "chart.js": "^4.4.4",
+    "chartjs-adapter-dayjs-3": "^1.2.3",
     "classnames": "^2.5.1",
     "cookie": "^0.6.0",
     "cookie-parser": "^1.4.6",
@@ -51,11 +52,14 @@
     "mobx-react-lite": "^4.0.5",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.19.0",
     "react-toastify": "^10.0.5",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "winston": "^3.15.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react-swc": "^3.7.0",
@@ -73,7 +77,7 @@
     "node-mocks-http": "^1.14.1",
     "nodemon": "^3.0.1",
     "rollup-plugin-visualizer": "^5.12.0",
-    "sass": "^1.69.5",
+    "sass": "^1.79.5",
     "vite": "^5.0.10",
     "vite-plugin-compression2": "^1.0.0",
     "vitepress": "^1.1.3",

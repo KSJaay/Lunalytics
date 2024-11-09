@@ -1,11 +1,11 @@
 import SQLite from '../sqlite/setup.js';
 
-export const fetchHeartbeats = async (monitorId) => {
+export const fetchHeartbeats = async (monitorId, limit = 168) => {
   const heartbeats = await SQLite.client('heartbeat')
     .where({ monitorId })
     .select('id', 'status', 'latency', 'date', 'isDown', 'message')
     .orderBy('date', 'desc')
-    .limit(168);
+    .limit(limit);
 
   return heartbeats;
 };
@@ -25,7 +25,7 @@ export const fetchLastDailyHeartbeat = async (monitorId) => {
   const date = currentDate - (currentDate % 300000) - 300000;
 
   const heartbeats = await SQLite.client('heartbeat')
-    .where({ monitorId, isDown: 0 })
+    .where({ monitorId, isDown: false })
     .andWhere('date', '>', date)
     .orderBy('date', 'desc');
 
@@ -52,7 +52,7 @@ export const fetchDailyHeartbeats = async (monitorId) => {
   const date = Date.now() - 86400000;
 
   const heartbeats = await SQLite.client('heartbeat')
-    .where({ monitorId, isDown: 0 })
+    .where({ monitorId, isDown: false })
     .andWhere('date', '>', date)
     .orderBy('date', 'desc');
 

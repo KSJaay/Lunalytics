@@ -5,13 +5,20 @@ import './left.scss';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
-import { FaCog, FaHome, FaSignOutAlt } from '../icons';
+
+// import local files
+import { FaCog, FaHome, FaSignOutAlt, MdNotifications } from '../icons';
 
 const actionTabs = [
   {
     name: 'Home',
     url: '/',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
+  },
+  {
+    name: 'Notifications',
+    url: '/notifications',
+    logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
   },
 ];
 
@@ -27,7 +34,12 @@ const LeftNavigation = ({ activeUrl = '' }) => {
     });
 
     return (
-      <div className={classes} key={name} onClick={() => navigate(url)}>
+      <div
+        className={classes}
+        key={name}
+        tabIndex={1}
+        onClick={() => navigate(url)}
+      >
         {logo}
       </div>
     );
@@ -42,12 +54,14 @@ const LeftNavigation = ({ activeUrl = '' }) => {
             activeUrl === 'settings' ? '-active' : ''
           }`}
           onClick={() => navigate('/settings')}
+          tabIndex={1}
         >
           <FaCog style={{ width: '28px', height: '28px' }} />
         </div>
         <a
           className="navigation-left-top-action navigation-left-signout-button"
           href="/auth/logout"
+          tabIndex={1}
         >
           <FaSignOutAlt style={{ width: '28px', height: '28px' }} />
         </a>

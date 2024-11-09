@@ -3,14 +3,20 @@ import fs from 'fs';
 import path from 'path';
 
 // import local files
-import logger from '../shared/utils/logger.js';
-import migrationList from '../server/migrations/index.js';
+import logger from '../server/utils/logger.js';
+import migrationList from './migrations/index.js';
 import { loadJSON } from '../shared/parseJson.js';
 
 const config = loadJSON('../config.json');
 const packageJson = loadJSON('../package.json');
 
 const migrateDatabase = async () => {
+  if (config.migrationType !== 'automatic') {
+    return logger.info('MIGRATION', {
+      message: 'Manual migration selected. Skipping migration checks...',
+    });
+  }
+
   const migrationListKeys = Object.keys(migrationList);
 
   const [version, patch] = config.version.split('.');
@@ -24,26 +30,12 @@ const migrateDatabase = async () => {
   });
 
   if (validMigrations.length > 0) {
-    if (config.migrationType !== 'automatic') {
-      return logger.log(
-        'MIGRATION',
-        'Manual migration selected. Skipping migration...',
-        'INFO',
-        false
-      );
-    }
-
-    logger.log('MIGRATION', 'Starting automatic migration...', 'INFO', false);
+    logger.info('MIGRATION', { message: 'Starting automatic migration...' });
 
     for (const migration of validMigrations) {
-      logger.log('MIGRATION', `Running migration: ${migration}`, 'INFO', false);
+      logger.info('MIGRATION', { message: `Running migration: ${migration}` });
       await migrationList[migration]();
-      logger.log(
-        'MIGRATION',
-        `Migration complete: ${migration}`,
-        'INFO',
-        false
-      );
+      logger.info('MIGRATION', { message: `Migration complete: ${migration}` });
     }
 
     const configPath = path.join(process.cwd(), 'config.json');
@@ -54,7 +46,7 @@ const migrateDatabase = async () => {
 
     fs.writeFileSync(configPath, JSON.stringify(newConfig, null, 2));
 
-    logger.log('MIGRATION', 'Automatic migration complete', 'INFO', false);
+    logger.info('MIGRATION', { message: 'Automatic migration complete' });
   }
 };
 

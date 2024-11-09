@@ -1,6 +1,6 @@
 import cleanCertificate from './certificate.js';
 
-const parseJson = (str) => {
+const parseJsonStatus = (str) => {
   try {
     return JSON.parse(str);
   } catch (e) {
@@ -18,10 +18,12 @@ export const cleanPartialMonitor = (monitor) => ({
   method: monitor.method,
   headers: monitor.headers,
   body: monitor.body,
-  valid_status_codes: parseJson(monitor.valid_status_codes),
+  valid_status_codes: parseJsonStatus(monitor.valid_status_codes),
   email: monitor.email,
   type: monitor.type,
   port: monitor.port,
+  notificationId: monitor.notificationId,
+  notificationType: monitor.notificationType,
   uptimePercentage: monitor.uptimePercentage,
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
 });
@@ -36,10 +38,12 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   method: monitor.method,
   headers: monitor.headers,
   body: monitor.body,
-  valid_status_codes: parseJson(monitor.valid_status_codes),
+  valid_status_codes: parseJsonStatus(monitor.valid_status_codes),
   email: monitor.email,
   type: monitor.type,
   port: monitor.port,
+  notificationId: monitor.notificationId,
+  notificationType: monitor.notificationType,
   uptimePercentage: monitor.uptimePercentage,
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
   lastCheck: monitor.lastCheck,

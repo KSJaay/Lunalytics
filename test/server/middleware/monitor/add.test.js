@@ -42,7 +42,7 @@ describe('Add Monitor - Middleware', () => {
       certificates: {
         get: vi.fn().mockReturnValue({ isValid: false }),
       },
-      setTimeout: vi.fn(),
+      checkStatus: vi.fn(),
     };
 
     userExists = vi.fn().mockReturnValue({ email: 'KSJaay@lunalytics.xyz' });
@@ -66,6 +66,8 @@ describe('Add Monitor - Middleware', () => {
         interval: 60,
         email: 'KSJaay@lunalytics.xyz',
         valid_status_codes: JSON.stringify(['200-299']),
+        notificationType: 'All',
+        notificationId: null,
         method: 'GET',
         headers: null,
         body: null,
@@ -153,7 +155,7 @@ describe('Add Monitor - Middleware', () => {
       it('should call setTimeout with monitorId and interval', async () => {
         await monitorAdd(fakeRequest, fakeResponse);
 
-        expect(cache.setTimeout).toHaveBeenCalledWith('test', 60);
+        expect(cache.checkStatus).toHaveBeenCalledWith('test');
       });
 
       it('should return 200 when data is valid', async () => {
@@ -173,6 +175,8 @@ describe('Add Monitor - Middleware', () => {
         interval: 60,
         email: 'KSJaay@lunalytics.xyz',
         valid_status_codes: null,
+        notificationType: 'All',
+        notificationId: null,
         method: null,
         headers: null,
         body: null,
@@ -252,7 +256,7 @@ describe('Add Monitor - Middleware', () => {
       it('should call setTimeout with monitorId and interval', async () => {
         await monitorAdd(fakeRequest, fakeResponse);
 
-        expect(cache.setTimeout).toHaveBeenCalledWith('test', 60);
+        expect(cache.checkStatus).toHaveBeenCalledWith('test');
       });
 
       it('should return 200 when data is valid', async () => {

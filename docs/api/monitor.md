@@ -286,9 +286,9 @@ There are various restrictions applied to the monitor data. The following are so
 }
 ```
 
-<DividePage>
-
 ## Add a new monitor
+
+<DividePage>
 
 <template #left>
 
@@ -375,9 +375,9 @@ axios('/api/monitor/add', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Edit a monitor
+
+<DividePage>
 
 <template #left>
 
@@ -467,9 +467,9 @@ axios('/api/monitor/edit', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Delete monitor
+
+<DividePage>
 
 <template #left>
 
@@ -524,9 +524,9 @@ axios('/api/monitor/delete', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Get monitor status
+
+<DividePage>
 
 <template #left>
 
@@ -589,9 +589,9 @@ axios('/api/monitor/status', {
 </template>
 </DividePage>
 
-<DividePage>
-
 ## Get a specific monitor
+
+<DividePage>
 
 <template #left>
 

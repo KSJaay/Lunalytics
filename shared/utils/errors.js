@@ -1,5 +1,3 @@
-import logger from './logger.js';
-
 class AuthorizationError extends Error {
   constructor(error) {
     super();
@@ -24,32 +22,18 @@ class ConflictError extends Error {
   }
 }
 
-const handleError = (error, response) => {
-  logger.error('Error handler', error.message + error.stack);
-
-  if (!response.headersSent) {
-    if (error instanceof AuthorizationError) {
-      return response.status(401).send({
-        message: error.error,
-      });
-    }
-
-    if (error instanceof ConflictError) {
-      return response.status(409).send({
-        message: error.error,
-      });
-    }
-
-    if (error instanceof UnprocessableError) {
-      return response.status(422).send({
-        message: error.error,
-      });
-    }
-
-    return response.status(500).send({
-      message: 'Something went wrong',
-    });
+class NotificationValidatorError extends Error {
+  constructor(key, error) {
+    super();
+    this.name = 'NotificationValidatorError';
+    this.key = key;
+    this.message = error;
   }
-};
+}
 
-export { AuthorizationError, ConflictError, UnprocessableError, handleError };
+export {
+  AuthorizationError,
+  ConflictError,
+  NotificationValidatorError,
+  UnprocessableError,
+};

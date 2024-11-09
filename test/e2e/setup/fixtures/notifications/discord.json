@@ -1,0 +1,37 @@
+{
+  "friendlyName": {
+    "id": "[id=\"friendly-name\"]",
+    "value": "Discord",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"text-input-error-friendly-name\"]",
+      "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
+    }
+  },
+  "url": {
+    "id": "[id=\"webhook-url\"]",
+    "value": "https://discord.com/api/webhooks/082399/lunalytics",
+    "invalidValue": "https://discord.com/api/webhook/082399/lunalytics",
+    "type": "text",
+    "error": {
+      "id": "[id=\"text-input-error-webhook-url\"]",
+      "value": "Invalid Discord Webhook URL"
+    }
+  },
+  "username": {
+    "id": "[id=\"webhook-username\"]",
+    "value": "Lunalytics",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"text-input-error-webhook-username\"]",
+      "value": "Invalid Discord Webhook Username"
+    }
+  },
+  "message": {
+    "id": "[id=\"text-messsage\"]",
+    "value": "@everyone Alert!",
+    "type": "text"
+  }
+}

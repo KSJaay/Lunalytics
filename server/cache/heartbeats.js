@@ -3,6 +3,7 @@
 // weekly (Last 7 days (Total of 168 monitors))
 // monthly (Last 30 days (Total of 720 monitors))
 
+import Collection from '../../shared/utils/collection.js';
 import {
   fetchHeartbeats,
   fetchHourlyHeartbeats,
@@ -14,9 +15,9 @@ import {
 
 class Heartbeats {
   constructor() {
-    this.heartbeats = new Map();
-    this.dailyHeartbeats = new Map();
-    this.hourlyHeartbeats = new Map();
+    this.heartbeats = new Collection();
+    this.dailyHeartbeats = new Collection();
+    this.hourlyHeartbeats = new Collection();
   }
 
   async loadHeartbeats(monitors) {
@@ -101,8 +102,12 @@ class Heartbeats {
     this.hourlyHeartbeats.set(monitorId, heartbeats);
   }
 
-  async addHeartbeat(heartbeat) {
-    const heartbeats = this.heartbeats.get(heartbeat.monitorId) || [];
+  async getLastHeartbeat(monitorId) {
+    return fetchHeartbeats(monitorId, 1);
+  }
+
+  async addHeartbeat(monitorId, heartbeat) {
+    const heartbeats = this.heartbeats.get(monitorId) || [];
 
     const databaseHeartbeat = await createHeartbeat(heartbeat);
 
@@ -115,7 +120,7 @@ class Heartbeats {
     // add the new heartbeat to the beginning of the array (newest)
     heartbeats.unshift(databaseHeartbeat);
 
-    this.heartbeats.set(heartbeat.monitorId, heartbeats);
+    this.heartbeats.set(monitorId, heartbeats);
   }
 
   async delete(monitorId) {

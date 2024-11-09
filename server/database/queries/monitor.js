@@ -1,5 +1,5 @@
 import SQLite from '../sqlite/setup.js';
-import randomId from '../../../shared/utils/randomId.js';
+import randomId from '../../utils/randomId.js';
 import { timeToMs } from '../../../shared/utils/ms.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 

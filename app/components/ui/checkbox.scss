@@ -1,0 +1,74 @@
+@use '../../styles/pxToRem.scss' as *;
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkbox-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-slider {
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+  background-color: var(--accent-600);
+  border-radius: 1em;
+  position: relative;
+  transition: 0.3s all ease-in-out;
+}
+
+.checkbox-slider::after {
+  content: '';
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  background-color: #ddd;
+  border-radius: 0.75em;
+  position: absolute;
+  top: 0.25em;
+  transform: translateX(0.25em);
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.1);
+  transition: 0.3s all ease-in-out;
+}
+
+.checkbox-switch input[type='checkbox']:checked + .checkbox-slider {
+  background-color: var(--primary-600);
+}
+
+.checkbox-switch input[type='checkbox']:checked + .checkbox-slider::after {
+  transform: translateX(1.75em);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-switch input[type='checkbox'] {
+  display: none;
+}
+
+.checkbox-switch input[type='checkbox']:active + .checkbox-slider::after {
+  width: 2.5em;
+}
+
+.checkbox-switch
+  input[type='checkbox']:checked:active
+  + .checkbox-slider::after {
+  transform: translateX(1.75em);
+}
+
+.checkbox-input-label {
+  display: block;
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+  color: var(--font-color);
+  margin: 0 0 0 pxToRem(4);
+}
+
+.checkbox-description {
+  font-size: var(--font-sm);
+  margin: 0 0 0 pxToRem(4);
+}

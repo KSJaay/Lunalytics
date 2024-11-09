@@ -15,7 +15,7 @@ import { cleanMonitor } from '../class/monitor.js';
 import userUpdatePassword from '../middleware/user/update/password.js';
 import transferOwnershipMiddleware from '../middleware/user/transferOwnership.js';
 import deleteAccountMiddleware from '../middleware/user/deleteAccount.js';
-import { handleError } from '../../shared/utils/errors.js';
+import { handleError } from '../utils/errors.js';
 
 router.get('/', async (request, response) => {
   try {

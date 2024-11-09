@@ -1,4 +1,4 @@
-@import '../../styles/global.scss';
+@use '../../styles/pxToRem.scss' as *;
 
 .top-navigation {
   display: flex;

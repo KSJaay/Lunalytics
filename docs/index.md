@@ -20,7 +20,7 @@ hero:
 
 features:
   - title: Focus on work
-    details: Setup montiors once, and we'll monior take care of the rest
+    details: Setup your monitors once, and we'll take care of the rest
     icon: 📝
   - title: Multiple Users
     details: Open up your project and invite other collaborators to the project

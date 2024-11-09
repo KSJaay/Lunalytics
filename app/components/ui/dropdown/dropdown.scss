@@ -1,4 +1,4 @@
-@import '../../../styles/global.scss';
+@use '../../../styles/pxToRem.scss' as *;
 
 .dropdown {
   position: relative;
@@ -31,7 +31,9 @@
   border-radius: 10px;
   transition: all 0.2s ease-in-out;
 
-  @include glassmorphism;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
 }
 
 .dropdown-body-open {

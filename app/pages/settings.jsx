@@ -28,7 +28,7 @@ const Settings = () => {
     return () => {
       document.removeEventListener('keydown', handleKeydown);
     };
-  }, []);
+  }, [handleKeydown]);
 
   return (
     <>
