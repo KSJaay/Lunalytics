@@ -50,10 +50,7 @@ const Telegram = ({
   }
 
   if (!tokenRegex.test(token)) {
-    throw new NotificationValidatorError(
-      'token',
-      'Invalid Telegram Bot Token'
-    );
+    throw new NotificationValidatorError('token', 'Invalid Telegram Bot Token');
   }
 
   return {

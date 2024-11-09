@@ -2,6 +2,7 @@ import {
   AuthorizationError,
   ConflictError,
   UnprocessableError,
+  NotificationValidatorError,
 } from '../../shared/utils/errors.js';
 import logger from '../utils/logger.js';
 
@@ -24,6 +25,12 @@ const handleError = (error, response) => {
     if (error instanceof UnprocessableError) {
       return response.status(422).send({
         message: error.error,
+      });
+    }
+
+    if (error instanceof NotificationValidatorError) {
+      return response.status(422).send({
+        [error.key]: error.message,
       });
     }
 

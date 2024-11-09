@@ -48,7 +48,7 @@ const Webhook = ({
     throw new NotificationValidatorError('messageType', 'Invalid Message Type');
   }
 
-  if (!tokenRegex.test(token)) {  
+  if (!tokenRegex.test(token)) {
     throw new NotificationValidatorError('token', 'Invalid Webhook URL');
   }
 
