@@ -1,4 +1,4 @@
-@import '../../../../styles/global.scss';
+@use '../../../../styles/breakpoints.scss' as *;
 
 .settings-account-mobile-item {
   display: flex;

@@ -12,10 +12,14 @@ export const fetchNotifications = async () => {
 };
 
 export const fetchNotificationById = async (id) => {
+  if (!id) return null;
+
   const notification = await SQLite.client('notifications')
     .where({ id })
     .select()
     .first();
+
+  if (!notification) return null;
 
   return cleanNotification(notification);
 };
@@ -54,4 +58,6 @@ export const toggleNotification = async (id, isEnabled = true) => {
 
 export const deleteNotification = async (id) => {
   await SQLite.client('notifications').where({ id }).del();
+  await SQLite.client('monitor').where({ id }).update({ notificationId: null });
+  return;
 };

@@ -11,5 +11,6 @@ export default defineConfig({
     videosFolder: 'test/e2e/setup/videos',
     downloadsFolder: 'test/e2e/setup/downloads',
     supportFile: 'test/e2e/setup/support/e2e.js',
+    experimentalRunAllSpecs: true,
   },
 });

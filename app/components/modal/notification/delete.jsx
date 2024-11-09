@@ -18,7 +18,11 @@ const NotificationDeleteModal = ({ name, handleClose, handleConfirm }) => {
       </Modal.Message>
       <Modal.Actions>
         <Modal.Button onClick={handleClose}>Cancel</Modal.Button>
-        <Modal.Button color="red" onClick={handleConfirm}>
+        <Modal.Button
+          color="red"
+          onClick={handleConfirm}
+          id="notification-delete-confirm"
+        >
           Confirm
         </Modal.Button>
       </Modal.Actions>

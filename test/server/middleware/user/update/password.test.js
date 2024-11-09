@@ -4,10 +4,10 @@ import {
   userExists,
 } from '../../../../../server/database/queries/user';
 import userUpdatePassword from '../../../../../server/middleware/user/update/password';
-import { verifyPassword } from '../../../../../shared/utils/hashPassword';
+import { verifyPassword } from '../../../../../server/utils/hashPassword';
 
 vi.mock('../../../../../server/database/queries/user');
-vi.mock('../../../../../shared/utils/hashPassword');
+vi.mock('../../../../../server/utils/hashPassword');
 
 describe('userUpdatePassword - Middleware', () => {
   const user = {

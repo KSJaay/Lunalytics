@@ -45,7 +45,7 @@ const NotificationsMenu = ({ search, setSearch, platform, setPlatform }) => {
 
         {user.canEdit ? (
           <Button
-            id="home-add-monitor-button"
+            id="home-add-notification-button"
             onClick={() =>
               openModal(
                 <NotificationModal

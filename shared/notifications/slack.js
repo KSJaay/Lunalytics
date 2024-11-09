@@ -104,6 +104,18 @@ const SlackTemplateMessages = {
       },
     ],
   },
+  recovery: {
+    color: '#b80a47',
+    blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: 'Service {{service_name}} is back up!',
+        },
+      },
+    ],
+  },
 };
 
 export { SlackSchema, SlackTemplateMessages };

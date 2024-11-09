@@ -1,9 +1,11 @@
 const WebhookTemplateMessages = {
   basic: {
     title: 'Triggered: Service {{service_name}} is currently down!',
+    time: '{{date[YYYY-MM-DDTHH:mm:ssZ[Z]]}}',
   },
   pretty: {
     title: 'Triggered: Service {{service_name}} is currently down!',
+    time: '{{date[YYYY-MM-DDTHH:mm:ssZ[Z]]}}',
     service_name: '{{service_name}}',
     service_address: '{{service_address}}',
     heartbeat_latency: '{{heartbeat_latency}}',
@@ -11,6 +13,7 @@ const WebhookTemplateMessages = {
   },
   nerdy: {
     title: 'Triggered: Service {{service_name}} is currently down!',
+    time: '{{date[YYYY-MM-DDTHH:mm:ssZ[Z]]}}',
     service: {
       monitorId: '{{service_monitorId}}',
       name: '{{service_name}}',
@@ -32,6 +35,10 @@ const WebhookTemplateMessages = {
       isDown: '{{heartbeat_isDown}}',
       message: '{{heartbeat_message}}',
     },
+  },
+  recovery: {
+    title: 'Service {{service_name}} is back up!',
+    time: '{{date[YYYY-MM-DDTHH:mm:ssZ[Z]]}}',
   },
 };
 

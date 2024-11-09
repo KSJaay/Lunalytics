@@ -14,6 +14,7 @@ const NotificationModalSlackInput = ({
       <TextInput
         label={'Friendly Name'}
         placeholder="Lunalytics"
+        id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName}
         onChange={(e) => {
@@ -37,6 +38,7 @@ const NotificationModalSlackInput = ({
             </a>
           </>
         }
+        id="webhook-url"
         isRequired
         error={errors?.token}
         defaultValue={values.token}
@@ -48,6 +50,7 @@ const NotificationModalSlackInput = ({
       <TextInput
         label={'Webhook Username'}
         placeholder="Lunalytics"
+        id="webhook-username"
         error={errors?.username}
         defaultValue={values.username}
         onChange={(e) => {
@@ -58,6 +61,7 @@ const NotificationModalSlackInput = ({
       <TextInput
         label={'Text message'}
         placeholder="Alert @here"
+        id="text-messsage"
         error={errors?.textMessage}
         defaultValue={values.textMessage}
         onChange={(e) => {
@@ -67,6 +71,7 @@ const NotificationModalSlackInput = ({
       <TextInput
         label={'Channel name'}
         placeholder="#lunalytics-alerts"
+        id="channel-name"
         error={errors?.channel}
         defaultValue={values.channel}
         onChange={(e) => {

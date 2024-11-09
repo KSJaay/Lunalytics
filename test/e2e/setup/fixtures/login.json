@@ -35,7 +35,7 @@
     },
     {
       "value": "test123",
-      "error": "Password must be between 8 and 64 characters."
+      "error": "Password must be between 8 and 48 characters."
     },
     {
       "value": "1234568900",

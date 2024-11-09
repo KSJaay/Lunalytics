@@ -13,7 +13,6 @@ class NotificationBase {
   /**
    * Send a notification
    * @param {Object} notification Notification to send
-   * @param {string} message Message attached to notification
    * @param {object} monitor Monitor details
    * @param {object} heartbeat Heartbeat details
    * @returns {Promise<string>} Return successful message
@@ -21,7 +20,12 @@ class NotificationBase {
    */
 
   // eslint-disable-next-line no-unused-vars
-  async send(notification, message, monitor, heartbeat) {
+  async send(notification, monitor, heartbeat) {
+    throw new Error('Override this function dummy!');
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  async sendRecovery(notification, monitor, heartbeat) {
     throw new Error('Override this function dummy!');
   }
 

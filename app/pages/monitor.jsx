@@ -1,15 +1,15 @@
-import './style.scss';
+import './monitor.scss';
 
 // import dependencies
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import MonitorStatus from '../../components/monitor/status';
-import MonitorGraph from '../../components/monitor/graph';
-import MonitorUptime from '../../components/monitor/uptime';
-import Spacer from '../../components/ui/spacer';
-import useContextStore from '../../context';
-import MonitorMenu from '../../components/monitor/menu';
+import MonitorStatus from '../components/monitor/status';
+import MonitorGraph from '../components/monitor/graph';
+import MonitorUptime from '../components/monitor/uptime';
+import Spacer from '../components/ui/spacer';
+import useContextStore from '../context';
+import MonitorMenu from '../components/monitor/menu';
 import { useParams } from 'react-router-dom';
 
 const Monitor = () => {

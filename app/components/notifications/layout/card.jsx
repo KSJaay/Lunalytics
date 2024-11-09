@@ -64,18 +64,23 @@ const NotificationCard = ({ notification = {} }) => {
     }
   };
 
+  const friendlyName = notification.friendlyName || notification.platform;
+
   return (
     <div className="notification-card-container">
       <img
         src={NotificationIcons[notification.platform]}
-        alt="discord"
+        alt={notification.platform}
         className={`notification-card-img ${
           notification.isEnabled ? '' : 'notification-card-img-disabled'
         }`}
       />
 
-      <div className="notification-card-title">
-        {notification.friendlyName || notification.platform}
+      <div
+        className="notification-card-title"
+        id={`notification-title-${notification.id}`}
+      >
+        {friendlyName}
       </div>
 
       <Button
@@ -91,6 +96,7 @@ const NotificationCard = ({ notification = {} }) => {
             />
           )
         }
+        id={`notification-configure-${friendlyName}`}
       >
         Configure
       </Button>
@@ -104,6 +110,7 @@ const NotificationCard = ({ notification = {} }) => {
         <Dropdown.Trigger
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
+          id={`notification-dropdown-${friendlyName}`}
         >
           <div className="notification-card-dropdown-trigger">
             <FaEllipsisVertical style={{ width: '20px', height: '20px' }} />
@@ -114,6 +121,7 @@ const NotificationCard = ({ notification = {} }) => {
             onClick={() => {
               handleToggle(notification.id, !notification.isEnabled);
             }}
+            id={`notification-toggle-${friendlyName}`}
           >
             {notification.isEnabled ? 'Disable' : 'Enable'}
           </Dropdown.Item>
@@ -141,6 +149,7 @@ const NotificationCard = ({ notification = {} }) => {
                 />
               );
             }}
+            id={`notification-delete-${friendlyName}`}
           >
             Delete
           </Dropdown.Item>

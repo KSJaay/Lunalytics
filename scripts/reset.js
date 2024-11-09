@@ -4,9 +4,9 @@ import '../scripts/loadEnv.js';
 import inquirer from 'inquirer';
 
 // import local files
-import logger from '../shared/utils/logger.js';
+import logger from '../server/utils/logger.js';
 import SQLite from '../server/database/sqlite/setup.js';
-import { generateHash } from '../shared/utils/hashPassword.js';
+import { generateHash } from '../server/utils/hashPassword.js';
 
 const questions = [
   { type: 'input', name: 'email', message: 'Enter email added:' },
@@ -33,12 +33,9 @@ inquirer
   .prompt(questions)
   .then(async (answers) => {
     if (!answers?.email) {
-      logger.log(
-        'RESET PASSWORD',
-        'Please enter a valid email address.',
-        'ERROR',
-        false
-      );
+      logger.error('RESET PASSWORD', {
+        message: 'Please enter a valid email address.',
+      });
       return;
     }
 
@@ -48,12 +45,9 @@ inquirer
     const emailExists = await client('user').where({ email }).first();
 
     if (!emailExists) {
-      logger.log(
-        'RESET PASSWORD',
-        'Email provided does not exist in the database.',
-        'ERROR',
-        false
-      );
+      logger.error('RESET PASSWORD', {
+        message: 'Email provided does not exist in the database.',
+      });
 
       process.exit(0);
     }
@@ -63,25 +57,19 @@ inquirer
 
     await client('user').where({ email }).update({ password: hashedPassowrd });
 
-    logger.log(
-      'RESET PASSWORD',
-      `Password has been reset to: ${newPassword}`,
-      'INFO',
-      false
-    );
+    logger.notice('RESET PASSWORD', {
+      message: `Password has been reset to: ${newPassword}`,
+    });
 
     await client.destroy();
     process.exit(0);
   })
   .catch((error) => {
-    logger.log(
-      'RESET PASSWORD',
-      'Error resetting password, please try again.',
-      'ERROR',
-      false
-    );
-
-    logger.log('', error, 'ERROR', false);
+    logger.error('RESET PASSWORD', {
+      message: 'Error resetting password, please try again.',
+      error: error.message,
+      stack: error.stack,
+    });
 
     process.exit(0);
   });

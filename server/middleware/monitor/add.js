@@ -1,8 +1,6 @@
 // import local files
-import {
-  handleError,
-  UnprocessableError,
-} from '../../../shared/utils/errors.js';
+import { handleError } from '../../utils/errors.js';
+import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/monitor.js';
 import cache from '../../cache/index.js';
 import { userExists } from '../../database/queries/user.js';
@@ -30,7 +28,7 @@ const monitorAdd = async (request, response) => {
       isHttp
     );
 
-    await cache.setTimeout(data.monitorId, data.interval);
+    await cache.checkStatus(data.monitorId);
 
     const heartbeats = await cache.heartbeats.get(data.monitorId);
     const cert = await cache.certificates.get(data.monitorId);

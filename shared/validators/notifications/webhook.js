@@ -7,7 +7,7 @@
 
 import { NotificationValidatorError } from '../../utils/errors.js';
 
-const friendlyNameRegex = /^[a-zA-Z0-9_ ]+$/;
+const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];
 const requestTypes = ['application/json', 'form-data'];
 const tokenRegex =
@@ -33,14 +33,14 @@ const Webhook = ({
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(
       'friendlyName',
-      'Invalid Friendly Name. Must be alphanumeric, Spaces, and underscores only.'
+      'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
     );
   }
 
   if (showAdditionalHeaders && !isJson(additionalHeaders)) {
     throw new NotificationValidatorError(
       'additionalHeaders',
-      'Invalid Additional Headers'
+      'Invalid Additional Headers Format'
     );
   }
 

@@ -13,13 +13,39 @@ class Slack extends NotificationBase {
   async send(notification, monitor, heartbeat) {
     try {
       const payload =
-        SlackTemplateMessages[notification.type] || notification.payload;
+        SlackTemplateMessages[notification.messageType] || notification.payload;
 
       if (!payload) {
         throw new Error('Unable to find an payload');
       }
 
       const data = NotificationReplacers(payload, monitor, heartbeat);
+
+      if (
+        !checkObjectAgainstSchema(data, SlackSchema) ||
+        !this.validateSlackBlocks(data.blocks)
+      ) {
+        throw new Error('Parsed payload is invalid format');
+      }
+
+      await axios.post(notification.token, {
+        text: notification.text,
+        channel: notification.channel,
+        username: notification.username,
+        attachments: [data],
+      });
+
+      return this.success;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  async sendRecovery(notification, monitor, heartbeat) {
+    try {
+      const template = SlackTemplateMessages.recovery;
+
+      const data = NotificationReplacers(template, monitor, heartbeat);
 
       if (
         !checkObjectAgainstSchema(data, SlackSchema) ||

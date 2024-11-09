@@ -1,4 +1,4 @@
-@import '../styles/global.scss';
+@use '../styles/breakpoints.scss' as *;
 
 .error-page-container {
   display: flex;

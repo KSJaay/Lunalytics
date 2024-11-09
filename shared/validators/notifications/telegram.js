@@ -8,7 +8,7 @@
 import { NotificationValidatorError } from '../../utils/errors.js';
 
 const chatIdRegex = /^[0-9]+$/;
-const friendlyNameRegex = /^[a-zA-Z0-9_ ]+$/;
+const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];
 const tokenRegex = /^[a-zA-Z0-9_]{1,32}$/;
 
@@ -23,7 +23,7 @@ const Telegram = ({
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(
       'friendlyName',
-      'Invalid Friendly Name. Must be alphanumeric, Spaces, and underscores only.'
+      'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
     );
   }
 
@@ -50,10 +50,7 @@ const Telegram = ({
   }
 
   if (!tokenRegex.test(token)) {
-    throw new NotificationValidatorError(
-      'token',
-      'Invalid Telegram Webhook URL'
-    );
+    throw new NotificationValidatorError('token', 'Invalid Telegram Bot Token');
   }
 
   return {

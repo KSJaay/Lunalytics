@@ -1,4 +1,4 @@
-@import '../../styles/global.scss';
+@use '../../styles/pxToRem.scss' as *;
 
 .textarea {
   width: 100%;

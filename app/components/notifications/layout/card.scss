@@ -1,4 +1,4 @@
-@import '../../../styles/global.scss';
+@use '../../../styles/pxToRem.scss' as *;
 
 .notification-card-container {
   display: flex;
@@ -49,6 +49,6 @@
   transition: var(--transition-base);
 
   &:hover {
-    color: var(--primary-600); 
+    color: var(--primary-600);
   }
 }
