@@ -74,6 +74,16 @@ pm2 startup
 pm2 monit
 ```
 
+## 🎯 Roadmap
+
+- [ ] Custom status pages
+- [ ] Better design for compact mode
+- [ ] API keys for users
+- [ ] Move to Oauth2 for authentication
+- [ ] Allow session management (Track/logout from sessions)
+- [ ] Add support for more notification services
+- [ ] Better role based access control
+
 ## 📖 Backstory
 
 There's a lot of monitoring applications out there and I personally love using uptime-kuma. But, one of the main issues with Uptime-kuma is the ability to share with my friends/colleagues. And for the services that do allow me to share with others, they either have an outdated UI from the 90s or are so expensive I can't justify paying for it.

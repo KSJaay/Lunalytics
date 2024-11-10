@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -40,7 +40,7 @@
     "chart.js": "^4.4.4",
     "chartjs-adapter-dayjs-3": "^1.2.3",
     "classnames": "^2.5.1",
-    "cookie": "^0.6.0",
+    "cookie": "^1.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "cron": "^3.1.6",
