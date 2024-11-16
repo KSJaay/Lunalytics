@@ -81,6 +81,7 @@ pm2 monit
 - [ ] API keys for users
 - [ ] Move to Oauth2 for authentication
 - [ ] Allow session management (Track/logout from sessions)
+- [ ] Add support for multiple databases
 - [ ] Add support for more notification services
 - [ ] Better role based access control
 

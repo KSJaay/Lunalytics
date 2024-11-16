@@ -57,9 +57,7 @@ inquirer
 
     await client('user').where({ email }).update({ password: hashedPassowrd });
 
-    logger.notice('RESET PASSWORD', {
-      message: `Password has been reset to: ${newPassword}`,
-    });
+    console.log(`Password has been reset to: ${newPassword}`);
 
     await client.destroy();
     process.exit(0);
