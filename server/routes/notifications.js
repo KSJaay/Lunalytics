@@ -9,7 +9,7 @@ import hasEditorPermissions from '../middleware/user/hasEditor.js';
 
 const router = Router();
 
-router.get('/', hasEditorPermissions, NotificationGetAllMiddleware);
+router.get('/', NotificationGetAllMiddleware);
 router.get('/id', hasEditorPermissions, NotificationGetUsingIdMiddleware);
 router.post('/create', hasEditorPermissions, NotificationCreateMiddleware);
 router.post('/edit', hasEditorPermissions, NotificationEditMiddleware);
