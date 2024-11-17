@@ -1,5 +1,3 @@
-import '../scripts/loadEnv.js';
-
 // import dependencies
 import express from 'express';
 import cors from 'cors';
@@ -15,8 +13,13 @@ import initialiseCronJobs from './utils/cron.js';
 import authorization from './middleware/authorization.js';
 import migrateDatabase from '../scripts/migrate.js';
 import isDemo from './middleware/demo.js';
+import config from './utils/config.js';
 
 const app = express();
+
+const corsList = config.get('cors');
+const isDemoMode = config.get('isDemo');
+const port = config.get('port');
 
 const init = async () => {
   // connect to database and setup database tables
@@ -44,14 +47,12 @@ const init = async () => {
     app.use(
       cors({
         credentials: true,
-        origin: process.env.CORS_LIST?.split(',') || ['http://localhost:3000'],
+        origin: corsList || ['http://localhost:3000'],
       })
     );
   } else {
-    if (process.env.CORS_LIST) {
-      app.use(
-        cors({ credentials: true, origin: process.env.CORS_LIST?.split(',') })
-      );
+    if (corsList) {
+      app.use(cors({ credentials: true, origin: corsList }));
     }
 
     logger.info('Express', { message: 'Serving production static files' });
@@ -62,7 +63,7 @@ const init = async () => {
     return res.status(200).send('Everything looks good :D');
   });
 
-  if (process.env.IS_DEMO === 'enabled') {
+  if (isDemoMode) {
     app.get('/api/kanban', (req, res) => {
       return res.sendFile(path.join(process.cwd(), '/public/kanban.json'));
     });
@@ -83,7 +84,7 @@ const init = async () => {
   }
 
   // Start the server
-  const server_port = process.env.PORT || 2308;
+  const server_port = port || 2308;
   app.listen(server_port, () => {
     logger.info('Express', {
       message: `Server is running on port ${server_port}`,

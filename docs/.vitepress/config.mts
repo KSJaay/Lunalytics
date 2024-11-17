@@ -58,6 +58,7 @@ export default defineConfig({
           // { text: 'Overview', link: '/internals/overview' },
           { text: 'Changelog', link: '/internals/changelog' },
           // { text: 'Flows', link: '/internals/flows' },
+          { text: 'Config', link: '/internals/config' },
           { text: 'Notifications', link: '/internals/notifications' },
           { text: 'Permissions', link: '/internals/permissions' },
           { text: 'Roadmap', link: '/internals/roadmap' },

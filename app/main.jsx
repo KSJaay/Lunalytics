@@ -68,6 +68,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/verify" element={<Verify />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/404" element={<ErrorPage />} />
+        <Route path="/*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

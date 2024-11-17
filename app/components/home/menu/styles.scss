@@ -27,12 +27,6 @@
   display: none;
 }
 
-@include tablet {
-  #home-menu-status {
-    display: none;
-  }
-}
-
 @include mobile {
   .home-menu-buttons {
     display: none;

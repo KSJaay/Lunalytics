@@ -8,6 +8,7 @@ import httpStatusCheck from '../tools/httpStatus.js';
 import tcpStatusCheck from '../tools/tcpPing.js';
 import Collection from '../../shared/utils/collection.js';
 import NotificationServices from '../notifications/index.js';
+import logger from '../utils/logger.js';
 
 class Master {
   constructor() {
@@ -148,7 +149,10 @@ class Master {
         await service.sendRecovery(notification, monitor, heartbeat);
       }
     } catch (error) {
-      console.log(error);
+      logger.error('Notification - sendNotification', {
+        error: error.message,
+        stack: error.stack,
+      });
     }
   }
 }
