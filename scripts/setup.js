@@ -94,7 +94,7 @@ inquirer
   })
   .catch((error) => {
     logger.error('SETUP', {
-      message: 'Enable to setup application. Please try again.',
+      message: 'Unable to setup application. Please try again.',
       error: error.message,
       stack: error.stack,
     });

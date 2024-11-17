@@ -1,5 +1,3 @@
-import '../scripts/loadEnv.js';
-
 // import dependencies
 import inquirer from 'inquirer';
 

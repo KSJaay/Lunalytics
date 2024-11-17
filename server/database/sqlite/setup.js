@@ -2,6 +2,9 @@ import { existsSync, closeSync, openSync } from 'fs';
 import knex from 'knex';
 
 import logger from '../../utils/logger.js';
+import config from '../../utils/config.js';
+
+const configDatabaseName = config.get('database')?.name || 'lunalytics';
 
 export class SQLite {
   constructor() {
@@ -12,7 +15,7 @@ export class SQLite {
     if (this.client) return this.client;
 
     const path = `${process.cwd()}/server/database/sqlite/${
-      databaseName || process.env.DATABASE_NAME || 'lunalytics'
+      databaseName || configDatabaseName || 'lunalytics'
     }.db`;
 
     if (!existsSync(path)) {

@@ -3,12 +3,12 @@ import jwt from 'jsonwebtoken';
 
 // import local files
 import logger from './logger.js';
+import config from './config.js';
+
+const jwtSecret = config.get('jwtSecret');
 
 const verifyCookie = (value) => {
   try {
-    const jwtSecret =
-      process.env.JWT_SECRET || 'lunalyticsJwtSecretKeyHerePlease';
-
     let token = jwt.verify(value, jwtSecret, {
       algorithms: ['HS256'],
     });
@@ -24,9 +24,6 @@ const verifyCookie = (value) => {
 
 const signCookie = (value) => {
   try {
-    const jwtSecret =
-      process.env.JWT_SECRET || 'lunalyticsJwtSecretKeyHerePlease';
-
     let token = jwt.sign(value, jwtSecret, {
       expiresIn: 2592000,
     });
