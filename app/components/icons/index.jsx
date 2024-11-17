@@ -22,6 +22,7 @@ import {
   FaCheck,
   FaBars,
   FaTrashCan,
+  FaFilter,
 } from 'react-icons/fa6';
 import { IoArrowBack, IoColorPalette, IoGrid, IoReload } from 'react-icons/io5';
 import { RiStackFill } from 'react-icons/ri';
@@ -38,6 +39,7 @@ export {
   FaCircleCheck,
   FaCog,
   FaEllipsisVertical,
+  FaFilter,
   FaHome,
   FaPlus,
   FaSignOutAlt,

@@ -72,17 +72,10 @@
   }
 
   .left-actions-bottom {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 20px;
+    display: none;
   }
 
   .navigation-left-top-action {
     flex: 1;
-  }
-
-  .navigation-left-signout-button {
-    display: none;
   }
 }

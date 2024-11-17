@@ -30,7 +30,7 @@ class Config {
         message:
           'Configuration file not found. Please run "npm run setup" (or "yarn setup" or "pnpm setup") to create it.',
       });
-      process.exit(1);
+      return;
     }
 
     const fileData = fs.readFileSync(this.configPath);

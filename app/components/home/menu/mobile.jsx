@@ -1,12 +1,14 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { FaCog, FaPlus } from 'react-icons/fa';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useDropdown from '../../../hooks/useDropdown';
-import { FaEllipsisVertical } from '../../icons';
-import Dropdown from '../../ui/dropdown';
 import useContextStore from '../../../context';
+import Modal from '../../ui/modal';
+import Button from '../../ui/button';
+import HomeMobileMenuStatus from './mobile/status';
+import HomeMobileMenuLayout from './mobile/layout';
 import MonitorConfigureModal from '../../modal/monitor/configure';
 
 const HomeMenuMobile = ({ handleReset }) => {
@@ -15,40 +17,54 @@ const HomeMenuMobile = ({ handleReset }) => {
     globalStore: { addMonitor },
   } = useContextStore();
 
-  const { toggleDropdown, dropdownIsOpen } = useDropdown(true);
   return (
-    <Dropdown.Container isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
-      <Dropdown.Trigger
-        isOpen={dropdownIsOpen}
-        toggleDropdown={toggleDropdown}
-        style={{ height: '45px' }}
-      >
-        <FaEllipsisVertical style={{ width: '30px', height: '30px' }} />
-      </Dropdown.Trigger>
-      <Dropdown.List isOpen={dropdownIsOpen}>
-        <Dropdown.Item
-          onClick={() =>
-            openModal(
-              <MonitorConfigureModal
-                closeModal={closeModal}
-                handleMonitorSubmit={addMonitor}
-              />,
-              false
-            )
-          }
-        >
-          Add Monitor
-        </Dropdown.Item>
-        <Dropdown.Item
-          onClick={() => {
-            handleReset();
-            toggleDropdown();
-          }}
-        >
-          Reset
-        </Dropdown.Item>
-      </Dropdown.List>
-    </Dropdown.Container>
+    <Button
+      iconLeft={<FaCog style={{ width: '30px', height: '30px' }} />}
+      onClick={() => {
+        openModal(
+          <Modal.Container>
+            <Modal.Title>Settings</Modal.Title>
+            <Modal.Message>
+              <div className="input-label">Status</div>
+              <HomeMobileMenuStatus />
+              <div className="input-label">Layout</div>
+              <HomeMobileMenuLayout />
+              <br />
+              <Button
+                iconLeft={<FaPlus style={{ width: '20px', height: '20px' }} />}
+                color={'gray'}
+                fullWidth
+                onClick={() => {
+                  closeModal();
+                  openModal(
+                    <MonitorConfigureModal
+                      closeModal={closeModal}
+                      handleMonitorSubmit={addMonitor}
+                    />,
+                    false
+                  );
+                }}
+              >
+                New Monitor
+              </Button>
+            </Modal.Message>
+            <Modal.Actions>
+              <Modal.Button onClick={closeModal}>Close</Modal.Button>
+              <Modal.Button
+                color="red"
+                onClick={() => {
+                  handleReset();
+                  closeModal();
+                }}
+              >
+                Reset
+              </Modal.Button>
+            </Modal.Actions>
+          </Modal.Container>,
+          false
+        );
+      }}
+    />
   );
 };
 
