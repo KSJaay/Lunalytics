@@ -83,4 +83,8 @@
   .home-monitor-table-header-uptime {
     display: none;
   }
+
+  .home-monitor-compact-table-content {
+    height: calc(100vh - 280px);
+  }
 }

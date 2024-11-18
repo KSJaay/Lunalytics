@@ -39,12 +39,17 @@ const SettingsAccountMobileItem = ({
   id,
   canEdit,
   fontColor,
+  permissionLevel,
   ...props
 }) => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },
   } = useContextStore();
+
+  if (permissionLevel && permissionLevel < user.permission) {
+    return null;
+  }
 
   const color = !fontColor ? {} : { color: `var(--${fontColor}-700)` };
 
@@ -88,6 +93,7 @@ SettingsAccountMobileItem.propTypes = {
   id: PropTypes.string.isRequired,
   canEdit: PropTypes.bool,
   fontColor: PropTypes.string,
+  permissionLevel: PropTypes.number,
 };
 
 export default observer(SettingsAccountMobileItem);
