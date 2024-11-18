@@ -1,4 +1,4 @@
-import './error.scss';
+import '../styles/pages/error.scss';
 
 // import dependencies
 import { useNavigate } from 'react-router-dom';

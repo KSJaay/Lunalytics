@@ -1,4 +1,4 @@
-import './register.scss';
+import '../styles/pages/register.scss';
 
 // import dependencies
 import { useNavigate } from 'react-router-dom';

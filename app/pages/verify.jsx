@@ -1,4 +1,4 @@
-import './verify.scss';
+import '../styles/pages/verify.scss';
 
 import { StatusLogo } from '../components/icons';
 

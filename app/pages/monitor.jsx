@@ -1,4 +1,4 @@
-import './monitor.scss';
+import '../styles/pages/monitor.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';

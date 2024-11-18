@@ -1,5 +1,5 @@
 // import styles
-import './home.scss';
+import '../styles/pages/home.scss';
 
 // import dependencies
 import { useState } from 'react';
