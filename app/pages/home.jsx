@@ -15,6 +15,7 @@ import useContextStore from '../context';
 import HomeMenu from '../components/home/menu';
 import MonitorTable from '../components/home/monitor/layout/table';
 import useLocalStorageContext from '../hooks/useLocalstorage';
+import MonitorCompactItem from '../components/home/monitor/layout/compact/monitor';
 
 const Home = () => {
   const {
@@ -23,6 +24,7 @@ const Home = () => {
 
   const [search, setSearch] = useState('');
   const { layout, status, setStatus } = useLocalStorageContext();
+  const [activeMonitor, setActiveMonitor] = useState('');
 
   const handleReset = () => {
     setSearch('');
@@ -63,7 +65,12 @@ const Home = () => {
 
       if (layout === 'compact') {
         return (
-          <MonitorCompact key={monitor.monitorId + index} monitor={monitor} />
+          <MonitorCompactItem
+            key={monitor.monitorId + index}
+            monitor={monitor}
+            isActive={activeMonitor === monitor.monitorId}
+            setActive={setActiveMonitor}
+          />
         );
       }
 
@@ -84,6 +91,22 @@ const Home = () => {
     );
   }
 
+  if (layout === 'compact') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <HomeMenu
+          search={search}
+          handleReset={handleReset}
+          setSearch={(e) => setSearch(e.target.value)}
+        />
+
+        <MonitorCompact monitor_id={activeMonitor}>
+          {monitorsList}
+        </MonitorCompact>
+      </div>
+    );
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <HomeMenu
@@ -92,7 +115,7 @@ const Home = () => {
         setSearch={(e) => setSearch(e.target.value)}
       />
 
-      <MonitorTable layout={layout}>{monitorsList}</MonitorTable>
+      <MonitorTable>{monitorsList}</MonitorTable>
     </div>
   );
 };

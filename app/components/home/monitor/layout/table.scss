@@ -31,6 +31,7 @@
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   transition: var(--transition-base);
   border-bottom: 1px solid var(--accent-700);
+  margin-bottom: 0.25rem;
 
   div {
     display: flex;
@@ -53,6 +54,11 @@
     border-radius: 0 0 var(--radius-md) var(--radius-md);
     margin-bottom: pxToRem(32);
   }
+}
+
+.home-monitor-compact-table-content {
+  overflow: auto;
+  height: calc(100vh - 220px);
 }
 
 @include tablet {
