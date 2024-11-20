@@ -1,6 +1,15 @@
 @use '../../../styles/breakpoints.scss' as *;
 @use '../../../styles/pxToRem.scss' as *;
 
+.monitor-chart-content {
+  width: 100%;
+  height: 425px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1.75rem;
+}
+
 .monitor-chart-container {
   background-color: var(--accent-900);
   border-radius: pxToRem(16);
@@ -21,7 +30,23 @@
   display: none;
 }
 
+@include laptop {
+  .monitor-chart-content {
+    height: 325px;
+  }
+}
+
+@include tablet {
+  .monitor-chart-content {
+    height: 280px;
+  }
+}
+
 @include mobile {
+  .monitor-chart-content {
+    height: 250px;
+  }
+
   .monitor-chart-buttons-container {
     display: none;
   }
