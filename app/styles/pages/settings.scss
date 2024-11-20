@@ -1,5 +1,5 @@
-@use '../styles/pxToRem.scss' as *;
-@use '../styles/breakpoints.scss' as *;
+@use '../pxToRem.scss' as *;
+@use '../breakpoints.scss' as *;
 
 .settings-content {
   display: flex;

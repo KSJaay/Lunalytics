@@ -1,6 +1,7 @@
-import './monitor.scss';
+import '../styles/pages/monitor.scss';
 
 // import dependencies
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -12,13 +13,13 @@ import useContextStore from '../context';
 import MonitorMenu from '../components/monitor/menu';
 import { useParams } from 'react-router-dom';
 
-const Monitor = () => {
+const Monitor = ({ monitor_id }) => {
   const {
     globalStore: { getMonitor },
   } = useContextStore();
 
   const query = useParams();
-  const monitorId = query['monitor_id'];
+  const monitorId = query['monitor_id'] || monitor_id;
 
   const monitor = getMonitor(monitorId);
 
@@ -38,5 +39,9 @@ const Monitor = () => {
 };
 
 Monitor.displayName = 'MonitorPage';
+
+Monitor.propTypes = {
+  monitor_id: PropTypes.string,
+};
 
 export default observer(Monitor);

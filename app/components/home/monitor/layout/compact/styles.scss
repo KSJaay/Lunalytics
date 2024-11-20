@@ -1,0 +1,81 @@
+@use '../../../../../styles/pxToRem.scss' as *;
+@use '../../../../../styles/breakpoints.scss' as *;
+
+.home-monitor-compact {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  background-color: var(--accent-800);
+  overflow: hidden;
+}
+
+.home-monitor-compact-content {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  overflow-x: hidden;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+}
+
+.home-monitor-container-compact {
+  width: 100%;
+  background-color: var(--accent-900);
+  padding: pxToRem(4) pxToRem(8);
+  transition: var(--transition-base);
+
+  &:hover {
+    cursor: pointer;
+
+    .home-monitor-name-compact {
+      color: var(--primary-500);
+      background-color: var(--accent-800);
+    }
+  }
+}
+
+.home-monitor-name-compact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--font-color);
+  font-size: var(--font-lg);
+  padding: pxToRem(4) pxToRem(8);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: var(--transition-base);
+
+  &-active {
+    color: var(--primary-500);
+    background-color: var(--accent-800);
+  }
+}
+
+.home-monitor-uptime-compact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--font-color);
+  font-size: var(--font-lg);
+}
+
+.home-monitor-compact-content-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: var(--font-2xl);
+  color: var(--accent-200);
+}
+
+@include tablet {
+  .home-monitor-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .home-monitor-compact-content {
+    display: none;
+  }
+}

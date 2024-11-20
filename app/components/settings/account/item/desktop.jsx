@@ -44,6 +44,7 @@ const SettingsAccountDesktopItem = ({
   canEdit,
   description,
   customButton,
+  permissionLevel,
   ...props
 }) => {
   const classes = classNames({
@@ -55,6 +56,10 @@ const SettingsAccountDesktopItem = ({
     userStore: { user },
     modalStore: { openModal, closeModal },
   } = useContextStore();
+
+  if (permissionLevel && permissionLevel < user.permission) {
+    return null;
+  }
 
   return (
     <div className={classes}>
@@ -103,6 +108,7 @@ SettingsAccountDesktopItem.propTypes = {
   canEdit: PropTypes.bool,
   description: PropTypes.string,
   customButton: PropTypes.element,
+  permissionLevel: PropTypes.number,
 };
 
 export default observer(SettingsAccountDesktopItem);

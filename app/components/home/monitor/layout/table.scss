@@ -31,6 +31,7 @@
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   transition: var(--transition-base);
   border-bottom: 1px solid var(--accent-700);
+  margin-bottom: 0.25rem;
 
   div {
     display: flex;
@@ -55,6 +56,11 @@
   }
 }
 
+.home-monitor-compact-table-content {
+  overflow: auto;
+  height: calc(100vh - 220px);
+}
+
 @include tablet {
   .home-monitor-table-container-list {
     grid-template-columns: 1fr 100px 100px;
@@ -76,5 +82,9 @@
 
   .home-monitor-table-header-uptime {
     display: none;
+  }
+
+  .home-monitor-compact-table-content {
+    height: calc(100vh - 280px);
   }
 }

@@ -30,8 +30,11 @@ const NotificationCard = ({ notification = {} }) => {
       deleteNotification,
       toggleNotification,
     },
+    userStore: { user },
   } = useContextStore();
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
+
+  const isEditor = user.permission <= 3;
 
   const handleDelete = async (id) => {
     try {
@@ -83,78 +86,82 @@ const NotificationCard = ({ notification = {} }) => {
         {friendlyName}
       </div>
 
-      <Button
-        fullWidth
-        outline="primary"
-        onClick={() =>
-          openModal(
-            <NotificationModal
-              values={{ ...notification, ...notification.data }}
-              isEdit
-              closeModal={closeModal}
-              addNotification={addNotification}
-            />
-          )
-        }
-        id={`notification-configure-${friendlyName}`}
-      >
-        Configure
-      </Button>
+      {isEditor && (
+        <Button
+          fullWidth
+          outline="primary"
+          onClick={() =>
+            openModal(
+              <NotificationModal
+                values={{ ...notification, ...notification.data }}
+                isEdit
+                closeModal={closeModal}
+                addNotification={addNotification}
+              />
+            )
+          }
+          id={`notification-configure-${friendlyName}`}
+        >
+          Configure
+        </Button>
+      )}
 
-      <Dropdown.Container
-        isOpen={dropdownIsOpen}
-        toggleDropdown={toggleDropdown}
-        position="center"
-        className="notification-card-dropdown"
-      >
-        <Dropdown.Trigger
+      {isEditor && (
+        <Dropdown.Container
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
-          id={`notification-dropdown-${friendlyName}`}
+          position="center"
+          className="notification-card-dropdown"
         >
-          <div className="notification-card-dropdown-trigger">
-            <FaEllipsisVertical style={{ width: '20px', height: '20px' }} />
-          </div>
-        </Dropdown.Trigger>
-        <Dropdown.List isOpen={dropdownIsOpen}>
-          <Dropdown.Item
-            onClick={() => {
-              handleToggle(notification.id, !notification.isEnabled);
-            }}
-            id={`notification-toggle-${friendlyName}`}
+          <Dropdown.Trigger
+            isOpen={dropdownIsOpen}
+            toggleDropdown={toggleDropdown}
+            id={`notification-dropdown-${friendlyName}`}
           >
-            {notification.isEnabled ? 'Disable' : 'Enable'}
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() =>
-              openModal(
-                <NotificationModal
-                  values={{ ...notification, ...notification.data }}
-                  isEdit
-                  closeModal={closeModal}
-                  addNotification={addNotification}
-                />
-              )
-            }
-          >
-            Edit
-          </Dropdown.Item>
-          <Dropdown.Item
-            onClick={() => {
-              openModal(
-                <NotificationDeleteModal
-                  name={notification.friendlyName}
-                  handleClose={closeModal}
-                  handleConfirm={() => handleDelete(notification.id)}
-                />
-              );
-            }}
-            id={`notification-delete-${friendlyName}`}
-          >
-            Delete
-          </Dropdown.Item>
-        </Dropdown.List>
-      </Dropdown.Container>
+            <div className="notification-card-dropdown-trigger">
+              <FaEllipsisVertical style={{ width: '20px', height: '20px' }} />
+            </div>
+          </Dropdown.Trigger>
+          <Dropdown.List isOpen={dropdownIsOpen}>
+            <Dropdown.Item
+              onClick={() => {
+                handleToggle(notification.id, !notification.isEnabled);
+              }}
+              id={`notification-toggle-${friendlyName}`}
+            >
+              {notification.isEnabled ? 'Disable' : 'Enable'}
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() =>
+                openModal(
+                  <NotificationModal
+                    values={{ ...notification, ...notification.data }}
+                    isEdit
+                    closeModal={closeModal}
+                    addNotification={addNotification}
+                  />
+                )
+              }
+            >
+              Edit
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                openModal(
+                  <NotificationDeleteModal
+                    name={notification.friendlyName}
+                    handleClose={closeModal}
+                    handleConfirm={() => handleDelete(notification.id)}
+                  />
+                );
+              }}
+              id={`notification-delete-${friendlyName}`}
+            >
+              Delete
+            </Dropdown.Item>
+          </Dropdown.List>
+        </Dropdown.Container>
+      )}
     </div>
   );
 };

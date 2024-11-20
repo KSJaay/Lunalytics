@@ -1,5 +1,5 @@
 // import styles
-import './notifications.scss';
+import '../styles/pages/notifications.scss';
 
 // import dependencies
 import { observer } from 'mobx-react-lite';

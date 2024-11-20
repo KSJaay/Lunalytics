@@ -1,4 +1,4 @@
-import './settings.scss';
+import '../styles/pages/settings.scss';
 
 // import dependencies
 import { useEffect, useState } from 'react';
