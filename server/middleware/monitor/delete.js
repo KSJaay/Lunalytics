@@ -1,7 +1,9 @@
 // import local files
-import cache from '../../cache/index.js';
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
+import { deleteCertificate } from '../../database/queries/certificate.js';
+import { deleteHeartbeats } from '../../database/queries/heartbeat.js';
+import { deleteMonitor } from '../../database/queries/monitor.js';
 
 const monitorDelete = async (request, response) => {
   try {
@@ -11,9 +13,9 @@ const monitorDelete = async (request, response) => {
       throw new UnprocessableError('No monitorId provided');
     }
 
-    await cache.monitors.delete(monitorId);
-    await cache.heartbeats.delete(monitorId);
-    await cache.certificates.delete(monitorId);
+    await deleteMonitor(monitorId);
+    await deleteHeartbeats(monitorId);
+    await deleteCertificate(monitorId);
 
     return response.sendStatus(200);
   } catch (error) {

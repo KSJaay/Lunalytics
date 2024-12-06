@@ -30,16 +30,6 @@ class GlobalStore {
 
     this.monitors.set(data.monitorId, data);
 
-    const nextTimeout = data.nextCheck - Date.now() + 5000;
-
-    if (nextTimeout > 0) {
-      this.timeouts.set(
-        data.monitorId,
-        setTimeout(() => func(data.monitorId, this.setMonitor), nextTimeout)
-      );
-      return true;
-    }
-
     this.timeouts.set(
       data.monitorId,
       setTimeout(
@@ -54,15 +44,11 @@ class GlobalStore {
   setTimeouts = (monitors, func) => {
     for (const monitor of monitors) {
       if (!this.timeouts.has(monitor.monitorId)) {
-        const nextTimeout = monitor.nextCheck - Date.now() + 5000;
-        const timeoutInterval =
-          nextTimeout > 0 ? nextTimeout : monitor.interval * 1000;
-
         this.timeouts.set(
           monitor.monitorId,
           setTimeout(
             () => func(monitor.monitorId, this.setMonitor),
-            timeoutInterval
+            monitor.interval * 1000
           )
         );
       }
@@ -72,15 +58,11 @@ class GlobalStore {
   addMonitor = (monitor) => {
     this.monitors.set(monitor.monitorId, monitor);
 
-    const nextTimeout = monitor.nextCheck - Date.now() + 5000;
-    const timeoutInterval =
-      nextTimeout > 0 ? nextTimeout : monitor.interval * 1000;
-
     this.timeouts.set(
       monitor.monitorId,
       setTimeout(
         () => fetchMonitorById(monitor.monitorId, this.setMonitor),
-        timeoutInterval
+        monitor.interval * 1000
       )
     );
   };

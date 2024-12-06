@@ -4,9 +4,11 @@ import SQLite from '../../../../server/database/sqlite/setup';
 import { userExists } from '../../../../server/database/queries/user';
 import cache from '../../../../server/cache';
 import monitorEdit from '../../../../server/middleware/monitor/edit';
+import { updateMonitor } from '../../../../server/database/queries/monitor';
 
-vi.mock('../../../../server/database/queries/user');
 vi.mock('../../../../server/cache');
+vi.mock('../../../../server/database/queries/user');
+vi.mock('../../../../server/database/queries/monitor');
 
 describe('Edit Monitor - Middleware', () => {
   const user = {
@@ -22,30 +24,29 @@ describe('Edit Monitor - Middleware', () => {
 
   beforeEach(() => {
     SQLiteBuilders = {
-      insert: vi.fn(),
+      insert: vi.fn().mockImplementation(() => {
+        return { returning: vi.fn().mockReturnValue([{ id: 1 }]) };
+      }),
       where: vi.fn().mockImplementation(() => {
-        return { first: vi.fn().mockReturnValue(null) };
+        return {
+          first: vi.fn().mockReturnValue(null),
+          select: vi.fn().mockImplementation(() => {
+            return {
+              orderBy: vi.fn().mockImplementation(() => {
+                return { limit: vi.fn() };
+              }),
+            };
+          }),
+        };
       }),
       update: vi.fn(),
     };
 
     SQLite.client = () => SQLiteBuilders;
-    cache = {
-      monitors: {
-        addOrEdit: vi.fn().mockImplementation(() => {
-          return { monitorId: 'test', interval: 60 };
-        }),
-      },
-      heartbeats: {
-        get: vi.fn().mockReturnValue([]),
-      },
-      certificates: {
-        get: vi.fn().mockReturnValue({ isValid: false }),
-      },
-      checkStatus: vi.fn(),
-    };
+    cache = { checkStatus: vi.fn() };
 
     userExists = vi.fn().mockReturnValue({ email: 'KSJaay@lunalytics.xyz' });
+    updateMonitor = vi.fn().mockReturnValue({ monitorId: 'test' });
 
     fakeRequest = createRequest();
     fakeResponse = createResponse();
@@ -65,7 +66,7 @@ describe('Edit Monitor - Middleware', () => {
         url: 'https://lunalytics.xyz',
         interval: 60,
         email: 'KSJaay@lunalytics.xyz',
-        valid_status_codes: JSON.stringify(['200-299']),
+        valid_status_codes: ['200-299'],
         notificationType: 'All',
         notificationId: null,
         method: 'GET',
@@ -142,15 +143,25 @@ describe('Edit Monitor - Middleware', () => {
         expect(userExists).toHaveBeenCalledWith(access_token);
       });
 
-      it('should call addOrEdit with body, email, and isHttp', async () => {
+      it('should call updateMonitor with body, email, and isHttp', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
 
-        expect(cache.monitors.addOrEdit).toHaveBeenCalledWith(
-          fakeRequest.body,
-          user.email,
-          true,
-          true
-        );
+        expect(updateMonitor).toHaveBeenCalledWith({
+          name: fakeRequest.body.name,
+          url: fakeRequest.body.url,
+          interval: fakeRequest.body.interval,
+          monitorId: fakeRequest.body.monitorId,
+          retryInterval: fakeRequest.body.retryInterval,
+          requestTimeout: fakeRequest.body.requestTimeout,
+          notificationId: fakeRequest.body.notificationId,
+          notificationType: fakeRequest.body.notificationType,
+          email: user.email,
+          method: fakeRequest.body.method,
+          valid_status_codes: JSON.stringify(
+            fakeRequest.body.valid_status_codes
+          ),
+          type: 'http',
+        });
       });
 
       it('should call checkStatus with monitorId and interval', async () => {
@@ -247,12 +258,20 @@ describe('Edit Monitor - Middleware', () => {
       it('should call addOrEdit with body, email, and isHttp', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
 
-        expect(cache.monitors.addOrEdit).toHaveBeenCalledWith(
-          fakeRequest.body,
-          user.email,
-          false,
-          true
-        );
+        expect(updateMonitor).toHaveBeenCalledWith({
+          name: fakeRequest.body.name,
+          url: fakeRequest.body.url,
+          interval: fakeRequest.body.interval,
+          monitorId: fakeRequest.body.monitorId,
+          retryInterval: fakeRequest.body.retryInterval,
+          requestTimeout: fakeRequest.body.requestTimeout,
+          notificationId: fakeRequest.body.notificationId,
+          notificationType: fakeRequest.body.notificationType,
+          email: user.email,
+          port: fakeRequest.body.port,
+          valid_status_codes: '',
+          type: 'tcp',
+        });
       });
 
       it('should call checkStatus with monitorId and interval', async () => {

@@ -19,13 +19,17 @@ const migrateDatabase = async () => {
 
   const migrationListKeys = Object.keys(migrationList);
 
-  const [version, patch] = config.version.split('.');
+  const [version, patch, minor] = config.version.split('.');
 
   const validMigrations = migrationListKeys.filter((migration) => {
-    const [migrationVersion, migrationPatch] = migration.split('.');
+    const [migrationVersion, migrationPatch, migrationMinor] =
+      migration.split('.');
     return (
       migrationVersion > version ||
-      (migrationVersion === version && migrationPatch > patch)
+      (migrationVersion === version && migrationPatch > patch) ||
+      (migrationVersion === version &&
+        migrationPatch === patch &&
+        migrationMinor > minor)
     );
   });
 
@@ -48,6 +52,8 @@ const migrateDatabase = async () => {
 
     logger.info('MIGRATION', { message: 'Automatic migration complete' });
   }
+
+  return;
 };
 
 export default migrateDatabase;

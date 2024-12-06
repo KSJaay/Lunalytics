@@ -171,6 +171,7 @@ export class SQLite {
         table.timestamp('validTill');
         table.string('validOn');
         table.integer('daysRemaining').defaultTo(0);
+        table.timestamp('nextCheck').defaultTo(Date.now());
 
         table.index('monitorId');
       });

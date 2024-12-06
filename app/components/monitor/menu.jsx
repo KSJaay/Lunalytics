@@ -18,8 +18,11 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
   const {
     modalStore: { openModal, closeModal },
     globalStore: { getMonitor, editMonitor, removeMonitor },
+    userStore: { user },
   } = useContextStore();
   const navigate = useNavigate();
+
+  const isEditor = user.permission <= 3;
 
   const handleConfirm = async () => {
     await createGetRequest('/api/monitor/delete', {
@@ -65,20 +68,24 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
       </div>
       {/* <Button iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}>Pause</Button> */}
       {/* <Button iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}>Duplicate</Button> */}
-      <Button
-        id="monitor-edit-button"
-        iconLeft={<MdEdit style={{ width: '20px', height: '20px' }} />}
-        onClick={handleEdit}
-      >
-        Edit
-      </Button>
-      <Button
-        id="monitor-delete-button"
-        iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}
-        onClick={handleDelete}
-      >
-        Delete
-      </Button>
+      {isEditor && (
+        <>
+          <Button
+            id="monitor-edit-button"
+            iconLeft={<MdEdit style={{ width: '20px', height: '20px' }} />}
+            onClick={handleEdit}
+          >
+            Edit
+          </Button>
+          <Button
+            id="monitor-delete-button"
+            iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        </>
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import NotificationValidators from '../../../shared/validators/notifications/index.js';
-import cache from '../../cache/index.js';
+import { editNotification } from '../../database/queries/notification.js';
 
 const NotificationEditMiddleware = async (request, response) => {
   const notification = request.body;
@@ -15,7 +15,7 @@ const NotificationEditMiddleware = async (request, response) => {
 
     const result = validator({ ...notification, ...notification.data });
 
-    const query = await cache.notifications.edit({
+    const query = await editNotification({
       ...result,
       id: notification.id,
       email: notification.email,

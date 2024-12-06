@@ -5,6 +5,7 @@ import {
   deleteCertificate,
 } from '../../../server/database/queries/certificate';
 import SQLite from '../../../server/database/sqlite/setup';
+import cleanCertificate from '../../../server/class/certificate';
 
 vi.mock('../../../server/database/sqlite/setup');
 
@@ -68,7 +69,7 @@ describe('Certificate - Database queries', () => {
 
       const cert = await fetchCertificate(monitorId);
 
-      expect(cert).toEqual(certificate);
+      expect(cert).toEqual(cleanCertificate(certificate));
     });
   });
 

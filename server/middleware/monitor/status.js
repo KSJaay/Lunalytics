@@ -1,11 +1,16 @@
-import cache from '../../cache/index.js';
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
+import { fetchMonitor } from '../../database/queries/monitor.js';
+import {
+  fetchDailyHeartbeats,
+  fetchHeartbeats,
+  fetchHourlyHeartbeats,
+} from '../../database/queries/heartbeat.js';
 const validTypes = ['latest', 'day', 'week', 'month'];
 
 const fetchMonitorStatus = async (request, response) => {
   try {
-    const { monitorId, type } = request.query;
+    const { monitorId, type = 'latest' } = request.query;
 
     if (!monitorId) {
       throw new UnprocessableError('Monitor ID is required');
@@ -15,7 +20,7 @@ const fetchMonitorStatus = async (request, response) => {
       throw new UnprocessableError('Invalid type');
     }
 
-    const monitorExists = await cache.monitors.get(monitorId);
+    const monitorExists = await fetchMonitor(monitorId);
 
     if (!monitorExists) {
       return response.status(404).json({
@@ -23,43 +28,28 @@ const fetchMonitorStatus = async (request, response) => {
       });
     }
 
+    let heartbeats = [];
+
     if (type === 'latest') {
-      const heartbeats = cache.heartbeats.getRealtime(monitorId);
-
-      return response.json(heartbeats);
+      heartbeats = await fetchHeartbeats(monitorId);
     }
-
     if (type === 'day') {
-      const heartbeats = cache.heartbeats.getDaily(monitorId);
-
-      if (heartbeats.length < 2) {
-        return response.sendStatus(416);
-      }
-
-      return response.json(heartbeats);
+      heartbeats = await fetchDailyHeartbeats(monitorId);
     }
 
     if (type === 'week') {
-      const heartbeats = cache.heartbeats.getWeekly(monitorId);
-
-      if (heartbeats.length < 2) {
-        return response.sendStatus(416);
-      }
-
-      return response.json(heartbeats);
+      heartbeats = await fetchHourlyHeartbeats(monitorId, 168);
     }
 
     if (type === 'month') {
-      const heartbeats = cache.heartbeats.getMonthly(monitorId);
-
-      if (heartbeats.length < 2) {
-        return response.sendStatus(416);
-      }
-
-      return response.json(heartbeats);
+      heartbeats = await fetchHourlyHeartbeats(monitorId, 720);
     }
 
-    return response.sendStatus(404);
+    if (type !== 'latest' && heartbeats.length < 2) {
+      return response.sendStatus(416);
+    }
+
+    return response.json(heartbeats);
   } catch (error) {
     return handleError(error, response);
   }

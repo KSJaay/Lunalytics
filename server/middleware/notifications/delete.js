@@ -1,6 +1,6 @@
 import { handleError } from '../../utils/errors.js';
-import cache from '../../cache/index.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
+import { deleteNotification } from '../../database/queries/notification.js';
 
 const NotificationDeleteMiddleware = async (request, response) => {
   const { notificationId } = request.query;
@@ -10,7 +10,7 @@ const NotificationDeleteMiddleware = async (request, response) => {
   }
 
   try {
-    await cache.notifications.delete(notificationId);
+    await deleteNotification(notificationId);
     return response.status(200).send('Notification deleted');
   } catch (error) {
     handleError(error, response);

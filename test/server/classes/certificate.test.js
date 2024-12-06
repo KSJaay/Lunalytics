@@ -9,7 +9,6 @@ describe('Certificate - Class', () => {
       validTill: 'Jul 14 01:56:21 2024 GMT',
       validOn: JSON.stringify(['*.vercel.app', 'vercel.app']),
       daysRemaining: 62,
-      lastCheck: 1715559831877,
       nextCheck: 1715646231877,
     };
 
@@ -20,7 +19,6 @@ describe('Certificate - Class', () => {
       validTill: 'Jul 14 01:56:21 2024 GMT',
       validOn: ['*.vercel.app', 'vercel.app'],
       daysRemaining: 62,
-      lastCheck: 1715559831877,
       nextCheck: 1715646231877,
     });
   });

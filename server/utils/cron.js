@@ -2,12 +2,12 @@
 import { CronJob } from 'cron';
 
 // import local files
-import cache from '../cache/index.js';
 import logger from '../utils/logger.js';
 import {
+  createHourlyHeartbeat,
   fetchHeartbeatsByDate,
-  fetchLastDailyHeartbeat,
 } from '../database/queries/heartbeat.js';
+import { fetchMonitors } from '../database/queries/monitor.js';
 
 // fetch all monitors
 // fetch only heartbeats that are up for each monitor
@@ -25,7 +25,8 @@ async function initialiseCronJobs() {
         message: 'Running hourly cron job for creating heartbeat',
       });
 
-      const monitors = await cache.monitors.getKeys();
+      const monitorsList = await fetchMonitors();
+      const monitors = Object.keys(monitorsList);
 
       if (monitors.length === 0) {
         return;
@@ -62,32 +63,7 @@ async function initialiseCronJobs() {
           latency: averageLatency,
         };
 
-        await cache.heartbeats.addHourlyHeartbeat(monitorId, data);
-      }
-    },
-    null,
-    true,
-    'Europe/London'
-  );
-
-  // every 5 minutes
-  new CronJob(
-    '*/5 * * * *',
-    async function () {
-      logger.info('Cron', {
-        message: 'Running 5 minute cron job for fetching heartbeats',
-      });
-
-      const monitors = await cache.monitors.getKeys();
-
-      if (monitors.length === 0) {
-        return;
-      }
-
-      for (const monitorId of monitors) {
-        const query = await fetchLastDailyHeartbeat(monitorId);
-
-        cache.heartbeats.addFifthMinuteHeartbeat(monitorId, query);
+        await createHourlyHeartbeat(data);
       }
     },
     null,

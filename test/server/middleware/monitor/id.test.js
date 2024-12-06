@@ -1,9 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
-import cache from '../../../../server/cache';
 import fetchMonitorUsingId from '../../../../server/middleware/monitor/id';
+import { fetchCertificate } from '../../../../server/database/queries/certificate';
+import { fetchMonitor } from '../../../../server/database/queries/monitor';
+import { fetchHeartbeats } from '../../../../server/database/queries/heartbeat';
 
-vi.mock('../../../../server/cache');
+vi.mock('../../../../server/database/queries/certificate');
+vi.mock('../../../../server/database/queries/monitor');
+vi.mock('../../../../server/database/queries/heartbeat');
 
 describe('Fetch Monitor Using Id - Middleware', () => {
   const monitorId = 'test_monitor_id';
@@ -12,14 +16,12 @@ describe('Fetch Monitor Using Id - Middleware', () => {
   let fakeResponse;
 
   beforeEach(() => {
-    cache = {
-      monitors: { get: vi.fn().mockReturnValue({ monitorId }) },
-      heartbeats: { get: vi.fn().mockReturnValue({ isValid: false }) },
-      certificates: { get: vi.fn().mockReturnValue([]) },
-    };
-
     fakeRequest = createRequest();
     fakeResponse = createResponse();
+
+    fetchCertificate = vi.fn().mockReturnValue({ isValid: false });
+    fetchMonitor = vi.fn().mockReturnValue({ monitorId: 'test_monitor_id' });
+    fetchHeartbeats = vi.fn().mockReturnValue([]);
 
     fakeRequest.query = {
       monitorId,
@@ -41,30 +43,30 @@ describe('Fetch Monitor Using Id - Middleware', () => {
   });
 
   describe('when monitorId is valid', () => {
-    it('should call cache.monitors.get with monitorId', async () => {
+    it('should call fetchMonitor with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
-      expect(cache.monitors.get).toHaveBeenCalledWith(monitorId);
+      expect(fetchMonitor).toHaveBeenCalledWith(monitorId);
     });
 
     it('should return 404 when monitor is not found', async () => {
-      cache.monitors.get.mockReturnValue(null);
+      fetchMonitor.mockReturnValue(null);
 
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
       expect(fakeResponse.statusCode).toEqual(404);
     });
 
-    it('should call cache.heartbeats.get with monitorId', async () => {
+    it('should call fetchHeartbeats with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
-      expect(cache.heartbeats.get).toHaveBeenCalledWith(monitorId);
+      expect(fetchHeartbeats).toHaveBeenCalledWith(monitorId);
     });
 
-    it('should call cache.certificates.get with monitorId', async () => {
+    it('should call fetchCertificate with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
-      expect(cache.certificates.get).toHaveBeenCalledWith(monitorId);
+      expect(fetchCertificate).toHaveBeenCalledWith(monitorId);
     });
 
     it('should return 200 when data is valid', async () => {

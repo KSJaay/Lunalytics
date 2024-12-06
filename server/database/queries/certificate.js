@@ -1,3 +1,4 @@
+import cleanCertificate from '../../class/certificate.js';
 import SQLite from '../sqlite/setup.js';
 
 export const fetchCertificate = async (monitorId) => {
@@ -9,7 +10,7 @@ export const fetchCertificate = async (monitorId) => {
     return { isValid: false };
   }
 
-  return certificate;
+  return cleanCertificate(certificate);
 };
 
 export const updateCertificate = async (monitorId, certificate) => {

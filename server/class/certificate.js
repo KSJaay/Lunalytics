@@ -13,7 +13,6 @@ const cleanCertificate = (certificate) => ({
   validTill: certificate.validTill,
   validOn: parseJson(certificate.validOn),
   daysRemaining: certificate.daysRemaining,
-  lastCheck: certificate.lastCheck,
   nextCheck: certificate.nextCheck,
 });
 

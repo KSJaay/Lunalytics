@@ -20,34 +20,6 @@ export const fetchHeartbeatsByDate = async (monitorId, date) => {
   return heartbeats;
 };
 
-export const fetchLastDailyHeartbeat = async (monitorId) => {
-  const currentDate = Date.now();
-  const date = currentDate - (currentDate % 300000) - 300000;
-
-  const heartbeats = await SQLite.client('heartbeat')
-    .where({ monitorId, isDown: false })
-    .andWhere('date', '>', date)
-    .orderBy('date', 'desc');
-
-  if (heartbeats.length === 0) {
-    return {
-      date: date,
-      status: 'down',
-      latency: 0,
-    };
-  }
-
-  const averageLatency = Math.round(
-    heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / heartbeats.length
-  );
-
-  return {
-    date: date,
-    status: heartbeats[0].status,
-    latency: averageLatency,
-  };
-};
-
 export const fetchDailyHeartbeats = async (monitorId) => {
   const date = Date.now() - 86400000;
 
@@ -93,12 +65,12 @@ export const fetchDailyHeartbeats = async (monitorId) => {
   return dailyHeartbeats;
 };
 
-export const fetchHourlyHeartbeats = async (monitorId) => {
+export const fetchHourlyHeartbeats = async (monitorId, limit = 720) => {
   const heartbeats = await SQLite.client('hourly_heartbeat')
     .where({ monitorId })
     .select('id', 'status', 'latency', 'date')
     .orderBy('date', 'desc')
-    .limit(720);
+    .limit(limit);
 
   return heartbeats;
 };

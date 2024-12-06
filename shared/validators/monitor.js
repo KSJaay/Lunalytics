@@ -28,6 +28,10 @@ export const httpUrl = (url) => {
   if (!url || !urlRegex.test(url)) {
     return 'Please enter a valid URL.';
   }
+
+  if (!url.includes('http://') && !url.includes('https://')) {
+    return 'Please enter a valid URL. Only http:// or https:// is allowed.';
+  }
 };
 
 export const httpMethod = (method) => {

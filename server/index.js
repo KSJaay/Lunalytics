@@ -28,8 +28,6 @@ const init = async () => {
   await cache.initialise();
 
   await migrateDatabase();
-  const monitors = await cache.monitors.getAll();
-  await cache.heartbeats.loadHeartbeats(monitors);
   await initialiseCronJobs();
 
   app
