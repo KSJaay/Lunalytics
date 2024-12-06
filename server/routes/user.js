@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
 
-import cache from '../cache/index.js';
 import hasAdminPermissions from '../middleware/user/hasAdmin.js';
 import accessDeclineMiddleware from '../middleware/user/access/declineUser.js';
 import accessApproveMiddleware from '../middleware/user/access/approveUser.js';
@@ -16,6 +15,9 @@ import userUpdatePassword from '../middleware/user/update/password.js';
 import transferOwnershipMiddleware from '../middleware/user/transferOwnership.js';
 import deleteAccountMiddleware from '../middleware/user/deleteAccount.js';
 import { handleError } from '../utils/errors.js';
+import { fetchMonitors } from '../database/queries/monitor.js';
+import { fetchHeartbeats } from '../database/queries/heartbeat.js';
+import { fetchCertificate } from '../database/queries/certificate.js';
 
 router.get('/', async (request, response) => {
   try {
@@ -56,17 +58,17 @@ router.post('/exists', async (request, response) => {
 
 router.get('/monitors', async (request, response) => {
   try {
-    const monitors = await cache.monitors.getAll();
+    const monitors = await fetchMonitors();
     const query = [];
 
     for (const monitor of monitors) {
-      const heartbeats = await cache.heartbeats.get(monitor.monitorId);
+      const heartbeats = await fetchHeartbeats(monitor.monitorId, 12);
       monitor.heartbeats = heartbeats;
 
       monitor.cert = { isValid: false };
 
       if (monitor.type === 'http') {
-        const cert = await cache.certificates.get(monitor.monitorId);
+        const cert = await fetchCertificate(monitor.monitorId);
         monitor.cert = cert;
       }
 

@@ -126,8 +126,6 @@ There are various restrictions applied to the monitor data. The following are so
 | port                    | number                                   | Port for the TCP monitor                                 |
 | uptimePercentage        | number                                   | Uptime percentage for the monitor over the last 24 hours |
 | averageHeartbeatLatency | number                                   | Average latency for the monitor over the last 24 hours   |
-| lastCheck               | number                                   | Time of last time monitor was checked (in ms)            |
-| nextCheck               | number                                   | Time of next time monitor should be checked (in ms)      |
 | heartbeats              | Array<[Heartbeat](#heartbeat-structure)> | Array of monitor heartbeats                              |
 | cert                    | [Certificate](#certificate-structure)    | Information about the certificate                        |
 
@@ -152,8 +150,6 @@ There are various restrictions applied to the monitor data. The following are so
   "port": null,
   "uptimePercentage": 83,
   "averageHeartbeatLatency": 38,
-  "lastCheck": 1708092690225,
-  "nextCheck": 1708095536463,
   "heartbeats": [
     {
       "id": 38,
@@ -180,7 +176,6 @@ There are various restrictions applied to the monitor data. The following are so
     "validTill": "Jul 10 03:50:39 2024 GMT",
     "validOn": ["lunalytics.xyz", "www.lunalytics.xyz"],
     "daysRemaining": "72",
-    "lastCheck": 1708092690225,
     "nextCheck": 1714178279326
   }
 }
@@ -203,8 +198,6 @@ There are various restrictions applied to the monitor data. The following are so
   "port": 2308,
   "uptimePercentage": 83,
   "averageHeartbeatLatency": 38,
-  "lastCheck": 1708092690225,
-  "nextCheck": 1708095536463,
   "heartbeats": [
     {
       "id": 38,
@@ -242,7 +235,6 @@ There are various restrictions applied to the monitor data. The following are so
 | validTill     | date    | Date the certificate expires                            |
 | validOn       | array   | Array of urls the certificate is valid for              |
 | daysRemaining | number  | Number of days the certificate is valid                 |
-| lastCheck     | number  | Time of last time certificate was checked (in ms)       |
 | nextCheck     | number  | Time of next time certificate should be checked (in ms) |
 
 ### Example Certificate
@@ -255,7 +247,6 @@ There are various restrictions applied to the monitor data. The following are so
   "validTill": "Jul 10 03:50:39 2024 GMT",
   "validOn": ["lunalytics.xyz", "www.lunalytics.xyz"],
   "daysRemaining": "72",
-  "lastCheck": 1708092690225,
   "nextCheck": 1714178279326
 }
 ```

@@ -17,6 +17,8 @@ describe('Monitor - Class', () => {
     body: null,
     valid_status_codes: JSON.stringify(['200-299']),
     email: 'ksjaay@lunalytics.xyz',
+    notificationId: 'test',
+    notificationType: 'All',
     type: 'http',
     port: null,
     uptimePercentage: 100,
@@ -30,7 +32,6 @@ describe('Monitor - Class', () => {
     validTill: 'Jul 14 01:56:21 2024 GMT',
     validOn: JSON.stringify(['*.vercel.app', 'vercel.app']),
     daysRemaining: 62,
-    lastCheck: 1715559831877,
     nextCheck: 1715646231877,
   };
 
@@ -47,6 +48,8 @@ describe('Monitor - Class', () => {
       body: null,
       valid_status_codes: ['200-299'],
       email: 'ksjaay@lunalytics.xyz',
+      notificationId: 'test',
+      notificationType: 'All',
       type: 'http',
       port: null,
       uptimePercentage: 100,
@@ -58,8 +61,6 @@ describe('Monitor - Class', () => {
     expect(
       cleanMonitor({
         ...monitor,
-        lastCheck: 1715559831877,
-        nextCheck: 1715646231877,
         cert: certificate,
         heartbeats: [],
       })
@@ -75,12 +76,12 @@ describe('Monitor - Class', () => {
       body: null,
       valid_status_codes: ['200-299'],
       email: 'ksjaay@lunalytics.xyz',
+      notificationId: 'test',
+      notificationType: 'All',
       type: 'http',
       port: null,
       uptimePercentage: 100,
       averageHeartbeatLatency: 820,
-      lastCheck: 1715559831877,
-      nextCheck: 1715646231877,
       cert: {
         isValid: true,
         issuer: { C: 'US', O: "Let's Encrypt", CN: 'R3' },
@@ -88,7 +89,6 @@ describe('Monitor - Class', () => {
         validTill: 'Jul 14 01:56:21 2024 GMT',
         validOn: ['*.vercel.app', 'vercel.app'],
         daysRemaining: 62,
-        lastCheck: 1715559831877,
         nextCheck: 1715646231877,
       },
       heartbeats: [],

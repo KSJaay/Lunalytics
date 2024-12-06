@@ -24,7 +24,6 @@ const monitorPropType = PropTypes.shape({
   body: PropTypes.string,
   valid_status_codes: PropTypes.array.isRequired,
   email: PropTypes.string.isRequired,
-  nextCheck: PropTypes.number.isRequired,
 });
 
 const heartbeatPropType = PropTypes.shape({
@@ -45,6 +44,7 @@ const certPropType = PropTypes.shape({
   validTill: PropTypes.string.isRequired,
   validOn: PropTypes.string.isRequired,
   daysRemaining: PropTypes.number.isRequired,
+  nextCheck: PropTypes.number.isRequired,
 });
 
 const fullMonitorPropType = PropTypes.shape({

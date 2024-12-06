@@ -5,15 +5,17 @@ import validators from '../../../shared/validators/monitor.js';
 import cache from '../../cache/index.js';
 import { userExists } from '../../database/queries/user.js';
 import { cleanMonitor } from '../../class/monitor.js';
+import { getTcpOrHttpData } from './add.js';
+import { updateMonitor } from '../../database/queries/monitor.js';
+import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
+import { fetchCertificate } from '../../database/queries/certificate.js';
 
 const monitorEdit = async (request, response) => {
   try {
     const { type } = request.body;
 
     const isHttp = type === 'http';
-
     const validator = isHttp ? validators.http : validators.tcp;
-
     const isInvalidMonitor = validator(request.body);
 
     if (isInvalidMonitor) {
@@ -22,17 +24,13 @@ const monitorEdit = async (request, response) => {
 
     const user = await userExists(request.cookies.access_token);
 
-    const data = await cache.monitors.addOrEdit(
-      request.body,
-      user.email,
-      isHttp,
-      true
-    );
+    const montior_data = getTcpOrHttpData(request.body, user.email, isHttp);
+    const data = await updateMonitor(montior_data);
 
     await cache.checkStatus(data.monitorId);
 
-    const heartbeats = await cache.heartbeats.get(data.monitorId);
-    const cert = await cache.certificates.get(data.monitorId);
+    const heartbeats = await fetchHeartbeats(data.monitorId);
+    const cert = await fetchCertificate(data.monitorId);
 
     const monitor = cleanMonitor({
       ...data,
