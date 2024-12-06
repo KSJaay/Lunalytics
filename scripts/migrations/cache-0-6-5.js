@@ -14,10 +14,11 @@ const migrate = async () => {
   const client = await SQLite.connect();
 
   await client.schema.alterTable('certificate', (table) => {
-    table.timestamp('nextCheck').defaultTo(Date.now());
+    table.timestamp('nextCheck').defaultTo(client.fn.now());
   });
 
   logger.info('Migrations', { message: '0.6.5 has been applied' });
+  return;
 };
 
 export { infomation, migrate };

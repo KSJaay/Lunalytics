@@ -25,7 +25,10 @@ const MonitorGraph = ({ monitor }) => {
     useGraphStatus(monitor);
 
   const data = statusHeartbeats.map((heartbeat = {}) => {
-    return { Latency: heartbeat.latency, time: heartbeat.date };
+    return {
+      Latency: heartbeat.latency,
+      time: dayjs(heartbeat.date).format(timeformat),
+    };
   });
 
   const gridColor =
@@ -42,7 +45,6 @@ const MonitorGraph = ({ monitor }) => {
               dataKey="time"
               style={{ fill: 'var(--accent-200)' }}
               tick={{ fontSize: 12 }}
-              tickFormatter={(date) => dayjs(date).format(timeformat)}
             />
             <YAxis
               label={{

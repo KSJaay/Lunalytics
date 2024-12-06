@@ -11,7 +11,7 @@ const tcpStatusCheck = async (monitor, callback) => {
   const options = {
     address: monitor.url || '127.0.0.1',
     port: monitor.port || 80,
-    timeout: monitor.interval * 1000 || 5000,
+    timeout: monitor.requestTimeout * 1000 || 5000,
   };
 
   socket.setTimeout(options.timeout, function () {
@@ -24,7 +24,7 @@ const tcpStatusCheck = async (monitor, callback) => {
 
     callback(monitor, {
       monitorId: monitor.monitorId,
-      status: 'TIMEOUT',
+      status: 504,
       latency,
       message: 'Ping timed out!',
       isDown: true,
@@ -37,7 +37,7 @@ const tcpStatusCheck = async (monitor, callback) => {
 
     callback(monitor, {
       monitorId: monitor.monitorId,
-      status: 'ALIVE',
+      status: 200,
       latency,
       message: 'Up and running!',
       isDown: false,
@@ -54,7 +54,7 @@ const tcpStatusCheck = async (monitor, callback) => {
 
     callback(monitor, {
       monitorId: monitor.monitorId,
-      status: 'ERROR',
+      status: 503,
       latency,
       message: error.message,
       isDown: true,
