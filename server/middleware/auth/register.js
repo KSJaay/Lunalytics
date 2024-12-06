@@ -28,6 +28,7 @@ const register = async (request, response) => {
         avatar: null,
         permission: 1,
         isVerified: true,
+        createdAt: new Date().toISOString(),
       };
 
       const jwt = await registerUser(data);
@@ -41,6 +42,7 @@ const register = async (request, response) => {
       displayName: username,
       password,
       avatar: null,
+      createdAt: new Date().toISOString(),
     };
 
     const jwt = await registerUser(data);

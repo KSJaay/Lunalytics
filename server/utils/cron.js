@@ -58,7 +58,7 @@ async function initialiseCronJobs() {
 
         const data = {
           monitorId,
-          date: lastHour,
+          date: new Date(lastHour).toISOString(),
           status: lastMonitor.status,
           latency: averageLatency,
         };

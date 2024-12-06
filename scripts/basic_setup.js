@@ -28,7 +28,7 @@ try {
   const configPath = path.join(process.cwd(), 'config.json');
   const config = {
     port: 2308,
-    database: { name: 'lunalytics' },
+    database: { name: 'lunalytics', type: 'better-sqlite3', config: {} },
     jwtSecret: uuidv4(),
     migrationType: 'automatic',
     version: packageJson.version,

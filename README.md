@@ -46,11 +46,8 @@ cd Lunalytics
 #### Setup application
 
 ```bash
-# Setup application
+# Setup and start application
 npm run setup
-
-# Start application using scripts
-npm run start
 
 # Alternatively start application using
 node server/index.js
@@ -86,6 +83,9 @@ pm2 monit
 - [ ] Move to Oauth2 for authentication
 - [ ] Allow session management (Track/logout from sessions)
 - [ ] Add support for multiple databases
+  - [x] Add support for PostgreSQL
+  - [x] Add support for SQLite
+  - [ ] Add support for MongoDB
 - [ ] Add support for more notification services
 - [ ] Better role based access control
 
