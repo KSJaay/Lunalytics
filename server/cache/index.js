@@ -70,9 +70,10 @@ class Master {
       if (monitor.url?.toLowerCase().startsWith('https')) {
         const certificate = await fetchCertificate(monitorId);
 
-        if (!certificate?.nextCheck || certificate.nextCheck <= Date.now()) {
+        const certDate = new Date(certificate?.nextCheck);
+        if (!certificate?.nextCheck || certDate.getTime() <= Date.now()) {
           const cert = await getCertInfo(monitor.url);
-          cert.nextCheck = Date.now() + 600000;
+          cert.nextCheck = new Date(Date.now() + 600000).toISOString();
           await updateCertificate(monitorId, cert);
         }
       }

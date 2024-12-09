@@ -10,17 +10,24 @@ import { loadJSON } from '../../shared/parseJson.js';
 const loginDetails = loadJSON('../test/e2e/setup/fixtures/login.json');
 
 const setupDatabase = async () => {
-  if (fs.existsSync(`${process.cwd()}/server/database/sqlite/e2e-test.db`)) {
-    fs.unlinkSync(`${process.cwd()}/server/database/sqlite/e2e-test.db`);
+  if (fs.existsSync(`${process.cwd()}/server/database/sqlite/e2etest.db`)) {
+    fs.unlinkSync(`${process.cwd()}/server/database/sqlite/e2etest.db`);
     logger.info('SETUP', { message: 'Removed old database' });
   }
 
   const sqlite = new SQLite();
 
-  await sqlite.connect('e2e-test');
+  await sqlite.connect('e2etest');
   await sqlite.setup();
 
   const { username, email, password } = loginDetails.ownerUser;
+
+  const ownerExists = await sqlite.client('user').where({ email }).first();
+
+  if (ownerExists) {
+    logger.info('SETUP', { message: 'Owner user already exists' });
+    return sqlite.client.destroy();
+  }
 
   await sqlite.client('user').insert({
     email: email.toLowerCase(),

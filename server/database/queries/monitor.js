@@ -27,7 +27,7 @@ const updateMonitor = async (monitor) => {
 };
 
 const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
-  const time = Date.now() - timeToMs(duration, type);
+  const time = new Date(Date.now() - timeToMs(duration, type)).toISOString();
 
   const heartbeats = await SQLite.client('heartbeat')
     .select()
@@ -64,18 +64,22 @@ const fetchMonitorUptime = async (monitorId) => {
       .orderBy('date', 'asc')
       .first();
 
-    return !firstEverHeartbeat ? 0 : firstEverHeartbeat.date;
+    return !firstEverHeartbeat
+      ? 0
+      : new Date(firstEverHeartbeat.date).getTime();
   }
 
   const newestUptimeHeartbeat = await SQLite.client('heartbeat')
     .select()
     .where('monitorId', monitorId)
     .andWhere('isDown', false)
-    .andWhere('date', '>', lastDownHeartbeat.date)
+    .andWhere('date', '>', new Date(lastDownHeartbeat.date).getTime())
     .orderBy('date', 'asc')
     .first();
 
-  return !newestUptimeHeartbeat ? 0 : newestUptimeHeartbeat.date;
+  return !newestUptimeHeartbeat
+    ? 0
+    : new Date(newestUptimeHeartbeat.date).getTime();
 };
 
 const fetchMonitors = async () => {

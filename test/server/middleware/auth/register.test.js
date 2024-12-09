@@ -24,6 +24,10 @@ describe('Register - Middleware', () => {
       username: 'KSJaay',
     };
 
+    vi.useFakeTimers({
+      now: new Date('2023-01-01T00:00:00.000Z').getTime(),
+    });
+
     registerUser = vi.fn().mockReturnValue('test');
     fetchMembers = vi.fn().mockReturnValue([]);
     setServerSideCookie = vi.fn();
@@ -72,6 +76,7 @@ describe('Register - Middleware', () => {
         avatar: null,
         permission: 1,
         isVerified: true,
+        createdAt: new Date().toISOString(),
       });
     });
 
@@ -116,6 +121,7 @@ describe('Register - Middleware', () => {
         displayName: 'KSJaay',
         password: 'testUser123',
         avatar: null,
+        createdAt: new Date().toISOString(),
       });
     });
 

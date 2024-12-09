@@ -41,10 +41,10 @@ class Config {
 
       if (process.env.NODE_ENV === 'test') {
         if (!this.config.database) this.config.database = {};
-        this.config.database.name = 'e2e-test';
+        this.config.database.name = 'e2etest';
 
         logger.info('CONFIG', {
-          message: 'Changed database name to "e2e-test" for testing purposes.',
+          message: 'Changed database name to "e2etest" for testing purposes.',
         });
       }
 
