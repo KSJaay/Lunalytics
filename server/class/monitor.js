@@ -46,8 +46,6 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   notificationType: monitor.notificationType,
   uptimePercentage: monitor.uptimePercentage,
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
-  lastCheck: monitor.lastCheck,
-  nextCheck: monitor.nextCheck,
   cert: !cert?.isValid ? cert : cleanCertificate(cert),
   heartbeats,
 });

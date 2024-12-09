@@ -1,9 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
-import cache from '../../../../server/cache';
 import fetchMonitorStatus from '../../../../server/middleware/monitor/status';
+import { fetchMonitor } from '../../../../server/database/queries/monitor';
+import {
+  fetchDailyHeartbeats,
+  fetchHeartbeats,
+  fetchHourlyHeartbeats,
+} from '../../../../server/database/queries/heartbeat';
 
-vi.mock('../../../../server/cache');
+vi.mock('../../../../server/database/queries/monitor');
+vi.mock('../../../../server/database/queries/heartbeat');
 
 describe('Fetch Monitor Status - Middleware', () => {
   const monitorId = 'test_monitor_id';
@@ -18,16 +24,11 @@ describe('Fetch Monitor Status - Middleware', () => {
   };
 
   beforeEach(() => {
-    cache = {
-      monitors: { get: vi.fn().mockReturnValue({ monitorId }) },
-      heartbeats: {
-        get: vi.fn().mockReturnValue(true),
-        getRealtime: vi.fn().mockReturnValue([heartbeat, heartbeat]),
-        getDaily: vi.fn().mockReturnValue([heartbeat, heartbeat]),
-        getWeekly: vi.fn().mockReturnValue([heartbeat, heartbeat]),
-        getMonthly: vi.fn().mockReturnValue([heartbeat, heartbeat]),
-      },
-    };
+    fetchMonitor = vi.fn().mockReturnValue({ monitorId });
+    fetchHeartbeats = vi.fn().mockReturnValue([heartbeat, heartbeat]);
+    fetchHeartbeats = vi.fn().mockReturnValue([heartbeat, heartbeat]);
+    fetchHourlyHeartbeats = vi.fn().mockReturnValue([heartbeat, heartbeat]);
+    fetchDailyHeartbeats = vi.fn().mockReturnValue([heartbeat, heartbeat]);
 
     fakeRequest = createRequest();
     fakeResponse = createResponse();
@@ -63,16 +64,16 @@ describe('Fetch Monitor Status - Middleware', () => {
   });
 
   describe('when monitorId is valid', () => {
-    it('should call cache.monitors.get with monitorId', async () => {
+    it('should call fetchMonitor with monitorId', async () => {
       await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-      expect(cache.monitors.get).toHaveBeenCalledWith(monitorId);
+      expect(fetchMonitor).toHaveBeenCalledWith(monitorId);
     });
 
-    it('should call cache.heartbeats.getRealtime with monitorId', async () => {
+    it('should call fetchHeartbeats with monitorId', async () => {
       await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-      expect(cache.heartbeats.getRealtime).toHaveBeenCalledWith(monitorId);
+      expect(fetchHeartbeats).toHaveBeenCalledWith(monitorId);
     });
 
     it('should return 200 when data is valid', async () => {
@@ -87,49 +88,106 @@ describe('Fetch Monitor Status - Middleware', () => {
       expect(fakeResponse.json).toHaveBeenCalledWith([heartbeat, heartbeat]);
     });
 
-    [
-      { type: 'day', funcName: 'getDaily' },
-      { type: 'week', funcName: 'getWeekly' },
-      { type: 'month', funcName: 'getMonthly' },
-    ].forEach(({ type, funcName }) =>
-      describe(`when type is ${type}`, () => {
-        beforeEach(() => {
-          fakeRequest.query.type = type;
-        });
+    describe(`when type is day`, () => {
+      beforeEach(() => {
+        fakeRequest.query.type = 'day';
+      });
 
-        it(`should call cache.heartbeats.${funcName} with monitorId`, async () => {
-          await fetchMonitorStatus(fakeRequest, fakeResponse);
+      it(`should call fetchDailyHeartbeats with monitorId`, async () => {
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-          expect(cache.heartbeats[funcName]).toHaveBeenCalledWith(monitorId);
-        });
+        expect(fetchDailyHeartbeats).toHaveBeenCalledWith(monitorId);
+      });
 
-        it('should return 416 when heartbeats are less than two', async () => {
-          cache.heartbeats[funcName] = vi.fn().mockReturnValue([]);
+      it('should return 416 when heartbeats are less than two', async () => {
+        fetchDailyHeartbeats = vi.fn().mockReturnValue([]);
 
-          await fetchMonitorStatus(fakeRequest, fakeResponse);
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-          expect(fakeResponse.statusCode).toEqual(416);
-        });
+        expect(fakeResponse.statusCode).toEqual(416);
+      });
 
-        it('should return 200 when data is valid', async () => {
-          await fetchMonitorStatus(fakeRequest, fakeResponse);
+      it('should return 200 when data is valid', async () => {
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-          expect(fakeResponse.statusCode).toEqual(200);
-        });
+        expect(fakeResponse.statusCode).toEqual(200);
+      });
 
-        it('should call response.json with heartbeats', async () => {
-          cache.heartbeats[funcName] = vi
-            .fn()
-            .mockReturnValue([heartbeat, heartbeat]);
+      it('should call response.json with heartbeats', async () => {
+        fetchDailyHeartbeats = vi.fn().mockReturnValue([heartbeat, heartbeat]);
 
-          await fetchMonitorStatus(fakeRequest, fakeResponse);
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-          expect(fakeResponse.json).toHaveBeenCalledWith([
-            heartbeat,
-            heartbeat,
-          ]);
-        });
-      })
-    );
+        expect(fakeResponse.json).toHaveBeenCalledWith([heartbeat, heartbeat]);
+      });
+    });
+
+    describe(`when type is week`, () => {
+      beforeEach(() => {
+        fakeRequest.query.type = 'week';
+      });
+
+      it(`should call fetchHourlyHeartbeats with monitorId`, async () => {
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+        expect(fetchHourlyHeartbeats).toHaveBeenCalledWith(monitorId, 168);
+      });
+
+      it('should return 416 when heartbeats are less than two', async () => {
+        fetchHourlyHeartbeats = vi.fn().mockReturnValue([]);
+
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+        expect(fakeResponse.statusCode).toEqual(416);
+      });
+
+      it('should return 200 when data is valid', async () => {
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+        expect(fakeResponse.statusCode).toEqual(200);
+      });
+
+      it('should call response.json with heartbeats', async () => {
+        fetchHourlyHeartbeats = vi.fn().mockReturnValue([heartbeat, heartbeat]);
+
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+        expect(fakeResponse.json).toHaveBeenCalledWith([heartbeat, heartbeat]);
+      });
+    });
+
+    describe(`when type is month`, () => {
+      beforeEach(() => {
+        fakeRequest.query.type = 'month';
+      });
+
+      it(`should call fetchHourlyHeartbeats with monitorId`, async () => {
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+        expect(fetchHourlyHeartbeats).toHaveBeenCalledWith(monitorId, 720);
+      });
+
+      it('should return 416 when heartbeats are less than two', async () => {
+        fetchHourlyHeartbeats = vi.fn().mockReturnValue([]);
+
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+        expect(fakeResponse.statusCode).toEqual(416);
+      });
+
+      it('should return 200 when data is valid', async () => {
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+        expect(fakeResponse.statusCode).toEqual(200);
+      });
+
+      it('should call response.json with heartbeats', async () => {
+        fetchHourlyHeartbeats = vi.fn().mockReturnValue([heartbeat, heartbeat]);
+
+        await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+        expect(fakeResponse.json).toHaveBeenCalledWith([heartbeat, heartbeat]);
+      });
+    });
   });
 });

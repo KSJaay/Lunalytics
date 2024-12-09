@@ -1,9 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
-import cache from '../../../../server/cache';
 import monitorDelete from '../../../../server/middleware/monitor/delete';
+import { deleteMonitor } from '../../../../server/database/queries/monitor';
+import { deleteHeartbeats } from '../../../../server/database/queries/heartbeat';
+import { deleteCertificate } from '../../../../server/database/queries/certificate';
 
-vi.mock('../../../../server/cache');
+vi.mock('../../../../server/database/queries/monitor');
+vi.mock('../../../../server/database/queries/heartbeat');
+vi.mock('../../../../server/database/queries/certificate');
 
 describe('Delete Monitor - Middleware', () => {
   const monitorId = 'test_monitor_id';
@@ -12,12 +16,6 @@ describe('Delete Monitor - Middleware', () => {
   let fakeResponse;
 
   beforeEach(() => {
-    cache = {
-      monitors: { delete: vi.fn() },
-      heartbeats: { delete: vi.fn() },
-      certificates: { delete: vi.fn() },
-    };
-
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
@@ -41,22 +39,22 @@ describe('Delete Monitor - Middleware', () => {
   });
 
   describe('when monitorId is valid', () => {
-    it('should call cache.monitors.delete with monitorId', async () => {
+    it('should call deleteMonitor with monitorId', async () => {
       await monitorDelete(fakeRequest, fakeResponse);
 
-      expect(cache.monitors.delete).toHaveBeenCalledWith(monitorId);
+      expect(deleteMonitor).toHaveBeenCalledWith(monitorId);
     });
 
-    it('should call cache.heartbeats.delete with monitorId', async () => {
+    it('should call deleteHeartbeats with monitorId', async () => {
       await monitorDelete(fakeRequest, fakeResponse);
 
-      expect(cache.heartbeats.delete).toHaveBeenCalledWith(monitorId);
+      expect(deleteHeartbeats).toHaveBeenCalledWith(monitorId);
     });
 
-    it('should call cache.certificates.delete with monitorId', async () => {
+    it('should call deleteCertificate with monitorId', async () => {
       await monitorDelete(fakeRequest, fakeResponse);
 
-      expect(cache.certificates.delete).toHaveBeenCalledWith(monitorId);
+      expect(deleteCertificate).toHaveBeenCalledWith(monitorId);
     });
   });
 });

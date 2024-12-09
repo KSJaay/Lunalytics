@@ -1,9 +1,9 @@
 import { handleError } from '../../utils/errors.js';
-import cache from '../../cache/index.js';
+import { fetchNotifications } from '../../database/queries/notification.js';
 
 const NotificationGetAllMiddleware = async (request, response) => {
   try {
-    const notifications = await cache.notifications.getAll();
+    const notifications = await fetchNotifications();
 
     return response.json(notifications);
   } catch (error) {

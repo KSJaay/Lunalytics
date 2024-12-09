@@ -1,46 +1,41 @@
-// import classes
-import Certificates from './certificates.js';
-import Heartbeats from './heartbeats.js';
-import Monitor from './monitors.js';
-import Notifications from './notifications.js';
+// import local files
 import getCertInfo from '../tools/checkCertificate.js';
 import httpStatusCheck from '../tools/httpStatus.js';
 import tcpStatusCheck from '../tools/tcpPing.js';
 import Collection from '../../shared/utils/collection.js';
 import NotificationServices from '../notifications/index.js';
 import logger from '../utils/logger.js';
+import { fetchMonitor, fetchMonitors } from '../database/queries/monitor.js';
+import {
+  createHeartbeat,
+  deleteHeartbeats,
+  fetchHeartbeats,
+} from '../database/queries/heartbeat.js';
+import {
+  deleteCertificate,
+  fetchCertificate,
+  updateCertificate,
+} from '../database/queries/certificate.js';
+import { fetchNotificationById } from '../database/queries/notification.js';
 
 class Master {
   constructor() {
-    this.heartbeats = new Heartbeats();
-    this.certificates = new Certificates();
-    this.monitors = new Monitor();
-    this.notifications = new Notifications();
     this.timeouts = new Collection();
   }
 
   async initialise() {
-    await this.notifications.getAll();
-    const monitors = await this.monitors.getAll();
+    const monitors = await fetchMonitors();
 
     for (const monitor of monitors) {
-      await this.certificates.get(monitor.monitorId);
-      await this.heartbeats.get(monitor.monitorId);
       await this.checkStatus(monitor.monitorId);
     }
   }
 
   async updateTcpStatus(monitor, heartbeat) {
-    const [lastHeartbeat] = await this.heartbeats.getLastHeartbeat(
-      monitor.monitorId
-    );
-    await this.heartbeats.addHeartbeat(monitor.monitorId, heartbeat);
+    const [lastHeartbeat] = await fetchHeartbeats(monitor.monitorId, 1);
+    await createHeartbeat(heartbeat);
 
     clearTimeout(this.timeouts.get(monitor.monitorId));
-
-    monitor.lastCheck = Date.now();
-    monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
-    await this.monitors.updateUptimePercentage(monitor);
 
     await this.sendNotification(monitor, heartbeat, lastHeartbeat);
 
@@ -53,13 +48,13 @@ class Master {
   }
 
   async checkStatus(monitorId) {
-    const monitor = await this.monitors.get(monitorId).catch(() => false);
+    const monitor = await fetchMonitor(monitorId).catch(() => false);
 
     if (!monitor) {
       clearTimeout(this.timeouts.get(monitorId));
       this.timeouts.delete(monitorId);
-      await this.certificates.delete(monitorId);
-      await this.heartbeats.delete(monitorId);
+      await deleteCertificate(monitorId);
+      await deleteHeartbeats(monitorId);
       return;
     }
 
@@ -68,22 +63,19 @@ class Master {
     }
 
     if (monitor.type === 'http') {
-      const [lastHeartbeat] = await this.heartbeats.getLastHeartbeat(monitorId);
+      const [lastHeartbeat] = await fetchHeartbeats(monitorId, 1);
       const heartbeat = await httpStatusCheck(monitor);
-      await this.heartbeats.addHeartbeat(monitorId, heartbeat);
+      await createHeartbeat(heartbeat);
 
       if (monitor.url?.toLowerCase().startsWith('https')) {
-        const certificate = await this.certificates.get(monitorId);
+        const certificate = await fetchCertificate(monitorId);
 
         if (!certificate?.nextCheck || certificate.nextCheck <= Date.now()) {
           const cert = await getCertInfo(monitor.url);
-          await this.certificates.update(monitorId, cert);
+          cert.nextCheck = Date.now() + 600000;
+          await updateCertificate(monitorId, cert);
         }
       }
-
-      monitor.lastCheck = Date.now();
-      monitor.nextCheck = monitor.lastCheck + monitor.interval * 1000;
-      await this.monitors.updateUptimePercentage(monitor);
 
       await this.sendNotification(monitor, heartbeat, lastHeartbeat);
 
@@ -126,9 +118,7 @@ class Master {
       if (!hasOutage && !hasRecovered) return;
       if (!monitor.notificationId) return;
 
-      const notification = await this.notifications.getById(
-        monitor.notificationId
-      );
+      const notification = await fetchNotificationById(monitor.notificationId);
 
       if (
         !notification?.isEnabled ||

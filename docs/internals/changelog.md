@@ -1,5 +1,76 @@
 # Previous updates
 
+## 0.6.5
+
+### Removes caching system
+
+### Summary
+
+Removes caching system, and adds column to certificate table for the next check time. I was testing the caching system, and realised it was pretty useless, so for now it's been removed. The difference between response time for caching and non-caching was barely noticeable. There are some calls that have a higher latency, so they may be cached in the future at somepoint.
+
+## 0.6.4
+
+### Moves from chart.js to recharts
+
+## 0.6.3
+
+### Adds new compact mode
+
+### Summary
+
+Adds a new compact mode that shows both the list of monitors and information about the selected monitor on the same page. This is to make it easier to filter/look through larger list of monitors. This is only available for PC/laptops and for mobile/tablet it'll still be the previous view, where the user is taken to another page.
+
+### Updates
+
+- Adds new compact mode
+- Updates setting page to remove transfer ownership if you don't have the permission
+- Moved scss for pages to /styles/pages directory
+
+## 0.6.2
+
+### New config and filtering system
+
+### Summary
+
+It's a pretty small update, wanted to rework the config system because the old one was a pain to use. Also, wanted to make some more adjustments for mobile users as filtering on the monitor list page was pretty annoying.
+
+### New Features
+
+- Adds new config system
+- Changes to `npm run setup` to no longer require user input (Making setup a bit easier)
+- Adds `npm run setup:advance` that uses the old config setup system
+- Adds a new filtering system for mobile devices, old one was uhh.. rough...
+- Adds some guides for notifications
+
+## 0.6.1
+
+### Updates package-lock.json and adds roadmap to readme
+
+### Summary
+
+Updates package-lock.json and adds roadmap to readme
+
+## 0.6.0
+
+### Adds ability to create different notifications
+
+### Summary
+
+This PR introduces notifications for when services are down/recovered. This is the first of two parts for PRs, the second PR will be out later this month. And needs to be merged at the same time!
+
+### New Features
+
+- Allows users to create notifications
+- New page to show currently available notifications
+- Adds notification support for Discord, Slack, Telegram, and Webhooks
+- Adds Collection which extends Map with a few extra functions
+- Adds schemas for notifications (To be used in the future)
+
+### Updates
+
+- Reworks folder structure to better share code
+- Reworks context store to add computed methods
+
 ## v0.5.4
 
 ### Cleaning up and moving to canvasjs

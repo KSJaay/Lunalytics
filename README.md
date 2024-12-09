@@ -24,6 +24,10 @@
 
 ## 🚀 Getting Started
 
+> [!CAUTION]
+>
+> This project is under active development, things may randomly break. But I'll do my best to fix them as soon as possible.
+
 #### Requirements
 
 Make sure you have the following applications installed before starting:
@@ -77,7 +81,7 @@ pm2 monit
 ## 🎯 Roadmap
 
 - [ ] Custom status pages
-- [ ] Better design for compact mode
+- [x] Better design for compact mode
 - [ ] API keys for users
 - [ ] Move to Oauth2 for authentication
 - [ ] Allow session management (Track/logout from sessions)
