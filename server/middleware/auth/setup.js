@@ -89,7 +89,7 @@ const setupMiddleware = async (request, response) => {
       return response.status(400).send({ general: 'Invalid setup type' });
     }
 
-    const keys = getSetupKeys(request.body.databaseType);
+    const keys = getSetupKeys(type, request.body.databaseType);
     let errors = {};
 
     const setErrors = (error) => {
@@ -98,7 +98,7 @@ const setupMiddleware = async (request, response) => {
       errors = { ...errors, ...error };
     };
 
-    for (let key of keys) {
+    for (const key of keys) {
       const validator = setupValidators[key];
       validator(request.body[key], setErrors);
     }

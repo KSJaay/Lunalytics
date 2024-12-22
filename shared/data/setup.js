@@ -6,22 +6,21 @@ const setupPages = {
   SECRETS_FORM: 'secrets',
 };
 
-const getSetupKeys = (type) => {
-  let keys = ['email', 'username', 'password'];
+const getSetupKeys = (type, databaseType) => {
+  let keys = [
+    'email',
+    'username',
+    'password',
+    'databaseType',
+    'databaseName',
+    'migrationType',
+  ];
 
   if (type === 'advanced') {
-    keys = [
-      ...keys,
-      'websiteUrl',
-      'databaseType',
-      'databaseName',
-      'retentionPeriod',
-      'jwtSecret',
-      'migrationType',
-    ];
+    keys = [...keys, 'websiteUrl', 'retentionPeriod', 'jwtSecret'];
   }
 
-  if (type === 'pg') {
+  if (databaseType === 'pg') {
     keys = [
       ...keys,
       'postgresHost',

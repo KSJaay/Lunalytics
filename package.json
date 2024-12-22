@@ -19,7 +19,7 @@
     "lint:server": "eslint server --ext js",
     "test:app": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "cypress open",
+    "test:e2e": "npm run build && cypress open",
     "test:db": "node ./test/shared/setupDatabase.js",
     "test:server": "npm run test:db && cross-env NODE_ENV=test node server/index.js",
     "migrate": "node ./scripts/migrate_manual.js",

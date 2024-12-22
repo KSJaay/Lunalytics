@@ -1,10 +1,7 @@
 import { beforeEach, describe, expect, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import register from '../../../../server/middleware/auth/register';
-import {
-  fetchMembers,
-  registerUser,
-} from '../../../../server/database/queries/user';
+import { registerUser } from '../../../../server/database/queries/user';
 import { setServerSideCookie } from '../../../../shared/utils/cookies';
 
 vi.mock('../../../../server/database/queries/user');
@@ -29,7 +26,6 @@ describe('Register - Middleware', () => {
     });
 
     registerUser = vi.fn().mockReturnValue('test');
-    fetchMembers = vi.fn().mockReturnValue([]);
     setServerSideCookie = vi.fn();
   });
 
@@ -63,58 +59,9 @@ describe('Register - Middleware', () => {
     });
   });
 
-  describe('When no members exist', () => {
-    it('should call registerUser with permission 1 and isVerified true', async () => {
-      await register(fakeRequest, fakeResponse);
-
-      expect(fetchMembers).toHaveBeenCalled();
-
-      expect(registerUser).toHaveBeenCalledWith({
-        email: 'ksjaay@lunalytics.xyz',
-        displayName: 'KSJaay',
-        password: 'testUser123',
-        avatar: null,
-        permission: 1,
-        isVerified: true,
-        createdAt: new Date().toISOString(),
-      });
-    });
-
-    it('should call setServerSideCookie with response, "access_token", and jwt', async () => {
-      await register(fakeRequest, fakeResponse);
-
-      expect(setServerSideCookie).toHaveBeenCalledWith(
-        fakeResponse,
-        'access_token',
-        'test'
-      );
-    });
-
-    it('should return 201 when user has been created', async () => {
-      await register(fakeRequest, fakeResponse);
-
-      expect(fakeResponse.statusCode).toEqual(201);
-    });
-  });
-
-  describe('When members exist', () => {
-    beforeEach(() => {
-      fetchMembers = vi.fn().mockReturnValue([
-        {
-          email: 'ksjaay@lunalytics.xyz',
-          displayName: 'KSJaay',
-          password: 'testUser123',
-          avatar: null,
-          permission: 1,
-          isVerified: true,
-        },
-      ]);
-    });
-
+  describe('Registering a new user', () => {
     it('should call registerUser with user data', async () => {
       await register(fakeRequest, fakeResponse);
-
-      expect(fetchMembers).toHaveBeenCalled();
 
       expect(registerUser).toHaveBeenCalledWith({
         email: 'ksjaay@lunalytics.xyz',

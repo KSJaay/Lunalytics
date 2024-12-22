@@ -18,6 +18,15 @@ const authorization = async (request, response, next) => {
         if (!userExistsInDatabase.isVerified) {
           return response.sendStatus(403);
         }
+
+        // if user is trying to access login or register page and is already logged in, redirect to home page
+        if (
+          request.url.startsWith('/login') ||
+          request.url.startsWith('/register') ||
+          request.url.startsWith('/setup')
+        ) {
+          return response.redirect('/');
+        }
       }
 
       if (!userExistsInDatabase) {
