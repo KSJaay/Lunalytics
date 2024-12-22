@@ -2,8 +2,8 @@
 import PropTypes from 'prop-types';
 
 // import local files
-import TextInput from '../../components/ui/input';
-import ProgressBar from '../../components/ui/progress';
+import TextInput from '../ui/input';
+import ProgressBar from '../ui/progress';
 
 const RegisterEmailForm = ({
   handleInput,

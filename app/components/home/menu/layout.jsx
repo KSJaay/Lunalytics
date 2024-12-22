@@ -45,7 +45,7 @@ const MenuLayoutDropdown = () => {
 
   return (
     <Dropdown.Container
-      position="center"
+      position="left"
       isOpen={dropdownIsOpen}
       toggleDropdown={toggleDropdown}
       id="home-menu-layout"

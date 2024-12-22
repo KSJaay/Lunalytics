@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import ProgressBar from '../../components/ui/progress';
+import ProgressBar from '../ui/progress';
 import { createGetRequest } from '../../services/axios';
 
 const RegisterVerify = () => {

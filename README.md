@@ -21,6 +21,11 @@
 - Customizable themes/colors
 - Customizable user profiles
 - Support for notifications
+  - Discord
+  - Slack
+  - Telegram
+  - Webhook
+  - More to come...
 
 ## 🚀 Getting Started
 
@@ -46,8 +51,11 @@ cd Lunalytics
 #### Setup application
 
 ```bash
-# Setup and start application
+# Setup application
 npm run setup
+
+# Start application using scripts
+npm run start
 
 # Alternatively start application using
 node server/index.js

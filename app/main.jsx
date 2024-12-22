@@ -19,11 +19,14 @@ import Setttings from './pages/settings';
 import Verify from './pages/verify';
 import ErrorPage from './pages/error';
 import Notifications from './pages/notifications';
+import Setup from './pages/setup';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ToastContainer position="top-right" theme="dark" />
-    <BrowserRouter>
+    <BrowserRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <Routes>
         <Route
           path="/"
@@ -65,6 +68,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/setup" element={<Setup />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/404" element={<ErrorPage />} />
