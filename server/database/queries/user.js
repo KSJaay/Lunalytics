@@ -48,11 +48,45 @@ const registerUser = async (data) => {
 
 const userExists = async (access_token) => {
   const user = verifyCookie(access_token);
-  return SQLite.client('user').where({ email: user.email }).first();
+  return SQLite.client('user')
+    .where({ email: user.email })
+    .select(
+      'email',
+      'displayName',
+      'avatar',
+      'isVerified',
+      'permission',
+      'createdAt'
+    )
+    .first();
 };
 
 const emailExists = async (email) => {
-  return SQLite.client('user').where({ email }).first();
+  return SQLite.client('user')
+    .where({ email })
+    .select(
+      'email',
+      'displayName',
+      'avatar',
+      'isVerified',
+      'permission',
+      'createdAt'
+    )
+    .first();
+};
+
+const ownerExists = async () => {
+  return SQLite.client('user')
+    .where({ permission: 1 })
+    .select(
+      'email',
+      'displayName',
+      'avatar',
+      'isVerified',
+      'permission',
+      'createdAt'
+    )
+    .first();
 };
 
 const updateUserDisplayname = (email, displayName) => {
@@ -137,6 +171,7 @@ export {
   registerUser,
   userExists,
   emailExists,
+  ownerExists,
   updateUserDisplayname,
   updateUserAvatar,
   fetchMembers,

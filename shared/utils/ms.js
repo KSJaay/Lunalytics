@@ -1,3 +1,9 @@
+const h = 1000 * 60 * 60;
+const d = h * 24;
+const w = d * 7;
+const m = d * 30;
+const y = d * 365.25;
+
 const timeToMs = (duration, type = 'hours') => {
   const types = {
     months: 2592000000,
@@ -47,4 +53,45 @@ const msToTime = (duration) => {
   return 'Unknown';
 };
 
-export { msToTime, timeToMs };
+const stringToMs = (value) => {
+  const [_, stringNumber, matchedType] = value.match(/^(\d+)([a-zA-Z])$/) || [];
+
+  if (!stringNumber || !matchedType) return 0;
+
+  const n = parseInt(stringNumber);
+  const type = matchedType?.toLowerCase();
+
+  if (isNaN(n)) return 0;
+
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'months':
+    case 'month':
+    case 'mo':
+    case 'm':
+      return n * m;
+    case 'weeks':
+    case 'week':
+    case 'w':
+      return n * w;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    default:
+      return 0;
+  }
+};
+
+export { msToTime, timeToMs, stringToMs };

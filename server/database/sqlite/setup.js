@@ -4,22 +4,26 @@ import knex from 'knex';
 import logger from '../../utils/logger.js';
 import config from '../../utils/config.js';
 
-const configDatabaseName = config.get('database')?.name || 'lunalytics';
-const configDatatbaseType = config.get('database')?.type || 'better-sqlite3';
-
 export class SQLite {
   constructor() {
     this.client = null;
   }
 
   async connect(databaseName) {
-    const dbName = databaseName || configDatabaseName;
+    if (!config.get('database')?.name && process.env.NODE_ENV !== 'test') {
+      return logger.error('SQLITE', {
+        message: 'Database name is not set in config.json',
+      });
+    }
+
+    const dbName = databaseName || config.get('database')?.name || 'lunalytics';
+    const databaseType = config.get('database')?.type || 'better-sqlite3';
 
     if (this.client) return this.client;
 
-    if (configDatatbaseType === 'pg') {
+    if (databaseType === 'pg') {
       this.client = knex({
-        client: configDatatbaseType,
+        client: databaseType,
         connection: { ...config.get('database')?.config },
         useNullAsDefault: true,
       });
@@ -34,19 +38,14 @@ export class SQLite {
       if (!databaseExists) {
         await this.client.raw(`CREATE DATABASE ${dbName}`);
 
-        logger.info('PostgreSQL', {
-          message: 'Created PostgreSQL database',
-        });
+        logger.info('PostgreSQL', { message: 'Created PostgreSQL database' });
       }
 
       this.client.destroy();
 
       this.client = knex({
-        client: configDatatbaseType,
-        connection: {
-          ...config.get('database')?.config,
-          database: dbName,
-        },
+        client: databaseType,
+        connection: { ...config.get('database')?.config, database: dbName },
         useNullAsDefault: true,
       });
 
@@ -55,7 +54,7 @@ export class SQLite {
       });
     }
 
-    if (configDatatbaseType === 'better-sqlite3') {
+    if (databaseType === 'better-sqlite3') {
       const path = `${process.cwd()}/server/database/sqlite/${dbName}.db`;
 
       if (!existsSync(path)) {
@@ -63,7 +62,7 @@ export class SQLite {
       }
 
       this.client = knex({
-        client: configDatatbaseType,
+        client: databaseType,
         connection: { filename: path },
         useNullAsDefault: true,
       });
@@ -80,6 +79,8 @@ export class SQLite {
   }
 
   async setup() {
+    if (!this.client) return false;
+
     const userExists = await this.client.schema.hasTable('user');
 
     if (!userExists) {
@@ -215,6 +216,8 @@ export class SQLite {
         table.index('monitorId');
       });
     }
+
+    return true;
   }
 }
 

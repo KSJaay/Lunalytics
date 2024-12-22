@@ -7,8 +7,8 @@ import logger from '../server/utils/logger.js';
 import migrationList from './migrations/index.js';
 import { loadJSON } from '../shared/parseJson.js';
 
-const config = loadJSON('../config.json');
-const packageJson = loadJSON('../package.json');
+const config = loadJSON('config.json');
+const packageJson = loadJSON('package.json');
 
 const migrateDatabase = async () => {
   if (config.migrationType !== 'automatic') {
@@ -43,10 +43,7 @@ const migrateDatabase = async () => {
     }
 
     const configPath = path.join(process.cwd(), 'config.json');
-    const newConfig = {
-      ...config,
-      version: packageJson.version,
-    };
+    const newConfig = { ...config, version: packageJson.version };
 
     fs.writeFileSync(configPath, JSON.stringify(newConfig, null, 2));
 

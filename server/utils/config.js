@@ -37,7 +37,7 @@ class Config {
 
     try {
       this.config = JSON.parse(fileData);
-      process.env.VITE_API_URL = `http://localhost:${this.config.port}`;
+      process.env.VITE_API_URL = this.config.websiteUrl;
 
       if (process.env.NODE_ENV === 'test') {
         if (!this.config.database) this.config.database = {};
