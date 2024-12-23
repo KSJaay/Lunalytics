@@ -69,14 +69,13 @@ const migrate = async () => {
   logger.info('Heartbeats - Converting createdAt to datetime...');
   await client.schema.alterTable('heartbeat', (table) => {
     table.datetime('date');
-    table.index(['monitorId', 'date']);
   });
 
   logger.info('Heartbeats - Updating createdAt...');
   for (const heartbeat of heartbeats) {
     const date = new Date(heartbeat.date).toISOString();
     await SQLite.client('heartbeat')
-      .where({ monitorId: heartbeat.monitorId })
+      .where({ id: heartbeat.id })
       .update({ date });
   }
 
@@ -92,14 +91,13 @@ const migrate = async () => {
   logger.info('Hourly Heartbeats - Converting date to datetime...');
   await client.schema.alterTable('hourly_heartbeat', (table) => {
     table.datetime('date');
-    table.index(['monitorId', 'date']);
   });
 
   logger.info('Hourly Heartbeats - Updating date...');
   for (const heartbeat of hourlyHeartbeats) {
     const date = new Date(heartbeat.date).toISOString();
     await SQLite.client('hourly_heartbeat')
-      .where({ monitorId: heartbeat.monitorId })
+      .where({ id: heartbeat.id })
       .update({ date });
   }
 

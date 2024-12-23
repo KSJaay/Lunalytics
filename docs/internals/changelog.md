@@ -1,5 +1,13 @@
 # Previous updates
 
+## 0.7.1
+
+### Fixes issues with migration scripts not working for 0.6.5 and 0.7.0
+
+### Summary
+
+While migrating from 0.6.0 to 0.7.0, I noticed that the migration scripts weren't working for both of 0.6.5 and 0.7.0. This update fixes the scripts so they work for both versions. Will be running more tests on migration scripts in the future to make sure this doesn't happen again.
+
 ## 0.7.0
 
 ### Adds support for PostgreSQL and new setup system
