@@ -114,6 +114,8 @@ const migrate = async () => {
     table.dropColumn('nextCheck');
     table.dropColumn('validFrom');
     table.dropColumn('validTill');
+    table.dropColumn('issuer');
+    table.dropColumn('validOn');
   });
 
   logger.info(
@@ -123,6 +125,8 @@ const migrate = async () => {
     table.datetime('nextCheck');
     table.datetime('validFrom');
     table.datetime('validTill');
+    table.text('issuer');
+    table.text('validOn');
   });
 
   logger.info('Certificates - Updating nextCheck, validFrom, and validTill...');
@@ -132,7 +136,13 @@ const migrate = async () => {
     const tillDate = new Date(certificate.validTill).toISOString();
     await SQLite.client('certificate')
       .where({ monitorId: certificate.monitorId })
-      .update({ nextCheck: date, validFrom: fromDate, validTill: tillDate });
+      .update({
+        nextCheck: date,
+        validFrom: fromDate,
+        validTill: tillDate,
+        issuer: certificate.issuer,
+        validOn: certificate.validOn,
+      });
   }
 
   logger.info('Migrations', { message: '0.7.0 has been applied' });

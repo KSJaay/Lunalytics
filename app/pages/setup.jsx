@@ -20,7 +20,7 @@ const Setup = () => {
       try {
         const query = await createGetRequest('/auth/setup/exists');
 
-        if (query) {
+        if (query?.ownerExists) {
           toast.error(
             'An owner already exists, check your database and try again.'
           );

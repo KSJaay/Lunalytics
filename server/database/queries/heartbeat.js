@@ -11,17 +11,19 @@ export const fetchHeartbeats = async (monitorId, limit = 168) => {
 };
 
 export const fetchHeartbeatsByDate = async (monitorId, date) => {
+  const isoDate = new Date(date).toISOString();
+
   const heartbeats = await SQLite.client('heartbeat')
     .where({ monitorId })
     .select('id', 'status', 'latency', 'date', 'isDown', 'message')
-    .andWhere('date', '>', date)
+    .andWhere('date', '>', isoDate)
     .orderBy('date', 'desc');
 
   return heartbeats;
 };
 
 export const fetchDailyHeartbeats = async (monitorId) => {
-  const date = Date.now() - 86400000;
+  const date = new Date(Date.now() - 86400000).toISOString();
 
   const heartbeats = await SQLite.client('heartbeat')
     .where({ monitorId, isDown: false })

@@ -206,10 +206,10 @@ export class SQLite {
           .onUpdate('CASCADE');
 
         table.boolean('isValid').defaultTo(0);
-        table.string('issuer');
+        table.text('issuer');
         table.datetime('validFrom');
         table.datetime('validTill');
-        table.string('validOn');
+        table.text('validOn');
         table.integer('daysRemaining').defaultTo(0);
         table.datetime('nextCheck').defaultTo(this.client.fn.now());
 

@@ -120,6 +120,7 @@ const setupData = {
         placeholder: '6m',
       },
     ],
+    submit: true,
   },
 };
 

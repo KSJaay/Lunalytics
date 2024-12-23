@@ -29,6 +29,12 @@ const GlobalLayout = ({ children }) => {
   useEffect(() => {
     const fetchMontiors = async () => {
       try {
+        const query = await createGetRequest('/auth/setup/exists');
+
+        if (!query?.ownerExists) {
+          return navigate('/setup');
+        }
+
         const user = await createGetRequest('/api/user');
         const monitors = await createGetRequest('/api/user/monitors');
         const notifications = await createGetRequest('/api/notifications');

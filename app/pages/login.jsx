@@ -1,6 +1,7 @@
 import '../styles/pages/register.scss';
 
 // import dependencies
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
@@ -8,13 +9,31 @@ import TextInput from '../components/ui/input';
 import useLogin from '../hooks/useLogin';
 import handleLogin from '../handlers/login';
 import { IoMdEye, IoMdEyeOff } from '../components/icons';
-import { useState } from 'react';
+import { createGetRequest } from '../services/axios';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();
 
   const { errors, inputs, handleInput, setErrors } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const checkDatabaseExists = async () => {
+      try {
+        const query = await createGetRequest('/auth/setup/exists');
+
+        if (!query?.ownerExists) {
+          return navigate('/setup');
+        }
+      } catch (error) {
+        console.log(error);
+        return toast.error('Error occurred while checking if database exists.');
+      }
+    };
+
+    checkDatabaseExists();
+  }, []);
 
   return (
     <div className="auth-form-container">

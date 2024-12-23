@@ -73,7 +73,7 @@ const fetchMonitorUptime = async (monitorId) => {
     .select()
     .where('monitorId', monitorId)
     .andWhere('isDown', false)
-    .andWhere('date', '>', new Date(lastDownHeartbeat.date).getTime())
+    .andWhere('date', '>', new Date(lastDownHeartbeat.date).toISOString())
     .orderBy('date', 'asc')
     .first();
 

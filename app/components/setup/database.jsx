@@ -35,7 +35,7 @@ const pgInputs = [
   {
     id: 'postgresPassword',
     label: 'Postgres password',
-    type: 'text',
+    type: 'password',
     placeholder: 'Strong-Password',
   },
 ];

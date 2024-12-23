@@ -40,7 +40,6 @@ const SetupForm = () => {
         }
 
         console.log(error);
-
         return toast.error(
           'Error occurred while creating user and setting up configuration.'
         );
@@ -101,7 +100,7 @@ const SetupForm = () => {
 
       {page.hideButton ? null : (
         <button className="auth-button" onClick={changePage}>
-          {page.submit ? 'Register' : 'Continue'}
+          {page.submit ? 'Complete' : 'Continue'}
         </button>
       )}
 
