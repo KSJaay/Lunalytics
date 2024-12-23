@@ -91,7 +91,7 @@ export class SQLite {
         table.string('avatar');
         table.boolean('isVerified').defaultTo(0);
         table.integer('permission').defaultTo(4);
-        table.datetime('createdAt').defaultTo(this.client.fn.now());
+        table.datetime('createdAt');
 
         table.index('email');
         table.index('isVerified');
@@ -138,7 +138,7 @@ export class SQLite {
         table.text('content').defaultTo(null);
         table.string('friendlyName');
         table.text('data');
-        table.datetime('createdAt').defaultTo(this.client.fn.now());
+        table.datetime('createdAt');
 
         table.index('id');
       });
@@ -211,7 +211,7 @@ export class SQLite {
         table.datetime('validTill');
         table.text('validOn');
         table.integer('daysRemaining').defaultTo(0);
-        table.datetime('nextCheck').defaultTo(this.client.fn.now());
+        table.datetime('nextCheck');
 
         table.index('monitorId');
       });
