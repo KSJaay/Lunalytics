@@ -11,7 +11,7 @@ const setupExistsMiddleware = async (request, response) => {
 
     const query = await ownerExists();
 
-    return response.send({ ownerExists: query });
+    return response.send({ ownerExists: !!query });
   } catch (error) {
     return response.status(400).send(error);
   }

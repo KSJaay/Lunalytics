@@ -31,7 +31,7 @@ const GlobalLayout = ({ children }) => {
       try {
         const query = await createGetRequest('/auth/setup/exists');
 
-        if (!query?.ownerExists) {
+        if (!query.data?.ownerExists) {
           return navigate('/setup');
         }
 
