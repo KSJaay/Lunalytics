@@ -30,21 +30,21 @@ const heartbeatPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   status: PropTypes.number.isRequired,
   latency: PropTypes.number.isRequired,
-  date: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
   isDown: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
 });
 
 const certPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  monitorId: PropTypes.string.isRequired,
+  id: PropTypes.number,
+  monitorId: PropTypes.string,
   isValid: PropTypes.bool.isRequired,
-  issuer: PropTypes.string.isRequired,
-  validFrom: PropTypes.string.isRequired,
-  validTill: PropTypes.string.isRequired,
-  validOn: PropTypes.string.isRequired,
-  daysRemaining: PropTypes.number.isRequired,
-  nextCheck: PropTypes.number.isRequired,
+  issuer: PropTypes.string,
+  validFrom: PropTypes.string,
+  validTill: PropTypes.string,
+  validOn: PropTypes.string,
+  daysRemaining: PropTypes.number,
+  nextCheck: PropTypes.string,
 });
 
 const fullMonitorPropType = PropTypes.shape({
