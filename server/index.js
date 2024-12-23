@@ -10,7 +10,6 @@ import logger from './utils/logger.js';
 import initialiseRoutes from './routes/index.js';
 import SQLite from './database/sqlite/setup.js';
 import initialiseCronJobs from './utils/cron.js';
-import authorization from './middleware/authorization.js';
 import migrateDatabase from '../scripts/migrate.js';
 import isDemo from './middleware/demo.js';
 import config from './utils/config.js';
@@ -24,10 +23,13 @@ const port = config.get('port');
 const init = async () => {
   // connect to database and setup database tables
   await SQLite.connect();
-  await SQLite.setup();
-  await cache.initialise();
+  const databaseExists = await SQLite.setup();
 
-  await migrateDatabase();
+  if (databaseExists) {
+    await cache.initialise();
+    await migrateDatabase();
+  }
+
   await initialiseCronJobs();
 
   app
@@ -67,7 +69,6 @@ const init = async () => {
     });
   }
 
-  app.use(authorization);
   logger.info('Express', { message: 'Initialising routes' });
   initialiseRoutes(app);
 

@@ -1,5 +1,21 @@
 # Previous updates
 
+## 0.7.0
+
+### Adds support for PostgreSQL and new setup system
+
+### Summary
+
+I've been wanting to support multiple databases for a while now, with this update I've added support for PostgreSQL. Along with that, I've removed the CLI system for setting up the application and added a new UI system that is a lot easier to use for most users. Going forward, I'll be adding support for more databases, along with cleaning up the setup system.
+
+### Updates
+
+- Adds support for PostgreSQL
+- Removes CLI system for setting up the application
+- Adds new UI system for setting up the application
+- Fixed issues with certificates not being fetched properly
+- Fixed issues with certificates not being able to store all validOn urls and issuers
+
 ## 0.6.5
 
 ### Removes caching system

@@ -4,42 +4,82 @@ import knex from 'knex';
 import logger from '../../utils/logger.js';
 import config from '../../utils/config.js';
 
-const configDatabaseName = config.get('database')?.name || 'lunalytics';
-
 export class SQLite {
   constructor() {
     this.client = null;
   }
 
   async connect(databaseName) {
-    if (this.client) return this.client;
-
-    const path = `${process.cwd()}/server/database/sqlite/${
-      databaseName || configDatabaseName || 'lunalytics'
-    }.db`;
-
-    if (!existsSync(path)) {
-      closeSync(openSync(path, 'w'));
+    if (!config.get('database')?.name && process.env.NODE_ENV !== 'test') {
+      return logger.error('SQLITE', {
+        message: 'Database name is not set in config.json',
+      });
     }
 
-    this.client = knex({
-      client: 'better-sqlite3',
-      connection: {
-        filename: path,
-      },
-      useNullAsDefault: true,
-    });
+    const dbName = databaseName || config.get('database')?.name || 'lunalytics';
+    const databaseType = config.get('database')?.type || 'better-sqlite3';
 
-    logger.info('SQLite - connect', {
-      message: 'Connected to SQLite database',
-    });
+    if (this.client) return this.client;
+
+    if (databaseType === 'pg') {
+      this.client = knex({
+        client: databaseType,
+        connection: { ...config.get('database')?.config },
+        useNullAsDefault: true,
+      });
+
+      const query = await this.client.raw(
+        `SELECT 1 AS exists FROM pg_database WHERE datname = ?`,
+        [dbName]
+      );
+
+      const [databaseExists] = query.rows ?? [];
+
+      if (!databaseExists) {
+        await this.client.raw(`CREATE DATABASE ${dbName}`);
+
+        logger.info('PostgreSQL', { message: 'Created PostgreSQL database' });
+      }
+
+      this.client.destroy();
+
+      this.client = knex({
+        client: databaseType,
+        connection: { ...config.get('database')?.config, database: dbName },
+        useNullAsDefault: true,
+      });
+
+      logger.info('PostgreSQL', {
+        message: 'Connected to PostgreSQL database',
+      });
+    }
+
+    if (databaseType === 'better-sqlite3') {
+      const path = `${process.cwd()}/server/database/sqlite/${dbName}.db`;
+
+      if (!existsSync(path)) {
+        closeSync(openSync(path, 'w'));
+      }
+
+      this.client = knex({
+        client: databaseType,
+        connection: { filename: path },
+        useNullAsDefault: true,
+      });
+
+      // Need to enable this for foreign key to work
+      await this.client.raw('PRAGMA foreign_keys = ON');
+
+      logger.info('SQLite', {
+        message: 'Connected to SQLite database',
+      });
+    }
 
     return this.client;
   }
 
   async setup() {
-    // Need to enable this for foreign key to work
-    await this.client.raw('PRAGMA foreign_keys = ON');
+    if (!this.client) return false;
 
     const userExists = await this.client.schema.hasTable('user');
 
@@ -51,7 +91,7 @@ export class SQLite {
         table.string('avatar');
         table.boolean('isVerified').defaultTo(0);
         table.integer('permission').defaultTo(4);
-        table.timestamp('createdAt').defaultTo(this.client.fn.now());
+        table.datetime('createdAt').defaultTo(this.client.fn.now());
 
         table.index('email');
         table.index('isVerified');
@@ -98,7 +138,7 @@ export class SQLite {
         table.text('content').defaultTo(null);
         table.string('friendlyName');
         table.text('data');
-        table.timestamp('createdAt').defaultTo(this.client.fn.now());
+        table.datetime('createdAt').defaultTo(this.client.fn.now());
 
         table.index('id');
       });
@@ -119,7 +159,7 @@ export class SQLite {
 
         table.integer('status').notNullable();
         table.integer('latency').notNullable();
-        table.timestamp('date').notNullable();
+        table.datetime('date').notNullable();
         table.boolean('isDown').defaultTo(false);
         table.text('message').notNullable();
 
@@ -145,7 +185,7 @@ export class SQLite {
 
         table.integer('status').notNullable();
         table.integer('latency').notNullable();
-        table.timestamp('date').notNullable();
+        table.datetime('date').notNullable();
 
         table.index('monitorId');
         table.index(['monitorId', 'date']);
@@ -166,16 +206,18 @@ export class SQLite {
           .onUpdate('CASCADE');
 
         table.boolean('isValid').defaultTo(0);
-        table.string('issuer');
-        table.timestamp('validFrom');
-        table.timestamp('validTill');
-        table.string('validOn');
+        table.text('issuer');
+        table.datetime('validFrom');
+        table.datetime('validTill');
+        table.text('validOn');
         table.integer('daysRemaining').defaultTo(0);
-        table.timestamp('nextCheck').defaultTo(Date.now());
+        table.datetime('nextCheck').defaultTo(this.client.fn.now());
 
         table.index('monitorId');
       });
     }
+
+    return true;
   }
 }
 

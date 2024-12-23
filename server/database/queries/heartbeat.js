@@ -11,17 +11,19 @@ export const fetchHeartbeats = async (monitorId, limit = 168) => {
 };
 
 export const fetchHeartbeatsByDate = async (monitorId, date) => {
+  const isoDate = new Date(date).toISOString();
+
   const heartbeats = await SQLite.client('heartbeat')
     .where({ monitorId })
     .select('id', 'status', 'latency', 'date', 'isDown', 'message')
-    .andWhere('date', '>', date)
+    .andWhere('date', '>', isoDate)
     .orderBy('date', 'desc');
 
   return heartbeats;
 };
 
 export const fetchDailyHeartbeats = async (monitorId) => {
-  const date = Date.now() - 86400000;
+  const date = new Date(Date.now() - 86400000).toISOString();
 
   const heartbeats = await SQLite.client('heartbeat')
     .where({ monitorId, isDown: false })
@@ -30,7 +32,8 @@ export const fetchDailyHeartbeats = async (monitorId) => {
 
   // get the first heartbeat of the day
   const firstHeartbeat = heartbeats[heartbeats.length - 1] || {};
-  let firstHeartbeatDate = firstHeartbeat.date || Date.now();
+  let firstHeartbeatDate =
+    new Date(firstHeartbeat.date).getTime() || Date.now();
   // next 5th minute
   let nextHeartbeat =
     firstHeartbeatDate - (firstHeartbeatDate % 300000) + 300000;
@@ -42,7 +45,9 @@ export const fetchDailyHeartbeats = async (monitorId) => {
   while (nextHeartbeat < lastFifthMinute) {
     const date = nextHeartbeat - 300000;
     const filteredHeartbeats = heartbeats.filter(
-      (h) => h.date >= date && h.date < nextHeartbeat
+      (h) =>
+        new Date(h.date).getTime() >= date &&
+        new Date(h.date).getTime() < nextHeartbeat
     );
 
     if (filteredHeartbeats.length) {
@@ -84,7 +89,7 @@ export const createHourlyHeartbeat = async (data) => {
 };
 
 export const createHeartbeat = async (data) => {
-  const date = Date.now();
+  const date = new Date().toISOString();
 
   const query = await SQLite.client('heartbeat').insert({ date, ...data });
 

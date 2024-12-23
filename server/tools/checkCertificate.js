@@ -1,19 +1,79 @@
 import https from 'https';
-import axios from 'axios';
 import logger from '../utils/logger.js';
+
+// Some of the following code is from https://github.com/johncrisostomo/get-ssl-certificate
+const isEmpty = (object) => {
+  for (let prop in object) {
+    if (Object.prototype.hasOwnProperty.call(object, prop)) return false;
+  }
+
+  return true;
+};
+
+const getOptions = (url, port, protocol) => {
+  const parseUrl = url.startsWith('http')
+    ? new URL(url)
+    : new URL(`http://${url}`);
+
+  if (parseUrl.protocol === 'https:') {
+    port = parseUrl.port || 443;
+  } else {
+    port = parseUrl.port || 80;
+  }
+
+  return {
+    hostname: parseUrl.hostname,
+    agent: false,
+    rejectUnauthorized: false,
+    ciphers: 'ALL',
+    port,
+    protocol,
+  };
+};
+
+const handleRequest = (options, detailed = false, resolve, reject) => {
+  return https.get(options, function (res) {
+    let certificate = res.socket.getPeerCertificate(detailed);
+
+    if (isEmpty(certificate) || certificate === null) {
+      reject({ message: 'The website did not provide a certificate' });
+    } else {
+      resolve(certificate);
+    }
+  });
+};
+
+const fetchCertificate = (
+  url,
+  timeout,
+  port = 443,
+  protocol = 'https:',
+  detailed
+) => {
+  let options = getOptions(url, port, protocol);
+
+  return new Promise(function (resolve, reject) {
+    let req = handleRequest(options, detailed, resolve, reject);
+
+    if (timeout) {
+      req.setTimeout(timeout, function () {
+        reject({ message: 'Request timed out.' });
+        req.abort();
+      });
+    }
+
+    req.on('error', function (e) {
+      reject(e);
+    });
+
+    req.end();
+  });
+};
 
 const getCertInfo = async (url) => {
   try {
-    const response = await axios.request({
-      url,
-      method: 'HEAD',
-      port: 443,
-      httpAgent: new https.Agent({
-        enableTrace: true,
-      }),
-    });
-
-    return checkCertificate(response);
+    const certificate = await fetchCertificate(url, 5000);
+    return { isValid: true, ...parseCert(certificate) };
   } catch (error) {
     logger.error('getCertInfo', {
       error: error.message,
@@ -22,22 +82,6 @@ const getCertInfo = async (url) => {
 
     return { isValid: false };
   }
-};
-
-const checkCertificate = (res) => {
-  if (!res.request.socket) {
-    logger.error('checkCertificate', {
-      message: 'Socket not found',
-    });
-    return { isValid: false };
-  }
-
-  const info = res.request.socket.getPeerCertificate(true);
-  const valid = res.request.socket.authorized || false;
-
-  const parsedInfo = parseCert(info);
-
-  return { isValid: valid, ...parsedInfo };
 };
 
 const getDaysBetween = (validFrom, validTo) =>

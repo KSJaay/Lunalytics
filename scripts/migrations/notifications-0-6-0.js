@@ -20,6 +20,7 @@ const migrate = async () => {
   });
 
   logger.info('Migrations', { message: '0.6.0 has been applied' });
+  return;
 };
 
 export { infomation, migrate };

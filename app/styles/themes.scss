@@ -92,6 +92,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --font-color: #f3f6fb;
+    --font-dark-color: #1a0c09;
+    --font-light-color: #9fa9af;
 
     --accent-50: var(--gray-50);
     --accent-100: var(--gray-100);
@@ -109,6 +111,8 @@
 @media (prefers-color-scheme: light) {
   :root {
     --font-color: #0c0c0c;
+    --font-dark-color: #f3f6fb;
+    --font-light-color: #4c5155;
 
     --accent-50: var(--white-900);
     --accent-100: var(--white-800);
@@ -125,6 +129,8 @@
 
 [data-theme='dark'] {
   --font-color: #f3f6fb;
+  --font-dark-color: #1a0c09;
+  --font-light-color: #9fa9af;
 
   --accent-50: var(--gray-50);
   --accent-100: var(--gray-100);
@@ -140,6 +146,8 @@
 
 [data-theme='light'] {
   --font-color: #0c0c0c;
+  --font-dark-color: #f3f6fb;
+  --font-light-color: #4c5155;
 
   --accent-50: var(--white-900);
   --accent-100: var(--white-800);

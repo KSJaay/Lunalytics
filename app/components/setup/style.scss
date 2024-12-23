@@ -1,0 +1,44 @@
+@use '../../styles/pxToRem.scss' as *;
+
+.auth-setup-back-button {
+  position: absolute;
+  top: pxToRem(10);
+  left: pxToRem(10);
+  font-size: var(--font-xl);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: pxToRem(5);
+}
+
+.auth-setup-type-container {
+  display: flex;
+  gap: pxToRem(15);
+  flex-direction: column;
+  margin: pxToRem(32) 0;
+}
+
+.auth-setup-type-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: pxToRem(12) pxToRem(16);
+  border: pxToRem(1) solid var(--accent-600);
+  background-color: var(--accent-800);
+  cursor: pointer;
+  color: var(--font-color);
+  border-radius: pxToRem(12);
+  flex-direction: column;
+}
+
+.auth-setup-type-title {
+  font-size: var(--font-xl);
+  font-weight: bold;
+}
+
+.auth-setup-type-subtitle {
+  text-align: center;
+  color: var(--font-light-color);
+  font-size: var(--font-sm);
+}
