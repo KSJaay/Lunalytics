@@ -21,7 +21,7 @@ export const cleanNotification = (notification) => ({
   token: notification.token,
   email: notification.email,
   friendlyName: notification.friendlyName,
-  isEnabled: notification.isEnabled ? true : false,
+  isEnabled: notification.isEnabled == '1',
   data:
     typeof notification.data === 'string'
       ? parseJson(notification.data)
@@ -35,6 +35,6 @@ export const stringifyNotification = (notification) => ({
   token: notification.token,
   email: notification.email,
   friendlyName: notification.friendlyName,
-  isEnabled: notification.isEnabled ? true : false,
+  isEnabled: notification.isEnabled == '1',
   data: stringifyJson(notification.data),
 });

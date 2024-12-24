@@ -61,6 +61,7 @@ There are various restrictions applied to the monitor data. The following are so
 | uptimePercentage        | number  | Uptime percentage for the monitor over the last 24 hours |
 | averageHeartbeatLatency | number  | Average latency for the monitor over the last 24 hours   |
 | showFilters             | boolean | Used to check if hourly heartbeats are available         |
+| paused                  | boolean | Boolean if the monitor is paused                         |
 
 ### Example Partial Monitor
 
@@ -83,7 +84,8 @@ There are various restrictions applied to the monitor data. The following are so
   "port": null,
   "uptimePercentage": 83,
   "averageHeartbeatLatency": 38,
-  "showFilters": true
+  "showFilters": true,
+  "paused": false
 }
 ```
 
@@ -104,7 +106,8 @@ There are various restrictions applied to the monitor data. The following are so
   "port": 2308,
   "uptimePercentage": 83,
   "averageHeartbeatLatency": 38,
-  "showFilters": false
+  "showFilters": false,
+  "paused": false
 }
 ```
 
@@ -130,6 +133,7 @@ There are various restrictions applied to the monitor data. The following are so
 | uptimePercentage        | number                                   | Uptime percentage for the monitor over the last 24 hours |
 | averageHeartbeatLatency | number                                   | Average latency for the monitor over the last 24 hours   |
 | showFilters             | boolean                                  | Used to check if hourly heartbeats are available         |
+| paused                  | boolean                                  | Boolean if the monitor is paused                         |
 | heartbeats              | Array<[Heartbeat](#heartbeat-structure)> | Array of monitor heartbeats                              |
 | cert                    | [Certificate](#certificate-structure)    | Information about the certificate                        |
 
@@ -155,6 +159,7 @@ There are various restrictions applied to the monitor data. The following are so
   "uptimePercentage": 83,
   "averageHeartbeatLatency": 38,
   "showFilters": true,
+  "paused": false,
   "heartbeats": [
     {
       "id": 38,
@@ -204,6 +209,7 @@ There are various restrictions applied to the monitor data. The following are so
   "uptimePercentage": 83,
   "averageHeartbeatLatency": 38,
   "showFilters": false,
+  "paused": false,
   "heartbeats": [
     {
       "id": 38,

@@ -39,7 +39,10 @@ const MonitorCard = ({ monitor = {} }) => {
             <div>{uptimePercentage}%</div>
           </div>
         </div>
-        <div className="home-monitor-status">
+        <div
+          className="home-monitor-status"
+          style={{ filter: `grayscale(${monitor.paused ? 0.75 : 0})` }}
+        >
           <h1>Status</h1>
           <StatusBar heartbeats={heartbeats} />
         </div>

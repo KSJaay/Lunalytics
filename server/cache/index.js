@@ -58,6 +58,8 @@ class Master {
       return;
     }
 
+    if (monitor.paused) return;
+
     if (this.timeouts.has(monitorId)) {
       clearTimeout(this.timeouts.get(monitorId));
     }
@@ -145,6 +147,11 @@ class Master {
         stack: error.stack,
       });
     }
+  }
+
+  removeMonitor(monitorId) {
+    clearTimeout(this.timeouts.get(monitorId));
+    this.timeouts.delete(monitorId);
   }
 }
 

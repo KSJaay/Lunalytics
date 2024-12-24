@@ -10,6 +10,7 @@ import {
   FaPlus,
   FaSignOutAlt,
   FaUsers,
+  FaClone,
 } from 'react-icons/fa';
 import { FiLayout } from 'react-icons/fi';
 import { HiStatusOffline, HiStatusOnline } from 'react-icons/hi';
@@ -23,6 +24,8 @@ import {
   FaBars,
   FaTrashCan,
   FaFilter,
+  FaPause,
+  FaPlay,
 } from 'react-icons/fa6';
 import { IoArrowBack, IoColorPalette, IoGrid, IoReload } from 'react-icons/io5';
 import { RiStackFill } from 'react-icons/ri';
@@ -37,10 +40,13 @@ export {
   FaChevronRight,
   FaChevronUp,
   FaCircleCheck,
+  FaClone,
   FaCog,
   FaEllipsisVertical,
   FaFilter,
   FaHome,
+  FaPause,
+  FaPlay,
   FaPlus,
   FaSignOutAlt,
   FaTrashCan,
