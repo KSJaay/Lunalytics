@@ -26,11 +26,11 @@
   border-radius: pxToRem(12);
 
   &:hover {
-    background-color: var(--accent-900);
+    background-color: var(--accent-800);
   }
 
   &.active {
-    background-color: var(--accent-900);
+    background-color: var(--accent-800);
     color: var(--primary-500);
   }
 }

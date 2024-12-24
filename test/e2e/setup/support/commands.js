@@ -7,7 +7,7 @@ Cypress.Commands.add('equals', (id, value) => {
 });
 
 Cypress.Commands.add('typeText', (id, value) => {
-  return cy.get(id).type(value);
+  return cy.get(id).type(`${value}`);
 });
 
 Cypress.Commands.add('clearText', (id) => {
@@ -45,7 +45,7 @@ Cypress.Commands.add('createMonitor', (details = {}) => {
     const { id, value: elementValue, error, type, invalidValue } = value;
 
     if (invalidValue) {
-      if (type === 'text') {
+      if (type === 'text' || type === 'textarea') {
         cy.typeText(id, invalidValue);
       }
 
@@ -54,12 +54,12 @@ Cypress.Commands.add('createMonitor', (details = {}) => {
       cy.equals(error.id, error.value);
     }
 
-    if (type === 'click') {
+    if (type === 'click' || type === 'textarea') {
       cy.get(id).click();
     }
 
     if (elementValue) {
-      if (type === 'text') {
+      if (type === 'text' || type === 'textarea') {
         cy.clearText(id);
         cy.typeText(id, elementValue);
       } else if (type === 'dropdown') {

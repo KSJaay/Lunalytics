@@ -11,6 +11,8 @@
   <a href="https://discord.gg/cjbGmmNdcd">Support</a>
 </div>
 
+![Demo](https://raw.githubusercontent.com/KSJaay/Lunalytics/refs/heads/main/docs/public/demo.gif)
+
 ## ⭐ Features
 
 - Easy to self-host

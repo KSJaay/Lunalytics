@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // import local files
 import logger from '../utils/logger.js';
+import { isEmpty } from '../../shared/utils/object.js';
 
 const httpStatusCheck = async (monitor) => {
   const options = {
@@ -11,6 +12,14 @@ const httpStatusCheck = async (monitor) => {
     timeout: monitor.requestTimeout * 1000,
     signal: AbortSignal.timeout((monitor.requestTimeout + 10) * 1000),
   };
+
+  if (!isEmpty(monitor.headers)) {
+    options.headers = { ...monitor.headers };
+  }
+
+  if (!isEmpty(monitor.body)) {
+    options.data = { ...monitor.body };
+  }
 
   const startTime = Date.now();
 

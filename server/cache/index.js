@@ -17,6 +17,7 @@ import {
   updateCertificate,
 } from '../database/queries/certificate.js';
 import { fetchNotificationById } from '../database/queries/notification.js';
+import { cleanPartialMonitor } from '../class/monitor.js';
 
 class Master {
   constructor() {
@@ -48,15 +49,17 @@ class Master {
   }
 
   async checkStatus(monitorId) {
-    const monitor = await fetchMonitor(monitorId).catch(() => false);
+    const query = await fetchMonitor(monitorId).catch(() => false);
 
-    if (!monitor) {
+    if (!query) {
       clearTimeout(this.timeouts.get(monitorId));
       this.timeouts.delete(monitorId);
       await deleteCertificate(monitorId);
       await deleteHeartbeats(monitorId);
       return;
     }
+
+    const monitor = cleanPartialMonitor(query);
 
     if (monitor.paused) return;
 
