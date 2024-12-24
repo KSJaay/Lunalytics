@@ -1,5 +1,19 @@
 # Previous updates
 
+## 0.7.3
+
+### Cleans up codebase, adds support for headers and body for http monitors
+
+### Summary
+
+I thought I had added support for headers and body for http monitors already, but I totally forgot to add it to the UI. This was bought up in https://github.com/KSJaay/Lunalytics/issues/62. This update adds support for headers and body for http monitors, along with some other small changes.
+
+### Updates
+
+- Adds support for headers and body for http monitors
+- Cleans up monitor codebase to make things easier to read
+- Adds gif showing UI on the README
+
 ## 0.7.2
 
 ### Cleans up codebase, adds support for cloning and pausing monitors
