@@ -101,3 +101,7 @@ export const createHeartbeat = async (data) => {
 export const deleteHeartbeats = async (monitorId) => {
   await SQLite.client('heartbeat').where({ monitorId }).del();
 };
+
+export const cleanHeartbeats = async (date) => {
+  await SQLite.client('heartbeat').where('date', '<', date).del();
+};
