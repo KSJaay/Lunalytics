@@ -30,11 +30,8 @@ const MonitorGraph = ({ monitor }) => {
     useGraphStatus(monitor);
 
   const data = statusHeartbeats
-    .map((heartbeat = {}) => {
-      return {
-        Latency: heartbeat.latency,
-        time: heartbeat.date,
-      };
+    .map(({ latency = 0, date = 0 } = {}) => {
+      return { Latency: latency, time: date };
     })
     .reverse();
 

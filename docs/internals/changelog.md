@@ -1,5 +1,23 @@
 # Previous updates
 
+## 0.7.2
+
+### Cleans up codebase, adds support for cloning and pausing monitors
+
+### Summary
+
+This update cleans up a few endpoints and moves their code to their own middleware. This way router files are a lot cleaner, and it's easier to look through code for specific endpoints. Along with that, this update adds some features requested in issues https://github.com/KSJaay/Lunalytics/issues/61 and https://github.com/KSJaay/Lunalytics/issues/62.
+
+### Updates
+
+- Fixes issues with chart showing "Invalid Date" instead of time/date format
+- Made some changes to make sure timezone is being used for charts
+- Added a showFilters option to the monitors to show "1 week" and "1 month" in the menu
+- Adds a script to run at midnight to clear out heartbeats older than the given retention period
+- Renames the migration scripts from descriptive to version names, this makes my life a little bit easier
+- Adds support for cloning monitors
+- Adds support for pausing monitors
+
 ## 0.7.1
 
 ### Fixes issues with migration scripts not working for 0.6.5 and 0.7.0
