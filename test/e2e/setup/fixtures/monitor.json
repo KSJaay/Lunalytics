@@ -63,6 +63,26 @@
         "id": "[id=\"text-input-error-input-request-timeout\"]",
         "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
       }
+    },
+    "headers": {
+      "id": "[id=\"http-headers-textarea\"]",
+      "value": "{{}\"key\":\"value\"{}}",
+      "type": "textarea",
+      "invalidValue": "{{}\"key\":\"value{}}",
+      "error": {
+        "id": "[id=\"textarea-error-http-headers-textarea\"]",
+        "value": "Please enter valid headers. Make sure to follow JSON key/value format."
+      }
+    },
+    "body": {
+      "id": "[id=\"http-body-textarea\"]",
+      "value": "{{}\"key\":\"value\"{}}",
+      "type": "textarea",
+      "invalidValue": "{{}\"key\":\"value{}}",
+      "error": {
+        "id": "[id=\"textarea-error-http-body-textarea\"]",
+        "value": "Please enter valid body. Make sure to follow JSON key/value format."
+      }
     }
   },
   "tcp": {

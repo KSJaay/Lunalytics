@@ -8,6 +8,23 @@ const parseJsonStatus = (str) => {
   }
 };
 
+const parseJson = (str) => {
+  try {
+    if (!str) return {};
+    if (typeof str === 'string') {
+      return JSON.parse(str);
+    }
+    if (typeof str === 'object') {
+      if (Array.isArray(str)) return {};
+      return str;
+    }
+
+    return {};
+  } catch (e) {
+    return {};
+  }
+};
+
 export const cleanPartialMonitor = (monitor) => ({
   monitorId: monitor.monitorId,
   name: monitor.name,
@@ -16,8 +33,8 @@ export const cleanPartialMonitor = (monitor) => ({
   retryInterval: parseInt(monitor.retryInterval),
   requestTimeout: parseInt(monitor.requestTimeout),
   method: monitor.method,
-  headers: monitor.headers,
-  body: monitor.body,
+  headers: parseJson(monitor.headers),
+  body: parseJson(monitor.body),
   valid_status_codes: parseJsonStatus(monitor.valid_status_codes),
   email: monitor.email,
   type: monitor.type,
@@ -38,8 +55,8 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   retryInterval: parseInt(monitor.retryInterval),
   requestTimeout: parseInt(monitor.requestTimeout),
   method: monitor.method,
-  headers: monitor.headers,
-  body: monitor.body,
+  headers: parseJson(monitor.headers),
+  body: parseJson(monitor.body),
   valid_status_codes: parseJsonStatus(monitor.valid_status_codes),
   email: monitor.email,
   type: monitor.type,

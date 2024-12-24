@@ -12,13 +12,13 @@
 # production
 /dist
 /stats
-/server/database/sqlite/*.db
 /app/pages/icons.jsx
 /app/components/icons/list.jsx
 docs/.vitepress/dist
 docs/.vitepress/cache
 public/kanban.json
 /logs
+*.db
 
 # misc
 .DS_Store

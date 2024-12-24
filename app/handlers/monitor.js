@@ -4,6 +4,22 @@ import { toast } from 'react-toastify';
 // import local files
 import { createPostRequest } from '../services/axios';
 
+const parseJson = (str) => {
+  try {
+    if (typeof str === 'string') {
+      return JSON.parse(str);
+    }
+    if (typeof str === 'object') {
+      if (Array.isArray(str)) return {};
+      return str;
+    }
+
+    return {};
+  } catch (e) {
+    return {};
+  }
+};
+
 const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
   try {
     const apiPath = isEdit ? '/api/monitor/edit' : '/api/monitor/add';
@@ -21,7 +37,12 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
       monitorId,
       notificationId,
       notificationType,
+      headers,
+      body,
     } = form;
+
+    const parsedHeaders = parseJson(headers);
+    const parsedBody = parseJson(body);
 
     const query = await createPostRequest(apiPath, {
       name,
@@ -36,6 +57,8 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
       monitorId,
       notificationId,
       notificationType,
+      headers: parsedHeaders,
+      body: parsedBody,
     });
 
     setMonitor(query.data);

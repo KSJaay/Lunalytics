@@ -96,6 +96,30 @@ export const notificationType = (notification) => {
   }
 };
 
+export const headers = (headers = {}) => {
+  if (typeof headers === 'string') {
+    try {
+      JSON.parse(headers);
+    } catch (error) {
+      return 'Please enter valid headers. Make sure to follow JSON key/value format.';
+    }
+  } else if (typeof headers !== 'object' || Array.isArray(headers)) {
+    return 'Please enter valid headers. Make sure to follow JSON key/value format.';
+  }
+};
+
+const body = (body = {}) => {
+  if (typeof body === 'string') {
+    try {
+      JSON.parse(body);
+    } catch (error) {
+      return 'Please enter valid body. Make sure to follow JSON key/value format.';
+    }
+  } else if (typeof body !== 'object' || Array.isArray(body)) {
+    return 'Please enter valid body. Make sure to follow JSON key/value format.';
+  }
+};
+
 const validators = {
   type,
   name,
@@ -108,6 +132,8 @@ const validators = {
   retryInterval,
   requestTimeout,
   notificationType,
+  headers,
+  body,
 };
 
 const httpValidators = [
@@ -120,6 +146,8 @@ const httpValidators = [
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
   ['notificationType', 'notificationType'],
+  ['headers', 'headers'],
+  ['body', 'body'],
 ];
 
 const tcpValidators = [

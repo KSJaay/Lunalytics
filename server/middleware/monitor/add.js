@@ -9,6 +9,18 @@ import { createMonitor } from '../../database/queries/monitor.js';
 import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
 
+const stringifyJson = (obj) => {
+  try {
+    if (typeof obj === 'string') {
+      return obj;
+    }
+
+    return JSON.stringify(obj);
+  } catch (e) {
+    return '{}';
+  }
+};
+
 export const getTcpOrHttpData = (body, email, isHttp) => {
   let monitor = {
     name: body.name,
@@ -27,6 +39,8 @@ export const getTcpOrHttpData = (body, email, isHttp) => {
       ...monitor,
       method: body.method,
       valid_status_codes: JSON.stringify(body.valid_status_codes),
+      headers: stringifyJson(body.headers),
+      body: stringifyJson(body.body),
       type: 'http',
     };
   } else {

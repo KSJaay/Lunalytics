@@ -13,6 +13,8 @@ import MonitorPageNotification from './pages/notification';
 import useMonitorForm from '../../../hooks/useMonitorForm';
 import { Accordion, AccordionItem } from '../../ui/accordion';
 import MonitorHttpStatusCodes from './pages/http/statusCodes';
+import MonitorHttpHeaders from './pages/headers';
+import MonitorHttpBody from './pages/body';
 
 const MonitorConfigureModal = ({
   closeModal,
@@ -41,21 +43,21 @@ const MonitorConfigureModal = ({
             isEdit={isEdit}
           />
 
-          {inputs.type === 'http' && (
+          {inputs.type === 'http' ? (
             <MonitorPageHttp
               inputs={inputs}
               errors={errors}
               handleInput={handleInput}
             />
-          )}
+          ) : null}
 
-          {inputs.type === 'tcp' && (
+          {inputs.type === 'tcp' ? (
             <MonitorPageTcp
               inputs={inputs}
               errors={errors}
               handleInput={handleInput}
             />
-          )}
+          ) : null}
           <br />
           <Accordion dark>
             <AccordionItem
@@ -94,6 +96,22 @@ const MonitorConfigureModal = ({
                 errors={errors}
                 handleInput={handleInput}
               />
+
+              {inputs.type === 'http' ? (
+                <>
+                  <MonitorHttpHeaders
+                    inputs={inputs}
+                    errors={errors}
+                    handleInput={handleInput}
+                  />
+
+                  <MonitorHttpBody
+                    inputs={inputs}
+                    errors={errors}
+                    handleInput={handleInput}
+                  />
+                </>
+              ) : null}
 
               <br />
             </AccordionItem>

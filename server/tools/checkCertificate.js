@@ -1,14 +1,8 @@
 import https from 'https';
 import logger from '../utils/logger.js';
+import { isEmpty } from '../../shared/utils/object.js';
 
 // Some of the following code is from https://github.com/johncrisostomo/get-ssl-certificate
-const isEmpty = (object) => {
-  for (let prop in object) {
-    if (Object.prototype.hasOwnProperty.call(object, prop)) return false;
-  }
-
-  return true;
-};
 
 const getOptions = (url, port, protocol) => {
   const parseUrl = url.startsWith('http')
