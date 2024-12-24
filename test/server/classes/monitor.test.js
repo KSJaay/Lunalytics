@@ -23,6 +23,8 @@ describe('Monitor - Class', () => {
     port: null,
     uptimePercentage: 100,
     averageHeartbeatLatency: 820,
+    showFilters: false,
+    paused: false,
   };
 
   const certificate = {
@@ -54,6 +56,8 @@ describe('Monitor - Class', () => {
       port: null,
       uptimePercentage: 100,
       averageHeartbeatLatency: 820,
+      showFilters: false,
+      paused: false,
     });
   });
 
@@ -82,6 +86,8 @@ describe('Monitor - Class', () => {
       port: null,
       uptimePercentage: 100,
       averageHeartbeatLatency: 820,
+      showFilters: false,
+      paused: false,
       cert: {
         isValid: true,
         issuer: { C: 'US', O: "Let's Encrypt", CN: 'R3' },

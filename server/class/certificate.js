@@ -7,7 +7,7 @@ const parseJson = (str) => {
 };
 
 const cleanCertificate = (certificate) => ({
-  isValid: certificate.isValid,
+  isValid: certificate.isValid == '1',
   issuer: parseJson(certificate.issuer),
   validFrom: certificate.validFrom,
   validTill: certificate.validTill,

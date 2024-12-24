@@ -56,6 +56,11 @@ const Home = () => {
 
       return true;
     })
+    .sort((a, b) => {
+      if (a.paused && !b.paused) return 1;
+      if (!a.paused && b.paused) return -1;
+      return a.name.localeCompare(b.name);
+    })
     .map((monitor, index) => {
       if (layout === 'list') {
         return (

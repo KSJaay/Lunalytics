@@ -7,7 +7,7 @@ import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
 import { FaEllipsisVertical } from '../../icons';
 
-const GraphMenu = ({ statusType, setStatusType }) => {
+const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (
@@ -25,18 +25,22 @@ const GraphMenu = ({ statusType, setStatusType }) => {
         >
           1 Day
         </Button>
-        <Button
-          color={statusType === 'week' ? 'primary' : null}
-          onClick={() => setStatusType('week')}
-        >
-          1 Week
-        </Button>
-        <Button
-          color={statusType === 'month' ? 'primary' : null}
-          onClick={() => setStatusType('month')}
-        >
-          1 Month
-        </Button>
+        {showFilters ? (
+          <>
+            <Button
+              color={statusType === 'week' ? 'primary' : null}
+              onClick={() => setStatusType('week')}
+            >
+              1 Week
+            </Button>
+            <Button
+              color={statusType === 'month' ? 'primary' : null}
+              onClick={() => setStatusType('month')}
+            >
+              1 Month
+            </Button>
+          </>
+        ) : null}
       </div>
 
       <div className="monitor-chart-dropdown-container">
@@ -96,6 +100,7 @@ GraphMenu.displayName = 'GraphMenu';
 GraphMenu.propTypes = {
   statusType: PropTypes.string.isRequired,
   setStatusType: PropTypes.func.isRequired,
+  showFilters: PropTypes.bool.isRequired,
 };
 
 export default GraphMenu;

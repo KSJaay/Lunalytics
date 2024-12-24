@@ -10,18 +10,23 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../ui/button';
 import useContextStore from '../../context';
 import MonitorModal from '../modal/monitor/delete';
-import { createGetRequest } from '../../services/axios';
+import { createGetRequest, createPostRequest } from '../../services/axios';
 import MonitorConfigureModal from '../modal/monitor/configure';
-import { FaTrashCan, MdEdit } from '../icons';
+import { FaClone, FaEllipsisVertical, FaTrashCan, MdEdit } from '../icons';
+import { FaPlay, FaPause } from '../icons';
+import Dropdown from '../ui/dropdown';
+import useDropdown from '../../hooks/useDropdown';
 
 const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
   const {
     modalStore: { openModal, closeModal },
-    globalStore: { getMonitor, editMonitor, removeMonitor },
+    globalStore: { addMonitor, getMonitor, editMonitor, removeMonitor },
     userStore: { user },
   } = useContextStore();
+  const { toggleDropdown, dropdownIsOpen } = useDropdown();
   const navigate = useNavigate();
 
+  const monitor = getMonitor(monitorId);
   const isEditor = user.permission <= 3;
 
   const handleConfirm = async () => {
@@ -37,9 +42,38 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
     navigate('/');
   };
 
-  const handleEdit = () => {
-    const monitor = getMonitor(monitorId);
+  const handlePause = async () => {
+    try {
+      await createPostRequest('/api/monitor/pause', {
+        monitorId,
+        pause: !monitor.paused,
+      });
 
+      editMonitor({ ...monitor, paused: !monitor.paused });
+
+      toast.success(
+        monitor.paused
+          ? 'Monitor resumed successfully!'
+          : 'Monitor paused successfully!'
+      );
+    } catch (error) {
+      console.log(error);
+      toast.error('Error occurred while pausing monitor!');
+    }
+  };
+
+  const handleClone = () => {
+    openModal(
+      <MonitorConfigureModal
+        monitor={monitor}
+        closeModal={closeModal}
+        handleMonitorSubmit={addMonitor}
+      />,
+      false
+    );
+  };
+
+  const handleEdit = () => {
     openModal(
       <MonitorConfigureModal
         monitor={monitor}
@@ -61,6 +95,37 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
     );
   };
 
+  const options = [
+    {
+      value: 'Clone',
+      icon: <FaClone style={{ width: '20px', height: '20px' }} />,
+      onClick: handleClone,
+      id: 'monitor-pause-button',
+    },
+    {
+      value: 'Edit',
+      icon: <MdEdit style={{ width: '20px', height: '20px' }} />,
+      onClick: handleEdit,
+      id: 'monitor-edit-button',
+    },
+    {
+      value: 'Delete',
+      icon: <FaTrashCan style={{ width: '20px', height: '20px' }} />,
+      onClick: handleDelete,
+      id: 'monitor-delete-button',
+    },
+    {
+      value: monitor.paused ? 'Resume' : 'Pause',
+      icon: monitor.paused ? (
+        <FaPlay style={{ width: '20px', height: '20px' }} />
+      ) : (
+        <FaPause style={{ width: '20px', height: '20px' }} />
+      ),
+      onClick: handlePause,
+      id: 'monitor-clone-button',
+    },
+  ];
+
   return (
     <div className="monitor-view-menu-container">
       <div className="monitor-view-menu-name" id="monitor-view-menu-name">
@@ -70,20 +135,37 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
       {/* <Button iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}>Duplicate</Button> */}
       {isEditor && (
         <>
-          <Button
-            id="monitor-edit-button"
-            iconLeft={<MdEdit style={{ width: '20px', height: '20px' }} />}
-            onClick={handleEdit}
+          {options.map((option) => (
+            <Button
+              key={option.value}
+              id={option.id}
+              iconLeft={option.icon}
+              onClick={option.onClick}
+            >
+              {option.value}
+            </Button>
+          ))}
+
+          <Dropdown.Container
+            toggleDropdown={toggleDropdown}
+            isOpen={dropdownIsOpen}
+            position="left"
           >
-            Edit
-          </Button>
-          <Button
-            id="monitor-delete-button"
-            iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}
-            onClick={handleDelete}
-          >
-            Delete
-          </Button>
+            <Dropdown.Trigger
+              toggleDropdown={toggleDropdown}
+              isOpen={dropdownIsOpen}
+            >
+              <FaEllipsisVertical style={{ width: '25px', height: '25px' }} />
+            </Dropdown.Trigger>
+            <Dropdown.List isOpen={dropdownIsOpen}>
+              {options.map((option) => (
+                <Dropdown.Item key={option.value} onClick={option.onClick}>
+                  {option.icon}
+                  {option.value}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.List>
+          </Dropdown.Container>
         </>
       )}
     </div>

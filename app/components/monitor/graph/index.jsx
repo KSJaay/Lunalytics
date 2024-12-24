@@ -11,6 +11,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 // import local files
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
@@ -18,25 +20,31 @@ import GraphMenu from './menu';
 import useGraphStatus from '../../../hooks/useGraphStatus';
 import { fullMonitorPropType } from '../../../../shared/utils/propTypes';
 
+dayjs.extend(timezone);
+dayjs.extend(utc);
+
 const MonitorGraph = ({ monitor }) => {
-  const { dateformat, timeformat, theme } = useLocalStorageContext();
+  const { dateformat, timeformat, theme, timezone } = useLocalStorageContext();
 
   const { statusType, statusHeartbeats, setStatusType } =
     useGraphStatus(monitor);
 
-  const data = statusHeartbeats.map((heartbeat = {}) => {
-    return {
-      Latency: heartbeat.latency,
-      time: dayjs(heartbeat.date).format(timeformat),
-    };
-  });
+  const data = statusHeartbeats
+    .map(({ latency = 0, date = 0 } = {}) => {
+      return { Latency: latency, time: date };
+    })
+    .reverse();
 
   const gridColor =
     theme.type === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
 
   return (
     <div className="monitor-chart-container">
-      <GraphMenu statusType={statusType} setStatusType={setStatusType} />
+      <GraphMenu
+        statusType={statusType}
+        setStatusType={setStatusType}
+        showFilters={monitor.showFilters}
+      />
       <div className="monitor-chart-content">
         <ResponsiveContainer>
           <AreaChart data={data}>
@@ -45,6 +53,9 @@ const MonitorGraph = ({ monitor }) => {
               dataKey="time"
               style={{ fill: 'var(--accent-200)' }}
               tick={{ fontSize: 12 }}
+              tickFormatter={(value) => {
+                return dayjs(value).tz(timezone).format(timeformat);
+              }}
             />
             <YAxis
               label={{
@@ -58,9 +69,11 @@ const MonitorGraph = ({ monitor }) => {
             <CartesianGrid vertical={false} stroke={gridColor} />
             <Tooltip
               formatter={(value) => `${value} ms`}
-              labelFormatter={(value) =>
-                dayjs(value).format(`${dateformat} - ${timeformat}`)
-              }
+              labelFormatter={(value) => {
+                return dayjs(value)
+                  .tz(timezone)
+                  .format(`${dateformat} - ${timeformat}`);
+              }}
               separator=": "
               contentStyle={{
                 backgroundColor: 'var(--accent-800)',

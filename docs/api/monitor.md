@@ -43,23 +43,25 @@ There are various restrictions applied to the monitor data. The following are so
 
 ### Partial Monitor Structure
 
-| Field                   | Type   | Description                                              |
-| ----------------------- | ------ | -------------------------------------------------------- |
-| monitorId               | string | Unique id for the monitor                                |
-| name                    | string | Name of the monitor                                      |
-| url                     | string | URL/IP of the monitor                                    |
-| interval                | number | Interval between each ping to monitor                    |
-| retryInterval           | number | Retry interval after a failed ping                       |
-| requestTimeout          | number | Request timeout for ping                                 |
-| method                  | string | Method for http monitor                                  |
-| headers                 | object | Headers object for http request                          |
-| body                    | object | Body object for http request                             |
-| valid_status_codes      | array  | Array of valid status codes for http request             |
-| email                   | string | Email address for the user who created the monitor       |
-| type                    | string | Type of montior (HTTP/TCP)                               |
-| port                    | number | Port for the TCP monitor                                 |
-| uptimePercentage        | number | Uptime percentage for the monitor over the last 24 hours |
-| averageHeartbeatLatency | number | Average latency for the monitor over the last 24 hours   |
+| Field                   | Type    | Description                                              |
+| ----------------------- | ------- | -------------------------------------------------------- |
+| monitorId               | string  | Unique id for the monitor                                |
+| name                    | string  | Name of the monitor                                      |
+| url                     | string  | URL/IP of the monitor                                    |
+| interval                | number  | Interval between each ping to monitor                    |
+| retryInterval           | number  | Retry interval after a failed ping                       |
+| requestTimeout          | number  | Request timeout for ping                                 |
+| method                  | string  | Method for http monitor                                  |
+| headers                 | object  | Headers object for http request                          |
+| body                    | object  | Body object for http request                             |
+| valid_status_codes      | array   | Array of valid status codes for http request             |
+| email                   | string  | Email address for the user who created the monitor       |
+| type                    | string  | Type of montior (HTTP/TCP)                               |
+| port                    | number  | Port for the TCP monitor                                 |
+| uptimePercentage        | number  | Uptime percentage for the monitor over the last 24 hours |
+| averageHeartbeatLatency | number  | Average latency for the monitor over the last 24 hours   |
+| showFilters             | boolean | Used to check if hourly heartbeats are available         |
+| paused                  | boolean | Boolean if the monitor is paused                         |
 
 ### Example Partial Monitor
 
@@ -81,7 +83,9 @@ There are various restrictions applied to the monitor data. The following are so
   "type": "http",
   "port": null,
   "uptimePercentage": 83,
-  "averageHeartbeatLatency": 38
+  "averageHeartbeatLatency": 38,
+  "showFilters": true,
+  "paused": false
 }
 ```
 
@@ -101,7 +105,9 @@ There are various restrictions applied to the monitor data. The following are so
   "type": "tcp",
   "port": 2308,
   "uptimePercentage": 83,
-  "averageHeartbeatLatency": 38
+  "averageHeartbeatLatency": 38,
+  "showFilters": false,
+  "paused": false
 }
 ```
 
@@ -126,6 +132,8 @@ There are various restrictions applied to the monitor data. The following are so
 | port                    | number                                   | Port for the TCP monitor                                 |
 | uptimePercentage        | number                                   | Uptime percentage for the monitor over the last 24 hours |
 | averageHeartbeatLatency | number                                   | Average latency for the monitor over the last 24 hours   |
+| showFilters             | boolean                                  | Used to check if hourly heartbeats are available         |
+| paused                  | boolean                                  | Boolean if the monitor is paused                         |
 | heartbeats              | Array<[Heartbeat](#heartbeat-structure)> | Array of monitor heartbeats                              |
 | cert                    | [Certificate](#certificate-structure)    | Information about the certificate                        |
 
@@ -150,6 +158,8 @@ There are various restrictions applied to the monitor data. The following are so
   "port": null,
   "uptimePercentage": 83,
   "averageHeartbeatLatency": 38,
+  "showFilters": true,
+  "paused": false,
   "heartbeats": [
     {
       "id": 38,
@@ -198,6 +208,8 @@ There are various restrictions applied to the monitor data. The following are so
   "port": 2308,
   "uptimePercentage": 83,
   "averageHeartbeatLatency": 38,
+  "showFilters": false,
+  "paused": false,
   "heartbeats": [
     {
       "id": 38,

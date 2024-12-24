@@ -114,6 +114,16 @@ const deleteMonitor = async (monitorId) => {
   return true;
 };
 
+const pauseMonitor = async (monitorId, paused) => {
+  const monitor = await SQLite.client('monitor').where({ monitorId }).first();
+
+  if (!monitor) {
+    throw new UnprocessableError('Monitor does not exist');
+  }
+
+  await SQLite.client('monitor').where({ monitorId }).update({ paused });
+};
+
 export {
   createMonitor,
   monitorExists,
@@ -123,4 +133,5 @@ export {
   deleteMonitor,
   fetchUptimePercentage,
   fetchMonitorUptime,
+  pauseMonitor,
 };
