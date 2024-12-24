@@ -43,7 +43,11 @@ const MonitorGraph = ({ monitor }) => {
 
   return (
     <div className="monitor-chart-container">
-      <GraphMenu statusType={statusType} setStatusType={setStatusType} />
+      <GraphMenu
+        statusType={statusType}
+        setStatusType={setStatusType}
+        showFilters={monitor.showFilters}
+      />
       <div className="monitor-chart-content">
         <ResponsiveContainer>
           <AreaChart data={data}>

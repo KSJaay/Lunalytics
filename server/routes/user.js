@@ -9,77 +9,18 @@ import permissionUpdateMiddleware from '../middleware/user/permission/update.js'
 import teamMembersListMiddleware from '../middleware/user/team/members.js';
 import userUpdateAvatar from '../middleware/user/update/avatar.js';
 import userUpdateUsername from '../middleware/user/update/username.js';
-import { userExists, emailExists } from '../database/queries/user.js';
-import { cleanMonitor } from '../class/monitor.js';
 import userUpdatePassword from '../middleware/user/update/password.js';
 import transferOwnershipMiddleware from '../middleware/user/transferOwnership.js';
 import deleteAccountMiddleware from '../middleware/user/deleteAccount.js';
-import { handleError } from '../utils/errors.js';
-import { fetchMonitors } from '../database/queries/monitor.js';
-import { fetchHeartbeats } from '../database/queries/heartbeat.js';
-import { fetchCertificate } from '../database/queries/certificate.js';
+import userMonitorsMiddleware from '../middleware/user/monitors.js';
+import userExistsMiddleware from '../middleware/user/exists.js';
+import fetchUserMiddleware from '../middleware/user/user.js';
 
-router.get('/', async (request, response) => {
-  try {
-    const { access_token } = request.cookies;
+router.get('/', fetchUserMiddleware);
 
-    const user = await userExists(access_token);
+router.post('/exists', userExistsMiddleware);
 
-    const userInfo = {
-      displayName: user.displayName,
-      avatar: user.avatar,
-      email: user.email,
-      isVerified: user.isVerified,
-      permission: user.permission,
-    };
-
-    userInfo.canEdit = [1, 2, 3].includes(user.permission);
-    userInfo.canManage = [1, 2].includes(user.permission);
-
-    return response.send(userInfo);
-  } catch (error) {
-    handleError(error, response);
-  }
-});
-
-router.post('/exists', async (request, response) => {
-  try {
-    const { email } = request.body;
-    if (!email) return response.status(400).send('No email provided');
-
-    const user = await emailExists(email);
-    if (!user) return response.send(false);
-
-    return response.send(true);
-  } catch (error) {
-    handleError(error, response);
-  }
-});
-
-router.get('/monitors', async (request, response) => {
-  try {
-    const monitors = await fetchMonitors();
-    const query = [];
-
-    for (const monitor of monitors) {
-      const heartbeats = await fetchHeartbeats(monitor.monitorId, 12);
-      monitor.heartbeats = heartbeats;
-
-      monitor.cert = { isValid: false };
-
-      if (monitor.type === 'http') {
-        const cert = await fetchCertificate(monitor.monitorId);
-        monitor.cert = cert;
-      }
-
-      query.push(cleanMonitor(monitor));
-    }
-
-    return response.send(query);
-  } catch (error) {
-    handleError(error, response);
-  }
-});
+router.get('/monitors', userMonitorsMiddleware);
 
 router.post('/update/username', userUpdateUsername);
 
