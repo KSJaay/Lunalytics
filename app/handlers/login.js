@@ -19,7 +19,7 @@ const handleLogin = async (inputs, setErrors, navigate) => {
     const query = await createPostRequest('/auth/login', { email, password });
 
     if (query.status === 200) {
-      return navigate('/');
+      return navigate('/dashboard');
     }
   } catch (error) {
     console.log(error);

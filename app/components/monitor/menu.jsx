@@ -39,7 +39,7 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
     toast.success('Monitor deleted successfully!');
 
     closeModal();
-    navigate('/');
+    navigate('/dashboard');
   };
 
   const handlePause = async () => {

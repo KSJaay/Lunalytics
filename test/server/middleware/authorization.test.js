@@ -66,7 +66,7 @@ describe('Authorization - Middleware', () => {
 
       await authorization(fakeRequest, fakeResponse, fakeNext);
 
-      expect(fakeResponse.redirect).toHaveBeenCalledWith('/');
+      expect(fakeResponse.redirect).toHaveBeenCalledWith('/dashboard');
 
       expect(fakeNext).not.toHaveBeenCalled();
     });
@@ -76,7 +76,7 @@ describe('Authorization - Middleware', () => {
 
       await authorization(fakeRequest, fakeResponse, fakeNext);
 
-      expect(fakeResponse.redirect).toHaveBeenCalledWith('/');
+      expect(fakeResponse.redirect).toHaveBeenCalledWith('/dashboard');
 
       expect(fakeNext).not.toHaveBeenCalled();
     });

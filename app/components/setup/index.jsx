@@ -33,7 +33,7 @@ const SetupForm = () => {
       try {
         await submitSetup(setErrors, 'advanced', inputs);
 
-        return navigate('/');
+        return navigate('/dashboard');
       } catch (error) {
         if (error?.response?.data) {
           return setErrors(error?.response?.data);

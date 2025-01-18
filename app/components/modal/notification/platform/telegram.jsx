@@ -80,7 +80,10 @@ const NotificationModalTelegramInput = ({
           error={errors?.disableNotification}
           checked={values.disableNotification}
           onChange={(e) => {
-            handleInput({ key: 'disableNotification', value: e.target.value });
+            handleInput({
+              key: 'disableNotification',
+              value: e.target.checked,
+            });
           }}
         />
       </div>
@@ -93,7 +96,7 @@ const NotificationModalTelegramInput = ({
           error={errors?.protectContent}
           checked={values.protectContent}
           onChange={(e) => {
-            handleInput({ key: 'protectContent', value: e.target.value });
+            handleInput({ key: 'protectContent', value: e.target.checked });
           }}
         />
       </div>

@@ -18,7 +18,7 @@ const ErrorPage = () => {
       <div className="error-page-subtitle">
         Sorry, couldn&#39;t find what you&#39;re looking for!
       </div>
-      <Button color={'gray'} onClick={() => navigate('/')}>
+      <Button color={'gray'} onClick={() => navigate('/dashboard')}>
         Go to homepage
       </Button>
     </div>

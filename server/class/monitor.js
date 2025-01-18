@@ -43,7 +43,7 @@ export const cleanPartialMonitor = (monitor) => ({
   notificationType: monitor.notificationType,
   uptimePercentage: monitor.uptimePercentage,
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
-  showFilters: monitor.showFilters == '1',
+  showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
 });
 
@@ -65,7 +65,7 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   notificationType: monitor.notificationType,
   uptimePercentage: monitor.uptimePercentage,
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
-  showFilters: monitor.showFilters == '1',
+  showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
   cert: !cert?.isValid ? cert : cleanCertificate(cert),
   heartbeats,

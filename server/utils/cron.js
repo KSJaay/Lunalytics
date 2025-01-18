@@ -30,7 +30,7 @@ async function initialiseCronJobs() {
         });
 
         const monitorsList = await fetchMonitors();
-        const monitors = Object.keys(monitorsList);
+        const monitors = monitorsList.map((monitor) => monitor.monitorId);
 
         if (monitors.length === 0) {
           return;

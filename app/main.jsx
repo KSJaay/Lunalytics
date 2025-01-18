@@ -21,6 +21,7 @@ import ErrorPage from './pages/error';
 import Notifications from './pages/notifications';
 import Setup from './pages/setup';
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ToastContainer position="top-right" theme="dark" />
@@ -39,7 +40,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           }
         />
         <Route
-          path="/notifications"
+          path="/dashboard"
+          element={
+            <GlobalLayout>
+              <Navigation>
+                <Home />
+              </Navigation>
+            </GlobalLayout>
+          }
+        />
+        <Route
+          path="/dashboard/notifications"
           element={
             <GlobalLayout>
               <Navigation activeUrl="/notifications">

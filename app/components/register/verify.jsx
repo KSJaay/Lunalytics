@@ -19,7 +19,7 @@ const RegisterVerify = () => {
         return toast.error('Your account has not been verified yet.');
       }
 
-      return navigate('/');
+      return navigate('/dashboard');
     } catch (error) {
       console.log(error);
       toast.error('Something went wrong while verifying your account.');

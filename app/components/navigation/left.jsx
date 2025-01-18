@@ -7,12 +7,17 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import { FaCog, FaHome, FaSignOutAlt, MdNotifications } from '../icons';
+import {
+  FaCog,
+  FaHome,
+  FaSignOutAlt,
+  MdNotifications,
+} from '../icons';
 
 const actionTabs = [
   {
     name: 'Home',
-    url: '/',
+    url: '/dashboard',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
   },
   {
