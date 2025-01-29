@@ -1,0 +1,37 @@
+@use '../../../../styles/pxToRem.scss' as *;
+
+.status-configure-layout-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: pxToRem(10);
+  right: pxToRem(10);
+  gap: pxToRem(12);
+}
+
+.status-configure-layout-bin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--red-700);
+    transition: all 0.25s ease-in-out;
+  }
+}
+
+.status-configure-layout-minimize {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--accent-200);
+    transition: all 0.25s ease-in-out;
+  }
+}

@@ -1,0 +1,138 @@
+@use '../../../../styles/pxToRem.scss' as *;
+@use '../../../../styles/breakpoints.scss' as *;
+
+.status-configure-status-content {
+  --status-color: var(--green-700);
+
+  &.Operational {
+    --status-color: var(--green-700);
+  }
+
+  &.Maintenance {
+    --status-color: var(--blue-700);
+  }
+
+  &.Incident {
+    --status-color: var(--yellow-700);
+  }
+
+  &.Outage {
+    --status-color: var(--red-700);
+  }
+
+  display: flex;
+  align-items: center;
+  align-self: center;
+  width: 100%;
+  background-color: var(--status-color);
+  padding: pxToRem(24) pxToRem(8);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  gap: pxToRem(12);
+  max-width: $BREAKPOINT_3;
+
+  &.XS {
+    font-size: var(--font-xs);
+    padding: pxToRem(12) pxToRem(8);
+    gap: pxToRem(4);
+
+    > .Outline {
+      padding-left: pxToRem(16);
+    }
+  }
+
+  &.S {
+    font-size: var(--font-sm);
+    padding: pxToRem(16) pxToRem(12);
+    gap: pxToRem(8);
+
+    > .Outline {
+      padding-left: pxToRem(24);
+    }
+  }
+
+  &.M {
+    font-size: var(--font-md);
+    padding: pxToRem(24) pxToRem(16);
+    gap: pxToRem(12);
+
+    > .Outline {
+      padding-left: pxToRem(32);
+    }
+  }
+
+  &.L {
+    font-size: var(--font-lg);
+    padding: pxToRem(32) pxToRem(16);
+    gap: pxToRem(16);
+
+    > .Outline {
+      padding-left: pxToRem(32);
+    }
+  }
+
+  &.XL {
+    font-size: var(--font-xl);
+    padding: pxToRem(40) pxToRem(16);
+    gap: pxToRem(20);
+
+    > .Outline {
+      padding-left: pxToRem(32);
+    }
+  }
+
+  &.Outline {
+    background-color: transparent;
+    border: 2px solid var(--gray-700);
+    border-left: 8px solid var(--status-color);
+    box-shadow: var(--shadow-md);
+
+    > .status-configure-status-title svg {
+      color: var(--status-color);
+    }
+  }
+
+  &.Solid {
+    background-color: var(--accent-800);
+    border: 2px solid var(--accent-800);
+    box-shadow: var(--shadow-md);
+
+    > .status-configure-status-title svg {
+      color: var(--status-color);
+    }
+  }
+}
+
+.status-configure-status-title {
+  display: flex;
+  align-items: center;
+  gap: pxToRem(8);
+  font-size: var(--font-xl);
+  font-weight: 700;
+
+  &.XS {
+    font-size: var(--font-md);
+  }
+
+  &.S {
+    font-size: var(--font-lg);
+  }
+
+  &.M {
+    font-size: var(--font-2xl);
+  }
+
+  &.L {
+    font-size: var(--font-3xl);
+  }
+
+  &.XL {
+    font-size: var(--font-4xl);
+  }
+}
+
+.status-configure-status-options {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+}

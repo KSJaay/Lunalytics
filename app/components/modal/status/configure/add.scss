@@ -1,0 +1,43 @@
+// status-configure-modal-add > scma
+
+.scma-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  margin: 20px 0px 10px 0px;
+}
+
+.scma-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--accent-700);
+  padding: 10px;
+  cursor: pointer;
+  flex-direction: column;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    border-color: var(--primary-700);
+
+    .scma-item-icon {
+      transition: all 0.2s ease-in-out;
+      color: var(--primary-700);
+    }
+  }
+
+  &.active {
+    border-color: var(--primary-700);
+
+    .scma-item-icon {
+      color: var(--primary-700);
+    }
+  }
+}
+
+.scma-item-name {
+  font-size: var(--font-md);
+  color: var(--font-color);
+}

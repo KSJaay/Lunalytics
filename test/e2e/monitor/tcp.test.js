@@ -8,7 +8,7 @@ describe('Monitor TCP - Advance', () => {
 
       cy.clearCookies();
       cy.loginUser(email, password);
-      cy.visit('/dashboard');
+      cy.visit('/home');
     });
 
     it('should show errors for invalid values and create a monitor with valid values', () => {
@@ -22,7 +22,7 @@ describe('Monitor TCP - Advance', () => {
 
       cy.clearCookies();
       cy.loginUser(email, password);
-      cy.visit('/dashboard');
+      cy.visit('/home');
     });
 
     it('Edit monitor name', () => {
@@ -47,7 +47,7 @@ describe('Monitor TCP - Advance', () => {
 
       cy.clearCookies();
       cy.loginUser(email, password);
-      cy.visit('/dashboard');
+      cy.visit('/home');
     });
 
     it('should delete a monitor', () => {

@@ -20,7 +20,8 @@ import Verify from './pages/verify';
 import ErrorPage from './pages/error';
 import Notifications from './pages/notifications';
 import Setup from './pages/setup';
-
+import Status from './pages/status';
+import StatusConfigure from './pages/status/configure';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -40,7 +41,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           }
         />
         <Route
-          path="/dashboard"
+          path="/home"
           element={
             <GlobalLayout>
               <Navigation>
@@ -50,12 +51,30 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           }
         />
         <Route
-          path="/dashboard/notifications"
+          path="/notifications"
           element={
             <GlobalLayout>
               <Navigation activeUrl="/notifications">
                 <Notifications />
               </Navigation>
+            </GlobalLayout>
+          }
+        />
+        <Route
+          path="/status-pages"
+          element={
+            <GlobalLayout>
+              <Navigation activeUrl="/status-pages">
+                <Status />
+              </Navigation>
+            </GlobalLayout>
+          }
+        />
+        <Route
+          path="/status-pages/configure"
+          element={
+            <GlobalLayout>
+              <StatusConfigure />
             </GlobalLayout>
           }
         />

@@ -1,4 +1,4 @@
-import { BsTable } from 'react-icons/bs';
+import { BsBroadcast, BsTable } from 'react-icons/bs';
 import {
   FaChevronDown,
   FaChevronLeft,
@@ -11,6 +11,7 @@ import {
   FaSignOutAlt,
   FaUsers,
   FaClone,
+  FaClock,
 } from 'react-icons/fa';
 import { FiLayout } from 'react-icons/fi';
 import { HiStatusOffline, HiStatusOnline } from 'react-icons/hi';
@@ -27,11 +28,19 @@ import {
   FaPause,
   FaPlay,
 } from 'react-icons/fa6';
-import { IoArrowBack, IoColorPalette, IoGrid, IoReload } from 'react-icons/io5';
-import { RiStackFill } from 'react-icons/ri';
+import {
+  IoArrowBack,
+  IoColorPalette,
+  IoGrid,
+  IoReload,
+  IoWarning,
+} from 'react-icons/io5';
+import { RiStackFill, RiIndeterminateCircleFill } from 'react-icons/ri';
 import StatusLogo from './statusLogo';
+import { PiBroadcast, PiDotsSixVerticalBold } from 'react-icons/pi';
 
 export {
+  BsBroadcast,
   BsTable,
   FaBars,
   FaCheck,
@@ -40,6 +49,7 @@ export {
   FaChevronRight,
   FaChevronUp,
   FaCircleCheck,
+  FaClock,
   FaClone,
   FaCog,
   FaEllipsisVertical,
@@ -63,10 +73,14 @@ export {
   IoMdEyeOff,
   IoMdHelpCircle,
   IoReload,
+  IoWarning,
   LiaSyncSolid,
   MdEdit,
   MdErrorOutline,
   MdNotifications,
+  PiBroadcast,
+  PiDotsSixVerticalBold,
+  RiIndeterminateCircleFill,
   RiStackFill,
   StatusLogo,
 };

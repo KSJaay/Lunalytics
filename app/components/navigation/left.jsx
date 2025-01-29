@@ -12,18 +12,24 @@ import {
   FaHome,
   FaSignOutAlt,
   MdNotifications,
+  PiBroadcast,
 } from '../icons';
 
 const actionTabs = [
   {
     name: 'Home',
-    url: '/dashboard',
+    url: '/home',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
   },
   {
     name: 'Notifications',
     url: '/notifications',
     logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
+  },
+  {
+    name: 'Status',
+    url: '/status-pages',
+    logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
   },
 ];
 

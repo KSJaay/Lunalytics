@@ -1,0 +1,144 @@
+@use '../../../../../styles/breakpoints.scss' as *;
+
+.status-page-metrics-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--status-page-max-width);
+}
+
+.status-page-metrics-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.status-page-metrics-title {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  padding-left: 8px;
+}
+
+.status-page-metrics-graph {
+  padding: 8px 8px 8px 0;
+  height: 140px;
+  width: 100%;
+}
+
+// status-page-metrics-basic > spmb
+
+.spmb-graph {
+  border: 1px solid var(--accent-700);
+  border-top: none;
+
+  &:first-child {
+    border-top: 1px solid var(--accent-700);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+
+  &:only-child {
+    border-radius: var(--radius-md);
+  }
+}
+
+.spmb-header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.spmb-title {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+}
+
+.spmb-subtitle {
+  font-weight: 500;
+  font-size: var(--font-xl);
+}
+
+// status-page-metrics-pretty > spmp
+
+.spmp-container {
+  padding: 8px 8px 8px 0;
+  height: 160px;
+  width: 100%;
+  display: flex;
+}
+
+.spmp-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.spmp-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.spmp-title {
+  font-size: var(--font-md);
+  color: var(--font-light-color);
+  text-align: center;
+  width: max-content;
+}
+
+.spmp-subtitle {
+  font-size: var(--font-md);
+  font-weight: 600;
+  text-align: center;
+  width: max-content;
+}
+
+// status-page-metrics-nerdy > spmn
+
+.spmn-container {
+  padding: 8px 8px 8px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.spmn-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.spmn-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.spmn-title {
+  font-size: var(--font-md);
+  color: var(--font-light-color);
+  text-align: center;
+  width: max-content;
+}
+
+.spmn-subtitle {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  text-align: center;
+  width: max-content;
+}

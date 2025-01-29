@@ -28,7 +28,7 @@ const handleRegister = async (inputs, setErrors, setPage, navigate) => {
     toast.success('You have been successfully registered!');
 
     if (query.status === 201) {
-      return navigate('/dashboard');
+      return navigate('/home');
     }
 
     setPage('verify');

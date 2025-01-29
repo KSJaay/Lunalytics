@@ -39,7 +39,7 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
     toast.success('Monitor deleted successfully!');
 
     closeModal();
-    navigate('/dashboard');
+    navigate('/home');
   };
 
   const handlePause = async () => {
@@ -131,8 +131,6 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
       <div className="monitor-view-menu-name" id="monitor-view-menu-name">
         {name}
       </div>
-      {/* <Button iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}>Pause</Button> */}
-      {/* <Button iconLeft={<FaTrashCan style={{ width: '20px', height: '20px' }} />}>Duplicate</Button> */}
       {isEditor && (
         <>
           {options.map((option) => (

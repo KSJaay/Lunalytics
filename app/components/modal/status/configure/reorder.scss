@@ -1,0 +1,24 @@
+// status-configure-modal-reorder > scmr
+.scmr-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  overflow-x: hidden;
+  min-width: 450px;
+}
+
+.scmr-block {
+  display: flex;
+  border: 2px solid var(--accent-400);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  gap: 8px;
+  align-items: center;
+
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

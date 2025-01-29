@@ -18,7 +18,7 @@ const TopNavigation = () => {
     <div className="top-navigation">
       <div
         className="top-navigation-logo-container"
-        onClick={() => navigate('/dashboard')}
+        onClick={() => navigate('/home')}
       >
         <StatusLogo size={50} />
         <div className="top-navigation-logo-text">Lunalytics</div>

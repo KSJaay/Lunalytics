@@ -13,15 +13,15 @@
 
 ![Demo](https://raw.githubusercontent.com/KSJaay/Lunalytics/refs/heads/main/docs/public/demo.gif)
 
-## ⭐ Features
+## 📔 Features
 
 - Easy to self-host
 - Monitor uptime for HTTP(s)/TCP
 - Support for multiple users
+- Fully customisable status/dashboard pages
 - Role based access control
 - Clean and easy to use UX/UI
-- Customizable themes/colors
-- Customizable user profiles
+- Customizable user profiles/themes/colors
 - Support for notifications
   - Discord
   - Slack
@@ -39,7 +39,7 @@
 
 Make sure you have the following applications installed before starting:
 
-- [Nodejs](https://nodejs.org/en/download/) (v18 or higher)
+- [Nodejs](https://nodejs.org/en/download/) (v20 or higher)
 - Npm or [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 - [Git](https://git-scm.com/)
 
@@ -98,6 +98,11 @@ pm2 monit
   - [ ] Add support for MongoDB
 - [ ] Add support for more notification services
 - [ ] Better role based access control
+
+## ⭐ Help us grow
+
+- Add a star to the project if you like it!
+- [AlternativeTo](https://alternativeto.net/software/lunalytics/about/)
 
 ## 📖 Backstory
 

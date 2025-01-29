@@ -25,7 +25,7 @@ const authorization = async (request, response, next) => {
           request.url.startsWith('/register') ||
           request.url.startsWith('/setup')
         ) {
-          return response.redirect('/dashboard');
+          return response.redirect('/home');
         }
       }
 

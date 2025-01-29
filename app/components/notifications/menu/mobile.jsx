@@ -23,7 +23,7 @@ const HomeMenuMobile = ({ handleReset }) => {
         toggleDropdown={toggleDropdown}
         style={{ height: '45px' }}
       >
-        <FaEllipsisVertical height={30} width={30} />
+        <FaEllipsisVertical style={{ width: '24px', height: '24px' }} />
       </Dropdown.Trigger>
       <Dropdown.List isOpen={dropdownIsOpen}>
         <Dropdown.Item

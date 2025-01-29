@@ -1,0 +1,108 @@
+// import dependencies
+import PropTypes from 'prop-types';
+
+// import local files
+import useStatusContext from '../../../../../hooks/useConfigureStatus';
+import Tabs from '../../../../ui/tabs';
+import TextInput from '../../../../ui/input';
+import Checkbox from '../../../../ui/checkbox';
+import StatusConfigureLayoutMetricsTypeBasic from './type/basic';
+import StatusConfigureLayoutMetricsTypeNerdy from './type/nerdy';
+import StatusConfigureLayoutMetricsTypePretty from './type/pretty';
+
+const getGraphType = (graphType, title, showPing) => {
+  if (graphType === 'Basic') {
+    return (
+      <StatusConfigureLayoutMetricsTypeBasic
+        showPing={showPing}
+        showTitle={title}
+      />
+    );
+  }
+
+  if (graphType === 'Pretty') {
+    return (
+      <StatusConfigureLayoutMetricsTypePretty
+        showPing={showPing}
+        showTitle={title}
+      />
+    );
+  }
+
+  if (graphType === 'Nerdy') {
+    return (
+      <StatusConfigureLayoutMetricsTypeNerdy
+        showPing={showPing}
+        showTitle={title}
+      />
+    );
+  }
+
+  return null;
+};
+
+const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
+  const { getComponentMonitor, setMonitorValue } = useStatusContext();
+  const {
+    graphType,
+    title = '',
+    showPing = true,
+  } = getComponentMonitor(componentId, monitorId);
+
+  return (
+    <>
+      <div className="status-configure-layout-graph-title">Graph options</div>
+      <div className="status-configure-layout-graph-container">
+        {getGraphType(graphType, title, showPing)}
+
+        <div className="status-configure-layout-graph-options-container">
+          <div className="status-configure-layout-graph-options-content">
+            <TextInput
+              label="Graph title"
+              placeholder="Monitors"
+              shortDescription="This can be left blank if you don't want a title"
+              value={title}
+              onChange={(e) =>
+                setMonitorValue(componentId, monitorId, 'title', e.target.value)
+              }
+            />
+          </div>
+          <div className="status-configure-layout-graph-options-content">
+            <Tabs
+              options={['Basic', 'Pretty', 'Nerdy']}
+              label="Graph type"
+              activeOption={graphType}
+              onChange={(value) =>
+                setMonitorValue(componentId, monitorId, 'graphType', value)
+              }
+            />
+
+            <Checkbox
+              label="Show Ping"
+              shortDescription="Show the last latency of the monitor on the graph"
+              checked={showPing}
+              onChange={(e) => {
+                setMonitorValue(
+                  componentId,
+                  monitorId,
+                  'showPing',
+                  e.target.checked
+                );
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+StatusConfigureLayoutMetricsOptions.displayName =
+  'StatusConfigureLayoutMetricsOptions';
+
+StatusConfigureLayoutMetricsOptions.propTypes = {
+  componentId: PropTypes.string.isRequired,
+  monitorId: PropTypes.string.isRequired,
+};
+
+export default StatusConfigureLayoutMetricsOptions;

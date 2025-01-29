@@ -10,7 +10,7 @@ const useGoBack = () => {
   const { key: prevKey } = useLocation();
   const navigate = useNavigate();
 
-  return ({ fallback = '/dashboard' } = {}) => {
+  return ({ fallback = '/home' } = {}) => {
     const key = prevKey !== 'default' ? -1 : fallback;
     navigate(key);
   };
