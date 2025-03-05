@@ -7,7 +7,7 @@ const MonitorHttpHeaders = ({ inputs, errors, handleInput }) => {
       if (typeof body === 'object') {
         return JSON.stringify(body, null, 2);
       }
-    } catch (error) {
+    } catch (_error) {
       return '';
     }
   };

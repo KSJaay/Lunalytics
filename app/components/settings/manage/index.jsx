@@ -23,7 +23,7 @@ const ManageTeam = () => {
         const query = await createGetRequest('/api/user/team');
 
         setTeam(query.data);
-      } catch (error) {
+      } catch (_error) {
         toast.error("Couldn't fetch team members");
       }
     };

@@ -56,7 +56,7 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
           ? 'Monitor resumed successfully!'
           : 'Monitor paused successfully!'
       );
-    } catch (error) {
+    } catch (_error) {
       toast.error('Error occurred while pausing monitor!');
     }
   };
