@@ -120,6 +120,10 @@ class Collection extends Map {
     return this;
   }
 
+  toObject() {
+    return Object.fromEntries(this.entries());
+  }
+
   toJSON() {
     return [...this.entries()];
   }

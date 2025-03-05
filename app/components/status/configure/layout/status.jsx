@@ -15,8 +15,8 @@ import {
 import useStatusContext from '../../../../hooks/useConfigureStatus';
 import Tabs from '../../../ui/tabs';
 import {
-  statusAlignments,
   statusBarDesign,
+  statusSizes,
 } from '../../../../../shared/constants/status';
 
 const icons = {
@@ -89,14 +89,14 @@ const StatusConfigureLayoutStatus = ({ componentId }) => {
               />
               <Tabs
                 label="Banner size"
-                options={statusAlignments}
+                options={statusSizes}
                 activeOption={size}
                 onChange={(e) => setComponentValue(componentId, 'size', e)}
                 shortDescription="Change the size of the status banner"
               />
               <Tabs
                 label="Title size"
-                options={statusAlignments}
+                options={statusSizes}
                 activeOption={titleSize}
                 onChange={(e) => setComponentValue(componentId, 'titleSize', e)}
               />

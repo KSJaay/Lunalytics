@@ -4,7 +4,7 @@ import { timeToMs } from '../../../shared/utils/ms.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 
 const monitorExists = async (monitorId) => {
-  return SQLite.client('monitor').where({ id: monitorId }).first();
+  return SQLite.client('monitor').where({ monitorId }).first();
 };
 
 const createMonitor = async (monitor) => {

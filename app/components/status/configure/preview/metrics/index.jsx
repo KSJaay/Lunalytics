@@ -14,12 +14,19 @@ const StatusPageMetrics = ({
   showName,
   monitors,
   graphType,
+  heartbeats,
 }) => {
   return (
     <div className="status-page-metrics-container">
       <div className="status-page-metrics-content">
         {graphType === 'Separate' ? (
-          <StatusPageMetricsSeparate monitors={monitors} title={title} />
+          <StatusPageMetricsSeparate
+            monitors={monitors}
+            title={title}
+            showName={showName}
+            showPing={showPing}
+            heartbeats={heartbeats}
+          />
         ) : null}
 
         {graphType === 'Dropdown' ? (
@@ -28,6 +35,7 @@ const StatusPageMetrics = ({
             title={title}
             showName={showName}
             showPing={showPing}
+            heartbeats={heartbeats}
           />
         ) : null}
       </div>
@@ -43,6 +51,7 @@ StatusPageMetrics.propTypes = {
   showName: PropTypes.bool.isRequired,
   monitors: PropTypes.array.isRequired,
   graphType: PropTypes.string.isRequired,
+  heartbeats: PropTypes.object,
 };
 
 export default observer(StatusPageMetrics);

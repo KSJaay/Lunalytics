@@ -31,9 +31,27 @@ class NotificationValidatorError extends Error {
   }
 }
 
+class StatusPageValidatorError extends Error {
+  constructor(error) {
+    super();
+    this.name = 'StatusPageValidatorError';
+    this.message = error;
+  }
+}
+
+class ObjectSchemaValidatorError extends Error {
+  constructor(error) {
+    super();
+    this.name = 'ObjectSchemaValidatorError';
+    this.message = error;
+  }
+}
+
 export {
   AuthorizationError,
   ConflictError,
   NotificationValidatorError,
   UnprocessableError,
+  StatusPageValidatorError,
+  ObjectSchemaValidatorError,
 };

@@ -1,5 +1,8 @@
 import './styles.scss';
 
+// import dependencies
+import { useEffect } from 'react';
+
 // import local files
 import useStatusContext from '../../../../hooks/useConfigureStatus';
 import Button from '../../../ui/button';
@@ -16,10 +19,47 @@ import StatusConfigureAddModal from '../../../modal/status/configure/add';
 import StatusConfigureReorderModal from '../../../modal/status/configure/reorder';
 
 const StatusConfigureLayout = () => {
-  const { layout, createComponent, reorderBlocks } = useStatusContext();
+  const {
+    settings: {
+      font = 'Montserrat',
+      theme = 'Auto',
+      headerBackground = '#171a1c',
+      background = '#171a1c',
+      textColor = '#f3f6fb',
+      highlight = '#17c964',
+    },
+    layout,
+    createComponent,
+    reorderBlocks,
+  } = useStatusContext();
   const {
     modalStore: { openModal, closeModal },
   } = useContextStore();
+
+  function injectStylesheet(id, content = '') {
+    let styleSheet = document.getElementById(id);
+
+    if (!styleSheet) {
+      styleSheet = document.createElement('style');
+      styleSheet.id = id;
+      document.head.appendChild(styleSheet);
+    }
+
+    styleSheet.textContent = content.replace(/\n/g, '');
+  }
+
+  useEffect(() => {
+    const styles = [
+      `--status-font: ${font}`,
+      `--status-theme: ${theme}`,
+      `--status-header-background: ${headerBackground}`,
+      `--status-background: ${background}`,
+      `--status-text-color: ${textColor}`,
+      `--status-highlight-color: ${highlight}`,
+    ].join(';');
+
+    injectStylesheet('status-configure-layout', `:root {${styles}}`);
+  }, [font, theme, headerBackground, background, textColor, highlight]);
 
   return (
     <>

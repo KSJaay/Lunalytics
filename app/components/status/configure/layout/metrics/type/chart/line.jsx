@@ -20,9 +20,15 @@ const StatusLayoutLineChart = ({ heartbeats = defaultHeartbeats }) => {
   const gridColor =
     theme.type === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
 
+  const data = heartbeats
+    .map(({ latency = 0, date = 0, time = 0 } = {}) => {
+      return { latency, time: date || time };
+    })
+    .reverse();
+
   return (
     <ResponsiveContainer style={{ marginLeft: '16px' }}>
-      <AreaChart data={heartbeats}>
+      <AreaChart data={data}>
         <XAxis
           type="category"
           dataKey="time"

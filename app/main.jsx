@@ -20,8 +20,10 @@ import Verify from './pages/verify';
 import ErrorPage from './pages/error';
 import Notifications from './pages/notifications';
 import Setup from './pages/setup';
-import Status from './pages/status';
-import StatusConfigure from './pages/status/configure';
+import Status from './pages/status-pages';
+import StatusConfigure from './pages/status-pages/configure';
+import StatusLayout from './layout/status';
+import StatusPage from './pages/status';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -33,11 +35,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route
           path="/"
           element={
-            <GlobalLayout>
-              <Navigation>
-                <Home />
-              </Navigation>
-            </GlobalLayout>
+            <StatusLayout>
+              <StatusPage id={'default'} />
+            </StatusLayout>
+          }
+        />
+        <Route
+          path="/status/:statusPageId"
+          element={
+            <StatusLayout>
+              <StatusPage />
+            </StatusLayout>
           }
         />
         <Route

@@ -29,8 +29,8 @@ const StatusConfigureSettings = () => {
             </label>
 
             <div className="input-short-description">
-              URL will be prefixed with /status (Use "default" to use the index
-              route)
+              URL will be prefixed with /status (Use &#34;default&#34; to use
+              the index route)
             </div>
 
             <div
@@ -77,7 +77,7 @@ const StatusConfigureSettings = () => {
             <TextInput
               label="Name of status page"
               placeholder="Status"
-              shortDescription="This will be used if there is no logo and also in the page title and as a friendly name for the status page."
+              shortDescription="This will be used as the page title and friendly name for the status page."
               value={settings.title}
               onChange={(e) => {
                 changeValues({ title: e.target.value });

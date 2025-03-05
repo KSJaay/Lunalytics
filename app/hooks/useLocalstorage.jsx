@@ -25,7 +25,7 @@ export const useLocalStorageState = () => {
       window?.localStorage?.getItem('timeformat') || 'HH:mm:ss';
     const theme = window?.localStorage?.getItem('theme') || 'dark';
     const color = window?.localStorage?.getItem('color') || 'Green';
-    const layout = window?.localStorage?.getItem('layout') || 'cards';
+    const layout = window?.localStorage?.getItem('layout') || 'compact';
     const status = window?.localStorage?.getItem('status') || 'all';
 
     setValues((prevState) => ({

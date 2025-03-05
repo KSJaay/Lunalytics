@@ -49,7 +49,7 @@ const MenuPlatformDropdown = ({ platform, setPlatform }) => {
   const dropdownItems = statusOptions.map((view) => (
     <Dropdown.Item
       key={view.text}
-      showDot={view.text === platform}
+      showDot
       isSelected={platform === view.text}
       onClick={() => setPlatform(view.text)}
     >

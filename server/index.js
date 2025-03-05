@@ -13,6 +13,7 @@ import initialiseCronJobs from './utils/cron.js';
 import migrateDatabase from '../scripts/migrate.js';
 import isDemo from './middleware/demo.js';
 import config from './utils/config.js';
+import statusCache from './cache/status.js';
 
 const app = express();
 
@@ -28,6 +29,7 @@ const init = async () => {
   if (databaseExists) {
     await cache.initialise();
     await migrateDatabase();
+    await statusCache.loadAllStatusPages(true);
   }
 
   await initialiseCronJobs();
@@ -54,12 +56,9 @@ const init = async () => {
     if (corsList) {
       app.use(cors({ credentials: true, origin: corsList }));
     }
-
-    logger.info('Express', { message: 'Serving production static files' });
-    app.use(express.static(path.join(process.cwd(), 'dist')));
   }
 
-  app.get('/api/status', (req, res) => {
+  app.get('/api/ping', (req, res) => {
     return res.status(200).send('Everything looks good :D');
   });
 
@@ -69,14 +68,19 @@ const init = async () => {
     });
   }
 
-  logger.info('Express', { message: 'Initialising routes' });
+  logger.notice('Express', { message: 'Initialising routes' });
   initialiseRoutes(app);
+
+  if (process.env.NODE_ENV === 'production') {
+    logger.notice('Express', { message: 'Serving production static files' });
+    app.use(express.static(path.join(process.cwd(), 'dist')));
+  }
 
   if (
     process.env.NODE_ENV === 'production' ||
     process.env.NODE_ENV === 'test'
   ) {
-    logger.info('Express', { message: 'Serving production static files' });
+    logger.notice('Express', { message: 'Serving production static files' });
     app.get('*', function (request, response) {
       response.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
     });
@@ -85,7 +89,7 @@ const init = async () => {
   // Start the server
   const server_port = port || 2308;
   app.listen(server_port, () => {
-    logger.info('Express', {
+    logger.notice('Express', {
       message: `Server is running on port ${server_port}`,
     });
   });

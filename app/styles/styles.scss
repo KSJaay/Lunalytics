@@ -14,7 +14,7 @@ body {
   line-height: 1.5;
   color: var(--font-color);
   background-color: var(--accent-800);
-  overflow: hidden;
+
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -107,54 +107,54 @@ body {
 
 .mobile-hidden {
   @include mobile {
-    display: none;
+    display: none !important;
   }
 }
 
 .tablet-hidden {
   @include tablet {
-    display: none;
+    display: none !important;
   }
 }
 
 .laptop-hidden {
   @include laptop {
-    display: none;
+    display: none !important;
   }
 }
 
 .desktop-hidden {
   @include desktop {
-    display: none;
+    display: none !important;
   }
 }
 
 .mobile-shown {
-  display: none;
+  display: none !important;
 
   @include mobile {
-    display: flex;
+    display: flex !important;
   }
 }
 
 .tablet-shown {
-  display: none;
+  display: none !important;
 
   @include tablet {
-    display: flex;
+    display: flex !important;
   }
 }
 
 .laptop-shown {
   @include laptop {
-    display: none;
+    display: none !important;
   }
 }
 
 .desktop-shown {
-  display: none;
+  display: none !important;
 
   @include desktop {
-    display: flex;
+    display: flex !important;
   }
 }

@@ -68,7 +68,7 @@ const StatusConfigurePreview = () => {
     if (statusPreviewContainer) {
       statusPreviewContainer.scrollTo(0, 0, { behavior: 'smooth' });
     }
-  }, []);
+  }, [font, theme, headerBackground, background, textColor, highlight]);
 
   return (
     <>

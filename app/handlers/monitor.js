@@ -66,8 +66,6 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
     toast.success(`Monitor been ${isEdit ? 'added' : 'edited'} successfully`);
     return closeModal();
   } catch (error) {
-    console.log(error);
-
     if (error.response?.status === 422) {
       return toast.error(error.response.data);
     }

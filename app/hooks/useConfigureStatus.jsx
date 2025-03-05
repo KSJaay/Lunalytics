@@ -1,10 +1,10 @@
 import { useContext, createContext, useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import { defaultStatusComponents } from '../constant/status';
 import {
-  defaultStatusComponents,
   defaultStatusValues,
   statusComponents,
-} from '../constant/status';
+} from '../../shared/constants/status';
 
 const ConfigureStatusContext = createContext();
 export const ConfigureStatusProvider = ConfigureStatusContext.Provider;

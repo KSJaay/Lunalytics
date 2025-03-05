@@ -21,7 +21,6 @@ const RegisterVerify = () => {
 
       return navigate('/home');
     } catch (error) {
-      console.log(error);
       toast.error('Something went wrong while verifying your account.');
     }
   };

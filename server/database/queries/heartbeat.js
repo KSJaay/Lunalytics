@@ -30,44 +30,35 @@ export const fetchDailyHeartbeats = async (monitorId) => {
     .andWhere('date', '>', date)
     .orderBy('date', 'desc');
 
-  // get the first heartbeat of the day
-  const firstHeartbeat = heartbeats[heartbeats.length - 1] || {};
-  let firstHeartbeatDate =
-    new Date(firstHeartbeat.date).getTime() || Date.now();
-  // next 5th minute
-  let nextHeartbeat =
-    firstHeartbeatDate - (firstHeartbeatDate % 300000) + 300000;
-  const currentDate = Date.now();
-  const lastFifthMinute = currentDate - (currentDate % 300000);
+  const bucket = {};
 
-  const dailyHeartbeats = [];
+  heartbeats.forEach((heartbeat) => {
+    const heartbeatDate = new Date(heartbeat.date).getTime();
+    const nearestFifthMinute = heartbeatDate - (heartbeatDate % 300000);
 
-  while (nextHeartbeat < lastFifthMinute) {
-    const date = nextHeartbeat - 300000;
-    const filteredHeartbeats = heartbeats.filter(
-      (h) =>
-        new Date(h.date).getTime() >= date &&
-        new Date(h.date).getTime() < nextHeartbeat
-    );
-
-    if (filteredHeartbeats.length) {
-      const averageLatency = Math.round(
-        filteredHeartbeats.reduce((acc, curr) => acc + curr.latency, 0) /
-          filteredHeartbeats.length
-      );
-
-      // Add the first heartbeat of the day
-      dailyHeartbeats.unshift({
-        date: nextHeartbeat - (nextHeartbeat % 300000),
-        status: filteredHeartbeats[0].status,
-        latency: averageLatency,
-      });
+    if (!bucket[nearestFifthMinute]) {
+      bucket[nearestFifthMinute] = {
+        date: nearestFifthMinute,
+        status: heartbeat.status,
+        latency: heartbeat.latency,
+        count: 1,
+      };
     }
 
-    nextHeartbeat += 300000;
-  }
+    bucket[nearestFifthMinute].count++;
+    bucket[nearestFifthMinute].latency =
+      bucket[nearestFifthMinute].latency + heartbeat.latency;
+  });
 
-  return dailyHeartbeats;
+  return Object.keys(bucket).map((key) => {
+    const heartbeat = bucket[key];
+
+    return {
+      date: new Date(heartbeat.date).toISOString(),
+      status: heartbeat.status,
+      latency: Math.round(heartbeat.latency / heartbeat.count),
+    };
+  });
 };
 
 export const fetchHourlyHeartbeats = async (monitorId, limit = 720) => {

@@ -3,7 +3,7 @@ const router = express.Router();
 
 import emailExistsMiddleware from '../middleware/auth/emailExists.js';
 import { register, login, logout, setup } from '../middleware/auth/index.js';
-import setupExistsMiddleware from '../middleware/auth/setupExists.js';
+import setupExistsMiddleware from '../middleware/setupExists.js';
 
 router.post('/user/exists', emailExistsMiddleware);
 

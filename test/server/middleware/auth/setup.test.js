@@ -8,7 +8,7 @@ import {
   registerUser,
 } from '../../../../server/database/queries/user';
 import config from '../../../../server/utils/config';
-import setupExistsMiddleware from '../../../../server/middleware/auth/setupExists';
+import setupExistsMiddleware from '../../../../server/middleware/setupExists';
 import setupMiddleware from '../../../../server/middleware/auth/setup';
 import setupValidators from '../../../../shared/validators/setup';
 
@@ -42,6 +42,7 @@ describe('Setup - Middleware', () => {
 
   let fakeRequest;
   let fakeResponse;
+  let fakeNext;
   let builders;
 
   beforeEach(() => {
@@ -61,6 +62,7 @@ describe('Setup - Middleware', () => {
 
     fakeRequest = createRequest();
     fakeResponse = createResponse();
+    fakeNext = vi.fn();
 
     fakeRequest.body = {
       email: 'KSJaay@lunalytics.xyz',
@@ -69,41 +71,34 @@ describe('Setup - Middleware', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
 
   describe('GET - /setup/exists', () => {
     it('should return ownerExists: false if database name is not set', async () => {
-      const fakeRequest = createRequest();
-      const fakeResponse = createResponse();
-
       config.get = vi.fn().mockReturnValue(null);
-      const spy = vi.spyOn(fakeResponse, 'send');
+      const spy = vi.spyOn(fakeResponse, 'redirect');
 
       await setupExistsMiddleware(fakeRequest, fakeResponse);
 
-      expect(spy).toHaveBeenCalledWith({ ownerExists: false });
+      expect(spy).toHaveBeenCalledWith('/setup');
     });
 
     it('should return ownerExists: false if database name is set but owner does not exist', async () => {
       ownerExists = vi.fn().mockReturnValue(false);
 
-      const spy = vi.spyOn(fakeResponse, 'send');
+      const spy = vi.spyOn(fakeResponse, 'redirect');
       await setupExistsMiddleware(fakeRequest, fakeResponse);
 
-      expect(spy).toHaveBeenCalledWith({ ownerExists: false });
+      expect(spy).toHaveBeenCalledWith('/setup');
     });
 
     it('should return ownerExists: true if owner exists in database', async () => {
-      const fakeRequest = createRequest();
-      const fakeResponse = createResponse();
-
       config.get = vi.fn().mockReturnValue({ name: 'test' });
-      const spy = vi.spyOn(fakeResponse, 'send');
 
-      await setupExistsMiddleware(fakeRequest, fakeResponse);
+      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
 
-      expect(spy).toHaveBeenCalledWith({ ownerExists: true });
+      expect(fakeNext).toHaveBeenCalled();
     });
   });
 

@@ -1,9 +1,15 @@
-function checkObjectAgainstSchema(object, schema) {
+import { ObjectSchemaValidatorError } from './errors.js';
+
+function checkObjectAgainstSchema(object, schema, fullKey = '') {
   for (const key in object) {
     // If key doesn't exist then throw an error
 
+    const nextFullKey = !fullKey ? key : `${fullKey}.${key}`;
+
     if (!schema?.hasOwnProperty(key)) {
-      throw new Error('Invalid key provided: ' + key);
+      throw new ObjectSchemaValidatorError(
+        'Invalid key provided: ' + nextFullKey
+      );
     } else {
       const requirements = schema[key];
       const data = object[key];
@@ -12,20 +18,55 @@ function checkObjectAgainstSchema(object, schema) {
         if (Array.isArray(data)) {
           if (!requirements._keys) {
             if (requirements._validate && !requirements._validate(data)) {
-              throw new Error('Unable to validate key: ' + key);
+              throw new ObjectSchemaValidatorError(
+                'Unable to validate key: ' + nextFullKey
+              );
             }
           } else {
-            checkArrayAgainstSchema(data, requirements._keys);
+            if (requirements._strictMatch) {
+              const schemaKeys = Object.keys(requirements._keys);
+
+              data.forEach((item) => {
+                const dataKeys = Object.keys(item);
+
+                schemaKeys.forEach((key) => {
+                  if (!dataKeys.includes(key)) {
+                    throw new ObjectSchemaValidatorError(
+                      'Missing key: ' + nextFullKey
+                    );
+                  }
+                });
+              });
+            }
+
+            checkArrayAgainstSchema(data, requirements._keys, nextFullKey);
           }
         } else {
-          checkObjectAgainstSchema(data, requirements._keys);
+          if (requirements._strictMatch) {
+            const schemaKeys = Object.keys(requirements._keys);
+            const dataKeys = Object.keys(data);
+
+            schemaKeys.forEach((key) => {
+              if (!dataKeys.includes(key)) {
+                throw new ObjectSchemaValidatorError(
+                  'Missing key: ' + nextFullKey
+                );
+              }
+            });
+          }
+
+          checkObjectAgainstSchema(data, requirements._keys, nextFullKey);
         }
       } else if (typeof data === requirements._type) {
         if (requirements._validate && !requirements._validate(data)) {
-          throw new Error('Unable to validate key: ' + key);
+          throw new ObjectSchemaValidatorError(
+            'Unable to validate key: ' + nextFullKey
+          );
         }
       } else {
-        throw new Error('Invalid key type: ' + key);
+        throw new ObjectSchemaValidatorError(
+          'Invalid key type: ' + nextFullKey
+        );
       }
     }
   }
@@ -33,8 +74,10 @@ function checkObjectAgainstSchema(object, schema) {
   return true;
 }
 
-function checkArrayAgainstSchema(objArr, schema) {
-  return objArr.map((obj) => checkObjectAgainstSchema(obj, schema));
+function checkArrayAgainstSchema(objArr, schema, fullKey) {
+  return objArr.map((obj, index) =>
+    checkObjectAgainstSchema(obj, schema, fullKey + `[${index}]`)
+  );
 }
 
 export { checkArrayAgainstSchema, checkObjectAgainstSchema };

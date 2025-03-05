@@ -5,7 +5,8 @@ import 'winston-daily-rotate-file';
 const buildLogger = () => {
   const isProduction = process.env.NODE_ENV === 'production';
 
-  const levels = { error: 0, warn: 1, info: 2, notice: 3, debug: 4 };
+  const levels = { error: 0, warn: 1, notice: 2, info: 3, debug: 4 };
+  const level = isProduction ? 'notice' : 'debug';
 
   const colors = {
     error: 'red',
@@ -30,18 +31,18 @@ const buildLogger = () => {
     format: timestampFormat,
     defaultMeta: { service: 'bot' },
     levels,
+    level,
   });
 
-  if (!isProduction) {
-    const colorize = new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize({ colors }),
-        winston.format.simple()
-      ),
-    });
+  const colorize = new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize({ colors }),
+      winston.format.simple()
+    ),
+    level,
+  });
 
-    winLogger.add(colorize);
-  }
+  winLogger.add(colorize);
 
   const transporter = new winston.transports.DailyRotateFile({
     filename: path.join(process.cwd(), `/logs/log-%DATE%.log`),
@@ -50,20 +51,12 @@ const buildLogger = () => {
     zippedArchive: true,
     maxFiles: 7,
     maxSize: '50m',
+    level,
   });
 
   winLogger.add(transporter);
 
-  return {
-    error: (message, data = {}) => winLogger.error(message, data),
-    warn: (message, data = {}) =>
-      isProduction ? null : winLogger.warn(message, data),
-    info: (message, data = {}) =>
-      isProduction ? null : winLogger.info(message, data),
-    notice: (message, data = {}) => winLogger.notice(message, data),
-    debug: (message, data = {}) =>
-      isProduction ? null : winLogger.debug(message, data),
-  };
+  return winLogger;
 };
 
 const logger = buildLogger();

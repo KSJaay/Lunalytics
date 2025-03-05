@@ -39,7 +39,6 @@ const SetupForm = () => {
           return setErrors(error?.response?.data);
         }
 
-        console.log(error);
         return toast.error(
           'Error occurred while creating user and setting up configuration.'
         );

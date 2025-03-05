@@ -20,6 +20,7 @@ const GlobalLayout = ({ children }) => {
     globalStore: { setMonitors, setTimeouts },
     userStore: { setUser },
     notificationStore: { setNotifications },
+    statusStore: { setStatusPages },
   } = useContextStore();
 
   const navigate = useNavigate();
@@ -29,23 +30,18 @@ const GlobalLayout = ({ children }) => {
   useEffect(() => {
     const fetchMontiors = async () => {
       try {
-        const query = await createGetRequest('/auth/setup/exists');
-
-        if (!query.data?.ownerExists) {
-          return navigate('/setup');
-        }
-
         const user = await createGetRequest('/api/user');
         const monitors = await createGetRequest('/api/user/monitors');
         const notifications = await createGetRequest('/api/notifications');
+        const statusPages = await createGetRequest('/api/status-pages');
         const data = monitors?.data || [];
 
         setUser(user?.data);
         setMonitors(data);
         setTimeouts(data, fetchMonitorById);
         setNotifications(notifications?.data || []);
+        setStatusPages(statusPages?.data || []);
       } catch (error) {
-        console.log(error);
         if (error.response?.status === 401) {
           return navigate('/login');
         }

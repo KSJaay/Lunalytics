@@ -70,3 +70,9 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   cert: !cert?.isValid ? cert : cleanCertificate(cert),
   heartbeats,
 });
+
+export const cleanMonitorForStatusPage = (monitor) => ({
+  monitorId: monitor.monitorId,
+  name: monitor.name,
+  url: monitor.url,
+});

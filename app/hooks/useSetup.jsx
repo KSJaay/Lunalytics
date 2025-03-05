@@ -21,7 +21,7 @@ export const useSetup = (
       databaseName: 'lunalytics',
       websiteUrl: '',
       migrationType: 'automatic',
-      retentionPeriod: '6m', 
+      retentionPeriod: '6m',
     },
     errors: {},
   }
@@ -69,8 +69,6 @@ export const useSetup = (
         const isBasic = page.name === 'type' ? 'basic' : 'advanced';
         await preSumbit(isBasic, values.inputs);
       } catch (error) {
-        console.log(error);
-
         if (error?.status === 400 && error?.response?.data) {
           return setErrors(error?.response?.data);
         }

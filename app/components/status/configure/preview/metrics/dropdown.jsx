@@ -9,13 +9,22 @@ import StatusPageMetricsBasicGraph from './graph/basic';
 import useDropdown from '../../../../../hooks/useDropdown';
 import { defaultHeartbeats } from '../../../../../constant/status';
 
-const StatusPageMetricsDropdown = ({ monitors, title, showName, showPing }) => {
+const StatusPageMetricsDropdown = ({
+  monitors,
+  title,
+  showName,
+  showPing,
+  heartbeats,
+}) => {
   const { dropdownIsOpen, toggleDropdown, selectedId, handleDropdownSelect } =
     useDropdown(true, monitors[0]?.id);
 
   if (!monitors[0]) return null;
 
   const activeMonitor = monitors.find((monitor) => monitor.id === selectedId);
+  const activeHeartbeats = heartbeats
+    ? heartbeats[selectedId]
+    : defaultHeartbeats;
 
   return (
     <div className="status-page-metrics-container">
@@ -62,7 +71,7 @@ const StatusPageMetricsDropdown = ({ monitors, title, showName, showPing }) => {
         <StatusPageMetricsBasicGraph
           title={showName ? activeMonitor.title : false}
           showPing={showPing}
-          heartbeats={defaultHeartbeats}
+          heartbeats={activeHeartbeats}
         />
       </div>
     </div>
@@ -76,6 +85,7 @@ StatusPageMetricsDropdown.propTypes = {
   title: PropTypes.string.isRequired,
   showName: PropTypes.bool.isRequired,
   showPing: PropTypes.bool.isRequired,
+  heartbeats: PropTypes.object,
 };
 
 export default StatusPageMetricsDropdown;
