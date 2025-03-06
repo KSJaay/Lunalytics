@@ -21,7 +21,7 @@ const MemberDeleteModal = ({ member, onClose }) => {
 
       toast.success('User has been removed successfully.');
       onClose();
-    } catch (_error) {
+    } catch {
       toast.error("Error declining user's request.");
     }
   };

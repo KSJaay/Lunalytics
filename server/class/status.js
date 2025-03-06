@@ -3,7 +3,7 @@ import { defaultStatusValues } from '../../shared/constants/status.js';
 const parseJson = (obj, isArray = false) => {
   try {
     return JSON.parse(obj);
-  } catch (e) {
+  } catch {
     return isArray ? [] : {};
   }
 };

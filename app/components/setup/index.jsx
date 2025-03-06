@@ -68,8 +68,8 @@ const SetupForm = () => {
           if (type === 'text' || type === 'password') {
             return (
               <TextInput
-                {...input}
                 key={id}
+                {...input}
                 error={errors[id]}
                 onChange={handleInput}
                 value={inputs[id] || ''}

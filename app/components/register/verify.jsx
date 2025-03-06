@@ -20,7 +20,7 @@ const RegisterVerify = () => {
       }
 
       return navigate('/home');
-    } catch (_error) {
+    } catch {
       toast.error('Something went wrong while verifying your account.');
     }
   };

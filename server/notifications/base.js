@@ -1,7 +1,7 @@
 const parseErrorData = (data) => {
   try {
     JSON.stringify(data);
-  } catch (error) {
+  } catch {
     return data;
   }
 };

@@ -55,13 +55,13 @@ const SettingsAccount = () => {
 
       <span className="mobile-hidden">
         {accountItems.map((item) => (
-          <SettingsAccountDesktopItem {...item} key={item.title} />
+          <SettingsAccountDesktopItem key={item.title} {...item} />
         ))}
       </span>
 
       <span className="settings-account-mobile-container mobile-shown">
         {accountItems.map((item) => (
-          <SettingsAccountMobileItem {...item} key={item.title} />
+          <SettingsAccountMobileItem key={item.title} {...item} />
         ))}
       </span>
     </div>

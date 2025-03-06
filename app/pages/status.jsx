@@ -55,7 +55,7 @@ const StatusPage = ({ id }) => {
         });
 
         setStatusPage(statusPages?.data);
-      } catch (_error) {
+      } catch {
         navigate('/error');
       }
     };

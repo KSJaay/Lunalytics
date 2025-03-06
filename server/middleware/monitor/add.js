@@ -16,7 +16,7 @@ const stringifyJson = (obj) => {
     }
 
     return JSON.stringify(obj);
-  } catch (e) {
+  } catch {
     return '{}';
   }
 };

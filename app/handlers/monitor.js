@@ -15,7 +15,7 @@ const parseJson = (str) => {
     }
 
     return {};
-  } catch (_e) {
+  } catch {
     return {};
   }
 };

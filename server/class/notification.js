@@ -1,7 +1,7 @@
 const parseJson = (str) => {
   try {
     return JSON.parse(str);
-  } catch (e) {
+  } catch {
     return str;
   }
 };
@@ -9,7 +9,7 @@ const parseJson = (str) => {
 const stringifyJson = (obj) => {
   try {
     return JSON.stringify(obj);
-  } catch (e) {
+  } catch {
     return null;
   }
 };
