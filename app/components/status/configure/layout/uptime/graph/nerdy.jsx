@@ -24,7 +24,11 @@ const statusAndText = {
   },
 };
 
-const StatusUptimeNerdyGraph = ({ monitor = {}, indicator }) => {
+const StatusUptimeNerdyGraph = ({
+  monitor = {},
+  indicator,
+  // incidents = {},
+}) => {
   const iconOrText =
     statusAndText[indicator][monitor.status] ||
     statusAndText[indicator].Operational;
@@ -42,9 +46,18 @@ const StatusUptimeNerdyGraph = ({ monitor = {}, indicator }) => {
       <div
         className={`status-uptime-nerdy-graph-pills-container ${monitor.status}`}
       >
-        {Array.from({ length: 90 }).map((_, i) => (
-          <div key={i}></div>
-        ))}
+        {Array.from({ length: 90 }).map((_, i) => {
+          const date = new Date();
+          date.setDate(date.getDate() - (90 - (i + 1)));
+          // const dateString = date.toISOString().split('T')[0];
+
+          const statusColor =
+            date.getTime() < new Date(monitor.createdAt).getTime()
+              ? 'gray'
+              : 'Operational';
+
+          return <div key={i} className={statusColor}></div>;
+        })}
       </div>
       <div className="status-uptime-nerdy-graph-footer">
         <div>90 days ago</div>

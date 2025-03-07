@@ -38,7 +38,7 @@ const editStatusPageMiddleware = async (request, response) => {
 
     const statusPage = cleanStatusPage(query);
 
-    statusCache.updateStatusPage(statusPage);
+    await statusCache.updateStatusPage(statusPage);
 
     response.status(200).send({
       message: 'Status page created successfully!',

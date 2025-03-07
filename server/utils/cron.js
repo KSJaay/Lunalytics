@@ -13,11 +13,6 @@ import config from './config.js';
 import { stringToMs } from '../../shared/utils/ms.js';
 import statusCache from '../cache/status.js';
 
-// fetch all monitors
-// fetch only heartbeats that are up for each monitor
-// get the average response time for each monitor
-// create a new record in the database
-
 async function initialiseCronJobs() {
   logger.info('Cron', { message: 'Initialising cron jobs' });
 
@@ -26,6 +21,9 @@ async function initialiseCronJobs() {
     '*/5 * * * *',
     async function () {
       try {
+        logger.info('Cron', {
+          message: 'Loading all status pages',
+        });
         await statusCache.loadAllStatusPages();
       } catch (error) {
         logger.error('Cron - Updating status page', {

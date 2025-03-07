@@ -1,3 +1,4 @@
+import statusCache from '../../cache/status.js';
 import { deleteStatusPage } from '../../database/queries/status.js';
 import { handleError } from '../../utils/errors.js';
 
@@ -10,6 +11,7 @@ const deleteStatusPageMiddleware = async (request, response) => {
     }
 
     await deleteStatusPage(statusPageId);
+    statusCache.deleteStatusPage(statusPageId);
 
     response.status(200).send({
       message: 'Status page deleted successfully!',

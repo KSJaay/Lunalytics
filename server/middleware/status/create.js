@@ -8,6 +8,7 @@ import { createStatusPage } from '../../database/queries/status.js';
 import validateStatusLayout from '../../../shared/validators/status/layout.js';
 import validateStatusSettings from '../../../shared/validators/status/settings.js';
 import { cleanStatusPage } from '../../class/status.js';
+import statusCache from '../../cache/status.js';
 
 const createStatusPageMiddleware = async (request, response) => {
   const { settings, layout } = request.body;
@@ -30,6 +31,8 @@ const createStatusPageMiddleware = async (request, response) => {
     const user = await userExists(access_token);
 
     const query = await createStatusPage(settings, layout, user);
+
+    await statusCache.addNewStatusPage(cleanStatusPage(query));
 
     response.status(200).send({
       message: 'Status page created successfully!',

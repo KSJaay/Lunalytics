@@ -18,7 +18,7 @@ import { toast } from 'react-toastify';
 const StatusPageTable = ({ search }) => {
   const {
     modalStore: { openModal, closeModal },
-    statusStore: { allStatusPages },
+    statusStore: { allStatusPages, deleteStatusPage },
   } = useContextStore();
 
   const navigate = useNavigate();
@@ -47,7 +47,8 @@ const StatusPageTable = ({ search }) => {
     : allStatusPages;
 
   const handleDelete = async (statusPageId) => {
-    await createPostRequest('/api/status-page/delete', { statusPageId });
+    await createPostRequest('/api/status-pages/delete', { statusPageId });
+    deleteStatusPage(statusPageId);
     toast.success('Status page deleted successfully!');
     navigate('/status-pages');
   };

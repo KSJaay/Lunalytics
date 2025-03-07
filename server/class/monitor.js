@@ -45,6 +45,7 @@ export const cleanPartialMonitor = (monitor) => ({
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
   showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
+  createdAt: monitor.createdAt,
 });
 
 export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
@@ -67,6 +68,7 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
   showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
+  createdAt: monitor.createdAt,
   cert: !cert?.isValid ? cert : cleanCertificate(cert),
   heartbeats,
 });
@@ -75,4 +77,5 @@ export const cleanMonitorForStatusPage = (monitor) => ({
   monitorId: monitor.monitorId,
   name: monitor.name,
   url: monitor.url,
+  createdAt: monitor.createdAt,
 });

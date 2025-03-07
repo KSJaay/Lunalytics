@@ -6,8 +6,6 @@ const setupExistsMiddleware = async (request, response, next) => {
   try {
     const databaseName = config.get('database')?.name;
 
-    console.log(databaseName);
-
     if (!databaseName) {
       return response.redirect('/setup');
     }

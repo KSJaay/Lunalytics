@@ -159,6 +159,26 @@
     &:last-child {
       border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
     }
+
+    &.Operational {
+      background-color: var(--green-700);
+    }
+
+    &.Maintenance {
+      background-color: var(--blue-700);
+    }
+
+    &.Incident {
+      background-color: var(--yellow-700);
+    }
+
+    &.Outage {
+      background-color: var(--red-700);
+    }
+
+    &.gray {
+      background-color: var(--accent-700);
+    }
   }
 }
 
@@ -265,6 +285,26 @@
 
     &:last-child {
       border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    }
+
+    &.Operational {
+      background-color: var(--green-700);
+    }
+
+    &.Maintenance {
+      background-color: var(--blue-700);
+    }
+
+    &.Incident {
+      background-color: var(--yellow-700);
+    }
+
+    &.Outage {
+      background-color: var(--red-700);
+    }
+
+    &.gray {
+      background-color: var(--accent-600);
     }
   }
 }

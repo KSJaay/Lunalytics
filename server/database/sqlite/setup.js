@@ -119,6 +119,7 @@ export class SQLite {
         table.string('notificationType').defaultTo('All');
         table.string('email').notNullable();
         table.boolean('paused').defaultTo(false);
+        table.datetime('createdAt');
 
         table.index('monitorId');
       });

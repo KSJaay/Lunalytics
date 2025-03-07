@@ -10,9 +10,11 @@ const monitorExists = async (monitorId) => {
 const createMonitor = async (monitor) => {
   const monitorId = randomId();
 
+  const createdAt = new Date().toISOString();
+
   // insert and return row
   const data = await SQLite.client('monitor')
-    .insert({ ...monitor, monitorId })
+    .insert({ ...monitor, createdAt, monitorId })
     .returning('*');
 
   return data[0];

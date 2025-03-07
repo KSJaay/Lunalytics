@@ -14,6 +14,7 @@ const StatusPageUptime = ({
   graphType = 'Basic',
   statusIndicator = 'Text',
   title = '',
+  incidents = {},
 }) => {
   const graphTitle = useMemo(() => title?.trim(), [title]);
 
@@ -28,12 +29,15 @@ const StatusPageUptime = ({
         {monitors.map((monitor) => {
           if (!monitor) return null;
 
+          const monitorIncidents = incidents[monitor.monitorId] || [];
+
           if (graphType === 'Pretty') {
             return (
               <StatusUptimePrettyGraph
                 key={monitor.monitorId}
                 monitor={monitor}
                 indicator={statusIndicator}
+                incidents={monitorIncidents}
               />
             );
           }
@@ -68,6 +72,7 @@ StatusPageUptime.propTypes = {
   graphType: PropTypes.string.isRequired,
   statusIndicator: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  incidents: PropTypes.object.isRequired,
 };
 
 export default StatusPageUptime;

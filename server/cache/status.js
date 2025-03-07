@@ -8,6 +8,7 @@ import {
   fetchAllStatusPages,
   fetchIncidentsUsindIdArray,
 } from '../database/queries/status.js';
+import { getMonitorIds, hasAutoAdd } from '../utils/status.js';
 
 class Status {
   constructor() {
@@ -20,44 +21,17 @@ class Status {
   async loadAllStatusPages(isInitialLoad = false) {
     const statusPages = await fetchAllStatusPages();
 
-    const autoAddExists = statusPages.some((statusPage) => {
-      return statusPage.layout.some(
-        (item) =>
-          (item.type === 'metrics' && item.autoAdd) ||
-          (item.type === 'uptime' && item.autoAdd)
-      );
-    });
-
-    if (autoAddExists) {
+    if (hasAutoAdd(statusPages)) {
       const monitors = await fetchAllMonitors();
 
       for (const monitor of monitors) {
-        const heartbeats = await fetchDailyHeartbeats(monitor.monitorId);
-        this.heartbeats.set(monitor.monitorId, heartbeats);
-        this.monitors.set(
-          monitor.monitorId,
-          cleanMonitorForStatusPage(monitor)
-        );
+        await this.loadMonitorData(monitor.monitorId, monitor);
       }
     } else {
-      const monitorIds = [];
-
-      for (const statusPage of statusPages) {
-        statusPage.layout.forEach((item) => {
-          if (item.monitors) {
-            item.monitors.forEach((value) => {
-              monitorIds.push(value?.id || value);
-            });
-          }
-        });
-      }
+      const monitorIds = getMonitorIds(statusPages);
 
       for (const monitorId of monitorIds) {
-        const heartbeats = await fetchDailyHeartbeats(monitorId);
-        const monitor = await monitorExists(monitorId);
-
-        this.heartbeats.set(monitorId, heartbeats);
-        this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));
+        await this.loadMonitorData(monitorId);
       }
     }
 
@@ -77,8 +51,72 @@ class Status {
     }
   }
 
-  updateStatusPage(statusPage) {
+  async loadMonitorData(monitorId, monitor) {
+    if (!monitor) {
+      const monitor = await monitorExists(monitorId);
+      this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));
+    } else {
+      this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));
+    }
+
+    const heartbeats = await fetchDailyHeartbeats(monitorId);
+    this.heartbeats.set(monitorId, heartbeats);
+  }
+
+  async updateStatusPage(statusPage) {
+    if (hasAutoAdd(statusPage)) {
+      const allMonitors = await fetchAllMonitors();
+
+      for (const monitor of allMonitors) {
+        if (this.monitors.has(monitor.monitorId)) {
+          continue;
+        }
+
+        await this.loadMonitorData(monitor.monitorId, monitor);
+      }
+    } else {
+      const monitorIds = getMonitorIds(statusPage);
+
+      for (const monitorId of monitorIds) {
+        if (this.monitors.has(monitorId)) {
+          continue;
+        }
+
+        await this.loadMonitorData(monitorId);
+      }
+    }
+
     this.statusPages.set(statusPage.statusId, statusPage);
+  }
+
+  async addNewStatusPage(statusPage) {
+    if (hasAutoAdd(statusPage)) {
+      const allMonitors = await fetchAllMonitors();
+
+      for (const monitor of allMonitors) {
+        if (this.monitors.has(monitor.monitorId)) {
+          continue;
+        }
+
+        await this.loadMonitorData(monitor.monitorId, monitor);
+      }
+    } else {
+      const monitorIds = getMonitorIds(statusPage);
+
+      for (const monitorId of monitorIds) {
+        if (this.monitors.has(monitorId)) {
+          continue;
+        }
+
+        await this.loadMonitorData(monitorId);
+      }
+    }
+
+    this.statusPages.set(statusPage.statusId, statusPage);
+  }
+
+  deleteStatusPage(statusId) {
+    this.statusPages.delete(statusId);
   }
 
   fetchStatusPage(statusId) {
@@ -88,29 +126,14 @@ class Status {
       return null;
     }
 
-    const isAutoAdd = statusPage.layout.some((item) => {
-      return (
-        (item.type === 'metrics' && item.autoAdd) ||
-        (item.type === 'uptime' && item.graphType !== 'Basic' && item.autoAdd)
-      );
-    });
-
-    if (isAutoAdd) {
+    if (hasAutoAdd(statusPage)) {
       const monitors = this.monitors.toObject() || {};
       const heartbeats = this.heartbeats.toObject() || {};
       const incidents = this.incidents.toObject() || {};
 
       return { ...statusPage, monitors, incidents, heartbeats };
     } else {
-      const monitorIds = [];
-
-      statusPage.layout.forEach((item) => {
-        if (item.monitors) {
-          item.monitors.forEach((value) => {
-            monitorIds.push(value?.id || value);
-          });
-        }
-      });
+      const monitorIds = getMonitorIds(statusPage);
 
       const monitors = monitorIds.reduce((acc, monitorId) => {
         if (this.monitors.has(monitorId)) {

@@ -1,22 +1,22 @@
 import fs from 'fs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
-import SQLite from '../../../../server/database/sqlite/setup';
-import { setServerSideCookie } from '../../../../shared/utils/cookies';
+import SQLite from '../../../server/database/sqlite/setup';
+import { setServerSideCookie } from '../../../shared/utils/cookies';
 import {
   ownerExists,
   registerUser,
-} from '../../../../server/database/queries/user';
-import config from '../../../../server/utils/config';
-import setupExistsMiddleware from '../../../../server/middleware/setupExists';
-import setupMiddleware from '../../../../server/middleware/auth/setup';
-import setupValidators from '../../../../shared/validators/setup';
+} from '../../../server/database/queries/user';
+import config from '../../../server/utils/config';
+import setupExistsMiddleware from '../../../server/middleware/setupExists';
+import setupMiddleware from '../../../server/middleware/auth/setup';
+import setupValidators from '../../../shared/validators/setup';
 
 vi.mock('fs');
-vi.mock('../../../../server/database/sqlite/setup');
-vi.mock('../../../../server/database/queries/user');
-vi.mock('../../../../shared/utils/cookies');
-vi.mock('../../../../server/utils/config');
+vi.mock('../../../server/database/sqlite/setup');
+vi.mock('../../../server/database/queries/user');
+vi.mock('../../../shared/utils/cookies');
+vi.mock('../../../server/utils/config');
 
 describe('Setup - Middleware', () => {
   const data = {
@@ -55,8 +55,8 @@ describe('Setup - Middleware', () => {
     };
 
     SQLite.client = () => builders;
-    registerUser = vi.fn().mockReturnValue('test');
-    ownerExists = vi.fn().mockReturnValue(true);
+    // registerUser = vi.fn().mockResolvedValue('test');
+    ownerExists = vi.fn().mockResolvedValue(true);
     setServerSideCookie = vi.fn();
     fs.writeFileSync = vi.fn();
 

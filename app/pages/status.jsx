@@ -61,7 +61,7 @@ const StatusPage = ({ id }) => {
     };
 
     fetchStatusPage();
-  }, [statusPageId]);
+  }, [statusPageId, navigate]);
 
   useEffect(() => {
     const styles = [
@@ -76,7 +76,6 @@ const StatusPage = ({ id }) => {
     injectStylesheet('status-configure-layout', `:root {${styles}}`);
   }, [
     statusPageId,
-    injectStylesheet,
     font,
     theme,
     headerBackground,
@@ -149,6 +148,7 @@ const StatusPage = ({ id }) => {
                   graphType={item.graphType}
                   statusIndicator={item.statusIndicator}
                   title={item.title}
+                  incidents={statusPage.incidents}
                 />
               );
             }

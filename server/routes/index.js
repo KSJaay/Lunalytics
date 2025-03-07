@@ -14,14 +14,14 @@ const initialiseRoutes = async (app) => {
   app.use('/auth', authRoutes);
   app.get('/', defaultPageMiddleware);
   app.get('/status/:id', getStatusPageUsingIdMiddleware);
+  // Routes used for fetching public status pages
+  app.use('/api/status', statusApiRoutes);
   app.use(authorization);
   app.use('/api/monitor', monitorRoutes);
   app.use('/api/user', userRoutes);
   app.use('/api/notifications', notificationRoutes);
   // Routes used for configuring status pages
   app.use('/api/status-pages', statusPagesRoutes);
-  // Routes used for fetching public status pages
-  app.use('/api/status', statusApiRoutes);
 };
 
 export default initialiseRoutes;

@@ -12,8 +12,6 @@ const defaultPageMiddleware = async (request, response, next) => {
 
     const parsedStatusPage = cleanStatusPage(statusPage);
 
-    console.log(parsedStatusPage.isPublic);
-
     if (!parsedStatusPage.isPublic) {
       const { access_token } = request.cookies;
 
