@@ -44,7 +44,7 @@ describe('Sign in', () => {
 
       cy.get('[class="auth-button"]').click();
 
-      cy.url().should('eq', 'http://localhost:2308/');
+      cy.url().should('eq', 'http://localhost:2308/home');
     });
   });
 });

@@ -71,7 +71,10 @@ const init = async () => {
   logger.notice('Express', { message: 'Initialising routes' });
   initialiseRoutes(app);
 
-  if (process.env.NODE_ENV === 'production') {
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.NODE_ENV === 'test'
+  ) {
     logger.notice('Express', { message: 'Serving production static files' });
     app.use(express.static(path.join(process.cwd(), 'dist')));
   }
