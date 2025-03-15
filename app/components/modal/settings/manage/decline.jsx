@@ -21,7 +21,7 @@ const MemberDeclineModal = ({ member, onClose }) => {
 
       toast.success('User request declined successfully.');
       onClose();
-    } catch (error) {
+    } catch {
       toast.error("Error declining user's request.");
     }
   };

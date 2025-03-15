@@ -140,8 +140,8 @@ const SetupDatabaseForm = () => {
 
             return (
               <TextInput
-                {...input}
                 key={input.id}
+                {...input}
                 error={errors[input.id]}
                 onChange={handleInput}
                 value={inputs[input.id] || ''}

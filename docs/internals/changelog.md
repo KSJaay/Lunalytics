@@ -1,5 +1,13 @@
 # Previous updates
 
+## 0.8.1
+
+### Updates to React 19 and other packges
+
+### Summary
+
+I've updated a few packages and React to 19.
+
 ## 0.8.0
 
 ### Adds support for status pages

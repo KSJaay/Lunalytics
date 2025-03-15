@@ -39,7 +39,7 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
         );
 
         setTeam(filteredMembers);
-      } catch (error) {
+      } catch {
         toast.error("Couldn't fetch team members");
       }
     };

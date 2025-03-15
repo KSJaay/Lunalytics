@@ -46,7 +46,7 @@ const useRegister = () => {
             },
           }));
         }
-      } catch (error) {
+      } catch {
         return toast.error('Error occurred while checking if email exists.');
       }
     }

@@ -3,7 +3,7 @@ import cleanCertificate from './certificate.js';
 const parseJsonStatus = (str) => {
   try {
     return JSON.parse(str);
-  } catch (e) {
+  } catch {
     return ['200-299'];
   }
 };
@@ -20,7 +20,7 @@ const parseJson = (str) => {
     }
 
     return {};
-  } catch (e) {
+  } catch {
     return {};
   }
 };

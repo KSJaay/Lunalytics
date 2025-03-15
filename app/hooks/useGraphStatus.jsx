@@ -20,7 +20,7 @@ const useGraphStatus = (monitor = {}) => {
         if (query.status === 200) {
           return setStatusHeartbeats(query.data);
         }
-      } catch (error) {
+      } catch {
         toast.error('Failed to fetch monitor heartbeats');
       }
     };
