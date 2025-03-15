@@ -8,11 +8,11 @@ import deleteStatusPageMiddleware from '../middleware/status/delete.js';
 
 const router = express.Router();
 
-router.use(hasEditorPermissions);
-
 router.get('/', getAllStatusPagesMiddleware);
 
 router.get('/id', getUsingIdMiddleware);
+
+router.use(hasEditorPermissions);
 
 router.post('/create', createStatusPageMiddleware);
 
