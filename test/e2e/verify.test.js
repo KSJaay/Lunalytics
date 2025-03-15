@@ -35,7 +35,7 @@ describe('Verify User', () => {
 
       cy.loginUser(`${username}@lunalytics.xyz`, 'testing123');
 
-      cy.url().should('eq', 'http://localhost:2308/');
+      cy.url().should('eq', 'http://localhost:2308/home');
     });
 
     it('Decline member from settings', () => {

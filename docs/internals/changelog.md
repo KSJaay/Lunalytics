@@ -1,5 +1,21 @@
 # Previous updates
 
+## 0.8.0
+
+### Adds support for status pages
+
+### Summary
+
+This has taken way too much time, but status pages are almost ready for release!!! Next update will include incidents and that should complete status pages.
+
+### New features
+
+- Adds support for status pages
+- Changes the default url to `/home` instead of `/`
+  - You will be redirected to `/home` if you try to access `/`
+- Adds support for 8 different status page components, along with various different styles for some components
+- Adds incidents table to the database
+
 ## 0.7.3
 
 ### Cleans up codebase, adds support for headers and body for http monitors

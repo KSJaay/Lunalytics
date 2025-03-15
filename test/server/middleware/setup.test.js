@@ -1,22 +1,22 @@
 import fs from 'fs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
-import SQLite from '../../../../server/database/sqlite/setup';
-import { setServerSideCookie } from '../../../../shared/utils/cookies';
+import SQLite from '../../../server/database/sqlite/setup';
+import { setServerSideCookie } from '../../../shared/utils/cookies';
 import {
   ownerExists,
   registerUser,
-} from '../../../../server/database/queries/user';
-import config from '../../../../server/utils/config';
-import setupExistsMiddleware from '../../../../server/middleware/auth/setupExists';
-import setupMiddleware from '../../../../server/middleware/auth/setup';
-import setupValidators from '../../../../shared/validators/setup';
+} from '../../../server/database/queries/user';
+import config from '../../../server/utils/config';
+import setupExistsMiddleware from '../../../server/middleware/setupExists';
+import setupMiddleware from '../../../server/middleware/auth/setup';
+import setupValidators from '../../../shared/validators/setup';
 
 vi.mock('fs');
-vi.mock('../../../../server/database/sqlite/setup');
-vi.mock('../../../../server/database/queries/user');
-vi.mock('../../../../shared/utils/cookies');
-vi.mock('../../../../server/utils/config');
+vi.mock('../../../server/database/sqlite/setup');
+vi.mock('../../../server/database/queries/user');
+vi.mock('../../../shared/utils/cookies');
+vi.mock('../../../server/utils/config');
 
 describe('Setup - Middleware', () => {
   const data = {
@@ -42,6 +42,7 @@ describe('Setup - Middleware', () => {
 
   let fakeRequest;
   let fakeResponse;
+  let fakeNext;
   let builders;
 
   beforeEach(() => {
@@ -54,13 +55,14 @@ describe('Setup - Middleware', () => {
     };
 
     SQLite.client = () => builders;
-    registerUser = vi.fn().mockReturnValue('test');
-    ownerExists = vi.fn().mockReturnValue(true);
+    // registerUser = vi.fn().mockResolvedValue('test');
+    ownerExists = vi.fn().mockResolvedValue(true);
     setServerSideCookie = vi.fn();
     fs.writeFileSync = vi.fn();
 
     fakeRequest = createRequest();
     fakeResponse = createResponse();
+    fakeNext = vi.fn();
 
     fakeRequest.body = {
       email: 'KSJaay@lunalytics.xyz',
@@ -69,41 +71,34 @@ describe('Setup - Middleware', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.resetAllMocks();
   });
 
   describe('GET - /setup/exists', () => {
     it('should return ownerExists: false if database name is not set', async () => {
-      const fakeRequest = createRequest();
-      const fakeResponse = createResponse();
-
       config.get = vi.fn().mockReturnValue(null);
-      const spy = vi.spyOn(fakeResponse, 'send');
+      const spy = vi.spyOn(fakeResponse, 'redirect');
 
       await setupExistsMiddleware(fakeRequest, fakeResponse);
 
-      expect(spy).toHaveBeenCalledWith({ ownerExists: false });
+      expect(spy).toHaveBeenCalledWith('/setup');
     });
 
     it('should return ownerExists: false if database name is set but owner does not exist', async () => {
       ownerExists = vi.fn().mockReturnValue(false);
 
-      const spy = vi.spyOn(fakeResponse, 'send');
+      const spy = vi.spyOn(fakeResponse, 'redirect');
       await setupExistsMiddleware(fakeRequest, fakeResponse);
 
-      expect(spy).toHaveBeenCalledWith({ ownerExists: false });
+      expect(spy).toHaveBeenCalledWith('/setup');
     });
 
     it('should return ownerExists: true if owner exists in database', async () => {
-      const fakeRequest = createRequest();
-      const fakeResponse = createResponse();
-
       config.get = vi.fn().mockReturnValue({ name: 'test' });
-      const spy = vi.spyOn(fakeResponse, 'send');
 
-      await setupExistsMiddleware(fakeRequest, fakeResponse);
+      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
 
-      expect(spy).toHaveBeenCalledWith({ ownerExists: true });
+      expect(fakeNext).toHaveBeenCalled();
     });
   });
 

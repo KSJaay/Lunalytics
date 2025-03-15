@@ -13,11 +13,6 @@ import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationModalPayload from './payload';
 import * as inputForPlatform from './platform';
 
-// Notification types
-// - Up and running
-// - Application went down
-// - Warning (If the monitor goes down once it shows a warning, else throw error)
-
 const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
   const { inputs, errors, handleInput, handleSubmit } = useNotificationForm(
     values,

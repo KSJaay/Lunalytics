@@ -34,6 +34,7 @@
 .button--blue {
   background-color: var(--blue-700);
   border-color: var(--blue-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--blue-600);
@@ -44,6 +45,7 @@
 .button--cyan {
   background-color: var(--cyan-700);
   border-color: var(--cyan-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--cyan-600);
@@ -54,6 +56,7 @@
 .button--gray {
   background-color: var(--gray-700);
   border-color: var(--gray-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--gray-600);
@@ -64,6 +67,7 @@
 .button--green {
   background-color: var(--green-700);
   border-color: var(--green-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--green-600);
@@ -73,6 +77,7 @@
 .button--pink {
   background-color: var(--pink-700);
   border-color: var(--pink-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--pink-600);
@@ -83,6 +88,7 @@
 .button--primary {
   background-color: var(--primary-700);
   border-color: var(--primary-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--primary-600);
@@ -93,6 +99,7 @@
 .button--purple {
   background-color: var(--purple-700);
   border-color: var(--purple-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--purple-600);
@@ -103,6 +110,7 @@
 .button--red {
   background-color: var(--red-700);
   border-color: var(--red-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--red-600);
@@ -113,6 +121,7 @@
 .button--yellow {
   background-color: var(--yellow-700);
   border-color: var(--yellow-700);
+  color: var(--white);
 
   &:hover {
     background-color: var(--yellow-600);

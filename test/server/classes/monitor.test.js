@@ -1,4 +1,4 @@
-import { it } from 'vitest';
+import { expect, it } from 'vitest';
 import {
   cleanPartialMonitor,
   cleanMonitor,
@@ -9,6 +9,7 @@ describe('Monitor - Class', () => {
     monitorId: '4d048471-9e85-428b-8050-4238f6033478',
     name: 'Lunalytics',
     url: 'https://demo.lunalytics.xyz/api/status',
+    createdAt: '2025-08-23T17:00:00.000Z',
     interval: '30',
     retryInterval: '60',
     requestTimeout: '30',
@@ -42,6 +43,7 @@ describe('Monitor - Class', () => {
       monitorId: '4d048471-9e85-428b-8050-4238f6033478',
       name: 'Lunalytics',
       url: 'https://demo.lunalytics.xyz/api/status',
+      createdAt: '2025-08-23T17:00:00.000Z',
       interval: 30,
       retryInterval: 60,
       requestTimeout: 30,
@@ -72,6 +74,7 @@ describe('Monitor - Class', () => {
       monitorId: '4d048471-9e85-428b-8050-4238f6033478',
       name: 'Lunalytics',
       url: 'https://demo.lunalytics.xyz/api/status',
+      createdAt: '2025-08-23T17:00:00.000Z',
       interval: 30,
       retryInterval: 60,
       requestTimeout: 30,

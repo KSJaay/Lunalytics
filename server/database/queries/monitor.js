@@ -4,15 +4,17 @@ import { timeToMs } from '../../../shared/utils/ms.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 
 const monitorExists = async (monitorId) => {
-  return SQLite.client('monitor').where({ id: monitorId }).first();
+  return SQLite.client('monitor').where({ monitorId }).first();
 };
 
 const createMonitor = async (monitor) => {
   const monitorId = randomId();
 
+  const createdAt = new Date().toISOString();
+
   // insert and return row
   const data = await SQLite.client('monitor')
-    .insert({ ...monitor, monitorId })
+    .insert({ ...monitor, createdAt, monitorId })
     .returning('*');
 
   return data[0];

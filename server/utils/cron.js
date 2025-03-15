@@ -11,14 +11,31 @@ import {
 import { fetchMonitors } from '../database/queries/monitor.js';
 import config from './config.js';
 import { stringToMs } from '../../shared/utils/ms.js';
-
-// fetch all monitors
-// fetch only heartbeats that are up for each monitor
-// get the average response time for each monitor
-// create a new record in the database
+import statusCache from '../cache/status.js';
 
 async function initialiseCronJobs() {
   logger.info('Cron', { message: 'Initialising cron jobs' });
+
+  // Every 5 minutes
+  new CronJob(
+    '*/5 * * * *',
+    async function () {
+      try {
+        logger.info('Cron', {
+          message: 'Loading all status pages',
+        });
+        await statusCache.loadAllStatusPages();
+      } catch (error) {
+        logger.error('Cron - Updating status page', {
+          error: error.message,
+          stack: error.stack,
+        });
+      }
+    },
+    null,
+    true,
+    'Europe/London'
+  );
 
   // Every hour
   new CronJob(
@@ -30,7 +47,7 @@ async function initialiseCronJobs() {
         });
 
         const monitorsList = await fetchMonitors();
-        const monitors = Object.keys(monitorsList);
+        const monitors = monitorsList.map((monitor) => monitor.monitorId);
 
         if (monitors.length === 0) {
           return;

@@ -1,0 +1,77 @@
+@use '../../styles/pxToRem.scss' as *;
+
+// status-page-table > spt
+
+.spt-container {
+  display: flex;
+  flex-direction: column;
+  margin: pxToRem(10) pxToRem(10) 0px pxToRem(10);
+}
+
+// status-page-table-item > spti
+
+.spti {
+  display: flex;
+  align-items: center;
+  gap: pxToRem(12);
+}
+
+.spti-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+
+  div {
+    font-size: var(--font-sm);
+  }
+}
+
+.spti-icon {
+  padding: 10px;
+  background-color: var(--accent-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--primary-700);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.spti-url {
+  color: var(--font-light-color);
+}
+
+.spt-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+
+  div,
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-900);
+    padding: 10px;
+    border-radius: 10px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover svg {
+      color: var(--primary-700);
+    }
+
+    &.bin:hover svg {
+      color: var(--red-700);
+    }
+  }
+}

@@ -1,0 +1,146 @@
+@use '../../../../../styles/pxToRem.scss' as *;
+@use '../../../../../styles/breakpoints.scss' as *;
+// sci > status-configure-incidents
+
+.sci-content {
+  --status-color: var(--green-700);
+
+  &.Operational {
+    --status-color: var(--green-700);
+  }
+
+  &.Maintenance {
+    --status-color: var(--blue-700);
+  }
+
+  &.Incident {
+    --status-color: var(--yellow-700);
+  }
+
+  &.Outage {
+    --status-color: var(--red-700);
+  }
+
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  max-width: var(--status-page-max-width);
+  overflow: hidden;
+  background-color: var(--accent-800);
+}
+
+.sci-title {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  font-size: var(--font-lg);
+  width: 100%;
+  background-color: var(--status-color);
+  padding: pxToRem(24) pxToRem(8);
+
+  &.XS {
+    font-size: var(--font-xs);
+    padding: pxToRem(12) pxToRem(8);
+    gap: pxToRem(4);
+  }
+
+  &.S {
+    font-size: var(--font-sm);
+    padding: pxToRem(16) pxToRem(12);
+    gap: pxToRem(8);
+  }
+
+  &.M {
+    font-size: var(--font-md);
+    padding: pxToRem(24) pxToRem(16);
+    gap: pxToRem(12);
+  }
+
+  &.L {
+    font-size: var(--font-lg);
+    padding: pxToRem(32) pxToRem(16);
+    gap: pxToRem(16);
+  }
+
+  &.XL {
+    font-size: var(--font-xl);
+    padding: pxToRem(40) pxToRem(16);
+    gap: pxToRem(20);
+  }
+
+  &.title-XS {
+    font-size: var(--font-md);
+  }
+
+  &.title-S {
+    font-size: var(--font-lg);
+  }
+
+  &.title-M {
+    font-size: var(--font-2xl);
+  }
+
+  &.title-L {
+    font-size: var(--font-3xl);
+  }
+
+  &.title-XL {
+    font-size: var(--font-4xl);
+  }
+
+  .subtitle {
+    font-weight: 500;
+  }
+}
+
+.sci-list {
+  display: flex;
+  flex-direction: column;
+  gap: pxToRem(16);
+  width: 100%;
+  padding: pxToRem(12);
+}
+
+// status-configure-incidents-list > scil
+.scil-title {
+  font-size: var(--font-md);
+
+  &.Operational {
+    color: var(--green-700);
+  }
+
+  &.Maintenance {
+    color: var(--blue-700);
+  }
+
+  &.Incident {
+    color: var(--yellow-700);
+  }
+
+  &.Outage {
+    color: var(--red-700);
+  }
+}
+
+.scil-description {
+  font-size: var(--font-md);
+  color: var(--font-color);
+}
+
+.scil-timestamp {
+  font-size: var(--font-sm);
+  color: var(--font-light-color);
+}
+
+.status-configure-incidents-options {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+}

@@ -28,12 +28,11 @@ const handleRegister = async (inputs, setErrors, setPage, navigate) => {
     toast.success('You have been successfully registered!');
 
     if (query.status === 201) {
-      return navigate('/');
+      return navigate('/home');
     }
 
     setPage('verify');
   } catch (error) {
-    console.log(error);
     if (error?.response?.data?.message) {
       return setErrors(error?.response?.data?.message);
     }

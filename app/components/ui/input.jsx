@@ -9,6 +9,7 @@ const TextInput = ({
   label,
   id,
   description,
+  shortDescription,
   error,
   iconLeft,
   iconRight,
@@ -27,6 +28,9 @@ const TextInput = ({
           {label}
           {isRequired && <span className="input-required">*</span>}
         </label>
+      )}
+      {shortDescription && (
+        <div className="input-short-description">{shortDescription}</div>
       )}
       <div className="text-input-container">
         {iconLeft && <div className="text-left-icon">{iconLeft}</div>}
@@ -55,6 +59,7 @@ TextInput.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string,
   description: PropTypes.string,
+  shortDescription: PropTypes.string,
   error: PropTypes.string,
   iconLeft: PropTypes.node,
   iconRight: PropTypes.node,

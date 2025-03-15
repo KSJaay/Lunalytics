@@ -24,7 +24,6 @@ const ManageTeam = () => {
 
         setTeam(query.data);
       } catch (error) {
-        console.log(error);
         toast.error("Couldn't fetch team members");
       }
     };

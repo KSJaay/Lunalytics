@@ -33,13 +33,12 @@ const SetupForm = () => {
       try {
         await submitSetup(setErrors, 'advanced', inputs);
 
-        return navigate('/');
+        return navigate('/home');
       } catch (error) {
         if (error?.response?.data) {
           return setErrors(error?.response?.data);
         }
 
-        console.log(error);
         return toast.error(
           'Error occurred while creating user and setting up configuration.'
         );

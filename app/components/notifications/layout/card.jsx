@@ -45,7 +45,6 @@ const NotificationCard = ({ notification = {} }) => {
       deleteNotification(id);
       closeModal();
     } catch (e) {
-      console.log(e);
       closeModal();
       toast.error('Something went wrong! Please try again later.');
     }
@@ -61,7 +60,6 @@ const NotificationCard = ({ notification = {} }) => {
       toggleNotification(id, isEnabled);
       toggleDropdown();
     } catch (e) {
-      console.log(e);
       closeModal();
       toast.error('Something went wrong! Please try again later.');
     }

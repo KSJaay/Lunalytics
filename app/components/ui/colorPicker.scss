@@ -1,0 +1,54 @@
+@use '../../styles/pxToRem.scss' as *;
+
+// color-picker > cp
+
+.cp-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cp-hex {
+  position: absolute;
+  margin-top: pxToRem(4);
+}
+
+.cp-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: pxToRem(50);
+  width: pxToRem(50);
+  margin-top: pxToRem(4);
+  cursor: pointer;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--shadow-sm);
+  border: pxToRem(2) solid var(--accent-700);
+  border-right: none;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.cp-input {
+  width: 100%;
+  height: pxToRem(50);
+  background-color: var(--accent-800);
+  border: none;
+  outline: none;
+  color: var(--font-color);
+  padding: 0 pxToRem(8);
+  font-size: var(--font-md);
+  font-weight: var(--weight-medium);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-top: pxToRem(4);
+  border-color: var(--primary-700);
+  border: pxToRem(2) solid #ffffff00;
+
+  &:focus {
+    border: pxToRem(2) solid var(--primary-700);
+  }
+}

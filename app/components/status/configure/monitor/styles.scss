@@ -1,0 +1,103 @@
+// status-configure-monitor > scm
+
+.scm-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+// status-configure-monitor-options  > scmo
+.scmo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--accent-800);
+  padding: 24px 12px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.scmo-title {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  color: var(--accent-100);
+}
+
+.scmo-buttons {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+// status-configure-monitor-auto-add  > scmaa
+
+.scmaa-container {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--accent-800);
+  padding: 24px 12px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  align-items: center;
+}
+
+.scmaa-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.scmaa-title {
+  font-size: var(--font-md);
+  font-weight: 700;
+}
+.scmaa-subtitle {
+  font-size: var(--font-xs);
+  color: var(--accent-100);
+  max-width: 625px;
+}
+
+// status-configure-monitor-item  > scmi
+
+.scmi-container {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid var(--accent-700);
+  padding: 8px 4px;
+}
+
+.scmi-header {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.scmi-name {
+  font-size: var(--font-xl);
+  font-weight: 700;
+}
+.scmi-url {
+  font-size: var(--font-xs);
+  color: var(--font-light-color);
+}
+
+.scmi-icon {
+  display: flex;
+  align-items: center;
+  padding-right: 4px;
+  cursor: pointer;
+  color: var(--font-light-color);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    color: var(--red-700);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}

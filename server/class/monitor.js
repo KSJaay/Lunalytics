@@ -43,8 +43,9 @@ export const cleanPartialMonitor = (monitor) => ({
   notificationType: monitor.notificationType,
   uptimePercentage: monitor.uptimePercentage,
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
-  showFilters: monitor.showFilters == '1',
+  showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
+  createdAt: monitor.createdAt,
 });
 
 export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
@@ -65,8 +66,16 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   notificationType: monitor.notificationType,
   uptimePercentage: monitor.uptimePercentage,
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
-  showFilters: monitor.showFilters == '1',
+  showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
+  createdAt: monitor.createdAt,
   cert: !cert?.isValid ? cert : cleanCertificate(cert),
   heartbeats,
+});
+
+export const cleanMonitorForStatusPage = (monitor) => ({
+  monitorId: monitor.monitorId,
+  name: monitor.name,
+  url: monitor.url,
+  createdAt: monitor.createdAt,
 });

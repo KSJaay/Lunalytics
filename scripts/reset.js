@@ -11,20 +11,15 @@ const questions = [
 ];
 
 const generatePassword = () => {
-  const numbers = '1234567890';
   const alphaNumeric =
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
   const charLength = alphaNumeric.length;
 
-  var password = '';
-
-  for (let i = 0; i < 12; ++i) {
-    password += alphaNumeric.charAt(Math.floor(Math.random() * charLength));
-  }
-
-  password += numbers.charAt(Math.floor(Math.random() * charLength));
-
-  return password;
+  return (
+    Array.from({ length: 12 })
+      .map(() => alphaNumeric.charAt(Math.floor(Math.random() * charLength)))
+      .join('') + `23`
+  );
 };
 
 inquirer

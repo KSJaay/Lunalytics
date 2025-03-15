@@ -108,7 +108,6 @@ const NotificationReplacers = (
 
     return isString ? updatedText : JSON.parse(updatedText);
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

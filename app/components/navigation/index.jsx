@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import TopNavigation from './top';
 import LeftNavigation from './left';
 
-const Navigation = ({ children, activeUrl = '/' }) => {
+const Navigation = ({ children, activeUrl = '/home' }) => {
   return (
     <div className="navigation-container">
       <TopNavigation />

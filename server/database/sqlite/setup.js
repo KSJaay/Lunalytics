@@ -119,6 +119,7 @@ export class SQLite {
         table.string('notificationType').defaultTo('All');
         table.string('email').notNullable();
         table.boolean('paused').defaultTo(false);
+        table.datetime('createdAt');
 
         table.index('monitorId');
       });
@@ -215,6 +216,47 @@ export class SQLite {
         table.datetime('nextCheck');
 
         table.index('monitorId');
+      });
+    }
+
+    const statusPageExists = await this.client.schema.hasTable('status_page');
+
+    if (!statusPageExists) {
+      await this.client.schema.createTable('status_page', (table) => {
+        table.increments('id');
+        table.string('statusId').notNullable().primary().unique();
+        table.string('statusUrl').notNullable().unique();
+        table.json('settings').notNullable();
+        table.json('layout').notNullable();
+        table.string('email').notNullable();
+        table.datetime('createdAt');
+
+        table.index('statusId');
+        table.index('statusUrl');
+      });
+    }
+
+    await this.client.schema.dropTableIfExists('incident');
+
+    const incidentExists = await this.client.schema.hasTable('incident');
+
+    if (!incidentExists) {
+      await this.client.schema.createTable('incident', (table) => {
+        table.increments('id');
+        table.string('incidentId').notNullable().primary().unique();
+        table.string('title').notNullable();
+        table.json('monitorIds').notNullable();
+        table.json('messages').notNullable(); // Array of messages
+        table.string('status').notNullable(); // Operational, Maintenance, Incident, Outage
+        table.string('email').notNullable();
+        table.datetime('createdAt');
+        table.datetime('completedAt');
+        table.boolean('isClosed').defaultTo(false);
+
+        table.index('incidentId');
+        table.index('createdAt');
+        table.index('completedAt');
+        table.index('isClosed');
       });
     }
 

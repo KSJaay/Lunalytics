@@ -45,7 +45,6 @@ const MemberPermissionsModal = ({ member, onClose }) => {
       toast.success('User permissions updated successfully.');
       onClose();
     } catch (error) {
-      console.log(error);
       if (error.response?.status === 400) {
         return toast.error(
           "You don't have permission to assign this permission."

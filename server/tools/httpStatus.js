@@ -28,7 +28,22 @@ const httpStatusCheck = async (monitor) => {
 
     const latency = Date.now() - startTime;
     const message = `${query.status} - ${query.statusText}`;
-    const isDown = query.status >= 400 ? true : false;
+    let isDown = true;
+
+    for (const status of monitor.valid_status_codes) {
+      const [start, end] = status.split('-').map((s) => parseInt(s));
+
+      if (!end && start === query.status) {
+        isDown = false;
+        break;
+      }
+
+      if (query.status >= start && query.status <= end) {
+        isDown = false;
+        break;
+      }
+    }
+
     const status = query.status;
 
     return {
