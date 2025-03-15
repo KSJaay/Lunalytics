@@ -14,6 +14,10 @@ function checkObjectAgainstSchema(object, schema, fullKey = '') {
       const requirements = schema[key];
       const data = object[key];
 
+      if (requirements._required && typeof data === 'undefined') {
+        throw new ObjectSchemaValidatorError('Key is required: ' + nextFullKey);
+      }
+
       if (requirements._type === 'object' || requirements._type === 'array') {
         if (Array.isArray(data)) {
           if (!requirements._keys) {

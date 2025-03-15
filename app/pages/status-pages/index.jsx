@@ -1,5 +1,3 @@
-import '../../styles/pages/status/styles.scss';
-
 // import dependencies
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
