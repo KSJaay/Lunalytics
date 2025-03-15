@@ -1,10 +1,12 @@
-.status-configure-layout-header-content {
+// sclh - status-configure-layout-header
+
+.sclh-content {
   display: flex;
   gap: 16px;
   justify-content: space-between;
 }
 
-.status-configure-layout-header-item {
+.sclh-item {
   flex: 1;
   border-radius: var(--radius-md);
   border: 1px solid var(--accent-700);
@@ -14,7 +16,6 @@
   min-height: 50px;
 }
 
-// sclh - status-configure-layout-header
 .sclh-status-container {
   display: flex;
   align-items: center;

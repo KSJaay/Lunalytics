@@ -51,22 +51,22 @@ const StatusConfigure = () => {
 
   return (
     <ConfigureStatusProvider value={statusValues}>
-      <div className="status-configure-container">
-        <div className="status-configure-tab">
-          <div className="status-configure-header">
-            <div className="status-configure-header-title">Status Page</div>
-            <div className="status-configure-header-spacer">|</div>
-            <div className="status-configure-header-subtitle">
+      <div className="sc-container">
+        <div className="sc-tab">
+          <div className="sch">
+            <div className="sch-title">Status Page</div>
+            <div className="sch-spacer">|</div>
+            <div className="sch-subtitle">
               Configure a status page to display information about specific
               monitors
             </div>
           </div>
-          <div className="status-configure-header-options-list">
-            <div className="status-configure-header-options-item">
+          <div className="sch-options-list">
+            <div className="sch-options-item">
               {pages.map((page) => (
                 <div
                   key={page}
-                  className={`status-configure-tab-text${
+                  className={`sc-tab-text${
                     page === activePage ? ' active' : ''
                   }`}
                   onClick={() => setActivePage(page)}
@@ -75,7 +75,7 @@ const StatusConfigure = () => {
                 </div>
               ))}
             </div>
-            <div className="status-configure-header-buttons">
+            <div className="sch-buttons">
               <div>
                 <Button
                   outline="red"
@@ -106,11 +106,8 @@ const StatusConfigure = () => {
           </div>
         </div>
 
-        <div
-          className="status-configure-account-container"
-          id="status-configure-account-container"
-        >
-          <div className="status-configure-content">
+        <div className="sc-account-container" id="sc-account-container">
+          <div className="sc-content">
             {activePage === 'Appearance' ? <StatusConfigureAppearance /> : null}
 
             {activePage === 'Settings' ? <StatusConfigureSettings /> : null}

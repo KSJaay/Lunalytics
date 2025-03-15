@@ -31,7 +31,7 @@ const StatusConfigureMonitor = ({
   });
 
   return (
-    <div className="status-configure-monitor-container">
+    <div className="scm-container">
       <div className="input-label">Monitors</div>
       <div className="input-short-description" style={{ marginTop: '-12px' }}>
         Select monitors to display on the status block.
@@ -78,11 +78,11 @@ const StatusConfigureMonitor = ({
       ) : null}
 
       {monitors.length === 0 && !autoAdd ? (
-        <div className="status-configure-monitor-options-container">
-          <div className="status-configure-monitor-options-title">
+        <div className="scmo-container">
+          <div className="scmo-title">
             Select monitors to display on the status page.
           </div>
-          <div className="status-configure-monitor-options-buttons">
+          <div className="scmo-buttons">
             <Button color="green" onClick={addAllMonitors}>
               Add all monitors
             </Button>
@@ -94,12 +94,10 @@ const StatusConfigureMonitor = ({
       ) : null}
 
       {autoAdd ? (
-        <div className="status-configure-monitor-auto-add-container">
-          <div className="status-configure-monitor-auto-add-content">
-            <div className="status-configure-monitor-auto-add-title">
-              Auto add montiors
-            </div>
-            <div className="status-configure-monitor-auto-add-subtitle">
+        <div className="scmaa-container">
+          <div className="scmaa-content">
+            <div className="scmaa-title">Auto add montiors</div>
+            <div className="scmaa-subtitle">
               All monitors will be visible on this page. As you create more
               monitors they will be added to this page. You can disable auto add
               to manually select specific monitors.

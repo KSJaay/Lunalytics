@@ -1,8 +1,9 @@
 import './reorder.scss';
 
 // import dependencies
-import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { createSwapy } from 'swapy';
+import { useEffect, useRef } from 'react';
 import { MdHistory } from 'react-icons/md';
 import { BsGraphUp } from 'react-icons/bs';
 import { IoWarning } from 'react-icons/io5';
@@ -12,7 +13,6 @@ import { TbLayoutNavbarInactive } from 'react-icons/tb';
 
 // import local files
 import Modal from '../../../ui/modal';
-import { createSwapy } from 'swapy';
 
 const components = {
   header: {

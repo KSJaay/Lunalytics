@@ -8,12 +8,10 @@ const StatusConfigureSettings = () => {
 
   return (
     <>
-      <div className="status-configure-content-block">
+      <div className="scc-block">
         <div>
-          <div className="status-configure-content-title">
-            Name and homepage
-          </div>
-          <div className="status-configure-content-description"></div>
+          <div className="scc-title">Name and homepage</div>
+          <div className="scc-description"></div>
         </div>
 
         <div
@@ -98,8 +96,8 @@ const StatusConfigureSettings = () => {
         </div>
       </div>
 
-      <div className="status-configure-content-block">
-        <div className="status-configure-content-title">Toggle settings</div>
+      <div className="scc-block">
+        <div className="scc-title">Toggle settings</div>
 
         <div
           style={{

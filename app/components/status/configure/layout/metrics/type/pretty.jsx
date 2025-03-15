@@ -6,7 +6,7 @@ import StatusLayoutLineChart from './chart/line';
 
 const StatusConfigureLayoutMetricsTypePretty = ({ showPing, showTitle }) => {
   return (
-    <div className="status-configure-layout-header-content">
+    <div className="sclh-content">
       <div className="sclgp-container">
         {showTitle ? (
           <div className="sclgp-header">
@@ -29,10 +29,7 @@ const StatusConfigureLayoutMetricsTypePretty = ({ showPing, showTitle }) => {
             </div>
           ) : null}
 
-          <div
-            className="status-configure-layout-metrics-content"
-            style={{ flex: 1 }}
-          >
+          <div className="sclm-content" style={{ flex: 1 }}>
             <StatusLayoutLineChart />
           </div>
         </div>

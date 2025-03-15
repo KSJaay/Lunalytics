@@ -6,7 +6,7 @@ import StatusLayoutLineChart from './chart/line';
 
 const StatusConfigureLayoutMetricsTypeBasic = ({ showPing, showTitle }) => {
   return (
-    <div className="status-configure-layout-header-content">
+    <div className="sclh-content">
       <div className="sclgb-content">
         {showTitle || showPing ? (
           <div className="sclgb-header">
@@ -14,7 +14,7 @@ const StatusConfigureLayoutMetricsTypeBasic = ({ showPing, showTitle }) => {
             {showPing && <div className="sclgb-subtitle ">30 ms</div>}
           </div>
         ) : null}
-        <div className="status-configure-layout-metrics-content">
+        <div className="sclm-content">
           <StatusLayoutLineChart />
         </div>
       </div>

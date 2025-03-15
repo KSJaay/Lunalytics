@@ -9,7 +9,7 @@ const StatusConfigureAppearanceBranding = () => {
   } = useStatusContext();
 
   return (
-    <div className="status-configure-branding-container">
+    <div className="scb-container">
       <div>
         <TextInput
           value={logo}

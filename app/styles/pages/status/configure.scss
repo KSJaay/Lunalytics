@@ -5,7 +5,9 @@
   --status-page-max-width: 850px;
 }
 
-.status-configure-container {
+// status-configure > sc
+
+.sc-container {
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -13,7 +15,7 @@
   flex-direction: column;
 }
 
-.status-configure-tab {
+.sc-tab {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -23,7 +25,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.status-configure-tab-text {
+.sc-tab-text {
   color: var(--accent-100);
   font-size: var(--font-lg);
   font-weight: 500;
@@ -43,13 +45,15 @@
   }
 }
 
-.status-configure-account-container {
+.sc-account-container {
   overflow-y: auto;
   padding: pxToRem(24) 0 pxToRem(100) 0;
   scroll-behavior: smooth;
 }
 
-.status-configure-header {
+// status-configure-header > sch
+
+.sch {
   display: flex;
   flex-direction: row;
   gap: 6px;
@@ -58,36 +62,36 @@
   border-bottom: 2px solid var(--accent-700);
 }
 
-.status-configure-header-title {
+.sch-title {
   font-size: var(--font-2xl);
   font-weight: 700;
 }
 
-.status-configure-header-spacer {
+.sch-spacer {
   font-size: var(--font-2xl);
   color: var(--accent-400);
   font-weight: 600;
 }
 
-.status-configure-header-subtitle {
+.sch-subtitle {
   font-size: var(--font-sm);
   color: var(--font-light-color);
 }
 
-.status-configure-header-options-list {
+.sch-options-list {
   display: flex;
   flex-direction: row;
   padding-right: 12px;
 }
 
-.status-configure-header-options-item {
+.sch-options-item {
   flex: 1;
   display: flex;
   flex-direction: row;
   gap: 8px;
 }
 
-.status-configure-header-buttons {
+.sch-buttons {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -95,7 +99,7 @@
   gap: 8px;
 }
 
-.status-configure-content {
+.sc-content {
   padding: 0 15px;
   max-width: 1440px;
   display: flex;

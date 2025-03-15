@@ -1,6 +1,8 @@
 @use '../../../../styles/pxToRem.scss' as *;
 
-.status-configure-layout-menu {
+// status-configure-layout  > scl
+
+.scl-menu {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,7 +12,7 @@
   gap: pxToRem(12);
 }
 
-.status-configure-layout-bin {
+.scl-bin {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,7 +25,7 @@
   }
 }
 
-.status-configure-layout-minimize {
+.scl-minimize {
   display: flex;
   align-items: center;
   justify-content: center;

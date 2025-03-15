@@ -1,8 +1,8 @@
 @use '../../../../../styles/pxToRem.scss' as *;
 @use '../../../../../styles/breakpoints.scss' as *;
 
-// scl > status-configure-layout
-.scl-history-container {
+// sclh > status-configure-layout-history
+.sclh-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -12,12 +12,12 @@
   max-width: var(--status-page-max-width);
 }
 
-.scl-history-title {
+.sclh-title {
   font-size: var(--font-lg);
   font-weight: 600;
 }
 
-.scl-history-date {
+.sclh-date {
   display: flex;
   flex-direction: row;
   gap: 16px;
@@ -27,7 +27,7 @@
   font-size: var(--font-lg);
 }
 
-.scl-history-subtitle {
+.sclh-subtitle {
   color: var(--font-light-color);
   font-size: var(--font-sm);
 }

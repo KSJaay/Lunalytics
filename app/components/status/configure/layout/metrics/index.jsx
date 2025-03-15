@@ -94,12 +94,12 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
 
   return (
     <>
-      <div className="status-configure-content-block">
-        <div className="status-configure-content-title">Uptime Metrics</div>
+      <div className="scc-block">
+        <div className="scc-title">Uptime Metrics</div>
 
-        <div className="status-configure-layout-menu">
+        <div className="scl-menu">
           <div
-            className="status-configure-layout-minimize"
+            className="scl-minimize"
             onClick={() =>
               setComponentValue(componentId, 'isMinimized', !isMinimized)
             }
@@ -111,17 +111,11 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
             )}
           </div>
 
-          <div
-            className="status-configure-layout-bin"
-            onClick={() => removeComponent(componentId)}
-          >
+          <div className="scl-bin" onClick={() => removeComponent(componentId)}>
             <FaTrashCan style={{ width: '20px', height: '20px' }} />
           </div>
         </div>
-        <div
-          className="status-configure-layout-header-content"
-          style={{ flexDirection: 'column' }}
-        >
+        <div className="sclh-content" style={{ flexDirection: 'column' }}>
           {monitors.length > 0 && !autoAdd
             ? getGraphWithType(graphType, monitors, componentId)
             : null}

@@ -12,8 +12,8 @@ const StatusConfigureLayoutMetricsDropdown = ({ componentId, title }) => {
 
   return (
     <>
-      <div className="status-configure-layout-graph-title">Graph options</div>
-      <div className="status-configure-layout-graph-container">
+      <div className="sclg-title">Graph options</div>
+      <div className="sclg-container">
         <StatusConfigureLayoutMetricsTypeBasic
           showPing={showPing}
           showTitle={showName ? title : false}

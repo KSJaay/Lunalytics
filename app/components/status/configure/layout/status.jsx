@@ -43,12 +43,12 @@ const StatusConfigureLayoutStatus = ({ componentId }) => {
 
   return (
     <>
-      <div className="status-configure-content-block">
-        <div className="status-configure-content-title">Status</div>
+      <div className="scc-block">
+        <div className="scc-title">Status</div>
 
-        <div className="status-configure-layout-menu">
+        <div className="scl-menu">
           <div
-            className="status-configure-layout-minimize"
+            className="scl-minimize"
             onClick={() =>
               setComponentValue(componentId, 'isMinimized', !isMinimized)
             }
@@ -60,25 +60,20 @@ const StatusConfigureLayoutStatus = ({ componentId }) => {
             )}
           </div>
 
-          <div
-            className="status-configure-layout-bin"
-            onClick={() => removeComponent(componentId)}
-          >
+          <div className="scl-bin" onClick={() => removeComponent(componentId)}>
             <FaTrashCan style={{ width: '20px', height: '20px' }} />
           </div>
         </div>
 
-        <div
-          className={`status-configure-status-content ${size} ${design} ${status}`}
-        >
-          <div className={`status-configure-status-title ${titleSize}`}>
+        <div className={`scs-content ${size} ${design} ${status}`}>
+          <div className={`scs-title ${titleSize}`}>
             {icon ? icons[status] : null}
             {statusText[status]}
           </div>
         </div>
 
         {!isMinimized && (
-          <div className="status-configure-status-options">
+          <div className="scs-options">
             <div style={{ flex: 1 }}>
               <Tabs
                 label="Incident color"

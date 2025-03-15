@@ -14,13 +14,11 @@ const StatusConfigureAppearance = () => {
   } = useStatusContext();
 
   return (
-    <div className="status-configure-content-block">
+    <div className="scc-block">
       <div>
-        <div className="status-configure-content-title">
-          Monitors for Status page
-        </div>
-        <div className="status-configure-content-description">
-          Select monitors to display on the status page.
+        <div className="scc-title">Status Page Appearance</div>
+        <div className="scc-description">
+          Select the theme and colors to use for the status page.
         </div>
       </div>
 

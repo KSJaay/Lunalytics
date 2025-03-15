@@ -54,7 +54,7 @@ const StatusPageTable = ({ search }) => {
   };
 
   return (
-    <div className="status-page-table-container">
+    <div className="spt-container">
       <Table.Table>
         <Table.Header>
           <Table.Row>
@@ -81,13 +81,13 @@ const StatusPageTable = ({ search }) => {
                     )
                   }
                 >
-                  <div className="status-page-table-item">
-                    <div className="status-page-table-item-icon">
+                  <div className="spti">
+                    <div className="spti-icon">
                       <PiBroadcast />
                     </div>
-                    <div className="status-page-table-item-title">
+                    <div className="spti-title">
                       <div>{statusPage.settings.title}</div>
-                      <div className="status-page-table-item-url">{url}</div>
+                      <div className="spti-url">{url}</div>
                     </div>
                   </div>
                 </Table.Cell>
@@ -102,7 +102,7 @@ const StatusPageTable = ({ search }) => {
                 </Table.Cell>
 
                 <Table.Cell>
-                  <div className="status-page-table-actions">
+                  <div className="spt-actions">
                     <a href={url} target="_blank" rel="noreferrer">
                       <IoMdEye />
                     </a>

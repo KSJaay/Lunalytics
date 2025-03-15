@@ -2,18 +2,21 @@
 
 // status-page-table > spt
 
-.status-page-table-container {
+.spt-container {
   display: flex;
   flex-direction: column;
   margin: pxToRem(10) pxToRem(10) 0px pxToRem(10);
 }
-.status-page-table-item {
+
+// status-page-table-item > spti
+
+.spti {
   display: flex;
   align-items: center;
   gap: pxToRem(12);
 }
 
-.status-page-table-item-title {
+.spti-title {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,7 +27,7 @@
   }
 }
 
-.status-page-table-item-icon {
+.spti-icon {
   padding: 10px;
   background-color: var(--accent-700);
   display: flex;
@@ -39,11 +42,11 @@
   }
 }
 
-.status-page-table-item-url {
+.spti-url {
   color: var(--font-light-color);
 }
 
-.status-page-table-actions {
+.spt-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;

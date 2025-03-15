@@ -1,7 +1,9 @@
 @use '../../../../styles/pxToRem.scss' as *;
 @use '../../../../styles/breakpoints.scss' as *;
 
-.status-configure-status-content {
+// status-configure-status > scs
+
+.scs-content {
   --status-color: var(--green-700);
 
   &.Operational {
@@ -87,7 +89,7 @@
     border-left: 8px solid var(--status-color);
     box-shadow: var(--shadow-md);
 
-    > .status-configure-status-title svg {
+    > .scs-title svg {
       color: var(--status-color);
     }
   }
@@ -97,13 +99,13 @@
     border: 2px solid var(--accent-800);
     box-shadow: var(--shadow-md);
 
-    > .status-configure-status-title svg {
+    > .scs-title svg {
       color: var(--status-color);
     }
   }
 }
 
-.status-configure-status-title {
+.scs-title {
   display: flex;
   align-items: center;
   gap: pxToRem(8);
@@ -131,7 +133,7 @@
   }
 }
 
-.status-configure-status-options {
+.scs-options {
   display: flex;
   flex-direction: row;
   margin-top: 16px;

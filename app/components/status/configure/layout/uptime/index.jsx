@@ -17,7 +17,10 @@ import {
 import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import StatusConfigureMonitor from '../../monitor';
 import useContextStore from '../../../../../context';
-import { statusGraphDesigns, statusIndicators } from '../../../../../../shared/constants/status';
+import {
+  statusGraphDesigns,
+  statusIndicators,
+} from '../../../../../../shared/constants/status';
 
 const StatusConfigureLayoutUptime = ({ componentId }) => {
   const {
@@ -32,9 +35,9 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
     component;
 
   const graphClass = classNames({
-    'status-uptime-basic-graph-container': graphType === 'Basic',
-    'status-uptime-pretty-graph-container': graphType === 'Pretty',
-    'status-uptime-nerdy-graph-container': graphType === 'Nerdy',
+    'subg-container': graphType === 'Basic',
+    'supg-container': graphType === 'Pretty',
+    'sung-container': graphType === 'Nerdy',
   });
 
   const updateAutoAdd = (value) => {
@@ -70,12 +73,12 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
 
   return (
     <>
-      <div className="status-configure-content-block">
-        <div className="status-configure-content-title">Uptime graph</div>
+      <div className="scc-block">
+        <div className="scc-title">Uptime graph</div>
 
-        <div className="status-configure-layout-menu">
+        <div className="scl-menu">
           <div
-            className="status-configure-layout-minimize"
+            className="scl-minimize"
             onClick={() =>
               setComponentValue(componentId, 'isMinimized', !isMinimized)
             }
@@ -87,10 +90,7 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
             )}
           </div>
 
-          <div
-            className="status-configure-layout-bin"
-            onClick={() => removeComponent(componentId)}
-          >
+          <div className="scl-bin" onClick={() => removeComponent(componentId)}>
             <FaTrashCan style={{ width: '20px', height: '20px' }} />
           </div>
         </div>
@@ -159,7 +159,7 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
         )}
 
         {!isMinimized && (
-          <div className="status-configure-layout-header-content">
+          <div className="sclh-content">
             <div style={{ flex: 1 }}>
               <TextInput
                 label="Title"

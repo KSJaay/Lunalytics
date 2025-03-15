@@ -30,13 +30,9 @@ const StatusUptimeBasicGraph = ({ monitor = {}, indicator }) => {
     statusAndText[indicator].Operational;
 
   return (
-    <div className="status-uptime-basic-graph-content">
-      <div className="status-uptime-basic-graph-title">
-        {monitor.name || 'Monitor'}
-      </div>
-      <div className={`status-uptime-basic-graph-icon ${monitor.status}`}>
-        {iconOrText}
-      </div>
+    <div className="subg-content">
+      <div className="subg-title">{monitor.name || 'Monitor'}</div>
+      <div className={`subg-icon ${monitor.status}`}>{iconOrText}</div>
     </div>
   );
 };

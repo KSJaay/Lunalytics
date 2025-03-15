@@ -34,20 +34,12 @@ const StatusUptimePrettyGraph = ({
     statusAndText[indicator].Operational;
 
   return (
-    <div className="status-uptime-pretty-graph-content">
-      <div className="status-uptime-pretty-graph-header">
-        <div className="status-uptime-pretty-graph-title">
-          {monitor.name || 'Monitor'}
-        </div>
-        <div
-          className={`status-uptime-pretty-graph-subtitle ${monitor.status}`}
-        >
-          {iconOrText}
-        </div>
+    <div className="supg-content">
+      <div className="supg-header">
+        <div className="supg-title">{monitor.name || 'Monitor'}</div>
+        <div className={`supg-subtitle ${monitor.status}`}>{iconOrText}</div>
       </div>
-      <div
-        className={`status-uptime-pretty-graph-pills-container ${monitor.status}`}
-      >
+      <div className={`supg-pills-container ${monitor.status}`}>
         {Array.from({ length: 90 }).map((_, i) => {
           const date = new Date();
           date.setDate(date.getDate() - (90 - (i + 1)));
@@ -61,7 +53,7 @@ const StatusUptimePrettyGraph = ({
           return <div key={i} className={statusColor}></div>;
         })}
       </div>
-      <div className="status-uptime-pretty-graph-footer">
+      <div className="supg-footer">
         <div>90 days ago</div>
         <div>Today</div>
       </div>

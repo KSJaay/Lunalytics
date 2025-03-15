@@ -51,12 +51,12 @@ const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
 
   return (
     <>
-      <div className="status-configure-layout-graph-title">Graph options</div>
-      <div className="status-configure-layout-graph-container">
+      <div className="sclg-title">Graph options</div>
+      <div className="sclg-container">
         {getGraphType(graphType, title, showPing)}
 
-        <div className="status-configure-layout-graph-options-container">
-          <div className="status-configure-layout-graph-options-content">
+        <div className="sclg-options-container">
+          <div className="sclg-options-content">
             <TextInput
               label="Graph title"
               placeholder="Monitors"
@@ -67,7 +67,7 @@ const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
               }
             />
           </div>
-          <div className="status-configure-layout-graph-options-content">
+          <div className="sclg-options-content">
             <Tabs
               options={['Basic', 'Pretty', 'Nerdy']}
               label="Graph type"

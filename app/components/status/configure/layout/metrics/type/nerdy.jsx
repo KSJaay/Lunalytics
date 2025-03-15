@@ -6,7 +6,7 @@ import StatusLayoutLineChart from './chart/line';
 
 const StatusConfigureLayoutMetricsTypeNerdy = ({ showPing, showTitle }) => {
   return (
-    <div className="status-configure-layout-header-content">
+    <div className="sclh-content">
       <div className="sclgn-container">
         {showTitle ? (
           <div className="sclgn-header">
@@ -34,7 +34,7 @@ const StatusConfigureLayoutMetricsTypeNerdy = ({ showPing, showTitle }) => {
             </div>
           </div>
         ) : null}
-        <div className="status-configure-layout-metrics-content">
+        <div className="sclm-content">
           <StatusLayoutLineChart />
         </div>
       </div>

@@ -1,7 +1,8 @@
 @use '../../../../../styles/pxToRem.scss' as *;
 @use '../../../../../styles/breakpoints.scss' as *;
+// sci > status-configure-incidents
 
-.status-configure-incidents-content {
+.sci-content {
   --status-color: var(--green-700);
 
   &.Operational {
@@ -33,7 +34,7 @@
   background-color: var(--accent-800);
 }
 
-.status-configure-incident-title {
+.sci-title {
   display: flex;
   gap: 8px;
   justify-content: space-between;
@@ -99,7 +100,7 @@
   }
 }
 
-.status-configure-incidents-list {
+.sci-list {
   display: flex;
   flex-direction: column;
   gap: pxToRem(16);

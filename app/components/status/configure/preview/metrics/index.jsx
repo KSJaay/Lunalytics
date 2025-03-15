@@ -17,8 +17,8 @@ const StatusPageMetrics = ({
   heartbeats,
 }) => {
   return (
-    <div className="status-page-metrics-container">
-      <div className="status-page-metrics-content">
+    <div className="spm-container">
+      <div className="spm-content">
         {graphType === 'Separate' ? (
           <StatusPageMetricsSeparate
             monitors={monitors}

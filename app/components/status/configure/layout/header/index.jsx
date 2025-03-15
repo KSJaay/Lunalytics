@@ -47,12 +47,12 @@ const StatusConfigureLayoutHeader = ({ componentId }) => {
 
   return (
     <>
-      <div className="status-configure-content-block">
-        <div className="status-configure-content-title">Header</div>
+      <div className="scc-block">
+        <div className="scc-title">Header</div>
 
-        <div className="status-configure-layout-menu">
+        <div className="scl-menu">
           <div
-            className="status-configure-layout-minimize"
+            className="scl-minimize"
             onClick={() =>
               setComponentValue(componentId, 'isMinimized', !isMinimized)
             }
@@ -64,29 +64,17 @@ const StatusConfigureLayoutHeader = ({ componentId }) => {
             )}
           </div>
 
-          <div
-            className="status-configure-layout-bin"
-            onClick={() => removeComponent(componentId)}
-          >
+          <div className="scl-bin" onClick={() => removeComponent(componentId)}>
             <FaTrashCan style={{ width: '20px', height: '20px' }} />
           </div>
         </div>
 
-        <div className="status-configure-layout-header-content" ref={container}>
-          <div
-            className="status-configure-layout-header-item"
-            data-swapy-slot="Left"
-          >
+        <div className="sclh-content" ref={container}>
+          <div className="sclh-item" data-swapy-slot="Left">
             <StatusConfigureLayoutHeaderLogo componentId={componentId} />
           </div>
-          <div
-            className="status-configure-layout-header-item"
-            data-swapy-slot="Center"
-          ></div>
-          <div
-            className="status-configure-layout-header-item"
-            data-swapy-slot="Right"
-          >
+          <div className="sclh-item" data-swapy-slot="Center"></div>
+          <div className="sclh-item" data-swapy-slot="Right">
             <StatusConfigureLayoutHeaderStatus componentId={componentId} />
           </div>
         </div>

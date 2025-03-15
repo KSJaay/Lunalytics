@@ -30,7 +30,7 @@ const StatusPageMetricsPrettyGraph = ({ title, showPing, heartbeats = [] }) => {
           </div>
         ) : null}
 
-        <div className="status-page-metrics-graph">
+        <div className="spm-graph">
           <StatusLayoutLineChart heartbeats={heartbeats} />
         </div>
       </div>

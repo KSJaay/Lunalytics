@@ -18,7 +18,7 @@ const StatusPageMetricsBasicGraph = ({ title, showPing, heartbeats = [] }) => {
           <div className="spmb-subtitle">{ms.toLocaleString()} ms</div>
         )}
       </div>
-      <div className="status-page-metrics-graph">
+      <div className="spm-graph">
         <StatusLayoutLineChart heartbeats={heartbeats} />
       </div>
     </div>

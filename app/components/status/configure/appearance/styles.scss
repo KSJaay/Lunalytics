@@ -1,6 +1,8 @@
 @use '../../../../styles/pxToRem.scss' as *;
 
-.status-configure-content-block {
+// status-configure-content > scc
+
+.scc-block {
   display: flex;
   flex-direction: column;
   background-color: var(--accent-900);
@@ -13,28 +15,31 @@
   padding-bottom: pxToRem(25);
 }
 
-.status-configure-content-title {
+.scc-title {
   font-size: var(--font-xl);
   font-weight: 700;
 }
 
-.status-configure-content-description {
+.scc-description {
   font-size: var(--font-sm);
   color: var(--font-light-color);
 }
 
-.status-configure-colors-container {
+// status-configure-colors > scc
+.scc-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: pxToRem(16);
 }
 
-.status-configure-colors-container > div {
+.scc-container > div {
   flex: 1;
   z-index: 1;
 }
 
-.status-configure-branding-container {
+// status-configure-branding > scb
+
+.scb-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: pxToRem(16);

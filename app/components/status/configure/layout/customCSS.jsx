@@ -15,15 +15,15 @@ const StatusConfigureLayoutCustomCSS = ({ componentId }) => {
 
   return (
     <>
-      <div className="status-configure-content-block">
-        <div className="status-configure-content-title">Custom CSS</div>
-        <div className="status-configure-content-description">
+      <div className="scc-block">
+        <div className="scc-title">Custom CSS</div>
+        <div className="scc-description">
           CSS will be injected into the page and will apply to all components.
         </div>
 
-        <div className="status-configure-layout-menu">
+        <div className="scl-menu">
           <div
-            className="status-configure-layout-minimize"
+            className="scl-minimize"
             onClick={() =>
               setComponentValue(componentId, 'isMinimized', !isMinimized)
             }
@@ -35,16 +35,13 @@ const StatusConfigureLayoutCustomCSS = ({ componentId }) => {
             )}
           </div>
 
-          <div
-            className="status-configure-layout-bin"
-            onClick={() => removeComponent(componentId)}
-          >
+          <div className="scl-bin" onClick={() => removeComponent(componentId)}>
             <FaTrashCan style={{ width: '20px', height: '20px' }} />
           </div>
         </div>
 
         {!isMinimized && (
-          <div className="status-configure-layout-header-content">
+          <div className="sclh-content">
             <Textarea
               rows={15}
               onChange={(event) => {

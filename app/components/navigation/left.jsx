@@ -7,13 +7,8 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import {
-  FaCog,
-  FaHome,
-  FaSignOutAlt,
-  MdNotifications,
-  PiBroadcast,
-} from '../icons';
+import { FaCog, FaHome, FaSignOutAlt, MdNotifications } from '../icons';
+// PiBroadcast,
 
 const actionTabs = [
   {
@@ -26,11 +21,11 @@ const actionTabs = [
     url: '/notifications',
     logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
   },
-  {
-    name: 'Status',
-    url: '/status-pages',
-    logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
-  },
+  // {
+  //   name: 'Status',
+  //   url: '/status-pages',
+  //   logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
+  // },
 ];
 
 const LeftNavigation = ({ activeUrl = '' }) => {

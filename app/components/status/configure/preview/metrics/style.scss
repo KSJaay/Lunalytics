@@ -1,26 +1,28 @@
 @use '../../../../../styles/breakpoints.scss' as *;
 
-.status-page-metrics-container {
+// status-page-metrics  > spm
+
+.spm-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: var(--status-page-max-width);
 }
 
-.status-page-metrics-content {
+.spm-content {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 8px 0;
 }
 
-.status-page-metrics-title {
+.spm-title {
   font-size: var(--font-xl);
   font-weight: 700;
   padding-left: 8px;
 }
 
-.status-page-metrics-graph {
+.spm-graph {
   padding: 8px 8px 8px 0;
   height: 140px;
   width: 100%;

@@ -9,7 +9,7 @@ const StatusConfigureAppearanceColors = () => {
   } = useStatusContext();
 
   return (
-    <div className="status-configure-colors-container">
+    <div className="scc-container">
       <div>
         <ColorPicker
           label="Header background:"

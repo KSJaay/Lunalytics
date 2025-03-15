@@ -1,4 +1,6 @@
-.status-uptime-basic-graph-container {
+// status-uptime-basic-graph > subg
+
+.subg-container {
   display: flex;
   background-color: var(--accent-800);
   padding: 12px 16px;
@@ -7,7 +9,7 @@
   gap: 12px;
 }
 
-.status-uptime-basic-graph-content {
+.subg-content {
   display: flex;
   gap: 16px;
   justify-content: space-between;
@@ -29,12 +31,12 @@
   }
 }
 
-.status-uptime-basic-graph-title {
+.subg-title {
   font-size: var(--font-xl);
   font-weight: 700;
 }
 
-.status-uptime-basic-graph-icon {
+.subg-icon {
   color: var(--green-700);
   display: flex;
   justify-content: center;
@@ -57,12 +59,14 @@
   }
 }
 
-.status-uptime-basic-graph-icon svg {
+.subg-icon svg {
   width: 32px;
   height: 32px;
 }
 
-.status-uptime-pretty-graph-container {
+// status-uptime-pretty-graph > supg
+
+.supg-container {
   display: flex;
   background-color: var(--accent-800);
   padding: 12px 16px;
@@ -71,7 +75,7 @@
   gap: 12px;
 }
 
-.status-uptime-pretty-graph-content {
+.supg-content {
   display: flex;
   gap: 8px;
   flex-direction: column;
@@ -89,19 +93,19 @@
   }
 }
 
-.status-uptime-pretty-graph-header {
+.supg-header {
   display: flex;
   gap: 12px;
   justify-content: space-between;
   align-items: center;
 }
 
-.status-uptime-pretty-graph-title {
+.supg-title {
   font-size: var(--font-xl);
   font-weight: 600;
 }
 
-.status-uptime-pretty-graph-subtitle {
+.supg-subtitle {
   color: var(--green-700);
 
   &.Operational {
@@ -126,7 +130,7 @@
   }
 }
 
-.status-uptime-pretty-graph-pills-container {
+.supg-pills-container {
   display: flex;
   justify-content: space-between;
   gap: 3px;
@@ -182,14 +186,16 @@
   }
 }
 
-.status-uptime-pretty-graph-footer {
+.supg-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: var(--font-light-color);
 }
 
-.status-uptime-nerdy-graph-container {
+// status-uptime-nerdy-graph > sung
+
+.sung-container {
   display: flex;
   background-color: var(--accent-800);
   padding: 12px 16px;
@@ -198,7 +204,7 @@
   gap: 12px;
 }
 
-.status-uptime-nerdy-graph-content {
+.sung-content {
   display: flex;
   gap: 8px;
   flex-direction: column;
@@ -216,19 +222,19 @@
   }
 }
 
-.status-uptime-nerdy-graph-header {
+.sung-header {
   display: flex;
   gap: 12px;
   justify-content: space-between;
   align-items: center;
 }
 
-.status-uptime-nerdy-graph-title {
+.sung-title {
   font-size: var(--font-xl);
   font-weight: 600;
 }
 
-.status-uptime-nerdy-graph-subtitle {
+.sung-subtitle {
   color: var(--green-700);
 
   &.Operational {
@@ -253,7 +259,7 @@
   }
 }
 
-.status-uptime-nerdy-graph-pills-container {
+.sung-pills-container {
   display: flex;
   justify-content: space-between;
   gap: 3px;
@@ -309,7 +315,7 @@
   }
 }
 
-.status-uptime-nerdy-graph-footer {
+.sung-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;

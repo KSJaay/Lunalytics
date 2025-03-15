@@ -1,7 +1,9 @@
 import './add.scss';
 
 // import dependencies
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { MdHistory } from 'react-icons/md';
 import { BsGraphUp } from 'react-icons/bs';
 import { IoWarning } from 'react-icons/io5';
@@ -11,8 +13,6 @@ import { TbLayoutNavbarInactive } from 'react-icons/tb';
 
 // import local files
 import Modal from '../../../ui/modal';
-import classNames from 'classnames';
-import { useState } from 'react';
 
 const components = [
   {

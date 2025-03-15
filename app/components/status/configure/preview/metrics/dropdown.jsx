@@ -27,10 +27,10 @@ const StatusPageMetricsDropdown = ({
     : defaultHeartbeats;
 
   return (
-    <div className="status-page-metrics-container">
+    <div className="spm-container">
       <div style={{ display: 'flex', gap: '12px' }}>
         <div
-          className="status-page-metrics-title"
+          className="spm-title"
           style={{ flex: 1, display: 'flex', alignItems: 'center' }}
         >
           {title}
@@ -67,7 +67,7 @@ const StatusPageMetricsDropdown = ({
         </div>
       </div>
 
-      <div className="status-page-metrics-content">
+      <div className="spm-content">
         <StatusPageMetricsBasicGraph
           title={showName ? activeMonitor.title : false}
           showPing={showPing}

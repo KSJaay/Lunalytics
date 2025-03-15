@@ -24,15 +24,15 @@ const StatusConfigureLayoutHistoryList = ({ incidents = [], size }) => {
   }
 
   return (
-    <div className="scl-history-container">
-      <div className="scl-history-title">PAST INCIDENTS</div>
+    <div className="sclh-container">
+      <div className="sclh-title">PAST INCIDENTS</div>
 
       {incidentsList.map((incident, index) => (
         <div key={index}>
-          <div className="scl-history-date">
+          <div className="sclh-date">
             {dayjs(incident.created_at).format('MMM DD, YYYY')}
           </div>
-          <div className="scl-history-subtitle">
+          <div className="sclh-subtitle">
             {!incident?.title ? 'No incidents reported.' : incident.title}
           </div>
         </div>

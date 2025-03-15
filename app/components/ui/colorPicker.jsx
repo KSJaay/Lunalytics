@@ -39,20 +39,20 @@ const ColorPicker = ({
   return (
     <>
       {label && (
-        <label className="input-label" id={`color-picker-label-${id}`}>
+        <label className="input-label" id={`cp-label-${id}`}>
           {label}
           {isRequired && <span className="input-required">*</span>}
         </label>
       )}
-      <div className="color-picker-container">
+      <div className="cp-container">
         <div
-          className="color-picker-block"
+          className="cp-block"
           style={{ backgroundColor: color }}
           onClick={() => setShowColorPicker(!showColorPicker)}
         />
         <input
           type="text"
-          className="color-picker-input"
+          className="cp-input"
           id={id}
           value={color}
           tabIndex={tabIndex}
@@ -61,7 +61,7 @@ const ColorPicker = ({
       </div>
 
       {showColorPicker ? (
-        <div className="color-picker-hex" ref={containerRef}>
+        <div className="cp-hex" ref={containerRef}>
           <HexColorPicker color={color} onChange={(value) => setColor(value)} />
         </div>
       ) : null}

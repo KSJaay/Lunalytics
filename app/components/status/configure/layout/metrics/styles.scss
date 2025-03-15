@@ -1,4 +1,6 @@
-.status-configure-layout-graph-container {
+
+// status-configure-layout-graph > sclg
+.sclg-container {
   display: flex;
   gap: 12px;
   flex: 1;
@@ -8,26 +10,27 @@
   padding-bottom: 24px;
 }
 
-.status-configure-layout-graph-title {
+.sclg-title {
   font-size: var(--font-2xl);
   font-weight: 700;
   display: flex;
   align-items: center;
 }
 
-.status-configure-layout-graph-options-container {
+.sclg-options-container {
   display: flex;
   gap: 24px;
 }
 
-.status-configure-layout-graph-options-content {
+.sclg-options-content {
   display: flex;
   gap: 8px;
   flex-direction: column;
   flex: 1;
 }
 
-.status-configure-layout-metrics-content {
+// status-configure-layout-metrics > sclm
+.sclm-content {
   padding: 8px 8px 8px 0;
   height: 175px;
   width: 100%;

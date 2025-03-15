@@ -6,14 +6,11 @@ import classNames from 'classnames';
 const StatusIncidentBasic = ({ incidents = [], status }) => {
   const incidentsList = !incidents?.length ? [] : incidents;
 
-  const containerClasses = classNames(
-    'status-configure-incidents-content',
-    status
-  );
+  const containerClasses = classNames('sci-content', status);
 
   return (
     <div className={containerClasses}>
-      <div className="status-configure-incidents-list">
+      <div className="sci-list">
         {incidentsList.map((incident, index) => (
           <div key={index}>
             <div className="scil-description">

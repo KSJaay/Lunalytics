@@ -12,23 +12,20 @@ const StatusConfigureLayoutHistory = ({ componentId, incidents = [] }) => {
   const { removeComponent } = useStatusContext();
 
   return (
-    <div className="status-configure-content-block">
-      <div className="status-configure-content-title">Incidents History</div>
-      <div className="status-configure-content-description">
+    <div className="scc-block">
+      <div className="scc-title">Incidents History</div>
+      <div className="scc-description">
         Will display the last 15 days, and if any incidents have occurred
         it&#39;ll show information about them.
       </div>
 
-      <div className="status-configure-layout-menu">
-        <div
-          className="status-configure-layout-bin"
-          onClick={() => removeComponent(componentId)}
-        >
+      <div className="scl-menu">
+        <div className="scl-bin" onClick={() => removeComponent(componentId)}>
           <FaTrashCan style={{ width: '20px', height: '20px' }} />
         </div>
       </div>
 
-      <div className="status-configure-layout-header-content">
+      <div className="sclh-content">
         <StatusConfigureLayoutHistoryList incidents={incidents} size={3} />
       </div>
     </div>

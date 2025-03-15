@@ -16,8 +16,8 @@ const StatusPageMetricsSeparate = ({
 }) => {
   return (
     <>
-      <div className="status-page-metrics-title">{title}</div>
-      <div className="status-page-metrics-content">
+      <div className="spm-title">{title}</div>
+      <div className="spm-content">
         {monitors.map((monitor) => {
           const heartbeatsList =
             heartbeats[monitor.monitorId] || defaultHeartbeats;

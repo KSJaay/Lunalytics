@@ -62,7 +62,7 @@ const StatusConfigurePreview = () => {
     injectStylesheet('status-configure-layout', `:root {${styles}}`);
 
     const statusPreviewContainer = document.getElementById(
-      'status-configure-account-container'
+      'sc-account-container'
     );
 
     if (statusPreviewContainer) {

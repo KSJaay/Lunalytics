@@ -8,13 +8,13 @@ const StatusConfigureMonitorItem = ({ monitor, removeMonitor }) => {
   if (!monitor) return null;
 
   return (
-    <div className="status-configure-monitor-item-container">
-      <div className="status-configure-monitor-item-header">
-        <div className="status-configure-monitor-item-name">{monitor.name}</div>
-        <div className="status-configure-monitor-item-url">{monitor.url}</div>
+    <div className="scmi-container">
+      <div className="scmi-header">
+        <div className="scmi-name">{monitor.name}</div>
+        <div className="scmi-url">{monitor.url}</div>
       </div>
       <div
-        className="status-configure-monitor-item-icon"
+        className="scmi-icon"
         onClick={() => removeMonitor(monitor.monitorId)}
       >
         <FaTrashCan />

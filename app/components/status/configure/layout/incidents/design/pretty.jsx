@@ -13,14 +13,12 @@ const StatusIncidentPretty = ({ incidents = [], size, status, titleSize }) => {
   const incidentsList = !incidents?.length ? [] : incidents;
 
   return (
-    <div className={`status-configure-incidents-content ${status}`}>
-      <div
-        className={`status-configure-incident-title ${size} title-${titleSize}`}
-      >
+    <div className={`sci-content ${status}`}>
+      <div className={`sci-title ${size} title-${titleSize}`}>
         <div>Monitor issues</div>
         <div className="subtitle">{statusText[status]}</div>
       </div>
-      <div className="status-configure-incidents-list">
+      <div className="sci-list">
         {incidentsList.map((incident, index) => (
           <div key={index}>
             <div className={`scil-title ${incident.type}`}>

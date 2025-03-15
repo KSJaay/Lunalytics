@@ -26,18 +26,18 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
 
   return (
     <>
-      <div className="status-configure-content-block">
+      <div className="scc-block">
         <div>
-          <div className="status-configure-content-title">Incidents</div>
-          <div className="status-configure-content-description">
+          <div className="scc-title">Incidents</div>
+          <div className="scc-description">
             Incidents will only be visible if there is currently an ongoing
             incident.
           </div>
         </div>
 
-        <div className="status-configure-layout-menu">
+        <div className="scl-menu">
           <div
-            className="status-configure-layout-minimize"
+            className="scl-minimize"
             onClick={() =>
               setComponentValue(componentId, 'isMinimized', !isMinimized)
             }
@@ -49,10 +49,7 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
             )}
           </div>
 
-          <div
-            className="status-configure-layout-bin"
-            onClick={() => removeComponent(componentId)}
-          >
+          <div className="scl-bin" onClick={() => removeComponent(componentId)}>
             <FaTrashCan style={{ width: '20px', height: '20px' }} />
           </div>
         </div>
