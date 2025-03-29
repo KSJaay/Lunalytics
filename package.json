@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -52,6 +52,7 @@
     "mobx": "^6.13.6",
     "mobx-react-lite": "^4.1.0",
     "mongoose": "^8.12.1",
+    "nanoid": "^5.1.3",
     "pg": "^8.13.3",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
@@ -62,6 +63,7 @@
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.1",
     "swapy": "^1.0.5",
+    "ua-parser-js": "^2.0.3",
     "uuid": "^11.1.0",
     "winston": "^3.17.0",
     "winston-daily-rotate-file": "^5.0.0"

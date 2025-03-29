@@ -1,24 +1,10 @@
-import {
-  updateUserDisplayname,
-  userExists,
-} from '../../../database/queries/user.js';
+import { updateUserDisplayname } from '../../../database/queries/user.js';
 import { handleError } from '../../../utils/errors.js';
 import validators from '../../../../shared/validators/index.js';
 
 const userUpdateUsername = async (request, response) => {
   try {
-    const { access_token } = request.cookies;
-
-    if (!access_token) {
-      return response.sendStatus(401);
-    }
-
-    const user = await userExists(access_token);
-
-    if (!user) {
-      return response.sendStatus(401);
-    }
-
+    const { user } = response.locals;
     const { displayName } = request.body;
 
     if (!displayName || user.displayName === displayName) {
@@ -35,6 +21,7 @@ const userUpdateUsername = async (request, response) => {
 
     return response.sendStatus(200);
   } catch (error) {
+    console.log(error);
     handleError(error, response);
   }
 };

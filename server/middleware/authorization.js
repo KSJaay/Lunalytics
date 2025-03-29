@@ -1,13 +1,24 @@
-import { userExists } from '../database/queries/user.js';
+import { getUserByEmail } from '../database/queries/user.js';
 import { deleteCookie } from '../../shared/utils/cookies.js';
 import { handleError } from '../utils/errors.js';
+import { userSessionExists } from '../database/queries/session.js';
+import { apiTokenExists } from '../database/queries/api.js';
+import { oldPermsToFlags } from '../../shared/permissions/oldPermsToFlags.js';
 
 const authorization = async (request, response, next) => {
   try {
-    const { access_token } = request.cookies;
+    const { session_token } = request.cookies;
+    const { Authorization } = request.headers;
 
-    if (access_token) {
-      const userExistsInDatabase = await userExists(access_token);
+    if (session_token) {
+      const userSession = await userSessionExists(session_token);
+
+      if (!userSession) {
+        deleteCookie(response, 'session_token');
+        return response.sendStatus(401);
+      }
+
+      const userExistsInDatabase = await getUserByEmail(userSession.email);
 
       if (userExistsInDatabase) {
         // if user is trying to access `/api/user/verfied` and is already logged in, send user data
@@ -27,21 +38,38 @@ const authorization = async (request, response, next) => {
         ) {
           return response.redirect('/home');
         }
+
+        response.locals.user = {
+          ...userExistsInDatabase,
+          permission: oldPermsToFlags[userExistsInDatabase.permission],
+          isApiToken: false,
+          isOwner: userExistsInDatabase.permission === 1,
+        };
       }
 
       if (!userExistsInDatabase) {
-        deleteCookie(response, 'access_token');
+        deleteCookie(response, 'session_token');
         return response.sendStatus(401);
       }
     }
 
-    if (request.url.startsWith('/api') && !access_token) {
+    if (request.url.startsWith('/api') && Authorization) {
+      const authorizationTokenExists = await apiTokenExists(Authorization);
+
+      if (!authorizationTokenExists) {
+        return response.sendStatus(401);
+      }
+
+      response.locals.user = { ...authorizationTokenExists, isApiToken: true };
+    }
+
+    if (request.url.startsWith('/api') && !session_token && !Authorization) {
       return response.sendStatus(401);
     }
 
     return next();
   } catch (error) {
-    deleteCookie(response, 'access_token');
+    deleteCookie(response, 'session_token');
     handleError(error, response);
   }
 };

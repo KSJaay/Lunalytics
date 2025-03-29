@@ -1,34 +1,28 @@
 import SQLite from '../sqlite/setup.js';
 import { generateHash, verifyPassword } from '../../utils/hashPassword.js';
-import { signCookie, verifyCookie } from '../../utils/jwt.js';
+import { signCookie } from '../../utils/jwt.js';
 import {
   AuthorizationError,
   ConflictError,
 } from '../../../shared/utils/errors.js';
 
-const passwordMatches = (user, password) => {
-  const passwordMatches = verifyPassword(password, user.password);
-
-  if (!passwordMatches) {
-    throw new AuthorizationError('Password does not match');
-  }
-
-  const email = user.email.toLowerCase();
-
-  return { jwt: signCookie({ email }), user };
-};
-
-const signInUser = async (email, password) => {
+export const signInUser = async (email, password) => {
   const user = await SQLite.client('user').where({ email }).first();
 
   if (!user) {
     throw new AuthorizationError('User does not exist');
   }
 
-  return passwordMatches(user, password);
+  const passwordMatches = verifyPassword(password, user.password);
+
+  if (!passwordMatches) {
+    throw new AuthorizationError('Password does not match');
+  }
+
+  return user;
 };
 
-const registerUser = async (data) => {
+export const registerUser = async (data) => {
   const { email, password } = data;
 
   const userEmail = await SQLite.client('user').where({ email }).first();
@@ -43,25 +37,10 @@ const registerUser = async (data) => {
 
   await SQLite.client('user').insert(data);
 
-  return signCookie({ email });
+  return data;
 };
 
-const userExists = async (access_token) => {
-  const user = verifyCookie(access_token);
-  return SQLite.client('user')
-    .where({ email: user.email })
-    .select(
-      'email',
-      'displayName',
-      'avatar',
-      'isVerified',
-      'permission',
-      'createdAt'
-    )
-    .first();
-};
-
-const emailExists = async (email) => {
+export const getUserByEmail = async (email) => {
   return SQLite.client('user')
     .where({ email })
     .select(
@@ -75,7 +54,25 @@ const emailExists = async (email) => {
     .first();
 };
 
-const ownerExists = async () => {
+export const emailExists = async (email) => {
+  return SQLite.client('user')
+    .where({ email })
+    .select(
+      'email',
+      'displayName',
+      'avatar',
+      'isVerified',
+      'permission',
+      'createdAt'
+    )
+    .first();
+};
+
+export const emailIsOwner = async (email) => {
+  return SQLite.client('user').where({ email }).select('permission').first();
+};
+
+export const ownerExists = async () => {
   return SQLite.client('user')
     .where({ permission: 1 })
     .select(
@@ -89,30 +86,48 @@ const ownerExists = async () => {
     .first();
 };
 
-const updateUserDisplayname = (email, displayName) => {
+export const getUserPasswordUsingEmail = async (email) => {
+  return SQLite.client('user').where({ email }).select('password').first();
+};
+
+export const updateUserDisplayname = (email, displayName) => {
   return SQLite.client('user').where({ email }).update({ displayName });
 };
 
-const updateUserAvatar = (email, avatar) => {
+export const updateUserAvatar = (email, avatar) => {
   return SQLite.client('user').where({ email }).update({ avatar });
 };
 
-const fetchMembers = () => {
-  return SQLite.client('user').select(
-    'email',
-    'displayName',
-    'avatar',
-    'isVerified',
-    'permission',
-    'createdAt'
-  );
+export const fetchMembers = (userHasManageTeam = false) => {
+  if (userHasManageTeam) {
+    return SQLite.client('user').select(
+      'email',
+      'displayName',
+      'avatar',
+      'isVerified',
+      'permission',
+      'createdAt'
+    );
+  }
+
+  return SQLite.client('user')
+    .where({ isVerified: true })
+    .select(
+      'email',
+      'displayName',
+      'avatar',
+      'isVerified',
+      'permission',
+      'createdAt'
+    );
 };
 
-const declineAccess = (email) => {
+export const declineAccess = async (email) => {
+  await SQLite.client('user_session').where({ email }).del();
   return SQLite.client('user').where({ email }).del();
 };
 
-const approveAccess = (email) => {
+export const approveAccess = (email) => {
   // check user using email and update isVerified to true
 
   const userExists = SQLite.client('user').where({ email }).first();
@@ -124,7 +139,7 @@ const approveAccess = (email) => {
   return SQLite.client('user').where({ email }).update({ isVerified: true });
 };
 
-const updateUserPermission = (email, permission) => {
+export const updateUserPermission = (email, permission) => {
   const userExists = SQLite.client('user').where({ email }).first();
 
   if (!userExists) {
@@ -134,7 +149,7 @@ const updateUserPermission = (email, permission) => {
   return SQLite.client('user').where({ email }).update({ permission });
 };
 
-const updateUserPassword = (email, password) => {
+export const updateUserPassword = (email, password) => {
   const hashedPassword = generateHash(password);
 
   return SQLite.client('user')
@@ -142,7 +157,22 @@ const updateUserPassword = (email, password) => {
     .update({ password: hashedPassword });
 };
 
-const getDemoUser = async () => {
+export const resetDemoUser = async () => {
+  const demoUser = await SQLite.client('user').where({ email: 'demo' }).first();
+
+  if (demoUser) {
+    await SQLite.client('user').where({ email: 'demo' }).update({
+      email: 'demo',
+      displayName: 'Demo User',
+      password: 'demo',
+      avatar: null,
+      permission: 4,
+      isVerified: true,
+    });
+  }
+};
+
+export const getDemoUser = async () => {
   const demoUser = await SQLite.client('user').where({ email: 'demo' }).first();
 
   if (!demoUser) {
@@ -159,26 +189,11 @@ const getDemoUser = async () => {
   return signCookie({ email: 'demo' });
 };
 
-const transferOwnership = async (email, newOwner) => {
+export const transferOwnership = async (email, newOwner) => {
   await SQLite.client('user').where({ email }).update({ permission: 4 });
   return SQLite.client('user')
     .where({ email: newOwner })
     .update({ permission: 1 });
 };
 
-export {
-  signInUser,
-  registerUser,
-  userExists,
-  emailExists,
-  ownerExists,
-  updateUserDisplayname,
-  updateUserAvatar,
-  fetchMembers,
-  declineAccess,
-  approveAccess,
-  updateUserPermission,
-  updateUserPassword,
-  getDemoUser,
-  transferOwnership,
-};
+export const userExists = () => {};

@@ -12,19 +12,19 @@ const handleError = (error, response) => {
   if (!response.headersSent) {
     if (error instanceof AuthorizationError) {
       return response.status(401).send({
-        message: error.error,
+        message: error.message,
       });
     }
 
     if (error instanceof ConflictError) {
       return response.status(409).send({
-        message: error.error,
+        message: error.message,
       });
     }
 
     if (error instanceof UnprocessableError) {
       return response.status(422).send({
-        message: error.error,
+        message: error.message,
       });
     }
 

@@ -260,6 +260,36 @@ export class SQLite {
       });
     }
 
+    const sessionExists = await this.client.schema.hasTable('user_session');
+
+    if (!sessionExists) {
+      await this.client.schema.createTable('user_session', (table) => {
+        table.increments('id');
+        table.string('sessionId').notNullable().primary().unique();
+        table.string('email').notNullable().references('email').inTable('user');
+        table.jsonb('device');
+        table.jsonb('data');
+        table.datetime('createdAt');
+
+        table.index('sessionId');
+        table.index('email');
+      });
+    }
+
+    const apiTokenExists = await this.client.schema.hasTable('api_token');
+
+    if (!apiTokenExists) {
+      await this.client.schema.createTable('api_token', (table) => {
+        table.string('token').notNullable().primary().unique();
+        table.string('permission').notNullable();
+        table.string('email').notNullable().references('email').inTable('user');
+        table.datetime('createdAt');
+
+        table.index('token');
+        table.index('email');
+      });
+    }
+
     return true;
   }
 }

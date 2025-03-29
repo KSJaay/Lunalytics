@@ -1,23 +1,10 @@
-import {
-  userExists,
-  updateUserAvatar,
-} from '../../../database/queries/user.js';
+import { updateUserAvatar } from '../../../database/queries/user.js';
 import { handleError } from '../../../utils/errors.js';
 import validators from '../../../../shared/validators/index.js';
 
 const userUpdateAvatar = async (request, response) => {
   try {
-    const { access_token } = request.cookies;
-
-    if (!access_token) {
-      return response.sendStatus(401);
-    }
-
-    const user = await userExists(access_token);
-
-    if (!user) {
-      return response.sendStatus(401);
-    }
+    const { user } = response.locals;
 
     const { avatar } = request.body;
 

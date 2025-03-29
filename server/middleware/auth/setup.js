@@ -13,6 +13,8 @@ import { setServerSideCookie } from '../../../shared/utils/cookies.js';
 import { handleError } from '../../utils/errors.js';
 import client from '../../database/sqlite/setup.js';
 import config from '../../utils/config.js';
+import { createUserSession } from '../../database/queries/session.js';
+import { parseUserAgent } from '../../utils/uaParser.js';
 
 const packageJson = loadJSON('package.json');
 
@@ -89,6 +91,10 @@ const setupMiddleware = async (request, response) => {
       return response.status(400).send({ general: 'Invalid setup type' });
     }
 
+    if (config.get('database')?.name) {
+      return response.status(400).send({ general: 'Database already exists' });
+    }
+
     const keys = getSetupKeys(type, request.body.databaseType);
     let errors = {};
 
@@ -138,8 +144,18 @@ const setupMiddleware = async (request, response) => {
       createdAt: new Date().toISOString(),
     };
 
-    const jwt = await registerUser(data);
-    setServerSideCookie(response, 'access_token', jwt);
+    await registerUser(data);
+
+    const userAgent = request.headers['user-agent'];
+    const agentData = parseUserAgent(userAgent);
+
+    const sessionToken = await createUserSession(
+      data.email,
+      agentData.device,
+      agentData.data
+    );
+
+    setServerSideCookie(response, 'session_token', sessionToken);
 
     return response.sendStatus(200);
   } catch (error) {

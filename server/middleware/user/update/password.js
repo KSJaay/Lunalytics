@@ -1,6 +1,6 @@
 import {
+  getUserPasswordUsingEmail,
   updateUserPassword,
-  userExists,
 } from '../../../database/queries/user.js';
 import { handleError } from '../../../utils/errors.js';
 import { verifyPassword } from '../../../utils/hashPassword.js';
@@ -8,21 +8,13 @@ import validators from '../../../../shared/validators/index.js';
 
 const userUpdatePassword = async (request, response) => {
   try {
-    const { access_token } = request.cookies;
+    const { user } = response.locals;
 
-    if (!access_token) {
-      return response.sendStatus(401);
-    }
-
-    const user = await userExists(access_token);
-
-    if (!user) {
-      return response.sendStatus(401);
-    }
+    const password = await getUserPasswordUsingEmail(user.email);
 
     const { currentPassword, newPassword } = request.body;
 
-    const passwordMatches = verifyPassword(currentPassword, user.password);
+    const passwordMatches = verifyPassword(currentPassword, password);
 
     if (!passwordMatches) {
       return response.status(401).json({

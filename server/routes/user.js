@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
 
-import hasAdminPermissions from '../middleware/user/hasAdmin.js';
 import accessDeclineMiddleware from '../middleware/user/access/declineUser.js';
 import accessApproveMiddleware from '../middleware/user/access/approveUser.js';
 import accessRemoveMiddleware from '../middleware/user/access/removeUser.js';
@@ -15,6 +14,15 @@ import deleteAccountMiddleware from '../middleware/user/deleteAccount.js';
 import userMonitorsMiddleware from '../middleware/user/monitors.js';
 import userExistsMiddleware from '../middleware/user/exists.js';
 import fetchUserMiddleware from '../middleware/user/user.js';
+import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
+import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
+
+const hasManagePermissions = hasRequiredPermission(
+  PermissionsBits.MANAGE_MONITORS
+);
+const hasAdminPermissions = hasRequiredPermission(
+  PermissionsBits.ADMINISTRATOR
+);
 
 router.get('/', fetchUserMiddleware);
 
@@ -30,15 +38,23 @@ router.post('/update/avatar', userUpdateAvatar);
 
 router.get('/team', teamMembersListMiddleware);
 
-router.post('/access/decline', hasAdminPermissions, accessDeclineMiddleware);
+router.post('/access/decline', hasManagePermissions, accessDeclineMiddleware);
 
-router.post('/access/approve', hasAdminPermissions, accessApproveMiddleware);
+router.post('/access/approve', hasManagePermissions, accessApproveMiddleware);
 
-router.post('/access/remove', hasAdminPermissions, accessRemoveMiddleware);
+router.post('/access/remove', hasManagePermissions, accessRemoveMiddleware);
 
-router.post('/permission/update', permissionUpdateMiddleware);
+router.post(
+  '/permission/update',
+  hasAdminPermissions,
+  permissionUpdateMiddleware
+);
 
-router.post('/transfer/ownership', transferOwnershipMiddleware);
+router.post(
+  '/transfer/ownership',
+  hasAdminPermissions,
+  transferOwnershipMiddleware
+);
 
 router.post('/delete/account', deleteAccountMiddleware);
 

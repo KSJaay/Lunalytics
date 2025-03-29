@@ -3,7 +3,6 @@ import {
   StatusPageValidatorError,
 } from '../../../shared/utils/errors.js';
 import { handleError } from '../../utils/errors.js';
-import { userExists } from '../../database/queries/user.js';
 import { createStatusPage } from '../../database/queries/status.js';
 import validateStatusLayout from '../../../shared/validators/status/layout.js';
 import validateStatusSettings from '../../../shared/validators/status/settings.js';
@@ -27,8 +26,7 @@ const createStatusPageMiddleware = async (request, response) => {
       );
     }
 
-    const { access_token } = request.cookies;
-    const user = await userExists(access_token);
+    const { user } = response.locals;
 
     const query = await createStatusPage(settings, layout, user);
 

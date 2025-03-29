@@ -1,21 +1,13 @@
-import { userExists, declineAccess } from '../../database/queries/user.js';
+import { declineAccess, emailIsOwner } from '../../database/queries/user.js';
 import { handleError } from '../../utils/errors.js';
 
 const deleteAccountMiddleware = async (request, response) => {
   try {
-    const { access_token } = request.cookies;
+    const { user } = response.locals;
 
-    if (!access_token) {
-      return response.sendStatus(401);
-    }
+    const userIsOwner = await emailIsOwner(user.email);
 
-    const user = await userExists(access_token);
-
-    if (!user) {
-      return response.sendStatus(401);
-    }
-
-    if (user.permission === 1) {
+    if (userIsOwner.permission === 1) {
       return response
         .status(403)
         .send('Please transfer ownership before deleting your account.');
