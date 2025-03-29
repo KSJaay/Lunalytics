@@ -2,7 +2,7 @@ class AuthorizationError extends Error {
   constructor(error) {
     super();
     this.name = 'AuthorizationError';
-    this.error = error;
+    this.message = error;
   }
 }
 
@@ -10,7 +10,7 @@ class UnprocessableError extends Error {
   constructor(error) {
     super();
     this.name = 'UnprocessableError';
-    this.error = error;
+    this.message = error;
   }
 }
 
@@ -18,7 +18,7 @@ class ConflictError extends Error {
   constructor(error) {
     super();
     this.name = 'ConflictError';
-    this.error = error;
+    this.message = error;
   }
 }
 
