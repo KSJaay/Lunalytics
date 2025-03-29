@@ -77,6 +77,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
         <MdEdit style={{ width: '20px', height: '20px' }} />
       </div>
       <div
+        id={`decline-${member.displayName}`}
         className={`member-row-body-icon-trash ${classes}`}
         onClick={() => {
           if (canManage) {

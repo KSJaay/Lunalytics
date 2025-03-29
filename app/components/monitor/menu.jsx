@@ -16,6 +16,8 @@ import { FaClone, FaEllipsisVertical, FaTrashCan, MdEdit } from '../icons';
 import { FaPlay, FaPause } from '../icons';
 import Dropdown from '../ui/dropdown';
 import useDropdown from '../../hooks/useDropdown';
+import Role from '../../../shared/permissions/role';
+import { PermissionsBits } from '../../../shared/permissions/bitFlags';
 
 const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
   const {
@@ -27,7 +29,8 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
   const navigate = useNavigate();
 
   const monitor = getMonitor(monitorId);
-  const isEditor = user.permission <= 3;
+  const role = new Role('user', user.permission);
+  const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
 
   const handleConfirm = async () => {
     await createGetRequest('/api/monitor/delete', {

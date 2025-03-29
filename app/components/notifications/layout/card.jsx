@@ -14,6 +14,8 @@ import useContextStore from '../../../context';
 import NotificationModal from '../../modal/notification';
 import NotificationDeleteModal from '../../modal/notification/delete';
 import { createGetRequest } from '../../../services/axios';
+import Role from '../../../../shared/permissions/role';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 
 const NotificationIcons = {
   Discord: '/notifications/discord.svg',
@@ -34,7 +36,8 @@ const NotificationCard = ({ notification = {} }) => {
   } = useContextStore();
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
-  const isEditor = user.permission <= 3;
+  const role = new Role('user', user.permission);
+  const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
 
   const handleDelete = async (id) => {
     try {

@@ -13,6 +13,8 @@ import SearchBar from '../../ui/searchBar';
 import useContextStore from '../../../context';
 import HomeMenuMobile from './mobile';
 import MonitorConfigureModal from '../../modal/monitor/configure';
+import Role from '../../../../shared/permissions/role';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 
 const HomeMenu = ({ handleReset, search, setSearch }) => {
   const {
@@ -20,6 +22,10 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
     modalStore: { openModal, closeModal },
     globalStore: { addMonitor },
   } = useContextStore();
+
+  const canManageMonitors = new Role('user', user.permission).hasPermission(
+    PermissionsBits.MANAGE_MONITORS
+  );
 
   return (
     <div className="home-menu">
@@ -34,7 +40,7 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
         <MenuStatusDropdown />
         <MenuLayoutDropdown />
 
-        {user.canEdit ? (
+        {canManageMonitors ? (
           <Button
             id="home-add-monitor-button"
             onClick={() =>
