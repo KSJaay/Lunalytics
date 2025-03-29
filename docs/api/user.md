@@ -10,7 +10,7 @@ import DividePage from '../components/DividePage.vue';
 
 ## Authorization
 
-Currently users are only able to access the API while they are signed into the application. The API requires the `access_token` cookie to be present in the request. Soon in the future we will be rolling out an update that allows admins to create API keys to access the API, along with restricting what each API key can access.
+Currently users are only able to access the API while they are signed into the application. The API requires the `session_token` cookie to be present in the request. Soon in the future we will be rolling out an update that allows admins to create API keys to access the API, along with restricting what each API key can access.
 
 ## Restrictions
 
@@ -88,11 +88,11 @@ Returns the [user](#user-structure) object for the current logged in user. This 
 
 ### HTTP Response Codes
 
-| Status Code | Description                                               |
-| ----------- | --------------------------------------------------------- |
-| 200         | Success, returns [user](#user-structure) object           |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token) |
-| 403         | User is unverified                                        |
+| Status Code | Description                                                |
+| ----------- | ---------------------------------------------------------- |
+| 200         | Success, returns [user](#user-structure) object            |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token) |
+| 403         | User is unverified                                         |
 
 </template>
 
@@ -134,12 +134,12 @@ Returns a boolean stating whether the user exists in the database.
 
 ### HTTP Response Codes
 
-| Status Code | Description                                               |
-| ----------- | --------------------------------------------------------- |
-| 200         | Success, returns boolean for if user exists               |
-| 400         | Bad Request, email not provided                           |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token) |
-| 403         | User is unverified                                        |
+| Status Code | Description                                                |
+| ----------- | ---------------------------------------------------------- |
+| 200         | Success, returns boolean for if user exists                |
+| 400         | Bad Request, email not provided                            |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token) |
+| 403         | User is unverified                                         |
 
 </template>
 
@@ -189,7 +189,7 @@ Returns an array of the montiors the user has access to.
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | 200         | Success, returns an array of [monitor](#monitor-structure) along with [heartbeats](#heartbeat-structure) and [cert](#cert-structure) |
 | 400         | Bad Request, email not provided                                                                                                      |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)                                                                            |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)                                                                           |
 | 403         | User is unverified                                                                                                                   |
 
 </template>
@@ -244,7 +244,7 @@ Update the username for the current logged in user.
 | ----------- | ---------------------------------------------------------- |
 | 200         | Success, username has been updates                         |
 | 400         | Bad Request, displayName not provided or is invalid format |
-| 401         | Unauthorized (Missing `access_token` cookie)               |
+| 401         | Unauthorized (Missing `session_token` cookie)              |
 | 403         | User is unverified                                         |
 
 </template>
@@ -302,7 +302,7 @@ Update the password for the current logged in user.
 | ----------- | ----------------------------------------------------------------------------- |
 | 200         | Success, username has been updates                                            |
 | 400         | Bad Request, currentPassword or newPassword not provided or is invalid format |
-| 401         | Unauthorized (Missing `access_token` cookie or user password is invalid)      |
+| 401         | Unauthorized (Missing `session_token` cookie or user password is invalid)     |
 | 403         | User is unverified                                                            |
 
 </template>
@@ -360,7 +360,7 @@ Update the avatar for the current logged in user.
 | ----------- | ----------------------------------------------------- |
 | 200         | Success, avatar has been updates                      |
 | 400         | Bad Request, avatar not provided or is invalid format |
-| 401         | Unauthorized (Missing `access_token` cookie)          |
+| 401         | Unauthorized (Missing `session_token` cookie)         |
 | 403         | User is unverified                                    |
 
 </template>
@@ -405,11 +405,11 @@ Returns an array of [team members](#user-structure).
 
 ### HTTP Response Codes
 
-| Status Code | Description                                               |
-| ----------- | --------------------------------------------------------- |
-| 200         | Success, returns an array of team members                 |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token) |
-| 403         | User is unverified                                        |
+| Status Code | Description                                                |
+| ----------- | ---------------------------------------------------------- |
+| 200         | Success, returns an array of team members                  |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token) |
+| 403         | User is unverified                                         |
 
 </template>
 
@@ -459,12 +459,12 @@ Decline the request from a member wanting to join the team. Only admins/owners c
 
 ### HTTP Response Codes
 
-| Status Code | Description                                                                           |
-| ----------- | ------------------------------------------------------------------------------------- |
-| 200         | Success, declined request                                                             |
-| 400         | Bad Request, email not provided                                                       |
-| 401         | Unauthorized (Missing `access_token` cookie, API Token, or user isn't an admin/owner) |
-| 403         | User is unverified                                                                    |
+| Status Code | Description                                                                            |
+| ----------- | -------------------------------------------------------------------------------------- |
+| 200         | Success, declined request                                                              |
+| 400         | Bad Request, email not provided                                                        |
+| 401         | Unauthorized (Missing `session_token` cookie, API Token, or user isn't an admin/owner) |
+| 403         | User is unverified                                                                     |
 
 </template>
 
@@ -518,12 +518,12 @@ Approve the request from a member wanting to join the team. Only admins/owners c
 
 ### HTTP Response Codes
 
-| Status Code | Description                                                                           |
-| ----------- | ------------------------------------------------------------------------------------- |
-| 200         | Success, approved request                                                             |
-| 400         | Bad Request, email not provided                                                       |
-| 401         | Unauthorized (Missing `access_token` cookie, API Token, or user isn't an admin/owner) |
-| 403         | User is unverified                                                                    |
+| Status Code | Description                                                                            |
+| ----------- | -------------------------------------------------------------------------------------- |
+| 200         | Success, approved request                                                              |
+| 400         | Bad Request, email not provided                                                        |
+| 401         | Unauthorized (Missing `session_token` cookie, API Token, or user isn't an admin/owner) |
+| 403         | User is unverified                                                                     |
 
 </template>
 
@@ -577,12 +577,12 @@ Remove the user from the team. Only admins/owners can access this endpoint.
 
 ### HTTP Response Codes
 
-| Status Code | Description                                                                           |
-| ----------- | ------------------------------------------------------------------------------------- |
-| 200         | Success, removed user                                                                 |
-| 400         | Bad Request, email not provided                                                       |
-| 401         | Unauthorized (Missing `access_token` cookie, API Token, or user isn't an admin/owner) |
-| 403         | User is unverified                                                                    |
+| Status Code | Description                                                                            |
+| ----------- | -------------------------------------------------------------------------------------- |
+| 200         | Success, removed user                                                                  |
+| 400         | Bad Request, email not provided                                                        |
+| 401         | Unauthorized (Missing `session_token` cookie, API Token, or user isn't an admin/owner) |
+| 403         | User is unverified                                                                     |
 
 </template>
 
@@ -637,12 +637,12 @@ Update the permission of a user. Only admins/owners can access this endpoint. Ad
 
 ### HTTP Response Codes
 
-| Status Code | Description                                                                           |
-| ----------- | ------------------------------------------------------------------------------------- |
-| 200         | Success, updated user permissions                                                     |
-| 400         | Bad Request, email not provided or invalid permission                                 |
-| 401         | Unauthorized (Missing `access_token` cookie, API Token, or user isn't an admin/owner) |
-| 403         | User is unverified                                                                    |
+| Status Code | Description                                                                            |
+| ----------- | -------------------------------------------------------------------------------------- |
+| 200         | Success, updated user permissions                                                      |
+| 400         | Bad Request, email not provided or invalid permission                                  |
+| 401         | Unauthorized (Missing `session_token` cookie, API Token, or user isn't an admin/owner) |
+| 403         | User is unverified                                                                     |
 
 </template>
 
@@ -697,12 +697,12 @@ Transfer the ownership of to another user. Only the owner can access this endpoi
 
 ### HTTP Response Codes
 
-| Status Code | Description                                                                |
-| ----------- | -------------------------------------------------------------------------- |
-| 200         | Success, ownership has been transferred                                    |
-| 400         | Bad Request, email not provided, user doesn't exist, or invalid permission |
-| 401         | Unauthorized (Missing `access_token` cookie, or user isn't an admin/owner) |
-| 403         | User is unverified                                                         |
+| Status Code | Description                                                                 |
+| ----------- | --------------------------------------------------------------------------- |
+| 200         | Success, ownership has been transferred                                     |
+| 400         | Bad Request, email not provided, user doesn't exist, or invalid permission  |
+| 401         | Unauthorized (Missing `session_token` cookie, or user isn't an admin/owner) |
+| 403         | User is unverified                                                          |
 
 </template>
 
@@ -746,11 +746,11 @@ Delete the users account, user won't be able to do this unless they have transfe
 
 ### HTTP Response Codes
 
-| Status Code | Description                                                         |
-| ----------- | ------------------------------------------------------------------- |
-| 200         | Success, delete your account                                        |
-| 401         | Unauthorized (Missing `access_token` cookie, or user doesn't exist) |
-| 403         | User has ownership                                                  |
+| Status Code | Description                                                          |
+| ----------- | -------------------------------------------------------------------- |
+| 200         | Success, delete your account                                         |
+| 401         | Unauthorized (Missing `session_token` cookie, or user doesn't exist) |
+| 403         | User has ownership                                                   |
 
 </template>
 

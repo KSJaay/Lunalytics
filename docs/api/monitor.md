@@ -10,7 +10,7 @@ import DividePage from '../components/DividePage.vue';
 
 ## Authorization
 
-Currently monitors are only able to access the API while they are signed into the application. The API requires the `access_token` cookie to be present in the request.
+Currently monitors are only able to access the API while they are signed into the application. The API requires the `session_token` cookie to be present in the request.
 
 ## Restrictions
 
@@ -335,7 +335,7 @@ Returns the [full monitor](#full-monitor-structure) object for the new monitor a
 | Status Code | Description                                                     |
 | ----------- | --------------------------------------------------------------- |
 | 200         | Success, returns [full monitor](#full-monitor-structure) object |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)       |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)       |
 | 403         | User is unverified                                              |
 | 422         | Invalid monitor information                                     |
 
@@ -426,7 +426,7 @@ Returns the [full monitor](#full-monitor-structure) object for the edited monito
 | Status Code | Description                                                     |
 | ----------- | --------------------------------------------------------------- |
 | 200         | Success, returns [full monitor](#full-monitor-structure) object |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)       |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)       |
 | 403         | User is unverified                                              |
 | 422         | Invalid monitor information                                     |
 
@@ -492,7 +492,7 @@ Monitor id for the monitor to be deleted.
 | ----------- | --------------------------------------------------------- |
 | 200         | Success, return status code 200                           |
 | 400         | Bad Request, monitorId not provided                       |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token) |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token) |
 | 403         | User is unverified                                        |
 
 </template>
@@ -553,7 +553,7 @@ Status can either be `latest`, `day`, `week`, or `month`. If no status is specif
 | ----------- | ---------------------------------------------------------- |
 | 200         | Success, an array of [heartbeats](#heartbeat-structure)    |
 | 400         | Bad Request, monitorId not provided or invalid status type |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)  |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)  |
 | 403         | User is unverified                                         |
 | 404         | Monitor not found                                          |
 | 416         | Range Not Satisfiable (Less than 2 monitors)               |
@@ -614,7 +614,7 @@ Monitor id for the monitor to be deleted.
 | ----------- | ------------------------------------------------------------------- |
 | 200         | Success, returns the [full monitor](#full-monitor-structure) object |
 | 400         | Bad Request, monitorId not provided                                 |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)           |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)           |
 | 403         | User is unverified                                                  |
 | 404         | Monitor not found                                                   |
 
