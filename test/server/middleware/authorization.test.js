@@ -1,9 +1,11 @@
 import { createRequest, createResponse } from 'node-mocks-http';
 import { afterEach, beforeEach, describe, it, vi } from 'vitest';
-import { userExists } from '../../../server/database/queries/user';
 import authorization from '../../../server/middleware/authorization';
 import { deleteCookie } from '../../../shared/utils/cookies';
+import { userSessionExists } from '../../../server/database/queries/session';
+import { getUserByEmail } from '../../../server/database/queries/user';
 
+vi.mock('../../../server/database/queries/session');
 vi.mock('../../../server/database/queries/user');
 vi.mock('../../../shared/utils/cookies');
 
@@ -22,7 +24,7 @@ describe('Authorization - Middleware', () => {
     vi.restoreAllMocks();
   });
 
-  describe('when user has a valid access_token', () => {
+  describe('when user has a valid session_token', () => {
     let user;
 
     beforeEach(() => {
@@ -32,14 +34,35 @@ describe('Authorization - Middleware', () => {
         isVerified: true,
       };
 
-      userExists = vi.fn().mockReturnValue(user);
-      fakeRequest.cookies = { access_token: 'test' };
+      userSessionExists = vi.fn().mockReturnValue(user);
+      getUserByEmail = vi.fn().mockReturnValue(user);
+      fakeRequest.cookies = { session_token: 'test' };
       fakeResponse.send = vi.fn();
       fakeResponse.redirect = vi.fn();
     });
 
     afterEach(() => {
       vi.restoreAllMocks();
+    });
+
+    it('should call next if session_token is missing', async () => {
+      fakeRequest.cookies = {};
+
+      await authorization(fakeRequest, fakeResponse, fakeNext);
+
+      expect(fakeNext).toHaveBeenCalled();
+    });
+
+    it('should call userSessionExists with session_token', async () => {
+      await authorization(fakeRequest, fakeResponse, fakeNext);
+
+      expect(userSessionExists).toHaveBeenCalledWith('test');
+    });
+
+    it('should call getUserByEmail with session_token', async () => {
+      await authorization(fakeRequest, fakeResponse, fakeNext);
+
+      expect(getUserByEmail).toHaveBeenCalledWith(user.email);
     });
 
     it('should return user data if endpoint is /api/user/verfied', async () => {
@@ -82,25 +105,25 @@ describe('Authorization - Middleware', () => {
     });
   });
 
-  describe('when user has an invalid access_token', () => {
+  describe('when user has an invalid session_token', () => {
     beforeEach(() => {
-      fakeRequest.cookies = { access_token: 'test' };
+      fakeRequest.cookies = { session_token: 'test' };
       fakeResponse.cookie = vi.fn();
-      userExists = vi.fn().mockImplementation(() => null);
+      userSessionExists = vi.fn().mockImplementation(() => null);
     });
 
     afterEach(() => {
       vi.restoreAllMocks();
     });
 
-    it('should delete access_token cookie and return 401', async () => {
+    it('should delete session_token cookie and return 401', async () => {
       deleteCookie = vi.fn();
 
       await authorization(fakeRequest, fakeResponse, fakeNext);
 
       expect(fakeResponse.statusCode).toEqual(401);
 
-      expect(deleteCookie).toHaveBeenCalledWith(fakeResponse, 'access_token');
+      expect(deleteCookie).toHaveBeenCalledWith(fakeResponse, 'session_token');
 
       expect(fakeNext).not.toHaveBeenCalled();
     });
@@ -113,7 +136,7 @@ describe('Authorization - Middleware', () => {
       fakeRequest.cookies = {};
     });
 
-    it("should return 401 if access_token doesn't exist", async () => {
+    it("should return 401 if session_token doesn't exist", async () => {
       await authorization(fakeRequest, fakeResponse, fakeNext);
 
       expect(fakeResponse.statusCode).toEqual(401);
@@ -122,7 +145,7 @@ describe('Authorization - Middleware', () => {
     });
   });
 
-  describe('when no access_token exists', () => {
+  describe('when no session_token exists', () => {
     beforeEach(() => {
       fakeRequest.url = '/login';
 

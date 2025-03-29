@@ -1,13 +1,22 @@
-import { beforeEach, describe, expect, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import register from '../../../../server/middleware/auth/register';
 import { registerUser } from '../../../../server/database/queries/user';
 import { setServerSideCookie } from '../../../../shared/utils/cookies';
+import { parseUserAgent } from '../../../../server/utils/uaParser';
+import { createUserSession } from '../../../../server/database/queries/session';
 
 vi.mock('../../../../server/database/queries/user');
 vi.mock('../../../../shared/utils/cookies');
+vi.mock('../../../../server/utils/uaParser');
+vi.mock('../../../../server/database/queries/session');
 
 describe('Register - Middleware', () => {
+  const fakeUserAgentData = {
+    device: 'testDevice',
+    data: { test: 'test' },
+  };
+
   let fakeRequest;
   let fakeResponse;
 
@@ -27,6 +36,12 @@ describe('Register - Middleware', () => {
 
     registerUser = vi.fn().mockReturnValue('test');
     setServerSideCookie = vi.fn();
+    parseUserAgent = vi.fn().mockReturnValue(fakeUserAgentData);
+    createUserSession = vi.fn().mockReturnValue('test');
+
+    fakeRequest.headers = {
+      'user-agent': 'fakeUserAgent',
+    };
   });
 
   afterEach(() => {
@@ -72,12 +87,30 @@ describe('Register - Middleware', () => {
       });
     });
 
-    it('should call setServerSideCookie with response, "access_token", and jwt', async () => {
+    it('should call parseUserAgent with headers', async () => {
+      await register(fakeRequest, fakeResponse);
+
+      expect(parseUserAgent).toHaveBeenCalledWith(
+        fakeRequest.headers['user-agent']
+      );
+    });
+
+    it('should call createUserSession with email, device, and data', async () => {
+      await register(fakeRequest, fakeResponse);
+
+      expect(createUserSession).toHaveBeenCalledWith(
+        fakeRequest.body.email.toLowerCase(),
+        fakeUserAgentData.device,
+        fakeUserAgentData.data
+      );
+    });
+
+    it('should call setServerSideCookie with response, "session_token", and jwt', async () => {
       await register(fakeRequest, fakeResponse);
 
       expect(setServerSideCookie).toHaveBeenCalledWith(
         fakeResponse,
-        'access_token',
+        'session_token',
         'test'
       );
     });

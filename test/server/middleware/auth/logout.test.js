@@ -21,10 +21,10 @@ describe('Logout - Middleware', () => {
     vi.restoreAllMocks();
   });
 
-  it('should call deleteCookie with response and "access_token"', async () => {
+  it('should call deleteCookie with response and "session_token"', async () => {
     await logout(fakeRequest, fakeResponse);
 
-    expect(deleteCookie).toHaveBeenCalledWith(fakeResponse, 'access_token');
+    expect(deleteCookie).toHaveBeenCalledWith(fakeResponse, 'session_token');
   });
 
   it('should redirect to /login', async () => {

@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import {
-  userExists,
   emailExists,
+  emailIsOwner,
   transferOwnership,
 } from '../../../../server/database/queries/user';
 import transferOwnershipMiddleware from '../../../../server/middleware/user/transferOwnership';
@@ -10,35 +10,34 @@ import transferOwnershipMiddleware from '../../../../server/middleware/user/tran
 vi.mock('../../../../server/database/queries/user');
 
 describe('transferOwnershipMiddleware - Middleware', () => {
-  const access_token = 'test_token';
+  const session_token = 'test_token';
+
+  const user = {
+    email: 'KSJaay@lunalytics.xyz',
+    permission: 1,
+  };
 
   let fakeRequest;
   let fakeResponse;
 
   beforeEach(() => {
-    userExists = vi
+    emailExists = vi
       .fn()
       .mockReturnValue({ email: 'KSJaay@lunalytics.xyz', permission: 1 });
     emailExists = vi.fn().mockReturnValue(true);
     transferOwnership = vi.fn();
+    emailIsOwner = vi.fn().mockReturnValue({ permission: 1 });
 
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fakeRequest.cookies = { access_token };
+    fakeRequest.cookies = { session_token };
     fakeRequest.body = { email: '123@lunalytics.xyz' };
+    fakeResponse.locals = { user };
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
-  });
-
-  it('should return 401 when access_token is not provided', async () => {
-    fakeRequest.cookies = {};
-
-    await transferOwnershipMiddleware(fakeRequest, fakeResponse);
-
-    expect(fakeResponse.statusCode).toEqual(401);
   });
 
   it('should return 400 when email is not provided', async () => {
@@ -49,24 +48,8 @@ describe('transferOwnershipMiddleware - Middleware', () => {
     expect(fakeResponse.statusCode).toEqual(400);
   });
 
-  it('should call userExists with access_token', async () => {
-    await transferOwnershipMiddleware(fakeRequest, fakeResponse);
-
-    expect(userExists).toHaveBeenCalledWith(access_token);
-  });
-
-  it('should return 401 when user does not exist', async () => {
-    userExists = vi.fn().mockReturnValue(null);
-
-    await transferOwnershipMiddleware(fakeRequest, fakeResponse);
-
-    expect(fakeResponse.statusCode).toEqual(401);
-  });
-
   it('should return 401 when user does has ownership', async () => {
-    userExists = vi
-      .fn()
-      .mockReturnValue({ email: 'KSJaay@lunalytics.xyz', permission: 2 });
+    emailIsOwner = vi.fn().mockReturnValue({ permission: 2 });
 
     await transferOwnershipMiddleware(fakeRequest, fakeResponse);
 

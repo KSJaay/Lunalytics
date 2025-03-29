@@ -2,11 +2,7 @@ import fs from 'fs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import SQLite from '../../../server/database/sqlite/setup';
-import { setServerSideCookie } from '../../../shared/utils/cookies';
-import {
-  ownerExists,
-  registerUser,
-} from '../../../server/database/queries/user';
+import { ownerExists } from '../../../server/database/queries/user';
 import config from '../../../server/utils/config';
 import setupExistsMiddleware from '../../../server/middleware/setupExists';
 import setupMiddleware from '../../../server/middleware/auth/setup';
@@ -15,7 +11,6 @@ import setupValidators from '../../../shared/validators/setup';
 vi.mock('fs');
 vi.mock('../../../server/database/sqlite/setup');
 vi.mock('../../../server/database/queries/user');
-vi.mock('../../../shared/utils/cookies');
 vi.mock('../../../server/utils/config');
 
 describe('Setup - Middleware', () => {
@@ -55,14 +50,14 @@ describe('Setup - Middleware', () => {
     };
 
     SQLite.client = () => builders;
-    // registerUser = vi.fn().mockResolvedValue('test');
     ownerExists = vi.fn().mockResolvedValue(true);
-    setServerSideCookie = vi.fn();
     fs.writeFileSync = vi.fn();
 
     fakeRequest = createRequest();
     fakeResponse = createResponse();
     fakeNext = vi.fn();
+
+    config.get = vi.fn().mockReturnValue({ name: 'test' });
 
     fakeRequest.body = {
       email: 'KSJaay@lunalytics.xyz',
@@ -94,15 +89,41 @@ describe('Setup - Middleware', () => {
     });
 
     it('should return ownerExists: true if owner exists in database', async () => {
-      config.get = vi.fn().mockReturnValue({ name: 'test' });
-
       await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
 
       expect(fakeNext).toHaveBeenCalled();
     });
+
+    it('should call ownerExists', async () => {
+      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
+
+      expect(ownerExists).toHaveBeenCalled();
+    });
+
+    it('should redirect to /setup if owner does not exist', async () => {
+      ownerExists = vi.fn().mockReturnValue(false);
+
+      const spy = vi.spyOn(fakeResponse, 'redirect');
+      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
+
+      expect(spy).toHaveBeenCalledWith('/setup');
+    });
+
+    it('should redirect to /login if request.url is /setup', async () => {
+      fakeRequest.url = '/setup';
+
+      const spy = vi.spyOn(fakeResponse, 'redirect');
+      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
+
+      expect(spy).toHaveBeenCalledWith('/login');
+    });
   });
 
   describe('POST - /setup', () => {
+    beforeEach(() => {
+      config.get = vi.fn().mockReturnValue(null);
+    });
+
     it('should return 400 when type is not provided', async () => {
       fakeRequest.body = {};
 

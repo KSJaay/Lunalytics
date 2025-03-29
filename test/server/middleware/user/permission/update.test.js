@@ -1,10 +1,8 @@
 import { createRequest, createResponse } from 'node-mocks-http';
-import {
-  updateUserPermission,
-  userExists,
-} from '../../../../../server/database/queries/user';
+import { updateUserPermission } from '../../../../../server/database/queries/user';
 import permissionUpdateMiddleware from '../../../../../server/middleware/user/permission/update';
 import { AuthorizationError } from '../../../../../shared/utils/errors';
+import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 
 vi.mock('../../../../../server/database/queries/user');
 
@@ -15,39 +13,29 @@ describe('permissionUpdateMiddleware - Middleware', () => {
   let fakeResponse;
 
   beforeEach(() => {
+    const user = {
+      email: 'KSJaay@lunalytics.xyz',
+      displayName: 'KSJaay',
+      permission: PermissionsBits.ADMINISTRATOR,
+    };
+
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    userExists = vi.fn().mockReturnValue({ email, permission: 2 });
     updateUserPermission = vi.fn();
 
-    fakeRequest.cookies = { access_token: 'test_token' };
+    fakeRequest.cookies = { session_token: 'test_token' };
     fakeRequest.body = { email, permission: 3 };
+
+    fakeResponse.locals = { user };
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('should return 401 when access_token is missing', async () => {
-    fakeRequest.cookies = {};
-
-    await permissionUpdateMiddleware(fakeRequest, fakeResponse);
-
-    expect(fakeResponse.statusCode).toEqual(401);
-  });
-
-  it('should return 401 when user does not exist', async () => {
-    userExists = vi.fn().mockReturnValue(null);
-
-    await permissionUpdateMiddleware(fakeRequest, fakeResponse);
-
-    expect(fakeResponse.statusCode).toEqual(401);
-  });
-
-  it('should return 401 when user is not an admin/owner', async () => {
-    userExists = vi.fn().mockReturnValue({ email, permission: 3 });
-
+  it("should return 401 when user doesn't have administrator permission", async () => {
+    fakeResponse.locals.user.permission = PermissionsBits.VIEW_STATUS_PAGES;
     await permissionUpdateMiddleware(fakeRequest, fakeResponse);
 
     expect(fakeResponse.statusCode).toEqual(401);

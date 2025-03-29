@@ -1,8 +1,5 @@
 import { createRequest, createResponse } from 'node-mocks-http';
-import {
-  updateUserAvatar,
-  userExists,
-} from '../../../../../server/database/queries/user';
+import { updateUserAvatar } from '../../../../../server/database/queries/user';
 import userUpdateAvatar from '../../../../../server/middleware/user/update/avatar';
 import validators from '../../../../../shared/validators';
 
@@ -24,32 +21,16 @@ describe('userUpdateAvatar - Middleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    userExists = vi.fn().mockReturnValue(user);
     updateUserAvatar = vi.fn();
 
-    fakeRequest.cookies = { access_token: 'test_token' };
-
+    fakeRequest.cookies = { session_token: 'test_token' };
     fakeRequest.body = { avatar: 'Hamster' };
+
+    fakeResponse.locals = { user };
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
-  });
-
-  it('should return 401 when access_token is missing', async () => {
-    fakeRequest.cookies = {};
-
-    await userUpdateAvatar(fakeRequest, fakeResponse);
-
-    expect(fakeResponse.statusCode).toEqual(401);
-  });
-
-  it('should return 401 when user does not exist', async () => {
-    userExists = vi.fn().mockReturnValue(null);
-
-    await userUpdateAvatar(fakeRequest, fakeResponse);
-
-    expect(fakeResponse.statusCode).toEqual(401);
   });
 
   it('should return 200 when avatar is missing', async () => {

@@ -19,6 +19,8 @@ describe('permissionUpdateMiddleware - Middleware', () => {
     fakeResponse = createResponse();
 
     fetchMembers = vi.fn().mockReturnValue([user, user]);
+
+    fakeResponse.locals = { user };
   });
 
   afterEach(() => {
