@@ -21,7 +21,6 @@ const userUpdateUsername = async (request, response) => {
 
     return response.sendStatus(200);
   } catch (error) {
-    console.log(error);
     handleError(error, response);
   }
 };

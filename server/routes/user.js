@@ -38,23 +38,19 @@ router.post('/update/avatar', userUpdateAvatar);
 
 router.get('/team', teamMembersListMiddleware);
 
-router.post('/access/decline', hasManagePermissions, accessDeclineMiddleware);
+router.use(hasManagePermissions);
 
-router.post('/access/approve', hasManagePermissions, accessApproveMiddleware);
+router.post('/access/decline', accessDeclineMiddleware);
 
-router.post('/access/remove', hasManagePermissions, accessRemoveMiddleware);
+router.post('/access/approve', accessApproveMiddleware);
 
-router.post(
-  '/permission/update',
-  hasAdminPermissions,
-  permissionUpdateMiddleware
-);
+router.post('/access/remove', accessRemoveMiddleware);
 
-router.post(
-  '/transfer/ownership',
-  hasAdminPermissions,
-  transferOwnershipMiddleware
-);
+router.use(hasAdminPermissions);
+
+router.post('/permission/update', permissionUpdateMiddleware);
+
+router.post('/transfer/ownership', transferOwnershipMiddleware);
 
 router.post('/delete/account', deleteAccountMiddleware);
 

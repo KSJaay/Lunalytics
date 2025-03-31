@@ -1,10 +1,10 @@
 import SQLite from '../sqlite/setup.js';
 import { generateHash, verifyPassword } from '../../utils/hashPassword.js';
-import { signCookie } from '../../utils/jwt.js';
 import {
   AuthorizationError,
   ConflictError,
 } from '../../../shared/utils/errors.js';
+import { createUserSession } from './session.js';
 
 export const signInUser = async (email, password) => {
   const user = await SQLite.client('user').where({ email }).first();
@@ -186,7 +186,7 @@ export const getDemoUser = async () => {
     });
   }
 
-  return signCookie({ email: 'demo' });
+  return createUserSession('demo', 'demo', null);
 };
 
 export const transferOwnership = async (email, newOwner) => {

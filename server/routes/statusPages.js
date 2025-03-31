@@ -13,8 +13,6 @@ const hasEditorPermissions = hasRequiredPermission(
   PermissionsBits.MANAGE_STATUS_PAGES
 );
 
-router.use(hasEditorPermissions);
-
 router.get('/', getAllStatusPagesMiddleware);
 
 router.get('/id', getUsingIdMiddleware);

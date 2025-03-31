@@ -16,9 +16,11 @@ const canEditMonitors = hasRequiredPermission(PermissionsBits.MANAGE_MONITORS);
 
 router.get('/status', fetchMonitorStatus);
 router.get('/id', fetchMonitorUsingId);
-router.post('/add', canEditMonitors, monitorAdd);
-router.post('/edit', canEditMonitors, monitorEdit);
-router.get('/delete', canEditMonitors, monitorDelete);
-router.post('/pause', canEditMonitors, monitorPause);
+
+router.use(canEditMonitors);
+router.post('/add', monitorAdd);
+router.post('/edit', monitorEdit);
+router.get('/delete', monitorDelete);
+router.post('/pause', monitorPause);
 
 export default router;

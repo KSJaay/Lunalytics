@@ -15,10 +15,12 @@ const hasEditorPermissions = hasRequiredPermission(
 );
 
 router.get('/', NotificationGetAllMiddleware);
-router.get('/id', hasEditorPermissions, NotificationGetUsingIdMiddleware);
-router.post('/create', hasEditorPermissions, NotificationCreateMiddleware);
-router.post('/edit', hasEditorPermissions, NotificationEditMiddleware);
-router.get('/delete', hasEditorPermissions, NotificationDeleteMiddleware);
-router.get('/toggle', hasEditorPermissions, NotificationToggleMiddleware);
+
+router.use(hasEditorPermissions);
+router.get('/id', NotificationGetUsingIdMiddleware);
+router.post('/create', NotificationCreateMiddleware);
+router.post('/edit', NotificationEditMiddleware);
+router.get('/delete', NotificationDeleteMiddleware);
+router.get('/toggle', NotificationToggleMiddleware);
 
 export default router;
