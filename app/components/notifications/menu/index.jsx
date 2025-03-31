@@ -15,6 +15,8 @@ import SearchBar from '../../ui/searchBar';
 import useContextStore from '../../../context';
 import HomeMenuMobile from './mobile';
 import NotificationModal from '../../modal/notification';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import Role from '../../../../shared/permissions/role';
 
 const NotificationsMenu = ({ search, setSearch, platform, setPlatform }) => {
   const {
@@ -22,6 +24,11 @@ const NotificationsMenu = ({ search, setSearch, platform, setPlatform }) => {
     modalStore: { openModal, closeModal },
     notificationStore: { addNotification },
   } = useContextStore();
+
+  const canManageNotifications = new Role(
+    'user',
+    user.permission
+  ).hasPermission(PermissionsBits.MANAGE_NOTIFICATIONS);
 
   return (
     <div className="home-menu">
@@ -43,7 +50,7 @@ const NotificationsMenu = ({ search, setSearch, platform, setPlatform }) => {
         <MenuPlatformDropdown platform={platform} setPlatform={setPlatform} />
         {/* <MenuLayoutDropdown /> */}
 
-        {user.canEdit ? (
+        {canManageNotifications ? (
           <Button
             id="home-add-notification-button"
             onClick={() =>

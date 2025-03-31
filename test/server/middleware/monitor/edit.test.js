@@ -1,13 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import SQLite from '../../../../server/database/sqlite/setup';
-import { userExists } from '../../../../server/database/queries/user';
 import cache from '../../../../server/cache';
 import monitorEdit from '../../../../server/middleware/monitor/edit';
 import { updateMonitor } from '../../../../server/database/queries/monitor';
 
 vi.mock('../../../../server/cache');
-vi.mock('../../../../server/database/queries/user');
 vi.mock('../../../../server/database/queries/monitor');
 
 describe('Edit Monitor - Middleware', () => {
@@ -16,7 +14,7 @@ describe('Edit Monitor - Middleware', () => {
     displayName: 'KSJaay',
     isVerified: false,
   };
-  const access_token = 'test_token';
+  const session_token = 'test_token';
 
   let fakeRequest;
   let fakeResponse;
@@ -45,13 +43,13 @@ describe('Edit Monitor - Middleware', () => {
     SQLite.client = () => SQLiteBuilders;
     cache = { checkStatus: vi.fn() };
 
-    userExists = vi.fn().mockReturnValue({ email: 'KSJaay@lunalytics.xyz' });
     updateMonitor = vi.fn().mockReturnValue({ monitorId: 'test' });
 
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fakeRequest.cookies = { access_token };
+    fakeRequest.cookies = { session_token };
+    fakeResponse.locals = { user };
   });
 
   afterEach(() => {
@@ -137,12 +135,6 @@ describe('Edit Monitor - Middleware', () => {
     });
 
     describe('when valid data is provided', () => {
-      it('should return 200 when data is valid', async () => {
-        await monitorEdit(fakeRequest, fakeResponse);
-
-        expect(userExists).toHaveBeenCalledWith(access_token);
-      });
-
       it('should call updateMonitor with body, email, and isHttp', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
 
@@ -251,12 +243,6 @@ describe('Edit Monitor - Middleware', () => {
     });
 
     describe('when valid data is provided', () => {
-      it('should return 200 when data is valid', async () => {
-        await monitorEdit(fakeRequest, fakeResponse);
-
-        expect(userExists).toHaveBeenCalledWith(access_token);
-      });
-
       it('should call addOrEdit with body, email, and isHttp', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
 

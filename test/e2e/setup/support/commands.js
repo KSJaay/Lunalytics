@@ -26,6 +26,7 @@ Cypress.Commands.add('registerUser', (email, username, password) => {
   cy.typeText('[id="confirmPassword"]', password).clickOutside();
 
   cy.get('[class="auth-button"]').click();
+  cy.wait(1000);
 });
 
 Cypress.Commands.add('loginUser', (email, password) => {

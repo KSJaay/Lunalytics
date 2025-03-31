@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
 
-import hasAdminPermissions from '../middleware/user/hasAdmin.js';
 import accessDeclineMiddleware from '../middleware/user/access/declineUser.js';
 import accessApproveMiddleware from '../middleware/user/access/approveUser.js';
 import accessRemoveMiddleware from '../middleware/user/access/removeUser.js';
@@ -15,6 +14,15 @@ import deleteAccountMiddleware from '../middleware/user/deleteAccount.js';
 import userMonitorsMiddleware from '../middleware/user/monitors.js';
 import userExistsMiddleware from '../middleware/user/exists.js';
 import fetchUserMiddleware from '../middleware/user/user.js';
+import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
+import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
+
+const hasManagePermissions = hasRequiredPermission(
+  PermissionsBits.MANAGE_MONITORS
+);
+const hasAdminPermissions = hasRequiredPermission(
+  PermissionsBits.ADMINISTRATOR
+);
 
 router.get('/', fetchUserMiddleware);
 
@@ -30,11 +38,15 @@ router.post('/update/avatar', userUpdateAvatar);
 
 router.get('/team', teamMembersListMiddleware);
 
-router.post('/access/decline', hasAdminPermissions, accessDeclineMiddleware);
+router.use(hasManagePermissions);
 
-router.post('/access/approve', hasAdminPermissions, accessApproveMiddleware);
+router.post('/access/decline', accessDeclineMiddleware);
 
-router.post('/access/remove', hasAdminPermissions, accessRemoveMiddleware);
+router.post('/access/approve', accessApproveMiddleware);
+
+router.post('/access/remove', accessRemoveMiddleware);
+
+router.use(hasAdminPermissions);
 
 router.post('/permission/update', permissionUpdateMiddleware);
 

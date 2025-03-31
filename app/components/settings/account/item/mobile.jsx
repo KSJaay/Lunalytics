@@ -39,7 +39,7 @@ const SettingsAccountMobileItem = ({
   id,
   canEdit,
   fontColor,
-  permissionLevel,
+  ownerOnly,
   ...props
 }) => {
   const {
@@ -47,9 +47,7 @@ const SettingsAccountMobileItem = ({
     modalStore: { openModal, closeModal },
   } = useContextStore();
 
-  if (permissionLevel && permissionLevel < user.permission) {
-    return null;
-  }
+  if (ownerOnly && !user.isOwner) return null;
 
   const color = !fontColor ? {} : { color: `var(--${fontColor}-700)` };
 

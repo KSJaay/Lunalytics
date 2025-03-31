@@ -1,7 +1,6 @@
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import NotificationValidators from '../../../shared/validators/notifications/index.js';
-import { userExists } from '../../database/queries/user.js';
 import {
   createNotification,
   fetchNotificationUniqueId,
@@ -19,7 +18,7 @@ const NotificationCreateMiddleware = async (request, response) => {
 
     const result = validator({ ...notification, ...notification.data });
 
-    const user = await userExists(request.cookies.access_token);
+    const { user } = response.locals;
 
     const uniqueId = await fetchNotificationUniqueId();
     const query = await createNotification({

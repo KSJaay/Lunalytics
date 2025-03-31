@@ -4,7 +4,7 @@ import { createURL } from '../../../shared/utils/url.js';
 
 const logout = (request, response) => {
   try {
-    deleteCookie(response, 'access_token');
+    deleteCookie(response, 'session_token');
 
     return response.redirect(createURL('/login'));
   } catch (error) {

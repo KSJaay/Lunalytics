@@ -10,7 +10,7 @@ import DividePage from '../components/DividePage.vue';
 
 ## Authorization
 
-Currently notifications are only able to access the API while they are signed into the application. The API requires the `access_token` cookie to be present in the request.
+Currently notifications are only able to access the API while they are signed into the application. The API requires the `session_token` cookie to be present in the request.
 
 ## Restrictions
 
@@ -139,7 +139,7 @@ Returns an array of [notifications](#notification-structure). Only editors, admi
 | Status Code | Description                                                           |
 | ----------- | --------------------------------------------------------------------- |
 | 200         | Success, returns an array of [notifications](#notification-structure) |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)             |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)             |
 
 </template>
 
@@ -188,7 +188,7 @@ Returns a [notification](#notification-structure) for the given id. Only editors
 | Status Code | Description                                                            |
 | ----------- | ---------------------------------------------------------------------- |
 | 200         | Success, returns an object for [notification](#notification-structure) |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)              |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)              |
 | 404         | Notification not found                                                 |
 
 </template>
@@ -291,7 +291,7 @@ Create a new [notification](#notification-structure) and returns the notificatio
 | Status Code | Description                                                            |
 | ----------- | ---------------------------------------------------------------------- |
 | 201         | Success, returns an object for [notification](#notification-structure) |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)              |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)              |
 | 422         | Return a notification error (Format: `{key: 'message'}`)               |
 
 </template>
@@ -406,7 +406,7 @@ Edit an existing [notification](#notification-structure) and returns the notific
 | Status Code | Description                                                            |
 | ----------- | ---------------------------------------------------------------------- |
 | 200         | Success, returns an object for [notification](#notification-structure) |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token)              |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token)              |
 | 422         | Return a notification error (Format: `{key: 'message'}`)               |
 
 </template>
@@ -464,7 +464,7 @@ Deletes the notification using the given notificationId. Only editors, admins, a
 | Status Code | Description                                               |
 | ----------- | --------------------------------------------------------- |
 | 200         | Success                                                   |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token) |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token) |
 | 422         | No notificationId provided                                |
 
 </template>
@@ -520,7 +520,7 @@ Toggle the notification using the given notificationId and isEnabled query param
 | Status Code | Description                                               |
 | ----------- | --------------------------------------------------------- |
 | 200         | Success                                                   |
-| 401         | Unauthorized (Missing `access_token` cookie or API Token) |
+| 401         | Unauthorized (Missing `session_token` cookie or API Token) |
 | 422         | No notificationId provided or isEnabled is not a boolean  |
 
 </template>

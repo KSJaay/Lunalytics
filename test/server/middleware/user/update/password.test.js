@@ -1,7 +1,7 @@
 import { createRequest, createResponse } from 'node-mocks-http';
 import {
+  getUserPasswordUsingEmail,
   updateUserPassword,
-  userExists,
 } from '../../../../../server/database/queries/user';
 import userUpdatePassword from '../../../../../server/middleware/user/update/password';
 import { verifyPassword } from '../../../../../server/utils/hashPassword';
@@ -24,36 +24,33 @@ describe('userUpdatePassword - Middleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    userExists = vi.fn().mockReturnValue(user);
     verifyPassword = vi.fn().mockReturnValue(true);
     updateUserPassword = vi.fn();
+    getUserPasswordUsingEmail = vi.fn().mockReturnValue('testUser123');
 
-    fakeRequest.cookies = { access_token: 'test_token' };
-
+    fakeRequest.cookies = { session_token: 'test_token' };
     fakeRequest.body = {
       currentPassword: 'testUser123',
       newPassword: 'testUser1234',
     };
+
+    fakeResponse.locals = { user };
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('should return 401 when access_token is missing', async () => {
-    fakeRequest.cookies = {};
-
+  it('should call getUserPasswordUsingEmail with user.email', async () => {
     await userUpdatePassword(fakeRequest, fakeResponse);
 
-    expect(fakeResponse.statusCode).toEqual(401);
+    expect(getUserPasswordUsingEmail).toHaveBeenCalledWith(user.email);
   });
 
-  it('should return 401 when user does not exist', async () => {
-    userExists = vi.fn().mockReturnValue(null);
-
+  it('should call verifyPassword with currentPassword and user.password', async () => {
     await userUpdatePassword(fakeRequest, fakeResponse);
 
-    expect(fakeResponse.statusCode).toEqual(401);
+    expect(verifyPassword).toHaveBeenCalledWith('testUser123', 'testUser123');
   });
 
   it("should return 401 when currentPassword and user.password aren't the same", async () => {

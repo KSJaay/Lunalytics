@@ -49,7 +49,7 @@ Port needs to be a number between 1 and 65535. The application will be hosted on
 
 ### JWT Secret Key
 
-We use Json Web Tokens (JWT) to authenticate users. The JWT is signed using a secret key, and then stored in the users cookies. Any requests made to the API is verified using the JWT token (`access_token` cookie). We strongly recommend the JWT secret key being at least 64 bytes.
+We use Json Web Tokens (JWT) to authenticate users. The JWT is signed using a secret key, and then stored in the users cookies. Any requests made to the API is verified using the JWT token (`session_token` cookie). We strongly recommend the JWT secret key being at least 64 bytes.
 
 ### Migration Type
 

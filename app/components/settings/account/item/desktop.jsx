@@ -44,7 +44,7 @@ const SettingsAccountDesktopItem = ({
   canEdit,
   description,
   customButton,
-  permissionLevel,
+  ownerOnly,
   ...props
 }) => {
   const classes = classNames({
@@ -57,9 +57,7 @@ const SettingsAccountDesktopItem = ({
     modalStore: { openModal, closeModal },
   } = useContextStore();
 
-  if (permissionLevel && permissionLevel < user.permission) {
-    return null;
-  }
+  if (ownerOnly && !user.isOwner) return null;
 
   return (
     <div className={classes}>

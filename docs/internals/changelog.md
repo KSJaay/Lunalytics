@@ -1,5 +1,22 @@
 # Previous updates
 
+## 0.8.2
+
+### Updates to a session based login and new permissions system
+
+### Summary
+
+I've updated the login system to use sessions instead of storing JWT within the cookies. I've also updated the permissions system to be more flexible, this will allow us to create a much more dynamic and complex permissions system in the future. In the future, we'll be able to create custom permissions for each user, and also allow users to have different permissions based on the monitors they have access to.
+
+### New features
+
+- Adds session based login system
+- Adds new permissions system
+- Adds new `Role` and `User` classes
+- Adds new `PermissionsBits`, with new permissions
+- Server side checks now use `Role` to check if the user has the required permission
+- All React components now use `Role` to check if the user has the required permission
+
 ## 0.8.1
 
 ### Updates to React 19 and other packges

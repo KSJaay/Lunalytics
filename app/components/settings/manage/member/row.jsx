@@ -8,6 +8,8 @@ import { observer } from 'mobx-react-lite';
 import MemberRowActions from './actions';
 import useContextStore from '../../../../context';
 import { userPropType } from '../../../../../shared/utils/propTypes';
+import Role from '../../../../../shared/permissions/role';
+import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 
 const positions = { 1: 'Owner', 2: 'Admin', 3: 'Editor', 4: 'Guest' };
 
@@ -19,18 +21,15 @@ const isImageUrl = (url) => {
 };
 
 const MemberTableRow = ({ member = {} }) => {
-  // Only user can manage is if the user is an admin or owner,
-  // the member is not the current user,
-  // and the member has a lower permission level
-
   const {
     userStore: { user },
   } = useContextStore();
 
+  const role = new Role('user', user.permission);
+
   const canManage =
-    user.canManage &&
     user.email !== member.email &&
-    member.permission > user.permission;
+    role.hasPermission(PermissionsBits.MANAGE_TEAM);
 
   const memberPermission = !member.isVerified
     ? 'Unverified'

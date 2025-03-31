@@ -12,6 +12,8 @@ import useDropdown from '../../../hooks/useDropdown';
 import { createGetRequest } from '../../../services/axios';
 import MonitorConfigureModal from '../../modal/monitor/configure';
 import { FaEllipsisVertical } from '../../icons';
+import Role from '../../../../shared/permissions/role';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 
 const MonitorOptions = ({ monitorId }) => {
   const {
@@ -66,7 +68,11 @@ const MonitorOptions = ({ monitorId }) => {
     );
   };
 
-  if (!user.canEdit) return null;
+  const canManageMonitors = new Role('user', user.permission).hasPermission(
+    PermissionsBits.MANAGE_MONITORS
+  );
+
+  if (!canManageMonitors) return null;
 
   return (
     <Dropdown.Container

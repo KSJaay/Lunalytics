@@ -3,7 +3,6 @@ import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/monitor.js';
 import cache from '../../cache/index.js';
-import { userExists } from '../../database/queries/user.js';
 import { cleanMonitor } from '../../class/monitor.js';
 import { getTcpOrHttpData } from './add.js';
 import { updateMonitor } from '../../database/queries/monitor.js';
@@ -22,7 +21,7 @@ const monitorEdit = async (request, response) => {
       throw new UnprocessableError(isInvalidMonitor);
     }
 
-    const user = await userExists(request.cookies.access_token);
+    const { user } = response.locals;
 
     const montior_data = getTcpOrHttpData(request.body, user.email, isHttp);
     const data = await updateMonitor(montior_data);

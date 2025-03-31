@@ -25,7 +25,10 @@ class TeamStore {
   };
 
   updateUserPermission = (email, permission) => {
-    this.team.get(email).permission = permission;
+    const user = this.team.get(email);
+
+    user.permission = permission;
+    this.team.set(email, user);
   };
 
   updateUserVerified = (email) => {

@@ -8,7 +8,9 @@ describe('Verify User', () => {
     it('Register two users', () => {
       cy.visit('/register');
       cy.registerUser(`${username}@lunalytics.xyz`, username, 'testing123');
+
       cy.clearCookies();
+
       cy.visit('/register');
       cy.registerUser(
         `${secondUsername}@lunalytics.xyz`,
@@ -51,6 +53,8 @@ describe('Verify User', () => {
       cy.get('[id="Manage-Team"]').click();
       cy.get(`[id="decline-${secondUsername}"]`).click();
       cy.get('[id="manage-decline-button"]').click();
+
+      cy.wait(1000);
 
       cy.clearCookies();
 

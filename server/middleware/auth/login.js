@@ -4,6 +4,8 @@ import { setServerSideCookie } from '../../../shared/utils/cookies.js';
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/index.js';
+import { createUserSession } from '../../database/queries/session.js';
+import { parseUserAgent } from '../../utils/uaParser.js';
 
 const login = async (request, response) => {
   try {
@@ -16,9 +18,18 @@ const login = async (request, response) => {
       throw new UnprocessableError(isInvalidAuth);
     }
 
-    const { jwt, user } = await signInUser(email.toLowerCase(), password);
+    const userAgent = request.headers['user-agent'];
+    const agentData = parseUserAgent(userAgent);
 
-    setServerSideCookie(response, 'access_token', jwt);
+    const user = await signInUser(email.toLowerCase(), password);
+
+    const userSession = await createUserSession(
+      user.email,
+      agentData.device,
+      agentData.data
+    );
+
+    setServerSideCookie(response, 'session_token', userSession);
 
     if (!user.isVerified) {
       return response.sendStatus(418);

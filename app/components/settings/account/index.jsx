@@ -33,7 +33,7 @@ const accountItems = [
         <Button color="red">Transfer Ownership</Button>
       </div>
     ),
-    permissionLevel: 1,
+    ownerOnly: true,
   },
   {
     title: 'Delete Account',
