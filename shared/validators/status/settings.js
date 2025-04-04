@@ -1,4 +1,4 @@
-import { listOfFonts } from '../../../app/constant/status.js';
+import { listOfFonts } from '../../constants/status.js';
 import { StatusPageValidatorError } from '../../utils/errors.js';
 
 const themes = ['Auto', 'Light', 'Dark'];

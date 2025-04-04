@@ -55,7 +55,7 @@ export class SQLite {
     }
 
     if (databaseType === 'better-sqlite3') {
-      const path = `${process.cwd()}/server/database/sqlite/${dbName}.db`;
+      const path = `${process.cwd()}/data/${dbName}.db`;
 
       if (!existsSync(path)) {
         closeSync(openSync(path, 'w'));
