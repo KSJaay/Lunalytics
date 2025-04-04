@@ -2,14 +2,12 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
-.yarn/install-state.gz
 
 # testing
 /coverage
 
 # production
+/data
 /dist
 /stats
 /app/pages/icons.jsx
@@ -19,6 +17,7 @@ docs/.vitepress/cache
 public/kanban.json
 /logs
 *.db
+test/e2e/setup/downloads
 
 # misc
 .DS_Store

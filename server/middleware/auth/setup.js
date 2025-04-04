@@ -37,7 +37,7 @@ const createBasicSetup = ({
   };
 
   fs.writeFileSync(
-    path.join(process.cwd(), 'config.json'),
+    path.join(process.cwd(), 'data', 'config.json'),
     JSON.stringify(config, null, 2)
   );
 
@@ -76,7 +76,7 @@ const createAdvancedSetup = ({
   }
 
   fs.writeFileSync(
-    path.join(process.cwd(), 'config.json'),
+    path.join(process.cwd(), 'data', 'config.json'),
     JSON.stringify(config, null, 2)
   );
 

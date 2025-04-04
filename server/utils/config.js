@@ -3,7 +3,7 @@ import logger from './logger.js';
 
 class Config {
   constructor() {
-    this.configPath = `${process.cwd()}/config.json`;
+    this.configPath = `${process.cwd()}/data/config.json`;
     this.config = {};
 
     try {

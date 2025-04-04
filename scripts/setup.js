@@ -6,7 +6,7 @@ import path from 'path';
 import logger from '../server/utils/logger.js';
 
 const configExists = () => {
-  const configPath = path.join(process.cwd(), 'config.json');
+  const configPath = path.join(process.cwd(), 'data', 'config.json');
   return fs.existsSync(configPath);
 };
 
@@ -22,7 +22,7 @@ try {
   logger.info('SETUP', { message: 'Creating config file...' });
 
   // create config.json file
-  const configPath = path.join(process.cwd(), 'config.json');
+  const configPath = path.join(process.cwd(), 'data', 'config.json');
 
   fs.writeFileSync(configPath, JSON.stringify({}, null, 2));
   logger.info('SETUP', { message: 'Successfully created config file.' });

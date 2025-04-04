@@ -8,6 +8,33 @@ outline: deep
 
 You can try out the Lunalytics [live demo here](https://demo.lunalytics.xyz). You will be signed in as a guest user who has the ability to look through all sections of the application.
 
+### Docker
+
+::: code-group
+
+```bash [Docker]
+docker run -d \
+  -p 2308:2308 \
+  -v /path/to/data:/app/data \
+  -v /path/to/logs:/app/logs \
+  ksjaay/lunalytics:latest
+```
+
+```yaml [Docker Compose]
+# docker-compose.yml
+services:
+  lunalytics:
+    image: ksjaay/lunalytics:latest
+    container_name: lunalytics
+    ports:
+      - '2308:2308'
+    volumes:
+      - ./path/to/data:/app/data
+      - ./path/to/logs:/app/logs
+```
+
+:::
+
 ### Requirements
 
 Make sure you have the following applications installed before starting:

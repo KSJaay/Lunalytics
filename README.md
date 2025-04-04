@@ -35,6 +35,31 @@
 >
 > This project is under active development, things may randomly break. But I'll do my best to fix them as soon as possible.
 
+#### Docker
+
+```bash
+docker run -d \
+  -p 2308:2308 \
+  -v /path/to/data:/app/data \
+  -v /path/to/logs:/app/logs \
+  ksjaay/lunalytics:latest
+```
+
+#### Docker Compose
+
+```yaml
+# docker-compose.yml
+services:
+  lunalytics:
+    image: ksjaay/lunalytics:latest
+    container_name: lunalytics
+    ports:
+      - '2308:2308'
+    volumes:
+      - ./path/to/data:/app/data
+      - ./path/to/logs:/app/logs
+```
+
 #### Requirements
 
 Make sure you have the following applications installed before starting:
