@@ -87,3 +87,53 @@ const httpStatusCheck = async (monitor) => {
 };
 
 export default httpStatusCheck;
+
+// Ping check that provides a lot more information
+// import dns from 'dns';
+// import https from 'https';
+// import { performance } from 'perf_hooks';
+
+// export const pingWebsite = (url) => {
+//   return new Promise((resolve, reject) => {
+//     const timings = {};
+//     const parsedUrl = new URL(url);
+//     const hostname = parsedUrl.hostname;
+
+//     const dnsStart = performance.now();
+
+//     dns.lookup(hostname, (err) => {
+//       if (err) {
+//         return reject(err);
+//       }
+
+//       timings.dnsLookup = performance.now() - dnsStart;
+
+//       const requestStart = performance.now();
+
+//       const req = https.get(url, (res) => {
+//         timings.firstByte = performance.now() - requestStart;
+//         timings.totalTime = performance.now() - start;
+
+//         res.on('data', () => {}); // Prevents memory leak
+//         res.on('end', () => resolve(timings));
+//       });
+
+//       req.on('socket', (socket) => {
+//         socket.on('lookup', () => {
+//           timings.dnsLookup = performance.now() - start;
+//         });
+
+//         socket.on('connect', () => {
+//           timings.tcpConnection = performance.now() - requestStart;
+//         });
+
+//         socket.on('secureConnect', () => {
+//           timings.sslHandshake =
+//             performance.now() - requestStart - timings.tcpConnection;
+//         });
+//       });
+
+//       req.on('error', (err) => reject(err));
+//     });
+//   });
+// };

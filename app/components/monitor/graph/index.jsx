@@ -19,6 +19,7 @@ import useLocalStorageContext from '../../../hooks/useLocalstorage';
 import GraphMenu from './menu';
 import useGraphStatus from '../../../hooks/useGraphStatus';
 import { fullMonitorPropType } from '../../../../shared/utils/propTypes';
+import GraphPing from './ping';
 
 dayjs.extend(timezone);
 dayjs.extend(utc);
@@ -31,7 +32,7 @@ const MonitorGraph = ({ monitor }) => {
 
   const data = statusHeartbeats
     .map(({ latency = 0, date = 0 } = {}) => {
-      return { Latency: latency, time: date };
+      return { latency, time: date };
     })
     .reverse();
 
@@ -86,13 +87,15 @@ const MonitorGraph = ({ monitor }) => {
             />
             <Area
               type="monotone"
-              dataKey="Latency"
+              dataKey="latency"
               stroke="var(--primary-400)"
               fill="var(--primary-500)"
             />
           </AreaChart>
         </ResponsiveContainer>
       </div>
+
+      <GraphPing data={data} />
     </div>
   );
 };

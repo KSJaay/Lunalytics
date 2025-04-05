@@ -11,7 +11,7 @@ const configExists = () => {
 };
 
 if (configExists()) {
-  logger.error('SETUP', {
+  logger.notice('SETUP', {
     message:
       'Configuration file already exists. Please manually edit to overwrite or delete the file.',
   });

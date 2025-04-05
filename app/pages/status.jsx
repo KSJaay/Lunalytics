@@ -1,8 +1,10 @@
 // import dependencies
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 // import local files
+import { createGetRequest } from '../services/axios';
 import StatusFooter from '../components/status/configure/preview/footer';
 import StatusPageHeader from '../components/status/configure/preview/header';
 import StatusPageStatus from '../components/status/configure/preview/status';
@@ -10,8 +12,6 @@ import StatusPageUptime from '../components/status/configure/preview/uptime';
 import StatusPageIncident from '../components/status/configure/preview/incident';
 import StatusPageMetrics from '../components/status/configure/preview/metrics';
 import StatusConfigureLayoutHistoryList from '../components/status/configure/layout/history/list';
-import { createGetRequest } from '../services/axios';
-import PropTypes from 'prop-types';
 
 const StatusPage = ({ id }) => {
   const [statusPage, setStatusPage] = useState(null);
