@@ -28,9 +28,15 @@ router.get('/', async (request, response) => {
       const { session_token } = request.cookies;
       const { Authorization } = request.headers;
 
+      if (!session_token && !Authorization) {
+        return response.sendStatus(401);
+      }
+
       if (session_token) {
         const session = await userSessionExists(session_token);
         const user = await getUserByEmail(session.email);
+
+        console.log(session, user);
 
         if (!user) {
           return response.sendStatus(401);
@@ -45,8 +51,6 @@ router.get('/', async (request, response) => {
           return response.sendStatus(401);
         }
       }
-
-      return response.sendStatus(401);
     }
 
     const payload = statusCache.fetchStatusPage(status.statusId);

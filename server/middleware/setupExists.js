@@ -6,18 +6,24 @@ const setupExistsMiddleware = async (request, response, next) => {
   try {
     const databaseName = config.get('database')?.name;
 
-    if (!databaseName) {
+    if (
+      !databaseName &&
+      request.url !== '/setup' &&
+      !request.url.startsWith('/assets')
+    ) {
       return response.redirect('/setup');
     }
 
-    const query = await ownerExists();
+    if (databaseName) {
+      const query = await ownerExists();
 
-    if (!query) {
-      return response.redirect('/setup');
-    }
+      if (!query) {
+        return response.redirect('/setup');
+      }
 
-    if (request.url === '/setup') {
-      return response.redirect('/login');
+      if (request.url === '/setup') {
+        return response.redirect('/login');
+      }
     }
 
     next();

@@ -17,6 +17,9 @@ import statusCache from './cache/status.js';
 
 const app = express();
 
+const isProductionOrTest =
+  process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
+
 const corsList = config.get('cors');
 const isDemoMode = config.get('isDemo');
 const port = config.get('port');
@@ -71,18 +74,12 @@ const init = async () => {
   logger.notice('Express', { message: 'Initialising routes' });
   initialiseRoutes(app);
 
-  if (
-    process.env.NODE_ENV === 'production' ||
-    process.env.NODE_ENV === 'test'
-  ) {
+  if (isProductionOrTest) {
     logger.notice('Express', { message: 'Serving production static files' });
     app.use(express.static(path.join(process.cwd(), 'dist')));
   }
 
-  if (
-    process.env.NODE_ENV === 'production' ||
-    process.env.NODE_ENV === 'test'
-  ) {
+  if (isProductionOrTest) {
     logger.notice('Express', { message: 'Serving production static files' });
     app.get('*', function (request, response) {
       response.sendFile(path.join(process.cwd(), 'dist', 'index.html'));

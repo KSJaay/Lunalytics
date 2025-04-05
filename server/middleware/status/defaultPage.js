@@ -14,7 +14,7 @@ const defaultPageMiddleware = async (request, response, next) => {
 
     const parsedStatusPage = cleanStatusPage(statusPage);
 
-    if (!parsedStatusPage.isPublic) {
+    if (!parsedStatusPage.settings?.isPublic) {
       const { session_token } = request.cookies;
 
       const userSession = await userSessionExists(session_token);

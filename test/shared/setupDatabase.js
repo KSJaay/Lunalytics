@@ -10,8 +10,8 @@ import { loadJSON } from '../../shared/parseJson.js';
 const loginDetails = loadJSON('test/e2e/setup/fixtures/login.json');
 
 const setupDatabase = async () => {
-  if (fs.existsSync(`${process.cwd()}/server/database/sqlite/e2etest.db`)) {
-    fs.unlinkSync(`${process.cwd()}/server/database/sqlite/e2etest.db`);
+  if (fs.existsSync(`${process.cwd()}/data/e2etest.db`)) {
+    fs.unlinkSync(`${process.cwd()}/data/e2etest.db`);
     logger.info('SETUP', { message: 'Removed old database' });
   }
 
