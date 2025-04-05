@@ -30,6 +30,49 @@
   display: none;
 }
 
+// monitor-chart-graph-ping > mcgp
+.mcgp-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 12px 0px 24px 0px;
+}
+
+.mcgp-item {
+  padding: 8px 28px;
+
+  &:not(:last-child) {
+    border-right: 1px solid var(--accent-600);
+  }
+}
+
+.mcgp-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mcgp-icon {
+  color: var(--font-light-color);
+  display: flex;
+
+  &.red svg {
+    color: var(--red-800);
+  }
+
+  &.green svg {
+    color: var(--green-800);
+  }
+}
+
+.mcgp-title {
+  font-weight: bold;
+  font-size: var(--font-xl);
+}
+
+.mcgp-subtitle {
+  color: var(--font-light-color);
+}
+
 @include laptop {
   .monitor-chart-content {
     height: 325px;
@@ -58,4 +101,9 @@
     gap: pxToRem(10);
     padding: pxToRem(10) pxToRem(10) 0 0;
   }
+
+  // .mcgp-container {
+  //   grid-template-columns: 1fr;
+  //   padding: 0;
+  // }
 }

@@ -18,6 +18,7 @@ public/kanban.json
 /logs
 *.db
 test/e2e/setup/downloads
+/docker
 
 # misc
 .DS_Store
