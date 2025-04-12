@@ -20,6 +20,10 @@ if (configExists()) {
 
 try {
   logger.info('SETUP', { message: 'Creating config file...' });
+  // create data directory if it does not exist
+  if (!fs.existsSync(path.join(process.cwd(), 'data'))) {
+    fs.mkdirSync(path.join(process.cwd(), 'data'));
+  }
 
   // create config.json file
   const configPath = path.join(process.cwd(), 'data', 'config.json');

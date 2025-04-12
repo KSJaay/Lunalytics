@@ -4,25 +4,47 @@ import logger from '../utils/logger.js';
 
 const setupExistsMiddleware = async (request, response, next) => {
   try {
+    // Skip for setup page and assets to prevent infinite redirect loop
+    if (request.url === '/setup' || request.url.startsWith('/assets')) {
+      return next();
+    }
+
     const databaseName = config.get('database')?.name;
 
-    if (
-      !databaseName &&
-      request.url !== '/setup' &&
-      !request.url.startsWith('/assets')
-    ) {
-      return response.redirect('/setup');
+    // If database is not configured
+    if (!databaseName) {
+      // Instead of redirecting, return a specific status that the frontend can intercept
+      if (request.url.startsWith('/api/')) {
+        return response.status(200).json({
+          success: false,
+          setupRequired: true,
+          message: 'Application setup required'
+        });
+      }
+      // For non-API requests, continue to the frontend which will handle the check
+      return next();
     }
 
     if (databaseName) {
       const query = await ownerExists();
 
       if (!query) {
-        return response.redirect('/setup');
+        // Instead of redirecting, return a specific status that the frontend can intercept
+        if (request.url.startsWith('/api/')) {
+          return response.status(200).json({
+            success: false,
+            setupRequired: true,
+            message: 'Application setup required'
+          });
+        }
+        // For non-API requests, continue to the frontend which will handle the check
+        return next();
       }
 
+      // If we're already on the setup page but everything is set up, this is optional
       if (request.url === '/setup') {
-        return response.redirect('/login');
+        // Let the frontend handle this
+        return next();
       }
     }
 

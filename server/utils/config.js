@@ -6,6 +6,10 @@ class Config {
     this.configPath = `${process.cwd()}/data/config.json`;
     this.config = {};
 
+    if (!fs.existsSync(this.configPath)) {
+      return;
+    }
+
     try {
       fs.watch(this.configPath, { persistent: false }, (eventType) => {
         if (eventType === 'change') {
@@ -25,14 +29,6 @@ class Config {
   }
 
   readConfigFile() {
-    if (!fs.existsSync(this.configPath)) {
-      logger.error('CONFIG', {
-        message:
-          'Configuration file not found. Please run "npm run setup" (or "yarn setup" or "pnpm setup") to create it.',
-      });
-      return;
-    }
-
     const fileData = fs.readFileSync(this.configPath);
 
     try {
@@ -60,8 +56,7 @@ class Config {
   }
 
   get(key) {
-    const value = this.config[key];
-    return value;
+    return Object.keys(this.config).includes(key) ? this.config[key] : null;
   }
 }
 
