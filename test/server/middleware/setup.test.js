@@ -70,28 +70,52 @@ describe('Setup - Middleware', () => {
   });
 
   describe('GET - /setup/exists', () => {
-    it('should return ownerExists: false if database name is not set', async () => {
+    it('should call next if database name is not set', async () => {
       config.get = vi.fn().mockReturnValue(null);
-      const spy = vi.spyOn(fakeResponse, 'redirect');
 
-      await setupExistsMiddleware(fakeRequest, fakeResponse);
-
-      expect(spy).toHaveBeenCalledWith('/setup');
-    });
-
-    it('should return ownerExists: false if database name is set but owner does not exist', async () => {
-      ownerExists = vi.fn().mockReturnValue(false);
-
-      const spy = vi.spyOn(fakeResponse, 'redirect');
-      await setupExistsMiddleware(fakeRequest, fakeResponse);
-
-      expect(spy).toHaveBeenCalledWith('/setup');
-    });
-
-    it('should return ownerExists: true if owner exists in database', async () => {
       await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
 
       expect(fakeNext).toHaveBeenCalled();
+    });
+
+    it('should return expected response if database name is not set and request.url starts with /api', async () => {
+      config.get = vi.fn().mockReturnValue(null);
+
+      fakeRequest.url = '/api/test';
+      const spy = vi.spyOn(fakeResponse, 'status');
+      const jsonSpy = vi.spyOn(fakeResponse, 'json');
+      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
+
+      expect(spy).toHaveBeenCalledWith(200);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        success: false,
+        setupRequired: true,
+        message: 'Application setup required',
+      });
+    });
+
+    it('should call next if owner does not exist', async () => {
+      ownerExists = vi.fn().mockReturnValue(false);
+
+      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
+
+      expect(fakeNext).toHaveBeenCalled();
+    });
+
+    it('should return expected response if owner does not exist and request.url starts with /api', async () => {
+      ownerExists = vi.fn().mockReturnValue(false);
+
+      fakeRequest.url = '/api/test';
+      const spy = vi.spyOn(fakeResponse, 'status');
+      const jsonSpy = vi.spyOn(fakeResponse, 'json');
+      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
+
+      expect(spy).toHaveBeenCalledWith(200);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        success: false,
+        setupRequired: true,
+        message: 'Application setup required',
+      });
     });
 
     it('should call ownerExists', async () => {
@@ -100,22 +124,10 @@ describe('Setup - Middleware', () => {
       expect(ownerExists).toHaveBeenCalled();
     });
 
-    it('should redirect to /setup if owner does not exist', async () => {
-      ownerExists = vi.fn().mockReturnValue(false);
-
-      const spy = vi.spyOn(fakeResponse, 'redirect');
+    it('should call next if owner exists in database', async () => {
       await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
 
-      expect(spy).toHaveBeenCalledWith('/setup');
-    });
-
-    it('should redirect to /login if request.url is /setup', async () => {
-      fakeRequest.url = '/setup';
-
-      const spy = vi.spyOn(fakeResponse, 'redirect');
-      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
-
-      expect(spy).toHaveBeenCalledWith('/login');
+      expect(fakeNext).toHaveBeenCalled();
     });
   });
 
