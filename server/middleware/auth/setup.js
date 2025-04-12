@@ -18,6 +18,30 @@ import { parseUserAgent } from '../../utils/uaParser.js';
 
 const packageJson = loadJSON('package.json');
 
+/**
+ * Creates the data directory if it does not exist.
+ *
+ * The data directory is where things like the SQLite database and
+ * uploaded certificates are stored.
+ */
+const createDataDirIfNotExist = () => {
+  if (!fs.existsSync(path.join(process.cwd(), 'data'))) {
+    fs.mkdirSync(path.join(process.cwd(), 'data'));
+  }
+};
+
+/**
+ * Writes the config to the `config.json` file in the `data` directory.
+ *
+ * @param {Object} config - The config object to write to the file.
+ */
+const writeConfigFile = (config) => {
+  fs.writeFileSync(
+    path.join(process.cwd(), 'data', 'config.json'),
+    JSON.stringify(config, null, 2)
+  );
+};
+
 const createBasicSetup = ({
   databaseType,
   databaseName,
@@ -36,10 +60,8 @@ const createBasicSetup = ({
     retentionPeriod,
   };
 
-  fs.writeFileSync(
-    path.join(process.cwd(), 'data', 'config.json'),
-    JSON.stringify(config, null, 2)
-  );
+  createDataDirIfNotExist();
+  writeConfigFile(config);
 
   logger.info('SETUP', { message: 'Config file created successfully' });
 };
@@ -75,10 +97,8 @@ const createAdvancedSetup = ({
     };
   }
 
-  fs.writeFileSync(
-    path.join(process.cwd(), 'data', 'config.json'),
-    JSON.stringify(config, null, 2)
-  );
+  createDataDirIfNotExist();
+  writeConfigFile();
 
   logger.info('SETUP', { message: 'Config file created successfully' });
 };

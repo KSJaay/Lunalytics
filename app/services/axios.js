@@ -1,5 +1,16 @@
 import axios from 'axios';
 
+axios.interceptors.response.use(
+  function(response) {
+    if (response.headers['content-type']?.includes('application/json')) {
+        if (response.data?.setupRequired	=== true && window.location.pathname !== '/setup') {
+          window.location.href = '/setup';
+        }
+    }
+    return response;
+  }
+);
+
 const createURL = (path, params) => {
   if (!path) return path;
   if (path?.startsWith('http')) return new URL(path);

@@ -30,7 +30,7 @@
     "dev:prepare": "husky",
     "preview": "vite preview",
     "reset:password": "node ./scripts/reset.js",
-    "server:watch": "nodemon --delay 2 --watch server --watch shared ./server/index.js",
+    "server:watch": "nodemon --inspect --delay 2 --watch server --watch shared ./server/index.js",
     "setup": "npm install && node ./scripts/setup.js && npm run build",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "docs:dev": "vitepress dev docs",
