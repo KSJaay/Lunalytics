@@ -130,8 +130,8 @@ const MonitorMenu = ({ name = 'Unknown', type, url, monitorId }) => {
 
   return (
     <div className="monitor-view-menu-container">
-      <div className="monitor-view-menu-name" id="monitor-view-menu-name">
-        <div>{name}</div>
+      <div className="monitor-view-menu-name" id="monitor-view-menu">
+        <div id="monitor-view-menu-name">{name}</div>
         <div className="subtitle">
           <span>{type === 'http' ? 'HTTP/S ' : 'TCP '}</span>
           monitor for{' '}
@@ -141,7 +141,7 @@ const MonitorMenu = ({ name = 'Unknown', type, url, monitorId }) => {
         </div>
       </div>
       {isEditor && (
-        <div className='monitor-view-menu-content'>
+        <div className="monitor-view-menu-content">
           {options.map((option) => (
             <Button
               key={option.value}
