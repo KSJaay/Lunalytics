@@ -19,7 +19,7 @@ import useDropdown from '../../hooks/useDropdown';
 import Role from '../../../shared/permissions/role';
 import { PermissionsBits } from '../../../shared/permissions/bitFlags';
 
-const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
+const MonitorMenu = ({ name = 'Unknown', type, url, monitorId }) => {
   const {
     modalStore: { openModal, closeModal },
     globalStore: { addMonitor, getMonitor, editMonitor, removeMonitor },
@@ -131,10 +131,17 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
   return (
     <div className="monitor-view-menu-container">
       <div className="monitor-view-menu-name" id="monitor-view-menu-name">
-        {name}
+        <div>{name}</div>
+        <div className="subtitle">
+          <span>{type === 'http' ? 'HTTP/S ' : 'TCP '}</span>
+          monitor for{' '}
+          <a href={url} target="_blank" rel="noreferrer">
+            {url}
+          </a>
+        </div>
       </div>
       {isEditor && (
-        <>
+        <div className='monitor-view-menu-content'>
           {options.map((option) => (
             <Button
               key={option.value}
@@ -166,7 +173,7 @@ const MonitorMenu = ({ name = 'Unknown', monitorId }) => {
               ))}
             </Dropdown.List>
           </Dropdown.Container>
-        </>
+        </div>
       )}
     </div>
   );

@@ -98,7 +98,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           path="/monitor/:monitor_id"
           element={
             <GlobalLayout>
-              <Navigation activeUrl="monitor">
+              <Navigation>
                 <Monitor />
               </Navigation>
             </GlobalLayout>

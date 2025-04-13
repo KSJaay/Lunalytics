@@ -1,5 +1,3 @@
-import './uptime.scss';
-
 // import dependencies
 import dayjs from 'dayjs';
 import classNames from 'classnames';
@@ -7,10 +5,10 @@ import classNames from 'classnames';
 // import local files
 import { heartbeatPropType } from '../../../shared/utils/propTypes';
 import useLocalStorageContext from '../../hooks/useLocalstorage';
+import Tooltip from '../ui/tooltip';
 
-const UptimeInfo = ({ heartbeat = {} }) => {
+const UptimeInfo = ({ heartbeat = {}, highestLatency = 0 }) => {
   const { dateformat, timeformat, timezone } = useLocalStorageContext();
-  
 
   const classes = classNames('monitor-uptime-info-button', {
     'monitor-uptime-info-button-inactive': heartbeat?.isDown,
@@ -30,6 +28,21 @@ const UptimeInfo = ({ heartbeat = {} }) => {
       <div className="monitor-uptime-info">
         {heartbeat.message || 'Unknown'}
       </div>
+
+      <Tooltip text={`Latency: ${heartbeat.latency} ms`}>
+        <div className="monitor-uptime-info-bar-container">
+          <div className="monitor-uptime-info-bar-content">
+            <div
+              style={{
+                width: `${Math.floor(
+                  (100 / highestLatency) * heartbeat.latency
+                )}%`,
+              }}
+              className="monitor-uptime-info-bar"
+            />
+          </div>
+        </div>
+      </Tooltip>
     </div>
   );
 };

@@ -8,12 +8,33 @@
   border-radius: var(--radius-md);
 }
 
+.monitor-view-menu-content {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .monitor-view-menu-name {
   flex: 1;
   display: flex;
-  align-items: center;
   font-size: var(--font-2xl);
   font-weight: bold;
+  flex-direction: column;
+  justify-content: center;
+
+  & > .subtitle {
+    font-size: var(--font-sm);
+    font-weight: normal;
+    color: var(--font-light-color);
+
+    & > span {
+      font-weight: bold;
+    }
+
+    & > a {
+      color: var(--primary-600);
+    }
+  }
 }
 
 .monitor-view-menu-container .dropdown {

@@ -1,4 +1,5 @@
 @use '../../styles/pxToRem.scss' as *;
+@use '../../styles/breakpoints.scss' as *;
 
 .monitor-uptime-container {
   background-color: var(--accent-900);
@@ -11,7 +12,7 @@
 
 .monitor-uptime-content {
   display: grid;
-  grid-template-columns: 125px 1fr 1fr;
+  grid-template-columns: 125px 1fr 1fr 200px;
   background-color: var(--accent-800);
   padding: pxToRem(12) 0 pxToRem(12) pxToRem(12);
   border-radius: pxToRem(8);
@@ -25,7 +26,7 @@
 
 .monitor-uptime-header-container {
   display: grid;
-  grid-template-columns: 125px 1fr 1fr;
+  grid-template-columns: 125px 1fr 1fr 200px;
 }
 
 .monitor-uptime-header {
@@ -78,5 +79,42 @@
     &:hover {
       background-color: var(--red-700);
     }
+  }
+}
+
+.monitor-uptime-info-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding-right: pxToRem(8);
+}
+
+.monitor-uptime-info-bar-content {
+  width: 100%;
+  height: 16px;
+  background-color: var(--accent-900);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.monitor-uptime-info-bar {
+  width: 100%;
+  height: 16px;
+  background-color: var(--primary-800);
+  border-radius: 8px;
+}
+
+@include mobile {
+  .monitor-uptime-content {
+    grid-template-columns: 125px 1fr 1fr;
+  }
+
+  .monitor-uptime-header-container {
+    grid-template-columns: 125px 1fr 1fr;
+  }
+
+  .monitor-uptime-info-bar-container {
+    display: none;
   }
 }

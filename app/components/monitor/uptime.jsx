@@ -8,8 +8,16 @@ import { heartbeatPropType } from '../../../shared/utils/propTypes';
 import UptimeInfo from './updateInfo';
 
 const MonitorUptime = ({ heartbeats = [] }) => {
+  const highestLatency = heartbeats.reduce((acc, curr) => {
+    return Math.max(acc, curr.latency);
+  }, 0);
+
   const heartbeatList = heartbeats.map((heartbeat) => (
-    <UptimeInfo key={heartbeat.id} heartbeat={heartbeat} />
+    <UptimeInfo
+      key={heartbeat.id}
+      heartbeat={heartbeat}
+      highestLatency={highestLatency}
+    />
   ));
 
   return (
@@ -18,6 +26,7 @@ const MonitorUptime = ({ heartbeats = [] }) => {
         <div className="monitor-uptime-header">Status</div>
         <div className="monitor-uptime-header">Time</div>
         <div className="monitor-uptime-header">Message</div>
+        <div className="monitor-uptime-header">Latency</div>
       </div>
       {heartbeatList}
     </div>
