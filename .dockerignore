@@ -1,6 +1,7 @@
 /coverage
 /data
 /dist
+/docker
 /docs
 /logs
 /node_modules

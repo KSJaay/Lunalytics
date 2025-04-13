@@ -10,8 +10,8 @@ import setupExistsMiddleware from '../middleware/setupExists.js';
 import getStatusPageUsingIdMiddleware from '../middleware/status/statusPageUsingId.js';
 
 const initialiseRoutes = async (app) => {
-  app.use(setupExistsMiddleware);
   app.use('/auth', authRoutes);
+  app.use(setupExistsMiddleware);
   app.get('/', defaultPageMiddleware);
   app.get('/status/:id', getStatusPageUsingIdMiddleware);
   // Routes used for fetching public status pages
