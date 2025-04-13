@@ -29,6 +29,14 @@ class Config {
   }
 
   readConfigFile() {
+    if (!fs.existsSync(this.configPath)) {
+      logger.notice('CONFIG', {
+        message:
+          'Configuration file not found. Setup the application by visiting /setup',
+      });
+      return;
+    }
+
     const fileData = fs.readFileSync(this.configPath);
 
     try {

@@ -1,4 +1,5 @@
 @use '../../styles/pxToRem.scss' as *;
+@use '../../styles/breakpoints.scss' as *;
 
 .top-navigation {
   display: flex;
@@ -37,4 +38,10 @@
   justify-content: flex-end;
   align-items: center;
   padding-right: pxToRem(8);
+}
+
+@include mobile {
+  .top-navigation-logo-text {
+    display: none;
+  }
 }

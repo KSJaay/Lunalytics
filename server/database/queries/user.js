@@ -87,7 +87,13 @@ export const ownerExists = async () => {
 };
 
 export const getUserPasswordUsingEmail = async (email) => {
-  return SQLite.client('user').where({ email }).select('password').first();
+  const user = await SQLite.client('user').where({ email }).first();
+
+  if (!user) {
+    throw new AuthorizationError('User does not exist');
+  }
+
+  return user.password;
 };
 
 export const updateUserDisplayname = (email, displayName) => {

@@ -18,7 +18,7 @@ const setupExistsMiddleware = async (request, response, next) => {
         return response.status(200).json({
           success: false,
           setupRequired: true,
-          message: 'Application setup required'
+          message: 'Application setup required',
         });
       }
       // For non-API requests, continue to the frontend which will handle the check
@@ -34,7 +34,7 @@ const setupExistsMiddleware = async (request, response, next) => {
           return response.status(200).json({
             success: false,
             setupRequired: true,
-            message: 'Application setup required'
+            message: 'Application setup required',
           });
         }
         // For non-API requests, continue to the frontend which will handle the check

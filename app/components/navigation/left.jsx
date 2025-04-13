@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
+import Tooltip from '../ui/tooltip';
 import { FaCog, FaHome, FaSignOutAlt, MdNotifications } from '../icons';
 // PiBroadcast,
 
@@ -40,14 +41,16 @@ const LeftNavigation = ({ activeUrl = '' }) => {
     });
 
     return (
-      <div
-        className={classes}
-        key={name}
-        tabIndex={1}
-        onClick={() => navigate(url)}
-      >
-        {logo}
-      </div>
+      <Tooltip text={name} position="right" key={name}>
+        <div
+          className={classes}
+          key={name}
+          tabIndex={1}
+          onClick={() => navigate(url)}
+        >
+          {logo}
+        </div>
+      </Tooltip>
     );
   });
 
@@ -55,22 +58,26 @@ const LeftNavigation = ({ activeUrl = '' }) => {
     <div className="left-navigation">
       <div className="left-actions">{actions}</div>
       <div className="left-actions-bottom">
-        <div
-          className={`navigation-left-top-action${
-            activeUrl === 'settings' ? '-active' : ''
-          }`}
-          onClick={() => navigate('/settings')}
-          tabIndex={1}
-        >
-          <FaCog style={{ width: '28px', height: '28px' }} />
-        </div>
-        <a
-          className="navigation-left-top-action navigation-left-signout-button"
-          href="/auth/logout"
-          tabIndex={1}
-        >
-          <FaSignOutAlt style={{ width: '28px', height: '28px' }} />
-        </a>
+        <Tooltip text="Settings" position="right" key="settings">
+          <div
+            className={`navigation-left-top-action${
+              activeUrl === 'settings' ? '-active' : ''
+            }`}
+            onClick={() => navigate('/settings')}
+            tabIndex={1}
+          >
+            <FaCog style={{ width: '28px', height: '28px' }} />
+          </div>
+        </Tooltip>
+        <Tooltip text="Logout" position="right" key="logout">
+          <a
+            className="navigation-left-top-action navigation-left-signout-button"
+            href="/auth/logout"
+            tabIndex={1}
+          >
+            <FaSignOutAlt style={{ width: '28px', height: '28px' }} />
+          </a>
+        </Tooltip>
       </div>
     </div>
   );

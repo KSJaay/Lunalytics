@@ -4,8 +4,10 @@ import './tooltip.scss';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const Tooltip = ({ text = '', position = 'top', children }) => {
-  const classes = classNames('tooltip', `tooltip--${position}`, {});
+const Tooltip = ({ children, text, position = 'top', color }) => {
+  const classes = classNames('tooltip', `tooltip--${position}`, {
+    [`tooltip--${color}`]: color,
+  });
 
   return (
     <div className="tooltip-container">

@@ -49,6 +49,20 @@ const MonitorGraph = ({ monitor }) => {
       <div className="monitor-chart-content">
         <ResponsiveContainer>
           <AreaChart data={data}>
+            <defs>
+              <linearGradient id="colorPrimary" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--primary-800)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--primary-900)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+            </defs>
             <XAxis
               type="category"
               dataKey="time"
@@ -88,8 +102,9 @@ const MonitorGraph = ({ monitor }) => {
             <Area
               type="monotone"
               dataKey="latency"
-              stroke="var(--primary-400)"
-              fill="var(--primary-500)"
+              strokeWidth={3}
+              stroke="var(--primary-800)"
+              fill="url(#colorPrimary)"
             />
           </AreaChart>
         </ResponsiveContainer>

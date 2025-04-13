@@ -2,55 +2,93 @@
 
 .tooltip-container {
   position: relative;
+  display: inline-block;
 
   &:hover .tooltip {
-    cursor: pointer;
-    display: block;
+    opacity: 1;
+    visibility: visible;
   }
 }
 
 .tooltip {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: var(--accent-600);
   color: var(--font-color);
   padding: pxToRem(8);
   font-size: var(--font-md);
   font-weight: var(--weight-medium);
-  border-radius: var(--radius-md);
-  transition: all 0.15s ease-in-out;
-  z-index: 99;
-  width: max-content;
-  text-align: center;
-  display: none;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  z-index: 10;
+  max-width: pxToRem(200);
 
-  &.tooltip--top {
-    transform: translate(-50%, -200%);
+  &::after {
+    content: '';
+    position: absolute;
+    border-style: solid;
   }
+}
 
-  &.tooltip--bottom {
-    transform: translate(-50%, 100%);
+.tooltip--top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 10px;
+
+  &::after {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0 5px;
+    border-color: var(--accent-600) transparent transparent transparent;
   }
+}
 
-  &.tooltip--left {
-    transform: translate(-150%, -50%);
+.tooltip--bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+
+  &::after {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 5px 5px 5px;
+    border-color: transparent transparent var(--accent-600) transparent;
   }
+}
 
-  &.tooltip--right {
-    transform: translate(50%, -50%);
+.tooltip--left {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 10px;
+
+  &::after {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 5px 0 5px 5px;
+    border-color: transparent transparent transparent var(--accent-600);
   }
+}
 
-  &.tooltip--top,
-  &.tooltip--bottom,
-  &.tooltip--left,
-  &.tooltip--right {
-    max-width: 200px;
-  }
+.tooltip--right {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 10px;
 
-  &:hover {
-    display: block;
+  &::after {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 5px 5px 5px 0;
+    border-color: transparent var(--accent-600) transparent transparent;
   }
 }
 
