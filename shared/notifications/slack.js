@@ -105,7 +105,7 @@ const SlackTemplateMessages = {
     ],
   },
   recovery: {
-    color: '#b80a47',
+    color: '#13a452',
     blocks: [
       {
         type: 'header',

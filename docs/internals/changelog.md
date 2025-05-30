@@ -1,5 +1,53 @@
 # Previous updates
 
+## 0.8.6
+
+### Fixes notifications and cookies not being set on local
+
+### Summary
+
+This PR fixes some bugs that were pointed out in the following issues. Also updates how docker images are created to support arm64.
+
+Fixes the following issues:
+
+- https://github.com/KSJaay/Lunalytics/issues/74
+- https://github.com/KSJaay/Lunalytics/issues/75
+
+### Updates
+
+- User's not being able to log into application on localhost when running in production
+- Recovery messages not being sent properly
+
+## 0.8.4
+
+### Updates monitor page layout
+
+### Summary
+
+Fixes some failing tests from previous PR, along with reworking the design for the monitor page. Currently working on an overhaul for the monitor page and how we monitor applications right now. Hopefully should have better analytics soon.
+
+### New features
+
+- Changed the design for the monitor page
+  - Monitor page now has the url/ip
+  - Status list now shows the latency (May change design)
+- Side navigation now has tooltips
+- Reworked tooltips to be a lot cleaner and not as buggy
+- Updates failing tests from https://github.com/KSJaay/Lunalytics/pull/71
+
+## 0.8.3
+
+### Updates monitor page and new docker script
+
+### Summary
+
+Updates monitor page and new docker script. Bigger updates coming soon to the monitor page
+
+### New features
+
+- Adds average, minimum and maximum latency to monitor page
+- Fixes issues with the previous docker script
+
 ## 0.8.2
 
 ### Updates to a session based login and new permissions system

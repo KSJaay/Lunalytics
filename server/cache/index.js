@@ -139,9 +139,11 @@ class Master {
 
       const service = new ServiceClass();
 
-      if (notifyOutage) {
+      if (hasOutage) {
         await service.send(notification, monitor, heartbeat);
-      } else {
+      }
+
+      if (hasRecovered) {
         await service.sendRecovery(notification, monitor, heartbeat);
       }
     } catch (error) {

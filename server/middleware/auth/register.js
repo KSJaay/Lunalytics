@@ -39,7 +39,12 @@ const register = async (request, response) => {
       agentData.data
     );
 
-    setServerSideCookie(response, 'session_token', sessionToken);
+    setServerSideCookie(
+      response,
+      'session_token',
+      sessionToken,
+      request.protocol === 'https'
+    );
 
     return response.sendStatus(200);
   } catch (error) {
