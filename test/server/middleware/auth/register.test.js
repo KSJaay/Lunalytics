@@ -111,7 +111,8 @@ describe('Register - Middleware', () => {
       expect(setServerSideCookie).toHaveBeenCalledWith(
         fakeResponse,
         'session_token',
-        'test'
+        'test',
+        false
       );
     });
 

@@ -151,7 +151,7 @@ const DiscordTemplateMessages = {
   recovery: {
     embeds: [
       {
-        color: 12061255,
+        color: 1287250,
         title: 'Service {{service_name}} is back up!',
         footer: { text: `{{date[YYYY-MM-DDTHH:mm:ssZ[Z]]}}` },
       },

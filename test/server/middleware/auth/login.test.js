@@ -119,7 +119,8 @@ describe('Login - Middleware', () => {
       expect(setServerSideCookie).toHaveBeenCalledWith(
         fakeResponse,
         'session_token',
-        'test'
+        'test',
+        false
       );
     });
 

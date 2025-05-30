@@ -29,7 +29,12 @@ const login = async (request, response) => {
       agentData.data
     );
 
-    setServerSideCookie(response, 'session_token', userSession);
+    setServerSideCookie(
+      response,
+      'session_token',
+      userSession,
+      request.protocol === 'https'
+    );
 
     if (!user.isVerified) {
       return response.sendStatus(418);
