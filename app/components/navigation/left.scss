@@ -14,6 +14,7 @@
   flex-direction: column;
   flex: 1;
   margin-top: pxToRem(12);
+  gap: pxToRem(8);
 }
 
 .navigation-left-top-action {
@@ -42,7 +43,6 @@
   background-color: var(--accent-700);
   border-radius: var(--radius-sm);
   color: var(--primary-500);
-  margin-bottom: pxToRem(8);
 
   &:hover {
     cursor: pointer;

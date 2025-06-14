@@ -9,11 +9,11 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import useContextStore from '../../context';
-import Table from '../ui/table';
 import StatusDeleteModal from '../modal/status/delete';
 import { useNavigate } from 'react-router-dom';
 import { createPostRequest } from '../../services/axios';
 import { toast } from 'react-toastify';
+import StatusListTable from './table';
 
 const StatusPageTable = ({ search }) => {
   const {
@@ -55,80 +55,77 @@ const StatusPageTable = ({ search }) => {
 
   return (
     <div className="spt-container">
-      <Table.Table>
-        <Table.Header>
-          <Table.Row>
-            <Table.Head>Status Page</Table.Head>
-            <Table.Head>Access Level</Table.Head>
-            <Table.Head align="right">Actions</Table.Head>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {filteredStatusPages.map((statusPage) => {
-            const url =
-              statusPage.statusUrl === 'default'
-                ? '/'
-                : `/status/${statusPage.statusUrl}`;
+      <StatusListTable
+        columns={[
+          { id: 'statusUrl', value: 'Status Page', align: 'left' },
+          { id: 'isPublic', value: 'Access Level', align: 'left' },
+          { id: 'actions', value: 'Actions', align: 'right', sortable: false },
+        ]}
+        rows={filteredStatusPages.map((statusPage) => {
+          const url =
+            statusPage.statusUrl === 'default'
+              ? '/'
+              : `/status/${statusPage.statusUrl}`;
 
-            const isPublic = statusPage.settings.isPublic;
-
-            return (
-              <Table.Row key={statusPage.statusId}>
-                <Table.Cell
-                  onClick={() =>
-                    navigate(
-                      `/status-pages/configure?statusPageId=${statusPage.statusId}`
-                    )
-                  }
-                >
-                  <div className="spti">
-                    <div className="spti-icon">
-                      <PiBroadcast />
-                    </div>
-                    <div className="spti-title">
-                      <div>{statusPage.settings.title}</div>
-                      <div className="spti-url">{url}</div>
-                    </div>
+          return {
+            statusUrl: {
+              hoverable: true,
+              onClick: () =>
+                navigate(
+                  `/status-pages/configure?statusPageId=${statusPage.statusId}`
+                ),
+              value: statusPage?.settings?.title,
+              component: (
+                <div className="spti">
+                  <div className="spti-icon">
+                    <PiBroadcast />
                   </div>
-                </Table.Cell>
-                <Table.Cell
-                  onClick={() =>
-                    navigate(
-                      `/status-pages/configure?statusPageId=${statusPage.statusId}`
-                    )
-                  }
-                >
-                  <div>{isPublic ? 'Public' : 'Private'}</div>
-                </Table.Cell>
-
-                <Table.Cell>
-                  <div className="spt-actions">
-                    <a href={url} target="_blank" rel="noreferrer">
-                      <IoMdEye />
-                    </a>
-                    <div
-                      className="bin"
-                      onClick={() => {
-                        openModal(
-                          <StatusDeleteModal
-                            title={statusPage.settings.title}
-                            closeModal={closeModal}
-                            deleteStatusPage={() =>
-                              handleDelete(statusPage.statusId)
-                            }
-                          />
-                        );
-                      }}
-                    >
-                      <FaTrashCan />
-                    </div>
+                  <div className="spti-title">
+                    <div>{statusPage.settings.title}</div>
+                    <div className="spti-url">{url}</div>
                   </div>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table.Table>
+                </div>
+              ),
+            },
+            isPublic: {
+              hoverable: true,
+              value: statusPage?.settings?.isPublic,
+              onClick: () =>
+                navigate(
+                  `/status-pages/configure?statusPageId=${statusPage.statusId}`
+                ),
+              component: (
+                <div>{statusPage?.data?.isPublic ? 'Public' : 'Private'}</div>
+              ),
+            },
+            actions: {
+              component: (
+                <div className="spt-actions">
+                  <a href={url} target="_blank" rel="noreferrer">
+                    <IoMdEye />
+                  </a>
+                  <div
+                    className="bin"
+                    onClick={() => {
+                      openModal(
+                        <StatusDeleteModal
+                          title={statusPage.settings.title}
+                          closeModal={closeModal}
+                          deleteStatusPage={() =>
+                            handleDelete(statusPage.statusId)
+                          }
+                        />
+                      );
+                    }}
+                  >
+                    <FaTrashCan />
+                  </div>
+                </div>
+              ),
+            },
+          };
+        })}
+      />
     </div>
   );
 };

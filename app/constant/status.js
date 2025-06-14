@@ -9,22 +9,19 @@ export const defaultHeartbeats = Array.from({ length: 100 })
 
 export const defaultIncidents = [
   {
-    title: 'Scheduled Maintenance',
-    description: "I've set my server on fire. Going to take 2 hours to fix it.",
-    timestamp: Date.now(),
-    type: 'Maintenance',
+    message: "I've set my server on fire. Going to take 2 hours to fix it.",
+    createdAt: Date.now(),
+    status: 'Maintenance',
   },
   {
-    title: 'Partially Degraded Service',
-    description: 'Something is broken, but not sure where 🤷🏽',
+    message: 'Something is broken, but not sure where 🤷🏽',
     timestamp: Date.now(),
-    type: 'Incident',
+    status: 'Incident',
   },
   {
-    title: 'Degraded Performance',
-    description: "IT'S ALL GONE!! We're working on fixing it.",
+    message: "IT'S ALL GONE!! We're working on fixing it.",
     timestamp: Date.now(),
-    type: 'Outage',
+    status: 'Outage',
   },
 ];
 

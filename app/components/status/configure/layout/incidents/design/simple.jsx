@@ -2,30 +2,28 @@
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 
-const statusText = {
-  Operational: 'All Systems Operational',
-  Maintenance: 'Scheduled Maintenance',
-  Incident: 'Partially Degraded Service',
-  Outage: 'Degraded Service',
-};
-
-const StatusIncidentSimple = ({ incidents = [], size, titleSize, status }) => {
+const StatusIncidentSimple = ({
+  incidents = [],
+  size,
+  titleSize,
+  title,
+  status,
+}) => {
   const incidentsList = !incidents?.length ? [] : incidents;
 
   return (
     <div className={`sci-content ${status}`}>
       <div className={`sci-title ${size} title-${titleSize}`}>
-        <div>Monitor issues</div>
-        <div className="subtitle">{statusText[status]}</div>
+        <div>{title}</div>
       </div>
       <div className="sci-list">
         {incidentsList.map((incident, index) => (
           <div key={index}>
             <div className="scil-description">
-              <span>{incident.title}</span> - {incident.description}
+              <span>{incident.status}</span> - {incident.message}
             </div>
             <div className="scil-timestamp">
-              {dayjs(incident.timestamp).format('MMM DD YYYY, HH:mm')}
+              {dayjs(incident.createdAt).format('MMM DD YYYY, HH:mm')}
             </div>
           </div>
         ))}

@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 const Tabs = ({
@@ -22,21 +23,45 @@ const Tabs = ({
         <div className="input-short-description">{shortDescription}</div>
       )}
       <div className="input-theme-container">
-        {options.map((item) => (
-          <div
-            id={id}
-            key={item}
-            tabIndex={tabIndex}
-            className="input-theme-item"
-            style={{
-              backgroundColor: activeOption === item ? colorName : '',
-            }}
-            onClick={() => onChange(item)}
-            {...props}
-          >
-            {item}
-          </div>
-        ))}
+        {options.map((item) => {
+          if (typeof item === 'object') {
+            const classes = classNames('input-theme-item', {
+              [item.color]: item.color,
+            });
+
+            return (
+              <div
+                id={id}
+                key={item.value}
+                tabIndex={tabIndex}
+                className={classes}
+                style={{
+                  backgroundColor: activeOption === item.value ? colorName : '',
+                }}
+                onClick={() => onChange(item.value)}
+                {...props}
+              >
+                {item.value}
+              </div>
+            );
+          }
+
+          return (
+            <div
+              id={id}
+              key={item}
+              tabIndex={tabIndex}
+              className="input-theme-item"
+              style={{
+                backgroundColor: activeOption === item ? colorName : '',
+              }}
+              onClick={() => onChange(item)}
+              {...props}
+            >
+              {item}
+            </div>
+          );
+        })}
       </div>
 
       {error && (

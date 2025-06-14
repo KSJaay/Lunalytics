@@ -21,6 +21,7 @@ const GlobalLayout = ({ children }) => {
     userStore: { setUser },
     notificationStore: { setNotifications },
     statusStore: { setStatusPages },
+    incidentStore: { setIncidents },
   } = useContextStore();
 
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const GlobalLayout = ({ children }) => {
         const monitors = await createGetRequest('/api/user/monitors');
         const notifications = await createGetRequest('/api/notifications');
         const statusPages = await createGetRequest('/api/status-pages');
+        const incidents = await createGetRequest('/api/incident/all');
         const data = monitors?.data || [];
 
         setUser(user?.data);
@@ -41,6 +43,7 @@ const GlobalLayout = ({ children }) => {
         setTimeouts(data, fetchMonitorById);
         setNotifications(notifications?.data || []);
         setStatusPages(statusPages?.data || []);
+        setIncidents(incidents?.data || []);
       } catch (error) {
         if (error.response?.status === 401) {
           return navigate('/login');

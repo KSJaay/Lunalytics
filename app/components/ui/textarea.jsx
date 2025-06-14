@@ -1,11 +1,27 @@
 import './textarea.scss';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-const Textarea = ({ label, error, id = 'text-input', children, ...props }) => {
+const Textarea = ({
+  label,
+  error,
+  id = 'text-input',
+  disableResize = false,
+  shortDescription,
+  children,
+  ...props
+}) => {
+  const classnames = classNames('textarea', {
+    'textarea-resize': disableResize,
+  });
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       {label && <label className="input-label">{label}</label>}
-      <textarea className="textarea" id={id} {...props}>
+      {shortDescription && (
+        <div className="input-short-description">{shortDescription}</div>
+      )}
+      <textarea className={classnames} id={id} {...props}>
         {children}
       </textarea>
       {error && (

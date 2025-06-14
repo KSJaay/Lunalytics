@@ -3,8 +3,8 @@ import { fetchMonitorById } from '../services/monitor/fetch';
 
 class GlobalStore {
   constructor() {
-    this.monitors = new Map();
-    this.timeouts = new Map();
+    this.monitors = observable.map();
+    this.timeouts = observable.map();
 
     makeObservable(this, {
       monitors: observable,

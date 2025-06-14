@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-const Body = ({ children }) => {
-  return <tbody>{children}</tbody>;
+const Body = ({ children, ...props }) => {
+  return <tbody {...props}>{children}</tbody>;
 };
 
 Body.propTypes = {

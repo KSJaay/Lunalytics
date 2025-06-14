@@ -3,22 +3,22 @@
 // sci > status-configure-incidents
 
 .sci-content {
-  --status-color: var(--green-700);
+  --status-color: color-mix(in srgb, var(--primary-700), transparent 35%);
 
   &.Operational {
-    --status-color: var(--green-700);
+    --status-color: color-mix(in srgb, var(--primary-700), transparent 35%);
   }
 
   &.Maintenance {
-    --status-color: var(--blue-700);
+    --status-color: color-mix(in srgb, var(--blue-700), transparent 35%);
   }
 
   &.Incident {
-    --status-color: var(--yellow-700);
+    --status-color: color-mix(in srgb, var(--yellow-700), transparent 35%);
   }
 
   &.Outage {
-    --status-color: var(--red-700);
+    --status-color: color-mix(in srgb, var(--red-700), transparent 35%);
   }
 
   display: flex;
@@ -77,22 +77,27 @@
 
   &.title-XS {
     font-size: var(--font-md);
+    font-weight: bold;
   }
 
   &.title-S {
     font-size: var(--font-lg);
+    font-weight: bold;
   }
 
   &.title-M {
-    font-size: var(--font-2xl);
+    font-size: var(--font-xl);
+    font-weight: bold;
   }
 
   &.title-L {
-    font-size: var(--font-3xl);
+    font-size: var(--font-2xl);
+    font-weight: bold;
   }
 
   &.title-XL {
-    font-size: var(--font-4xl);
+    font-size: var(--font-3xl);
+    font-weight: bold;
   }
 
   .subtitle {
@@ -111,20 +116,21 @@
 // status-configure-incidents-list > scil
 .scil-title {
   font-size: var(--font-md);
+  font-weight: 600;
 
-  &.Operational {
+  &.Resolved {
     color: var(--green-700);
   }
 
-  &.Maintenance {
+  &.Monitoring {
     color: var(--blue-700);
   }
 
-  &.Incident {
+  &.Identified {
     color: var(--yellow-700);
   }
 
-  &.Outage {
+  &.Investigating {
     color: var(--red-700);
   }
 }
@@ -132,6 +138,11 @@
 .scil-description {
   font-size: var(--font-md);
   color: var(--font-color);
+  font-weight: normal;
+
+  span {
+    font-weight: 600;
+  }
 }
 
 .scil-timestamp {

@@ -8,7 +8,7 @@ import Footer from './footer';
 import Head from './head';
 import Header from './header';
 import Row from './row';
-import TableContainer from './table';
+import Container from './container';
 
 const Table = {
   Body,
@@ -18,19 +18,10 @@ const Table = {
   Head,
   Header,
   Row,
-  Table: TableContainer,
+  Container,
 };
 
-export {
-  Body,
-  Caption,
-  Cell,
-  Footer,
-  Head,
-  Header,
-  Row,
-  TableContainer as Table,
-};
+export { Body, Caption, Cell, Footer, Head, Header, Row, Container };
 
 Table.displayName = 'Table';
 

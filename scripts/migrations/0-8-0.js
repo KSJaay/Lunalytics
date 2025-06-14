@@ -6,7 +6,7 @@ const infomation = {
   title: 'Add pause for monitors',
   description:
     'Allow monitors to be paused, this will stop checks for the monitor.',
-  version: '0.7.2',
+  version: '0.8.0',
 };
 
 const migrate = async () => {

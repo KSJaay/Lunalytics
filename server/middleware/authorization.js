@@ -42,7 +42,6 @@ const authorization = async (request, response, next) => {
         response.locals.user = {
           ...userExistsInDatabase,
           permission: oldPermsToFlags[userExistsInDatabase.permission],
-          isApiToken: false,
           isOwner: userExistsInDatabase.permission === 1,
         };
       }

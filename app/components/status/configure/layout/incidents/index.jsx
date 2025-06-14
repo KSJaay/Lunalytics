@@ -64,6 +64,7 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
             status={status}
             titleSize={titleSize}
             incidents={defaultIncidents}
+            title="Incident title"
           />
         ) : null}
 
@@ -73,6 +74,7 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
             status={status}
             titleSize={titleSize}
             incidents={defaultIncidents}
+            title="Incident title"
           />
         ) : null}
 

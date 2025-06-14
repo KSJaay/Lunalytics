@@ -112,10 +112,11 @@ pm2 monit
 
 ## 🎯 Roadmap
 
-- [ ] Custom status pages
+- [x] Custom status pages
 - [x] Better design for compact mode
 - [ ] API keys for users
 - [ ] Move to Oauth2 for authentication
+  - [x] Moved to session based system, but not full Oauth2
 - [ ] Allow session management (Track/logout from sessions)
 - [ ] Add support for multiple databases
   - [x] Add support for PostgreSQL
@@ -137,7 +138,7 @@ So I've decided to create my own application that's focused on a developer first
 
 ## Contributors
 
-Just me for now I guess :(
+No longer just me :D
 
 <a href="https://github.com/KSJaay/Lunalytics/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=KSJaay/Lunalytics" />

@@ -8,7 +8,7 @@ import { NotificationValidatorError } from '../../utils/errors.js';
 const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];
 const tokenRegex =
-  /^https:\/\/discord.com\/api\/webhooks\/[0-9]+\/[0-9a-zA-Z_.-]+$/;
+  /^https:\/\/(?:discord\.com|discordapp\.com)\/api\/webhooks\/[0-9]+\/[0-9a-zA-Z_.-]+$/;
 const usernameRegex = /^[a-zA-Z0-9_]{1,32}$/;
 
 const Discord = ({

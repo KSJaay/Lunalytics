@@ -99,7 +99,7 @@ const StatusConfigure = () => {
                     )
                   }
                 >
-                  {statusPageId ? 'Edit' : 'Create'}
+                  {statusPageId ? 'Update' : 'Create'}
                 </Button>
               </div>
             </div>

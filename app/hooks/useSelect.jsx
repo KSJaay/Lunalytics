@@ -16,19 +16,30 @@ const useSelect = (closeOnSelect, defaultValue = []) => {
     return setValues((prev) => ({ ...prev, search: e.target.value }));
   };
 
-  const handleItemSelect = (id) => {
-    if (closeOnSelect) {
-      return setValues((prev) => ({
-        ...prev,
-        selectedIds: prev.selectedIds.push(id),
-        isOpen: !prev.isOpen,
-      }));
+  const handleItemSelect = (id, remove = false) => {
+    if (remove) {
+      return setValues((prev) => {
+        const selectedIds = prev.selectedIds.filter(
+          (selectedId) => selectedId !== id
+        );
+
+        return {
+          ...prev,
+          selectedIds,
+          isOpen: closeOnSelect ? !prev.isOpen : prev.isOpen,
+        };
+      });
     }
 
-    return setValues((prev) => ({
-      ...prev,
-      selectedIds: prev.selectedIds.push(id),
-    }));
+    return setValues((prev) => {
+      const selectedIds = [...prev.selectedIds, id];
+
+      return {
+        ...prev,
+        selectedIds,
+        isOpen: closeOnSelect ? !prev.isOpen : prev.isOpen,
+      };
+    });
   };
 
   return {

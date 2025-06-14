@@ -1,0 +1,126 @@
+.label {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: var(--font-sm);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-medium);
+  text-align: center;
+  white-space: nowrap;
+
+  &--size-xs {
+    font-size: var(--font-xs);
+    padding: 0.1rem 0.25rem;
+  }
+
+  &--size-sm {
+    font-size: var(--font-sm);
+    padding: 0.2rem 0.25rem;
+  }
+
+  &--size-md {
+    font-size: var(--font-md);
+    padding: 0.25rem 0.5rem;
+  }
+
+  &--size-lg {
+    font-size: var(--font-lg);
+  }
+
+  &--size-xl {
+    font-size: var(--font-xl);
+  }
+
+  &--size-2xl {
+    font-size: var(--font-2xl);
+  }
+
+  & {
+    --label-background: var(--accent-700);
+    --label-color: var(--accent-900);
+    --label-font: var(--font-color);
+  }
+
+  &--primary {
+    --label-background: var(--primary-800);
+    --label-color: var(--primary-100);
+    --label-font: var(--primary-700);
+  }
+
+  &--red {
+    --label-background: var(--red-800);
+    --label-color: var(--red-100);
+    --label-font: var(--red-700);
+  }
+
+  &--green {
+    --label-background: var(--green-800);
+    --label-color: var(--green-100);
+    --label-font: var(--green-700);
+  }
+
+  &--yellow {
+    --label-background: var(--yellow-800);
+    --label-color: var(--yellow-100);
+    --label-font: var(--yellow-700);
+  }
+
+  &--blue {
+    --label-background: var(--blue-800);
+    --label-color: var(--blue-100);
+    --label-font: var(--blue-700);
+  }
+
+  &--purple {
+    --label-background: var(--purple-800);
+    --label-color: var(--purple-100);
+    --label-font: var(--purple-700);
+  }
+
+  &--cyan {
+    --label-background: var(--cyan-800);
+    --label-color: var(--cyan-100);
+    --label-font: var(--cyan-700);
+  }
+
+  &--gray {
+    --label-background: var(--gray-800);
+    --label-color: var(--gray-100);
+    --label-font: var(--white);
+  }
+
+  &--pink {
+    --label-background: var(--pink-800);
+    --label-color: var(--pink-100);
+    --label-font: var(--pink-700);
+  }
+
+  &--solid {
+    color: var(--font-color);
+    background-color: var(--label-background);
+  }
+
+  &--border {
+    color: var(--label-font);
+    border: 1px solid var(--label-background);
+  }
+
+  &--light {
+    color: var(--label-font);
+  }
+
+  &--flat {
+    color: var(--label-font);
+    background-color: color-mix(
+      in srgb,
+      var(--label-background),
+      transparent 66%
+    );
+    border: 1px solid var(--accent-900);
+  }
+
+  &--shadow {
+    color: var(--font-color);
+    background-color: var(--label-background);
+    box-shadow: 0 2px 5px var(--label-background);
+  }
+}

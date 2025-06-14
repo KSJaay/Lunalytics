@@ -1,0 +1,118 @@
+@use '../../../styles/breakpoints.scss' as *;
+@use '../../../styles/pxToRem.scss' as *;
+
+// incindent id > iid
+
+.iid-content {
+  --header-background: color-mix(in srgb, var(--red-700), transparent 60%);
+
+  &.Investigating {
+    --header-background: color-mix(in srgb, var(--red-700), transparent 60%);
+  }
+
+  &.Identified {
+    --header-background: color-mix(in srgb, var(--yellow-700), transparent 60%);
+  }
+
+  &.Monitoring {
+    --header-background: color-mix(in srgb, var(--blue-700), transparent 60%);
+  }
+
+  &.Resolved {
+    --header-background: color-mix(in srgb, var(--green-700), transparent 60%);
+  }
+
+  border: 1px solid var(--header-background);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+
+  .background {
+    display: flex;
+    gap: pxToRem(4);
+    background-color: var(--header-background);
+    padding: pxToRem(8);
+    align-items: center;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: pxToRem(4);
+  }
+
+  .title {
+    font-weight: bold;
+  }
+
+  .icon {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: center;
+    padding: pxToRem(4);
+    border-radius: var(--radius-xs);
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      color: var(--primary-700);
+    }
+  }
+}
+
+.iid-description {
+  padding: pxToRem(8);
+}
+
+.iid-footer {
+  padding: 0 pxToRem(8) pxToRem(8) pxToRem(8);
+  font-size: var(--font-xs);
+  color: var(--font-light-color);
+}
+
+// incident id header > iidh
+
+.iidh-item-container {
+  display: flex;
+  gap: pxToRem(12);
+  padding: 0 pxToRem(12);
+}
+
+.iidh-item {
+  flex: 1;
+  border: pxToRem(2) solid var(--accent-700);
+  padding: pxToRem(8) pxToRem(4) pxToRem(8) pxToRem(12);
+  border-radius: var(--radius-md);
+  background-color: var(--accent-800);
+  position: relative;
+
+  .title {
+    font-size: var(--font-xl);
+    text-transform: uppercase;
+    color: var(--font-light-color);
+    flex: 1;
+  }
+
+  .subtitle {
+    color: var(--font-color);
+  }
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    position: absolute;
+    top: pxToRem(5);
+    right: pxToRem(5);
+
+    &:hover {
+      cursor: pointer;
+      svg {
+        color: var(--primary-700);
+      }
+    }
+  }
+}

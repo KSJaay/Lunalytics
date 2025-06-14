@@ -106,27 +106,50 @@ const StatusPage = ({ id }) => {
               );
             }
             case 'status': {
+              const incident = statusPage.incidents[0] || {};
+              const incidentStatus =
+                incident.status === 'Resolved'
+                  ? 'Operational'
+                  : incident?.affect;
+
+              const incidentsComponentExists = layout.find(
+                (item) => item.type === 'incidents'
+              );
+
+              if (
+                incidentsComponentExists &&
+                incidentsComponentExists?.design !== 'Minimal' &&
+                incident.status !== 'Resolved'
+              ) {
+                return null;
+              }
+
               return (
                 <StatusPageStatus
                   key={item.id}
                   icon={item.icon}
                   design={item.design}
                   size={item.size}
-                  status={item.status}
+                  status={incidentStatus}
                   titleSize={item.titleSize}
                 />
               );
             }
             case 'incidents': {
+              const incident = statusPage.incidents[0] || null;
+
+              if (!incident || incident.status === 'Resolved') return null;
+
               return (
                 <StatusPageIncident
                   key={item.id}
-                  incidents={statusPage.incidents}
-                  incidentsStatus={item.incidentsStatus[0]?.status}
+                  incidents={incident.messages}
+                  incidentsStatus={incident.affect}
                   design={item.design}
-                  status={item.status}
+                  status={incident.affect}
                   size={item.size}
                   titleSize={item.titleSize}
+                  title={incident.title}
                 />
               );
             }
@@ -138,7 +161,16 @@ const StatusPage = ({ id }) => {
               const allMonitors = monitors.map((monitorId) => {
                 const monitor = statusPage?.monitors[monitorId];
                 if (!monitor) return null;
-                return { ...monitor, status: item.status };
+
+                const monitorHasIncident = statusPage.incidents.find(
+                  (incident) => incident?.monitorIds?.includes(monitorId)
+                );
+                const monitorStatus =
+                  monitorHasIncident && monitorHasIncident.status !== 'Resolved'
+                    ? monitorHasIncident.affect
+                    : 'Operational';
+
+                return { ...monitor, status: monitorStatus };
               });
 
               return (
@@ -171,7 +203,11 @@ const StatusPage = ({ id }) => {
             }
             case 'history': {
               return (
-                <StatusConfigureLayoutHistoryList key={item.id} size={15} />
+                <StatusConfigureLayoutHistoryList
+                  key={item.id}
+                  incidents={statusPage.incidents}
+                  size={15}
+                />
               );
             }
             case 'customHTML':

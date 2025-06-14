@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-const Footer = ({ children }) => {
-  return <tfoot>{children}</tfoot>;
+const Footer = ({ children, ...props }) => {
+  return <tfoot {...props}>{children}</tfoot>;
 };
 
 Footer.propTypes = {
