@@ -1,27 +1,21 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import { makeAutoObservable, observable } from 'mobx';
+import Incident from './incident';
 
 class IncidentStore {
   constructor() {
     this.incidents = observable.map();
 
-    makeObservable(this, {
-      incidents: observable,
-      setIncidents: action,
-      addIncident: action,
-      deleteIncident: action,
-      getIncidentById: action,
-      allIncidents: computed,
-    });
+    makeAutoObservable(this);
   }
 
   setIncidents = (incidents) => {
     for (const incident of incidents) {
-      this.incidents.set(incident.incidentId, incident);
+      this.incidents.set(incident.incidentId, new Incident(incident));
     }
   };
 
   addIncident = (incident) => {
-    this.incidents.set(incident.incidentId, incident);
+    this.incidents.set(incident.incidentId, new Incident(incident));
   };
 
   deleteIncident = (id) => {
@@ -30,6 +24,14 @@ class IncidentStore {
 
   getIncidentById = (id) => {
     return this.incidents.get(id);
+  };
+
+  updateMessages = (incidentId, messages) => {
+    const incident = this.getIncidentById(incidentId);
+
+    if (incident) {
+      incident.updateMessages(messages);
+    }
   };
 
   get allIncidents() {

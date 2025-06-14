@@ -12,7 +12,7 @@ import useIncidentMessage from '../../../hooks/useIncidentMessage';
 
 const IncidentAddUpdateModal = ({ incidentId }) => {
   const {
-    incidentStore: { getIncidentById, addIncident },
+    incidentStore: { getIncidentById, updateMessages },
     modalStore: { closeModal },
   } = useContextStore();
 
@@ -44,7 +44,7 @@ const IncidentAddUpdateModal = ({ incidentId }) => {
     try {
       const data = await handleSubmit();
 
-      addIncident(data);
+      updateMessages(incidentId, data.messages);
 
       closeModal();
     } catch (error) {

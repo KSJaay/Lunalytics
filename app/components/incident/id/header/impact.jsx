@@ -18,7 +18,7 @@ const IncidentIdHeaderItemImpact = ({ title, onClick, subtitle }) => {
   const [active, setActive] = useState(affected);
 
   const handleClick = async (id) => {
-    const affect = getIncidentAffect(id, true);
+    const affect = getIncidentAffect(id);
 
     setActive(affect);
     await onClick('affect', id);
