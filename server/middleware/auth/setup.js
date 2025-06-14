@@ -35,7 +35,7 @@ const createDataDirIfNotExist = () => {
  *
  * @param {Object} config - The config object to write to the file.
  */
-const writeConfigFile = (config) => {
+const writeConfigFile = (config = {}) => {
   fs.writeFileSync(
     path.join(process.cwd(), 'data', 'config.json'),
     JSON.stringify(config, null, 2)
@@ -98,7 +98,7 @@ const createAdvancedSetup = ({
   }
 
   createDataDirIfNotExist();
-  writeConfigFile();
+  writeConfigFile(config);
 
   logger.info('SETUP', { message: 'Config file created successfully' });
 };

@@ -18,6 +18,7 @@ import {
   statusBarDesign,
   statusSizes,
 } from '../../../../../shared/constants/status';
+import { affectTextIds } from '../../../../../shared/constants/incident';
 
 const icons = {
   Operational: <FaCircleCheck style={{ width: '32px', height: '32px' }} />,
@@ -77,7 +78,7 @@ const StatusConfigureLayoutStatus = ({ componentId }) => {
             <div style={{ flex: 1 }}>
               <Tabs
                 label="Incident color"
-                options={['Operational', 'Maintenance', 'Incident', 'Outage']}
+                options={affectTextIds}
                 activeOption={status}
                 onChange={(e) => setComponentValue(componentId, 'status', e)}
                 shortDescription="This is for testing only and will not be saved"

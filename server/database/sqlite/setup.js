@@ -12,6 +12,7 @@ import { monitorTable } from './tables/monitor.js';
 import { notificationsTable } from './tables/notifications.js';
 import { statusPageTable } from './tables/status_page.js';
 import { userTable } from './tables/user.js';
+import { userSessionTable } from './tables/user_session.js';
 
 export class SQLite {
   constructor() {
@@ -99,6 +100,7 @@ export class SQLite {
     await notificationsTable(this.client);
     await statusPageTable(this.client);
     await userTable(this.client);
+    await userSessionTable(this.client);
 
     return true;
   }

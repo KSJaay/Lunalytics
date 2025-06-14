@@ -1,13 +1,10 @@
-ARG BUILDPLATFORM
-
-FROM --platform=$BUILDPLATFORM node:22.14.0-alpine AS base
+FROM node:22.14.0-alpine AS base
 
 RUN apk add --no-cache \
-    build-base \
     python3 \
-    py3-pip \
     make \
-    g++
+    g++ \
+    git
 
 WORKDIR /app
 
@@ -17,27 +14,31 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-
 RUN npm run build
 
-FROM node:22.14.0-alpine AS production
+FROM base AS native
 
-RUN apk add --no-cache \
-    python3 \
-    make \
-    g++
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+RUN npm rebuild better-sqlite3
+
+FROM node:22.14.0-alpine AS production
 
 WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/server ./server
 COPY --from=builder /app/shared ./shared
 
-ENV HUSKY=0
+COPY --from=native /app/node_modules ./node_modules
+COPY --from=native /app/package*.json ./
 
-RUN npm ci --omit=dev
+ENV NODE_ENV=production \
+    HUSKY=0
 
 EXPOSE 2308
 

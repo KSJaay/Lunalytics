@@ -1,5 +1,6 @@
+import { affectTextIds } from '../constants/incident.js';
+
 const validStatus = ['Investigating', 'Identified', 'Monitoring', 'Resolved'];
-const validHealthStatus = ['Operational', 'Maintenance', 'Incident', 'Outage'];
 
 const messagesValidator = (messages) => {
   if (!messages.length) {
@@ -63,7 +64,7 @@ const IncidentValidator = ({
     return 'Please select a valid status for the incident';
   }
 
-  if (!validHealthStatus.includes(affect)) {
+  if (!affectTextIds.includes(affect)) {
     return 'Please select a valid affect for the incident';
   }
 
