@@ -1,10 +1,8 @@
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import NotificationValidators from '../../../shared/validators/notifications/index.js';
-import {
-  createNotification,
-  fetchNotificationUniqueId,
-} from '../../database/queries/notification.js';
+import { createNotification } from '../../database/queries/notification.js';
+import randomId from '../../utils/randomId.js';
 
 const NotificationCreateMiddleware = async (request, response) => {
   const notification = request.body;
@@ -20,7 +18,7 @@ const NotificationCreateMiddleware = async (request, response) => {
 
     const { user } = response.locals;
 
-    const uniqueId = await fetchNotificationUniqueId();
+    const uniqueId = randomId();
     const query = await createNotification({
       ...result,
       email: user.email,

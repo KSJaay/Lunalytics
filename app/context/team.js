@@ -3,7 +3,8 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 class TeamStore {
   constructor() {
-    this.team = new Map();
+    this.team = observable.map();
+
     makeObservable(this, {
       team: observable,
       setTeam: action,

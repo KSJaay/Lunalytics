@@ -16,6 +16,7 @@ import {
   statusDesign,
   statusSizes,
 } from '../../../../../../shared/constants/status';
+import { affectTextIds } from '../../../../../../shared/constants/incident';
 
 const StatusConfigureLayoutIncidents = ({ componentId }) => {
   const { setComponentValue, getComponent, removeComponent } =
@@ -64,6 +65,7 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
             status={status}
             titleSize={titleSize}
             incidents={defaultIncidents}
+            title="Incident title"
           />
         ) : null}
 
@@ -73,6 +75,7 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
             status={status}
             titleSize={titleSize}
             incidents={defaultIncidents}
+            title="Incident title"
           />
         ) : null}
 
@@ -81,7 +84,7 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
             <div style={{ flex: 1 }}>
               <Tabs
                 label="Incident color"
-                options={['Operational', 'Maintenance', 'Incident', 'Outage']}
+                options={affectTextIds}
                 activeOption={status}
                 onChange={(e) => setComponentValue(componentId, 'status', e)}
                 shortDescription="This is for testing only and will not be saved"

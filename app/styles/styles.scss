@@ -102,6 +102,51 @@ body {
     background-color: var(--accent-700);
     color: var(--accent-100);
   }
+
+  &.red {
+    color: var(--red-700);
+
+    &:hover {
+      color: var(--red-600);
+      background-color: transparent;
+    }
+  }
+
+  &.yellow {
+    color: var(--yellow-700);
+
+    &:hover {
+      color: var(--yellow-600);
+      background-color: transparent;
+    }
+  }
+
+  &.purple {
+    color: var(--purple-700);
+
+    &:hover {
+      color: var(--purple-600);
+      background-color: transparent;
+    }
+  }
+
+  &.blue {
+    color: var(--blue-700);
+
+    &:hover {
+      color: var(--blue-600);
+      background-color: transparent;
+    }
+  }
+
+  &.green {
+    color: var(--green-700);
+
+    &:hover {
+      color: var(--green-600);
+      background-color: transparent;
+    }
+  }
 }
 
 .mobile-hidden {

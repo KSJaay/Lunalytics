@@ -36,8 +36,6 @@ router.get('/', async (request, response) => {
         const session = await userSessionExists(session_token);
         const user = await getUserByEmail(session.email);
 
-        console.log(session, user);
-
         if (!user) {
           return response.sendStatus(401);
         }

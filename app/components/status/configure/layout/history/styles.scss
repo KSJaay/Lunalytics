@@ -31,3 +31,37 @@
   color: var(--font-light-color);
   font-size: var(--font-sm);
 }
+
+// sclhi > status-configure-layout-history-incident
+
+.sclhi-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sclhi-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sclhi-title {
+  font-size: var(--font-xl);
+  font-weight: 600;
+}
+
+.sclhi-subtitle {
+  color: var(--font-color);
+  font-weight: 700;
+}
+
+.sclhi-text {
+  color: var(--font-color);
+  font-weight: 300;
+}
+
+.sclhi-date {
+  font-size: var(--font-xs);
+  color: var(--font-light-color);
+}

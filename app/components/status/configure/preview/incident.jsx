@@ -8,13 +8,13 @@ import StatusIncidentSimple from '../layout/incidents/design/simple';
 
 const StatusPageIncident = ({
   incidents = '',
-  incidentsStatus = '',
   design = '',
   status = '',
   size = '',
   titleSize = '',
+  title = '',
 }) => {
-  if (incidentsStatus === 'Operational') {
+  if (status === 'Operational') {
     return null;
   }
 
@@ -29,6 +29,7 @@ const StatusPageIncident = ({
         status={status}
         size={size}
         titleSize={titleSize}
+        title={title}
       />
     );
   }
@@ -39,6 +40,7 @@ const StatusPageIncident = ({
       status={status}
       size={size}
       titleSize={titleSize}
+      title={title}
     />
   );
 };

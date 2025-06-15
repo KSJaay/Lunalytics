@@ -23,7 +23,7 @@ const statusText = {
   Operational: 'All Systems Operational',
   Maintenance: 'Scheduled Maintenance',
   Incident: 'Partially Degraded Service',
-  Outage: 'Degraded Service',
+  Outage: 'Major Outage',
 };
 
 const StatusPageStatus = ({

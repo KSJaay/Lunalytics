@@ -2,7 +2,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 class NotificationStore {
   constructor() {
-    this.notifications = new Map();
+    this.notifications = observable.map();
 
     makeObservable(this, {
       notifications: observable,

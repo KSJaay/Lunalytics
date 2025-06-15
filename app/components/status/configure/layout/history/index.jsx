@@ -26,7 +26,11 @@ const StatusConfigureLayoutHistory = ({ componentId, incidents = [] }) => {
       </div>
 
       <div className="sclh-content">
-        <StatusConfigureLayoutHistoryList incidents={incidents} size={3} />
+        <StatusConfigureLayoutHistoryList
+          incidents={incidents}
+          size={3}
+          style={{ maxWidth: '100%' }}
+        />
       </div>
     </div>
   );

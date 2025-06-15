@@ -420,6 +420,10 @@
 
 .scil-description {
   font-size: var(--font-md);
+
+  span {
+    font-weight: 600;
+  }
 }
 
 .scil-timestamp {

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-const Header = ({ children }) => {
-  return <thead>{children}</thead>;
+const Header = ({ children, ...props }) => {
+  return <thead {...props}>{children}</thead>;
 };
 
 Header.propTypes = {

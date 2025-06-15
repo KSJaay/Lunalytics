@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const ProgressBar = ({ sections = 1, progress = 1 }) => {
-  // create an array of divs that match the number of sections
-
   const sectionsArray = Array.from({ length: sections }, (_, i) => {
     const classes = classNames({
       'progress-section': i + 1 > progress,

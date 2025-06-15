@@ -1,18 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
 import SQLite from '../sqlite/setup.js';
 import { ConflictError } from '../../../shared/utils/errors.js';
 import { cleanStatusPage } from '../../class/status.js';
 import { timeToMs } from '../../../shared/utils/ms.js';
-
-const getUnqiueId = async () => {
-  let id = uuidv4();
-
-  while (await SQLite.client('status_page').where({ statusId: id }).first()) {
-    id = uuidv4();
-  }
-
-  return id;
-};
+import { cleanIncident } from '../../class/incident.js';
+import randomId from '../../utils/randomId.js';
 
 export const fetchAllStatusPages = async () => {
   const statusPages = await SQLite.client('status_page').select();
@@ -58,7 +49,7 @@ export const createStatusPage = async (settings, layout, user) => {
     return true;
   });
 
-  const uniqueId = await getUnqiueId();
+  const uniqueId = randomId();
 
   await SQLite.client('status_page').insert({
     statusId: uniqueId,
@@ -130,12 +121,12 @@ export const fetchAllMonitors = async () => {
   return SQLite.client('monitor');
 };
 
-export const fetchIncidentsUsindIdArray = async (monitorIds, days = 90) => {
+export const fetchIncidentsUsingIdArray = async (monitorIds, days = 90) => {
   const nintyDaysAgo = new Date(
     Date.now() - timeToMs(days, 'days')
   ).toISOString();
 
-  return SQLite.client('incident')
+  const query = await SQLite.client('incident')
     .whereRaw(
       `EXISTS (
         SELECT 1 FROM json_each(monitorIds)
@@ -145,4 +136,6 @@ export const fetchIncidentsUsindIdArray = async (monitorIds, days = 90) => {
     )
     .andWhere('createdAt', '>', nintyDaysAgo)
     .select();
+
+  return query.map((incident) => cleanIncident(incident));
 };

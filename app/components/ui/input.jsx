@@ -15,6 +15,7 @@ const TextInput = ({
   iconRight,
   isRequired,
   tabIndex = 0,
+  containerStyle = {},
   ...props
 }) => {
   const classes = classNames('text-input', {
@@ -32,7 +33,7 @@ const TextInput = ({
       {shortDescription && (
         <div className="input-short-description">{shortDescription}</div>
       )}
-      <div className="text-input-container">
+      <div className="text-input-container" style={containerStyle}>
         {iconLeft && <div className="text-left-icon">{iconLeft}</div>}
         <input
           type="text"

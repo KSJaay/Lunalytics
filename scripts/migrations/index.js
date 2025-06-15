@@ -5,6 +5,7 @@ import { migrate as migrateCache } from './0-6-5.js';
 import { migrate as migratePostgres } from './0-7-0.js';
 import { migrate as migratePause } from './0-7-2.js';
 import { migrate as migrateStatus } from './0-8-0.js';
+import { migrate as migrateIncidents } from './0-9-0.js';
 
 const migrationList = {
   '0.4.0': migrateTcpUpdate,
@@ -13,6 +14,7 @@ const migrationList = {
   '0.7.0': migratePostgres,
   '0.7.2': migratePause,
   '0.8.0': migrateStatus,
+  '0.9.0': migrateIncidents,
 };
 
 export default migrationList;

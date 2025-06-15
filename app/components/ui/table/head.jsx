@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-const Head = ({ children, align = 'left', ...props }) => {
-  const classes = classNames('table', {
-    [`align-${align}`]: true,
+const Head = ({ children, align = 'left', className, ...props }) => {
+  const classes = classNames(className, {
+    [`table-align-${align}`]: true,
   });
 
   return (

@@ -6,7 +6,7 @@ import { monitorExists } from '../database/queries/monitor.js';
 import {
   fetchAllMonitors,
   fetchAllStatusPages,
-  fetchIncidentsUsindIdArray,
+  fetchIncidentsUsingIdArray,
 } from '../database/queries/status.js';
 import { getMonitorIds, hasAutoAdd } from '../utils/status.js';
 
@@ -38,11 +38,9 @@ class Status {
     if (isInitialLoad) {
       // Fetch all incidents for the 90 days
       const monitorIds = this.monitors.toJSONKeys();
-      const incidents = await fetchIncidentsUsindIdArray(monitorIds);
+      const incidents = await fetchIncidentsUsingIdArray(monitorIds);
       for (const incident of incidents) {
-        const cacheIncidents = this.incidents.get(incident.monitorId) || [];
-        cacheIncidents.push(incident);
-        this.incidents.set(incident.monitorId, cacheIncidents);
+        this.incidents.set(incident.incidentId, incident);
       }
 
       for (const statusPage of statusPages) {
@@ -129,7 +127,7 @@ class Status {
     if (hasAutoAdd(statusPage)) {
       const monitors = this.monitors.toObject() || {};
       const heartbeats = this.heartbeats.toObject() || {};
-      const incidents = this.incidents.toObject() || {};
+      const incidents = this.incidents.toJSONValues() || {};
 
       return { ...statusPage, monitors, incidents, heartbeats };
     } else {
@@ -151,10 +149,23 @@ class Status {
         return acc;
       }, {});
 
-      const incidents = this.incidents.toJSON() || [];
+      const incidents =
+        this.incidents
+          ?.toJSONValues()
+          ?.filter((incident) =>
+            incident.monitorIds.some((id) => monitorIds.includes(id))
+          ) || [];
 
       return { ...statusPage, monitors, incidents, heartbeats };
     }
+  }
+
+  addIncident(incident) {
+    this.incidents.set(incident.incidentId, incident);
+  }
+
+  deleteIncident(incidentId) {
+    this.incidents.delete(incidentId);
   }
 }
 

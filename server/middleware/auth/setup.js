@@ -1,7 +1,6 @@
 // import dependencies
 import fs from 'fs';
 import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
 
 // import local files
 import { getSetupKeys } from '../../../shared/data/setup.js';
@@ -15,6 +14,7 @@ import client from '../../database/sqlite/setup.js';
 import config from '../../utils/config.js';
 import { createUserSession } from '../../database/queries/session.js';
 import { parseUserAgent } from '../../utils/uaParser.js';
+import randomId from '../../utils/randomId.js';
 
 const packageJson = loadJSON('package.json');
 
@@ -35,7 +35,7 @@ const createDataDirIfNotExist = () => {
  *
  * @param {Object} config - The config object to write to the file.
  */
-const writeConfigFile = (config) => {
+const writeConfigFile = (config = {}) => {
   fs.writeFileSync(
     path.join(process.cwd(), 'data', 'config.json'),
     JSON.stringify(config, null, 2)
@@ -45,7 +45,7 @@ const writeConfigFile = (config) => {
 const createBasicSetup = ({
   databaseType,
   databaseName,
-  jwtSecret = uuidv4(),
+  jwtSecret = randomId(),
   websiteUrl,
   migrationType,
   retentionPeriod = '6m',
@@ -69,7 +69,7 @@ const createBasicSetup = ({
 const createAdvancedSetup = ({
   databaseType,
   databaseName,
-  jwtSecret = uuidv4(),
+  jwtSecret = randomId(),
   websiteUrl,
   migrationType,
   postgresHost = 'localhost',
@@ -98,7 +98,7 @@ const createAdvancedSetup = ({
   }
 
   createDataDirIfNotExist();
-  writeConfigFile();
+  writeConfigFile(config);
 
   logger.info('SETUP', { message: 'Config file created successfully' });
 };

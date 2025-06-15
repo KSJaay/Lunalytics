@@ -5,11 +5,17 @@ import './left.scss';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
+import { BsFillShieldLockFill } from 'react-icons/bs';
 
 // import local files
 import Tooltip from '../ui/tooltip';
-import { FaCog, FaHome, FaSignOutAlt, MdNotifications } from '../icons';
-// PiBroadcast,
+import {
+  FaCog,
+  FaHome,
+  FaSignOutAlt,
+  MdNotifications,
+  PiBroadcast,
+} from '../icons';
 
 const actionTabs = [
   {
@@ -22,11 +28,16 @@ const actionTabs = [
     url: '/notifications',
     logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
   },
-  // {
-  //   name: 'Status',
-  //   url: '/status-pages',
-  //   logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
-  // },
+  {
+    name: 'Status',
+    url: '/status-pages',
+    logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
+  },
+  {
+    name: 'Incidents',
+    url: '/incidents',
+    logo: <BsFillShieldLockFill style={{ width: '25px', height: '25px' }} />,
+  },
 ];
 
 const LeftNavigation = ({ activeUrl = '' }) => {

@@ -14,10 +14,10 @@ const StatusIncidentBasic = ({ incidents = [], status }) => {
         {incidentsList.map((incident, index) => (
           <div key={index}>
             <div className="scil-description">
-              <span>{incident.title}</span> - {incident.description}
+              <span>{incident.status}</span> - {incident.message}
             </div>
             <div className="scil-timestamp">
-              {dayjs(incident.timestamp).format('MMM DD YYYY, HH:mm')}
+              {dayjs(incident.createdAt).format('MMM DD YYYY, HH:mm')}
             </div>
           </div>
         ))}

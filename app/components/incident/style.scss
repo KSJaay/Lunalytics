@@ -1,0 +1,52 @@
+.incident-item-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 10;
+  background-color: var(--accent-900);
+  margin: 0.625rem 0.625rem 0px 0.625rem;
+  padding: 0.625rem;
+  border-top: 5px solid color-mix(in srgb, var(--primary-700), transparent 40%);
+  border-radius: var(--radius-sm);
+
+  &.Operational {
+    border-top-color: color-mix(in srgb, var(--green-700), transparent 40%);
+  }
+
+  &.Maintenance {
+    border-top-color: color-mix(in srgb, var(--blue-700), transparent 40%);
+  }
+
+  &.Incident {
+    border-top-color: color-mix(in srgb, var(--yellow-700), transparent 40%);
+  }
+
+  &.Outage {
+    border-top-color: color-mix(in srgb, var(--red-700), transparent 40%);
+  }
+}
+
+.incident-item-content {
+  display: flex;
+  flex: 1;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.incident-item-title {
+  font-size: var(--font-xl);
+  font-weight: 700;
+}
+
+.incident-item-user {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  font-size: var(--font-sm);
+  color: var(--font-light-color);
+}
+
+.incident-item-action {
+  display: flex;
+  align-items: center;
+}

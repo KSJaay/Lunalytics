@@ -2,7 +2,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 class StatusStore {
   constructor() {
-    this.statusPages = new Map();
+    this.statusPages = observable.map();
 
     makeObservable(this, {
       statusPages: observable,

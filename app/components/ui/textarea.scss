@@ -12,8 +12,13 @@
   border: 2px solid #ffffff00;
   padding: pxToRem(8);
   font-family: var(--font-family);
+  margin-top: pxToRem(4);
 
   &:focus {
     border: 2px solid var(--primary-700);
+  }
+
+  &.textarea-resize {
+    resize: none;
   }
 }

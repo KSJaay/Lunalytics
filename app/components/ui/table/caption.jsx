@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-const Caption = ({ children }) => {
-  return <caption>{children}</caption>;
+const Caption = ({ children, ...props }) => {
+  return <caption {...props}>{children}</caption>;
 };
 
 Caption.propTypes = {

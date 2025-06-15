@@ -21,6 +21,7 @@ import {
   statusGraphDesigns,
   statusIndicators,
 } from '../../../../../../shared/constants/status';
+import { affectTextIds } from '../../../../../../shared/constants/incident';
 
 const StatusConfigureLayoutUptime = ({ componentId }) => {
   const {
@@ -172,7 +173,7 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
               />
               <Tabs
                 label="Incident color"
-                options={['Operational', 'Maintenance', 'Incident', 'Outage']}
+                options={affectTextIds}
                 activeOption={status}
                 onChange={(value) =>
                   setComponentValue(componentId, 'status', value)
