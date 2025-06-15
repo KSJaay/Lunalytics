@@ -35,11 +35,6 @@ const createIncidentMiddleware = async (request, response) => {
 
     data.messages.push(msg);
 
-    if (data.messages[data.messages.length - 2]) {
-      data.messages[data.messages.length - 2].endedAt =
-        new Date().toISOString();
-    }
-
     const incident = await createIncident(data);
 
     statusCache.addIncident(incident);

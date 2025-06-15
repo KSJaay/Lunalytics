@@ -15,12 +15,12 @@ export const defaultIncidents = [
   },
   {
     message: 'Something is broken, but not sure where 🤷🏽',
-    timestamp: Date.now(),
+    createdAt: Date.now(),
     status: 'Incident',
   },
   {
     message: "IT'S ALL GONE!! We're working on fixing it.",
-    timestamp: Date.now(),
+    createdAt: Date.now(),
     status: 'Outage',
   },
 ];

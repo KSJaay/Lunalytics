@@ -1,19 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
 import SQLite from '../sqlite/setup.js';
 import { ConflictError } from '../../../shared/utils/errors.js';
 import { cleanStatusPage } from '../../class/status.js';
 import { timeToMs } from '../../../shared/utils/ms.js';
 import { cleanIncident } from '../../class/incident.js';
-
-const getUnqiueId = async () => {
-  let id = uuidv4();
-
-  while (await SQLite.client('status_page').where({ statusId: id }).first()) {
-    id = uuidv4();
-  }
-
-  return id;
-};
+import randomId from '../../utils/randomId.js';
 
 export const fetchAllStatusPages = async () => {
   const statusPages = await SQLite.client('status_page').select();
@@ -59,7 +49,7 @@ export const createStatusPage = async (settings, layout, user) => {
     return true;
   });
 
-  const uniqueId = await getUnqiueId();
+  const uniqueId = randomId();
 
   await SQLite.client('status_page').insert({
     statusId: uniqueId,

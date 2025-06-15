@@ -12,6 +12,14 @@ const updateIncidentMiddleware = async (request, response) => {
       return response.status(400).json({ message: isInvalid });
     }
 
+    if (
+      data.messages[data.messages.length - 2] &&
+      !data.messages[data.messages.length - 2]?.endedAt
+    ) {
+      data.messages[data.messages.length - 2].endedAt =
+        new Date().toISOString();
+    }
+
     const query = await updateIncident(incident.incidentId, incident);
 
     statusCache.addIncident(query);

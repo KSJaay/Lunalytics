@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import SQLite from '../sqlite/setup.js';
 import {
   cleanNotification,
@@ -22,16 +21,6 @@ export const fetchNotificationById = async (id) => {
   if (!notification) return null;
 
   return cleanNotification(notification);
-};
-
-export const fetchNotificationUniqueId = async () => {
-  let id = uuidv4();
-
-  while (await SQLite.client('notifications').where({ id }).first()) {
-    id = uuidv4();
-  }
-
-  return id;
 };
 
 export const createNotification = async (notification) => {

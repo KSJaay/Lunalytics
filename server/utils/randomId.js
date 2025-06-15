@@ -1,7 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v7 as uuidv7 } from 'uuid';
 
 const randomId = () => {
-  return uuidv4();
+  return uuidv7();
 };
 
 export default randomId;
