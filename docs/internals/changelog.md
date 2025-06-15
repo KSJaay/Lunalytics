@@ -1,5 +1,29 @@
 # Previous updates
 
+## 0.9.0
+
+### Adds incident management and updates status pages
+
+### Summary
+
+I put myself through pain with these big PRs 😄. This PR adds ability for users to create incidents that can be displayed on the status page, along with fixing various bugs
+
+### New Features
+
+- Allows users to create incidents for status pages
+- Status page now update depending on the latest incident
+  - May change to display multiple incidents at once in the future
+
+### Updates
+
+- Adds support for `discordapp.com` for webhooks
+- Fixes issues with status page not showing incidents/history properly
+- Reworked some various things on the status page and how things are displayed
+- Reworked Docker build to further optimize the build
+- Mobx now uses `observable.map()` instead of `new Map()`
+- Cleaned up table creation on startup
+- Updates to uuid v7 for less collision between ids
+
 ## 0.8.6
 
 ### Fixes notifications and cookies not being set on local
@@ -642,7 +666,7 @@ The next update will mainly focus on an overhaul for cache and optimising the ca
 
 ## v0.2.0
 
-A### dds cert checks, confirmation message, notifications, themes, and time/data formats
+### Adds cert checks, confirmation message, notifications, themes, and time/data formats
 
 ### PRs:
 

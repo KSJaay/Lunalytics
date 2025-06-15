@@ -65,7 +65,7 @@ const setupValidators = {
 
   websiteUrl: (value = '', setErrors) => {
     const websiteUrl =
-      /^(https?:\/\/)?(localhost|([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(:\d+)?(\/[^\s]*)?$/;
+      /^https?:\/\/(localhost(:\d{1,5})?|\d{1,3}(\.\d{1,3}){3}:\d{1,5}|[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(:\d{1,5})?)$/g;
     const isInvalid = websiteUrl.test(value);
 
     if (!isInvalid) {
