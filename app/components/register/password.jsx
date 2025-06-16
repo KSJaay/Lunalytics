@@ -1,9 +1,9 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { ProgressBar } from '@lunalytics/ui';
 
 // import local files
 import TextInput from '../ui/input';
-import ProgressBar from '../ui/progress';
 import RegisterChecklist from './checklist';
 
 const RegisterPasswordForm = ({

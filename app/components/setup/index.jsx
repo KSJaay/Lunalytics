@@ -1,13 +1,13 @@
 import './style.scss';
 
 // import dependencies
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ProgressBar } from '@lunalytics/ui';
+import { useNavigate } from 'react-router-dom';
 
 // import local files
 import TextInput from '../ui/input';
 import SetupDropdown from './dropdown';
-import ProgressBar from '../ui/progress';
 import SetupTypeForm from './type';
 import SetupDatabaseForm from './database';
 import RegisterChecklist from '../register/checklist';

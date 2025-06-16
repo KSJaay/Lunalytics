@@ -1,9 +1,9 @@
 // import dependencies
 import { toast } from 'react-toastify';
+import { ProgressBar } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import ProgressBar from '../ui/progress';
 import { createGetRequest } from '../../services/axios';
 
 const RegisterVerify = () => {
