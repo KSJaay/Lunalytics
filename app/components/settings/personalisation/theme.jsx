@@ -1,9 +1,9 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Tooltip } from '@lunalytics/ui';
 
 // import local files
 import { FaCircleCheck, LiaSyncSolid } from '../../icons';
-import Tooltip from '../../ui/tooltip';
 
 const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
   return (

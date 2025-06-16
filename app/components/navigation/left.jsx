@@ -4,11 +4,11 @@ import './left.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Tooltip } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
 import { BsFillShieldLockFill } from 'react-icons/bs';
 
 // import local files
-import Tooltip from '../ui/tooltip';
 import {
   FaCog,
   FaHome,
