@@ -9,7 +9,7 @@ import { FiMaximize, FiMinimize } from 'react-icons/fi';
 import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import Tabs from '../../../../ui/tabs';
 import TextInput from '../../../../ui/input';
-import Checkbox from '../../../../ui/checkbox';
+import Switch from '../../../../ui/switch';
 import { FaTrashCan } from '../../../../icons';
 import useContextStore from '../../../../../context';
 import StatusConfigureMonitor from '../../monitor';
@@ -138,7 +138,7 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
 
             {autoAdd || graphType === 'Dropdown' ? (
               <>
-                <Checkbox
+                <Switch
                   label={'Show name'}
                   shortDescription={
                     'This will show the monitor name for the graph'
@@ -150,7 +150,7 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
                     })
                   }
                 />
-                <Checkbox
+                <Switch
                   label={'Show ping'}
                   shortDescription={
                     'This will show the current ping for the monitor'

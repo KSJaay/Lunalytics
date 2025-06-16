@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import Tabs from '../../../../ui/tabs';
 import TextInput from '../../../../ui/input';
-import Checkbox from '../../../../ui/checkbox';
+import Switch from '../../../../ui/switch';
 import StatusConfigureLayoutMetricsTypeBasic from './type/basic';
 import StatusConfigureLayoutMetricsTypeNerdy from './type/nerdy';
 import StatusConfigureLayoutMetricsTypePretty from './type/pretty';
@@ -77,7 +77,7 @@ const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
               }
             />
 
-            <Checkbox
+            <Switch
               label="Show Ping"
               shortDescription="Show the last latency of the monitor on the graph"
               checked={showPing}

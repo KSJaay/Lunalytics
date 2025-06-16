@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import TextInput from '../../../ui/input';
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
-import Checkbox from '../../../ui/checkbox';
+import Switch from '../../../ui/switch';
 import Textarea from '../../../ui/textarea';
 
 const NotificationModalWebhookInput = ({
@@ -91,7 +91,7 @@ const NotificationModalWebhookInput = ({
       </Dropdown.Container>
 
       <div style={{ padding: '12px 0 3px 0' }}>
-        <Checkbox
+        <Switch
           label="Additional Headers"
           id="additional-headers"
           checked={showAdditionalHeaders}

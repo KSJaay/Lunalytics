@@ -1,6 +1,6 @@
 // import local files
 import useStatusContext from '../../../../hooks/useConfigureStatus';
-import Checkbox from '../../../ui/checkbox';
+import Switch from '../../../ui/switch';
 import TextInput from '../../../ui/input';
 
 const StatusConfigureSettings = () => {
@@ -105,7 +105,7 @@ const StatusConfigureSettings = () => {
             gap: '16px',
           }}
         >
-          <Checkbox
+          <Switch
             label="Publicly available"
             shortDescription="Should the status page be visible users who are not signed into the application."
             value={settings.isPublic}
@@ -113,7 +113,7 @@ const StatusConfigureSettings = () => {
               changeValues({ isPublic: e.target.checked });
             }}
           />
-          <Checkbox
+          <Switch
             label="Hide paused monitors"
             shortDescription="When a monitor is paused, it will not be visible on the status page."
             value={settings.hidePaused}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // import local files
 import TextInput from '../../../ui/input';
-import Checkbox from '../../../ui/checkbox';
+import Switch from '../../../ui/switch';
 
 const NotificationModalTelegramInput = ({
   values = {},
@@ -73,7 +73,7 @@ const NotificationModalTelegramInput = ({
         }}
       />
       <div style={{ padding: '12px 0 3px 0' }}>
-        <Checkbox
+        <Switch
           label="Disable Notification"
           description="If enabled, users will recieve a notification without any sound."
           id="disable-notification"
@@ -89,7 +89,7 @@ const NotificationModalTelegramInput = ({
       </div>
 
       <div style={{ padding: '12px 0 3px 0' }}>
-        <Checkbox
+        <Switch
           label="Protect Content"
           description="If enabled, users cannot forward or save the bots message."
           id="protect-content"
