@@ -1,8 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
-import TextInput from '../../../ui/input';
 import Switch from '../../../ui/switch';
 
 const NotificationModalTelegramInput = ({
@@ -12,8 +12,8 @@ const NotificationModalTelegramInput = ({
 }) => {
   return (
     <>
-      <TextInput
-        label={'Friendly Name'}
+      <Input
+        title="Friendly Name"
         placeholder="Lunalytics"
         id="friendly-name"
         error={errors?.friendlyName}
@@ -22,10 +22,10 @@ const NotificationModalTelegramInput = ({
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Bot Token'}
+      <Input
+        title="Bot Token"
         placeholder="Bot Token"
-        description={
+        subtitle={
           <>
             For more information about how to create a bot token checkout this
             guide:{' '}
@@ -47,10 +47,10 @@ const NotificationModalTelegramInput = ({
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Chat ID'}
+      <Input
+        title="Chat ID"
         placeholder="12389741289"
-        description={
+        subtitle={
           <>
             For more information about how to find the chat ID for a channel
             checkout this guide:{' '}

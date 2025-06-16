@@ -2,10 +2,10 @@ import '../styles/pages/register.scss';
 
 // import dependencies
 import { useState } from 'react';
+import { Input } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import TextInput from '../components/ui/input';
 import useLogin from '../hooks/useLogin';
 import handleLogin from '../handlers/login';
 import { IoMdEye, IoMdEyeOff } from '../components/icons';
@@ -28,18 +28,18 @@ const Login = () => {
           <div className="input-error-general">{errors['general']}</div>
         )}
         <div>
-          <TextInput
+          <Input
             type="text"
             id="email"
-            label="Email"
+            title="Email"
             error={errors['email']}
             defaultValue={inputs['email']}
             onBlur={handleInput}
           />
-          <TextInput
+          <Input
             type={showPassword ? 'text' : 'password'}
             id="password"
-            label="Password"
+            title="Password"
             error={errors['password']}
             defaultValue={inputs['password']}
             onBlur={handleInput}

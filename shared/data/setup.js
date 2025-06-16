@@ -43,13 +43,13 @@ const setupData = {
     inputs: [
       {
         id: 'email',
-        label: 'Email',
+        title: 'Email',
         type: 'text',
         placeholder: 'example@lunalytics.xyz',
       },
       {
         id: 'username',
-        label: 'Username',
+        title: 'Username',
         type: 'text',
         placeholder: 'KSJaay',
       },
@@ -64,9 +64,9 @@ const setupData = {
     next: setupPages.TYPE_FORM,
     prev: setupPages.EMAIL_FORM,
     inputs: [
-      { type: 'password', id: 'password', label: 'Password' },
+      { type: 'password', id: 'password', title: 'Password' },
       { type: 'checklist' },
-      { type: 'password', id: 'confirmPassword', label: 'Confirm password' },
+      { type: 'password', id: 'confirmPassword', title: 'Confirm password' },
     ],
     required: ['password', 'confirmPassword'],
   },
@@ -97,25 +97,25 @@ const setupData = {
     inputs: [
       {
         id: 'jwtSecret',
-        label: 'JWT Secret',
+        title: 'JWT Secret',
         type: 'text',
         placeholder: 'Really-strong-secret',
       },
       {
         id: 'websiteUrl',
-        label: 'Website URL',
+        title: 'Website URL',
         type: 'text',
         placeholder: 'https://lunalytics.xyz',
       },
       {
         id: 'migrationType',
-        label: 'Migration Type',
+        title: 'Migration Type',
         type: 'dropdown',
         options: ['automatic', 'manual'],
       },
       {
         id: 'retentionPeriod',
-        label: 'Database Rentention (12h, 1d, 1w, 1m, 1y)',
+        title: 'Database Rentention (12h, 1d, 1w, 1m, 1y)',
         type: 'text',
         placeholder: '6m',
       },

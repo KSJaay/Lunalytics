@@ -1,16 +1,14 @@
 // import dependencies
 import PropTypes from 'prop-types';
-
-// import local files
-import TextInput from '../../../ui/input';
+import { Input } from '@lunalytics/ui';
 
 const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
   return (
     <>
-      <TextInput
+      <Input
         id="input-interval"
         type="number"
-        label="Interval"
+        title="Interval"
         onChange={(e) => {
           handleInput('interval', e.target.value);
         }}
@@ -18,10 +16,10 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         error={errors.interval}
       />
 
-      <TextInput
+      <Input
         id="input-retry-interval"
         type="number"
-        label="Retry Interval"
+        title="Retry Interval"
         onChange={(e) => {
           handleInput('retryInterval', e.target.value);
         }}
@@ -29,10 +27,10 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         error={errors.retryInterval}
       />
 
-      <TextInput
+      <Input
         id="input-request-timeout"
         type="number"
-        label="Request Timeout"
+        title="Request Timeout"
         onChange={(e) => {
           handleInput('requestTimeout', e.target.value);
         }}

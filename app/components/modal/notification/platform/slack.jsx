@@ -1,8 +1,6 @@
 // import dependencies
 import PropTypes from 'prop-types';
-
-// import local files
-import TextInput from '../../../ui/input';
+import { Input } from '@lunalytics/ui';
 
 const NotificationModalSlackInput = ({
   values = {},
@@ -11,8 +9,8 @@ const NotificationModalSlackInput = ({
 }) => {
   return (
     <>
-      <TextInput
-        label={'Friendly Name'}
+      <Input
+        title={'Friendly Name'}
         placeholder="Lunalytics"
         id="friendly-name"
         error={errors?.friendlyName}
@@ -21,10 +19,10 @@ const NotificationModalSlackInput = ({
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Webhook URL'}
+      <Input
+        title={'Webhook URL'}
         placeholder="https://hooks.slack.com/services/..."
-        description={
+        subtitle={
           <>
             For more information about how to create a webhook checkout this
             guide:{' '}
@@ -47,8 +45,8 @@ const NotificationModalSlackInput = ({
         }}
       />
 
-      <TextInput
-        label={'Webhook Username'}
+      <Input
+        title="Webhook Username"
         placeholder="Lunalytics"
         id="webhook-username"
         error={errors?.username}
@@ -58,8 +56,8 @@ const NotificationModalSlackInput = ({
         }}
       />
 
-      <TextInput
-        label={'Text message'}
+      <Input
+        title="Text message"
         placeholder="Alert @here"
         id="text-messsage"
         error={errors?.textMessage}
@@ -68,8 +66,8 @@ const NotificationModalSlackInput = ({
           handleInput({ key: 'textMessage', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Channel name'}
+      <Input
+        title="Channel name"
         placeholder="#lunalytics-alerts"
         id="channel-name"
         error={errors?.channel}

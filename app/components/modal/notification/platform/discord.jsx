@@ -1,8 +1,6 @@
 // import dependencies
 import PropTypes from 'prop-types';
-
-// import local files
-import TextInput from '../../../ui/input';
+import { Input } from '@lunalytics/ui';
 
 const NotificationModalDiscordInput = ({
   values = {},
@@ -11,8 +9,8 @@ const NotificationModalDiscordInput = ({
 }) => {
   return (
     <>
-      <TextInput
-        label={'Friendly Name'}
+      <Input
+        title={'Friendly Name'}
         placeholder="Lunalytics"
         id="friendly-name"
         error={errors?.friendlyName}
@@ -21,10 +19,10 @@ const NotificationModalDiscordInput = ({
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Webhook URL'}
+      <Input
+        title={'Webhook URL'}
         placeholder="https://discord.com/api/webhooks"
-        description={
+        subtitle={
           <>
             For more information about how to create a Discord webhoook checkout
             this guide:{' '}
@@ -46,8 +44,8 @@ const NotificationModalDiscordInput = ({
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Webhook Username'}
+      <Input
+        title="Webhook Username"
         placeholder="Lunalytics"
         id="webhook-username"
         error={errors?.username}
@@ -56,8 +54,8 @@ const NotificationModalDiscordInput = ({
           handleInput({ key: 'username', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Text Message'}
+      <Input
+        title="Text Message"
         placeholder="Alert @everyone"
         id="text-messsage"
         error={errors?.textMessage}

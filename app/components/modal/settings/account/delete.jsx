@@ -3,12 +3,12 @@ import './avatar.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import { Alert } from '@lunalytics/ui';
+import { Alert, Input } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
+
 
 // import local files
 import Modal from '../../../ui/modal';
-import TextInput from '../../../ui/input';
 import { createPostRequest } from '../../../../services/axios';
 
 const SettingsAccountDeleteModal = ({ closeModal }) => {
@@ -53,9 +53,9 @@ const SettingsAccountDeleteModal = ({ closeModal }) => {
           description="The following action is not reversible. Please be certain before you proceed."
         />
 
-        <TextInput
+        <Input
           id="settings-transfer-confirm"
-          label={
+          title={
             <div style={{ fontWeight: '500', fontSize: '14px' }}>
               To verify, type{' '}
               <span style={{ fontWeight: '800' }}>delete account</span> below:

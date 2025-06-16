@@ -2,14 +2,13 @@ import '../../../styles/pages/incidents.scss';
 
 // import dependencies
 import { toast } from 'react-toastify';
-import { Textarea } from '@lunalytics/ui';
+import { Textarea, Input } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import useIncidentForm from '../../../hooks/useIncidentForm';
 import Tabs from '../../ui/tabs';
 import Modal from '../../ui/modal';
-import TextInput from '../../ui/input';
 import IncidentMonitors from '../../incident/monitors';
 import useContextStore from '../../../context';
 
@@ -52,13 +51,13 @@ const IncidentCreateModal = () => {
     <Modal.Container>
       <Modal.Title>Create an Incident</Modal.Title>
       <Modal.Message className="modal-message ic-container">
-        <TextInput
-          label="Incident Title"
+        <Input
+          title="Incident Title"
           id="incident-name"
           maxLength={100}
           value={values.title || ''}
           onChange={(e) => handleChange('title', e.target.value)}
-          shortDescription="Breif description (maximum of 100 characters)"
+          subtitle="Breif description (maximum of 100 characters)"
         />
 
         <IncidentMonitors

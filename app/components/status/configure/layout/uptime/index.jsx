@@ -2,12 +2,12 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Input } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { FiMaximize, FiMinimize } from 'react-icons/fi';
 
 // import local files
 import { FaTrashCan } from '../../../../icons';
-import TextInput from '../../../../ui/input';
 import Tabs from '../../../../ui/tabs';
 import {
   StatusUptimeBasicGraph,
@@ -162,10 +162,10 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
         {!isMinimized && (
           <div className="sclh-content">
             <div style={{ flex: 1 }}>
-              <TextInput
-                label="Title"
+              <Input
+                title="Title"
                 placeholder="Monitors"
-                shortDescription="This can be left blank if you don't want a title"
+                subtitle="This can be left blank if you don't want a title"
                 value={title}
                 onChange={(e) =>
                   setComponentValue(componentId, 'title', e.target.value)

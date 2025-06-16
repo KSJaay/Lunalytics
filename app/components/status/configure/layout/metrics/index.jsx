@@ -2,19 +2,19 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { FiMaximize, FiMinimize } from 'react-icons/fi';
 
 // import local files
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import Tabs from '../../../../ui/tabs';
-import TextInput from '../../../../ui/input';
 import Switch from '../../../../ui/switch';
 import { FaTrashCan } from '../../../../icons';
-import useContextStore from '../../../../../context';
 import StatusConfigureMonitor from '../../monitor';
+import useContextStore from '../../../../../context';
 import StatusConfigureLayoutMetricsOptions from './options';
 import StatusConfigureLayoutMetricsDropdown from './dropdown';
+import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import { statusGraphTypes } from '../../../../../../shared/constants/status';
 
 const defaultMonitorObject = { graphType: 'Basic', showPing: true };
@@ -165,8 +165,8 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
               </>
             ) : null}
 
-            <TextInput
-              label="Title"
+            <Input
+              title="Title"
               value={title}
               placeholder="Monitors"
               onChange={(e) =>

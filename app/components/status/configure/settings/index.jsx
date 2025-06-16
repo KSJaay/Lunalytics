@@ -1,7 +1,8 @@
+import { Input } from '@lunalytics/ui';
+
 // import local files
 import useStatusContext from '../../../../hooks/useConfigureStatus';
 import Switch from '../../../ui/switch';
-import TextInput from '../../../ui/input';
 
 const StatusConfigureSettings = () => {
   const { changeValues, settings = {} } = useStatusContext();
@@ -72,10 +73,10 @@ const StatusConfigureSettings = () => {
           </div>
 
           <div>
-            <TextInput
-              label="Name of status page"
+            <Input
+              title="Name of status page"
               placeholder="Status"
-              shortDescription="This will be used as the page title and friendly name for the status page."
+              subtitle="This will be used as the page title and friendly name for the status page."
               value={settings.title}
               onChange={(e) => {
                 changeValues({ title: e.target.value });
@@ -83,10 +84,10 @@ const StatusConfigureSettings = () => {
             />
           </div>
           <div>
-            <TextInput
-              label="Homepage URL"
+            <Input
+              title="Homepage URL"
               placeholder="https://lunalytics.xyz"
-              shortDescription="URL for where the user will be redirect when they click the logo or title."
+              subtitle="URL for where the user will be redirect when they click the logo or title."
               value={settings.homepageUrl}
               onChange={(e) => {
                 changeValues({ homepageUrl: e.target.value });

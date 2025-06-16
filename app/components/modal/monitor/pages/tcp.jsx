@@ -1,23 +1,21 @@
 // import dependencies
 import PropTypes from 'prop-types';
-
-// import local files
-import TextInput from '../../../ui/input';
+import { Input } from '@lunalytics/ui';
 
 const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
   return (
     <>
-      <TextInput
+      <Input
         id="input-host"
-        label="Host"
+        title="Host"
         value={inputs.url}
         error={errors.url}
         onChange={(e) => handleInput('url', e.target.value)}
       />
 
-      <TextInput
+      <Input
         id="input-port"
-        label="Port"
+        title="Port"
         value={inputs.port}
         error={errors.port}
         onChange={(e) => handleInput('port', e.target.value)}

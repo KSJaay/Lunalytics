@@ -2,11 +2,10 @@ import './style.scss';
 
 // import dependencies
 import { toast } from 'react-toastify';
-import { ProgressBar } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
+import { ProgressBar, Input } from '@lunalytics/ui';
 
 // import local files
-import TextInput from '../ui/input';
 import SetupDropdown from './dropdown';
 import SetupTypeForm from './type';
 import SetupDatabaseForm from './database';
@@ -67,7 +66,7 @@ const SetupForm = () => {
 
           if (type === 'text' || type === 'password') {
             return (
-              <TextInput
+              <Input
                 key={id}
                 {...input}
                 error={errors[id]}

@@ -1,9 +1,6 @@
 // import dependencies
 import PropTypes from 'prop-types';
-import { ProgressBar } from '@lunalytics/ui';
-
-// import local files
-import TextInput from '../ui/input';
+import { ProgressBar, Input } from '@lunalytics/ui';
 
 const RegisterEmailForm = ({
   handleInput,
@@ -18,18 +15,18 @@ const RegisterEmailForm = ({
         Please provide your name and email
       </div>
       <div>
-        <TextInput
+        <Input
           type="text"
           id="email"
-          label="Email"
+          title="Email"
           error={errors['email']}
           defaultValue={inputs['email']}
           onBlur={handleInput}
         />
-        <TextInput
+        <Input
           type="text"
           id="username"
-          label="Username"
+          title="Username"
           error={errors['username']}
           defaultValue={inputs['username']}
           onBlur={handleInput}

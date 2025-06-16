@@ -1,11 +1,10 @@
 // import dependencies
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import { Button } from '@lunalytics/ui';
+import { Button, Input } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import TextInput from '../../ui/input';
 import useContextStore from '../../../context';
 
 const SettingsPersonalisationAppearance = ({
@@ -56,7 +55,7 @@ const SettingsPersonalisationAppearance = ({
 
         <div className="settings-appearance-content">
           <div style={{ flex: 1 }}>
-            <TextInput placeholder="Message" />
+            <Input placeholder="Message" />
           </div>
 
           <Button

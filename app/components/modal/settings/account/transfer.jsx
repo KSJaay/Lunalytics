@@ -4,12 +4,11 @@ import './avatar.scss';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import { Alert } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
+import { Alert, Input } from '@lunalytics/ui';
 
 // import local files
 import Modal from '../../../ui/modal';
-import TextInput from '../../../ui/input';
 import useTeamContext from '../../../../context/team';
 import { createGetRequest } from '../../../../services/axios';
 import useDropdown from '../../../../hooks/useDropdown';
@@ -104,9 +103,9 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
           </Dropdown.List>
         </Dropdown.Container>
 
-        <TextInput
+        <Input
           id="settings-transfer-confirm"
-          label={
+          title={
             <div style={{ fontWeight: '500', fontSize: '14px' }}>
               To verify, type{' '}
               <span style={{ fontWeight: '800' }}>transfer ownership</span>{' '}
