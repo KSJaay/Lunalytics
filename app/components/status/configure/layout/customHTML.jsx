@@ -1,11 +1,11 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Textarea } from '@lunalytics/ui';
 import { FiMaximize, FiMinimize } from 'react-icons/fi';
 
 // import local files
-import useStatusContext from '../../../../hooks/useConfigureStatus';
 import { FaTrashCan } from '../../../icons';
-import Textarea from '../../../ui/textarea';
+import useStatusContext from '../../../../hooks/useConfigureStatus';
 
 const StatusConfigureLayoutCustomHTML = ({ componentId }) => {
   const { getComponent, setComponentValue, removeComponent } =

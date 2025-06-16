@@ -1,12 +1,12 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Textarea } from '@lunalytics/ui';
 
 // import local files
 import TextInput from '../../../ui/input';
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
 import Switch from '../../../ui/switch';
-import Textarea from '../../../ui/textarea';
 
 const NotificationModalWebhookInput = ({
   values = {},

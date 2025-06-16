@@ -2,6 +2,7 @@ import '../../../styles/pages/incidents.scss';
 
 // import dependencies
 import { toast } from 'react-toastify';
+import { Textarea } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -9,7 +10,6 @@ import useIncidentForm from '../../../hooks/useIncidentForm';
 import Tabs from '../../ui/tabs';
 import Modal from '../../ui/modal';
 import TextInput from '../../ui/input';
-import Textarea from '../../ui/textarea';
 import IncidentMonitors from '../../incident/monitors';
 import useContextStore from '../../../context';
 
