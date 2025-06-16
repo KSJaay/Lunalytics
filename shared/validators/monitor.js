@@ -11,7 +11,7 @@ const validMethods = [
 const validTypes = ['http', 'tcp'];
 const notificationTypes = ['All', 'Outage', 'Recovery'];
 const urlRegex =
-  /^https?:\/\/(localhost(:\d{1,5})?|\d{1,3}(\.\d{1,3}){3}:\d{1,5}|[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(:\d{1,5})?)$/g;
+  /^https?:\/\/(localhost(:\d{1,5})?|\d{1,3}(\.\d{1,3}){3}:\d{1,5}|[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(:\d{1,5})?)$/;
 
 export const type = (type) => {
   if (!type || !validTypes.includes(type)) {
