@@ -10,7 +10,7 @@ import { NotificationValidatorError } from '../../utils/errors.js';
 const chatIdRegex = /^[0-9]+$/;
 const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];
-const tokenRegex = /^[a-zA-Z0-9_]{1,32}$/;
+const tokenRegex = /^[0-9]+:[a-zA-Z0-9_-]{1,35}$/;
 
 const Telegram = ({
   chatId,
