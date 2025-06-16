@@ -2,6 +2,7 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
+import { Accordion, AccordionItem } from '@lunalytics/ui';
 
 // import local files
 import Modal from '../../ui/modal';
@@ -11,7 +12,6 @@ import MonitorPageTcp from './pages/tcp';
 import MonitorPageInterval from './pages/interval';
 import MonitorPageNotification from './pages/notification';
 import useMonitorForm from '../../../hooks/useMonitorForm';
-import { Accordion, AccordionItem } from '../../ui/accordion';
 import MonitorHttpStatusCodes from './pages/http/statusCodes';
 import MonitorHttpHeaders from './pages/headers';
 import MonitorHttpBody from './pages/body';

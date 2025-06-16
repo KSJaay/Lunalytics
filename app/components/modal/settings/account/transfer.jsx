@@ -1,10 +1,11 @@
 import './avatar.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import { Alert } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import Modal from '../../../ui/modal';
@@ -13,7 +14,6 @@ import useTeamContext from '../../../../context/team';
 import { createGetRequest } from '../../../../services/axios';
 import useDropdown from '../../../../hooks/useDropdown';
 import Dropdown from '../../../ui/dropdown';
-import { AlertError } from '../../../ui/alert';
 import useContextStore from '../../../../context';
 import handleTransferAccount from '../../../../handlers/settings/account/transfer';
 
@@ -68,7 +68,8 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
         Transfer ownership
       </Modal.Title>
       <Modal.Message style={{ width: '400px' }}>
-        <AlertError
+        <Alert
+          status="error"
           title="Warning"
           description="The following action is not reversible. Please be certain before you proceed."
         />
