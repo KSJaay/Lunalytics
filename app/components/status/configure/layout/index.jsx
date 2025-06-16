@@ -2,10 +2,10 @@ import './styles.scss';
 
 // import dependencies
 import { useEffect } from 'react';
+import { Button } from '@lunalytics/ui';
 
 // import local files
 import useStatusContext from '../../../../hooks/useConfigureStatus';
-import Button from '../../../ui/button';
 import StatusConfigureLayoutHeader from './header';
 import StatusConfigureLayoutStatus from './status';
 import StatusConfigureLayoutUptime from './uptime';

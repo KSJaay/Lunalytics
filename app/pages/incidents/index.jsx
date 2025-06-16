@@ -2,13 +2,13 @@ import '../../styles/pages/incidents.scss';
 
 // import dependencies
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { useState } from 'react';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 // import local files
 import useContextStore from '../../context';
-import Button from '../../components/ui/button';
 import Role from '../../../shared/permissions/role';
 import SearchBar from '../../components/ui/searchBar';
 import IncidentItem from '../../components/incident/item';
@@ -54,6 +54,7 @@ const Incidents = () => {
 
         <div className="home-menu-buttons">
           <Button
+            color="gray"
             iconLeft={<IoReload style={{ width: '20px', height: '20px' }} />}
             onClick={() => setSearch('')}
           />

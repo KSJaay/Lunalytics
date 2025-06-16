@@ -2,6 +2,7 @@ import '../../styles/pages/status/configure.scss';
 
 // import dependencies
 import { useState } from 'react';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IoReloadSharp } from 'react-icons/io5';
@@ -12,7 +13,6 @@ import {
 } from 'react-icons/md';
 
 // import local files
-import Button from '../../components/ui/button';
 import StatusConfigureAppearance from '../../components/status/configure/appearance';
 import {
   ConfigureStatusProvider,
@@ -78,7 +78,8 @@ const StatusConfigure = () => {
             <div className="sch-buttons">
               <div>
                 <Button
-                  outline="red"
+                  color="red"
+                  variant="outline"
                   onClick={() => {
                     navigate('/status-pages');
                   }}
@@ -88,7 +89,8 @@ const StatusConfigure = () => {
               </div>
               <div>
                 <Button
-                  outline="green"
+                  color="green"
+                  variant="outline"
                   onClick={() =>
                     handleCreateOrEditStatusPage(
                       statusValues.settings,

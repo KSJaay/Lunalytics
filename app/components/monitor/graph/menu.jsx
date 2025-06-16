@@ -1,8 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Button } from '@lunalytics/ui';
 
 // import local files
-import Button from '../../ui/button';
 import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
 import { FaEllipsisVertical } from '../../icons';

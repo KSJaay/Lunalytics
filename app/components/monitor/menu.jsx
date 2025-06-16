@@ -1,13 +1,13 @@
 import './menu.scss';
 
 // import dependencies
-import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import Button from '../ui/button';
 import useContextStore from '../../context';
 import MonitorModal from '../modal/monitor/delete';
 import { createGetRequest, createPostRequest } from '../../services/axios';

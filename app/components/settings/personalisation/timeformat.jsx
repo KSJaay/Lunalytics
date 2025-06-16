@@ -1,8 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Button } from '@lunalytics/ui';
 
 // import local files
-import Button from '../../ui/button';
 import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
 
@@ -29,7 +29,7 @@ const SettingsPersonalisationTimeformat = ({ timeformat, setTimeformat }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          <Button fullWidth>{times[timeformat]}</Button>
+          <Button fullWidth variant="outline">{times[timeformat]}</Button>
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           {Object.keys(times).map((time) => (

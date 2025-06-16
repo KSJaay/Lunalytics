@@ -3,10 +3,10 @@ import './desktop.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import Button from '../../../ui/button';
 import useContextStore from '../../../../context';
 
 import SettingsAccountAvatarModal from '../../../modal/settings/account/avatar';

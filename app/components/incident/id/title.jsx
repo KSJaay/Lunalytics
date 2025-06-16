@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import Button from '../../ui/button';
+import { Button } from '@lunalytics/ui';
+
 import TextInput from '../../ui/input';
 
 const IncidentIdTitle = ({
@@ -25,6 +26,7 @@ const IncidentIdTitle = ({
       )}
       {canManageIncidents && (
         <Button
+          color="gray"
           onClick={() => handleChange(userInput)}
           outline={isFocused && 'green'}
         >

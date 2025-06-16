@@ -2,9 +2,9 @@ import './style.scss';
 
 // import node_modules
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@lunalytics/ui';
 
 // import local files
-import Button from '../ui/button';
 import Label from '../ui/label';
 import classNames from 'classnames';
 
@@ -40,7 +40,7 @@ const IncidentItem = ({ id, title = '', affect, status, lastUpdate }) => {
           className="incident-item-action"
           onClick={() => navigate(`/incidents/${id}`)}
         >
-          <Button>Update</Button>
+          <Button color="gray">Update</Button>
         </div>
       </div>
     </div>

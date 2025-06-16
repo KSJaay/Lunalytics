@@ -1,8 +1,9 @@
 import './../ui/tab/tab.scss';
 import './style.scss';
 
+import { Button } from '@lunalytics/ui';
+
 // import local files
-import Button from '../../ui/button';
 import SettingsAccountDesktopItem from './item/desktop';
 import SettingsAccountMobileItem from './item/mobile';
 import SettingsAccountAvatar from './avatar';
@@ -41,7 +42,9 @@ const accountItems = [
     description: 'Your account will be removed from our database',
     customButton: (
       <div className="settings-account-item-buttons">
-        <Button outline="red">Delete Account</Button>
+        <Button color="red" variant="outline">
+          Delete Account
+        </Button>
       </div>
     ),
     fontColor: 'red',
