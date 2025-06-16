@@ -10,8 +10,7 @@ const validMethods = [
 
 const validTypes = ['http', 'tcp'];
 const notificationTypes = ['All', 'Outage', 'Recovery'];
-const urlRegex =
-  /^https?:\/\/(localhost(:\d{1,5})?|\d{1,3}(\.\d{1,3}){3}:\d{1,5}|[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(:\d{1,5})?)$/;
+const urlRegex = /^https?:\/\//;
 
 export const type = (type) => {
   if (!type || !validTypes.includes(type)) {
@@ -27,10 +26,6 @@ export const name = (name) => {
 
 export const httpUrl = (url) => {
   if (!url || !urlRegex.test(url)) {
-    return 'Please enter a valid URL.';
-  }
-
-  if (!url.includes('http://') && !url.includes('https://')) {
     return 'Please enter a valid URL. Only http:// or https:// is allowed.';
   }
 };
