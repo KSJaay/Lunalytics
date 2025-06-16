@@ -2,10 +2,9 @@ import './style.scss';
 
 // import node_modules
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@lunalytics/ui';
+import { Button, Label } from '@lunalytics/ui';
 
 // import local files
-import Label from '../ui/label';
 import classNames from 'classnames';
 
 const incidentTypes = {
@@ -26,7 +25,7 @@ const IncidentItem = ({ id, title = '', affect, status, lastUpdate }) => {
           <div className="incident-item-title">{title}</div>
           <div className="incident-item-user">
             {status && (
-              <Label color={incidentTypes[status]} style="flat" size="xs">
+              <Label color={incidentTypes[status]} variant="flat" size="xs">
                 {status}
               </Label>
             )}
