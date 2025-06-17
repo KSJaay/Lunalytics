@@ -28,7 +28,8 @@ const TopNavigation = () => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown(true);
   const navigate = useNavigate();
 
-  const avatarUrl = isImageUrl(avatar) ? avatar : `/icons/${avatar}.png`;
+  const avatarUrl =
+    !avatar || isImageUrl(avatar) ? avatar : `/icons/${avatar}.png`;
 
   return (
     <div className="top-navigation">

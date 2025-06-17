@@ -4,10 +4,10 @@
       "id": "[id=\"input-name\"]",
       "value": "test-monitor",
       "type": "text",
-      "invalidValue": "@#${}[]||<>",
+      "invalidValue": "12345678123456781234567812345678123456781234567812345678123456789",
       "error": {
         "id": "[id=\"error-input-name\"]",
-        "value": "Please enter a valid name. Only letters, numbers and - are allowed."
+        "value": "Please enter a valid name. Maximum length is 64 characters."
       }
     },
     "type": {
@@ -70,7 +70,7 @@
       "type": "textarea",
       "invalidValue": "{{}\"key\":\"value{}}",
       "error": {
-        "id": "[id=\"textarea-error-http-headers-textarea\"]",
+        "id": "[id=\"error-http-headers-textarea\"]",
         "value": "Please enter valid headers. Make sure to follow JSON key/value format."
       }
     },
@@ -80,7 +80,7 @@
       "type": "textarea",
       "invalidValue": "{{}\"key\":\"value{}}",
       "error": {
-        "id": "[id=\"textarea-error-http-body-textarea\"]",
+        "id": "[id=\"error-http-body-textarea\"]",
         "value": "Please enter valid body. Make sure to follow JSON key/value format."
       }
     }
@@ -90,10 +90,10 @@
       "id": "[id=\"input-name\"]",
       "value": "test-monitor",
       "type": "text",
-      "invalidValue": "@#${}[]||<>",
+      "invalidValue": "12345678123456781234567812345678123456781234567812345678123456789",
       "error": {
         "id": "[id=\"error-input-name\"]",
-        "value": "Please enter a valid name. Only letters, numbers and - are allowed."
+        "value": "Please enter a valid name. Maximum length is 64 characters."
       }
     },
     "type": {
