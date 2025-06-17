@@ -1,8 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
-import TextInput from '../ui/input';
 import Dropdown from '../ui/dropdown';
 import useDropdown from '../../hooks/useDropdown';
 import useSetupFormContext from '../../hooks/useSetup';
@@ -16,25 +16,25 @@ const databaseTypes = {
 const pgInputs = [
   {
     id: 'postgresHost',
-    label: 'Postgres host',
+    title: 'Postgres host',
     type: 'text',
     placeholder: 'localhost',
   },
   {
     id: 'postgresPort',
-    label: 'Postgres port',
+    title: 'Postgres port',
     type: 'text',
     placeholder: '5432',
   },
   {
     id: 'postgresUser',
-    label: 'Postgres user',
+    title: 'Postgres user',
     type: 'text',
     placeholder: 'postgres',
   },
   {
     id: 'postgresPassword',
-    label: 'Postgres password',
+    title: 'Postgres password',
     type: 'password',
     placeholder: 'Strong-Password',
   },
@@ -118,10 +118,10 @@ const SetupDatabaseForm = () => {
           ))}
         </Dropdown.List>
       </Dropdown.Container>
-      <TextInput
+      <Input
         type="text"
         id="databaseName"
-        label="Database name"
+        title="Database name"
         error={errors['databaseName']}
         value={inputs['databaseName'] || ''}
         onChange={handleInput}
@@ -139,7 +139,7 @@ const SetupDatabaseForm = () => {
             const validator = setupValidators[input.id];
 
             return (
-              <TextInput
+              <Input
                 key={input.id}
                 {...input}
                 error={errors[input.id]}

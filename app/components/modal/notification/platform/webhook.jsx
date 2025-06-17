@@ -1,12 +1,11 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Textarea, Input } from '@lunalytics/ui';
 
 // import local files
-import TextInput from '../../../ui/input';
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
-import Checkbox from '../../../ui/checkbox';
-import Textarea from '../../../ui/textarea';
+import Switch from '../../../ui/switch';
 
 const NotificationModalWebhookInput = ({
   values = {},
@@ -22,8 +21,8 @@ const NotificationModalWebhookInput = ({
 
   return (
     <>
-      <TextInput
-        label={'Friendly Name'}
+      <Input
+        title="Friendly Name"
         placeholder="Lunalytics"
         id="friendly-name"
         error={errors?.friendlyName}
@@ -32,10 +31,10 @@ const NotificationModalWebhookInput = ({
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Webhook URL'}
+      <Input
+        title="Webhook URL"
         placeholder="https://lunalytics.xyz/webhooks/example"
-        description={
+        subtitle={
           <>
             For more information about how to create a custom webhoook checkout
             this guide:{' '}
@@ -91,7 +90,7 @@ const NotificationModalWebhookInput = ({
       </Dropdown.Container>
 
       <div style={{ padding: '12px 0 3px 0' }}>
-        <Checkbox
+        <Switch
           label="Additional Headers"
           id="additional-headers"
           checked={showAdditionalHeaders}

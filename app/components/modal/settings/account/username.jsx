@@ -1,9 +1,9 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
 import Modal from '../../../ui/modal';
-import TextInput from '../../../ui/input';
 import { useState } from 'react';
 import handleChangeUsername from '../../../../handlers/settings/account/username';
 import { observer } from 'mobx-react-lite';
@@ -39,9 +39,9 @@ const SettingsAccountUsernameModal = ({
     <>
       <Modal.Title style={{ textAlign: 'center' }}>{modalTitle}</Modal.Title>
       <Modal.Message style={{ width: '400px' }}>
-        <TextInput
+        <Input
           id={`settings-edit-${id}`}
-          label={title}
+          title={title}
           defaultValue={value}
           error={error}
         />

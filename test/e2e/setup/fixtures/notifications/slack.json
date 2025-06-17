@@ -10,7 +10,7 @@
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-friendly-name\"]",
+      "id": "[id=\"error-friendly-name\"]",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
@@ -21,7 +21,7 @@
     "invalidValue": "https://hooks.slack.com/service/123123/123123/123123",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-webhook-url\"]",
+      "id": "[id=\"error-webhook-url\"]",
       "value": "Invalid Slack Webhook URL"
     }
   },
@@ -31,7 +31,7 @@
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-webhook-username\"]",
+      "id": "[id=\"error-webhook-username\"]",
       "value": "Invalid Slack Webhook Username"
     }
   },
@@ -41,7 +41,7 @@
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-channel-name\"]",
+      "id": "[id=\"error-channel-name\"]",
       "value": "Invalid Channel Name"
     }
   },

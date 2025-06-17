@@ -1,9 +1,9 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
-import TextInput from '../../../ui/input';
-import Checkbox from '../../../ui/checkbox';
+import Switch from '../../../ui/switch';
 
 const NotificationModalTelegramInput = ({
   values = {},
@@ -12,8 +12,8 @@ const NotificationModalTelegramInput = ({
 }) => {
   return (
     <>
-      <TextInput
-        label={'Friendly Name'}
+      <Input
+        title="Friendly Name"
         placeholder="Lunalytics"
         id="friendly-name"
         error={errors?.friendlyName}
@@ -22,10 +22,10 @@ const NotificationModalTelegramInput = ({
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Bot Token'}
+      <Input
+        title="Bot Token"
         placeholder="Bot Token"
-        description={
+        subtitle={
           <>
             For more information about how to create a bot token checkout this
             guide:{' '}
@@ -47,10 +47,10 @@ const NotificationModalTelegramInput = ({
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
-      <TextInput
-        label={'Chat ID'}
+      <Input
+        title="Chat ID"
         placeholder="12389741289"
-        description={
+        subtitle={
           <>
             For more information about how to find the chat ID for a channel
             checkout this guide:{' '}
@@ -73,7 +73,7 @@ const NotificationModalTelegramInput = ({
         }}
       />
       <div style={{ padding: '12px 0 3px 0' }}>
-        <Checkbox
+        <Switch
           label="Disable Notification"
           description="If enabled, users will recieve a notification without any sound."
           id="disable-notification"
@@ -89,7 +89,7 @@ const NotificationModalTelegramInput = ({
       </div>
 
       <div style={{ padding: '12px 0 3px 0' }}>
-        <Checkbox
+        <Switch
           label="Protect Content"
           description="If enabled, users cannot forward or save the bots message."
           id="protect-content"

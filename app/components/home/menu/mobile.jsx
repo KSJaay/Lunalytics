@@ -2,11 +2,11 @@
 import PropTypes from 'prop-types';
 import { FaCog, FaPlus } from 'react-icons/fa';
 import { observer } from 'mobx-react-lite';
+import { Button } from '@lunalytics/ui';
 
 // import local files
 import useContextStore from '../../../context';
 import Modal from '../../ui/modal';
-import Button from '../../ui/button';
 import HomeMobileMenuStatus from './mobile/status';
 import HomeMobileMenuLayout from './mobile/layout';
 import MonitorConfigureModal from '../../modal/monitor/configure';
@@ -32,7 +32,7 @@ const HomeMenuMobile = ({ handleReset }) => {
               <br />
               <Button
                 iconLeft={<FaPlus style={{ width: '20px', height: '20px' }} />}
-                color={'gray'}
+                color="gray"
                 fullWidth
                 onClick={() => {
                   closeModal();

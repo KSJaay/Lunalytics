@@ -19,8 +19,8 @@ export const type = (type) => {
 };
 
 export const name = (name) => {
-  if (!name || !/^[a-zA-Z0-9-]+$/.test(name)) {
-    return 'Please enter a valid name. Only letters, numbers and - are allowed.';
+  if (!name || name.length > 64) {
+    return 'Please enter a valid name. Maximum length is 64 characters.';
   }
 };
 

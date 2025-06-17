@@ -1,15 +1,15 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
-import TextInput from '../../../../ui/input';
 import MonitorInitialDropdown from './type';
 
 const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
   return (
     <>
-      <TextInput
-        label="Name"
+      <Input
+        title="Name"
         id="input-name"
         value={inputs.name || ''}
         onChange={(e) => handleInput('name', e.target.value)}
@@ -25,8 +25,8 @@ const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
       )}
 
       {isEdit && (
-        <TextInput
-          label="Monitor Type"
+        <Input
+          title="Monitor Type"
           value={inputs.type?.toUpperCase()}
           readOnly
         />

@@ -10,7 +10,7 @@
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-friendly-name\"]",
+      "id": "[id=\"error-friendly-name\"]",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
@@ -20,7 +20,7 @@
     "invalidValue": "this is not a webhook url",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-webhook-url\"]",
+      "id": "[id=\"error-webhook-url\"]",
       "value": "Invalid Webhook URL"
     }
   }

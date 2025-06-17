@@ -5,7 +5,7 @@
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-friendly-name\"]",
+      "id": "[id=\"error-friendly-name\"]",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
@@ -15,7 +15,7 @@
     "invalidValue": "https://discord.com/api/webhook/082399/lunalytics",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-webhook-url\"]",
+      "id": "[id=\"error-webhook-url\"]",
       "value": "Invalid Discord Webhook URL"
     }
   },
@@ -25,7 +25,7 @@
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-webhook-username\"]",
+      "id": "[id=\"error-webhook-username\"]",
       "value": "Invalid Discord Webhook Username"
     }
   },

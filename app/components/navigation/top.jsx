@@ -3,16 +3,33 @@ import './top.scss';
 
 // import dependencies
 import { useNavigate } from 'react-router-dom';
+import { Avatar } from '@lunalytics/ui';
 
 // import local files
 import Dropdown from '../ui/dropdown/index';
 import { StatusLogo } from '../icons';
-import Avatar from '../ui/avatar';
 import useDropdown from '../../hooks/useDropdown';
+import { observer } from 'mobx-react-lite';
+import useContextStore from '../../context';
+
+const isImageUrl = (url) => {
+  if (typeof url !== 'string') {
+    return false;
+  }
+  return url.match(/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/gim) !== null;
+};
 
 const TopNavigation = () => {
+  const {
+    userStore: {
+      user: { avatar, displayName },
+    },
+  } = useContextStore();
   const { dropdownIsOpen, toggleDropdown } = useDropdown(true);
   const navigate = useNavigate();
+
+  const avatarUrl =
+    !avatar || isImageUrl(avatar) ? avatar : `/icons/${avatar}.png`;
 
   return (
     <div className="top-navigation">
@@ -32,7 +49,7 @@ const TopNavigation = () => {
             isOpen={dropdownIsOpen}
             toggleDropdown={toggleDropdown}
           >
-            <Avatar />
+            <Avatar avatar={avatarUrl} name={displayName} />
           </Dropdown.Trigger>
 
           <Dropdown.List position="right" isOpen={dropdownIsOpen}>
@@ -49,4 +66,4 @@ const TopNavigation = () => {
   );
 };
 
-export default TopNavigation;
+export default observer(TopNavigation);

@@ -1,8 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Button } from '@lunalytics/ui';
 
 // import local files
-import Button from '../../ui/button';
 import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
 import timeformats from '../../../constant/dateformats.json';
@@ -23,7 +23,9 @@ const SettingsPersonalisationDateformat = ({ dateformat, setDateformat }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          <Button fullWidth>{dateformat}</Button>
+          <Button fullWidth variant="outline">
+            {dateformat}
+          </Button>
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           {timeformats.map((format) => (

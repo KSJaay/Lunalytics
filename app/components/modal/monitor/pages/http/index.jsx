@@ -1,8 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
-import TextInput from '../../../../ui/input';
 import MonitorHttpMethods from './methods';
 
 const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
@@ -12,9 +12,9 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
 
   return (
     <>
-      <TextInput
+      <Input
         id="input-url"
-        label="URL"
+        title="URL"
         value={inputs.url}
         onChange={(event) => {
           handleInput('url', event.target.value);

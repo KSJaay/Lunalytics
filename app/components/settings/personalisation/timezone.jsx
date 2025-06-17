@@ -1,8 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Button } from '@lunalytics/ui';
 
 // import local files
-import Button from '../../ui/button';
 import Dropdown from '../../ui/dropdown';
 import timezonesList from '../../../constant/timezones.json';
 import useDropdown from '../../../hooks/useDropdown';
@@ -23,7 +23,7 @@ const SettingsPersonalisationTimezone = ({ timezone, setTimezone }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          <Button fullWidth>
+          <Button fullWidth variant="outline">
             {timezone} (GMT{timezonesList[timezone]})
           </Button>
         </Dropdown.Trigger>

@@ -95,7 +95,9 @@ const StatusPageTable = ({ search }) => {
                   `/status-pages/configure?statusPageId=${statusPage.statusId}`
                 ),
               component: (
-                <div>{statusPage?.data?.isPublic ? 'Public' : 'Private'}</div>
+                <div>
+                  {statusPage?.settings?.isPublic ? 'Public' : 'Private'}
+                </div>
               ),
             },
             actions: {

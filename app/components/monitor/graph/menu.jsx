@@ -1,8 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Button } from '@lunalytics/ui';
 
 // import local files
-import Button from '../../ui/button';
 import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
 import { FaEllipsisVertical } from '../../icons';
@@ -20,7 +20,7 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
           Latest
         </Button>
         <Button
-          color={statusType === 'day' ? 'primary' : null}
+          color={statusType === 'day' ? 'primary' : 'gray'}
           onClick={() => setStatusType('day')}
         >
           1 Day
@@ -28,13 +28,13 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
         {showFilters ? (
           <>
             <Button
-              color={statusType === 'week' ? 'primary' : null}
+              color={statusType === 'week' ? 'primary' : 'gray'}
               onClick={() => setStatusType('week')}
             >
               1 Week
             </Button>
             <Button
-              color={statusType === 'month' ? 'primary' : null}
+              color={statusType === 'month' ? 'primary' : 'gray'}
               onClick={() => setStatusType('month')}
             >
               1 Month

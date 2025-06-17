@@ -1,11 +1,11 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
 import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import Tabs from '../../../../ui/tabs';
-import TextInput from '../../../../ui/input';
-import Checkbox from '../../../../ui/checkbox';
+import Switch from '../../../../ui/switch';
 import StatusConfigureLayoutMetricsTypeBasic from './type/basic';
 import StatusConfigureLayoutMetricsTypeNerdy from './type/nerdy';
 import StatusConfigureLayoutMetricsTypePretty from './type/pretty';
@@ -57,8 +57,8 @@ const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
 
         <div className="sclg-options-container">
           <div className="sclg-options-content">
-            <TextInput
-              label="Graph title"
+            <Input
+              title="Graph title"
               placeholder="Monitors"
               shortDescription="This can be left blank if you don't want a title"
               value={title}
@@ -77,8 +77,8 @@ const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
               }
             />
 
-            <Checkbox
-              label="Show Ping"
+            <Switch
+              title="Show Ping"
               shortDescription="Show the last latency of the monitor on the graph"
               checked={showPing}
               onChange={(e) => {

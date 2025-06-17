@@ -1,10 +1,10 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Button } from '@lunalytics/ui';
 
 // import local files
 import useDropdown from '../../../hooks/useDropdown';
 import Dropdown from '../../ui/dropdown';
-import Button from '../../ui/button';
 
 // import icons
 import { MdNotifications, RiStackFill } from '../../icons';
@@ -77,6 +77,7 @@ const MenuPlatformDropdown = ({ platform, setPlatform }) => {
     >
       <Dropdown.Trigger isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
         <Button
+          color="gray"
           iconLeft={<RiStackFill style={{ width: '20px', height: '20px' }} />}
         >
           Platform

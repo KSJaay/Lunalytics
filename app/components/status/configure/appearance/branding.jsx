@@ -1,6 +1,7 @@
+import { Input } from '@lunalytics/ui';
+
 // import local files
 import useStatusContext from '../../../../hooks/useConfigureStatus';
-import TextInput from '../../../ui/input';
 
 const StatusConfigureAppearanceBranding = () => {
   const {
@@ -11,17 +12,17 @@ const StatusConfigureAppearanceBranding = () => {
   return (
     <div className="scb-container">
       <div>
-        <TextInput
+        <Input
           value={logo}
-          label="Logo"
+          title="Logo"
           placeholder="/logo.svg"
           onChange={(e) => changeValues({ logo: e.target.value })}
         />
       </div>
       <div>
-        <TextInput
+        <Input
           value={favicon}
-          label="Favicon"
+          title="Favicon"
           placeholder="/logo.svg"
           onChange={(e) => changeValues({ favicon: e.target.value })}
         />

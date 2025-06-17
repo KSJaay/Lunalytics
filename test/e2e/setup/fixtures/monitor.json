@@ -4,10 +4,10 @@
       "id": "[id=\"input-name\"]",
       "value": "test-monitor",
       "type": "text",
-      "invalidValue": "@#${}[]||<>",
+      "invalidValue": "12345678123456781234567812345678123456781234567812345678123456789",
       "error": {
-        "id": "[id=\"text-input-error-input-name\"]",
-        "value": "Please enter a valid name. Only letters, numbers and - are allowed."
+        "id": "[id=\"error-input-name\"]",
+        "value": "Please enter a valid name. Maximum length is 64 characters."
       }
     },
     "type": {
@@ -21,8 +21,8 @@
       "type": "text",
       "invalidValue": "@#${}[]||<>",
       "error": {
-        "id": "[id=\"text-input-error-input-url\"]",
-        "value": "Please enter a valid URL."
+        "id": "[id=\"error-input-url\"]",
+        "value": "Please enter a valid URL. Only http:// or https:// is allowed."
       }
     },
     "advance": {
@@ -40,7 +40,7 @@
       "invalidValue": 10,
       "type": "text",
       "error": {
-        "id": "[id=\"text-input-error-input-interval\"]",
+        "id": "[id=\"error-input-interval\"]",
         "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
       }
     },
@@ -50,7 +50,7 @@
       "invalidValue": 10,
       "type": "text",
       "error": {
-        "id": "[id=\"text-input-error-input-retry-interval\"]",
+        "id": "[id=\"error-input-retry-interval\"]",
         "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
       }
     },
@@ -60,7 +60,7 @@
       "invalidValue": 10,
       "type": "text",
       "error": {
-        "id": "[id=\"text-input-error-input-request-timeout\"]",
+        "id": "[id=\"error-input-request-timeout\"]",
         "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
       }
     },
@@ -70,7 +70,7 @@
       "type": "textarea",
       "invalidValue": "{{}\"key\":\"value{}}",
       "error": {
-        "id": "[id=\"textarea-error-http-headers-textarea\"]",
+        "id": "[id=\"error-http-headers-textarea\"]",
         "value": "Please enter valid headers. Make sure to follow JSON key/value format."
       }
     },
@@ -80,7 +80,7 @@
       "type": "textarea",
       "invalidValue": "{{}\"key\":\"value{}}",
       "error": {
-        "id": "[id=\"textarea-error-http-body-textarea\"]",
+        "id": "[id=\"error-http-body-textarea\"]",
         "value": "Please enter valid body. Make sure to follow JSON key/value format."
       }
     }
@@ -90,10 +90,10 @@
       "id": "[id=\"input-name\"]",
       "value": "test-monitor",
       "type": "text",
-      "invalidValue": "@#${}[]||<>",
+      "invalidValue": "12345678123456781234567812345678123456781234567812345678123456789",
       "error": {
-        "id": "[id=\"text-input-error-input-name\"]",
-        "value": "Please enter a valid name. Only letters, numbers and - are allowed."
+        "id": "[id=\"error-input-name\"]",
+        "value": "Please enter a valid name. Maximum length is 64 characters."
       }
     },
     "type": {
@@ -107,7 +107,7 @@
       "type": "text",
       "invalidValue": "@#${}[]||<>",
       "error": {
-        "id": "[id=\"text-input-error-input-host\"]",
+        "id": "[id=\"error-input-host\"]",
         "value": "Please enter a valid host (Only IPv4 is valid)."
       }
     },
@@ -117,7 +117,7 @@
       "type": "text",
       "invalidValue": "2308999",
       "error": {
-        "id": "[id=\"text-input-error-input-port\"]",
+        "id": "[id=\"error-input-port\"]",
         "value": "Please enter a valid port."
       }
     },
@@ -131,7 +131,7 @@
       "invalidValue": 10,
       "type": "text",
       "error": {
-        "id": "[id=\"text-input-error-input-interval\"]",
+        "id": "[id=\"error-input-interval\"]",
         "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
       }
     },
@@ -141,7 +141,7 @@
       "invalidValue": 10,
       "type": "text",
       "error": {
-        "id": "[id=\"text-input-error-input-retry-interval\"]",
+        "id": "[id=\"error-input-retry-interval\"]",
         "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
       }
     },
@@ -151,7 +151,7 @@
       "invalidValue": 10,
       "type": "text",
       "error": {
-        "id": "[id=\"text-input-error-input-request-timeout\"]",
+        "id": "[id=\"error-input-request-timeout\"]",
         "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
       }
     }

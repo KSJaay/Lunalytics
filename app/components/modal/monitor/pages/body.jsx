@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Textarea from '../../../ui/textarea';
+import { Textarea } from '@lunalytics/ui';
 
 const MonitorHttpBody = ({ inputs, errors, handleInput }) => {
   const parseBody = (body) => {

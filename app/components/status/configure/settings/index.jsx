@@ -1,7 +1,8 @@
+import { Input } from '@lunalytics/ui';
+
 // import local files
 import useStatusContext from '../../../../hooks/useConfigureStatus';
-import Checkbox from '../../../ui/checkbox';
-import TextInput from '../../../ui/input';
+import Switch from '../../../ui/switch';
 
 const StatusConfigureSettings = () => {
   const { changeValues, settings = {} } = useStatusContext();
@@ -72,10 +73,10 @@ const StatusConfigureSettings = () => {
           </div>
 
           <div>
-            <TextInput
-              label="Name of status page"
+            <Input
+              title="Name of status page"
               placeholder="Status"
-              shortDescription="This will be used as the page title and friendly name for the status page."
+              subtitle="This will be used as the page title and friendly name for the status page."
               value={settings.title}
               onChange={(e) => {
                 changeValues({ title: e.target.value });
@@ -83,10 +84,10 @@ const StatusConfigureSettings = () => {
             />
           </div>
           <div>
-            <TextInput
-              label="Homepage URL"
+            <Input
+              title="Homepage URL"
               placeholder="https://lunalytics.xyz"
-              shortDescription="URL for where the user will be redirect when they click the logo or title."
+              subtitle="URL for where the user will be redirect when they click the logo or title."
               value={settings.homepageUrl}
               onChange={(e) => {
                 changeValues({ homepageUrl: e.target.value });
@@ -105,18 +106,18 @@ const StatusConfigureSettings = () => {
             gap: '16px',
           }}
         >
-          <Checkbox
+          <Switch
             label="Publicly available"
             shortDescription="Should the status page be visible users who are not signed into the application."
-            value={settings.isPublic}
+            checked={settings.isPublic}
             onChange={(e) => {
               changeValues({ isPublic: e.target.checked });
             }}
           />
-          <Checkbox
+          <Switch
             label="Hide paused monitors"
             shortDescription="When a monitor is paused, it will not be visible on the status page."
-            value={settings.hidePaused}
+            checked={settings.hidePaused}
             onChange={(e) => {
               changeValues({ hidePaused: e.target.checked });
             }}
