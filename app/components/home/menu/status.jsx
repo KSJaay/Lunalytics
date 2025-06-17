@@ -1,7 +1,8 @@
+import { Button } from '@lunalytics/ui';
+
 // import local files
 import useDropdown from '../../../hooks/useDropdown';
 import Dropdown from '../../ui/dropdown';
-import Button from '../../ui/button';
 import { HiStatusOffline, HiStatusOnline, FaBars } from '../../icons';
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
 
@@ -51,6 +52,7 @@ const MenuStatusDropdown = () => {
     >
       <Dropdown.Trigger isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
         <Button
+          color="gray"
           iconLeft={
             <HiStatusOnline style={{ width: '20px', height: '20px' }} />
           }

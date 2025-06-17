@@ -1,9 +1,9 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { Tooltip } from '@lunalytics/ui';
 
 // import local files
 import { FaCircleCheck, LiaSyncSolid } from '../../icons';
-import Tooltip from '../../ui/tooltip';
 
 const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
   return (
@@ -11,7 +11,7 @@ const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
       <div className="settings-subtitle">Theme</div>
 
       <div style={{ display: 'flex', gap: '10px' }}>
-        <Tooltip text="Light">
+        <Tooltip text="Light" color="gray">
           <div
             className={
               theme === 'light'
@@ -27,7 +27,7 @@ const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
             )}
           </div>
         </Tooltip>
-        <Tooltip text="Dark">
+        <Tooltip text="Dark" color="gray">
           <div
             className={
               theme === 'dark'
@@ -43,7 +43,7 @@ const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
             )}
           </div>
         </Tooltip>
-        <Tooltip text="Sync with system">
+        <Tooltip text="Sync with system" color="gray">
           <div
             className={
               theme === 'system'

@@ -1,7 +1,8 @@
-import './checkbox.scss';
+import './switch.scss';
 import PropTypes from 'prop-types';
+import { Switch } from '@lunalytics/ui';
 
-const Checkbox = ({ label, description, shortDescription, ...props }) => {
+const SwitchWithText = ({ label, description, shortDescription, ...props }) => {
   return (
     <>
       <div className="checkbox-container">
@@ -11,10 +12,7 @@ const Checkbox = ({ label, description, shortDescription, ...props }) => {
             <div className="input-short-description">{shortDescription}</div>
           )}
         </div>
-        <label className="checkbox-switch">
-          <input type="checkbox" {...props} />
-          <span className="checkbox-slider"></span>
-        </label>
+        <Switch {...props} />
       </div>
 
       {description && <div className="checkbox-description">{description}</div>}
@@ -22,12 +20,12 @@ const Checkbox = ({ label, description, shortDescription, ...props }) => {
   );
 };
 
-Checkbox.displayName = 'Checkbox';
+SwitchWithText.displayName = 'SwitchWithText';
 
-Checkbox.propTypes = {
+SwitchWithText.propTypes = {
   label: PropTypes.string,
   description: PropTypes.string,
   shortDescription: PropTypes.string,
 };
 
-export default Checkbox;
+export default SwitchWithText;

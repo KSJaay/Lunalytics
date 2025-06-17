@@ -1,14 +1,14 @@
 import './avatar.scss';
 
 // import dependencies
-import { observer } from 'mobx-react-lite';
 import { toast } from 'react-toastify';
+import { Button } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import useContextStore from '../../../context';
-import Button from '../../ui/button';
-import SettingsAccountAvatarModal from '../../modal/settings/account/avatar';
 import { createPostRequest } from '../../../services/axios';
+import SettingsAccountAvatarModal from '../../modal/settings/account/avatar';
 
 const userPermissionNames = { 1: 'Owner', 2: 'Admin', 3: 'Editor', 4: 'Guest' };
 
@@ -72,6 +72,8 @@ const SettingsAccountAvatar = () => {
       </div>
       <div className="settings-account-avatar-button-container">
         <Button
+          color="gray"
+          variant="outline"
           onClick={() =>
             openModal(
               <SettingsAccountAvatarModal
@@ -84,7 +86,13 @@ const SettingsAccountAvatar = () => {
         >
           Change avatar
         </Button>
-        <Button onClick={() => handleAvatarChange(null)}>Delete avatar</Button>
+        <Button
+          color="gray"
+          variant="outline"
+          onClick={() => handleAvatarChange(null)}
+        >
+          Delete avatar
+        </Button>
       </div>
     </div>
   );

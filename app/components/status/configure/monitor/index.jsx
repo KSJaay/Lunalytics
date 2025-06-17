@@ -2,14 +2,14 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useContextStore from '../../../../context';
-import useDropdown from '../../../../hooks/useDropdown';
 import Dropdown from '../../../ui/dropdown';
 import StatusConfigureMonitorItem from './item';
-import Button from '../../../ui/button';
+import useContextStore from '../../../../context';
+import useDropdown from '../../../../hooks/useDropdown';
 
 const StatusConfigureMonitor = ({
   componentId,

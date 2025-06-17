@@ -1,9 +1,8 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { ProgressBar, Input } from '@lunalytics/ui';
 
 // import local files
-import TextInput from '../ui/input';
-import ProgressBar from '../ui/progress';
 import RegisterChecklist from './checklist';
 
 const RegisterPasswordForm = ({
@@ -18,10 +17,10 @@ const RegisterPasswordForm = ({
       <div className="auth-form-title">Choose a password</div>
       <div className="auth-form-subtitle">Please enter your password</div>
       <div>
-        <TextInput
+        <Input
           type="password"
           id="password"
-          label="Password"
+          title="Password"
           error={errors['password']}
           defaultValue={inputs['password']}
           onInput={setPassword}
@@ -30,10 +29,10 @@ const RegisterPasswordForm = ({
 
         <RegisterChecklist password={inputs['password']} />
 
-        <TextInput
+        <Input
           type="password"
           id="confirmPassword"
-          label="Confirm password"
+          title="Confirm password"
           error={errors['confirmPassword']}
           defaultValue={inputs['confirmPassword']}
           onBlur={handleInput}

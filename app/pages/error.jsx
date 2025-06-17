@@ -2,9 +2,7 @@ import '../styles/pages/error.scss';
 
 // import dependencies
 import { useNavigate } from 'react-router-dom';
-
-// import local files
-import Button from '../components/ui/button';
+import { Button } from '@lunalytics/ui';
 
 const ErrorPage = () => {
   const navigate = useNavigate();

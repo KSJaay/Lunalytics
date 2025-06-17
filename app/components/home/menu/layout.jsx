@@ -1,7 +1,8 @@
+import { Button } from '@lunalytics/ui';
+
 // import local files
 import useDropdown from '../../../hooks/useDropdown';
 import Dropdown from '../../ui/dropdown';
-import Button from '../../ui/button';
 import { BsTable, IoGrid, FaBars, FiLayout } from '../../icons';
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
 
@@ -53,6 +54,7 @@ const MenuLayoutDropdown = () => {
       <Dropdown.Trigger isOpen={dropdownIsOpen} toggleDropdown={toggleDropdown}>
         <Button
           iconLeft={<FiLayout style={{ width: '20px', height: '20px' }} />}
+          color="gray"
         >
           Layout
         </Button>

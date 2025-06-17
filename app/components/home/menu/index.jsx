@@ -3,9 +3,9 @@ import './styles.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
+import { Button } from '@lunalytics/ui';
 
 // import local files
-import Button from '../../ui/button';
 import { FaPlus, IoReload } from '../../icons';
 import MenuLayoutDropdown from './layout';
 import MenuStatusDropdown from './status';
@@ -35,6 +35,7 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
         <Button
           iconLeft={<IoReload style={{ width: '20px', height: '20px' }} />}
           onClick={handleReset}
+          color="gray"
         />
 
         <MenuStatusDropdown />
@@ -53,7 +54,7 @@ const HomeMenu = ({ handleReset, search, setSearch }) => {
               )
             }
             iconLeft={<FaPlus style={{ width: '20px', height: '20px' }} />}
-            color={'primary'}
+            color="primary"
           >
             New
           </Button>

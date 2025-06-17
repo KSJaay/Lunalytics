@@ -7,11 +7,11 @@ describe('Sign in', () => {
 
       cy.typeText('[id="email"]', 'ksjaay.com').clickOutside();
 
-      cy.equals('[id="text-input-error-email"]', 'Email is not valid');
+      cy.equals('[id="error-email"]', 'Email is not valid');
 
       cy.get('[class="auth-button"]').click();
 
-      cy.equals('[id="text-input-error-email"]', 'Email is not valid');
+      cy.equals('[id="error-email"]', 'Email is not valid');
     });
 
     it('Signing in with an invalid password', () => {
@@ -24,11 +24,11 @@ describe('Sign in', () => {
         loginDetails.incorrectPasswords[0].value
       ).clickOutside();
 
-      cy.equals('[id="text-input-error-password"]', 'Password is not valid');
+      cy.equals('[id="error-password"]', 'Password is not valid');
 
       cy.get('[class="auth-button"]').click();
 
-      cy.equals('[id="text-input-error-password"]', 'Password is not valid');
+      cy.equals('[id="error-password"]', 'Password is not valid');
     });
   });
 

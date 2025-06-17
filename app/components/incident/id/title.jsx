@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import Button from '../../ui/button';
-import TextInput from '../../ui/input';
+import { Button, Input } from '@lunalytics/ui';
 
 const IncidentIdTitle = ({
   title,
@@ -14,10 +13,10 @@ const IncidentIdTitle = ({
     <div className="ic-header">
       {isFocused ? (
         <div className="ic-title">
-          <TextInput
+          <Input
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            containerStyle={{ flex: 1 }}
+            className="ic-title-width"
           />
         </div>
       ) : (
@@ -25,6 +24,7 @@ const IncidentIdTitle = ({
       )}
       {canManageIncidents && (
         <Button
+          color="gray"
           onClick={() => handleChange(userInput)}
           outline={isFocused && 'green'}
         >

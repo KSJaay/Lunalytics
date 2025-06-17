@@ -1,11 +1,11 @@
 // import dependencies
 import dayjs from 'dayjs';
 import classNames from 'classnames';
+import { Tooltip } from '@lunalytics/ui';
 
 // import local files
 import { heartbeatPropType } from '../../../shared/utils/propTypes';
 import useLocalStorageContext from '../../hooks/useLocalstorage';
-import Tooltip from '../ui/tooltip';
 
 const UptimeInfo = ({ heartbeat = {}, highestLatency = 0 }) => {
   const { dateformat, timeformat, timezone } = useLocalStorageContext();
@@ -29,7 +29,7 @@ const UptimeInfo = ({ heartbeat = {}, highestLatency = 0 }) => {
         {heartbeat.message || 'Unknown'}
       </div>
 
-      <Tooltip text={`Latency: ${heartbeat.latency} ms`}>
+      <Tooltip text={`Latency: ${heartbeat.latency} ms`} color="gray">
         <div className="monitor-uptime-info-bar-container">
           <div className="monitor-uptime-info-bar-content">
             <div

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // import local files
 import useStatusContext from '../../../../../hooks/useConfigureStatus';
-import Checkbox from '../../../../ui/checkbox';
+import Switch from '../../../../ui/switch';
 import Tabs from '../../../../ui/tabs';
 import {
   statusAlignments,
@@ -19,7 +19,7 @@ const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
     <div style={{ flex: 1 }}>
       <div className="sclh-options-title">Service Status</div>
       <div className="sclh-options-list">
-        <Checkbox
+        <Switch
           label="Show title"
           shortDescription="Whether or not the title should be shown"
           checked={status.showTitle}
@@ -29,7 +29,7 @@ const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
             });
           }}
         />
-        <Checkbox
+        <Switch
           label="Show service status"
           shortDescription="Whether or not the service status should be shown"
           checked={status.showStatus}

@@ -1,10 +1,10 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
 import Modal from '../../../ui/modal';
-import TextInput from '../../../ui/input';
 import RegisterChecklist from '../../../register/checklist';
 import { IoMdEye, IoMdEyeOff } from '../../../icons';
 import handleChangePassword from '../../../../handlers/settings/account/password';
@@ -62,9 +62,9 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
     <>
       <Modal.Title style={{ textAlign: 'center' }}>{modalTitle}</Modal.Title>
       <Modal.Message style={{ width: '400px' }}>
-        <TextInput
+        <Input
           id={`settings-current-password-${id}`}
-          label={'Current Password'}
+          title="Current Password"
           value={values.current}
           onChange={(e) => handlePasswordChange('current', e.target.value)}
           onBlur={(e) => handleOnBlur('current', e.target.value)}
@@ -84,9 +84,9 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
           }
           error={values.errors.current}
         />
-        <TextInput
+        <Input
           id={`settings-new-password-${id}`}
-          label={'New Password'}
+          title="New Password"
           onChange={(e) => handlePasswordChange('new', e.target.value)}
           onBlur={(e) => handleOnBlur('new', e.target.value)}
           type={values.showNewPassword ? 'text' : 'password'}
@@ -109,12 +109,12 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
 
         <RegisterChecklist password={values.new} />
 
-        <TextInput
+        <Input
           id={`settings-repeat-password-${id}`}
-          label={'Repeat New Password'}
+          title="Repeat New Password"
           onChange={(e) => handlePasswordChange('repeat', e.target.value)}
           onBlur={(e) => handleOnBlur('repeat', e.target.value)}
-          type={'password'}
+          type="password"
           value={values.repeat}
           error={values.errors.repeat}
         />

@@ -4,11 +4,11 @@ import './left.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Tooltip } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
 import { BsFillShieldLockFill } from 'react-icons/bs';
 
 // import local files
-import Tooltip from '../ui/tooltip';
 import {
   FaCog,
   FaHome,
@@ -52,7 +52,7 @@ const LeftNavigation = ({ activeUrl = '' }) => {
     });
 
     return (
-      <Tooltip text={name} position="right" key={name}>
+      <Tooltip text={name} position="right" key={name} color="gray">
         <div
           className={classes}
           key={name}
@@ -69,7 +69,7 @@ const LeftNavigation = ({ activeUrl = '' }) => {
     <div className="left-navigation">
       <div className="left-actions">{actions}</div>
       <div className="left-actions-bottom">
-        <Tooltip text="Settings" position="right" key="settings">
+        <Tooltip text="Settings" position="right" key="settings" color="gray">
           <div
             className={`navigation-left-top-action${
               activeUrl === 'settings' ? '-active' : ''
@@ -80,7 +80,7 @@ const LeftNavigation = ({ activeUrl = '' }) => {
             <FaCog style={{ width: '28px', height: '28px' }} />
           </div>
         </Tooltip>
-        <Tooltip text="Logout" position="right" key="logout">
+        <Tooltip text="Logout" position="right" key="logout" color="gray">
           <a
             className="navigation-left-top-action navigation-left-signout-button"
             href="/auth/logout"

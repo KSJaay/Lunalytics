@@ -1,11 +1,11 @@
 // import dependencies
 import { toast } from 'react-toastify';
+import { Textarea } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import Tabs from '../../ui/tabs';
 import Modal from '../../ui/modal';
-import Textarea from '../../ui/textarea';
 import useContextStore from '../../../context';
 import IncidentMonitors from '../../incident/monitors';
 import useIncidentMessage from '../../../hooks/useIncidentMessage';

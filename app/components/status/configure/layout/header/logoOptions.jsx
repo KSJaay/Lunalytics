@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // import local files
 import useStatusContext from '../../../../../hooks/useConfigureStatus';
-import Checkbox from '../../../../ui/checkbox';
+import Switch from '../../../../ui/switch';
 import Tabs from '../../../../ui/tabs';
 import {
   statusAlignments,
@@ -20,7 +20,7 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
     <div style={{ flex: 1 }}>
       <div className="sclh-options-title">Title & Logo</div>
       <div className="sclh-options-list">
-        <Checkbox
+        <Switch
           label="Show logo"
           shortDescription="Whether or not the logo should be shown"
           checked={title.showLogo}
@@ -30,7 +30,7 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
             });
           }}
         />
-        <Checkbox
+        <Switch
           label="Show title"
           shortDescription="Whether or not the title should be shown"
           checked={title.showTitle}

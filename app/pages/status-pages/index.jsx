@@ -1,11 +1,11 @@
 // import dependencies
 import { useState } from 'react';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import useContextStore from '../../context';
 import { FaPlus, IoReload } from '../../components/icons';
-import Button from '../../components/ui/button';
 import SearchBar from '../../components/ui/searchBar';
 import HomeMenuMobile from '../../components/notifications/menu/mobile';
 import StatusPageTable from '../../components/status';
@@ -36,6 +36,7 @@ const Status = () => {
 
         <div className="home-menu-buttons">
           <Button
+            color="gray"
             iconLeft={<IoReload style={{ width: '20px', height: '20px' }} />}
             onClick={() => setSearch('')}
           />

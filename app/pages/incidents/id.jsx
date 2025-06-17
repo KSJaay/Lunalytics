@@ -4,6 +4,7 @@ import '../../styles/pages/incidents.scss';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { useNavigate, useParams } from 'react-router-dom';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -13,7 +14,6 @@ import useContextStore from '../../context';
 import { createPostRequest } from '../../services/axios';
 import { PermissionsBits } from '../../../shared/permissions/bitFlags';
 import Role from '../../../shared/permissions/role';
-import Button from '../../components/ui/button';
 import IncidentIdMessage from '../../components/incident/id/message';
 import IncidentIdHeader from '../../components/incident/id/header';
 import IncidentIdTitle from '../../components/incident/id/title';
@@ -108,7 +108,8 @@ const IncidentUpdate = () => {
           <div style={{ padding: '4px 12px' }}>
             <Button
               fullWidth
-              outline="primary"
+              color="primary"
+              variant="outline"
               onClick={() => {
                 openModal(
                   <IncidentAddUpdateModal incidentId={incidentId} />,
@@ -140,7 +141,8 @@ const IncidentUpdate = () => {
           <div style={{ padding: '4px 12px 20px 12px' }}>
             <Button
               fullWidth
-              outline="red"
+              color="red"
+              variant="outline"
               onClick={() => {
                 openModal(
                   <DeleteIncidentModal

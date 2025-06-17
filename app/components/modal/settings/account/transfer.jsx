@@ -1,19 +1,18 @@
 import './avatar.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import { observer } from 'mobx-react-lite';
+import { Alert, Input } from '@lunalytics/ui';
 
 // import local files
 import Modal from '../../../ui/modal';
-import TextInput from '../../../ui/input';
 import useTeamContext from '../../../../context/team';
 import { createGetRequest } from '../../../../services/axios';
 import useDropdown from '../../../../hooks/useDropdown';
 import Dropdown from '../../../ui/dropdown';
-import { AlertError } from '../../../ui/alert';
 import useContextStore from '../../../../context';
 import handleTransferAccount from '../../../../handlers/settings/account/transfer';
 
@@ -68,7 +67,8 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
         Transfer ownership
       </Modal.Title>
       <Modal.Message style={{ width: '400px' }}>
-        <AlertError
+        <Alert
+          status="error"
           title="Warning"
           description="The following action is not reversible. Please be certain before you proceed."
         />
@@ -103,9 +103,9 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
           </Dropdown.List>
         </Dropdown.Container>
 
-        <TextInput
+        <Input
           id="settings-transfer-confirm"
-          label={
+          title={
             <div style={{ fontWeight: '500', fontSize: '14px' }}>
               To verify, type{' '}
               <span style={{ fontWeight: '800' }}>transfer ownership</span>{' '}

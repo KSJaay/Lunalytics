@@ -3,12 +3,11 @@ import './card.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
-
 // import local files
 import useDropdown from '../../../hooks/useDropdown';
 import { FaEllipsisVertical } from '../../icons';
-import Button from '../../ui/button';
 import Dropdown from '../../ui/dropdown';
 import useContextStore from '../../../context';
 import NotificationModal from '../../modal/notification';
@@ -91,7 +90,7 @@ const NotificationCard = ({ notification = {} }) => {
       {isEditor && (
         <Button
           fullWidth
-          outline="primary"
+          color="gray"
           onClick={() =>
             openModal(
               <NotificationModal

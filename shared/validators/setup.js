@@ -64,12 +64,14 @@ const setupValidators = {
   },
 
   websiteUrl: (value = '', setErrors) => {
-    const websiteUrl =
-      /^https?:\/\/(localhost(:\d{1,5})?|\d{1,3}(\.\d{1,3}){3}:\d{1,5}|[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(:\d{1,5})?)$/g;
+    const websiteUrl = /^https?:\/\//;
     const isInvalid = websiteUrl.test(value);
 
     if (!isInvalid) {
-      setErrors({ websiteUrl: 'Please enter a valid URL.' });
+      setErrors({
+        websiteUrl:
+          'Please enter a valid URL. Only http:// or https:// is allowed.',
+      });
       return true;
     }
 

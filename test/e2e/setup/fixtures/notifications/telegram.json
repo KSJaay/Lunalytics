@@ -10,17 +10,17 @@
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-friendly-name\"]",
+      "id": "[id=\"error-friendly-name\"]",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
   "url": {
     "id": "[id=\"bot-token\"]",
-    "value": "123123123123123123",
+    "value": "123123:123123",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-bot-token\"]",
+      "id": "[id=\"error-bot-token\"]",
       "value": "Invalid Telegram Bot Token"
     }
   },
@@ -30,7 +30,7 @@
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"text-input-error-chat-id\"]",
+      "id": "[id=\"error-chat-id\"]",
       "value": "Invalid Chat ID"
     }
   }

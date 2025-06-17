@@ -3,10 +3,10 @@ import './avatar.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { Input } from '@lunalytics/ui';
 
 // import local files
 import Modal from '../../../ui/modal';
-import TextInput from '../../../ui/input';
 
 const avatars = [
   'Ape',
@@ -53,8 +53,8 @@ const SettingsAccountAvatarModal = ({
         <div className="settings-modal-avatar-container">
           <img src={imageUrl} className="settings-modal-avatar-image" />
         </div>
-        <TextInput
-          label="Input Avatar URL"
+        <Input
+          title="Input Avatar URL"
           value={isUrl ? avatar : ''}
           onChange={(e) => setAvatar(e.target.value)}
         />

@@ -10,11 +10,11 @@ describe('Register', () => {
 
         cy.typeText('[id="email"]', email).clickOutside();
 
-        cy.equals('[id="text-input-error-email"]', error);
+        cy.equals('[id="error-email"]', error);
 
         cy.get('[class="auth-button"]').click();
 
-        cy.equals('[id="text-input-error-email"]', error);
+        cy.equals('[id="error-email"]', error);
       });
     });
   });
@@ -26,11 +26,11 @@ describe('Register', () => {
 
         cy.typeText('[id="username"]', username).clickOutside();
 
-        cy.equals('[id="text-input-error-username"]', error);
+        cy.equals('[id="error-username"]', error);
 
         cy.get('[class="auth-button"]').click();
 
-        cy.equals('[id="text-input-error-username"]', error);
+        cy.equals('[id="error-username"]', error);
       });
     });
   });
@@ -61,11 +61,11 @@ describe('Register', () => {
 
         cy.typeText('[id="password"]', password).clickOutside();
 
-        cy.equals('[id="text-input-error-password"]', error);
+        cy.equals('[id="error-password"]', error);
 
         cy.get('[class="auth-button"]').click();
 
-        cy.equals('[id="text-input-error-password"]', error);
+        cy.equals('[id="error-password"]', error);
       });
     });
 
@@ -85,10 +85,7 @@ describe('Register', () => {
 
       cy.get('[class="auth-button"]').click();
 
-      cy.equals(
-        '[id="text-input-error-confirmPassword"]',
-        'Passwords do not match'
-      );
+      cy.equals('[id="error-confirmPassword"]', 'Passwords do not match');
 
       cy.get('[class="auth-button"]').click();
     });
