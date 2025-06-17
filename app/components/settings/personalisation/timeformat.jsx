@@ -29,7 +29,9 @@ const SettingsPersonalisationTimeformat = ({ timeformat, setTimeformat }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          <Button fullWidth variant="outline">{times[timeformat]}</Button>
+          <Button fullWidth variant="outline">
+            {times[timeformat]}
+          </Button>
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           {Object.keys(times).map((time) => (

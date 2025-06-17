@@ -79,7 +79,6 @@ const StatusConfigure = () => {
               <div>
                 <Button
                   color="red"
-                  variant="outline"
                   onClick={() => {
                     navigate('/status-pages');
                   }}
@@ -90,7 +89,6 @@ const StatusConfigure = () => {
               <div>
                 <Button
                   color="green"
-                  variant="outline"
                   onClick={() =>
                     handleCreateOrEditStatusPage(
                       statusValues.settings,

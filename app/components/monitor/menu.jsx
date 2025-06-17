@@ -148,6 +148,7 @@ const MonitorMenu = ({ name = 'Unknown', type, url, monitorId }) => {
               id={option.id}
               iconLeft={option.icon}
               onClick={option.onClick}
+              color="gray"
             >
               {option.value}
             </Button>

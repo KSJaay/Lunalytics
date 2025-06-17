@@ -58,11 +58,7 @@ const SettingsPersonalisationAppearance = ({
             <Input placeholder="Message" />
           </div>
 
-          <Button
-            color="primary"
-            variant="outline"
-            style={{ marginLeft: '10px' }}
-          >
+          <Button color="primary" style={{ marginLeft: '10px' }}>
             Edit user
           </Button>
         </div>

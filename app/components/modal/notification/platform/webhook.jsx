@@ -32,7 +32,7 @@ const NotificationModalWebhookInput = ({
         }}
       />
       <Input
-        title='Webhook URL'
+        title="Webhook URL"
         placeholder="https://lunalytics.xyz/webhooks/example"
         subtitle={
           <>

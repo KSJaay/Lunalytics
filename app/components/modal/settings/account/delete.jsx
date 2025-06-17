@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { Alert, Input } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
 
-
 // import local files
 import Modal from '../../../ui/modal';
 import { createPostRequest } from '../../../../services/axios';

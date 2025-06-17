@@ -89,7 +89,7 @@ const NotificationCard = ({ notification = {} }) => {
       {isEditor && (
         <Button
           fullWidth
-          outline="primary"
+          color="gray"
           onClick={() =>
             openModal(
               <NotificationModal

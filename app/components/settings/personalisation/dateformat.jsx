@@ -23,7 +23,9 @@ const SettingsPersonalisationDateformat = ({ dateformat, setDateformat }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          <Button fullWidth variant="outline">{dateformat}</Button>
+          <Button fullWidth variant="outline">
+            {dateformat}
+          </Button>
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           {timeformats.map((format) => (

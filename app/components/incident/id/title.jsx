@@ -16,6 +16,7 @@ const IncidentIdTitle = ({
           <Input
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
+            className="ic-title-width"
           />
         </div>
       ) : (

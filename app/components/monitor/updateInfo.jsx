@@ -29,7 +29,7 @@ const UptimeInfo = ({ heartbeat = {}, highestLatency = 0 }) => {
         {heartbeat.message || 'Unknown'}
       </div>
 
-      <Tooltip text={`Latency: ${heartbeat.latency} ms`}>
+      <Tooltip text={`Latency: ${heartbeat.latency} ms`} color="gray">
         <div className="monitor-uptime-info-bar-container">
           <div className="monitor-uptime-info-bar-content">
             <div
