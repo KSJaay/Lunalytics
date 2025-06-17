@@ -109,7 +109,7 @@ const StatusConfigureSettings = () => {
           <Switch
             label="Publicly available"
             shortDescription="Should the status page be visible users who are not signed into the application."
-            value={settings.isPublic}
+            checked={settings.isPublic}
             onChange={(e) => {
               changeValues({ isPublic: e.target.checked });
             }}
@@ -117,7 +117,7 @@ const StatusConfigureSettings = () => {
           <Switch
             label="Hide paused monitors"
             shortDescription="When a monitor is paused, it will not be visible on the status page."
-            value={settings.hidePaused}
+            checked={settings.hidePaused}
             onChange={(e) => {
               changeValues({ hidePaused: e.target.checked });
             }}

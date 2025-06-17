@@ -65,7 +65,6 @@ const MonitorConfigureModal = ({
               subtitle={
                 'Setup advanced settings for the monitor, such as intervals, notifications, and others.'
               }
-              value="Advance"
               id="monitor-advanced-settings"
             >
               <MonitorPageNotification

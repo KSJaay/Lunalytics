@@ -5,6 +5,23 @@ import axios from 'axios';
 import logger from '../utils/logger.js';
 import { isEmpty } from '../../shared/utils/object.js';
 
+const isDown = (monitor, status) => {
+  if (!monitor.valid_status_codes) return false;
+  for (const code of monitor.valid_status_codes) {
+    const [start, end] = code.split('-').map((s) => parseInt(s));
+
+    if (!end && start === status) {
+      return false;
+    }
+
+    if (status >= start && status <= end) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 const httpStatusCheck = async (monitor) => {
   const options = {
     method: monitor.method,
@@ -28,22 +45,6 @@ const httpStatusCheck = async (monitor) => {
 
     const latency = Date.now() - startTime;
     const message = `${query.status} - ${query.statusText}`;
-    let isDown = true;
-
-    for (const status of monitor.valid_status_codes) {
-      const [start, end] = status.split('-').map((s) => parseInt(s));
-
-      if (!end && start === query.status) {
-        isDown = false;
-        break;
-      }
-
-      if (query.status >= start && query.status <= end) {
-        isDown = false;
-        break;
-      }
-    }
-
     const status = query.status;
 
     return {
@@ -51,7 +52,7 @@ const httpStatusCheck = async (monitor) => {
       status,
       latency,
       message,
-      isDown,
+      isDown: isDown(monitor, status),
     };
   } catch (error) {
     const endTime = Date.now();
@@ -63,7 +64,6 @@ const httpStatusCheck = async (monitor) => {
     if (error.response) {
       const failedResponse = error.response;
       const message = `${failedResponse.status} - ${failedResponse.statusText}`;
-      const isDown = failedResponse.status >= 400;
       const latency = endTime - startTime;
       const status = failedResponse.status;
 
@@ -72,7 +72,7 @@ const httpStatusCheck = async (monitor) => {
         status,
         latency,
         message,
-        isDown,
+        isDown: isDown(monitor, status),
       };
     }
 
