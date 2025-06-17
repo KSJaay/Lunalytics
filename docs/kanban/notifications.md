@@ -17,3 +17,5 @@ title: Notifications
 ### Telegram
 
 ### Webhooks
+
+### HomeAssistant

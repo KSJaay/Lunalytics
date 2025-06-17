@@ -23,3 +23,7 @@ Currently a work in progress
 ## Webhooks
 
 Currently a work in progress
+
+## HomeAssistant
+
+Currently a work in progress
