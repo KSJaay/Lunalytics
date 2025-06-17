@@ -57,8 +57,8 @@ const HomeAssistantNotificationModalHomeAssistantInput = ({
         label={'Long Lived Access Token'}
         description={
             <>
-                Long-lived access tokens can be created using the "Long-Lived Access Tokens" 
-                section at the bottom of a user's Home Assistant profile page.
+                Long-lived access tokens can be created using the &quot;Long-Lived Access Tokens&quot; 
+                section at the bottom of a user&apos;s Home Assistant profile page.
             </>
         }
         id="home-assistant-access-token"
