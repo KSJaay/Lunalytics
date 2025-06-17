@@ -31,10 +31,10 @@ const HomeAssistantNotificationModalHomeAssistantInput = ({
         }
         id="home-assistant-url"
         isRequired
-        error={errors?.homeAssistantUrl}
-        defaultValue={values.homeAssistantUrl}
+        error={errors?.data?.homeAssistantUrl}
+        defaultValue={values.data?.homeAssistantUrl}
         onChange={(e) => {
-          handleInput({ key: 'homeAssistantUrl', value: e.target.value });
+          handleInput({ key: 'data', value: { ...values.data, homeAssistantUrl: e.target.value } });
         }}
       />
        <TextInput
@@ -47,10 +47,10 @@ const HomeAssistantNotificationModalHomeAssistantInput = ({
         }
         id="home-assistant-notification-service"
         isRequired
-        error={errors?.homeAssistantNotificationService}
-        defaultValue={values.homeAssistantNotificationService}
+        error={errors?.data?.homeAssistantNotificationService}
+        defaultValue={values.data?.homeAssistantNotificationService}
         onChange={(e) => {
-          handleInput({ key: 'homeAssistantNotificationService', value: e.target.value });
+          handleInput({ key: 'data', value: { ...values.data, homeAssistantNotificationService: e.target.value } });
         }}
       />
       <TextInput
