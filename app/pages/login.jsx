@@ -33,16 +33,18 @@ const Login = () => {
             id="email"
             title="Email"
             error={errors['email']}
-            defaultValue={inputs['email']}
+            value={inputs['email']}
             onBlur={handleInput}
+            onChange={(event) => handleInput(event, false)}
           />
           <Input
             type={showPassword ? 'text' : 'password'}
             id="password"
             title="Password"
             error={errors['password']}
-            defaultValue={inputs['password']}
+            value={inputs['password']}
             onBlur={handleInput}
+            onChange={(event) => handleInput(event, false)}
             iconRight={
               <div
                 onClick={() => setShowPassword(!showPassword)}
