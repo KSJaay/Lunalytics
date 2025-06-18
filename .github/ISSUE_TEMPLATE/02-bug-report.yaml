@@ -1,0 +1,70 @@
+name: Bug Report
+description: File a bug report.
+title: "[Bug]: "
+labels: ["bug"]
+# assignees: [""]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: What did you expect to happen and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. In this environment...
+        2. With this config...
+        3. Run '...'
+        4. See error...
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which Lunalytics Version are you using?
+      placeholder: e.g. Lunalytics v0.9.0 docker-installation
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browser are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Other (Please add it on the next block) :P
+    validations:
+      required: true
+  - type: input
+    id: other-browser
+    attributes:
+      label: Which browser are you using?
+      placeholder: e.g. OperaGX
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: I have checked the other issues and pull-requests for similar issues. 
+      options:
+        - label: "I've checked existing issues"
+          required: true
+        - label: "I've checked existing pull-requests"
+          required: true
