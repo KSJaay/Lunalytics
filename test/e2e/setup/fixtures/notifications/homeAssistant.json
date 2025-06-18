@@ -1,4 +1,9 @@
 {
+  "type": {
+    "id": "[id=\"notification-type-dropdown\"]",
+    "value": "[id=\"notification-type-HomeAssistant\"]",
+    "type": "dropdown"
+  },
   "friendlyName": {
     "id": "[id=\"friendly-name\"]",
     "value": "HomeAssistant",
@@ -7,6 +12,16 @@
     "error": {
       "id": "[id=\"error-friendly-name\"]",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
+    }
+  },
+  "token": {
+    "id": "[id=\"home-assistant-access-token\"]",
+    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-home-assistant-access-token\"]",
+      "value": "Invalid Access Token"
     }
   },
   "homeAssistantUrl": {
@@ -27,16 +42,6 @@
     "error": {
       "id": "[id=\"error-home-assistant-notification-service\"]",
       "value": "Invalid HomeAssistant Notification Service"
-    }
-  },
-  "token": {
-    "id": "[id=\"home-assistant-access-token\"]",
-    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
-    "invalidValue": "",
-    "type": "text",
-    "error": {
-      "id": "[id=\"error-home-assistant-access-token\"]",
-      "value": "Invalid Access Token"
     }
   }
 } 
