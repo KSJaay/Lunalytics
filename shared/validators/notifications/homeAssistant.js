@@ -19,8 +19,7 @@ const HomeAssistant = ({
   messageType,
   requestType = 'application/json',
   token,
-  homeAssistantUrl,
-  homeAssistantNotificationService,
+  data,
 }) => {
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(
@@ -29,11 +28,11 @@ const HomeAssistant = ({
     );
   }
 
-  if (homeAssistantUrlRegex && !homeAssistantUrlRegex.test(homeAssistantUrl)) {
+  if (homeAssistantUrlRegex && !homeAssistantUrlRegex.test(data.homeAssistantUrl)) {
     throw new NotificationValidatorError('homeAssistantUrl', 'Invalid HomeAssistant URL');
   }
 
-  if (homeAssistantNotificationServiceRegex && !homeAssistantNotificationServiceRegex.test(homeAssistantNotificationService)) {
+  if (homeAssistantNotificationServiceRegex && !homeAssistantNotificationServiceRegex.test(data.homeAssistantNotificationService)) {
     throw new NotificationValidatorError('homeAssistantNotificationService', 'Invalid HomeAssistant Notification Service');
   }
 
@@ -54,10 +53,7 @@ const HomeAssistant = ({
     messageType,
     token,
     friendlyName,
-    data: {
-        homeAssistantUrl,
-        homeAssistantNotificationService,
-    }
+    data
   };
 };
 
