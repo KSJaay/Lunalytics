@@ -46,6 +46,7 @@ body:
         - Safari
         - Microsoft Edge
         - Other (Please add it on the next block) :P
+    validations:
       required: true
   - type: input
     id: other-browser
