@@ -14,7 +14,6 @@ import client from '../../database/sqlite/setup.js';
 import config from '../../utils/config.js';
 import { createUserSession } from '../../database/queries/session.js';
 import { parseUserAgent } from '../../utils/uaParser.js';
-import randomId from '../../utils/randomId.js';
 
 const packageJson = loadJSON('package.json');
 
@@ -45,7 +44,6 @@ const writeConfigFile = (config = {}) => {
 const createBasicSetup = ({
   databaseType,
   databaseName,
-  jwtSecret = randomId(),
   websiteUrl,
   migrationType,
   retentionPeriod = '6m',
@@ -53,7 +51,6 @@ const createBasicSetup = ({
   const config = {
     port: 2308,
     database: { name: databaseName, type: databaseType, config: {} },
-    jwtSecret,
     migrationType,
     version: packageJson.version,
     websiteUrl,
@@ -69,7 +66,6 @@ const createBasicSetup = ({
 const createAdvancedSetup = ({
   databaseType,
   databaseName,
-  jwtSecret = randomId(),
   websiteUrl,
   migrationType,
   postgresHost = 'localhost',
@@ -81,7 +77,6 @@ const createAdvancedSetup = ({
   const config = {
     port: 2308,
     database: { name: databaseName, type: databaseType, config: {} },
-    jwtSecret,
     migrationType,
     version: packageJson.version,
     websiteUrl,

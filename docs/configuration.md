@@ -31,7 +31,6 @@ The following values need to be added to the config.json file:
 ```json [config.json]
 {
   "port": Number,
-  "jwtSecret": String,
   "migrationType": String,
   "database": {
     "name": String
