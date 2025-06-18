@@ -1,0 +1,29 @@
+name: Feature Request
+description: Request a feature.
+title: "[Feature]: "
+labels: ["enhancement"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for adding your thoughts to the project, making this even better!
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What do you imagine 💭
+      description: Please be as detailed as possible so we are talking about the same idea 💡
+      placeholder: I think of an feature to keep record of all these cute baby dogs...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: I have checked the other issues and pull-requests for similar issues. 
+      options:
+        - label: "I've checked existing issues"
+          required: true
+        - label: "I've checked existing pull-requests"
+          required: true
