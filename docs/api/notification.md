@@ -23,6 +23,7 @@ There are various restrictions applied to the notification data. The following a
   - Slack
   - Telegram
   - Webhooks
+  - HomeAssistant
 
 #### Message Type
 
@@ -38,6 +39,7 @@ There are various restrictions applied to the notification data. The following a
   - For Slack this is the webhook url
   - For Telegram this is the bot token
   - For Webhooks this is the url
+  - For HomeAssistant this is the long lived access token
 
 ### Platform specific requirements
 
@@ -118,6 +120,24 @@ There are various restrictions applied to the notification data. The following a
   "content": null,
   "friendlyName": "Lunalytics",
   "data": { "requestType": "form-data" },
+  "createdAt": "2024-11-03 12:00:00"
+}
+```
+
+```json [HomeAssistant]
+{
+  "id": "d8a53324-6c1b-410c-be0e-c17a99d862e6",
+  "platform": "HomeAssistant",
+  "messageType": "pretty",
+  "token": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "email": "KSJaay@lunalytics.xyz",
+  "isEnabled": true,
+  "content": null,
+  "friendlyName": "Lunalytics",
+  "data": { 
+    "homeAssistantUrl": "https://home-assistant.local:8123",
+    "homeAssistantNotificationService": "mobile_app_my_device"
+  },
   "createdAt": "2024-11-03 12:00:00"
 }
 ```
@@ -281,6 +301,19 @@ Create a new [notification](#notification-structure) and returns the notificatio
   "showAdditionalHeaders": true,
   "additionalHeaders": {},
   "token": "https://lunalytics.xyz/api/webhook/alert"
+}
+```
+
+```json [HomeAssistant]
+{
+  "platform": "HomeAssistant",
+  "friendlyName": "Lunalytics",
+  "messageType": "pretty",
+  "token": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "data": {
+    "homeAssistantUrl": "https://home-assistant.local:8123",
+    "homeAssistantNotificationService": "mobile_app_my_device"
+  }
 }
 ```
 

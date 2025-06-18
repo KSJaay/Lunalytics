@@ -21,6 +21,7 @@ const NotificationIcons = {
   Slack: '/notifications/slack.svg',
   Telegram: '/notifications/telegram.svg',
   Webhook: '/notifications/webhook.svg',
+  HomeAssistant: '/notifications/homeAssistant.svg',
 };
 
 const NotificationCard = ({ notification = {} }) => {

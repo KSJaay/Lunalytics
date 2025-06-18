@@ -41,6 +41,10 @@ const statusOptions = [
     text: 'Webhook',
     icon: '/notifications/webhook.svg',
   },
+  {
+    text: 'HomeAssistant',
+    icon: '/notifications/homeAssistant.svg',
+  },
 ];
 
 const MenuPlatformDropdown = ({ platform, setPlatform }) => {
