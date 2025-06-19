@@ -7,6 +7,7 @@ import {
   IoMdHelpCircle,
   FaUsers,
 } from '../../../icons';
+import { IoKey } from 'react-icons/io5';
 
 const tabs = [
   {
@@ -25,6 +26,10 @@ const tabs = [
   {
     title: 'Workspace Settings',
     items: [
+      {
+        name: 'API Token',
+        icon: <IoKey style={{ width: '25px', height: '25px' }} />,
+      },
       {
         name: 'Manage Team',
         icon: <FaUsers style={{ width: '25px', height: '25px' }} />,

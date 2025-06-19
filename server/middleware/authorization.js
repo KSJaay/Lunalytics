@@ -2,13 +2,13 @@ import { getUserByEmail } from '../database/queries/user.js';
 import { deleteCookie } from '../../shared/utils/cookies.js';
 import { handleError } from '../utils/errors.js';
 import { userSessionExists } from '../database/queries/session.js';
-import { apiTokenExists } from '../database/queries/api.js';
+import { apiTokenExists } from '../database/queries/tokens.js';
 import { oldPermsToFlags } from '../../shared/permissions/oldPermsToFlags.js';
 
 const authorization = async (request, response, next) => {
   try {
     const { session_token } = request.cookies;
-    const { Authorization } = request.headers;
+    const { authorization } = request.headers;
 
     if (session_token) {
       const userSession = await userSessionExists(session_token);
@@ -52,8 +52,8 @@ const authorization = async (request, response, next) => {
       }
     }
 
-    if (request.url.startsWith('/api') && Authorization) {
-      const authorizationTokenExists = await apiTokenExists(Authorization);
+    if (request.url.startsWith('/api') && authorization) {
+      const authorizationTokenExists = await apiTokenExists(authorization);
 
       if (!authorizationTokenExists) {
         return response.sendStatus(401);
@@ -62,7 +62,7 @@ const authorization = async (request, response, next) => {
       response.locals.user = { ...authorizationTokenExists, isApiToken: true };
     }
 
-    if (request.url.startsWith('/api') && !session_token && !Authorization) {
+    if (request.url.startsWith('/api') && !session_token && !authorization) {
       return response.sendStatus(401);
     }
 

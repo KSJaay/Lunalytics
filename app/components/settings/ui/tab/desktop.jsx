@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const tabs = [
   { title: 'GENERAL', items: ['Account', 'Appearance'] },
-  { title: 'WORKSPACE', items: ['Manage Team', 'About'] },
+  { title: 'WORKSPACE', items: ['API Token', 'Manage Team', 'About'] },
 ];
 
 const SettingsTab = ({ tab, handleTabUpdate }, index) => {

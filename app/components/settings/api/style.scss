@@ -1,0 +1,78 @@
+@use '../../../styles//breakpoints.scss' as *;
+
+// settings-api-token > sat
+
+.sat-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 25px 0px 15px 0px;
+}
+
+.sat-subheader {
+  color: var(--font-light-color);
+  font-size: var(--font-sm);
+  margin-bottom: 10px;
+}
+
+.sat-create-btn {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sat-container {
+  display: flex;
+  gap: 10px;
+  border: 2px solid var(--accent-900);
+  background-color: var(--accent-900);
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: var(--radius-md);
+}
+
+.sat-title-container {
+  flex: 1;
+  gap: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .title {
+    font-size: var(--font-lg);
+    font-weight: bold;
+  }
+
+  .subtitle {
+    color: var(--font-light-color);
+    font-size: var(--font-sm);
+  }
+}
+
+.sat-buttons {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+
+  .button {
+    background-color: var(--accent-800);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+}
+
+@include mobile {
+  // .sat-container {
+  //   flex-direction: column;
+  // }
+
+  .sat-title-container .subtitle {
+    overflow-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+}

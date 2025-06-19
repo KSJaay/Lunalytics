@@ -6,6 +6,7 @@ import SettingsTab from '../tab/desktop';
 import SettingsAccount from '../../account';
 import SettingsPersonalisation from '../../personalisation';
 import ManageTeam from '../../manage';
+import ManageApiTokens from '../../api';
 import SettingsAbout from '../../about';
 import { IoMdClose } from '../../../icons';
 
@@ -18,6 +19,7 @@ const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
       <SettingsTab tab={tab} handleTabUpdate={handleTabUpdate} />
       {tab === 'Account' && <SettingsAccount />}
       {tab === 'Appearance' && <SettingsPersonalisation />}
+      {tab === 'API Token' && <ManageApiTokens />}
       {tab === 'Manage Team' && <ManageTeam />}
       {tab === 'About' && <SettingsAbout />}
     </>

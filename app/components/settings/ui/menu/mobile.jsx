@@ -7,6 +7,7 @@ import { IoArrowBack } from '../../../icons';
 import SettingsMobileTabs from '../tab/mobile';
 import SettingsAccount from '../../account';
 import SettingsPersonalisation from '../../personalisation';
+import ManageApiTokens from '../../api';
 import ManageTeam from '../../manage';
 import SettingsAbout from '../../about';
 
@@ -45,6 +46,7 @@ const SettingsMobile = ({ handleKeydown }) => {
       )}
       {page === 'Account' && <SettingsAccount />}
       {page === 'Appearance' && <SettingsPersonalisation />}
+      {page === 'API Token' && <ManageApiTokens />}
       {page === 'Manage Team' && <ManageTeam />}
       {page === 'About' && <SettingsAbout />}
     </div>
