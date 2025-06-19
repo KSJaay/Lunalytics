@@ -3,8 +3,6 @@ import SQLite from '../sqlite/setup.js';
 import { generateRandomAnimalName } from '../../../shared/utils/animal.js';
 
 export const apiTokenExists = async (token) => {
-  console.log('token', token);
-
   return SQLite.client('api_token').where({ token }).first();
 };
 

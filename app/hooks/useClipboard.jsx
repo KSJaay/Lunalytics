@@ -11,9 +11,7 @@ const useClipboard = () => async (text, message) => {
   // Try to save to clipboard
   try {
     await navigator.clipboard.writeText(text);
-    toast.success(
-      message || 'Current translation has been copied to clipboard!'
-    );
+    toast.success(message || 'Text has been copied to clipboard!');
     return true;
   } catch (error) {
     toast.error('Copy failed', error);

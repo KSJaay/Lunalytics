@@ -10,10 +10,21 @@ import SettingsPersonalisation from '../../personalisation';
 import ManageApiTokens from '../../api';
 import ManageTeam from '../../manage';
 import SettingsAbout from '../../about';
+import { observer } from 'mobx-react-lite';
+import Role from '../../../../../shared/permissions/role';
+import useContextStore from '../../../../context';
+import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 
 const SettingsMobile = ({ handleKeydown }) => {
+  const {
+    userStore: { user },
+  } = useContextStore();
+
   const [page, setPage] = useState('homepage');
   const handleTabChange = (page) => setPage(page);
+
+  const role = new Role('user', user.permission);
+  const isAdmin = role.hasPermission(PermissionsBits.ADMINISTRATOR);
 
   return (
     <div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
@@ -42,11 +53,14 @@ const SettingsMobile = ({ handleKeydown }) => {
       </div>
 
       {page === 'homepage' && (
-        <SettingsMobileTabs handleTabChange={handleTabChange} />
+        <SettingsMobileTabs
+          handleTabChange={handleTabChange}
+          isAdmin={isAdmin}
+        />
       )}
       {page === 'Account' && <SettingsAccount />}
       {page === 'Appearance' && <SettingsPersonalisation />}
-      {page === 'API Token' && <ManageApiTokens />}
+      {isAdmin && page === 'API Token' && <ManageApiTokens />}
       {page === 'Manage Team' && <ManageTeam />}
       {page === 'About' && <SettingsAbout />}
     </div>
@@ -59,4 +73,4 @@ SettingsMobile.propTypes = {
   handleKeydown: PropTypes.func.isRequired,
 };
 
-export default SettingsMobile;
+export default observer(SettingsMobile);

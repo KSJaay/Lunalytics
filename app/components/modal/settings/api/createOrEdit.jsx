@@ -131,7 +131,6 @@ const SettingsApiConfigureModal = ({
 
       closeModal();
     } catch (error) {
-      console.log(error);
       if (error.response?.status === 401) {
         closeModal();
         return;

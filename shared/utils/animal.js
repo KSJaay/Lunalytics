@@ -19,26 +19,18 @@ export const generateRandomAnimalName = () => {
 
   const animals = [
     'panda',
-    'tiger',
     'fox',
     'otter',
-    'panda',
-    'eagle',
     'koala',
-    'lion',
     'dolphin',
     'wolf',
     'rabbit',
     'bear',
-    'falcon',
-    'zebra',
-    'giraffe',
-    'leopard',
     'penguin',
-    'rhino',
     'sloth',
-    'hyena',
-    'cheetah',
+    'pangolin',
+    'mongoose',
+    'badger',
   ];
 
   const randomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];

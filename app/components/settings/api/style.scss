@@ -66,10 +66,6 @@
 }
 
 @include mobile {
-  // .sat-container {
-  //   flex-direction: column;
-  // }
-
   .sat-title-container .subtitle {
     overflow-wrap: break-word;
     word-break: break-all;

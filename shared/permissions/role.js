@@ -21,13 +21,6 @@ class Role {
   removePermission(permission) {
     this.permissionFlags &= ~permission;
   }
-
-  isValidPermission(permission) {
-    return (
-      this.permissionFlags === PermissionsBits.ADMINISTRATOR ||
-      (this.permissionFlags & permission) === permission
-    );
-  }
 }
 
 export default Role;

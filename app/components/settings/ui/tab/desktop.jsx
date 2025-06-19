@@ -1,13 +1,18 @@
 // import dependencies
 import PropTypes from 'prop-types';
 
-const tabs = [
+const tabs = (isAdmin) => [
   { title: 'GENERAL', items: ['Account', 'Appearance'] },
-  { title: 'WORKSPACE', items: ['API Token', 'Manage Team', 'About'] },
+  {
+    title: 'WORKSPACE',
+    items: isAdmin
+      ? ['API Token', 'Manage Team', 'About']
+      : ['Manage Team', 'About'],
+  },
 ];
 
-const SettingsTab = ({ tab, handleTabUpdate }, index) => {
-  const tabsList = tabs.map(({ title, items }) => {
+const SettingsTab = ({ tab, handleTabUpdate, isAdmin }) => {
+  const tabsList = tabs(isAdmin).map(({ title, items }) => {
     const itemsList = items.map((name) => {
       const active = name === tab;
       return (
@@ -23,7 +28,7 @@ const SettingsTab = ({ tab, handleTabUpdate }, index) => {
     });
 
     return (
-      <div key={title + index}>
+      <div key={title}>
         {title && <div className="settings-tab-title">{title}</div>}
         <div>{itemsList}</div>
       </div>
