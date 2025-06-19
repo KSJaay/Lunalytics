@@ -1,5 +1,3 @@
-import './style.scss';
-
 // import dependencies
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';

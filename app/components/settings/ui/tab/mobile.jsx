@@ -7,8 +7,9 @@ import {
   IoMdHelpCircle,
   FaUsers,
 } from '../../../icons';
+import { IoKey } from 'react-icons/io5';
 
-const tabs = [
+const tabs = (isAdmin) => [
   {
     title: 'General Settings',
     items: [
@@ -24,21 +25,36 @@ const tabs = [
   },
   {
     title: 'Workspace Settings',
-    items: [
-      {
-        name: 'Manage Team',
-        icon: <FaUsers style={{ width: '25px', height: '25px' }} />,
-      },
-      {
-        name: 'About',
-        icon: <IoMdHelpCircle style={{ width: '25px', height: '25px' }} />,
-      },
-    ],
+    items: isAdmin
+      ? [
+          {
+            name: 'API Token',
+            icon: <IoKey style={{ width: '25px', height: '25px' }} />,
+          },
+          {
+            name: 'Manage Team',
+            icon: <FaUsers style={{ width: '25px', height: '25px' }} />,
+          },
+          {
+            name: 'About',
+            icon: <IoMdHelpCircle style={{ width: '25px', height: '25px' }} />,
+          },
+        ]
+      : [
+          {
+            name: 'Manage Team',
+            icon: <FaUsers style={{ width: '25px', height: '25px' }} />,
+          },
+          {
+            name: 'About',
+            icon: <IoMdHelpCircle style={{ width: '25px', height: '25px' }} />,
+          },
+        ],
   },
 ];
 
-const SettingsMobileTabs = ({ handleTabChange }) => {
-  const tabsList = tabs.map(({ title, items }) => {
+const SettingsMobileTabs = ({ handleTabChange, isAdmin }) => {
+  const tabsList = tabs(isAdmin).map(({ title, items }) => {
     const itemsList = items.map((item) => {
       return (
         <div

@@ -48,21 +48,6 @@ const setupValidators = {
     return false;
   },
 
-  jwtSecret: (value = '', setErrors) => {
-    if (!value) return false;
-
-    if (value.length < 8 || value.length > 128) {
-      setErrors({
-        jwtSecret: 'JWT Secret must be at between 8 and 128 characters.',
-      });
-
-      return true;
-    }
-
-    setErrors({ jwtSecret: '' });
-    return false;
-  },
-
   websiteUrl: (value = '', setErrors) => {
     const websiteUrl = /^https?:\/\//;
     const isInvalid = websiteUrl.test(value);

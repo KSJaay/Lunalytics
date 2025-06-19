@@ -10,10 +10,17 @@ const useLogin = () => {
     errors: {},
   });
 
-  const handleInput = (event) => {
+  const handleInput = (event, validate = true) => {
     const { id, value } = event.target;
 
-    if (validators.auth[id]) {
+    if (!validate) {
+      setValues((prev) => ({
+        ...prev,
+        inputs: { ...prev.inputs, [id]: value },
+      }));
+    }
+
+    if (validators.auth[id] && validate) {
       const isInvalid = validators.auth[id](value);
 
       if (isInvalid) {

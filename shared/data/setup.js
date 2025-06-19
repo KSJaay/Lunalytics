@@ -17,7 +17,7 @@ const getSetupKeys = (type, databaseType) => {
   ];
 
   if (type === 'advanced') {
-    keys = [...keys, 'websiteUrl', 'retentionPeriod', 'jwtSecret'];
+    keys = [...keys, 'websiteUrl', 'retentionPeriod'];
   }
 
   if (databaseType === 'pg') {
@@ -95,12 +95,6 @@ const setupData = {
     next: 'complete',
     prev: setupPages.DATABASE_FORM,
     inputs: [
-      {
-        id: 'jwtSecret',
-        title: 'JWT Secret',
-        type: 'text',
-        placeholder: 'Really-strong-secret',
-      },
       {
         id: 'websiteUrl',
         title: 'Website URL',

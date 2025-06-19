@@ -26,9 +26,9 @@ router.get('/', async (request, response) => {
 
     if (!parsedStatusPage.settings?.isPublic) {
       const { session_token } = request.cookies;
-      const { Authorization } = request.headers;
+      const { authorization } = request.headers;
 
-      if (!session_token && !Authorization) {
+      if (!session_token && !authorization) {
         return response.sendStatus(401);
       }
 
@@ -41,7 +41,7 @@ router.get('/', async (request, response) => {
         }
       }
 
-      if (Authorization) {
+      if (authorization) {
         const session = await userSessionExists(session_token);
         const user = await getUserByEmail(session.email);
 
