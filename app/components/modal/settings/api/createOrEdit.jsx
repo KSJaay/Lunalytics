@@ -173,7 +173,7 @@ const SettingsApiConfigureModal = ({
             >
               {permissionsWithDescription.map((permission) => (
                 <div
-                  key={title}
+                  key={permission.title}
                   style={{
                     borderBottom: '1px solid var(--accent-700)',
                     paddingBottom: '10px',
