@@ -186,13 +186,19 @@ const StatusPage = ({ id }) => {
             }
             case 'metrics': {
               const monitors = item.autoAdd
-                ? Object.values(statusPage.monitors)
+                ? Object.keys(statusPage.monitors)
                 : item.monitors;
+
+              const allMonitors = monitors.map((monitorId) => {
+                const monitor = statusPage?.monitors[monitorId];
+                if (!monitor) return null;
+                return monitor;
+              });
 
               return (
                 <StatusPageMetrics
                   key={item.id}
-                  monitors={monitors}
+                  monitors={allMonitors}
                   title={item.title}
                   graphType={item.graphType}
                   showPing={item.data.showPing}

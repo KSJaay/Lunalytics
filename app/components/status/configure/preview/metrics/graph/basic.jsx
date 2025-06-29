@@ -5,7 +5,27 @@ import PropTypes from 'prop-types';
 import StatusLayoutLineChart from '../../../layout/metrics/type/chart/line';
 
 const StatusPageMetricsBasicGraph = ({ title, showPing, heartbeats = [] }) => {
-  if (!heartbeats.length) return null;
+  if (heartbeats.length === 0)
+    return (
+      <div className="spmb-graph">
+        <div className="spmb-header">
+          <div className="spmb-title">{title}</div>
+        </div>
+        <div className="spm-graph">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: 'var(--font-lg)',
+              color: 'var(--font-light-color)',
+            }}
+          >
+            No heartbeats available
+          </div>
+        </div>
+      </div>
+    );
 
   const lastHeartbeat = heartbeats[heartbeats.length - 1];
   const ms = lastHeartbeat.latency;
