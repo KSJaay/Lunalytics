@@ -17,11 +17,13 @@ const StatusPageMetricsDropdown = ({
   heartbeats,
 }) => {
   const { dropdownIsOpen, toggleDropdown, selectedId, handleDropdownSelect } =
-    useDropdown(true, monitors[0]?.id);
+    useDropdown(true, monitors[0]?.monitorId);
 
   if (!monitors[0]) return null;
 
-  const activeMonitor = monitors.find((monitor) => monitor.id === selectedId);
+  const activeMonitor = monitors.find(
+    (monitor) => monitor.monitorId === selectedId
+  );
   const activeHeartbeats = heartbeats
     ? heartbeats[selectedId]
     : defaultHeartbeats;
@@ -48,18 +50,18 @@ const StatusPageMetricsDropdown = ({
               style={{ width: '250px' }}
             >
               <div className="status-page-metrics-dropdown-trigger">
-                {activeMonitor.title}
+                {activeMonitor?.name}
               </div>
             </Dropdown.Trigger>
             <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
               {monitors.map((monitor) => (
                 <Dropdown.Item
-                  key={monitor.id}
+                  key={monitor.monitorId}
                   onClick={() => {
-                    handleDropdownSelect(monitor.id);
+                    handleDropdownSelect(monitor.monitorId);
                   }}
                 >
-                  {monitor.title}
+                  {monitor.name}
                 </Dropdown.Item>
               ))}
             </Dropdown.List>
@@ -69,7 +71,7 @@ const StatusPageMetricsDropdown = ({
 
       <div className="spm-content">
         <StatusPageMetricsBasicGraph
-          title={showName ? activeMonitor.title : false}
+          title={showName ? activeMonitor?.name : false}
           showPing={showPing}
           heartbeats={activeHeartbeats}
         />

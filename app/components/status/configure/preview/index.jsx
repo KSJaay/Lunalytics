@@ -140,13 +140,12 @@ const StatusConfigurePreview = () => {
             const component = getComponent(item.id);
 
             const monitorList = component.autoAdd
-              ? allMonitors.map((monitor) => ({
-                  id: monitor.monitorId,
-                  title: monitor.name,
-                  graphType: 'Basic',
-                  showPing: component.data.showPing,
-                }))
-              : component.monitors;
+              ? Object.values(allMonitors)
+              : component.monitors.map((monitorId) => {
+                  const monitor = allMonitors[monitorId];
+                  if (!monitor) return null;
+                  return monitor;
+                });
 
             return (
               <StatusPageMetrics
