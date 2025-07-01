@@ -8,7 +8,7 @@ const validMethods = [
   'PUT',
 ];
 
-const validTypes = ['http', 'tcp'];
+const validTypes = ['http', 'tcp', 'ping'];
 const notificationTypes = ['All', 'Outage', 'Recovery'];
 const urlRegex = /^https?:\/\//;
 
@@ -24,7 +24,15 @@ export const name = (name) => {
   }
 };
 
-export const httpUrl = (url) => {
+export const httpUrl = (url, type) => {
+  if (type === 'ping') {
+    if (!url) {
+      return 'Please enter a valid URL/IP.';
+    }
+
+    return;
+  }
+
   if (!url || !urlRegex.test(url)) {
     return 'Please enter a valid URL. Only http:// or https:// is allowed.';
   }
@@ -146,6 +154,16 @@ const httpValidators = [
   ['body', 'body'],
 ];
 
+const pingValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'httpUrl'],
+  ['interval', 'interval'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+];
+
 const tcpValidators = [
   ['name', 'name'],
   ['type', 'type'],
@@ -174,6 +192,23 @@ const http = (data) => {
   return false;
 };
 
+const ping = (data) => {
+  const errors = {};
+
+  pingValidators.forEach((validator) => {
+    const error = validators[validator[1]](data[validator[0]], data.type);
+    if (error) {
+      errors[validator[0]] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
 const tcp = (data) => {
   const errors = {};
   tcpValidators.forEach((validator) => {
@@ -190,4 +225,4 @@ const tcp = (data) => {
   return false;
 };
 
-export default { ...validators, http, tcp };
+export default { ...validators, http, tcp, ping };

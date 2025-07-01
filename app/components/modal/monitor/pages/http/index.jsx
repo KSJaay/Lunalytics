@@ -1,6 +1,5 @@
 // import dependencies
 import PropTypes from 'prop-types';
-import { Input } from '@lunalytics/ui';
 
 // import local files
 import MonitorHttpMethods from './methods';
@@ -12,15 +11,6 @@ const MonitorAddHttp = ({ inputs, errors, handleInput }) => {
 
   return (
     <>
-      <Input
-        id="input-url"
-        title="URL"
-        value={inputs.url}
-        onChange={(event) => {
-          handleInput('url', event.target.value);
-        }}
-        error={errors.url}
-      />
       <MonitorHttpMethods
         selectValue={inputs.method}
         handleSelect={handleMethodSelect}

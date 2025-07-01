@@ -3,11 +3,13 @@ import { TbDownload, TbUpload, TbActivityHeartbeat } from 'react-icons/tb';
 const GraphPing = ({ data }) => {
   const sortedData = [...data].sort((a, b) => a.latency - b.latency);
 
-  const averageLatency = Math.floor(
-    sortedData.reduce((acc, curr) => acc + curr.latency, 0) / sortedData.length
-  );
-  const lowestLatency = sortedData[0].latency;
-  const highestLatency = sortedData[sortedData.length - 1].latency;
+  const averageLatency =
+    Math.floor(
+      sortedData.reduce((acc, curr) => acc + curr.latency, 0) /
+        sortedData.length
+    ) || 0;
+  const lowestLatency = sortedData[0]?.latency || 0;
+  const highestLatency = sortedData[sortedData.length - 1]?.latency || 0;
 
   return (
     <div className="mcgp-container">

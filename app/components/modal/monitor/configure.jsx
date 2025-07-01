@@ -2,7 +2,7 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
-import { Accordion, AccordionItem } from '@lunalytics/ui';
+import { Accordion, AccordionItem, Input } from '@lunalytics/ui';
 
 // import local files
 import Modal from '../../ui/modal';
@@ -44,6 +44,18 @@ const MonitorConfigureModal = ({
             isEdit={isEdit}
           />
 
+          {inputs.type === 'http' || inputs.type === 'ping' ? (
+            <Input
+              id="input-url"
+              title={inputs.type === 'http' ? "URL" : "URL/IP"}
+              value={inputs.url}
+              onChange={(event) => {
+                handleInput('url', event.target.value);
+              }}
+              error={errors.url}
+            />
+          ) : null}
+
           {inputs.type === 'http' ? (
             <MonitorPageHttp
               inputs={inputs}
@@ -75,22 +87,24 @@ const MonitorConfigureModal = ({
                 handleInput={handleInput}
               />
 
-              <MonitorHttpStatusCodes
-                selectedIds={inputs.valid_status_codes}
-                handleStatusCodeSelect={(code) => {
-                  const { valid_status_codes = [] } = inputs;
-                  const validStatusCodes = valid_status_codes.includes(code)
-                    ? valid_status_codes.filter((id) => id !== code)
-                    : valid_status_codes.concat(code);
-                  handleInput('valid_status_codes', validStatusCodes);
-                }}
-              />
+              {inputs.type === 'http' ? (
+                <MonitorHttpStatusCodes
+                  selectedIds={inputs.valid_status_codes}
+                  handleStatusCodeSelect={(code) => {
+                    const { valid_status_codes = [] } = inputs;
+                    const validStatusCodes = valid_status_codes.includes(code)
+                      ? valid_status_codes.filter((id) => id !== code)
+                      : valid_status_codes.concat(code);
+                    handleInput('valid_status_codes', validStatusCodes);
+                  }}
+                />
+              ) : null}
 
-              {errors.valid_status_codes && (
+              {errors.valid_status_codes && inputs.type === 'http' ? (
                 <label className="input-error">
                   {errors.valid_status_codes}
                 </label>
-              )}
+              ) : null}
 
               <MonitorPageInterval
                 inputs={inputs}

@@ -20,7 +20,7 @@ const stringifyJson = (obj) => {
   }
 };
 
-export const getTcpOrHttpData = (body, email, isHttp) => {
+export const formatMonitorData = (body, email) => {
   let monitor = {
     name: body.name,
     url: body.url,
@@ -34,7 +34,7 @@ export const getTcpOrHttpData = (body, email, isHttp) => {
     email,
   };
 
-  if (isHttp) {
+  if (body.type === 'http') {
     monitor = {
       ...monitor,
       method: body.method,
@@ -44,12 +44,18 @@ export const getTcpOrHttpData = (body, email, isHttp) => {
       type: 'http',
       ignoreTls: body.ignoreTls,
     };
-  } else {
+  } else if (body.type === 'tcp') {
     monitor = {
       ...monitor,
       port: body.port,
       valid_status_codes: '',
       type: 'tcp',
+    };
+  } else if (body.type === 'ping') {
+    monitor = {
+      ...monitor,
+      valid_status_codes: '',
+      type: 'ping',
     };
   }
 
@@ -60,8 +66,12 @@ const monitorAdd = async (request, response) => {
   try {
     const { type } = request.body;
 
-    const isHttp = type === 'http';
-    const validator = isHttp ? validators.http : validators.tcp;
+    const validator = validators[type];
+
+    if (!validator) {
+      throw new UnprocessableError('Invalid monitor type');
+    }
+
     const isInvalidMonitor = validator(request.body);
 
     if (isInvalidMonitor) {
@@ -70,7 +80,7 @@ const monitorAdd = async (request, response) => {
 
     const { user } = response.locals;
 
-    const montior_data = getTcpOrHttpData(request.body, user.email, isHttp);
+    const montior_data = formatMonitorData(request.body, user.email);
     const data = await createMonitor(montior_data);
 
     await cache.checkStatus(data.monitorId);

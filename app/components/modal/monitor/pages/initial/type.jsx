@@ -41,6 +41,15 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
           >
             TCP
           </Dropdown.Item>
+          <Dropdown.Item
+            id="type-ping"
+            onClick={() => {
+              handleInput('type', 'ping');
+              toggleDropdown();
+            }}
+          >
+            PING
+          </Dropdown.Item>
         </Dropdown.List>
       </Dropdown.Container>
       {errors.type && (

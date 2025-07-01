@@ -58,6 +58,7 @@
     "mongoose": "^8.15.2",
     "nanoid": "^5.1.5",
     "pg": "^8.16.0",
+    "ping": "^0.4.4",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
     "react-colorful": "^5.6.1",
