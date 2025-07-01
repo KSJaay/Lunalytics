@@ -45,6 +45,7 @@ export const cleanPartialMonitor = (monitor) => ({
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
   showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
+  ignoreTls: monitor.ignoreTls == '1',
   createdAt: monitor.createdAt,
 });
 
@@ -68,6 +69,7 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
   showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
+  ignoreTls: monitor.ignoreTls == '1',
   createdAt: monitor.createdAt,
   cert: !cert?.isValid ? cert : cleanCertificate(cert),
   heartbeats,

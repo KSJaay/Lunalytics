@@ -39,6 +39,7 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
       notificationType,
       headers,
       body,
+      ignoreTls,
     } = form;
 
     const parsedHeaders = parseJson(headers);
@@ -57,6 +58,7 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
       monitorId,
       notificationId,
       notificationType,
+      ignoreTls,
       headers: parsedHeaders,
       body: parsedBody,
     });

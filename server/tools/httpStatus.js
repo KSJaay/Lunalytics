@@ -38,6 +38,12 @@ const httpStatusCheck = async (monitor) => {
     options.data = { ...monitor.body };
   }
 
+  if (monitor.ignoreTls) {
+    options.httpsAgent = new https.Agent({
+      rejectUnauthorized: false,
+    });
+  }
+
   const startTime = Date.now();
 
   try {

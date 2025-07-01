@@ -15,6 +15,7 @@ import useMonitorForm from '../../../hooks/useMonitorForm';
 import MonitorHttpStatusCodes from './pages/http/statusCodes';
 import MonitorHttpHeaders from './pages/headers';
 import MonitorHttpBody from './pages/body';
+import MonitorHttpIgnoreTls from './pages/http/ignoreTls';
 
 const MonitorConfigureModal = ({
   closeModal,
@@ -58,6 +59,7 @@ const MonitorConfigureModal = ({
               handleInput={handleInput}
             />
           ) : null}
+
           <br />
           <Accordion dark>
             <AccordionItem
@@ -98,6 +100,11 @@ const MonitorConfigureModal = ({
 
               {inputs.type === 'http' ? (
                 <>
+                  <MonitorHttpIgnoreTls
+                    handleChange={handleInput}
+                    checkboxValue={inputs.ignoreTls}
+                  />
+
                   <MonitorHttpHeaders
                     inputs={inputs}
                     errors={errors}
