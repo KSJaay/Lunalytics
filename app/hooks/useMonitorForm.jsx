@@ -28,10 +28,10 @@ const useMonitorForm = (
   const handleActionButtons = (action) => () => {
     switch (action) {
       case 'Create': {
-        const errorsObj =
-          inputs.type === 'http'
-            ? monitorValidators.http(inputs)
-            : monitorValidators.tcp(inputs);
+        const validator = monitorValidators[inputs.type];
+        if (!validator) return;
+
+        const errorsObj = validator(inputs);
 
         if (errorsObj) {
           setErrors(errorsObj);

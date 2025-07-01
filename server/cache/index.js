@@ -18,6 +18,7 @@ import {
 } from '../database/queries/certificate.js';
 import { fetchNotificationById } from '../database/queries/notification.js';
 import { cleanPartialMonitor } from '../class/monitor.js';
+import pingStatusCheck from '../tools/icmpPing.js';
 
 class Master {
   constructor() {
@@ -34,6 +35,23 @@ class Master {
 
   async updateTcpStatus(monitor, heartbeat) {
     const [lastHeartbeat] = await fetchHeartbeats(monitor.monitorId, 1);
+    await createHeartbeat(heartbeat);
+
+    clearTimeout(this.timeouts.get(monitor.monitorId));
+
+    await this.sendNotification(monitor, heartbeat, lastHeartbeat);
+
+    const timeout = heartbeat.isDown ? monitor.retryInterval : monitor.interval;
+
+    this.timeouts.set(
+      monitor.monitorId,
+      setTimeout(() => this.checkStatus(monitor.monitorId), timeout * 1000)
+    );
+  }
+
+  async checkPingStatus(monitor) {
+    const [lastHeartbeat] = await fetchHeartbeats(monitor.monitorId, 1);
+    const heartbeat = await pingStatusCheck(monitor);
     await createHeartbeat(heartbeat);
 
     clearTimeout(this.timeouts.get(monitor.monitorId));
@@ -96,10 +114,14 @@ class Master {
     }
 
     if (monitor.type === 'tcp') {
+      clearTimeout(this.timeouts.get(monitorId));
       const updateHeartbeat = (monitor, heartbeat) =>
         this.updateTcpStatus(monitor, heartbeat);
       tcpStatusCheck(monitor, updateHeartbeat);
-      clearTimeout(this.timeouts.get(monitorId));
+    }
+
+    if (monitor.type === 'ping') {
+      await this.checkPingStatus(monitor);
     }
   }
 
