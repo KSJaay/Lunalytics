@@ -30,6 +30,7 @@ export const getTcpOrHttpData = (body, email, isHttp) => {
     requestTimeout: body.requestTimeout,
     notificationId: body.notificationId,
     notificationType: body.notificationType,
+    ignoreTls: false,
     email,
   };
 
@@ -41,6 +42,7 @@ export const getTcpOrHttpData = (body, email, isHttp) => {
       headers: stringifyJson(body.headers),
       body: stringifyJson(body.body),
       type: 'http',
+      ignoreTls: body.ignoreTls,
     };
   } else {
     monitor = {

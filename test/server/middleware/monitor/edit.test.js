@@ -259,6 +259,7 @@ describe('Edit Monitor - Middleware', () => {
           port: fakeRequest.body.port,
           valid_status_codes: '',
           type: 'tcp',
+          ignoreTls: false,
         });
       });
 

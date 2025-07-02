@@ -20,6 +20,7 @@ export const monitorTable = async (client) => {
       table.string('notificationType').defaultTo('All');
       table.string('email').notNullable();
       table.boolean('paused').defaultTo(false);
+      table.boolean('ignoreTls').defaultTo(false);
       table.datetime('createdAt');
 
       table.index('monitorId');

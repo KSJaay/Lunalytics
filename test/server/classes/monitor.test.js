@@ -24,6 +24,7 @@ describe('Monitor - Class', () => {
     port: null,
     uptimePercentage: 100,
     averageHeartbeatLatency: 820,
+    ignoreTls: true,
     showFilters: false,
     paused: false,
   };
@@ -58,6 +59,7 @@ describe('Monitor - Class', () => {
       port: null,
       uptimePercentage: 100,
       averageHeartbeatLatency: 820,
+      ignoreTls: true,
       showFilters: false,
       paused: false,
     });
@@ -90,6 +92,7 @@ describe('Monitor - Class', () => {
       uptimePercentage: 100,
       averageHeartbeatLatency: 820,
       showFilters: false,
+      ignoreTls: true,
       paused: false,
       cert: {
         isValid: true,
