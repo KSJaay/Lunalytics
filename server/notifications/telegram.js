@@ -3,6 +3,10 @@ import NotificationReplacers from '../../shared/notifications/replacers/notifica
 import NotificationBase from './base.js';
 import { TelegramTemplateMessages } from '../../shared/notifications/telegram.js';
 
+function escapeMarkdownV2(text) {
+  return text.replace(/([_*[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
+}
+
 class Telegram extends NotificationBase {
   name = 'Telegram';
 
@@ -14,15 +18,16 @@ class Telegram extends NotificationBase {
         TelegramTemplateMessages[notification.messageType] ||
         notification.payload;
 
+      const replacedText = NotificationReplacers(message, monitor, heartbeat, true);
+      const escapedText = escapeMarkdownV2(replacedText);
+
       const params = {
-        text: message,
+        text: escapedText,
         chat_id: notification.chatId,
         disable_notification: notification.disableNotification ?? false,
         parse_mode: notification.parseMode || 'MarkdownV2',
         protect_content: notification.protectContent ?? false,
       };
-
-      params.text = NotificationReplacers(message, monitor, heartbeat, true);
 
       await axios.get(`${url}${notification.token}/sendMessage`, { params });
       return this.success;
@@ -37,15 +42,16 @@ class Telegram extends NotificationBase {
 
       const message = TelegramTemplateMessages.recovery;
 
+      const replacedText = NotificationReplacers(message, monitor, heartbeat, true);
+      const escapedText = escapeMarkdownV2(replacedText);
+
       const params = {
-        text: message,
+        text: escapedText,
         chat_id: notification.chatId,
         disable_notification: notification.disableNotification ?? false,
         parse_mode: notification.parseMode || 'MarkdownV2',
         protect_content: notification.protectContent ?? false,
       };
-
-      params.text = NotificationReplacers(message, monitor, heartbeat, true);
 
       await axios.get(`${url}${notification.token}/sendMessage`, { params });
       return this.success;
