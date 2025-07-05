@@ -1,8 +1,5 @@
 import { expect, it } from 'vitest';
-import {
-  cleanPartialMonitor,
-  cleanMonitor,
-} from '../../../server/class/monitor';
+import { cleanMonitor } from '../../../server/class/monitor/index';
 
 describe('Monitor - Class', () => {
   const monitor = {
@@ -43,7 +40,7 @@ describe('Monitor - Class', () => {
   };
 
   it('should return valid monitor using cleanPartialMonitor', () => {
-    expect(cleanPartialMonitor(monitor)).toEqual({
+    expect(cleanMonitor(monitor, false, false)).toEqual({
       monitorId: '4d048471-9e85-428b-8050-4238f6033478',
       name: 'Lunalytics',
       url: 'https://demo.lunalytics.xyz/api/status',
@@ -59,13 +56,13 @@ describe('Monitor - Class', () => {
       notificationId: 'test',
       notificationType: 'All',
       type: 'http',
-      port: null,
       uptimePercentage: 100,
       averageHeartbeatLatency: 820,
       ignoreTls: true,
-      json_query: [{ key: 'test', operator: '==', value: 'test' }],
       showFilters: false,
       paused: false,
+      heartbeats: undefined,
+      cert: undefined,
     });
   });
 
@@ -92,12 +89,10 @@ describe('Monitor - Class', () => {
       notificationId: 'test',
       notificationType: 'All',
       type: 'http',
-      port: null,
       uptimePercentage: 100,
       averageHeartbeatLatency: 820,
       showFilters: false,
       ignoreTls: true,
-      json_query: [{ key: 'test', operator: '==', value: 'test' }],
       paused: false,
       cert: {
         isValid: true,

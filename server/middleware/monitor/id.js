@@ -1,4 +1,4 @@
-import { cleanMonitor } from '../../class/monitor.js';
+import { cleanMonitor } from '../../class/monitor/index.js';
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { fetchMonitor } from '../../database/queries/monitor.js';

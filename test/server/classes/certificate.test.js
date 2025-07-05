@@ -28,8 +28,6 @@ describe('Certificate - Class', () => {
 
     expect(cleanCertificate(certificate)).toEqual({
       isValid: false,
-      issuer: '',
-      validOn: '',
     });
   });
 });

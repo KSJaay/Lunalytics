@@ -17,9 +17,9 @@ import {
   updateCertificate,
 } from '../database/queries/certificate.js';
 import { fetchNotificationById } from '../database/queries/notification.js';
-import { cleanPartialMonitor } from '../class/monitor.js';
 import pingStatusCheck from '../tools/icmpPing.js';
 import jsonStatusCheck from '../tools/jsonStatus.js';
+import { cleanMonitor } from '../class/monitor/index.js';
 
 class Master {
   constructor() {
@@ -78,7 +78,7 @@ class Master {
       return;
     }
 
-    const monitor = cleanPartialMonitor(query);
+    const monitor = cleanMonitor(query, false, false);
 
     if (monitor.paused) return;
 

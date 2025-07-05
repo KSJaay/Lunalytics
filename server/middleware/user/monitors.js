@@ -1,4 +1,4 @@
-import { cleanMonitor } from '../../class/monitor.js';
+import { cleanMonitor } from '../../class/monitor/index.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
 import {
   fetchHeartbeats,
