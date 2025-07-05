@@ -3,7 +3,7 @@ import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/monitor.js';
 import cache from '../../cache/index.js';
-import { cleanMonitor } from '../../class/monitor.js';
+import { cleanMonitor } from '../../class/monitor/index.js';
 import { createMonitor } from '../../database/queries/monitor.js';
 import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';

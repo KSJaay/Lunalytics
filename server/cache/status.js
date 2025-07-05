@@ -1,6 +1,6 @@
 // import local files
 import Collection from '../../shared/utils/collection.js';
-import { cleanMonitorForStatusPage } from '../class/monitor.js';
+import { cleanMonitorForStatusPage } from '../class/monitor/index.js';
 import { fetchDailyHeartbeats } from '../database/queries/heartbeat.js';
 import { monitorExists } from '../database/queries/monitor.js';
 import {
