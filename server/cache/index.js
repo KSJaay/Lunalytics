@@ -19,6 +19,7 @@ import {
 import { fetchNotificationById } from '../database/queries/notification.js';
 import { cleanPartialMonitor } from '../class/monitor.js';
 import pingStatusCheck from '../tools/icmpPing.js';
+import jsonStatusCheck from '../tools/jsonStatus.js';
 
 class Master {
   constructor() {
@@ -122,6 +123,34 @@ class Master {
 
     if (monitor.type === 'ping') {
       await this.checkPingStatus(monitor);
+    }
+
+    if (monitor.type === 'json') {
+      const [lastHeartbeat] = await fetchHeartbeats(monitorId, 1);
+      const heartbeat = await jsonStatusCheck(monitor);
+      await createHeartbeat(heartbeat);
+
+      if (monitor.url?.toLowerCase().startsWith('https')) {
+        const certificate = await fetchCertificate(monitorId);
+
+        const certDate = new Date(certificate?.nextCheck);
+        if (!certificate?.nextCheck || certDate.getTime() <= Date.now()) {
+          const cert = await getCertInfo(monitor.url);
+          cert.nextCheck = new Date(Date.now() + 600000).toISOString();
+          await updateCertificate(monitorId, cert);
+        }
+      }
+
+      await this.sendNotification(monitor, heartbeat, lastHeartbeat);
+
+      const timeout = heartbeat.isDown
+        ? monitor.retryInterval
+        : monitor.interval;
+
+      this.timeouts.set(
+        monitorId,
+        setTimeout(() => this.checkStatus(monitorId), timeout * 1000)
+      );
     }
   }
 

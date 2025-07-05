@@ -19,6 +19,13 @@ import useDropdown from '../../hooks/useDropdown';
 import Role from '../../../shared/permissions/role';
 import { PermissionsBits } from '../../../shared/permissions/bitFlags';
 
+const typeToText = {
+  http: 'HTTP/S',
+  json: 'JSON Query',
+  ping: 'Ping',
+  tcp: 'TCP',
+};
+
 const MonitorMenu = ({ name = 'Unknown', type, url, monitorId }) => {
   const {
     modalStore: { openModal, closeModal },
@@ -133,8 +140,7 @@ const MonitorMenu = ({ name = 'Unknown', type, url, monitorId }) => {
       <div className="monitor-view-menu-name" id="monitor-view-menu">
         <div id="monitor-view-menu-name">{name}</div>
         <div className="subtitle">
-          <span>{type === 'http' ? 'HTTP/S ' : 'TCP '}</span>
-          monitor for{' '}
+          <span>{typeToText[type]}</span> monitor for{' '}
           <a href={url} target="_blank" rel="noreferrer">
             {url}
           </a>

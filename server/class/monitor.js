@@ -46,6 +46,7 @@ export const cleanPartialMonitor = (monitor) => ({
   showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
   ignoreTls: monitor.ignoreTls == '1',
+  json_query: parseJson(monitor.json_query),
   createdAt: monitor.createdAt,
 });
 
@@ -70,6 +71,7 @@ export const cleanMonitor = ({ heartbeats = [], cert, ...monitor }) => ({
   showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
   ignoreTls: monitor.ignoreTls == '1',
+  json_query: parseJson(monitor.json_query),
   createdAt: monitor.createdAt,
   cert: !cert?.isValid ? cert : cleanCertificate(cert),
   heartbeats,

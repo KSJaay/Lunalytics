@@ -21,6 +21,7 @@ export const monitorTable = async (client) => {
       table.string('email').notNullable();
       table.boolean('paused').defaultTo(false);
       table.boolean('ignoreTls').defaultTo(false);
+      table.json('json_query');
       table.datetime('createdAt');
 
       table.index('monitorId');

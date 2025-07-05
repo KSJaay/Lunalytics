@@ -8,7 +8,18 @@ const validMethods = [
   'PUT',
 ];
 
-const validTypes = ['http', 'tcp', 'ping'];
+const jsonOperators = [
+  '==',
+  '!=',
+  '>',
+  '>=',
+  '<',
+  '<=',
+  'contains',
+  'not_contains',
+];
+
+const validTypes = ['http', 'tcp', 'ping', 'json'];
 const notificationTypes = ['All', 'Outage', 'Recovery'];
 const urlRegex = /^https?:\/\//;
 
@@ -124,6 +135,26 @@ const body = (body = {}) => {
   }
 };
 
+const jsonQuery = (value) => {
+  if (!value || !Array.isArray(value)) {
+    return 'Please provide a valid JSON query.';
+  }
+
+  const { key, operator, value: jsonValue } = value?.[0] || {};
+
+  if (!key) {
+    return 'Please provide a valid JSON key.';
+  }
+
+  if (!operator || !jsonOperators.includes(operator)) {
+    return 'Please provide a valid operator.';
+  }
+
+  if (!jsonValue) {
+    return 'Please provide a valid value.';
+  }
+};
+
 const validators = {
   type,
   name,
@@ -138,6 +169,7 @@ const validators = {
   notificationType,
   headers,
   body,
+  jsonQuery,
 };
 
 const httpValidators = [
@@ -152,6 +184,20 @@ const httpValidators = [
   ['notificationType', 'notificationType'],
   ['headers', 'headers'],
   ['body', 'body'],
+];
+
+const jsonValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'httpUrl'],
+  ['method', 'httpMethod'],
+  ['interval', 'interval'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['headers', 'headers'],
+  ['body', 'body'],
+  ['json_query', 'jsonQuery'],
 ];
 
 const pingValidators = [
@@ -179,6 +225,23 @@ const http = (data) => {
   const errors = {};
 
   httpValidators.forEach((validator) => {
+    const error = validators[validator[1]](data[validator[0]]);
+    if (error) {
+      errors[validator[0]] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const json = (data) => {
+  const errors = {};
+
+  jsonValidators.forEach((validator) => {
     const error = validators[validator[1]](data[validator[0]]);
     if (error) {
       errors[validator[0]] = error;
@@ -225,4 +288,4 @@ const tcp = (data) => {
   return false;
 };
 
-export default { ...validators, http, tcp, ping };
+export default { ...validators, http, json, tcp, ping };
