@@ -25,6 +25,9 @@ describe('Monitor - Class', () => {
     uptimePercentage: 100,
     averageHeartbeatLatency: 820,
     ignoreTls: true,
+    json_query: JSON.stringify([
+      { key: 'test', operator: '==', value: 'test' },
+    ]),
     showFilters: false,
     paused: false,
   };
@@ -60,6 +63,7 @@ describe('Monitor - Class', () => {
       uptimePercentage: 100,
       averageHeartbeatLatency: 820,
       ignoreTls: true,
+      json_query: [{ key: 'test', operator: '==', value: 'test' }],
       showFilters: false,
       paused: false,
     });
@@ -93,6 +97,7 @@ describe('Monitor - Class', () => {
       averageHeartbeatLatency: 820,
       showFilters: false,
       ignoreTls: true,
+      json_query: [{ key: 'test', operator: '==', value: 'test' }],
       paused: false,
       cert: {
         isValid: true,

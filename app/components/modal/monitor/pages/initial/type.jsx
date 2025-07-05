@@ -5,6 +5,13 @@ import PropTypes from 'prop-types';
 import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
 
+const textInputTypes = {
+  http: 'HTTP',
+  json: 'JSON Query',
+  ping: 'Ping',
+  tcp: 'TCP',
+};
+
 const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
   return (
@@ -20,7 +27,7 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
           toggleDropdown={toggleDropdown}
           id="type-dropdown"
         >
-          {inputs.type?.toUpperCase() || 'Select Monitor Type'}
+          {textInputTypes[inputs.type] || 'Select Monitor Type'}
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           <Dropdown.Item
@@ -30,17 +37,19 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
               toggleDropdown();
             }}
           >
-            HTTP
+            {textInputTypes.http}
           </Dropdown.Item>
+
           <Dropdown.Item
-            id="type-tcp"
+            id="type-json"
             onClick={() => {
-              handleInput('type', 'tcp');
+              handleInput('type', 'json');
               toggleDropdown();
             }}
           >
-            TCP
+            {textInputTypes['json']}
           </Dropdown.Item>
+
           <Dropdown.Item
             id="type-ping"
             onClick={() => {
@@ -48,7 +57,17 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
               toggleDropdown();
             }}
           >
-            PING
+            {textInputTypes.ping}
+          </Dropdown.Item>
+
+          <Dropdown.Item
+            id="type-tcp"
+            onClick={() => {
+              handleInput('type', 'tcp');
+              toggleDropdown();
+            }}
+          >
+            {textInputTypes.tcp}
           </Dropdown.Item>
         </Dropdown.List>
       </Dropdown.Container>

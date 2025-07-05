@@ -40,6 +40,7 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
       headers,
       body,
       ignoreTls,
+      json_query,
     } = form;
 
     const parsedHeaders = parseJson(headers);
@@ -61,6 +62,7 @@ const handleMonitor = async (form, isEdit, closeModal, setMonitor) => {
       ignoreTls,
       headers: parsedHeaders,
       body: parsedBody,
+      json_query,
     });
 
     setMonitor(query.data);

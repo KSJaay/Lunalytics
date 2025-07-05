@@ -2,20 +2,15 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
-import { Accordion, AccordionItem, Input } from '@lunalytics/ui';
 
 // import local files
 import Modal from '../../ui/modal';
 import MonitorPageInitial from './pages/initial';
-import MonitorPageHttp from './pages/http';
-import MonitorPageTcp from './pages/tcp';
-import MonitorPageInterval from './pages/interval';
-import MonitorPageNotification from './pages/notification';
 import useMonitorForm from '../../../hooks/useMonitorForm';
-import MonitorHttpStatusCodes from './pages/http/statusCodes';
-import MonitorHttpHeaders from './pages/headers';
-import MonitorHttpBody from './pages/body';
-import MonitorHttpIgnoreTls from './pages/http/ignoreTls';
+import MonitorConfigureHttpModal from './configure/http';
+import MonitorConfigureJsonQueryModal from './configure/json';
+import MonitorConfigurePingModal from './configure/ping';
+import MonitorConfigureTcpModal from './configure/tcp';
 
 const MonitorConfigureModal = ({
   closeModal,
@@ -44,98 +39,34 @@ const MonitorConfigureModal = ({
             isEdit={isEdit}
           />
 
-          {inputs.type === 'http' || inputs.type === 'ping' ? (
-            <Input
-              id="input-url"
-              title={inputs.type === 'http' ? "URL" : "URL/IP"}
-              value={inputs.url}
-              onChange={(event) => {
-                handleInput('url', event.target.value);
-              }}
-              error={errors.url}
-            />
-          ) : null}
-
           {inputs.type === 'http' ? (
-            <MonitorPageHttp
+            <MonitorConfigureHttpModal
               inputs={inputs}
               errors={errors}
               handleInput={handleInput}
             />
           ) : null}
-
+          {inputs.type === 'json' ? (
+            <MonitorConfigureJsonQueryModal
+              inputs={inputs}
+              errors={errors}
+              handleInput={handleInput}
+            />
+          ) : null}
+          {inputs.type === 'ping' ? (
+            <MonitorConfigurePingModal
+              inputs={inputs}
+              errors={errors}
+              handleInput={handleInput}
+            />
+          ) : null}
           {inputs.type === 'tcp' ? (
-            <MonitorPageTcp
+            <MonitorConfigureTcpModal
               inputs={inputs}
               errors={errors}
               handleInput={handleInput}
             />
           ) : null}
-
-          <br />
-          <Accordion dark>
-            <AccordionItem
-              title="Advanced Settings"
-              subtitle={
-                'Setup advanced settings for the monitor, such as intervals, notifications, and others.'
-              }
-              id="monitor-advanced-settings"
-            >
-              <MonitorPageNotification
-                inputs={inputs}
-                errors={errors}
-                handleInput={handleInput}
-              />
-
-              {inputs.type === 'http' ? (
-                <MonitorHttpStatusCodes
-                  selectedIds={inputs.valid_status_codes}
-                  handleStatusCodeSelect={(code) => {
-                    const { valid_status_codes = [] } = inputs;
-                    const validStatusCodes = valid_status_codes.includes(code)
-                      ? valid_status_codes.filter((id) => id !== code)
-                      : valid_status_codes.concat(code);
-                    handleInput('valid_status_codes', validStatusCodes);
-                  }}
-                />
-              ) : null}
-
-              {errors.valid_status_codes && inputs.type === 'http' ? (
-                <label className="input-error">
-                  {errors.valid_status_codes}
-                </label>
-              ) : null}
-
-              <MonitorPageInterval
-                inputs={inputs}
-                errors={errors}
-                handleInput={handleInput}
-              />
-
-              {inputs.type === 'http' ? (
-                <>
-                  <MonitorHttpIgnoreTls
-                    handleChange={handleInput}
-                    checkboxValue={inputs.ignoreTls}
-                  />
-
-                  <MonitorHttpHeaders
-                    inputs={inputs}
-                    errors={errors}
-                    handleInput={handleInput}
-                  />
-
-                  <MonitorHttpBody
-                    inputs={inputs}
-                    errors={errors}
-                    handleInput={handleInput}
-                  />
-                </>
-              ) : null}
-
-              <br />
-            </AccordionItem>
-          </Accordion>
         </div>
       </Modal.Message>
 

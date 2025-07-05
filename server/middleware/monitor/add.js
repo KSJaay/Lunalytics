@@ -8,7 +8,7 @@ import { createMonitor } from '../../database/queries/monitor.js';
 import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
 
-const stringifyJson = (obj) => {
+const stringifyJson = (obj, asArray = false) => {
   try {
     if (typeof obj === 'string') {
       return obj;
@@ -16,7 +16,7 @@ const stringifyJson = (obj) => {
 
     return JSON.stringify(obj);
   } catch {
-    return '{}';
+    return asArray ? '[]' : '{}';
   }
 };
 
@@ -38,7 +38,7 @@ export const formatMonitorData = (body, email) => {
     monitor = {
       ...monitor,
       method: body.method,
-      valid_status_codes: JSON.stringify(body.valid_status_codes),
+      valid_status_codes: stringifyJson(body.valid_status_codes, true),
       headers: stringifyJson(body.headers),
       body: stringifyJson(body.body),
       type: 'http',
@@ -56,6 +56,16 @@ export const formatMonitorData = (body, email) => {
       ...monitor,
       valid_status_codes: '',
       type: 'ping',
+    };
+  } else if (body.type === 'json') {
+    monitor = {
+      ...monitor,
+      method: body.method,
+      headers: stringifyJson(body.headers),
+      body: stringifyJson(body.body),
+      type: 'json',
+      ignoreTls: body.ignoreTls,
+      json_query: stringifyJson(body.json_query, true),
     };
   }
 

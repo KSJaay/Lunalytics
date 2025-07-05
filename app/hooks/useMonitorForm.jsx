@@ -10,6 +10,7 @@ const defaultInputs = {
   requestTimeout: 30,
   notificationType: 'All',
   valid_status_codes: ['200-299'],
+  json_query: [{ key: '', operator: '==', value: '' }],
 };
 
 const useMonitorForm = (
