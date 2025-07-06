@@ -1,4 +1,4 @@
-FROM node:22.14.0-alpine AS base
+FROM node:22.17.0-alpine AS base
 
 RUN apk add --no-cache \
     python3 \
@@ -9,7 +9,7 @@ WORKDIR /app
 
 FROM base AS builder
 
-COPY package*.json ./
+COPY package*.json .
 RUN npm ci
 
 COPY . .
@@ -19,12 +19,12 @@ FROM base AS native
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json .
 RUN npm ci --omit=dev
 
 RUN npm rebuild better-sqlite3
 
-FROM node:22.14.0-alpine AS production
+FROM node:22.17.0-alpine AS production
 
 WORKDIR /app
 
