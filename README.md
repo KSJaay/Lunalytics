@@ -6,8 +6,7 @@
 <div align="center">
   <a href="https://lunalytics.xyz">Documentation</a> ·
   <a href="https://demo.lunalytics.xyz">Try live demo</a> ·
-  <a href="https://lunalytics.xyz/api/monitor">API Docs</a> ·
-  <!-- <a href="https://lunalytics.xyz/internal/roadmap">Roadmap</a> -->
+  <a href="https://roadmap.lunalytics.xyz">Roadmap</a> ·
   <a href="https://discord.gg/cjbGmmNdcd">Support</a>
 </div>
 
@@ -33,7 +32,7 @@
 
 > [!CAUTION]
 >
-> This project is under active development, things may randomly break. But I'll do my best to fix them as soon as possible.
+> This project is under active development and still in beta, things may randomly break. But I'll do my best to fix them as soon as possible.
 
 #### Docker
 
@@ -114,7 +113,7 @@ pm2 monit
 
 - [x] Custom status pages
 - [x] Better design for compact mode
-- [ ] API keys for users
+- [x] API keys for users
 - [ ] Move to Oauth2 for authentication
   - [x] Moved to session based system, but not full Oauth2
 - [ ] Allow session management (Track/logout from sessions)
