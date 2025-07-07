@@ -106,7 +106,7 @@ const jsonStatusCheck = async (monitor) => {
   } catch (error) {
     const endTime = Date.now();
 
-    logger.error('HTTP Status Check', {
+    logger.error('JSON Query Status Check', {
       message: `Issue checking monitor ${monitor.monitorId}: ${error.message}`,
     });
 

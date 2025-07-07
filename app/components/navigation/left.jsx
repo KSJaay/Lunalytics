@@ -7,15 +7,10 @@ import classNames from 'classnames';
 import { Tooltip } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
 import { BsFillShieldLockFill } from 'react-icons/bs';
+import { Avatar } from '@lunalytics/ui';
 
 // import local files
-import {
-  FaCog,
-  FaHome,
-  FaSignOutAlt,
-  MdNotifications,
-  PiBroadcast,
-} from '../icons';
+import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
 
 const actionTabs = [
   {
@@ -40,7 +35,7 @@ const actionTabs = [
   },
 ];
 
-const LeftNavigation = ({ activeUrl = '' }) => {
+const LeftNavigation = ({ activeUrl }) => {
   const navigate = useNavigate();
 
   const actions = actionTabs.map((action) => {
@@ -66,31 +61,53 @@ const LeftNavigation = ({ activeUrl = '' }) => {
   });
 
   return (
-    <div className="left-navigation">
-      <div className="left-actions">{actions}</div>
-      <div className="left-actions-bottom">
-        <Tooltip text="Settings" position="right" key="settings" color="gray">
-          <div
-            className={`navigation-left-top-action${
-              activeUrl === 'settings' ? '-active' : ''
-            }`}
-            onClick={() => navigate('/settings')}
-            tabIndex={1}
-          >
-            <FaCog style={{ width: '28px', height: '28px' }} />
-          </div>
-        </Tooltip>
-        <Tooltip text="Logout" position="right" key="logout" color="gray">
-          <a
-            className="navigation-left-top-action navigation-left-signout-button"
-            href="/auth/logout"
-            tabIndex={1}
-          >
-            <FaSignOutAlt style={{ width: '28px', height: '28px' }} />
-          </a>
-        </Tooltip>
+    <aside
+      style={{
+        width: '75px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '1rem 0',
+        }}
+      >
+        <img src="logo.svg" alt="Lunalytics" style={{ width: '50px' }} />
       </div>
-    </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          flex: 1,
+          paddingTop: '1rem',
+          alignItems: 'center',
+        }}
+      >
+        {actions}
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          paddingBottom: '1rem',
+          alignItems: 'center',
+        }}
+      >
+        <div>
+          <FaCog size={28} />
+        </div>
+        <div style={{ borderRadius: '100%', overflow: 'hidden' }}>
+          <Avatar avatar={'https://picsum.photos/240/240'} />
+        </div>
+      </div>
+    </aside>
   );
 };
 

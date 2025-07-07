@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 
 // import local files
 import cache from './cache/index.js';
@@ -38,6 +39,7 @@ const init = async () => {
   await initialiseCronJobs();
 
   app
+    .use(compression())
     .use(express.json())
     .use(express.urlencoded({ extended: true }))
     .disable('x-powered-by')

@@ -2,7 +2,7 @@
 @use '../../styles/breakpoints.scss' as *;
 
 .monitor-uptime-container {
-  background-color: var(--accent-900);
+  background-color: var(--accent-800);
   border-radius: pxToRem(16);
   padding: pxToRem(16);
   display: grid;

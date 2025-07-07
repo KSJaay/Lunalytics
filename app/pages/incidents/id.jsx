@@ -1,13 +1,11 @@
 import '../../styles/pages/incidents.scss';
 
 // import dependencies
-import dayjs from 'dayjs';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { useNavigate, useParams } from 'react-router-dom';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
 // import local files
 import useContextStore from '../../context';
@@ -19,8 +17,6 @@ import IncidentIdHeader from '../../components/incident/id/header';
 import IncidentIdTitle from '../../components/incident/id/title';
 import IncidentAddUpdateModal from '../../components/modal/incident/addUpdate';
 import DeleteIncidentModal from '../../components/modal/incident/delete';
-
-dayjs.extend(relativeTime);
 
 const IncidentUpdate = () => {
   const {
