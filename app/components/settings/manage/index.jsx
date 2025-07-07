@@ -1,12 +1,11 @@
 // import dependencies
-import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import { createGetRequest } from '../../../services/axios';
 import MembersTable from './member';
 import useTeamContext from '../../../context/team';
+import useFetch from '../../../hooks/useFetch';
 
 const ManageTeam = () => {
   const { teamMembers, setTeam } = useTeamContext();
@@ -15,19 +14,13 @@ const ManageTeam = () => {
     ?.sort((a, b) => a?.permission - b?.permission)
     .sort((a, b) => b?.isVerified - a?.isVerified);
 
-  useEffect(() => {
-    const fetchTeam = async () => {
-      try {
-        const query = await createGetRequest('/api/user/team');
+  const { isLoading } = useFetch({
+    url: '/api/user/team',
+    onSuccess: (data) => setTeam(data),
+    onFailure: () => toast.error("Couldn't fetch team members"),
+  });
 
-        setTeam(query.data);
-      } catch {
-        toast.error("Couldn't fetch team members");
-      }
-    };
-
-    fetchTeam();
-  }, []);
+  if (!isLoading) return null;
 
   return (
     <div

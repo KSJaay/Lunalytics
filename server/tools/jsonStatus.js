@@ -56,11 +56,13 @@ const jsonataCheck = async (data, jsonKey, jsonOperator, expectedValue) => {
 };
 
 const jsonStatusCheck = async (monitor) => {
+  const timeout = monitor.requestTimeout || 5;
+
   const options = {
     method: monitor.method,
     url: monitor.url,
-    timeout: monitor.requestTimeout * 1000,
-    signal: AbortSignal.timeout(monitor.requestTimeout * 1000),
+    timeout: timeout * 1000,
+    signal: AbortSignal.timeout(timeout * 1000),
   };
 
   if (!isEmpty(monitor.headers)) {

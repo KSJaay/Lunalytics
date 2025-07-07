@@ -1,18 +1,17 @@
 import './style.scss';
 
 // import dependencies
-import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@lunalytics/ui';
 import { IoKey } from 'react-icons/io5';
 
 // import local files
-import { createGetRequest } from '../../../services/axios';
 import useTokensContext from '../../../context/tokens';
 import SettingsApiCreateModal from '../../modal/settings/api/createOrEdit';
 import ManageApiToken from './token';
 import useContextStore from '../../../context';
+import useFetch from '../../../hooks/useFetch';
 
 const ManageApiTokens = () => {
   const { allTokens, setTokens } = useTokensContext();
@@ -20,20 +19,13 @@ const ManageApiTokens = () => {
     modalStore: { openModal, closeModal },
   } = useContextStore();
 
-  useEffect(() => {
-    const fetchTokens = async () => {
-      try {
-        const query = await createGetRequest('/api/tokens');
-
-        const tokens = query?.data?.tokens || [];
-        setTokens(tokens);
-      } catch {
-        toast.error("Couldn't fetch api tokens");
-      }
-    };
-
-    fetchTokens();
-  }, []);
+  useFetch({
+    url: '/api/tokens',
+    onSuccess: (data) => {
+      setTokens(data?.tokens || []);
+    },
+    onFailure: () => toast.error("Couldn't fetch api tokens"),
+  });
 
   return (
     <div

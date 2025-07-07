@@ -1,7 +1,6 @@
 import './avatar.scss';
 
 // import dependencies
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
@@ -10,11 +9,11 @@ import { Alert, Input } from '@lunalytics/ui';
 // import local files
 import Modal from '../../../ui/modal';
 import useTeamContext from '../../../../context/team';
-import { createGetRequest } from '../../../../services/axios';
 import useDropdown from '../../../../hooks/useDropdown';
 import Dropdown from '../../../ui/dropdown';
 import useContextStore from '../../../../context';
 import handleTransferAccount from '../../../../handlers/settings/account/transfer';
+import useFetch from '../../../../hooks/useFetch';
 
 const SettingsAccountTransferModal = ({ closeModal }) => {
   const { teamMembers, setTeam } = useTeamContext();
@@ -28,23 +27,19 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
     ?.sort((a, b) => a?.permission - b?.permission)
     .filter((member) => member.isVerified);
 
-  useEffect(() => {
-    const fetchTeam = async () => {
-      try {
-        const query = await createGetRequest('/api/user/team');
+  const { isLoading } = useFetch({
+    url: '/api/user/team',
+    onSuccess: (data) => {
+      const filteredMembers = data?.filter(
+        (member) => member.email !== user.email
+      );
 
-        const filteredMembers = query.data?.filter(
-          (member) => member.email !== user.email
-        );
+      setTeam(filteredMembers);
+    },
+    onFailure: () => toast.error("Couldn't fetch team members"),
+  });
 
-        setTeam(filteredMembers);
-      } catch {
-        toast.error("Couldn't fetch team members");
-      }
-    };
-
-    fetchTeam();
-  }, []);
+  if (isLoading) return null;
 
   const dropdownItems = sortedMembers.map((member) => (
     <Dropdown.Item
