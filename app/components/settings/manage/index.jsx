@@ -20,7 +20,17 @@ const ManageTeam = () => {
     onFailure: () => toast.error("Couldn't fetch team members"),
   });
 
-  if (!isLoading) return null;
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          overflow: 'auto',
+        }}
+        className="settings-account-container"
+        id="manage"
+      />
+    );
+  }
 
   return (
     <div
