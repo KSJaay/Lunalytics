@@ -10,7 +10,6 @@ import MonitorGraph from '../components/monitor/graph';
 import MonitorUptime from '../components/monitor/uptime';
 import Spacer from '../components/ui/spacer';
 import useContextStore from '../context';
-import MonitorMenu from '../components/monitor/menu';
 import { useParams } from 'react-router-dom';
 
 const Monitor = ({ monitor_id }) => {
@@ -29,12 +28,6 @@ const Monitor = ({ monitor_id }) => {
 
   return (
     <div className="monitor-container">
-      <MonitorMenu
-        monitorId={monitor.monitorId}
-        name={monitor.name}
-        type={monitor.type}
-        url={monitor.url}
-      />
       <MonitorStatus monitor={monitor} />
       <MonitorGraph monitor={monitor} />
       <MonitorUptime heartbeats={monitor.heartbeats} />

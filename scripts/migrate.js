@@ -12,7 +12,7 @@ const packageJson = loadJSON('package.json');
 
 const migrateDatabase = async () => {
   if (config.migrationType !== 'automatic') {
-    return logger.info('MIGRATION', {
+    return logger.notice('MIGRATION', {
       message: 'Manual migration selected. Skipping migration checks...',
     });
   }
@@ -34,12 +34,16 @@ const migrateDatabase = async () => {
   });
 
   if (validMigrations.length > 0) {
-    logger.info('MIGRATION', { message: 'Starting automatic migration...' });
+    logger.notice('MIGRATION', { message: 'Starting automatic migration...' });
 
     for (const migration of validMigrations) {
-      logger.info('MIGRATION', { message: `Running migration: ${migration}` });
+      logger.notice('MIGRATION', {
+        message: `Running migration: ${migration}`,
+      });
       await migrationList[migration]();
-      logger.info('MIGRATION', { message: `Migration complete: ${migration}` });
+      logger.notice('MIGRATION', {
+        message: `Migration complete: ${migration}`,
+      });
     }
 
     const configPath = path.join(process.cwd(), 'data', 'config.json');
@@ -47,7 +51,7 @@ const migrateDatabase = async () => {
 
     fs.writeFileSync(configPath, JSON.stringify(newConfig, null, 2));
 
-    logger.info('MIGRATION', { message: 'Automatic migration complete' });
+    logger.notice('MIGRATION', { message: 'Automatic migration complete' });
   }
 
   return;

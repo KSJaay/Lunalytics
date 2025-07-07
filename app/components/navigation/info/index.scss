@@ -1,0 +1,31 @@
+.navigation-info-title {
+  font-size: var(--font-2xl);
+  font-weight: bold;
+  padding-bottom: 0.25rem;
+}
+
+.navigation-info-subtitle {
+  font-size: var(--font-2xl);
+  font-weight: bold;
+  padding: 2rem 0 0.5rem 0;
+}
+
+.navigation-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--font-light-color);
+  padding-left: 8px;
+}
+
+.navigation-info-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--accent-700);
+  padding: 8px 0;
+
+  > div {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -3,7 +3,7 @@
 .monitor-view-menu-container {
   display: flex;
   gap: 10px;
-  background-color: var(--accent-900);
+  background-color: var(--accent-800);
   padding: 10px;
   border-radius: var(--radius-md);
 }
@@ -34,6 +34,20 @@
     & > a {
       color: var(--primary-600);
     }
+  }
+}
+
+.monitor-header-subtitle {
+  font-size: var(--font-sm);
+  font-weight: normal;
+  color: var(--font-light-color);
+
+  & > span {
+    font-weight: bold;
+  }
+
+  & > a {
+    color: var(--primary-600);
   }
 }
 
