@@ -13,7 +13,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Register from './pages/register';
 import Navigation from './components/navigation';
-import Home from './pages/home';
+import Home from './pages/new/home';
 import Monitor from './pages/monitor';
 import GlobalLayout from './layout/global';
 import Setttings from './pages/settings';
@@ -56,9 +56,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/home"
             element={
               <GlobalLayout>
-                <Navigation>
-                  <Home />
-                </Navigation>
+                <Home />
               </GlobalLayout>
             }
           />

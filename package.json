@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.9.10",
+  "version": "1.0.0",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -45,6 +45,7 @@
     "bcryptjs": "^3.0.2",
     "better-sqlite3": "^11.10.0",
     "classnames": "^2.5.1",
+    "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "cron": "^4.3.1",

@@ -52,7 +52,7 @@ const fetchCertificate = (
     if (timeout) {
       req.setTimeout(timeout, function () {
         reject({ message: 'Request timed out.' });
-        req.abort();
+        req.destroy();
       });
     }
 

@@ -14,7 +14,7 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
     <>
       <div className="monitor-chart-buttons-container">
         <Button
-          color={statusType === 'latest' ? 'primary' : null}
+          color={statusType === 'latest' ? 'primary' : 'gray'}
           onClick={() => setStatusType('latest')}
         >
           Latest
