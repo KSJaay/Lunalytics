@@ -35,7 +35,7 @@ const HomeMonitorHeader = ({
           Monitor {'>'} {monitor?.name}
         </div>
         {monitor?.url ? (
-          <div className="monitor-header-subtitle">
+          <div className="navigation-header-subtitle">
             <span>{typeToText[monitor.type]} </span>
             monitor for{' '}
             <a href={monitor.url} target="_blank" rel="noreferrer">

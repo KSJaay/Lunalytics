@@ -1,8 +1,12 @@
 import classNames from 'classnames';
 import PillCircle from '../navigation/PillCircle';
 
-const HomeMonitorsList = ({ monitors, selectedMonitor, setSelectedMonitor }) => {
-  return monitors.map((monitor) => {
+const HomeMonitorsList = ({
+  monitors,
+  selectedMonitor,
+  setSelectedMonitor,
+}) => {
+  const monitorsList = monitors.map((monitor) => {
     const classes = classNames('item', {
       'item-active': selectedMonitor === monitor.monitorId,
     });
@@ -42,6 +46,8 @@ const HomeMonitorsList = ({ monitors, selectedMonitor, setSelectedMonitor }) => 
       </div>
     );
   });
+
+  return <div className="navigation-monitor-items">{monitorsList}</div>;
 };
 
 export default HomeMonitorsList;

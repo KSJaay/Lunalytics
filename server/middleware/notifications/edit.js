@@ -13,7 +13,7 @@ const NotificationEditMiddleware = async (request, response) => {
       throw new UnprocessableError('Invalid Notification Platform');
     }
 
-    const result = validator({ ...notification, ...notification.data });
+    const result = validator({ ...notification.data, ...notification });
 
     const query = await editNotification({
       ...result,

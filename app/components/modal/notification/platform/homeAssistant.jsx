@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import local files
 import { Input } from '@lunalytics/ui';
 
-const HomeAssistantNotificationModalHomeAssistantInput = ({
+const NotificationModalHomeAssistantInput = ({
   values = {},
   errors = {},
   handleInput,
@@ -21,45 +21,50 @@ const HomeAssistantNotificationModalHomeAssistantInput = ({
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
+
       <Input
         title={'HomeAssistant URL'}
         placeholder="https://www.home-assistant.io/"
-        subtitle={
-          <>
-            URL of your HomeAssistant instance.
-          </>
-        }
+        subtitle={<>URL of your HomeAssistant instance.</>}
         id="home-assistant-url"
         isRequired
         error={errors?.homeAssistantUrl}
         defaultValue={values.data?.homeAssistantUrl}
         onChange={(e) => {
-          handleInput({ key: 'data', value: { ...values.data, homeAssistantUrl: e.target.value } });
+          handleInput({
+            key: 'data',
+            value: { ...values.data, homeAssistantUrl: e.target.value },
+          });
         }}
       />
-       <Input
+
+      <Input
         title={'Notification Service'}
         placeholder="mobile_app_<device_name>"
-        subtitle={
-          <>
-            Notification service to use.
-          </>
-        }
+        subtitle={<>Notification service to use.</>}
         id="home-assistant-notification-service"
         isRequired
         error={errors?.homeAssistantNotificationService}
         defaultValue={values.data?.homeAssistantNotificationService}
         onChange={(e) => {
-          handleInput({ key: 'data', value: { ...values.data, homeAssistantNotificationService: e.target.value } });
+          handleInput({
+            key: 'data',
+            value: {
+              ...values.data,
+              homeAssistantNotificationService: e.target.value,
+            },
+          });
         }}
       />
+
       <Input
         title={'Long Lived Access Token'}
         subtitle={
-            <>
-                Long-lived access tokens can be created using the &quot;Long-Lived Access Tokens&quot; 
-                section at the bottom of a user&apos;s Home Assistant profile page.
-            </>
+          <>
+            Long-lived access tokens can be created using the &quot;Long-Lived
+            Access Tokens&quot; section at the bottom of a user&apos;s Home
+            Assistant profile page.
+          </>
         }
         id="home-assistant-access-token"
         error={errors?.token}
@@ -72,12 +77,13 @@ const HomeAssistantNotificationModalHomeAssistantInput = ({
   );
 };
 
-HomeAssistantNotificationModalHomeAssistantInput.displayName = 'HomeAssistantNotificationModalHomeAssistantInput';
+NotificationModalHomeAssistantInput.displayName =
+  'NotificationModalHomeAssistantInput';
 
-HomeAssistantNotificationModalHomeAssistantInput.propTypes = {
+NotificationModalHomeAssistantInput.propTypes = {
   values: PropTypes.object,
   errors: PropTypes.object,
   handleInput: PropTypes.func,
 };
 
-export default HomeAssistantNotificationModalHomeAssistantInput;
+export default NotificationModalHomeAssistantInput;

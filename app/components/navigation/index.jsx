@@ -4,7 +4,7 @@ import './index.scss';
 // import dependencies
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input } from '@lunalytics/ui';
+import { Input } from '@lunalytics/ui';
 
 // import local files
 import LeftNavigation from './left';
@@ -12,10 +12,11 @@ import LeftNavigation from './left';
 const Navigation = ({
   children,
   leftChildren,
-  onLeftClick,
+  leftButton,
   rightChildren,
   activeUrl = '/home',
   header = {},
+  handleSearchUpdate,
 }) => {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
 
@@ -26,18 +27,21 @@ const Navigation = ({
       <LeftNavigation activeUrl={activeUrl} />
 
       <main className="navigation-content">
-        <div className="navigation-sidebar">
-          <div className="navigation-input-container">
-            <Input placeholder="Search..." />
-          </div>
-          <div className="navigation-monitor-items">{leftChildren}</div>
+        {leftChildren && (
+          <div className="navigation-sidebar">
+            <div className="navigation-input-container">
+              <Input
+                placeholder="Search..."
+                onChange={(e) => handleSearchUpdate(e.target.value)}
+              />
+            </div>
+            {leftChildren}
 
-          <div className="navigation-buttons">
-            <Button variant="flat" fullWidth onClick={onLeftClick}>
-              Add Monitor
-            </Button>
+            {leftButton && (
+              <div className="navigation-buttons">{leftButton}</div>
+            )}
           </div>
-        </div>
+        )}
         <div className="navigation-header">
           <HeaderComponent
             {...props}

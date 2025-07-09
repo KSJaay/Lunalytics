@@ -28,15 +28,29 @@ const HomeAssistant = ({
     );
   }
 
-  if (homeAssistantUrlRegex && !homeAssistantUrlRegex.test(data.homeAssistantUrl)) {
-    throw new NotificationValidatorError('homeAssistantUrl', 'Invalid HomeAssistant URL');
+  if (
+    !data.homeAssistantUrl ||
+    !homeAssistantUrlRegex.test(data.homeAssistantUrl)
+  ) {
+    throw new NotificationValidatorError(
+      'homeAssistantUrl',
+      'Invalid HomeAssistant URL'
+    );
   }
 
-  if (homeAssistantNotificationServiceRegex && !homeAssistantNotificationServiceRegex.test(data.homeAssistantNotificationService)) {
-    throw new NotificationValidatorError('homeAssistantNotificationService', 'Invalid HomeAssistant Notification Service');
+  if (
+    !data.homeAssistantNotificationService ||
+    !homeAssistantNotificationServiceRegex.test(
+      data.homeAssistantNotificationService
+    )
+  ) {
+    throw new NotificationValidatorError(
+      'homeAssistantNotificationService',
+      'Invalid HomeAssistant Notification Service'
+    );
   }
 
-  if (tokenRegex && !tokenRegex.test(token)) {
+  if (!token || !tokenRegex.test(token)) {
     throw new NotificationValidatorError('token', 'Invalid Access Token');
   }
 
@@ -53,8 +67,8 @@ const HomeAssistant = ({
     messageType,
     token,
     friendlyName,
-    data
+    data,
   };
 };
 
-export default HomeAssistant; 
+export default HomeAssistant;

@@ -2,6 +2,7 @@
 import '../../styles/pages/home.scss';
 
 // import dependencies
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 
@@ -39,17 +40,24 @@ const Home = () => {
           setSelectedMonitor={setSelectedMonitor}
         />
       }
-      onLeftClick={() =>
-        openModal(
-          <MonitorConfigureModal
-            monitor={activeMonitor}
-            closeModal={closeModal}
-            handleMonitorSubmit={addMonitor}
-          />,
-          false
-        )
+      leftButton={
+        <Button
+          variant="flat"
+          fullWidth
+          onClick={() =>
+            openModal(
+              <MonitorConfigureModal
+                monitor={activeMonitor}
+                closeModal={closeModal}
+                handleMonitorSubmit={addMonitor}
+              />,
+              false
+            )
+          }
+        >
+          Add Monitor
+        </Button>
       }
-      activeMonitor={activeMonitor}
       rightChildren={<NavigationMonitorInfo monitor={activeMonitor} />}
       header={{
         props: { monitor: activeMonitor },
