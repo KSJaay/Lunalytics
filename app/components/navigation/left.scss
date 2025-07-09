@@ -1,2 +1,42 @@
 @use '../../styles/breakpoints.scss' as *;
 @use '../../styles/pxToRem.scss' as *;
+
+.left-navigation-container {
+  width: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-navigation-logo {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.left-navigation-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  align-items: center;
+}
+
+.navigation-left-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: pxToRem(12) pxToRem(12);
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--accent-700);
+  }
+
+  &.active {
+    color: var(--primary-500);
+    background-color: var(--accent-700);
+  }
+}
