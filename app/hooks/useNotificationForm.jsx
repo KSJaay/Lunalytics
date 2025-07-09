@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import NotificationValidators from '../../shared/validators/notifications';
 import { NotificationValidatorError } from '../../shared/utils/errors';
 import { createPostRequest } from '../services/axios';
@@ -9,6 +9,10 @@ const defaultInputs = {
 };
 
 const inputReducer = (state, action) => {
+  if (action.key === 'reset') {
+    return action.value;
+  }
+
   if (action.key === 'platform') {
     return { [action.key]: action.value, messageType: state.messageType };
   }
@@ -23,6 +27,10 @@ const errorReducer = (state, action) => {
 const useNotificationForm = (values = defaultInputs, isEdit, closeModal) => {
   const [inputs, handleInput] = useReducer(inputReducer, values);
   const [errors, handleError] = useReducer(errorReducer, {});
+
+  useEffect(() => {
+    handleInput({ key: 'reset', value: values });
+  }, [JSON.stringify(values)]);
 
   const handleSubmit = async (addNotification) => {
     try {
@@ -44,7 +52,7 @@ const useNotificationForm = (values = defaultInputs, isEdit, closeModal) => {
       }
 
       addNotification(response.data);
-      closeModal();
+      closeModal?.();
     } catch (error) {
       if (error instanceof NotificationValidatorError) {
         handleError({ key: error.key, value: error.message });

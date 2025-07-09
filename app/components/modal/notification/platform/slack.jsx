@@ -19,6 +19,7 @@ const NotificationModalSlackInput = ({
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
+
       <Input
         title={'Webhook URL'}
         placeholder="https://hooks.slack.com/services/..."
@@ -66,6 +67,7 @@ const NotificationModalSlackInput = ({
           handleInput({ key: 'textMessage', value: e.target.value });
         }}
       />
+
       <Input
         title="Channel name"
         placeholder="#lunalytics-alerts"
