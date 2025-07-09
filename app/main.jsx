@@ -19,7 +19,7 @@ import GlobalLayout from './layout/global';
 import Setttings from './pages/settings';
 import Verify from './pages/verify';
 import ErrorPage from './pages/error';
-import Notifications from './pages/notifications';
+import Notifications from './pages/new/notifications';
 import Setup from './pages/setup';
 import Status from './pages/status-pages';
 import StatusConfigure from './pages/status-pages/configure';
@@ -64,9 +64,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/notifications"
             element={
               <GlobalLayout>
-                <Navigation activeUrl="/notifications">
-                  <Notifications />
-                </Navigation>
+                <Notifications />
               </GlobalLayout>
             }
           />

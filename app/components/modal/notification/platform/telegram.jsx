@@ -22,6 +22,7 @@ const NotificationModalTelegramInput = ({
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
+
       <Input
         title="Bot Token"
         placeholder="Bot Token"
@@ -47,6 +48,7 @@ const NotificationModalTelegramInput = ({
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
+
       <Input
         title="Chat ID"
         placeholder="12389741289"
@@ -72,6 +74,7 @@ const NotificationModalTelegramInput = ({
           handleInput({ key: 'chatId', value: e.target.value });
         }}
       />
+
       <div style={{ padding: '12px 0 3px 0' }}>
         <Switch
           label="Disable Notification"

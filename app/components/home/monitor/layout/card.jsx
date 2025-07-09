@@ -17,7 +17,7 @@ const MonitorCard = ({ monitor = {} }) => {
   const address = monitor.type === 'tcp' ? `${url}:${monitor.port}` : url;
 
   return (
-    <div className={'home-monitor-container'}>
+    <div className="home-monitor-container">
       <div className="home-monitor-type">
         <div>{name}</div>
         <span>

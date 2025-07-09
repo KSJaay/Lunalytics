@@ -1,3 +1,5 @@
+@use '../pxToRem.scss' as *;
+
 .notification-empty {
   display: flex;
   flex-direction: column;
@@ -28,4 +30,53 @@
   gap: 10px;
   padding: 10px;
   margin: 10px 0;
+}
+
+.navigation-notification-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0.25rem 0.5rem;
+  gap: 0.5rem;
+
+  .item {
+    display: flex;
+    align-items: center;
+    color: var(--font-color);
+    font-size: var(--font-lg);
+    padding: pxToRem(4) pxToRem(8);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: var(--transition-base);
+    gap: 0.5rem;
+
+    .content {
+      flex: 1;
+    }
+
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .platform {
+      font-size: var(--font-sm);
+      color: var(--accent-200);
+    }
+
+    &.active {
+      color: var(--primary-500);
+      background-color: var(--accent-800);
+    }
+
+    &:hover {
+      cursor: pointer;
+      color: var(--primary-500);
+      background-color: var(--accent-800);
+    }
+  }
 }

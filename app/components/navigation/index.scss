@@ -175,3 +175,17 @@
   transform-origin: center center;
   transition: background-color 0.3s;
 }
+
+.navigation-header-subtitle {
+  font-size: var(--font-sm);
+  font-weight: normal;
+  color: var(--font-light-color);
+
+  & > span {
+    font-weight: bold;
+  }
+
+  & > a {
+    color: var(--primary-600);
+  }
+}

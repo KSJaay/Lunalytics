@@ -1,5 +1,3 @@
-import './styles.scss';
-
 // import dependencies
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -58,15 +56,18 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
           setPlatform={handleInput}
           platform={inputs.platform}
         />
+
         <PlatformInputs
           values={inputs}
           errors={errors}
           handleInput={handleInput}
         />
+
         <NotificationModalType
           messageType={inputs.messageType}
           setMessageType={handleInput}
         />
+
         <label className="input-label">Payload</label>
         <NotificationModalPayload message={message} />
       </Modal.Message>

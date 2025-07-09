@@ -1,3 +1,5 @@
+import './styles.scss';
+
 // import dependencies
 import PropTypes from 'prop-types';
 

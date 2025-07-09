@@ -42,8 +42,8 @@ const LeftNavigation = ({ activeUrl }) => {
     const { name, url, logo } = action;
 
     const classes = classNames({
-      'navigation-left-top-action': true,
-      'navigation-left-top-action-active': activeUrl === url,
+      'navigation-left-action': true,
+      active: activeUrl === url,
     });
 
     return (
@@ -61,35 +61,11 @@ const LeftNavigation = ({ activeUrl }) => {
   });
 
   return (
-    <aside
-      style={{
-        width: '75px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '1rem 0',
-        }}
-      >
+    <aside className="left-navigation-container">
+      <div className="left-navigation-logo">
         <img src="logo.svg" alt="Lunalytics" style={{ width: '50px' }} />
       </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          flex: 1,
-          paddingTop: '1rem',
-          alignItems: 'center',
-        }}
-      >
-        {actions}
-      </div>
+      <div className="left-navigation-actions">{actions}</div>
 
       <div
         style={{
