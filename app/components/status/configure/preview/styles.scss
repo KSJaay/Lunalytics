@@ -130,7 +130,9 @@
   gap: pxToRem(64);
 }
 
-.status-page-status-container {
+// status-page-status > sps
+
+.sps-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,7 +142,7 @@
   width: 100%;
 }
 
-.status-page-status-content {
+.sps-content {
   --status-color: var(--green-700);
 
   &.Operational {
@@ -226,7 +228,7 @@
     border-left: 8px solid var(--status-color);
     box-shadow: var(--shadow-md);
 
-    > .status-page-status-title svg {
+    > .sps-title svg {
       color: var(--status-color);
     }
   }
@@ -236,13 +238,13 @@
     border: 2px solid var(--accent-800);
     box-shadow: var(--shadow-md);
 
-    > .status-page-status-title svg {
+    > .sps-title svg {
       color: var(--status-color);
     }
   }
 }
 
-.status-page-status-title {
+.sps-title {
   display: flex;
   align-items: center;
   gap: pxToRem(8);

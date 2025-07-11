@@ -21,8 +21,7 @@ import Verify from './pages/verify';
 import ErrorPage from './pages/error';
 import Notifications from './pages/new/notifications';
 import Setup from './pages/setup';
-import Status from './pages/status-pages';
-import StatusConfigure from './pages/status-pages/configure';
+import StatusConfigure from './pages/new/status-page';
 import StatusLayout from './layout/status';
 import StatusPage from './pages/status';
 import Incidents from './pages/incidents';
@@ -70,16 +69,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           />
           <Route
             path="/status-pages"
-            element={
-              <GlobalLayout>
-                <Navigation activeUrl="/status-pages">
-                  <Status />
-                </Navigation>
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/status-pages/configure"
             element={
               <GlobalLayout>
                 <StatusConfigure />

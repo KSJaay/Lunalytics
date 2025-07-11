@@ -33,18 +33,18 @@ const StatusPageStatus = ({
   status = 'Operational',
   titleSize = 'M',
 }) => {
-  const contentClasses = classNames('status-page-status-content', {
+  const contentClasses = classNames('sps-content', {
     [size]: true,
     [design]: true,
     [status]: true,
   });
 
-  const titleClasses = classNames('status-page-status-title', {
+  const titleClasses = classNames('sps-title', {
     [titleSize]: true,
   });
 
   return (
-    <div className="status-page-status-container">
+    <div className="sps-container">
       <div className={contentClasses}>
         <div className={titleClasses}>
           {icon ? icons[status] : null}

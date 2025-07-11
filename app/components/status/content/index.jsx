@@ -1,0 +1,131 @@
+import {
+  MdLock,
+  MdOutlineArrowBack,
+  MdOutlineArrowForward,
+} from 'react-icons/md';
+import { Button } from '@lunalytics/ui';
+import { useMemo } from 'react';
+import useStatusContext from '../../../hooks/useConfigureStatus';
+import StatusConfigureAppearance from '../configure/appearance';
+import StatusConfigureLayout from '../configure/layout';
+import StatusConfigureSettings from '../configure/settings';
+import { IoReloadSharp } from 'react-icons/io5';
+import StatusConfigurePreview from '../configure/preview';
+import ActionBar from '../../ui/actionBar';
+import useContextStore from '../../../context';
+import handleCreateOrEditStatusPage from '../../../handlers/status/configure/create';
+
+const StatusConfigureContent = ({ currentTab, activeStatusId }) => {
+  const {
+    statusStore: { addStatusPage, getStatusById },
+  } = useContextStore();
+
+  const { resetStatusPage, settings, layout } = useStatusContext();
+
+  const showSaveActionBar = useMemo(() => {
+    const statusPageById = getStatusById(activeStatusId);
+
+    return (
+      JSON.stringify({ settings, layout }) !==
+      JSON.stringify({
+        settings: statusPageById?.settings,
+        layout: statusPageById?.layout,
+      })
+    );
+  }, [activeStatusId, getStatusById, settings, layout]);
+
+  const handleUpdate = async (data) => {
+    addStatusPage(data);
+    resetStatusPage(data.settings, data.layout);
+  };
+
+  return (
+    <>
+      <div className="sc-account-container" id="sc-account-container">
+        <div className="sc-content">
+          {currentTab === 'Appearance' ? <StatusConfigureAppearance /> : null}
+          {currentTab === 'Settings' ? <StatusConfigureSettings /> : null}
+          {currentTab === 'Layout' ? <StatusConfigureLayout /> : null}
+        </div>
+        {currentTab === 'Preview' ? (
+          <div className="sppw-container">
+            <div className="sppw">
+              <div className="sppw-header">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <div className="sppw-navbar">
+                <div className="sppw-navbar-item">
+                  <MdOutlineArrowBack />
+                </div>
+                <div className="sppw-navbar-item">
+                  <MdOutlineArrowForward />
+                </div>
+                <div className="sppw-navbar-item">
+                  <IoReloadSharp />
+                </div>
+                <div className="sppw-navbar-search">
+                  <MdLock />
+                  <div>{window.location.href}</div>
+                </div>
+              </div>
+              <div style={{ overflow: 'auto' }}>
+                <div className="status-page-content">
+                  <StatusConfigurePreview />
+                </div>
+              </div>
+            </div>{' '}
+          </div>
+        ) : null}
+      </div>
+
+      <ActionBar show={showSaveActionBar} position="bottom" variant="floating">
+        <div
+          style={{
+            display: 'flex',
+            gap: '0.5rem',
+            padding: '0.75rem 1rem',
+            width: '850px',
+            alignItems: 'center',
+          }}
+        >
+          <div style={{ flex: 1, fontWeight: 'var(--weight-semibold)' }}>
+            Found some changes! Please save or cancel.
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <Button
+              color="red"
+              variant="flat"
+              onClick={() => {
+                const statusPageById = getStatusById(activeStatusId);
+                if (!statusPageById) return;
+
+                resetStatusPage(statusPageById.settings, statusPageById.layout);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              color="green"
+              variant="flat"
+              onClick={() => {
+                handleCreateOrEditStatusPage(
+                  settings,
+                  layout,
+                  handleUpdate,
+                  true,
+                  activeStatusId
+                );
+              }}
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </ActionBar>
+    </>
+  );
+};
+
+export default StatusConfigureContent;
