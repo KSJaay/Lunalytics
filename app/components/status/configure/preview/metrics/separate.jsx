@@ -20,9 +20,9 @@ const StatusPageMetricsSeparate = ({
       <div className="spm-content">
         {monitors.map((monitor) => {
           const heartbeatsList =
-            heartbeats[monitor.monitorId] || defaultHeartbeats;
+            heartbeats[monitor?.monitorId] || defaultHeartbeats;
 
-          if (monitor.graphType === 'Pretty') {
+          if (monitor?.graphType === 'Pretty') {
             return (
               <StatusPageMetricsPrettyGraph
                 key={monitor.id}
@@ -33,7 +33,7 @@ const StatusPageMetricsSeparate = ({
             );
           }
 
-          if (monitor.graphType === 'Nerdy') {
+          if (monitor?.graphType === 'Nerdy') {
             return (
               <StatusPageMetricsNerdyGraph
                 key={monitor.id}
@@ -46,9 +46,9 @@ const StatusPageMetricsSeparate = ({
 
           return (
             <StatusPageMetricsBasicGraph
-              key={monitor.id}
-              title={monitor.title || monitor.name}
-              showPing={monitor.showPing}
+              key={monitor?.id}
+              title={monitor?.title || monitor?.name}
+              showPing={monitor?.showPing}
               heartbeats={heartbeatsList}
             />
           );

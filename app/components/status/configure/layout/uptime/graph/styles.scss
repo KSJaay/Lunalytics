@@ -160,7 +160,7 @@
   }
 
   > div {
-    width: 10px;
+    width: 100%;
     height: 32px;
     background-color: var(--primary-700);
 
@@ -189,7 +189,7 @@
     }
 
     &.gray {
-      background-color: var(--accent-700);
+      background-color: var(--accent-600);
     }
   }
 }
