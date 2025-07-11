@@ -15,13 +15,7 @@ const StatusConfigureSettings = () => {
           <div className="scc-description"></div>
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            gap: '16px',
-          }}
-        >
+        <div style={{ gap: '12px' }}>
           <div>
             <label className="input-label" id={`text-input-label-status-url`}>
               Status Page URL
