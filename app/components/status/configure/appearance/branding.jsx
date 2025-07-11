@@ -13,16 +13,16 @@ const StatusConfigureAppearanceBranding = () => {
     <div className="scb-container">
       <div>
         <Input
-          value={logo}
           title="Logo"
+          value={logo || ''}
           placeholder="/logo.svg"
           onChange={(e) => changeValues({ logo: e.target.value })}
         />
       </div>
       <div>
         <Input
-          value={favicon}
           title="Favicon"
+          value={favicon || ''}
           placeholder="/logo.svg"
           onChange={(e) => changeValues({ favicon: e.target.value })}
         />

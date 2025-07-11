@@ -5,6 +5,7 @@ import {
   defaultStatusValues,
   statusComponents,
 } from '../../shared/constants/status';
+import { toJS } from 'mobx';
 
 const ConfigureStatusContext = createContext();
 export const ConfigureStatusProvider = ConfigureStatusContext.Provider;
@@ -24,9 +25,9 @@ export const useConfigureStatusState = (
   values = defaultStatusValues,
   components = defaultStatusComponents
 ) => {
-  const [data, setData] = useState(values);
+  const [data, setData] = useState(toJS(values));
 
-  const [layout, setLayout] = useState(components);
+  const [layout, setLayout] = useState(toJS(components));
 
   const changeValues = (data) => {
     setData((prev) => ({ ...prev, ...data }));
@@ -122,6 +123,11 @@ export const useConfigureStatusState = (
     });
   };
 
+  const resetStatusPage = (data, layout) => {
+    setData(data);
+    setLayout(layout);
+  };
+
   const reorderBlocks = (listOfIds) => {
     setLayout((prev) =>
       listOfIds.map((id) => prev.find((item) => item.id === id))
@@ -138,6 +144,7 @@ export const useConfigureStatusState = (
     removeComponent,
     getComponentMonitor,
     setMonitorValue,
+    resetStatusPage,
     reorderBlocks,
   };
 };

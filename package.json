@@ -40,7 +40,7 @@
     "unused": "npx unimported"
   },
   "dependencies": {
-    "@lunalytics/ui": "^0.1.12",
+    "@lunalytics/ui": "^0.1.13",
     "axios": "^1.10.0",
     "bcryptjs": "^3.0.2",
     "better-sqlite3": "^11.10.0",

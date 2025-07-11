@@ -5,14 +5,12 @@
 .scc-block {
   display: flex;
   flex-direction: column;
-  background-color: var(--accent-900);
-  padding: pxToRem(8) pxToRem(12);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
   margin-bottom: pxToRem(48);
   gap: pxToRem(12);
   position: relative;
-  padding-bottom: pxToRem(25);
+  padding: 1rem;
+  border: 2px solid var(--accent-600);
 }
 
 .scc-title {
