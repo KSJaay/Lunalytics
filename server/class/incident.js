@@ -37,6 +37,6 @@ export const cleanIncident = (incident) => {
     status,
     createdAt,
     completedAt,
-    isClosed,
+    isClosed: isClosed == '1',
   };
 };
