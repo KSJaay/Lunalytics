@@ -30,7 +30,7 @@ const StatusPageList = ({
               </div>
             </div>
             <div className="icon-container">
-              <FaLock style={{ width: '20px', height: '20px' }} />
+              <FaLock size={20} />
             </div>
           </div>
         );
