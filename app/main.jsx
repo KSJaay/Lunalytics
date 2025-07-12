@@ -24,8 +24,7 @@ import Setup from './pages/setup';
 import StatusConfigure from './pages/new/status-page';
 import StatusLayout from './layout/status';
 import StatusPage from './pages/status';
-import Incidents from './pages/incidents';
-import IncidentUpdate from './pages/incidents/id';
+import Incidents from './pages/new/incidents';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -79,19 +78,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/incidents"
             element={
               <GlobalLayout>
-                <Navigation activeUrl="/incidents">
-                  <Incidents />
-                </Navigation>
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/incidents/:incidentId"
-            element={
-              <GlobalLayout>
-                <Navigation activeUrl="/incidents">
-                  <IncidentUpdate />
-                </Navigation>
+                <Incidents />
               </GlobalLayout>
             }
           />
