@@ -128,6 +128,8 @@
   font-family: var(--status-font);
   background-color: var(--status-background);
   gap: pxToRem(64);
+  color: var(--font-color);
+  padding: 0 pxToRem(24);
 }
 
 // status-page-status > sps

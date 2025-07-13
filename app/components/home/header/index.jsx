@@ -1,3 +1,5 @@
+import '../styles.scss';
+
 // import dependencies
 import { observer } from 'mobx-react-lite';
 import { LuInfo } from 'react-icons/lu';
@@ -15,25 +17,20 @@ const typeToText = {
   tcp: 'TCP',
 };
 
-const HomeMonitorHeader = ({
-  monitor,
-  isInfoOpen,
-  setIsInfoOpen,
-  rightChildren,
-  setSelectedMonitor,
-}) => {
+const HomeMonitorHeader = ({ isInfoOpen, setIsInfoOpen, rightChildren }) => {
   const {
     userStore: { user },
+    globalStore: { activeMonitor = {} },
   } = useContextStore();
 
   const role = new Role('user', user.permission);
   const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
 
-  if (!monitor) {
+  if (!activeMonitor) {
     return (
       <div className="navigation-header-content">
         <div className="navigation-header-title">
-          <div>Monitor {monitor?.name ? `- ${monitor.name}` : ''}</div>
+          <div>Monitor</div>
         </div>
       </div>
     );
@@ -42,24 +39,19 @@ const HomeMonitorHeader = ({
   return (
     <div className="navigation-header-content">
       <div className="navigation-header-title">
-        <div>Monitor - {monitor.name}</div>
-        {monitor?.url ? (
+        <div>Monitor - {activeMonitor.name}</div>
+        {activeMonitor?.url ? (
           <div className="navigation-header-subtitle">
-            <span>{typeToText[monitor.type]} </span>
+            <span>{typeToText[activeMonitor.type]} </span>
             monitor for{' '}
-            <a href={monitor.url} target="_blank" rel="noreferrer">
-              {monitor.url}
+            <a href={activeMonitor.url} target="_blank" rel="noreferrer">
+              {activeMonitor.url}
             </a>
           </div>
         ) : null}
       </div>
       <div className="navigation-header-buttons">
-        {isEditor ? (
-          <HomeMonitorHeaderMenu
-            monitor={monitor}
-            setSelectedMonitor={setSelectedMonitor}
-          />
-        ) : null}
+        {isEditor ? <HomeMonitorHeaderMenu /> : null}
         {rightChildren ? (
           <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
             <LuInfo size={20} />

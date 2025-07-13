@@ -10,27 +10,21 @@ import MonitorGraph from '../components/monitor/graph';
 import MonitorUptime from '../components/monitor/uptime';
 import Spacer from '../components/ui/spacer';
 import useContextStore from '../context';
-import { useParams } from 'react-router-dom';
 
-const Monitor = ({ monitor_id }) => {
+const Monitor = () => {
   const {
-    globalStore: { getMonitor },
+    globalStore: { activeMonitor },
   } = useContextStore();
 
-  const query = useParams();
-  const monitorId = query['monitor_id'] || monitor_id;
-
-  const monitor = getMonitor(monitorId);
-
-  if (!monitor) {
+  if (!activeMonitor) {
     return null;
   }
 
   return (
     <div className="monitor-container">
-      <MonitorStatus monitor={monitor} />
-      <MonitorGraph monitor={monitor} />
-      <MonitorUptime heartbeats={monitor.heartbeats} />
+      <MonitorStatus monitor={activeMonitor} />
+      <MonitorGraph monitor={activeMonitor} />
+      <MonitorUptime heartbeats={activeMonitor.heartbeats} />
       <Spacer size={18} />
     </div>
   );

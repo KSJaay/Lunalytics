@@ -7,9 +7,9 @@ import { FaTrashCan } from 'react-icons/fa6';
 // import local files
 import useContextStore from '../../../context';
 import Role from '../../../../shared/permissions/role';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 import { createPostRequest } from '../../../services/axios';
-import StatusDeleteModal from '../../modal/status/delete';
+import DeleteIncidentModal from '../../modal/incident/delete';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 
 const HomeIncidentHeader = ({
   isInfoOpen,
@@ -31,11 +31,14 @@ const HomeIncidentHeader = ({
       await createPostRequest('/api/incident/delete', {
         incidentId: incident.incidentId,
       });
+
       deleteIncident(incident.incidentId);
-      toast.success('Incident deleted successfully!');
-    } catch {
+
       closeModal();
-      toast.error('Something went wrong! Please try again later.');
+      toast.success('Incident deleted successfully');
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to delete incident');
     }
   };
 
@@ -58,10 +61,9 @@ const HomeIncidentHeader = ({
             <div
               onClick={() =>
                 openModal(
-                  <StatusDeleteModal
-                    title={incident?.title}
+                  <DeleteIncidentModal
+                    handleDelete={handleDelete}
                     closeModal={closeModal}
-                    deleteStatusPage={handleDelete}
                   />
                 )
               }

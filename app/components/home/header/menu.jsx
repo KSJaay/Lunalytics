@@ -15,10 +15,16 @@ import MonitorModal from '../../modal/monitor/delete';
 import MonitorConfigureModal from '../../modal/monitor/configure';
 import { createGetRequest, createPostRequest } from '../../../services/axios';
 
-const HomeMonitorHeaderMenu = ({ monitor, setSelectedMonitor }) => {
+const HomeMonitorHeaderMenu = () => {
   const {
     modalStore: { openModal, closeModal },
-    globalStore: { addMonitor, editMonitor, removeMonitor },
+    globalStore: {
+      addMonitor,
+      editMonitor,
+      removeMonitor,
+      activeMonitor: monitor,
+      setActiveMonitor,
+    },
   } = useContextStore();
 
   const { toggleDropdown, dropdownIsOpen } = useDropdown(true);
@@ -32,7 +38,7 @@ const HomeMonitorHeaderMenu = ({ monitor, setSelectedMonitor }) => {
     });
 
     removeMonitor(monitorId);
-    setSelectedMonitor(null);
+    setActiveMonitor(null);
 
     toast.success('Monitor deleted successfully!');
 
@@ -142,12 +148,7 @@ const HomeMonitorHeaderMenu = ({ monitor, setSelectedMonitor }) => {
               key={option.id}
               id={option.id}
               onClick={option.onClick}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px',
-              }}
+              className="home-header-menu-list-item"
             >
               {option.icon}
               {option.value}

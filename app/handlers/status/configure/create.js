@@ -23,9 +23,11 @@ const handleCreateOrEditStatusPage = async (
       .reduce((a, b) => [...a, ...b.monitors], []);
 
     if (monitors.length === 0) {
-      return toast.error(
+      toast.error(
         'Unable to create status page: No monitors found. Please add at least one monitor to uptime graph or uptime metrics.'
       );
+
+      return false;
     }
 
     const url = isEdit
@@ -44,13 +46,15 @@ const handleCreateOrEditStatusPage = async (
 
     toast.success(message);
     callback(query.data.data);
+
+    return true;
   } catch (error) {
     if (
       error instanceof ObjectSchemaValidatorError ||
       error instanceof StatusPageValidatorError
     ) {
       toast.error(error.message);
-      return;
+      return false;
     }
 
     if (error.response?.data?.message) {
@@ -60,10 +64,11 @@ const handleCreateOrEditStatusPage = async (
 
       toast.error(message + error.response.data.message);
 
-      return;
+      return false;
     }
 
     toast.error('Unknown error occured. Please try again.');
+    return false;
   }
 };
 

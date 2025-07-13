@@ -2,126 +2,71 @@
 import '../styles/pages/home.scss';
 
 // import dependencies
-import { useState } from 'react';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
 
 // import local files
-import {
-  MonitorCard,
-  MonitorList,
-  MonitorCompact,
-} from '../components/home/monitor';
+import Monitor from './monitor';
 import useContextStore from '../context';
-import HomeMenu from '../components/home/menu';
-import MonitorTable from '../components/home/monitor/layout/table';
-import useLocalStorageContext from '../hooks/useLocalstorage';
-import MonitorCompactItem from '../components/home/monitor/layout/compact/monitor';
+import Navigation from '../components/navigation';
+import HomeMonitorHeader from '../components/home/header';
+import HomeMonitorsList from '../components/home/monitors';
+import NavigationMonitorInfo from '../components/navigation/info/monitor';
+import MonitorConfigureModal from '../components/modal/monitor/configure';
 
 const Home = () => {
   const {
-    globalStore: { allMonitors },
+    globalStore: { allMonitors, addMonitor, activeMonitor, setActiveMonitor },
+    modalStore: { openModal, closeModal },
   } = useContextStore();
 
-  const [search, setSearch] = useState('');
-  const { layout, status, setStatus } = useLocalStorageContext();
-  const [activeMonitor, setActiveMonitor] = useState('');
-
-  const handleReset = () => {
-    setSearch('');
-    setStatus('all');
-  };
-
-  const monitorsList = allMonitors
-    .filter((monitor = {}) => {
-      const matchesSearch =
-        monitor.name?.toLowerCase().includes(search.toLowerCase()) ||
-        monitor.url?.toLowerCase().includes(search.toLowerCase());
-
-      if (!matchesSearch) {
-        return false;
-      }
-
-      if (status === 'all') {
-        return true;
-      }
-
-      const [lastHeartbeat = {}] = monitor.heartbeats;
-      if (status === 'down') {
-        return lastHeartbeat.isDown;
-      }
-
-      if (status === 'up') {
-        return !lastHeartbeat.isDown;
-      }
-
-      return true;
-    })
-    .sort((a, b) => {
-      if (a.paused && !b.paused) return 1;
-      if (!a.paused && b.paused) return -1;
-      return a.name.localeCompare(b.name);
-    })
-    .map((monitor, index) => {
-      if (layout === 'list') {
-        return (
-          <MonitorList key={monitor.monitorId + index} monitor={monitor} />
-        );
-      }
-
-      if (layout === 'compact') {
-        return (
-          <MonitorCompactItem
-            key={monitor.monitorId + index}
-            monitor={monitor}
-            isActive={activeMonitor === monitor.monitorId}
-            setActive={setActiveMonitor}
-          />
-        );
-      }
-
-      return <MonitorCard key={monitor.monitorId + index} monitor={monitor} />;
-    });
-
-  if (layout === 'cards') {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <HomeMenu
-          search={search}
-          handleReset={handleReset}
-          setSearch={(e) => setSearch(e.target.value)}
-        />
-
-        <div className="home-container">{monitorsList}</div>
-      </div>
-    );
-  }
-
-  if (layout === 'compact') {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-        <HomeMenu
-          search={search}
-          handleReset={handleReset}
-          setSearch={(e) => setSearch(e.target.value)}
-        />
-
-        <MonitorCompact monitor_id={activeMonitor}>
-          {monitorsList}
-        </MonitorCompact>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!activeMonitor) setActiveMonitor(allMonitors[0]?.monitorId);
+  }, [allMonitors]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-      <HomeMenu
-        search={search}
-        handleReset={handleReset}
-        setSearch={(e) => setSearch(e.target.value)}
-      />
-
-      <MonitorTable>{monitorsList}</MonitorTable>
-    </div>
+    <Navigation
+      leftChildren={<HomeMonitorsList monitors={allMonitors} />}
+      leftButton={
+        <Button
+          variant="flat"
+          fullWidth
+          onClick={() =>
+            openModal(
+              <MonitorConfigureModal
+                closeModal={closeModal}
+                handleMonitorSubmit={addMonitor}
+              />,
+              false
+            )
+          }
+        >
+          Add Monitor
+        </Button>
+      }
+      rightChildren={<NavigationMonitorInfo monitor={activeMonitor} />}
+      header={{ HeaderComponent: HomeMonitorHeader }}
+    >
+      {!activeMonitor ? (
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            fontWeight: 'bold',
+            fontSize: 'var(--font-2xl)',
+            color: 'var(--font-light-color)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div>No monitors found</div>
+        </div>
+      ) : (
+        <Monitor />
+      )}
+    </Navigation>
   );
 };
 

@@ -11,6 +11,8 @@ import { Avatar } from '@lunalytics/ui';
 
 // import local files
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
+import { observer } from 'mobx-react-lite';
+import useContextStore from '../../context';
 
 const actionTabs = [
   {
@@ -35,8 +37,24 @@ const actionTabs = [
   },
 ];
 
+const isImageUrl = (url) => {
+  if (typeof url !== 'string') {
+    return false;
+  }
+
+  return url.match(/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/gim);
+};
+
 const LeftNavigation = ({ activeUrl }) => {
   const navigate = useNavigate();
+  const {
+    userStore: {
+      user: { avatar, displayName },
+    },
+  } = useContextStore();
+
+  const isUrl = isImageUrl(avatar);
+  const imageUrl = isUrl ? avatar : `/icons/${avatar}.png`;
 
   const actions = actionTabs.map((action) => {
     const { name, url, logo } = action;
@@ -63,7 +81,7 @@ const LeftNavigation = ({ activeUrl }) => {
   return (
     <aside className="left-navigation-container">
       <div className="left-navigation-logo">
-        <img src="logo.svg" alt="Lunalytics" style={{ width: '50px' }} />
+        <img src="/logo.svg" alt="Lunalytics" style={{ width: '50px' }} />
       </div>
       <div className="left-navigation-actions">{actions}</div>
 
@@ -76,11 +94,14 @@ const LeftNavigation = ({ activeUrl }) => {
           alignItems: 'center',
         }}
       >
-        <div>
+        <div
+          className="navigation-left-action"
+          onClick={() => navigate('/settings')}
+        >
           <FaCog size={28} />
         </div>
         <div style={{ borderRadius: '100%', overflow: 'hidden' }}>
-          <Avatar avatar={'https://picsum.photos/240/240'} />
+          <Avatar avatar={imageUrl} name={displayName} showName={false} />
         </div>
       </div>
     </aside>
@@ -93,4 +114,4 @@ LeftNavigation.propTypes = {
   activeUrl: PropTypes.string,
 };
 
-export default LeftNavigation;
+export default observer(LeftNavigation);

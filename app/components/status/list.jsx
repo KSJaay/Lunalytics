@@ -2,12 +2,18 @@ import { FaLock } from 'react-icons/fa';
 import './styles.scss';
 
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
+import useContextStore from '../../context';
 
-const StatusPageList = ({
-  statusPages,
-  activeStatusPage,
-  setActiveStatusPage,
-}) => {
+const StatusPageList = ({ statusPages }) => {
+  const {
+    statusStore: { activeStatusPage, setActiveStatusPage },
+  } = useContextStore();
+
+  if (!statusPages || statusPages.length === 0) {
+    return <div style={{ flex: 1 }}></div>;
+  }
+
   return (
     <div className="navigation-status-page-items">
       {statusPages.map((statusPage) => {
@@ -39,4 +45,4 @@ const StatusPageList = ({
   );
 };
 
-export default StatusPageList;
+export default observer(StatusPageList);

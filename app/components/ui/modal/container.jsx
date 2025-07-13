@@ -12,9 +12,10 @@ const Container = ({
   glassmorph,
   closeButton,
   contentProps = {},
+  className = '',
   ...props
 }) => {
-  const classes = classNames('modal-container', {
+  const classes = classNames('modal-container', className, {
     'modal-container--glassmorph': glassmorph,
     'modal-container--no-glassmorph': !glassmorph,
   });
