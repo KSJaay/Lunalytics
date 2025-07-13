@@ -15,7 +15,7 @@ const HomeIncidentHeader = ({
   isInfoOpen,
   setIsInfoOpen,
   rightChildren,
-  incident,
+  incident = {},
 }) => {
   const {
     userStore: { user },
@@ -28,10 +28,10 @@ const HomeIncidentHeader = ({
 
   const handleDelete = async () => {
     try {
-      await createPostRequest('/api/incidents/delete', {
-        incidentId: incident.id,
+      await createPostRequest('/api/incident/delete', {
+        incidentId: incident.incidentId,
       });
-      deleteIncident(incident.id);
+      deleteIncident(incident.incidentId);
       toast.success('Incident deleted successfully!');
     } catch {
       closeModal();
@@ -44,7 +44,8 @@ const HomeIncidentHeader = ({
       <div className="navigation-header-content">
         <div className="navigation-header-title">
           <div>
-            Incident {'>'} {incident.title || 'Lunalytics'}
+            Incident
+            {incident?.title ? ` - ${incident.title || 'Lunalytics'}` : ''}
           </div>
           {incident?.status ? (
             <div className="navigation-header-subtitle">

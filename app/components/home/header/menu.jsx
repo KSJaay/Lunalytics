@@ -15,7 +15,7 @@ import MonitorModal from '../../modal/monitor/delete';
 import MonitorConfigureModal from '../../modal/monitor/configure';
 import { createGetRequest, createPostRequest } from '../../../services/axios';
 
-const HomeMonitorHeaderMenu = ({ monitor }) => {
+const HomeMonitorHeaderMenu = ({ monitor, setSelectedMonitor }) => {
   const {
     modalStore: { openModal, closeModal },
     globalStore: { addMonitor, editMonitor, removeMonitor },
@@ -32,6 +32,7 @@ const HomeMonitorHeaderMenu = ({ monitor }) => {
     });
 
     removeMonitor(monitorId);
+    setSelectedMonitor(null);
 
     toast.success('Monitor deleted successfully!');
 
@@ -84,7 +85,7 @@ const HomeMonitorHeaderMenu = ({ monitor }) => {
   const handleDelete = () => {
     openModal(
       <MonitorModal
-        monitorId={name}
+        monitorId={monitor.monitorId}
         handleConfirm={handleConfirm}
         handleClose={closeModal}
       />

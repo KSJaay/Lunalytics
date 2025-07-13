@@ -60,11 +60,28 @@ const Home = () => {
       }
       rightChildren={<NavigationMonitorInfo monitor={activeMonitor} />}
       header={{
-        props: { monitor: activeMonitor },
+        props: { monitor: activeMonitor, setSelectedMonitor },
         HeaderComponent: HomeMonitorHeader,
       }}
     >
-      <Monitor monitor_id={selectedMonitor} />
+      {!activeMonitor ? (
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            fontWeight: 'bold',
+            fontSize: 'var(--font-2xl)',
+            color: 'var(--font-light-color)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div>No monitors found</div>
+        </div>
+      ) : (
+        <Monitor monitor_id={selectedMonitor} />
+      )}
     </Navigation>
   );
 };
