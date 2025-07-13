@@ -13,6 +13,10 @@ const NotificationList = ({
   activeNotification,
   setActiveNotification,
 }) => {
+  if (!notifications || !notifications?.length) {
+    return <div style={{ flex: 1 }}></div>;
+  }
+
   return (
     <div className="navigation-notification-items">
       {notifications.map((notification) => {

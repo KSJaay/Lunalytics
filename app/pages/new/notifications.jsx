@@ -51,34 +51,16 @@ const Notifications = () => {
 
   const addNotification = () => {};
 
-  if (!activeNotification) return null;
-
   return (
     <Navigation
       activeUrl="/notifications"
       handleSearchUpdate={handleSearchUpdate}
       leftChildren={
-        !activeNotification || !notifications?.length ? (
-          <div
-            style={{
-              display: 'flex',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '1rem',
-              fontSize: 'var(--font-lg)',
-              color: 'var(--font-color)',
-            }}
-          >
-            No notifications found
-          </div>
-        ) : (
-          <NotificationList
-            notifications={notifications}
-            activeNotification={activeNotification}
-            setActiveNotification={setActiveNotification}
-          />
-        )
+        <NotificationList
+          notifications={notifications}
+          activeNotification={activeNotification}
+          setActiveNotification={setActiveNotification}
+        />
       }
       leftButton={
         <Button
@@ -97,7 +79,6 @@ const Notifications = () => {
           Add Notification
         </Button>
       }
-      onLeftClick={() => {}}
       header={{
         props: {
           notification: activeNotification,
@@ -111,11 +92,14 @@ const Notifications = () => {
       ) : (
         <div
           style={{
+            height: '100%',
+            width: '100%',
+            fontWeight: 'bold',
+            fontSize: 'var(--font-2xl)',
+            color: 'var(--font-light-color)',
             display: 'flex',
+            alignItems: 'center',
             justifyContent: 'center',
-            padding: '1rem',
-            fontSize: 'var(--font-lg)',
-            color: 'var(--font-color)',
           }}
         >
           No notifications found

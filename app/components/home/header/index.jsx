@@ -20,6 +20,7 @@ const HomeMonitorHeader = ({
   isInfoOpen,
   setIsInfoOpen,
   rightChildren,
+  setSelectedMonitor,
 }) => {
   const {
     userStore: { user },
@@ -28,12 +29,20 @@ const HomeMonitorHeader = ({
   const role = new Role('user', user.permission);
   const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
 
+  if (!monitor) {
+    return (
+      <div className="navigation-header-content">
+        <div className="navigation-header-title">
+          <div>Monitor {monitor?.name ? `- ${monitor.name}` : ''}</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="navigation-header-content">
       <div className="navigation-header-title">
-        <div>
-          Monitor {'>'} {monitor?.name}
-        </div>
+        <div>Monitor - {monitor.name}</div>
         {monitor?.url ? (
           <div className="navigation-header-subtitle">
             <span>{typeToText[monitor.type]} </span>
@@ -45,7 +54,12 @@ const HomeMonitorHeader = ({
         ) : null}
       </div>
       <div className="navigation-header-buttons">
-        {isEditor ? <HomeMonitorHeaderMenu monitor={monitor} /> : null}
+        {isEditor ? (
+          <HomeMonitorHeaderMenu
+            monitor={monitor}
+            setSelectedMonitor={setSelectedMonitor}
+          />
+        ) : null}
         {rightChildren ? (
           <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
             <LuInfo size={20} />
