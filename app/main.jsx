@@ -13,18 +13,18 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Register from './pages/register';
 import Navigation from './components/navigation';
-import Home from './pages/new/home';
+import Home from './pages/home';
 import Monitor from './pages/monitor';
 import GlobalLayout from './layout/global';
 import Setttings from './pages/settings';
 import Verify from './pages/verify';
 import ErrorPage from './pages/error';
-import Notifications from './pages/new/notifications';
+import Notifications from './pages/notifications';
 import Setup from './pages/setup';
-import StatusConfigure from './pages/new/status-page';
+import StatusConfigure from './pages/status-page';
 import StatusLayout from './layout/status';
 import StatusPage from './pages/status';
-import Incidents from './pages/new/incidents';
+import Incidents from './pages/incidents';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

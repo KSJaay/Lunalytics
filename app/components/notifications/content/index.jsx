@@ -9,12 +9,10 @@ import NotificationModalPayload from '../../modal/notification/payload';
 import NotificationModalType from '../../modal/notification/dropdown/type';
 import * as NotificationPlatformContent from './platform';
 
-const NotificationContent = ({ notificationId }) => {
+const NotificationContent = () => {
   const {
-    notificationStore: { addNotification, getNotifciationById },
+    notificationStore: { addNotification, activeNotification: notification },
   } = useContextStore();
-
-  const notification = getNotifciationById(notificationId);
 
   const { inputs, errors, handleInput, handleSubmit } = useNotificationForm(
     notification,

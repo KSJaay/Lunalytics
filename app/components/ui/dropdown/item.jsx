@@ -10,10 +10,11 @@ const Item = ({
   showDot = false,
   isSelected = false,
   children,
+  className,
   as: Wrapper = 'div',
   ...props
 }) => {
-  const classes = classNames('dropdown-item-dot', {
+  const classes = classNames('dropdown-item-dot', className, {
     'dropdown-item-selected': isSelected,
     [`dropdown-item-dot--${dotColor}`]: dotColor,
   });
@@ -33,6 +34,7 @@ Item.propTypes = {
   showDot: PropTypes.bool,
   isSelected: PropTypes.bool,
   children: PropTypes.node,
+  className: PropTypes.string,
   as: PropTypes.elementType,
 };
 

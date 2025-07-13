@@ -3,14 +3,17 @@ import { action, computed, makeObservable, observable } from 'mobx';
 class NotificationStore {
   constructor() {
     this.notifications = observable.map();
+    this.activeNotification = null;
 
     makeObservable(this, {
       notifications: observable,
+      activeNotification: observable,
       setNotifications: action,
       addNotification: action,
       deleteNotification: action,
       toggleNotification: action,
       allNotifications: computed,
+      setActiveNotification: action,
     });
   }
 
@@ -44,6 +47,16 @@ class NotificationStore {
   get allNotifications() {
     return Array.from(this.notifications.values()) || [];
   }
+
+  setActiveNotification = (id) => {
+    if (!id || !this.notifications.has(id)) {
+      this.activeNotification =
+        this.notifications.values().next().value || null;
+      return;
+    }
+
+    this.activeNotification = this.notifications.get(id);
+  };
 }
 
 export default NotificationStore;

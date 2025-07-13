@@ -4,6 +4,7 @@ import Incident from './incident';
 class IncidentStore {
   constructor() {
     this.incidents = observable.map();
+    this.activeIncident = null;
 
     makeAutoObservable(this);
   }
@@ -41,6 +42,15 @@ class IncidentStore {
       ) || []
     );
   }
+
+  setActiveIncident = (id) => {
+    if (!id || !this.incidents.has(id)) {
+      this.activeIncident = this.incidents.values().next().value || null;
+      return;
+    }
+
+    this.activeIncident = this.incidents.get(id);
+  };
 }
 
 export default IncidentStore;

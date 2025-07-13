@@ -3,15 +3,18 @@ import { action, computed, makeObservable, observable } from 'mobx';
 class StatusStore {
   constructor() {
     this.statusPages = observable.map();
+    this.activeStatusPage = null;
 
     makeObservable(this, {
       statusPages: observable,
+      activeStatusPage: observable,
       setStatusPages: action,
       addStatusPage: action,
       deleteStatusPage: action,
       getStatusById: action,
       getStatusByUrl: action,
       allStatusPages: computed,
+      setActiveStatusPage: action,
     });
   }
 
@@ -42,6 +45,15 @@ class StatusStore {
   get allStatusPages() {
     return Array.from(this.statusPages.values()) || [];
   }
+
+  setActiveStatusPage = (id) => {
+    if (!id || !this.statusPages.has(id)) {
+      this.activeStatusPage = this.statusPages.values().next().value || null;
+      return;
+    }
+
+    this.activeStatusPage = this.statusPages.get(id);
+  };
 }
 
 export default StatusStore;
