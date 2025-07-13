@@ -43,10 +43,10 @@ const createIncidentMessageMiddleware = async (request, response) => {
     };
 
     if (
-      data.messages[data.messages.length - 2] &&
-      !data.messages[data.messages.length - 2]?.endedAt
+      incident.messages[incident.messages.length - 2] &&
+      !incident.messages[incident.messages.length - 2]?.endedAt
     ) {
-      data.messages[data.messages.length - 2].endedAt =
+      incident.messages[incident.messages.length - 2].endedAt =
         new Date().toISOString();
     }
 
