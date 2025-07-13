@@ -1,14 +1,18 @@
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
+import useContextStore from '../../context';
 import PillCircle from '../navigation/PillCircle';
 
-const HomeMonitorsList = ({
-  monitors,
-  selectedMonitor,
-  setSelectedMonitor,
-}) => {
+const HomeMonitorsList = ({ monitors }) => {
+  const {
+    globalStore: { activeMonitor, setActiveMonitor },
+  } = useContextStore();
+
+  if (!activeMonitor) return null;
+
   const monitorsList = monitors.map((monitor) => {
     const classes = classNames('item', {
-      'item-active': selectedMonitor === monitor.monitorId,
+      'item-active': activeMonitor.monitorId === monitor.monitorId,
     });
 
     let heartbeats = monitor.heartbeats
@@ -28,7 +32,7 @@ const HomeMonitorsList = ({
     return (
       <div
         className={classes}
-        onClick={() => setSelectedMonitor(monitor.monitorId)}
+        onClick={() => setActiveMonitor(monitor.monitorId)}
         key={monitor.monitorId}
       >
         <div className="content">
@@ -50,4 +54,4 @@ const HomeMonitorsList = ({
   return <div className="navigation-monitor-items">{monitorsList}</div>;
 };
 
-export default HomeMonitorsList;
+export default observer(HomeMonitorsList);

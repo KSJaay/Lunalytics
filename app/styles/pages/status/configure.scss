@@ -1,10 +1,6 @@
 @use '../../breakpoints.scss' as *;
 @use '../../pxToRem.scss' as *;
 
-:root {
-  --status-page-max-width: 850px;
-}
-
 // status-configure > sc
 
 .sc-container {

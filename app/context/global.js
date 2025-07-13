@@ -5,13 +5,17 @@ class GlobalStore {
   constructor() {
     this.monitors = observable.map();
     this.timeouts = observable.map();
+    this.activeMonitor = null;
 
     makeObservable(this, {
       monitors: observable,
+      timeouts: observable,
+      activeMonitor: observable,
       setMonitors: action,
       setMonitor: action,
       addMonitor: action,
       removeMonitor: action,
+      setActiveMonitor: action,
       allMonitors: computed,
     });
   }
@@ -94,6 +98,15 @@ class GlobalStore {
     }
 
     this.addMonitor(monitor);
+  };
+
+  setActiveMonitor = (monitorId) => {
+    if (!monitorId || !this.monitors.has(monitorId)) {
+      this.activeMonitor = this.monitors.values().next().value || null;
+      return;
+    }
+
+    this.activeMonitor = this.monitors.get(monitorId);
   };
 }
 

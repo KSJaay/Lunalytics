@@ -123,3 +123,21 @@
     }
   }
 }
+
+.status-action-bar-container {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  width: 850px;
+  align-items: center;
+
+  .title {
+    flex: 1;
+    font-weight: var(--weight-semibold);
+  }
+
+  .buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+}

@@ -1,4 +1,6 @@
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
+import useContextStore from '../../context';
 
 const NotificationIcons = {
   Discord: '/notifications/discord.svg',
@@ -8,11 +10,11 @@ const NotificationIcons = {
   HomeAssistant: '/notifications/homeAssistant.svg',
 };
 
-const NotificationList = ({
-  notifications,
-  activeNotification,
-  setActiveNotification,
-}) => {
+const NotificationList = ({ notifications }) => {
+  const {
+    notificationStore: { activeNotification, setActiveNotification },
+  } = useContextStore();
+
   if (!notifications || !notifications?.length) {
     return <div style={{ flex: 1 }}></div>;
   }
@@ -28,7 +30,7 @@ const NotificationList = ({
           <div
             key={notification.id}
             className={classes}
-            onClick={() => setActiveNotification(notification)}
+            onClick={() => setActiveNotification(notification.id)}
           >
             <div className="icon-container">
               <img
@@ -47,4 +49,4 @@ const NotificationList = ({
   );
 };
 
-export default NotificationList;
+export default observer(NotificationList);

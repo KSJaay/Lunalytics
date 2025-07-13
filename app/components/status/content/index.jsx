@@ -15,7 +15,11 @@ import ActionBar from '../../ui/actionBar';
 import useContextStore from '../../../context';
 import handleCreateOrEditStatusPage from '../../../handlers/status/configure/create';
 
-const StatusConfigureContent = ({ currentTab, activeStatusId }) => {
+const StatusConfigureContent = ({
+  currentTab,
+  activeStatusId,
+  showActionBar = true,
+}) => {
   const {
     statusStore: { addStatusPage, getStatusById },
   } = useContextStore();
@@ -80,50 +84,51 @@ const StatusConfigureContent = ({ currentTab, activeStatusId }) => {
         ) : null}
       </div>
 
-      <ActionBar show={showSaveActionBar} position="bottom" variant="floating">
-        <div
-          style={{
-            display: 'flex',
-            gap: '0.5rem',
-            padding: '0.75rem 1rem',
-            width: '850px',
-            alignItems: 'center',
-          }}
+      {showActionBar ? (
+        <ActionBar
+          show={showSaveActionBar}
+          position="bottom"
+          variant="floating"
         >
-          <div style={{ flex: 1, fontWeight: 'var(--weight-semibold)' }}>
-            Found some changes! Please save or cancel.
-          </div>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <Button
-              color="red"
-              variant="flat"
-              onClick={() => {
-                const statusPageById = getStatusById(activeStatusId);
-                if (!statusPageById) return;
+          <div className="status-action-bar-container">
+            <div className="title">
+              Found some changes! Please save or cancel.
+            </div>
+            <div className="buttons">
+              <Button
+                color="red"
+                variant="flat"
+                onClick={() => {
+                  const statusPageById = getStatusById(activeStatusId);
+                  if (!statusPageById) return;
 
-                resetStatusPage(statusPageById.settings, statusPageById.layout);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              color="green"
-              variant="flat"
-              onClick={() => {
-                handleCreateOrEditStatusPage(
-                  settings,
-                  layout,
-                  handleUpdate,
-                  true,
-                  activeStatusId
-                );
-              }}
-            >
-              Save
-            </Button>
+                  resetStatusPage(
+                    statusPageById.settings,
+                    statusPageById.layout
+                  );
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                color="green"
+                variant="flat"
+                onClick={() => {
+                  handleCreateOrEditStatusPage(
+                    settings,
+                    layout,
+                    handleUpdate,
+                    true,
+                    activeStatusId
+                  );
+                }}
+              >
+                Save
+              </Button>
+            </div>
           </div>
-        </div>
-      </ActionBar>
+        </ActionBar>
+      ) : null}
     </>
   );
 };
