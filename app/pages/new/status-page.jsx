@@ -54,8 +54,6 @@ const Notifications = () => {
 
   const addNotification = () => {};
 
-  if (!activeStatusPage) return null;
-
   return (
     <Navigation
       activeUrl="/status-pages"
@@ -95,17 +93,34 @@ const Notifications = () => {
         HeaderComponent: HomeStatusPageHeader,
       }}
     >
-      <div>
-        <div style={{ padding: '1rem 1rem 7rem 1rem' }}>
-          <StatusConfigureProvider activeStatusPage={activeStatusPage}>
-            <StatusConfigureContent
-              currentTab={activePage}
-              activeStatusId={activeStatusPage?.statusId}
-              getStatusById={getStatusById}
-            />
-          </StatusConfigureProvider>
+      {!activeStatusPage ? (
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            fontWeight: 'bold',
+            fontSize: 'var(--font-2xl)',
+            color: 'var(--font-light-color)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div>No status pages found</div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <div style={{ padding: '1rem 1rem 7rem 1rem' }}>
+            <StatusConfigureProvider activeStatusPage={activeStatusPage}>
+              <StatusConfigureContent
+                currentTab={activePage}
+                activeStatusId={activeStatusPage?.statusId}
+                getStatusById={getStatusById}
+              />
+            </StatusConfigureProvider>
+          </div>
+        </div>
+      )}
     </Navigation>
   );
 };

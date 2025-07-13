@@ -42,12 +42,14 @@ const HomeStatusPageHeader = ({
   const isEditor = role.hasPermission(PermissionsBits.MANAGE_STATUS_PAGES);
 
   const statusPageUrl =
-    statusPage.statusUrl === 'default'
+    statusPage?.statusUrl === 'default'
       ? baseUrl
-      : `${baseUrl}/status/${statusPage.statusUrl}`;
+      : `${baseUrl}/status/${statusPage?.statusUrl}`;
 
-  const handleDelete = async (statusPageId) => {
+  const handleDelete = async () => {
     try {
+      const statusPageId = statusPage?.statusId;
+
       await createPostRequest('/api/status-pages/delete', { statusPageId });
       setActiveNotification(null);
       deleteStatusPage(statusPageId);
@@ -59,12 +61,17 @@ const HomeStatusPageHeader = ({
     }
   };
 
+  if (!statusPage) return null;
+
   return (
     <>
       <div className="navigation-header-content" style={{ border: 'none' }}>
         <div className="navigation-header-title">
           <div>
-            Status Page {'>'} {statusPage?.settings?.title || 'Lunalytics'}
+            Status Page
+            {statusPage?.settings?.title
+              ? ` - ${statusPage.settings.title}`
+              : 'Lunalytics'}
           </div>
           {statusPage?.statusUrl ? (
             <div className="navigation-header-subtitle">

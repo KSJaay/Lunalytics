@@ -17,11 +17,15 @@ const NotificationsList = ({
   selectedIncidentId,
   setActiveIncident,
 }) => {
+  if (!incidents || incidents.length === 0) {
+    return <div style={{ flex: 1 }}></div>;
+  }
+
   return (
     <div className="navigation-incident-items">
       {incidents.map((incident) => {
         const classes = classNames('item', {
-          'item-active': selectedIncidentId === incident.incidentId,
+          'item-active': selectedIncidentId === incident?.incidentId,
         });
 
         return (

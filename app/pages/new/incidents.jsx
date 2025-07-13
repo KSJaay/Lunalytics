@@ -51,8 +51,6 @@ const Notifications = () => {
     [search, allIncidents]
   );
 
-  if (!activeIncident) return null;
-
   return (
     <Navigation
       activeUrl="/incidents"
@@ -60,7 +58,7 @@ const Notifications = () => {
       leftChildren={
         <NotificationsList
           incidents={incidents}
-          selectedIncidentId={activeIncident.incidentId}
+          selectedIncidentId={activeIncident?.incidentId}
           setActiveIncident={setActiveIncident}
         />
       }
@@ -79,7 +77,24 @@ const Notifications = () => {
         HeaderComponent: HomeIncidentHeader,
       }}
     >
-      <IncidentContent incident={activeIncident} />
+      {!activeIncident ? (
+        <div
+          style={{
+            height: '100%',
+            width: '100%',
+            fontWeight: 'bold',
+            fontSize: 'var(--font-2xl)',
+            color: 'var(--font-light-color)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div>No incidents found</div>
+        </div>
+      ) : (
+        <IncidentContent incident={activeIncident} />
+      )}
     </Navigation>
   );
 };

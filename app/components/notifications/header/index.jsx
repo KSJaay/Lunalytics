@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { createGetRequest } from '../../../services/axios';
 
 const HomeNotificationHeader = ({
-  notification,
+  notification = {},
   isInfoOpen,
   setIsInfoOpen,
   rightChildren,
@@ -25,8 +25,8 @@ const HomeNotificationHeader = ({
   } = useContextStore();
 
   const handleDelete = async () => {
-    const { id } = notification;
     try {
+      const { id } = notification;
       await createGetRequest('/api/notifications/delete', {
         notificationId: id,
       });
@@ -49,12 +49,15 @@ const HomeNotificationHeader = ({
     <div className="navigation-header-content">
       <div className="navigation-header-title">
         <div>
-          Notification {'>'} {notification?.friendlyName}
+          Notification
+          {notification?.friendlyName ? ` - ${notification.friendlyName}` : ''}
         </div>
 
-        <div className="navigation-header-subtitle">
-          Notification for <span>{notification.platform}</span>
-        </div>
+        {notification?.platform ? (
+          <div className="navigation-header-subtitle">
+            Notification for <span>{notification.platform}</span>
+          </div>
+        ) : null}
       </div>
       <div className="navigation-header-buttons">
         {isEditor ? (
