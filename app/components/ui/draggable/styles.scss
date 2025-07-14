@@ -1,0 +1,8 @@
+.draggable-item {
+  transition: background-color 0.1s ease, box-shadow 0.1s ease,
+    transform 0.1s ease;
+
+  &.dragging {
+    cursor: grabbing;
+  }
+}

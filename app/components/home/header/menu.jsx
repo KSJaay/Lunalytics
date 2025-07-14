@@ -103,7 +103,7 @@ const HomeMonitorHeaderMenu = () => {
       value: 'Clone',
       icon: <FaClone style={{ width: '20px', height: '20px' }} />,
       onClick: handleClone,
-      id: 'monitor-pause-button',
+      id: 'monitor-clone-button',
     },
     {
       value: 'Edit',
@@ -125,7 +125,7 @@ const HomeMonitorHeaderMenu = () => {
         <FaPause style={{ width: '20px', height: '20px' }} />
       ),
       onClick: handlePause,
-      id: 'monitor-clone-button',
+      id: 'monitor-pause-button',
     },
   ];
 

@@ -1,7 +1,11 @@
+// import dependencies
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
+
+// import local files
 import useContextStore from '../../context';
 import PillCircle from '../navigation/PillCircle';
+import HomeMonitorsListContext from './context';
 
 const HomeMonitorsList = ({ monitors }) => {
   const {
@@ -30,24 +34,28 @@ const HomeMonitorsList = ({ monitors }) => {
     }
 
     return (
-      <div
-        className={classes}
-        onClick={() => setActiveMonitor(monitor.monitorId)}
+      <HomeMonitorsListContext
+        monitorId={monitor.monitorId}
         key={monitor.monitorId}
       >
-        <div className="content">
-          <div>{monitor.name}</div>
-          <span>{monitor.url}</span>
+        <div
+          className={classes}
+          onClick={() => setActiveMonitor(monitor.monitorId)}
+        >
+          <div className="content">
+            <div>{monitor.name}</div>
+            <span>{monitor.url}</span>
+          </div>
+          <div className="pill-container">
+            <PillCircle
+              size={35}
+              pillWidth={10}
+              pillHeight={3}
+              pills={heartbeats}
+            />
+          </div>
         </div>
-        <div className="pill-container">
-          <PillCircle
-            size={35}
-            pillWidth={10}
-            pillHeight={3}
-            pills={heartbeats}
-          />
-        </div>
-      </div>
+      </HomeMonitorsListContext>
     );
   });
 
