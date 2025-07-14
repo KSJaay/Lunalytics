@@ -14,6 +14,7 @@ import HomeMonitorHeader from '../components/home/header';
 import HomeMonitorsList from '../components/home/monitors';
 import NavigationMonitorInfo from '../components/navigation/info/monitor';
 import MonitorConfigureModal from '../components/modal/monitor/configure';
+import { FaEllipsisVertical } from 'react-icons/fa6';
 
 const Home = () => {
   const {
@@ -29,21 +30,44 @@ const Home = () => {
     <Navigation
       leftChildren={<HomeMonitorsList monitors={allMonitors} />}
       leftButton={
-        <Button
-          variant="flat"
-          fullWidth
-          onClick={() =>
-            openModal(
-              <MonitorConfigureModal
-                closeModal={closeModal}
-                handleMonitorSubmit={addMonitor}
-              />,
-              false
-            )
-          }
+        <div
+          style={{
+            display: 'flex',
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}
         >
-          Add Monitor
-        </Button>
+          <Button
+            variant="flat"
+            fullWidth
+            onClick={() =>
+              openModal(
+                <MonitorConfigureModal
+                  closeModal={closeModal}
+                  handleMonitorSubmit={addMonitor}
+                />,
+                false
+              )
+            }
+          >
+            Add Monitor
+          </Button>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '0.75rem',
+              backgroundColor: 'var(--accent-800)',
+              borderRadius: 'var(--radius-sm)',
+              cursor: 'pointer',
+            }}
+          >
+            <FaEllipsisVertical size={20} />
+          </div>
+        </div>
       }
       rightChildren={<NavigationMonitorInfo monitor={activeMonitor} />}
       header={{ HeaderComponent: HomeMonitorHeader }}
