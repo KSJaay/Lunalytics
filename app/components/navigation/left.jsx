@@ -65,7 +65,7 @@ const LeftNavigation = ({ activeUrl }) => {
     });
 
     return (
-      <Tooltip text={name} position="right" key={name} color="gray">
+      <Tooltip position="right" text={name} key={name} color="gray">
         <div
           className={classes}
           key={name}
