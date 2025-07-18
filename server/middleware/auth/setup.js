@@ -107,7 +107,15 @@ const setupMiddleware = async (request, response) => {
     }
 
     if (config.get('database')?.name) {
-      return response.status(400).send({ general: 'Database already exists' });
+      const exists = await ownerExists().catch(() => false);
+
+      if (exists) {
+        return response.status(400).send({
+          general:
+            'Owner already exists, please delete the current database and try again.',
+          errorType: 'ownerExists',
+        });
+      }
     }
 
     const keys = getSetupKeys(type, request.body.databaseType);
@@ -145,7 +153,8 @@ const setupMiddleware = async (request, response) => {
     if (query) {
       return response.status(400).send({
         general:
-          'Owner already exists, please delete the current database and try again.',
+          'Owner already exists, please delete the current database and try again or login to your account.',
+        errorType: 'ownerExists',
       });
     }
 
