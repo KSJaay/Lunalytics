@@ -4,6 +4,7 @@ import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { deleteCertificate } from '../../database/queries/certificate.js';
 import { deleteHeartbeats } from '../../database/queries/heartbeat.js';
 import { deleteMonitor } from '../../database/queries/monitor.js';
+import statusCache from '../../cache/status.js';
 
 const monitorDelete = async (request, response) => {
   try {
@@ -16,6 +17,8 @@ const monitorDelete = async (request, response) => {
     await deleteMonitor(monitorId);
     await deleteHeartbeats(monitorId);
     await deleteCertificate(monitorId);
+
+    statusCache.removeMonitor(monitorId);
 
     return response.sendStatus(200);
   } catch (error) {
