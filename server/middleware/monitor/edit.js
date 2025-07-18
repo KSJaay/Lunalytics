@@ -25,7 +25,7 @@ const monitorEdit = async (request, response) => {
     const montior_data = formatMonitorData(request.body, user.email);
     const data = await updateMonitor(montior_data);
 
-    await cache.checkStatus(data.monitorId);
+    cache.checkStatus(data.monitorId)?.catch(() => false);
 
     const heartbeats = await fetchHeartbeats(data.monitorId);
     const cert = await fetchCertificate(data.monitorId);
@@ -38,6 +38,7 @@ const monitorEdit = async (request, response) => {
 
     return response.json(monitor);
   } catch (error) {
+    console.log('error123', error);
     return handleError(error, response);
   }
 };
