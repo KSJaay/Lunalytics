@@ -12,9 +12,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import local files
 import Login from './pages/login';
 import Register from './pages/register';
-import Navigation from './components/navigation';
 import Home from './pages/home';
-import Monitor from './pages/monitor';
 import GlobalLayout from './layout/global';
 import Setttings from './pages/settings';
 import Verify from './pages/verify';
@@ -38,7 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/"
             element={
               <StatusLayout>
-                <StatusPage id={'default'} />
+                <StatusPage id="default" />
               </StatusLayout>
             }
           />
@@ -87,16 +85,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             element={
               <GlobalLayout>
                 <Setttings />
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/monitor/:monitor_id"
-            element={
-              <GlobalLayout>
-                <Navigation>
-                  <Monitor />
-                </Navigation>
               </GlobalLayout>
             }
           />

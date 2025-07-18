@@ -1,11 +1,12 @@
 import { Input } from '@lunalytics/ui';
 
 // import local files
-import useStatusContext from '../../../../hooks/useConfigureStatus';
 import Switch from '../../../ui/switch';
+import useStatusPageContext from '../../../../context/status-page';
+import { observer } from 'mobx-react-lite';
 
 const StatusConfigureSettings = () => {
-  const { changeValues, settings = {} } = useStatusContext();
+  const { changeValues, settings = {} } = useStatusPageContext();
 
   return (
     <>
@@ -126,4 +127,4 @@ StatusConfigureSettings.displayName = 'StatusConfigureSettings';
 
 StatusConfigureSettings.propTypes = {};
 
-export default StatusConfigureSettings;
+export default observer(StatusConfigureSettings);

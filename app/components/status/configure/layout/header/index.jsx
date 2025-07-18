@@ -4,6 +4,7 @@ import './styles.scss';
 import PropTypes from 'prop-types';
 import { createSwapy } from 'swapy';
 import { useEffect, useRef } from 'react';
+import { observer } from 'mobx-react-lite';
 import { FiMinimize, FiMaximize } from 'react-icons/fi';
 
 // import local files
@@ -12,14 +13,14 @@ import StatusConfigureLayoutHeaderStatus from './status';
 import { FaTrashCan } from '../../../../icons';
 import StatusConfigureLayoutHeaderStatusOptions from './statusOptions';
 import StatusConfigureLayoutHeaderLogoOptions from './logoOptions';
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeader = ({ componentId }) => {
   const swapy = useRef(null);
   const container = useRef(null);
 
   const { getComponent, removeComponent, setComponentValue } =
-    useStatusContext();
+    useStatusPageContext();
   const component = getComponent(componentId);
   const { isMinimized } = component;
 
@@ -98,4 +99,4 @@ StatusConfigureLayoutHeader.propTypes = {
   componentId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutHeader;
+export default observer(StatusConfigureLayoutHeader);

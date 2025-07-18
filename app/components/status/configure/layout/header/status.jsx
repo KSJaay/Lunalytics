@@ -1,13 +1,14 @@
 // import dependencies
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import { PiDotsSixVerticalBold } from '../../../../icons';
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderStatus = ({ componentId }) => {
-  const { getComponent } = useStatusContext();
+  const { getComponent } = useStatusPageContext();
 
   const {
     status: { showTitle, showStatus, titleSize, statusSize, alignment },
@@ -46,4 +47,4 @@ StatusConfigureLayoutHeaderStatus.propTypes = {
   componentId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutHeaderStatus;
+export default observer(StatusConfigureLayoutHeaderStatus);

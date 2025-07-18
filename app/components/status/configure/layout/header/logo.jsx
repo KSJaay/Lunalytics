@@ -1,15 +1,16 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import { PiDotsSixVerticalBold } from '../../../../icons';
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderLogo = ({ componentId }) => {
   const {
     settings: { textColor, title = 'Lunalytics', logo = '/logo.svg' },
     getComponent,
-  } = useStatusContext();
+  } = useStatusPageContext();
 
   const {
     title: { showLogo, showTitle, logoSize, rotation, titleSize, alignment },
@@ -49,4 +50,4 @@ StatusConfigureLayoutHeaderLogo.propTypes = {
   componentId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutHeaderLogo;
+export default observer(StatusConfigureLayoutHeaderLogo);

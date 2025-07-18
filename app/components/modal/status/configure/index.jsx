@@ -3,16 +3,16 @@ import './add.scss';
 // import dependencies
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 import { TbLayoutFilled } from 'react-icons/tb';
 import { FaCog, FaPalette, FaRegEye } from 'react-icons/fa';
 
 // import local files
 import Modal from '../../../ui/modal';
 import StatusConfigureContent from '../../../status/content';
-import useStatusContext from '../../../../hooks/useConfigureStatus';
 import handleCreateOrEditStatusPage from '../../../../handlers/status/configure/create';
-import { observer } from 'mobx-react-lite';
 import useContextStore from '../../../../context';
+import useStatusPageContext from '../../../../context/status-page';
 
 const menuOptions = [
   { id: 'Appearance', Icon: FaPalette },
@@ -27,12 +27,12 @@ const StatusConfigurCreateModal = ({ closeModal }) => {
     statusStore: { addStatusPage },
   } = useContextStore();
 
-  const { settings, layout } = useStatusContext();
+  const { settings, layoutItems } = useStatusPageContext();
 
   const handleCreate = async () => {
     const hasUpdated = await handleCreateOrEditStatusPage(
       settings,
-      layout,
+      layoutItems,
       addStatusPage,
       false
     );

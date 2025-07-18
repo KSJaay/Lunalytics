@@ -1,17 +1,19 @@
 import './styles.scss';
 
+import { observer } from 'mobx-react-lite';
+
 // import local files
 import StatusConfigureAppearanceColors from './color';
 import StatusConfigureAppearanceBranding from './branding';
 import StatusConfigureAppearanceFont from './fonts';
 import Tabs from '../../../ui/tabs';
-import useStatusContext from '../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureAppearance = () => {
   const {
     settings: { theme = 'Auto' },
     changeValues,
-  } = useStatusContext();
+  } = useStatusPageContext();
 
   return (
     <div className="scc-block">
@@ -40,4 +42,4 @@ StatusConfigureAppearance.displayName = 'StatusConfigureAppearance';
 
 StatusConfigureAppearance.propTypes = {};
 
-export default StatusConfigureAppearance;
+export default observer(StatusConfigureAppearance);

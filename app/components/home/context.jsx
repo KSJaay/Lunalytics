@@ -1,142 +1,55 @@
 // import dependencies
-import { observer } from 'mobx-react-lite';
+import { useMemo } from 'react';
 import { ContextMenu } from '@lunalytics/ui';
+import useContextStore from '../../context';
+import useMonitorOptions from '../../hooks/useMonitorOptions';
 
-// import local files
-import { FaClone, FaTrashCan } from 'react-icons/fa6';
-import { MdEdit, MdFolder, MdFolderDelete, MdSort } from 'react-icons/md';
-import { FaPlay } from 'react-icons/fa';
+const styles = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+};
+
+const ItemContainer = ({ text, icon: Icon, ...props }) => {
+  return (
+    <div style={styles} {...props}>
+      <Icon size={16} />
+      <div>{text}</div>
+    </div>
+  );
+};
 
 const HomeMonitorsListContext = ({ children, monitorId }) => {
-  const styles = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  };
+  const {
+    globalStore: {
+      allMonitors,
+      getMonitor,
+      addMonitor,
+      editMonitor,
+      removeMonitor,
+    },
+    modalStore: { closeModal, openModal },
+  } = useContextStore();
 
-  const itemOptions = [
-    {
-      id: 'monitor-clone-button',
-      text: (
-        <div style={styles}>
-          <FaClone size={16} />
-          <div>Clone</div>
-        </div>
-      ),
-      type: 'item',
-    },
-    {
-      id: 'monitor-edit-button',
-      text: (
-        <div style={styles}>
-          <MdEdit size={16} />
-          <div>Edit</div>
-        </div>
-      ),
-      type: 'item',
-    },
-    {
-      id: 'monitor-delete-button',
-      text: (
-        <div style={styles}>
-          <FaTrashCan size={16} />
-          <div>Delete</div>
-        </div>
-      ),
-      type: 'item',
-    },
-    {
-      id: 'monitor-pause-button',
-      text: (
-        <div style={styles}>
-          <FaPlay size={16} />
-          <div>Pause</div>
-        </div>
-      ),
-      type: 'item',
-    },
-    { id: 'separator-1', type: 'separator' },
-    {
-      id: 'folder-move-options',
-      type: 'submenu',
-      text: (
-        <div style={styles}>
-          <MdFolder size={16} />
-          <div>Move to folder</div>
-        </div>
-      ),
-      options: [
-        {
-          id: 'folder-move-to-folder-1',
-          text: (
-            <div style={styles}>
-              <MdFolder size={16} />
-              <div>Folder 1</div>
-            </div>
-          ),
-          type: 'item',
-        },
-        {
-          id: 'folder-move-to-folder-2',
-          text: (
-            <div style={styles}>
-              <MdFolder size={16} />
-              <div>Folder 2</div>
-            </div>
-          ),
-          type: 'item',
-        },
-        {
-          id: 'folder-move-to-folder-3',
-          text: (
-            <div style={styles}>
-              <MdFolder size={16} />
-              <div>Folder 3</div>
-            </div>
-          ),
-          type: 'item',
-        },
-        { id: 'separator-1', type: 'separator' },
-        {
-          id: 'folder-create-new-folder',
-          text: (
-            <div style={styles}>
-              <MdFolder size={16} />
-              <div>Create Folder</div>
-            </div>
-          ),
-          type: 'item',
-        },
-      ],
-    },
-    { id: 'separator-2', type: 'separator' },
-    {
-      id: 'delete-folder',
-      text: (
-        <div style={styles}>
-          <MdFolderDelete size={16} />
-          <div>Delete Folder</div>
-        </div>
-      ),
-      type: 'item',
-    },
-    {
-      id: 'reorganise-monitors',
-      text: (
-        <div style={styles}>
-          <MdSort size={16} />
-          <div>Reorganise Monitors</div>
-        </div>
-      ),
-      type: 'item',
-    },
-  ];
+  const monitor = useMemo(() => {
+    return getMonitor(monitorId);
+  }, [monitorId, allMonitors]);
+
+  const { options } = useMonitorOptions(
+    ItemContainer,
+    monitor,
+    addMonitor,
+    editMonitor,
+    removeMonitor,
+    closeModal,
+    openModal
+  );
 
   return (
     <ContextMenu
       position="bottom"
       key={monitorId}
-      items={itemOptions}
+      items={options}
       align="start"
     >
       {children}
@@ -144,4 +57,4 @@ const HomeMonitorsListContext = ({ children, monitorId }) => {
   );
 };
 
-export default observer(HomeMonitorsListContext);
+export default HomeMonitorsListContext;

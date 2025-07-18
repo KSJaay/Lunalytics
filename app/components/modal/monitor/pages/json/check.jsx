@@ -23,8 +23,6 @@ const MonitorJsonQueryCheck = ({ inputs, errors, handleInput }) => {
 
   const json_query = inputs.json_query?.[0] || {};
 
-  console.log('json_query', json_query);
-
   const json_operator =
     JsonChecks.find((check) => check.id === json_query.operator) ||
     JsonChecks[0];

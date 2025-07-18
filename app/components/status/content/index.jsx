@@ -3,9 +3,11 @@ import {
   MdOutlineArrowBack,
   MdOutlineArrowForward,
 } from 'react-icons/md';
-import { Button } from '@lunalytics/ui';
+import { isEqual } from 'es-toolkit';
 import { useMemo } from 'react';
-import useStatusContext from '../../../hooks/useConfigureStatus';
+import { Button } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
+
 import StatusConfigureAppearance from '../configure/appearance';
 import StatusConfigureLayout from '../configure/layout';
 import StatusConfigureSettings from '../configure/settings';
@@ -14,6 +16,7 @@ import StatusConfigurePreview from '../configure/preview';
 import ActionBar from '../../ui/actionBar';
 import useContextStore from '../../../context';
 import handleCreateOrEditStatusPage from '../../../handlers/status/configure/create';
+import useStatusPageContext from '../../../context/status-page';
 
 const StatusConfigureContent = ({
   currentTab,
@@ -24,21 +27,19 @@ const StatusConfigureContent = ({
     statusStore: { addStatusPage, getStatusById },
   } = useContextStore();
 
-  const { resetStatusPage, settings, layout } = useStatusContext();
+  const { resetStatusPage, settings, layoutItems } = useStatusPageContext();
 
   const showSaveActionBar = useMemo(() => {
     const statusPageById = getStatusById(activeStatusId);
 
-    return (
-      JSON.stringify({ settings, layout }) !==
-      JSON.stringify({
-        settings: statusPageById?.settings,
-        layout: statusPageById?.layout,
-      })
+    return !isEqual(
+      { settings, layout: layoutItems },
+      { settings: statusPageById?.settings, layout: statusPageById?.layout }
     );
-  }, [activeStatusId, getStatusById, settings, layout]);
+  }, [activeStatusId, getStatusById, settings, layoutItems]);
 
   const handleUpdate = async (data) => {
+    console.log('data', data);
     addStatusPage(data);
     resetStatusPage(data.settings, data.layout);
   };
@@ -116,7 +117,7 @@ const StatusConfigureContent = ({
                 onClick={() => {
                   handleCreateOrEditStatusPage(
                     settings,
-                    layout,
+                    layoutItems,
                     handleUpdate,
                     true,
                     activeStatusId
@@ -133,4 +134,4 @@ const StatusConfigureContent = ({
   );
 };
 
-export default StatusConfigureContent;
+export default observer(StatusConfigureContent);

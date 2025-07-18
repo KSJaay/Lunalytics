@@ -2,10 +2,10 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 import { FiMinimize, FiMaximize } from 'react-icons/fi';
 
 // import local files
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import Tabs from '../../../../ui/tabs';
 import { FaTrashCan } from '../../../../icons';
 import StatusIncidentBasic from './design/basic';
@@ -17,10 +17,11 @@ import {
   statusSizes,
 } from '../../../../../../shared/constants/status';
 import { affectTextIds } from '../../../../../../shared/constants/incident';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutIncidents = ({ componentId }) => {
   const { setComponentValue, getComponent, removeComponent } =
-    useStatusContext();
+    useStatusPageContext();
 
   const { design, size, status, titleSize, isMinimized } =
     getComponent(componentId);
@@ -126,4 +127,4 @@ StatusConfigureLayoutIncidents.propTypes = {
   componentId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutIncidents;
+export default observer(StatusConfigureLayoutIncidents);
