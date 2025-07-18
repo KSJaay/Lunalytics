@@ -167,6 +167,11 @@ class Status {
   deleteIncident(incidentId) {
     this.incidents.delete(incidentId);
   }
+
+  removeMonitor(monitorId) {
+    this.monitors.delete(monitorId);
+    this.heartbeats.delete(monitorId);
+  }
 }
 
 const statusCache = new Status();
