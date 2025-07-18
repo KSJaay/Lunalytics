@@ -158,20 +158,29 @@ const StatusPage = ({ id }) => {
                 ? Object.keys(statusPage.monitors)
                 : item.monitors;
 
-              const allMonitors = monitors.map((monitorId) => {
-                const monitor = statusPage?.monitors[monitorId];
-                if (!monitor) return null;
+              const allMonitors = monitors
+                .map((monitorId) => {
+                  const monitor = statusPage?.monitors[monitorId];
+                  if (!monitor || monitor.paused) return null;
 
-                const monitorHasIncident = statusPage.incidents.find(
-                  (incident) => incident?.monitorIds?.includes(monitorId)
-                );
-                const monitorStatus =
-                  monitorHasIncident && monitorHasIncident.status !== 'Resolved'
-                    ? monitorHasIncident.affect
-                    : 'Operational';
+                  const monitorHasIncident = statusPage.incidents.find(
+                    (incident) => incident?.monitorIds?.includes(monitorId)
+                  );
+                  const monitorStatus =
+                    monitorHasIncident &&
+                    monitorHasIncident.status !== 'Resolved'
+                      ? monitorHasIncident.affect
+                      : 'Operational';
 
-                return { ...monitor, status: monitorStatus };
-              });
+                  const monitorHeartbeats =
+                    statusPage.heartbeats[monitorId]?.[0];
+                  const status = monitorHeartbeats.isDown
+                    ? 'Degraded'
+                    : monitorStatus;
+
+                  return { ...monitor, status };
+                })
+                .filter(Boolean);
 
               return (
                 <StatusPageUptime
@@ -189,11 +198,13 @@ const StatusPage = ({ id }) => {
                 ? Object.keys(statusPage.monitors)
                 : item.monitors;
 
-              const allMonitors = monitors.map((monitorId) => {
-                const monitor = statusPage?.monitors[monitorId];
-                if (!monitor) return null;
-                return monitor;
-              });
+              const allMonitors = monitors
+                .map((monitorId) => {
+                  const monitor = statusPage?.monitors[monitorId];
+                  if (!monitor || monitor.paused) return null;
+                  return monitor;
+                })
+                .filter(Boolean);
 
               return (
                 <StatusPageMetrics

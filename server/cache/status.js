@@ -2,7 +2,7 @@
 import Collection from '../../shared/utils/collection.js';
 import { cleanMonitorForStatusPage } from '../class/monitor/index.js';
 import { fetchDailyHeartbeats } from '../database/queries/heartbeat.js';
-import { monitorExists } from '../database/queries/monitor.js';
+import { fetchMonitor, monitorExists } from '../database/queries/monitor.js';
 import {
   fetchAllMonitors,
   fetchAllStatusPages,
@@ -171,6 +171,16 @@ class Status {
   removeMonitor(monitorId) {
     this.monitors.delete(monitorId);
     this.heartbeats.delete(monitorId);
+  }
+
+  async reloadMonitor(monitorId) {
+    const monitor = await fetchMonitor(monitorId).catch(() => false);
+
+    if (!monitor) {
+      return;
+    }
+
+    this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));
   }
 }
 

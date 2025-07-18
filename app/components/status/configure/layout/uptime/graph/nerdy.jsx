@@ -1,5 +1,6 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { FaTriangleExclamation } from 'react-icons/fa6';
 
 // import local files
 import {
@@ -14,12 +15,14 @@ const statusAndText = {
     Operational: <FaCircleCheck />,
     Maintenance: <FaClock />,
     Incident: <IoWarning />,
+    Degraded: <FaTriangleExclamation />,
     Outage: <RiIndeterminateCircleFill />,
   },
   Text: {
     Operational: 'Operational',
     Maintenance: 'Maintenance',
     Incident: 'Incident',
+    Degraded: 'Degraded Service',
     Outage: 'Outage',
   },
 };

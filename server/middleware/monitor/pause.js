@@ -1,4 +1,5 @@
 import cache from '../../cache/index.js';
+import statusCache from '../../cache/status.js';
 import { pauseMonitor } from '../../database/queries/monitor.js';
 import { handleError } from '../../utils/errors.js';
 
@@ -24,6 +25,8 @@ const monitorPause = async (request, response) => {
     } else {
       await cache.checkStatus(monitorId);
     }
+
+    statusCache.reloadMonitor(monitorId).catch(() => false);
 
     return response.sendStatus(200);
   } catch (error) {

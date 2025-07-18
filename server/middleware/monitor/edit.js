@@ -8,6 +8,7 @@ import { formatMonitorData } from './add.js';
 import { updateMonitor } from '../../database/queries/monitor.js';
 import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
+import statusCache from '../../cache/status.js';
 
 const monitorEdit = async (request, response) => {
   try {
@@ -29,6 +30,8 @@ const monitorEdit = async (request, response) => {
 
     const heartbeats = await fetchHeartbeats(data.monitorId);
     const cert = await fetchCertificate(data.monitorId);
+
+    statusCache.reloadMonitor(data.monitorId).catch(() => false);
 
     const monitor = cleanMonitor({
       ...data,
