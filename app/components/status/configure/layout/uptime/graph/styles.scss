@@ -54,6 +54,10 @@
     color: var(--yellow-700);
   }
 
+  &.Degraded {
+    color: var(--yellow-700);
+  }
+
   &.Outage {
     color: var(--red-700);
   }
@@ -117,6 +121,10 @@
   }
 
   &.Incident {
+    color: var(--yellow-700);
+  }
+
+  &.Degraded {
     color: var(--yellow-700);
   }
 
@@ -246,6 +254,10 @@
   }
 
   &.Incident {
+    color: var(--yellow-700);
+  }
+
+  &.Degraded {
     color: var(--yellow-700);
   }
 

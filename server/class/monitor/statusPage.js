@@ -3,4 +3,5 @@ export const cleanMonitorForStatusPage = (monitor) => ({
   name: monitor.name,
   url: monitor.url,
   createdAt: monitor.createdAt,
+  paused: monitor.paused == '1',
 });
