@@ -1,12 +1,13 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 // import local files
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import StatusConfigureLayoutMetricsTypeBasic from './type/basic';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutMetricsDropdown = ({ componentId, title }) => {
-  const { getComponent } = useStatusContext();
+  const { getComponent } = useStatusPageContext();
 
   const { data: { showName, showPing } = {} } = getComponent(componentId);
 
@@ -31,4 +32,4 @@ StatusConfigureLayoutMetricsDropdown.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutMetricsDropdown;
+export default observer(StatusConfigureLayoutMetricsDropdown);

@@ -25,7 +25,7 @@ const StatusPageList = ({ statusPages }) => {
           <div
             key={statusPage.statusId}
             className={classes}
-            onClick={() => setActiveStatusPage(statusPage)}
+            onClick={() => setActiveStatusPage(statusPage.statusId)}
           >
             <div className="content">
               <div>{statusPage.settings.title}</div>

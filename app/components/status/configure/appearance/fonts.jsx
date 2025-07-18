@@ -1,15 +1,17 @@
+import { observer } from 'mobx-react-lite';
+
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
-import useStatusContext from '../../../../hooks/useConfigureStatus';
 import { listOfFonts } from '../../../../constant/status';
+import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureAppearanceFont = () => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
   const {
     settings: { font = 'Montserrat' },
     changeValues,
-  } = useStatusContext();
+  } = useStatusPageContext();
 
   return (
     <div>
@@ -50,4 +52,4 @@ StatusConfigureAppearanceFont.displayName = 'StatusConfigureAppearanceFont';
 
 StatusConfigureAppearanceFont.propTypes = {};
 
-export default StatusConfigureAppearanceFont;
+export default observer(StatusConfigureAppearanceFont);

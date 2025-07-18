@@ -1,12 +1,14 @@
+import { observer } from 'mobx-react-lite';
+
 // import local files
-import useStatusContext from '../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../context/status-page.js';
 import ColorPicker from '../../../ui/colorPicker';
 
 const StatusConfigureAppearanceColors = () => {
   const {
     settings: { headerBackground, background, textColor, highlight },
     changeValues,
-  } = useStatusContext();
+  } = useStatusPageContext();
 
   return (
     <div className="scc-container">
@@ -53,4 +55,4 @@ StatusConfigureAppearanceColors.displayName = 'StatusConfigureAppearanceColors';
 
 StatusConfigureAppearanceColors.propTypes = {};
 
-export default StatusConfigureAppearanceColors;
+export default observer(StatusConfigureAppearanceColors);

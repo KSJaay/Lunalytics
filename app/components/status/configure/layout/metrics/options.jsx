@@ -1,14 +1,15 @@
 // import dependencies
 import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
 
 // import local files
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import Tabs from '../../../../ui/tabs';
 import Switch from '../../../../ui/switch';
 import StatusConfigureLayoutMetricsTypeBasic from './type/basic';
 import StatusConfigureLayoutMetricsTypeNerdy from './type/nerdy';
 import StatusConfigureLayoutMetricsTypePretty from './type/pretty';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const getGraphType = (graphType, title, showPing) => {
   if (graphType === 'Basic') {
@@ -42,7 +43,7 @@ const getGraphType = (graphType, title, showPing) => {
 };
 
 const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
-  const { getComponentMonitor, setMonitorValue } = useStatusContext();
+  const { getComponentMonitor, setMonitorValue } = useStatusPageContext();
   const {
     graphType,
     title = '',
@@ -105,4 +106,4 @@ StatusConfigureLayoutMetricsOptions.propTypes = {
   monitorId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutMetricsOptions;
+export default observer(StatusConfigureLayoutMetricsOptions);

@@ -2,14 +2,15 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import { FaTrashCan } from '../../../../icons';
 import StatusConfigureLayoutHistoryList from './list';
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHistory = ({ componentId, incidents = [] }) => {
-  const { removeComponent } = useStatusContext();
+  const { removeComponent } = useStatusPageContext();
 
   return (
     <div className="scc-block">
@@ -43,4 +44,4 @@ StatusConfigureLayoutHistory.propTypes = {
   incidents: PropTypes.array.isRequired,
 };
 
-export default StatusConfigureLayoutHistory;
+export default observer(StatusConfigureLayoutHistory);

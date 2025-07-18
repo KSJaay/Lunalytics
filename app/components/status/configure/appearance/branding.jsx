@@ -1,13 +1,14 @@
 import { Input } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
 
 // import local files
-import useStatusContext from '../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureAppearanceBranding = () => {
   const {
     settings: { logo, favicon },
     changeValues,
-  } = useStatusContext();
+  } = useStatusPageContext();
 
   return (
     <div className="scb-container">
@@ -36,4 +37,4 @@ StatusConfigureAppearanceBranding.displayName =
 
 StatusConfigureAppearanceBranding.propTypes = {};
 
-export default StatusConfigureAppearanceBranding;
+export default observer(StatusConfigureAppearanceBranding);

@@ -2,19 +2,22 @@
 import '../styles/pages/home.scss';
 
 // import dependencies
+import { useEffect } from 'react';
 import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
+import { FaEllipsisVertical } from 'react-icons/fa6';
 
 // import local files
-import Monitor from './monitor';
 import useContextStore from '../context';
 import Navigation from '../components/navigation';
 import HomeMonitorHeader from '../components/home/header';
 import HomeMonitorsList from '../components/home/monitors';
 import NavigationMonitorInfo from '../components/navigation/info/monitor';
 import MonitorConfigureModal from '../components/modal/monitor/configure';
-import { FaEllipsisVertical } from 'react-icons/fa6';
+import MonitorStatus from '../components/monitor/status';
+import MonitorGraph from '../components/monitor/graph';
+import MonitorUptime from '../components/monitor/uptime';
+import Spacer from '../components/ui/spacer';
 
 const Home = () => {
   const {
@@ -28,7 +31,7 @@ const Home = () => {
 
   return (
     <Navigation
-      leftChildren={<HomeMonitorsList monitors={allMonitors} />}
+      leftChildren={<HomeMonitorsList />}
       leftButton={
         <div
           style={{
@@ -88,7 +91,12 @@ const Home = () => {
           <div>No monitors found</div>
         </div>
       ) : (
-        <Monitor />
+        <div className="monitor-container">
+          <MonitorStatus monitor={activeMonitor} />
+          <MonitorGraph monitor={activeMonitor} />
+          <MonitorUptime heartbeats={activeMonitor.heartbeats} />
+          <Spacer size={18} />
+        </div>
       )}
     </Navigation>
   );

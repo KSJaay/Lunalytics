@@ -1,17 +1,18 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 // import local files
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import Switch from '../../../../ui/switch';
 import Tabs from '../../../../ui/tabs';
 import {
   statusAlignments,
   statusSizes,
 } from '../../../../../../shared/constants/status';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
-  const { setComponentValue, getComponent } = useStatusContext(componentId);
+  const { setComponentValue, getComponent } = useStatusPageContext();
 
   const { status = {} } = getComponent(componentId);
 
@@ -76,4 +77,4 @@ StatusConfigureLayoutHeaderStatusOptions.propTypes = {
   componentId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutHeaderStatusOptions;
+export default observer(StatusConfigureLayoutHeaderStatusOptions);

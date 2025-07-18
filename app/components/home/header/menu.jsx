@@ -1,133 +1,54 @@
 // import dependencies
-import { toast } from 'react-toastify';
-import { MdEdit } from 'react-icons/md';
+import { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { LuEllipsis } from 'react-icons/lu';
-import { FaTrashCan } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
-import { FaClone, FaPause, FaPlay } from 'react-icons/fa';
 
 // import local files
 import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
 import useContextStore from '../../../context';
-import MonitorModal from '../../modal/monitor/delete';
-import MonitorConfigureModal from '../../modal/monitor/configure';
-import { createGetRequest, createPostRequest } from '../../../services/axios';
+import useMonitorOptions from '../../../hooks/useMonitorOptions';
+
+const DropdownItem = ({ id, text, icon: Icon, onClick }) => (
+  <Dropdown.Item
+    key={id}
+    id={id}
+    onClick={onClick}
+    className="home-header-menu-list-item"
+  >
+    {Icon && <Icon style={{ width: '20px', height: '20px' }} />}
+    {text}
+  </Dropdown.Item>
+);
 
 const HomeMonitorHeaderMenu = () => {
   const {
-    modalStore: { openModal, closeModal },
     globalStore: {
+      getMonitor,
+      allMonitors,
+      activeMonitor,
       addMonitor,
       editMonitor,
       removeMonitor,
-      activeMonitor: monitor,
-      setActiveMonitor,
     },
+    modalStore: { closeModal, openModal },
   } = useContextStore();
 
   const { toggleDropdown, dropdownIsOpen } = useDropdown(true);
 
-  const navigate = useNavigate();
-  const monitorId = monitor?.monitorId;
+  const monitor = useMemo(() => {
+    return getMonitor(activeMonitor.monitorId);
+  }, [activeMonitor, getMonitor, allMonitors]);
 
-  const handleConfirm = async () => {
-    await createGetRequest('/api/monitor/delete', {
-      monitorId,
-    });
-
-    removeMonitor(monitorId);
-    setActiveMonitor(null);
-
-    toast.success('Monitor deleted successfully!');
-
-    closeModal();
-    navigate('/home');
-  };
-
-  const handlePause = async () => {
-    try {
-      await createPostRequest('/api/monitor/pause', {
-        monitorId,
-        pause: !monitor.paused,
-      });
-
-      editMonitor({ ...monitor, paused: !monitor.paused });
-
-      toast.success(
-        monitor.paused
-          ? 'Monitor resumed successfully!'
-          : 'Monitor paused successfully!'
-      );
-    } catch {
-      toast.error('Error occurred while pausing monitor!');
-    }
-  };
-
-  const handleClone = () => {
-    openModal(
-      <MonitorConfigureModal
-        monitor={monitor}
-        closeModal={closeModal}
-        handleMonitorSubmit={addMonitor}
-      />,
-      false
-    );
-  };
-
-  const handleEdit = () => {
-    openModal(
-      <MonitorConfigureModal
-        monitor={monitor}
-        closeModal={closeModal}
-        handleMonitorSubmit={editMonitor}
-        isEdit
-      />,
-      false
-    );
-  };
-
-  const handleDelete = () => {
-    openModal(
-      <MonitorModal
-        monitorId={monitor.monitorId}
-        handleConfirm={handleConfirm}
-        handleClose={closeModal}
-      />
-    );
-  };
-
-  const options = [
-    {
-      value: 'Clone',
-      icon: <FaClone style={{ width: '20px', height: '20px' }} />,
-      onClick: handleClone,
-      id: 'monitor-clone-button',
-    },
-    {
-      value: 'Edit',
-      icon: <MdEdit style={{ width: '20px', height: '20px' }} />,
-      onClick: handleEdit,
-      id: 'monitor-edit-button',
-    },
-    {
-      value: 'Delete',
-      icon: <FaTrashCan style={{ width: '20px', height: '20px' }} />,
-      onClick: handleDelete,
-      id: 'monitor-delete-button',
-    },
-    {
-      value: monitor?.paused ? 'Resume' : 'Pause',
-      icon: monitor?.paused ? (
-        <FaPlay style={{ width: '20px', height: '20px' }} />
-      ) : (
-        <FaPause style={{ width: '20px', height: '20px' }} />
-      ),
-      onClick: handlePause,
-      id: 'monitor-pause-button',
-    },
-  ];
+  const { options } = useMonitorOptions(
+    DropdownItem,
+    monitor,
+    addMonitor,
+    editMonitor,
+    removeMonitor,
+    closeModal,
+    openModal
+  );
 
   return (
     <div onClick={toggleDropdown}>
@@ -143,17 +64,7 @@ const HomeMonitorHeaderMenu = () => {
           <LuEllipsis size={20} onClick={toggleDropdown} />
         </Dropdown.Trigger>
         <Dropdown.List isOpen={dropdownIsOpen}>
-          {options.map((option) => (
-            <Dropdown.Item
-              key={option.id}
-              id={option.id}
-              onClick={option.onClick}
-              className="home-header-menu-list-item"
-            >
-              {option.icon}
-              {option.value}
-            </Dropdown.Item>
-          ))}
+          {options.map((option) => option.text)}
         </Dropdown.List>
       </Dropdown.Container>
     </div>
