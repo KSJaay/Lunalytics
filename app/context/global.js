@@ -14,8 +14,10 @@ class GlobalStore {
       setMonitors: action,
       setMonitor: action,
       addMonitor: action,
+      editMonitor: action,
       removeMonitor: action,
       setActiveMonitor: action,
+      getMonitor: action,
       allMonitors: computed,
     });
   }
@@ -62,6 +64,13 @@ class GlobalStore {
   addMonitor = (monitor) => {
     this.monitors.set(monitor.monitorId, monitor);
 
+    if (
+      this.activeMonitor &&
+      this.activeMonitor.monitorId === monitor.monitorId
+    ) {
+      this.setActiveMonitor(monitor.monitorId);
+    }
+
     this.timeouts.set(
       monitor.monitorId,
       setTimeout(
@@ -82,6 +91,7 @@ class GlobalStore {
     }
 
     this.monitors.delete(monitorId);
+    this.setActiveMonitor(null);
   };
 
   getMonitor = (monitorId) => {

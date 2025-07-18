@@ -14,7 +14,7 @@ import StatusConfigureMonitor from '../../monitor';
 import useContextStore from '../../../../../context';
 import StatusConfigureLayoutMetricsOptions from './options';
 import StatusConfigureLayoutMetricsDropdown from './dropdown';
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../../context/status-page';
 import { statusGraphTypes } from '../../../../../../shared/constants/status';
 
 const defaultMonitorObject = { graphType: 'Basic', showPing: true };
@@ -51,7 +51,8 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
     globalStore: { allMonitors, getMonitor },
   } = useContextStore();
   const { setComponentValue, getComponent, removeComponent } =
-    useStatusContext();
+    useStatusPageContext();
+
   const {
     monitors,
     graphType,

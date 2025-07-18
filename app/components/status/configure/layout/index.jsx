@@ -3,9 +3,9 @@ import './styles.scss';
 // import dependencies
 import { useEffect } from 'react';
 import { Button } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
 
 // import local files
-import useStatusContext from '../../../../hooks/useConfigureStatus';
 import StatusConfigureLayoutHeader from './header';
 import StatusConfigureLayoutStatus from './status';
 import StatusConfigureLayoutUptime from './uptime';
@@ -17,6 +17,7 @@ import StatusConfigureLayoutCustomCSS from './customCSS';
 import useContextStore from '../../../../context';
 import StatusConfigureAddModal from '../../../modal/status/configure/add';
 import StatusConfigureReorderModal from '../../../modal/status/configure/reorder';
+import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureLayout = () => {
   const {
@@ -28,10 +29,10 @@ const StatusConfigureLayout = () => {
       textColor = '#f3f6fb',
       highlight = '#17c964',
     },
-    layout,
+    layoutItems,
     createComponent,
     reorderBlocks,
-  } = useStatusContext();
+  } = useStatusPageContext();
   const {
     modalStore: { openModal, closeModal },
   } = useContextStore();
@@ -63,7 +64,7 @@ const StatusConfigureLayout = () => {
 
   return (
     <>
-      {layout.map((item) => {
+      {layoutItems.map((item) => {
         switch (item.type) {
           case 'header':
             return (
@@ -131,7 +132,7 @@ const StatusConfigureLayout = () => {
           onClick={() => {
             openModal(
               <StatusConfigureReorderModal
-                layout={layout}
+                layout={layoutItems}
                 closeModal={closeModal}
                 reorderBlocks={reorderBlocks}
               />
@@ -164,4 +165,4 @@ StatusConfigureLayout.displayName = 'StatusConfigureLayout';
 
 StatusConfigureLayout.propTypes = {};
 
-export default StatusConfigureLayout;
+export default observer(StatusConfigureLayout);

@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useStatusContext from '../../../../hooks/useConfigureStatus';
 import StatusPageHeader from './header';
 import StatusPageStatus from './status';
 import StatusPageUptime from './uptime';
@@ -15,6 +14,7 @@ import useContextStore from '../../../../context';
 import { defaultIncidents } from '../../../../constant/status';
 import StatusConfigureLayoutHistoryList from '../layout/history/list';
 import StatusFooter from './footer';
+import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigurePreview = () => {
   const {
@@ -29,9 +29,9 @@ const StatusConfigurePreview = () => {
       logo = '/logo.svg',
       title: titleText = 'Lunalytics',
     },
-    layout,
+    layoutItems,
     getComponent,
-  } = useStatusContext();
+  } = useStatusPageContext();
 
   const {
     globalStore: { allMonitors, getMonitor },
@@ -72,7 +72,7 @@ const StatusConfigurePreview = () => {
 
   return (
     <>
-      {layout.map((item) => {
+      {layoutItems.map((item) => {
         switch (item.type) {
           case 'header': {
             const component = getComponent(item.id);

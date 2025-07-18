@@ -14,12 +14,14 @@ import StatusConfigureContent from '../components/status/content';
 import StatusPageList from '../components/status/list';
 import StatusConfigureProvider from '../components/status/content/provider';
 import StatusConfigurCreateModal from '../components/modal/status/configure';
+import useStatusPageContext from '../context/status-page';
 
 const Notifications = () => {
   const {
     modalStore: { openModal, closeModal },
     statusStore: { allStatusPages, activeStatusPage, setActiveStatusPage },
   } = useContextStore();
+  const { setData } = useStatusPageContext();
 
   const [search, setSearch] = useState(null);
   const [activePage, setActivePage] = useState('Appearance');
@@ -27,6 +29,9 @@ const Notifications = () => {
   useEffect(() => {
     if (!activeStatusPage && allStatusPages[0]) {
       setActiveStatusPage(allStatusPages[0]);
+      setData(allStatusPages[0]);
+    } else {
+      setData(activeStatusPage);
     }
   }, [allStatusPages, activeStatusPage]);
 

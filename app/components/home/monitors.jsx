@@ -7,9 +7,9 @@ import useContextStore from '../../context';
 import PillCircle from '../navigation/PillCircle';
 import HomeMonitorsListContext from './context';
 
-const HomeMonitorsList = ({ monitors }) => {
+const HomeMonitorsList = () => {
   const {
-    globalStore: { activeMonitor, setActiveMonitor },
+    globalStore: { activeMonitor, setActiveMonitor, allMonitors: monitors },
   } = useContextStore();
 
   if (!activeMonitor) return null;

@@ -14,7 +14,6 @@ import {
   StatusUptimeNerdyGraph,
   StatusUptimePrettyGraph,
 } from './graph';
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import StatusConfigureMonitor from '../../monitor';
 import useContextStore from '../../../../../context';
 import {
@@ -22,6 +21,7 @@ import {
   statusIndicators,
 } from '../../../../../../shared/constants/status';
 import { affectTextIds } from '../../../../../../shared/constants/incident';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutUptime = ({ componentId }) => {
   const {
@@ -29,7 +29,7 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
   } = useContextStore();
 
   const { getComponent, setComponentValue, removeComponent } =
-    useStatusContext();
+    useStatusPageContext();
 
   const component = getComponent(componentId);
   const { title, monitors, graphType, status, statusIndicator, isMinimized } =
