@@ -8,7 +8,7 @@ import { PiDotsSixVerticalBold } from '../../../../icons';
 import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderStatus = ({ componentId }) => {
-  const { getComponent } = useStatusPageContext();
+  const { getComponent } = useStatusPageContext;
 
   const {
     status: { showTitle, showStatus, titleSize, statusSize, alignment },

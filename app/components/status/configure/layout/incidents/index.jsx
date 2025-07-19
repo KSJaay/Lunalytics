@@ -21,7 +21,7 @@ import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutIncidents = ({ componentId }) => {
   const { setComponentValue, getComponent, removeComponent } =
-    useStatusPageContext();
+    useStatusPageContext;
 
   const { design, size, status, titleSize, isMinimized } =
     getComponent(componentId);

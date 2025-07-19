@@ -1,9 +1,26 @@
 // import local files
+import { observer } from 'mobx-react-lite';
 import IncidentIdMessage from '../id/message';
+import useContextStore from '../../../context';
 
-const IncidentContentMessages = ({ incident }) => {
+const IncidentContentMessages = ({ incidentId }) => {
+  const {
+    incidentStore: { getIncidentById },
+  } = useContextStore();
+
+  const incident = getIncidentById(incidentId);
+
+  if (!incident) return null;
+
   return (
-    <div style={{ marginTop: '-0.5rem', gap: '1rem', display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{
+        marginTop: '-0.5rem',
+        gap: '1rem',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <div className="input-label">Incident Messages</div>
       {incident.messages.map((message, index) => (
         <IncidentIdMessage
@@ -23,4 +40,4 @@ IncidentContentMessages.displayName = 'IncidentContentMessages';
 
 IncidentContentMessages.propTypes = {};
 
-export default IncidentContentMessages;
+export default observer(IncidentContentMessages);

@@ -4,15 +4,9 @@ import { ContextMenu } from '@lunalytics/ui';
 import useContextStore from '../../context';
 import useMonitorOptions from '../../hooks/useMonitorOptions';
 
-const styles = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-};
-
 const ItemContainer = ({ text, icon: Icon, ...props }) => {
   return (
-    <div style={styles} {...props}>
+    <div className="content-menu-item" {...props}>
       <Icon size={16} />
       <div>{text}</div>
     </div>

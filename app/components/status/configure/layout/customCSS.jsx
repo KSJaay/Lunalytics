@@ -10,7 +10,7 @@ import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureLayoutCustomCSS = ({ componentId }) => {
   const { getComponent, setComponentValue, removeComponent } =
-    useStatusPageContext();
+    useStatusPageContext;
 
   const { isMinimized, data } = getComponent(componentId);
 
