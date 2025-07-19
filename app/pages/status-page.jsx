@@ -21,7 +21,7 @@ const Notifications = () => {
     modalStore: { openModal, closeModal },
     statusStore: { allStatusPages, activeStatusPage, setActiveStatusPage },
   } = useContextStore();
-  const { setData } = useStatusPageContext();
+  const { setData } = useStatusPageContext;
 
   const [search, setSearch] = useState(null);
   const [activePage, setActivePage] = useState('Appearance');

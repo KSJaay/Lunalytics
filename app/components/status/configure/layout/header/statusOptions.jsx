@@ -12,7 +12,7 @@ import {
 import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
-  const { setComponentValue, getComponent } = useStatusPageContext();
+  const { setComponentValue, getComponent } = useStatusPageContext;
 
   const { status = {} } = getComponent(componentId);
 

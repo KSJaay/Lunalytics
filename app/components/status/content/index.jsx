@@ -27,7 +27,7 @@ const StatusConfigureContent = ({
     statusStore: { addStatusPage, getStatusById },
   } = useContextStore();
 
-  const { resetStatusPage, settings, layoutItems } = useStatusPageContext();
+  const { resetStatusPage, settings, layoutItems } = useStatusPageContext;
 
   const showSaveActionBar = useMemo(() => {
     const statusPageById = getStatusById(activeStatusId);
@@ -36,10 +36,9 @@ const StatusConfigureContent = ({
       { settings, layout: layoutItems },
       { settings: statusPageById?.settings, layout: statusPageById?.layout }
     );
-  }, [activeStatusId, getStatusById, settings, layoutItems]);
+  }, [activeStatusId, JSON.stringify(settings), JSON.stringify(layoutItems)]);
 
   const handleUpdate = async (data) => {
-    console.log('data', data);
     addStatusPage(data);
     resetStatusPage(data.settings, data.layout);
   };

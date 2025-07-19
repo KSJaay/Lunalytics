@@ -20,7 +20,7 @@ const StatusConfigureLayoutHeader = ({ componentId }) => {
   const container = useRef(null);
 
   const { getComponent, removeComponent, setComponentValue } =
-    useStatusPageContext();
+    useStatusPageContext;
   const component = getComponent(componentId);
   const { isMinimized } = component;
 

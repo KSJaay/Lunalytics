@@ -27,7 +27,7 @@ const StatusConfigurCreateModal = ({ closeModal }) => {
     statusStore: { addStatusPage },
   } = useContextStore();
 
-  const { settings, layoutItems } = useStatusPageContext();
+  const { settings, layoutItems } = useStatusPageContext;
 
   const handleCreate = async () => {
     const hasUpdated = await handleCreateOrEditStatusPage(

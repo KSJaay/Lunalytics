@@ -39,7 +39,7 @@ const statusText = {
 
 const StatusConfigureLayoutStatus = ({ componentId }) => {
   const { setComponentValue, getComponent, removeComponent } =
-    useStatusPageContext();
+    useStatusPageContext;
   const { icon, design, size, status, titleSize, isMinimized } =
     getComponent(componentId);
 

@@ -1,5 +1,4 @@
 import { v7 as uuid } from 'uuid';
-import { createContext, useContext } from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import {
   defaultStatusValues,
@@ -43,6 +42,8 @@ class StatusPageStore {
   }
 
   setData = (data = {}) => {
+    // console.log('Updating data here');
+
     this.settings = data?.settings || defaultStatusValues;
 
     const layout = data?.layout || defaultStatusComponents;
@@ -55,6 +56,7 @@ class StatusPageStore {
   };
 
   setLayout = (layout) => {
+    // console.log('Updating layout here');
     if (typeof layout !== 'object' || !Array.isArray(layout)) {
       return;
     }
@@ -67,10 +69,12 @@ class StatusPageStore {
   };
 
   setSettings = (settings) => {
+    // console.log('Updating settings here');
     this.settings = { ...this.settings, ...settings };
   };
 
   changeValues = (data) => {
+    // console.log('Updating settings here');
     this.setSettings({
       ...this.settings,
       ...data,
@@ -78,6 +82,7 @@ class StatusPageStore {
   };
 
   createComponent = (type) => {
+    // console.log('Creating component here');
     const defaultComponent = statusComponents[type];
 
     if (!defaultComponent) {
@@ -91,6 +96,7 @@ class StatusPageStore {
   };
 
   getComponent = (id) => {
+    // console.log('Getting component here');
     const component = this.layout.get(id);
 
     if (!component) {
@@ -101,6 +107,7 @@ class StatusPageStore {
   };
 
   setComponentValue = (id, key, value) => {
+    // console.log('Setting component value here');
     const component = this.getComponent(id);
 
     if (!component) {
@@ -120,10 +127,12 @@ class StatusPageStore {
   };
 
   removeComponent = (id) => {
+    // console.log('Removing component here');
     this.layout.delete(id);
   };
 
   getComponentMonitor = (componentId, monitorId) => {
+    // console.log('Getting component monitor here');
     const component = this.getComponent(componentId);
 
     if (!component) {
@@ -134,6 +143,7 @@ class StatusPageStore {
   };
 
   setMonitorValue = (componentId, monitorId, key, value) => {
+    // console.log('Setting monitor value here');
     const component = this.getComponent(componentId);
 
     if (!component) return;
@@ -156,10 +166,12 @@ class StatusPageStore {
   };
 
   resetStatusPage = (settings, layout) => {
+    // console.log('Resetting status page here');
     this.setData({ settings, layout });
   };
 
   reorderBlocks = (listOfIds) => {
+    // console.log('Reordering blocks here');
     this.listOfIds = listOfIds;
   };
 
@@ -176,8 +188,6 @@ class StatusPageStore {
   }
 }
 
-const statusPage = new StatusPageStore();
-const store = createContext(statusPage);
-const useStatusPageContext = () => useContext(store);
+const useStatusPageContext = new StatusPageStore();
 
 export default useStatusPageContext;
