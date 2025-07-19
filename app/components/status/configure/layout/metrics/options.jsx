@@ -43,7 +43,7 @@ const getGraphType = (graphType, title, showPing) => {
 };
 
 const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
-  const { getComponentMonitor, setMonitorValue } = useStatusPageContext();
+  const { getComponentMonitor, setMonitorValue } = useStatusPageContext;
   const {
     graphType,
     title = '',

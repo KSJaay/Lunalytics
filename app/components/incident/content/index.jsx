@@ -34,7 +34,7 @@ const IncidentContent = ({ incident }) => {
         <IncidentContentImpact incident={incident} />
       </div>
 
-      <IncidentContentMessages incident={incident} />
+      <IncidentContentMessages incidentId={incident.incidentId} />
 
       <Button
         fullWidth

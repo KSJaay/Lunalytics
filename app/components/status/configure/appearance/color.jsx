@@ -8,7 +8,7 @@ const StatusConfigureAppearanceColors = () => {
   const {
     settings: { headerBackground, background, textColor, highlight },
     changeValues,
-  } = useStatusPageContext();
+  } = useStatusPageContext;
 
   return (
     <div className="scc-container">

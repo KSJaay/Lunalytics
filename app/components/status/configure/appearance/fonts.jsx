@@ -11,7 +11,7 @@ const StatusConfigureAppearanceFont = () => {
   const {
     settings: { font = 'Montserrat' },
     changeValues,
-  } = useStatusPageContext();
+  } = useStatusPageContext;
 
   return (
     <div>

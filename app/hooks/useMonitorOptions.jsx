@@ -91,18 +91,40 @@ const useMonitorOptions = (
     return [
       {
         id: 'monitor-clone-button',
-        text: <Container text="Clone" icon={FaClone} onClick={handleClone} />,
+        text: (
+          <Container
+            text="Clone"
+            icon={FaClone}
+            onClick={handleClone}
+            key="monitor-clone-button"
+            id="monitor-clone-button"
+          />
+        ),
         type: 'item',
       },
       {
         id: 'monitor-edit-button',
-        text: <Container text="Edit" icon={MdEdit} onClick={handleEdit} />,
+        text: (
+          <Container
+            text="Edit"
+            icon={MdEdit}
+            onClick={handleEdit}
+            key="monitor-edit-button"
+            id="monitor-edit-button"
+          />
+        ),
         type: 'item',
       },
       {
         id: 'monitor-delete-button',
         text: (
-          <Container text="Delete" icon={FaTrashCan} onClick={handleDelete} />
+          <Container
+            text="Delete"
+            icon={FaTrashCan}
+            onClick={handleDelete}
+            key="monitor-delete-button"
+            id="monitor-delete-button"
+          />
         ),
         type: 'item',
       },
@@ -113,6 +135,8 @@ const useMonitorOptions = (
             text={monitor?.paused ? 'Resume' : 'Pause'}
             icon={monitor?.paused ? FaPlay : FaPause}
             onClick={handlePause}
+            key="monitor-pause-button"
+            id="monitor-pause-button"
           />
         ),
         type: 'item',

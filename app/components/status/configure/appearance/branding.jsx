@@ -8,7 +8,7 @@ const StatusConfigureAppearanceBranding = () => {
   const {
     settings: { logo, favicon },
     changeValues,
-  } = useStatusPageContext();
+  } = useStatusPageContext;
 
   return (
     <div className="scb-container">

@@ -59,7 +59,7 @@ const IncidentEditMessageModal = ({ incidentId, incidentPosition }) => {
   return (
     <Modal.Container contentProps={{ style: { width: '1200px' } }}>
       <Modal.Title style={{ textAlign: 'center', marginBottom: '0' }}>
-        Add an update
+        Edit update
       </Modal.Title>
       <Modal.Message>
         <IncidentMonitors

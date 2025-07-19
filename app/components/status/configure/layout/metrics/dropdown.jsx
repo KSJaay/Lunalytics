@@ -7,7 +7,7 @@ import StatusConfigureLayoutMetricsTypeBasic from './type/basic';
 import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutMetricsDropdown = ({ componentId, title }) => {
-  const { getComponent } = useStatusPageContext();
+  const { getComponent } = useStatusPageContext;
 
   const { data: { showName, showPing } = {} } = getComponent(componentId);
 

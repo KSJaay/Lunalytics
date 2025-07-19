@@ -6,7 +6,7 @@ import useStatusPageContext from '../../../../context/status-page';
 import { observer } from 'mobx-react-lite';
 
 const StatusConfigureSettings = () => {
-  const { changeValues, settings = {} } = useStatusPageContext();
+  const { changeValues, settings = {} } = useStatusPageContext;
 
   return (
     <>

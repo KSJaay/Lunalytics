@@ -13,7 +13,7 @@ import {
 import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
-  const { getComponent, setComponentValue } = useStatusPageContext();
+  const { getComponent, setComponentValue } = useStatusPageContext;
 
   const { title = {} } = getComponent(componentId);
 
