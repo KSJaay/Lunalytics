@@ -35,8 +35,6 @@ const SetupForm = () => {
         return navigate('/home');
       } catch (error) {
         if (error?.response?.data) {
-          console.log(error?.response?.data?.errorType);
-
           if (error?.response?.data?.errorType === 'ownerExists') {
             return navigate('/login');
           }

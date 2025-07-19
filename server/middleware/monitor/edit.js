@@ -41,7 +41,6 @@ const monitorEdit = async (request, response) => {
 
     return response.json(monitor);
   } catch (error) {
-    console.log('error123', error);
     return handleError(error, response);
   }
 };
