@@ -22,18 +22,16 @@ const menuOptions = [
 ];
 
 const HomeStatusPageHeader = ({
-  statusPage,
   isInfoOpen,
   setIsInfoOpen,
   rightChildren,
-  setActiveNotification,
   activePage,
   setActivePage,
 }) => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },
-    statusStore: { deleteStatusPage },
+    statusStore: { deleteStatusPage, activeStatusPage: statusPage },
   } = useContextStore();
 
   const baseUrl = useCurrentUrl();
@@ -87,7 +85,7 @@ const HomeStatusPageHeader = ({
               onClick={() =>
                 openModal(
                   <StatusDeleteModal
-                    title={activePage?.settings?.title || 'Lunalytics'}
+                    title={statusPage?.settings?.title || 'Lunalytics'}
                     closeModal={closeModal}
                     deleteStatusPage={handleDelete}
                   />
