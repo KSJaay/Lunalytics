@@ -12,7 +12,6 @@ import Navigation from '../components/navigation';
 import HomeStatusPageHeader from '../components/status/header';
 import StatusConfigureContent from '../components/status/content';
 import StatusPageList from '../components/status/list';
-import StatusConfigureProvider from '../components/status/content/provider';
 import StatusConfigurCreateModal from '../components/modal/status/configure';
 import useStatusPageContext from '../context/status-page';
 
@@ -28,9 +27,11 @@ const Notifications = () => {
 
   useEffect(() => {
     if (!activeStatusPage && allStatusPages[0]) {
-      setActiveStatusPage(allStatusPages[0]);
+      setActiveStatusPage(allStatusPages[0].statusId);
       setData(allStatusPages[0]);
-    } else {
+    }
+
+    if (activeStatusPage) {
       setData(activeStatusPage);
     }
   }, [allStatusPages, activeStatusPage]);
@@ -67,9 +68,7 @@ const Notifications = () => {
           fullWidth
           onClick={() =>
             openModal(
-              <StatusConfigureProvider>
-                <StatusConfigurCreateModal closeModal={closeModal} />
-              </StatusConfigureProvider>,
+              <StatusConfigurCreateModal closeModal={closeModal} />,
               false
             )
           }
@@ -79,12 +78,7 @@ const Notifications = () => {
       }
       onLeftClick={() => {}}
       header={{
-        props: {
-          statusPage: activeStatusPage,
-          setActiveStatusPage,
-          activePage,
-          setActivePage,
-        },
+        props: { activePage, setActivePage },
         HeaderComponent: HomeStatusPageHeader,
       }}
     >
@@ -106,12 +100,7 @@ const Notifications = () => {
       ) : (
         <div>
           <div style={{ padding: '1rem 1rem 7rem 1rem' }}>
-            <StatusConfigureProvider activeStatusPage={activeStatusPage}>
-              <StatusConfigureContent
-                currentTab={activePage}
-                activeStatusId={activeStatusPage?.statusId}
-              />
-            </StatusConfigureProvider>
+            <StatusConfigureContent currentTab={activePage} />
           </div>
         </div>
       )}
