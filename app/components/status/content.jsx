@@ -3,40 +3,46 @@ import {
   MdOutlineArrowBack,
   MdOutlineArrowForward,
 } from 'react-icons/md';
-import { isEqual } from 'es-toolkit';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
-
-import StatusConfigureAppearance from '../configure/appearance';
-import StatusConfigureLayout from '../configure/layout';
-import StatusConfigureSettings from '../configure/settings';
 import { IoReloadSharp } from 'react-icons/io5';
-import StatusConfigurePreview from '../configure/preview';
-import ActionBar from '../../ui/actionBar';
-import useContextStore from '../../../context';
-import handleCreateOrEditStatusPage from '../../../handlers/status/configure/create';
-import useStatusPageContext from '../../../context/status-page';
 
-const StatusConfigureContent = ({
-  currentTab,
-  activeStatusId,
-  showActionBar = true,
-}) => {
+import StatusConfigureAppearance from './configure/appearance';
+import StatusConfigureLayout from './configure/layout';
+import StatusConfigureSettings from './configure/settings';
+import StatusConfigurePreview from './configure/preview';
+import ActionBar from '../ui/actionBar';
+import useContextStore from '../../context';
+import handleCreateOrEditStatusPage from '../../handlers/status/configure/create';
+import useStatusPageContext from '../../context/status-page';
+
+const StatusConfigureContent = ({ currentTab }) => {
   const {
-    statusStore: { addStatusPage, getStatusById },
+    statusStore: { addStatusPage, activeStatusPage: statusPage },
   } = useContextStore();
+
+  useEffect(() => {
+    console.log('Change');
+  }, [JSON.stringify(statusPage)]);
 
   const { resetStatusPage, settings, layoutItems } = useStatusPageContext;
 
-  const showSaveActionBar = useMemo(() => {
-    const statusPageById = getStatusById(activeStatusId);
+  console.log(statusPage.layout[0].status.showTitle);
 
-    return !isEqual(
-      { settings, layout: layoutItems },
-      { settings: statusPageById?.settings, layout: statusPageById?.layout }
+  const showSaveActionBar = useMemo(() => {
+    return (
+      JSON.stringify({ settings, layout: layoutItems }) ===
+      JSON.stringify({
+        layout: statusPage?.layout,
+        settings: statusPage?.settings,
+      })
     );
-  }, [activeStatusId, JSON.stringify(settings), JSON.stringify(layoutItems)]);
+  }, [
+    JSON.stringify(settings),
+    JSON.stringify(layoutItems),
+    JSON.stringify(statusPage),
+  ]);
 
   const handleUpdate = async (data) => {
     addStatusPage(data);
@@ -84,11 +90,11 @@ const StatusConfigureContent = ({
         ) : null}
       </div>
 
-      {showActionBar ? (
+      {showSaveActionBar ? (
         <ActionBar
-          show={showSaveActionBar}
           position="bottom"
           variant="floating"
+          show={showSaveActionBar}
         >
           <div className="status-action-bar-container">
             <div className="title">
@@ -99,13 +105,7 @@ const StatusConfigureContent = ({
                 color="red"
                 variant="flat"
                 onClick={() => {
-                  const statusPageById = getStatusById(activeStatusId);
-                  if (!statusPageById) return;
-
-                  resetStatusPage(
-                    statusPageById.settings,
-                    statusPageById.layout
-                  );
+                  resetStatusPage(statusPage.settings, statusPage.layout);
                 }}
               >
                 Cancel
@@ -119,7 +119,7 @@ const StatusConfigureContent = ({
                     layoutItems,
                     handleUpdate,
                     true,
-                    activeStatusId
+                    statusPage.statusId
                   );
                 }}
               >
