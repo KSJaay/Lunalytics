@@ -10,17 +10,14 @@ import Role from '../../../../shared/permissions/role';
 import { createPostRequest } from '../../../services/axios';
 import DeleteIncidentModal from '../../modal/incident/delete';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { MdArchive } from 'react-icons/md';
+import ArchiveIncidentModal from '../../modal/incident/archive';
 
-const HomeIncidentHeader = ({
-  isInfoOpen,
-  setIsInfoOpen,
-  rightChildren,
-  incident = {},
-}) => {
+const HomeIncidentHeader = ({ isInfoOpen, setIsInfoOpen, rightChildren }) => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },
-    incidentStore: { deleteIncident },
+    incidentStore: { addIncident, deleteIncident, activeIncident: incident },
   } = useContextStore();
 
   const role = new Role('user', user.permission);
@@ -42,6 +39,22 @@ const HomeIncidentHeader = ({
     }
   };
 
+  const handleArchive = async () => {
+    try {
+      const updatedIncident = { ...incident, isClosed: true };
+      await createPostRequest('/api/incident/update', {
+        incident: updatedIncident,
+      });
+
+      addIncident(updatedIncident);
+      closeModal();
+      toast.success('Incident archived successfully');
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to archive incident');
+    }
+  };
+
   return (
     <>
       <div className="navigation-header-content">
@@ -58,18 +71,32 @@ const HomeIncidentHeader = ({
         </div>
         <div className="navigation-header-buttons">
           {isEditor ? (
-            <div
-              onClick={() =>
-                openModal(
-                  <DeleteIncidentModal
-                    handleDelete={handleDelete}
-                    closeModal={closeModal}
-                  />
-                )
-              }
-            >
-              <FaTrashCan style={{ width: '20px', height: '20px' }} />
-            </div>
+            <>
+              <div
+                onClick={() =>
+                  openModal(
+                    <ArchiveIncidentModal
+                      closeModal={closeModal}
+                      handleArchive={handleArchive}
+                    />
+                  )
+                }
+              >
+                <MdArchive style={{ width: '20px', height: '20px' }} />
+              </div>
+              <div
+                onClick={() =>
+                  openModal(
+                    <DeleteIncidentModal
+                      handleDelete={handleDelete}
+                      closeModal={closeModal}
+                    />
+                  )
+                }
+              >
+                <FaTrashCan style={{ width: '20px', height: '20px' }} />
+              </div>
+            </>
           ) : null}
           {rightChildren ? (
             <div onClick={() => setIsInfoOpen(!isInfoOpen)}>

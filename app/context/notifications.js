@@ -25,6 +25,10 @@ class NotificationStore {
 
   addNotification = (notification) => {
     this.notifications.set(notification.id, notification);
+
+    if (notification.id === this.activeNotification?.id) {
+      this.setActiveNotification(notification.id);
+    }
   };
 
   deleteNotification = (id) => {

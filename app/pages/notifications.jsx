@@ -75,9 +75,7 @@ const Notifications = () => {
           Add Notification
         </Button>
       }
-      header={{
-        HeaderComponent: HomeNotificationHeader,
-      }}
+      header={{ HeaderComponent: HomeNotificationHeader }}
     >
       {!activeNotification ? (
         <div

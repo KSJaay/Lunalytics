@@ -6,10 +6,10 @@ import { IoWarning } from 'react-icons/io5';
 import { RiIndeterminateCircleFill } from 'react-icons/ri';
 
 const incidentTypes = {
-  Investigating: <RiIndeterminateCircleFill size={24} color="var(--red-700)" />,
-  Identified: <IoWarning size={24} color="var(--yellow-700)" />,
-  Monitoring: <FaClock size={24} color="var(--blue-700)" />,
-  Resolved: <FaCircleCheck size={24} color="var(--green-700)" />,
+  Outage: <RiIndeterminateCircleFill size={24} color="var(--red-700)" />,
+  Incident: <IoWarning size={24} color="var(--yellow-700)" />,
+  Maintenance: <FaClock size={24} color="var(--blue-700)" />,
+  Operational: <FaCircleCheck size={24} color="var(--green-700)" />,
 };
 
 const NotificationsList = ({
@@ -39,7 +39,7 @@ const NotificationsList = ({
               <span>{incident.status}</span>
             </div>
             <div className="icon-container">
-              {incidentTypes[incident.status]}
+              {incidentTypes[incident.affect]}
             </div>
           </div>
         );

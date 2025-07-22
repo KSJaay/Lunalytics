@@ -3,11 +3,13 @@ import './styles.scss';
 // import dependencies
 import dayjs from 'dayjs';
 import classNames from 'classnames';
-import { BsThreeDots } from 'react-icons/bs';
 
 // import local files
 import useContextStore from '../../../context';
 import IncidentEditMessageModal from '../../modal/incident/editUpdate';
+import { FaTrashCan } from 'react-icons/fa6';
+import { MdEdit } from 'react-icons/md';
+import IncidentDeleteMessageModal from '../../modal/incident/deleteMessage';
 
 const IncidentIdMessage = ({
   incidentId,
@@ -40,7 +42,21 @@ const IncidentIdMessage = ({
             )
           }
         >
-          <BsThreeDots />
+          <MdEdit />
+        </div>
+        <div
+          className="icon"
+          onClick={() =>
+            openModal(
+              <IncidentDeleteMessageModal
+                incidentId={incidentId}
+                incidentPosition={incidentPosition}
+              />,
+              false
+            )
+          }
+        >
+          <FaTrashCan />
         </div>
       </div>
 

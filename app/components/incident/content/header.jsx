@@ -19,7 +19,7 @@ const IncidentContentHeader = ({ incident }) => {
         }}
       >
         <div style={{ color: 'var(--font-light-color)' }}>STATUS</div>
-        <div>Investigating</div>
+        <div>{incident.status}</div>
       </div>
       <div
         style={{
@@ -45,7 +45,7 @@ const IncidentContentHeader = ({ incident }) => {
         <div style={{ color: 'var(--font-light-color)' }}>LAST UPDATE</div>
         <div>
           {dayjs(
-            new Date(incident.messages[incident.messages.length - 1].createdAt)
+            new Date(incident.messages[incident.messages.length - 1]?.createdAt)
           ).format('MMMM DD, YYYY HH:mm A')}
         </div>
       </div>

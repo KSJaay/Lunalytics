@@ -18,11 +18,10 @@ import IncidentCreateModal from '../components/modal/incident/create';
 const Notifications = () => {
   const {
     modalStore: { openModal },
-    incidentStore: { allIncidents },
+    incidentStore: { allIncidents, activeIncident, setActiveIncident },
   } = useContextStore();
 
   const [search, setSearch] = useState(null);
-  const [activeIncident, setActiveIncident] = useState(null);
 
   useEffect(() => {
     if (!activeIncident && allIncidents[0]) {
@@ -36,14 +35,13 @@ const Notifications = () => {
 
   const incidents = useMemo(
     () =>
-      allIncidents.filter((statusPage) => {
+      allIncidents.filter((incident) => {
         if (search) {
           const lowercaseSearch = search?.toLowerCase() || '';
           return (
-            statusPage?.statusUrl?.toLowerCase()?.includes(lowercaseSearch) ||
-            statusPage?.settings?.title
-              ?.toLowerCase()
-              ?.includes(lowercaseSearch)
+            incident?.title?.toLowerCase()?.includes(lowercaseSearch) ||
+            incident?.status?.toLowerCase()?.includes(lowercaseSearch) ||
+            incident?.affect?.toLowerCase()?.includes(lowercaseSearch)
           );
         }
         return true;
@@ -72,10 +70,7 @@ const Notifications = () => {
         </Button>
       }
       onLeftClick={() => {}}
-      header={{
-        props: { incident: activeIncident },
-        HeaderComponent: HomeIncidentHeader,
-      }}
+      header={{ HeaderComponent: HomeIncidentHeader }}
     >
       {!activeIncident ? (
         <div
@@ -93,7 +88,7 @@ const Notifications = () => {
           <div>No incidents found</div>
         </div>
       ) : (
-        <IncidentContent incident={activeIncident} />
+        <IncidentContent />
       )}
     </Navigation>
   );

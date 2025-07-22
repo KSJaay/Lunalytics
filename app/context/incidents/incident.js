@@ -24,10 +24,6 @@ class Incident {
 
     makeAutoObservable(this);
   }
-
-  updateMessages = (messages) => {
-    this.messages = messages;
-  };
 }
 
 export default Incident;

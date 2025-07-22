@@ -24,7 +24,9 @@ const fetchIncident = async (incidentId) => {
 };
 
 const fetchAllIncidents = async () => {
-  const incidents = await SQLite.client('incident').select();
+  const incidents = await SQLite.client('incident')
+    .where({ isClosed: false })
+    .select();
 
   return incidents.map((incident) => cleanIncident(incident));
 };

@@ -29,12 +29,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-800);
+  background: var(--accent-400);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-700);
+  background: var(--accent-300);
 }
 
 .input-label {
