@@ -1,9 +1,60 @@
+import { toast } from 'react-toastify';
+
 // import local files
 import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
+import { useMemo } from 'react';
+import useContextStore from '../../../context';
+import { createPostRequest } from '../../../services/axios';
 
-const IncidentContentImpact = ({ incident }) => {
+const impactTypes = [
+  { id: 'Outage', text: 'Major Outage', color: 'var(--red-700)' },
+  {
+    id: 'Incident',
+    text: 'Partially Degraded Service',
+    color: 'var(--yellow-700)',
+  },
+  // { id: 'Maintenance',text: 'Scheduled Maintenance', color: 'var(--blue-700)' },
+  {
+    id: 'Operational',
+    text: 'All Systems Operational',
+    color: 'var(--green-700)',
+  },
+];
+
+const IncidentContentImpact = () => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
+
+  const {
+    incidentStore: { addIncident, activeIncident: incident },
+  } = useContextStore();
+
+  const updateIncidentImpact = async (id) => {
+    try {
+      toggleDropdown();
+      const typeExists = impactTypes.find((type) => type.id === id);
+
+      if (!typeExists) {
+        return toast.error('Invalid type provided');
+      }
+
+      const updatedIncident = { ...incident, affect: id };
+
+      const response = await createPostRequest('/api/incident/update', {
+        incident: updatedIncident,
+      });
+
+      addIncident(response.data);
+      toast.success('Incident title has been updated successfully!');
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went wrong! Please try again later.');
+    }
+  };
+
+  const selectedImpact = useMemo(() => {
+    return impactTypes.find((type) => type.id === incident.affect);
+  }, [incident.affect]);
 
   return (
     <>
@@ -17,21 +68,20 @@ const IncidentContentImpact = ({ incident }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
         >
-          {incident.affect}
+          <div style={{ color: selectedImpact?.color }}>
+            {selectedImpact?.text}
+          </div>
         </Dropdown.Trigger>
         <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
-          <Dropdown.Item style={{ color: 'var(--red-700)' }} onClick={() => {}}>
-            Investigating
-          </Dropdown.Item>
-          <Dropdown.Item style={{ color: 'var(--yellow-700)' }}>
-            Identified
-          </Dropdown.Item>
-          <Dropdown.Item style={{ color: 'var(--blue-700)' }}>
-            Monitoring
-          </Dropdown.Item>
-          <Dropdown.Item style={{ color: 'var(--green-700)' }}>
-            Resolved
-          </Dropdown.Item>
+          {impactTypes.map((type) => (
+            <Dropdown.Item
+              key={type.id}
+              style={{ color: type.color }}
+              onClick={() => updateIncidentImpact(type.id)}
+            >
+              {type.text}
+            </Dropdown.Item>
+          ))}
         </Dropdown.List>
       </Dropdown.Container>
     </>

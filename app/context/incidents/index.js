@@ -17,22 +17,22 @@ class IncidentStore {
 
   addIncident = (incident) => {
     this.incidents.set(incident.incidentId, new Incident(incident));
+
+    if (incident.incidentId === this.activeIncident?.incidentId) {
+      this.setActiveIncident(incident.incidentId);
+    }
   };
 
   deleteIncident = (id) => {
     this.incidents.delete(id);
+
+    if (id === this.activeIncident?.incidentId) {
+      this.setActiveIncident();
+    }
   };
 
   getIncidentById = (id) => {
     return this.incidents.get(id);
-  };
-
-  updateMessages = (incidentId, messages) => {
-    const incident = this.getIncidentById(incidentId);
-
-    if (incident) {
-      incident.updateMessages(messages);
-    }
   };
 
   get allIncidents() {

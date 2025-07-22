@@ -1,21 +1,16 @@
 // import dependencies
+import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
-import { LuInfo } from 'react-icons/lu';
+import { FaTrashCan } from 'react-icons/fa6';
 
 // import local files
 import useContextStore from '../../../context';
 import Role from '../../../../shared/permissions/role';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
-import NotificationDeleteModal from '../../modal/notification/delete';
-import { FaTrashCan } from 'react-icons/fa6';
-import { toast } from 'react-toastify';
 import { createGetRequest } from '../../../services/axios';
+import NotificationDeleteModal from '../../modal/notification/delete';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 
-const HomeNotificationHeader = ({
-  isInfoOpen,
-  setIsInfoOpen,
-  rightChildren,
-}) => {
+const HomeNotificationHeader = () => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },
@@ -82,11 +77,6 @@ const HomeNotificationHeader = ({
             }
           >
             <FaTrashCan style={{ width: '20px', height: '20px' }} />
-          </div>
-        ) : null}
-        {rightChildren ? (
-          <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
-            <LuInfo size={20} />
           </div>
         ) : null}
       </div>
