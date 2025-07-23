@@ -1,6 +1,7 @@
 import './status.scss';
 
 // import dependencies
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { FiMinimize, FiMaximize } from 'react-icons/fi';
@@ -38,10 +39,12 @@ const statusText = {
 };
 
 const StatusConfigureLayoutStatus = ({ componentId }) => {
-  const { setComponentValue, getComponent, removeComponent } =
+  const { setComponentValue, getComponent, removeComponent, layoutItems } =
     useStatusPageContext;
-  const { icon, design, size, status, titleSize, isMinimized } =
-    getComponent(componentId);
+  const { icon, design, size, status, titleSize, isMinimized } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   return (
     <>

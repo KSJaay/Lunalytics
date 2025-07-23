@@ -1,4 +1,5 @@
 // import dependencies
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
@@ -10,11 +11,15 @@ const StatusConfigureLayoutHeaderLogo = ({ componentId }) => {
   const {
     settings: { textColor, title = 'Lunalytics', logo = '/logo.svg' },
     getComponent,
+    layoutItems,
   } = useStatusPageContext;
 
   const {
     title: { showLogo, showTitle, logoSize, rotation, titleSize, alignment },
-  } = getComponent(componentId);
+  } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   return (
     <div data-swapy-item="title" className="sclh-logo-container">

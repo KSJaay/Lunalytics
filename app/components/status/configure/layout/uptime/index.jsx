@@ -28,12 +28,14 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
     globalStore: { getMonitor, allMonitors },
   } = useContextStore();
 
-  const { getComponent, setComponentValue, removeComponent } =
+  const { getComponent, setComponentValue, removeComponent, layoutItems } =
     useStatusPageContext;
 
-  const component = getComponent(componentId);
   const { title, monitors, graphType, status, statusIndicator, isMinimized } =
-    component;
+    useMemo(
+      () => getComponent(componentId),
+      [componentId, JSON.stringify(layoutItems)]
+    );
 
   const graphClass = classNames({
     'subg-container': graphType === 'Basic',

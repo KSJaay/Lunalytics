@@ -1,4 +1,4 @@
-import { FaLock } from 'react-icons/fa';
+import { FaLock, FaLockOpen } from 'react-icons/fa';
 import './styles.scss';
 
 import classNames from 'classnames';
@@ -36,7 +36,11 @@ const StatusPageList = ({ statusPages }) => {
               </div>
             </div>
             <div className="icon-container">
-              <FaLock size={20} />
+              {statusPage.settings.isPublic ? (
+                <FaLockOpen size={20} />
+              ) : (
+                <FaLock size={20} />
+              )}
             </div>
           </div>
         );

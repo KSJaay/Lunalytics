@@ -1,4 +1,5 @@
 // import dependencies
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Textarea } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
@@ -12,7 +13,10 @@ const StatusConfigureLayoutCustomHTML = ({ componentId }) => {
   const { getComponent, setComponentValue, removeComponent } =
     useStatusPageContext;
 
-  const { isMinimized, data } = getComponent(componentId);
+  const { isMinimized, data } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   return (
     <>

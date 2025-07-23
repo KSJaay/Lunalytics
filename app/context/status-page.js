@@ -1,5 +1,5 @@
 import { v7 as uuid } from 'uuid';
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable, toJS } from 'mobx';
 import {
   defaultStatusValues,
   statusComponents,
@@ -42,9 +42,9 @@ class StatusPageStore {
   }
 
   setData = (data = {}) => {
-    this.settings = data?.settings || defaultStatusValues;
+    this.settings = toJS(data?.settings) || defaultStatusValues;
 
-    const layout = data?.layout || defaultStatusComponents;
+    const layout = toJS(data?.layout) || defaultStatusComponents;
 
     for (const component of layout) {
       this.layout.set(component.id, component);
@@ -58,15 +58,17 @@ class StatusPageStore {
       return;
     }
 
-    for (const component of layout) {
+    const jsLayout = toJS(layout);
+
+    for (const component of jsLayout) {
       this.layout.set(component.id, component);
     }
 
-    this.listOfIds = layout.map((component) => component.id);
+    this.listOfIds = jsLayout.map((component) => component.id);
   };
 
   setSettings = (settings) => {
-    this.settings = { ...this.settings, ...settings };
+    this.settings = toJS({ ...this.settings, ...settings });
   };
 
   changeValues = (data) => {
