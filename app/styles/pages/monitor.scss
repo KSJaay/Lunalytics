@@ -1,8 +1,1 @@
 @use '../pxToRem.scss' as *;
-
-.monitor-container {
-  display: flex;
-  flex-direction: column;
-  gap: pxToRem(16);
-  margin: pxToRem(16);
-}
