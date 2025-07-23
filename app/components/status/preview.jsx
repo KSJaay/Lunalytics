@@ -36,7 +36,7 @@ const StatusPagePreview = ({ children }) => {
       .map((statusPage) => {
         return (
           <div
-            className="notification-preview-content"
+            className="status-page-preview-content"
             key={statusPage.statusId}
             onClick={() => {
               navigate('/status-pages');
@@ -91,7 +91,7 @@ const StatusPagePreview = ({ children }) => {
               </div>,
             ]
       }
-      popupClassName="notification-preview-container"
+      popupClassName="status-page-preview-container"
     >
       {children}
     </Preview>

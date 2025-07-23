@@ -1,15 +1,5 @@
 @use '../pxToRem.scss' as *;
 
-.home-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  padding: pxToRem(16) pxToRem(12);
-  gap: pxToRem(16);
-  overflow-y: auto;
-  padding-bottom: pxToRem(48);
-}
-
 .monitor-container {
   display: flex;
   flex-direction: column;

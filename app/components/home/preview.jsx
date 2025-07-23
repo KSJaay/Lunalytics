@@ -47,6 +47,8 @@ const MonitorPreview = ({ children }) => {
                 style={{
                   fontSize: 'var(--font-sm)',
                   color: 'var(--font-light-color)',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
                 }}
               >
                 {monitor.url}
