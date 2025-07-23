@@ -20,15 +20,16 @@ const HomeMonitorsList = ({ monitors = [] }) => {
     });
 
     let heartbeats = monitor.heartbeats
-      .map((heartbeat) => {
-        return heartbeat.isDown ? 'var(--red-800)' : 'var(--green-800)';
-      })
+      .map((heartbeat) =>
+        heartbeat.isDown ? 'var(--red-800)' : 'var(--green-800)'
+      )
       .splice(0, 12);
 
     if (heartbeats.length < 12) {
-      const emptyHeartbeats = Array.from({
-        length: 12 - heartbeats.length,
-      }).map(() => 'var(--gray-500)');
+      const length = 12 - heartbeats.length;
+      const emptyHeartbeats = Array.from({ length }).map(
+        () => 'var(--gray-500)'
+      );
 
       heartbeats = heartbeats.concat(emptyHeartbeats);
     }
@@ -47,12 +48,7 @@ const HomeMonitorsList = ({ monitors = [] }) => {
             <span>{monitor.url}</span>
           </div>
           <div className="pill-container">
-            <PillCircle
-              size={35}
-              pillWidth={10}
-              pillHeight={3}
-              pills={heartbeats}
-            />
+            <PillCircle pills={heartbeats} />
           </div>
         </div>
       </HomeMonitorsListContext>

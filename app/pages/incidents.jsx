@@ -14,6 +14,7 @@ import NotificationsList from '../components/incident/list';
 import HomeIncidentHeader from '../components/incident/header';
 import IncidentContent from '../components/incident/content';
 import IncidentCreateModal from '../components/modal/incident/create';
+import { filterData } from '../../shared/utils/search';
 
 const Notifications = () => {
   const {
@@ -33,21 +34,11 @@ const Notifications = () => {
     setSearch(search.trim());
   };
 
-  const incidents = useMemo(
-    () =>
-      allIncidents.filter((incident) => {
-        if (search) {
-          const lowercaseSearch = search?.toLowerCase() || '';
-          return (
-            incident?.title?.toLowerCase()?.includes(lowercaseSearch) ||
-            incident?.status?.toLowerCase()?.includes(lowercaseSearch) ||
-            incident?.affect?.toLowerCase()?.includes(lowercaseSearch)
-          );
-        }
-        return true;
-      }),
-    [search, allIncidents]
-  );
+  const incidents = useMemo(() => {
+    if (!search) return allIncidents;
+
+    return filterData(allIncidents, search, ['title', 'status', 'affect']);
+  }, [search, allIncidents]);
 
   return (
     <Navigation
