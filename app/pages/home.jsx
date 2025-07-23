@@ -18,6 +18,7 @@ import MonitorStatus from '../components/monitor/status';
 import MonitorGraph from '../components/monitor/graph';
 import MonitorUptime from '../components/monitor/uptime';
 import Spacer from '../components/ui/spacer';
+import { filterData } from '../../shared/utils/search';
 
 const Home = () => {
   const {
@@ -34,20 +35,11 @@ const Home = () => {
     setSearch(search.trim());
   };
 
-  const monitors = useMemo(
-    () =>
-      allMonitors.filter((monitor) => {
-        if (search) {
-          const lowercaseSearch = search?.toLowerCase() || '';
-          return (
-            monitor?.name?.toLowerCase()?.includes(lowercaseSearch) ||
-            monitor?.url?.toLowerCase()?.includes(lowercaseSearch)
-          );
-        }
-        return true;
-      }),
-    [search, JSON.stringify(allMonitors)]
-  );
+  const monitors = useMemo(() => {
+    if (!search) return allMonitors;
+
+    return filterData(allMonitors, search, ['name', 'url']);
+  }, [search, JSON.stringify(allMonitors)]);
 
   return (
     <Navigation

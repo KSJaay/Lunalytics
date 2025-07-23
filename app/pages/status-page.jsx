@@ -15,6 +15,7 @@ import StatusPageList from '../components/status/list';
 import StatusConfigurCreateModal from '../components/modal/status/configure';
 import useStatusPageContext from '../context/status-page';
 import { toJS } from 'mobx';
+import { filterData } from '../../shared/utils/search';
 
 const Notifications = () => {
   const {
@@ -41,22 +42,11 @@ const Notifications = () => {
     setSearch(search.trim());
   };
 
-  const statusPages = useMemo(
-    () =>
-      allStatusPages.filter((statusPage) => {
-        if (search) {
-          const lowercaseSearch = search?.toLowerCase() || '';
-          return (
-            statusPage?.statusUrl?.toLowerCase()?.includes(lowercaseSearch) ||
-            statusPage?.settings?.title
-              ?.toLowerCase()
-              ?.includes(lowercaseSearch)
-          );
-        }
-        return true;
-      }),
-    [search, allStatusPages]
-  );
+  const statusPages = useMemo(() => {
+    if (!search) return allStatusPages;
+
+    return filterData(allStatusPages, search, ['statusUrl', 'settings.title']);
+  }, [search, allStatusPages]);
 
   return (
     <Navigation

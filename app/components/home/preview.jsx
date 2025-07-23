@@ -1,5 +1,3 @@
-import './preview.scss';
-
 // import dependencies
 import { Input, Preview } from '@lunalytics/ui';
 
@@ -9,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { filterData } from '../../../shared/utils/search';
 
 const MonitorPreview = ({ children }) => {
   const {
@@ -20,46 +19,24 @@ const MonitorPreview = ({ children }) => {
   const items = useMemo(() => {
     if (!allMonitors?.length) return [];
 
-    return allMonitors
-      .filter((monitor) => {
-        if (search) {
-          const lowercaseSearch = search?.toLowerCase() || '';
-          return (
-            monitor?.name?.toLowerCase()?.includes(lowercaseSearch) ||
-            monitor?.url?.toLowerCase()?.includes(lowercaseSearch)
-          );
-        }
-        return true;
-      })
-      .map((monitor) => {
-        return (
-          <div
-            className="monitor-preview-content"
-            key={monitor.monitorId}
-            onClick={() => {
-              navigate('/home');
-              setActiveMonitor(monitor.monitorId);
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>{monitor.name}</div>
-              <div
-                style={{
-                  fontSize: 'var(--font-sm)',
-                  color: 'var(--font-light-color)',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                }}
-              >
-                {monitor.url}
-              </div>
-            </div>
+    return filterData(allMonitors, search, ['name', 'url']).map((monitor) => {
+      return (
+        <div
+          className="navigation-preview-content"
+          key={monitor.monitorId}
+          onClick={() => {
+            navigate('/home');
+            setActiveMonitor(monitor.monitorId);
+          }}
+        >
+          <div className="navigation-preview-item">
+            <div>{monitor.name}</div>
+            <div className="navigation-preview-url">{monitor.url}</div>
           </div>
-        );
-      });
+        </div>
+      );
+    });
   }, [search, JSON.stringify(allMonitors)]);
-
-  if (!items.length) return children;
 
   const input = (
     <Input
@@ -73,23 +50,19 @@ const MonitorPreview = ({ children }) => {
   return (
     <Preview
       items={
-        items.length > 0
-          ? [input, ...items]
-          : [
+        !items?.length
+          ? [
               input,
               <div
-                style={{
-                  padding: '3rem 0',
-                  textAlign: 'center',
-                  color: 'var(--font-light-color)',
-                }}
+                className="navigation-preview-no-items"
                 key="no-monitor-preview"
               >
                 No monitors found
               </div>,
             ]
+          : [input, ...items]
       }
-      popupClassName="monitor-preview-container"
+      popupClassName="navigation-preview-container"
     >
       {children}
     </Preview>
