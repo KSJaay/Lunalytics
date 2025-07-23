@@ -2,7 +2,7 @@
 import '../styles/pages/home.scss';
 
 // import dependencies
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { FaEllipsisVertical } from 'react-icons/fa6';
@@ -24,14 +24,35 @@ const Home = () => {
     globalStore: { allMonitors, addMonitor, activeMonitor, setActiveMonitor },
     modalStore: { openModal, closeModal },
   } = useContextStore();
+  const [search, setSearch] = useState(null);
 
   useEffect(() => {
     if (!activeMonitor) setActiveMonitor(allMonitors[0]?.monitorId);
   }, [allMonitors]);
 
+  const handleSearchUpdate = (search = '') => {
+    setSearch(search.trim());
+  };
+
+  const monitors = useMemo(
+    () =>
+      allMonitors.filter((monitor) => {
+        if (search) {
+          const lowercaseSearch = search?.toLowerCase() || '';
+          return (
+            monitor?.name?.toLowerCase()?.includes(lowercaseSearch) ||
+            monitor?.url?.toLowerCase()?.includes(lowercaseSearch)
+          );
+        }
+        return true;
+      }),
+    [search, JSON.stringify(allMonitors)]
+  );
+
   return (
     <Navigation
-      leftChildren={<HomeMonitorsList />}
+      leftChildren={<HomeMonitorsList monitors={monitors} />}
+      handleSearchUpdate={handleSearchUpdate}
       leftButton={
         <div
           style={{

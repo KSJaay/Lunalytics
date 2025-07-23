@@ -13,27 +13,35 @@ import { Avatar } from '@lunalytics/ui';
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
 import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
+import MonitorPreview from '../home/preview';
+import IncidentPreview from '../incident/preview';
+import NotificationPreview from '../notifications/preview';
+import StatusPagePreview from '../status/preview';
 
 const actionTabs = [
   {
     name: 'Home',
     url: '/home',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
+    Preview: MonitorPreview,
   },
   {
     name: 'Notifications',
     url: '/notifications',
     logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
+    Preview: NotificationPreview,
   },
   {
     name: 'Status',
     url: '/status-pages',
     logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
+    Preview: StatusPagePreview,
   },
   {
     name: 'Incidents',
     url: '/incidents',
     logo: <BsFillShieldLockFill style={{ width: '25px', height: '25px' }} />,
+    Preview: IncidentPreview,
   },
 ];
 
@@ -57,25 +65,33 @@ const LeftNavigation = ({ activeUrl }) => {
   const imageUrl = isUrl ? avatar : `/icons/${avatar}.png`;
 
   const actions = actionTabs.map((action) => {
-    const { name, url, logo } = action;
+    const { name, url, logo, Preview } = action;
 
     const classes = classNames({
       'navigation-left-action': true,
       active: activeUrl === url,
     });
 
-    return (
-      <Tooltip position="right" text={name} key={name} color="gray">
-        <div
-          className={classes}
-          key={name}
-          tabIndex={1}
-          onClick={() => navigate(url)}
-        >
-          {logo}
-        </div>
-      </Tooltip>
+    const content = (
+      <div
+        className={classes}
+        key={name}
+        tabIndex={1}
+        onClick={() => navigate(url)}
+      >
+        {logo}
+      </div>
     );
+
+    if (!Preview) {
+      return (
+        <Tooltip position="right" text={name} key={name} color="gray">
+          {content}
+        </Tooltip>
+      );
+    }
+
+    return <Preview key={name}>{content}</Preview>;
   });
 
   return (

@@ -1,4 +1,4 @@
-.incident-preview-container {
+.notification-preview-container {
   box-sizing: border-box;
   width: 250px;
   display: flex;
@@ -11,7 +11,7 @@
   overflow-x: hidden;
 }
 
-.incident-preview-content {
+.notification-preview-content {
   display: flex;
   flex-direction: column;
   transition: 0.2s ease-in-out all;
