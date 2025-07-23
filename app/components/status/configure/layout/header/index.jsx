@@ -3,7 +3,7 @@ import './styles.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import { createSwapy } from 'swapy';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FiMinimize, FiMaximize } from 'react-icons/fi';
 
@@ -19,9 +19,14 @@ const StatusConfigureLayoutHeader = ({ componentId }) => {
   const swapy = useRef(null);
   const container = useRef(null);
 
-  const { getComponent, removeComponent, setComponentValue } =
+  const { getComponent, removeComponent, setComponentValue, layoutItems } =
     useStatusPageContext;
-  const component = getComponent(componentId);
+
+  const component = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
+
   const { isMinimized } = component;
 
   useEffect(() => {

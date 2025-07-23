@@ -1,4 +1,5 @@
 // import dependencies
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
@@ -7,9 +8,12 @@ import StatusConfigureLayoutMetricsTypeBasic from './type/basic';
 import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutMetricsDropdown = ({ componentId, title }) => {
-  const { getComponent } = useStatusPageContext;
+  const { getComponent, layoutItems } = useStatusPageContext;
 
-  const { data: { showName, showPing } = {} } = getComponent(componentId);
+  const { data: { showName, showPing } = {} } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   return (
     <>

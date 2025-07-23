@@ -1,4 +1,5 @@
 // import dependencies
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
@@ -12,9 +13,12 @@ import {
 import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
-  const { setComponentValue, getComponent } = useStatusPageContext;
+  const { setComponentValue, getComponent, layoutItems } = useStatusPageContext;
 
-  const { status = {} } = getComponent(componentId);
+  const { status = {} } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   return (
     <div style={{ flex: 1 }}>
