@@ -26,10 +26,15 @@ class StatusStore {
 
   addStatusPage = (statusPage) => {
     this.statusPages.set(statusPage.statusId, statusPage);
+
+    if (this.activeStatusPage.statusId === statusPage.statusId) {
+      this.setActiveStatusPage(statusPage.statusId);
+    }
   };
 
   deleteStatusPage = (id) => {
     this.statusPages.delete(id);
+    this.setActiveStatusPage(null);
   };
 
   getStatusById = (id) => {

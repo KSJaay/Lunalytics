@@ -14,6 +14,7 @@ import StatusConfigureContent from '../components/status/content';
 import StatusPageList from '../components/status/list';
 import StatusConfigurCreateModal from '../components/modal/status/configure';
 import useStatusPageContext from '../context/status-page';
+import { toJS } from 'mobx';
 
 const Notifications = () => {
   const {
@@ -28,11 +29,11 @@ const Notifications = () => {
   useEffect(() => {
     if (!activeStatusPage && allStatusPages[0]) {
       setActiveStatusPage(allStatusPages[0].statusId);
-      setData(allStatusPages[0]);
+      setData(toJS(allStatusPages[0]));
     }
 
     if (activeStatusPage) {
-      setData(activeStatusPage);
+      setData(toJS(activeStatusPage));
     }
   }, [allStatusPages, activeStatusPage]);
 

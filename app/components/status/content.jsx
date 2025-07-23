@@ -3,7 +3,7 @@ import {
   MdOutlineArrowBack,
   MdOutlineArrowForward,
 } from 'react-icons/md';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { IoReloadSharp } from 'react-icons/io5';
@@ -17,25 +17,19 @@ import useContextStore from '../../context';
 import handleCreateOrEditStatusPage from '../../handlers/status/configure/create';
 import useStatusPageContext from '../../context/status-page';
 
-const StatusConfigureContent = ({ currentTab }) => {
+const StatusConfigureContent = ({ currentTab, showActionBar = true }) => {
   const {
     statusStore: { addStatusPage, activeStatusPage: statusPage },
   } = useContextStore();
 
-  useEffect(() => {
-    console.log('Change');
-  }, [JSON.stringify(statusPage)]);
-
   const { resetStatusPage, settings, layoutItems } = useStatusPageContext;
-
-  console.log(statusPage.layout[0].status.showTitle);
 
   const showSaveActionBar = useMemo(() => {
     return (
-      JSON.stringify({ settings, layout: layoutItems }) ===
+      JSON.stringify({ settings, layout: layoutItems }) !==
       JSON.stringify({
-        layout: statusPage?.layout,
         settings: statusPage?.settings,
+        layout: statusPage?.layout,
       })
     );
   }, [
@@ -90,7 +84,7 @@ const StatusConfigureContent = ({ currentTab }) => {
         ) : null}
       </div>
 
-      {showSaveActionBar ? (
+      {showActionBar ? (
         <ActionBar
           position="bottom"
           variant="floating"
