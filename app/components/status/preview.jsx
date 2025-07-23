@@ -2,13 +2,14 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
+import { useMemo, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { filterData } from '../../../shared/utils/search';
 
 const StatusPagePreview = ({ children }) => {
   const {
@@ -20,48 +21,32 @@ const StatusPagePreview = ({ children }) => {
   const items = useMemo(() => {
     if (!allStatusPages?.length) return [];
 
-    return allStatusPages
-      .filter((statusPage) => {
-        if (search) {
-          const lowercaseSearch = search?.toLowerCase() || '';
-          return (
-            statusPage?.statusUrl?.toLowerCase()?.includes(lowercaseSearch) ||
-            statusPage?.settings?.title
-              ?.toLowerCase()
-              ?.includes(lowercaseSearch)
-          );
-        }
-        return true;
-      })
-      .map((statusPage) => {
-        return (
-          <div
-            className="status-page-preview-content"
-            key={statusPage.statusId}
-            onClick={() => {
-              navigate('/status-pages');
-              setActiveStatusPage(statusPage.statusId);
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>{statusPage.settings.title}</div>
-              <div
-                style={{
-                  fontSize: 'var(--font-sm)',
-                  color: 'var(--font-light-color)',
-                }}
-              >
-                {statusPage.statusUrl === 'default'
-                  ? '/'
-                  : `/status/${statusPage.statusUrl}`}
-              </div>
+    const filteredStatusPages = !search
+      ? allStatusPages
+      : filterData(allStatusPages, search, ['settings.title', 'statusUrl']);
+
+    return filteredStatusPages.map((statusPage) => {
+      return (
+        <div
+          className="navigation-preview-content"
+          key={statusPage.statusId}
+          onClick={() => {
+            navigate('/status-pages');
+            setActiveStatusPage(statusPage.statusId);
+          }}
+        >
+          <div className="navigation-preview-item">
+            <div>{statusPage.settings.title}</div>
+            <div className="navigation-preview-subtitle">
+              {statusPage.statusUrl === 'default'
+                ? '/'
+                : `/status/${statusPage.statusUrl}`}
             </div>
           </div>
-        );
-      });
+        </div>
+      );
+    });
   }, [search, JSON.stringify(allStatusPages)]);
-
-  if (!items.length) return children;
 
   const input = (
     <Input
@@ -75,23 +60,19 @@ const StatusPagePreview = ({ children }) => {
   return (
     <Preview
       items={
-        items.length > 0
-          ? [input, ...items]
-          : [
+        !items?.length
+          ? [
               input,
               <div
-                style={{
-                  padding: '3rem 0',
-                  textAlign: 'center',
-                  color: 'var(--font-light-color)',
-                }}
+                className="navigation-preview-no-items"
                 key="no-status-page-preview"
               >
                 No status pages found
               </div>,
             ]
+          : [input, ...items]
       }
-      popupClassName="status-page-preview-container"
+      popupClassName="navigation-preview-container"
     >
       {children}
     </Preview>

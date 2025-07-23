@@ -1,5 +1,3 @@
-import './style.scss';
-
 // import dependencies
 import { Input, Preview } from '@lunalytics/ui';
 
@@ -9,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { filterData } from '../../../shared/utils/search';
 
 const IncidentPreview = ({ children }) => {
   const {
@@ -20,45 +19,28 @@ const IncidentPreview = ({ children }) => {
   const items = useMemo(() => {
     if (!allIncidents?.length) return [];
 
-    return allIncidents
-      .filter((incident) => {
-        if (search) {
-          const lowercaseSearch = search?.toLowerCase() || '';
-          return (
-            incident?.title?.toLowerCase()?.includes(lowercaseSearch) ||
-            incident?.status?.toLowerCase()?.includes(lowercaseSearch) ||
-            incident?.affect?.toLowerCase()?.includes(lowercaseSearch)
-          );
-        }
-        return true;
-      })
-      .map((incident) => {
+    return filterData(allIncidents, search, ['title', 'status', 'affect']).map(
+      (incident) => {
         return (
           <div
-            className="incident-preview-content"
+            className="navigation-preview-content"
             key={incident.incidentId}
             onClick={() => {
               navigate('/incidents');
               setActiveIncident(incident.incidentId);
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="navigation-preview-item">
               <div>{incident.title || ''}</div>
-              <div
-                style={{
-                  fontSize: 'var(--font-sm)',
-                  color: 'var(--font-light-color)',
-                }}
-              >
+              <div className="navigation-preview-subtitle">
                 {incident.status || ''}
               </div>
             </div>
           </div>
         );
-      });
+      }
+    );
   }, [search, JSON.stringify(allIncidents)]);
-
-  if (!items?.length) return children;
 
   const input = (
     <Input
@@ -72,23 +54,19 @@ const IncidentPreview = ({ children }) => {
   return (
     <Preview
       items={
-        items.length > 0
-          ? [input, ...items]
-          : [
+        !items?.length
+          ? [
               input,
               <div
-                style={{
-                  padding: '3rem 0',
-                  textAlign: 'center',
-                  color: 'var(--font-light-color)',
-                }}
+                className="navigation-preview-no-items"
                 key="no-incident-preview"
               >
                 No incidents found
               </div>,
             ]
+          : [input, ...items]
       }
-      popupClassName="incident-preview-container"
+      popupClassName="navigation-preview-container"
     >
       {children}
     </Preview>

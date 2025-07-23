@@ -1,7 +1,7 @@
 const PillCircle = ({
-  size = 300,
-  pillWidth = 40,
-  pillHeight = 12,
+  size = 35,
+  pillWidth = 10,
+  pillHeight = 3,
   pills = [],
 }) => {
   const radius = size / 2;

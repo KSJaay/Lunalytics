@@ -13,6 +13,7 @@ import NotificationList from '../components/notifications/list';
 import NotificationModal from '../components/modal/notification';
 import NotificationContent from '../components/notifications/content';
 import HomeNotificationHeader from '../components/notifications/header';
+import { filterData } from '../../shared/utils/search';
 
 const Notifications = () => {
   const {
@@ -37,21 +38,11 @@ const Notifications = () => {
     setSearch(search.trim());
   };
 
-  const notifications = useMemo(
-    () =>
-      allNotifications.filter((notification) => {
-        if (search) {
-          return (
-            notification.friendlyName
-              .toLowerCase()
-              .includes(search.toLowerCase()) ||
-            notification.platform.toLowerCase().includes(search.toLowerCase())
-          );
-        }
-        return true;
-      }),
-    [search, allNotifications]
-  );
+  const notifications = useMemo(() => {
+    if (!search) return allNotifications;
+
+    return filterData(allNotifications, search, ['friendlyName', 'platform']);
+  }, [search, allNotifications]);
 
   return (
     <Navigation

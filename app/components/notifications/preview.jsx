@@ -1,5 +1,3 @@
-import './preview.scss';
-
 // import dependencies
 import { Input, Preview } from '@lunalytics/ui';
 
@@ -9,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { filterData } from '../../../shared/utils/search';
 
 const NotificationPreview = ({ children }) => {
   const {
@@ -20,45 +19,29 @@ const NotificationPreview = ({ children }) => {
   const items = useMemo(() => {
     if (!allNotifications?.length) return [];
 
-    return allNotifications
-      .filter((notification) => {
-        if (search) {
-          return (
-            notification.friendlyName
-              .toLowerCase()
-              .includes(search.toLowerCase()) ||
-            notification.platform.toLowerCase().includes(search.toLowerCase())
-          );
-        }
-        return true;
-      })
-      .map((notification) => {
-        return (
-          <div
-            className="notification-preview-content"
-            key={notification.id}
-            onClick={() => {
-              navigate('/notifications');
-              setActiveNotification(notification.id);
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div>{notification.friendlyName}</div>
-              <div
-                style={{
-                  fontSize: 'var(--font-sm)',
-                  color: 'var(--font-light-color)',
-                }}
-              >
-                {notification.platform}
-              </div>
+    return filterData(allNotifications, search, [
+      'friendlyName',
+      'platform',
+    ]).map((notification) => {
+      return (
+        <div
+          className="navigation-preview-content"
+          key={notification.id}
+          onClick={() => {
+            navigate('/notifications');
+            setActiveNotification(notification.id);
+          }}
+        >
+          <div className="navigation-preview-item">
+            <div>{notification.friendlyName}</div>
+            <div className="navigation-preview-subtitle">
+              {notification.platform}
             </div>
           </div>
-        );
-      });
+        </div>
+      );
+    });
   }, [search, JSON.stringify(allNotifications)]);
-
-  if (!items.length) return children;
 
   const input = (
     <Input
@@ -72,23 +55,19 @@ const NotificationPreview = ({ children }) => {
   return (
     <Preview
       items={
-        items.length > 0
-          ? [input, ...items]
-          : [
+        !items?.length
+          ? [
               input,
               <div
-                style={{
-                  padding: '3rem 0',
-                  textAlign: 'center',
-                  color: 'var(--font-light-color)',
-                }}
+                className="navigation-preview-no-items"
                 key="no-notification-preview"
               >
                 No notifications found
               </div>,
             ]
+          : [input, ...items]
       }
-      popupClassName="notification-preview-container"
+      popupClassName="navigation-preview-container"
     >
       {children}
     </Preview>
