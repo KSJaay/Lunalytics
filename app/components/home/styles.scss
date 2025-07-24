@@ -5,6 +5,11 @@
   align-items: center;
   justify-content: center;
   gap: pxToRem(10);
+
+  svg {
+    width: pxToRem(20);
+    height: pxToRem(20);
+  }
 }
 
 .content-menu-item {

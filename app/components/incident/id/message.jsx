@@ -3,12 +3,12 @@ import './styles.scss';
 // import dependencies
 import dayjs from 'dayjs';
 import classNames from 'classnames';
+import { MdEdit } from 'react-icons/md';
+import { FaTrashCan } from 'react-icons/fa6';
 
 // import local files
 import useContextStore from '../../../context';
 import IncidentEditMessageModal from '../../modal/incident/editUpdate';
-import { FaTrashCan } from 'react-icons/fa6';
-import { MdEdit } from 'react-icons/md';
 import IncidentDeleteMessageModal from '../../modal/incident/deleteMessage';
 
 const IncidentIdMessage = ({

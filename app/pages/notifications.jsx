@@ -69,20 +69,7 @@ const Notifications = () => {
       header={{ HeaderComponent: HomeNotificationHeader }}
     >
       {!activeNotification ? (
-        <div
-          style={{
-            height: '100%',
-            width: '100%',
-            fontWeight: 'bold',
-            fontSize: 'var(--font-2xl)',
-            color: 'var(--font-light-color)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          No notifications found
-        </div>
+        <div className="monitor-none-exist">No notifications found</div>
       ) : (
         <NotificationContent />
       )}

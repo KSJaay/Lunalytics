@@ -24,8 +24,6 @@ const IncidentDeleteMessageModal = ({ incidentId, incidentPosition }) => {
       closeModal();
       toast.success('Incident message deleted successfully!');
     } catch (error) {
-      console.log(error);
-
       if (error?.response?.data?.message) {
         return toast.error(error.response.data.message);
       }

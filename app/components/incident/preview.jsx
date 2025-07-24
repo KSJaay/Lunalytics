@@ -21,20 +21,22 @@ const IncidentPreview = ({ children }) => {
 
     return filterData(allIncidents, search, ['title', 'status', 'affect']).map(
       (incident) => {
+        const handleOnClick = () => {
+          navigate('/incidents');
+          setActiveIncident(incident.incidentId);
+        };
+
+        const { incidentId = '', title = '', status = '' } = incident;
+
         return (
           <div
             className="navigation-preview-content"
-            key={incident.incidentId}
-            onClick={() => {
-              navigate('/incidents');
-              setActiveIncident(incident.incidentId);
-            }}
+            key={incidentId}
+            onClick={handleOnClick}
           >
             <div className="navigation-preview-item">
-              <div>{incident.title || ''}</div>
-              <div className="navigation-preview-subtitle">
-                {incident.status || ''}
-              </div>
+              <div>{title}</div>
+              <div className="navigation-preview-subtitle">{status}</div>
             </div>
           </div>
         );
@@ -64,7 +66,7 @@ const IncidentPreview = ({ children }) => {
                 No incidents found
               </div>,
             ]
-          : [input, ...items]
+          : [input].concat(items)
       }
       popupClassName="navigation-preview-container"
     >

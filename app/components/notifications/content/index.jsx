@@ -24,13 +24,7 @@ const NotificationContent = () => {
   const Content = NotificationPlatformContent[notification.platform];
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        margin: '0 1rem 1rem 1rem',
-      }}
-    >
+    <div className="notication-container">
       <Content
         inputs={inputs}
         errors={errors}
