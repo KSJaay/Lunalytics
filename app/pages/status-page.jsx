@@ -1,5 +1,5 @@
 // import styles
-import '../styles/pages/notifications.scss';
+import '../styles/pages/status.scss';
 
 // import dependencies
 import { Button } from '@lunalytics/ui';
