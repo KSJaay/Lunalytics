@@ -23,14 +23,16 @@ const NotificationPreview = ({ children }) => {
       'friendlyName',
       'platform',
     ]).map((notification) => {
+      const handleOnClick = () => {
+        navigate('/notifications');
+        setActiveNotification(notification.id);
+      };
+
       return (
         <div
           className="navigation-preview-content"
           key={notification.id}
-          onClick={() => {
-            navigate('/notifications');
-            setActiveNotification(notification.id);
-          }}
+          onClick={handleOnClick}
         >
           <div className="navigation-preview-item">
             <div>{notification.friendlyName}</div>
@@ -65,7 +67,7 @@ const NotificationPreview = ({ children }) => {
                 No notifications found
               </div>,
             ]
-          : [input, ...items]
+          : [input].concat(items)
       }
       popupClassName="navigation-preview-container"
     >

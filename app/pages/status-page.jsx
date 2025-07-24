@@ -74,18 +74,7 @@ const Notifications = () => {
       }}
     >
       {!activeStatusPage ? (
-        <div
-          style={{
-            height: '100%',
-            width: '100%',
-            fontWeight: 'bold',
-            fontSize: 'var(--font-2xl)',
-            color: 'var(--font-light-color)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <div className="monitor-none-exist">
           <div>No status pages found</div>
         </div>
       ) : (

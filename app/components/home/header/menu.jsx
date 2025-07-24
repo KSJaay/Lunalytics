@@ -16,7 +16,7 @@ const DropdownItem = ({ id, text, icon: Icon, onClick }) => (
     onClick={onClick}
     className="home-header-menu-list-item"
   >
-    {Icon && <Icon style={{ width: '20px', height: '20px' }} />}
+    {Icon && <Icon />}
     {text}
   </Dropdown.Item>
 );

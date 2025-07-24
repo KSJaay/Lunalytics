@@ -26,14 +26,16 @@ const StatusPagePreview = ({ children }) => {
       : filterData(allStatusPages, search, ['settings.title', 'statusUrl']);
 
     return filteredStatusPages.map((statusPage) => {
+      const handleOnClick = () => {
+        setActiveStatusPage(statusPage);
+        navigate(`/status/${statusPage.statusUrl}`);
+      };
+
       return (
         <div
           className="navigation-preview-content"
           key={statusPage.statusId}
-          onClick={() => {
-            navigate('/status-pages');
-            setActiveStatusPage(statusPage.statusId);
-          }}
+          onClick={handleOnClick}
         >
           <div className="navigation-preview-item">
             <div>{statusPage.settings.title}</div>
@@ -70,7 +72,7 @@ const StatusPagePreview = ({ children }) => {
                 No status pages found
               </div>,
             ]
-          : [input, ...items]
+          : [input].concat(items)
       }
       popupClassName="navigation-preview-container"
     >

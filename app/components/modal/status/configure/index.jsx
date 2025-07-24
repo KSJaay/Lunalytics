@@ -44,17 +44,9 @@ const StatusConfigurCreateModal = ({ closeModal }) => {
 
   return (
     <Modal.Container closeButton={closeModal}>
-      <Modal.Title style={{ textAlign: 'center', fontSize: 'var(--font-xl)' }}>
+      <Modal.Title className="modal-title smc-title">
         Add New Component
-        <div
-          style={{
-            gap: '0.5rem',
-            display: 'flex',
-            padding: '0.75rem 0 0 0',
-            alignItems: 'center',
-            borderBottom: '1px solid var(--accent-700)',
-          }}
-        >
+        <div className="smc-options">
           {menuOptions.map(({ id, Icon }) => {
             const isActive = activePage === id;
 
@@ -65,14 +57,8 @@ const StatusConfigurCreateModal = ({ closeModal }) => {
                   borderBottom: isActive
                     ? '4px solid var(--primary-700)'
                     : '4px solid transparent',
-                  padding: '0.25rem 1rem 0.5rem 1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
                 }}
+                className="smc-options-item"
                 onClick={() => setActivePage(id)}
               >
                 <div style={{ width: '20px', height: '20px' }}>

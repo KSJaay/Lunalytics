@@ -13,14 +13,7 @@ const IncidentContentMessages = ({ incidentId }) => {
   if (!incident) return null;
 
   return (
-    <div
-      style={{
-        marginTop: '-0.5rem',
-        gap: '1rem',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <div className="icp-message-container">
       <div className="input-label">Incident Messages</div>
       {incident.messages.map((message, index) => (
         <IncidentIdMessage
