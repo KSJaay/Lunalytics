@@ -1,4 +1,5 @@
 // import dependencies
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { Button, Input } from '@lunalytics/ui';
@@ -10,7 +11,6 @@ import useContextStore from '../../../context';
 import IncidentContentMessages from './message';
 import { createPostRequest } from '../../../services/axios';
 import IncidentAddUpdateModal from '../../modal/incident/addUpdate';
-import { useState } from 'react';
 
 const IncidentContent = () => {
   const {
@@ -41,14 +41,7 @@ const IncidentContent = () => {
   };
 
   return (
-    <div
-      style={{
-        padding: '1rem 1rem 7rem 1rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-      }}
-    >
+    <div className="icp-container">
       <IncidentContentHeader incident={incident} />
 
       <div style={{ marginTop: '-0.5rem' }}>

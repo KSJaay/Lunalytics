@@ -4,19 +4,18 @@ import './left.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Tooltip } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
+import { Avatar, Tooltip } from '@lunalytics/ui';
 import { BsFillShieldLockFill } from 'react-icons/bs';
-import { Avatar } from '@lunalytics/ui';
 
 // import local files
-import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
-import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
 import MonitorPreview from '../home/preview';
 import IncidentPreview from '../incident/preview';
-import NotificationPreview from '../notifications/preview';
 import StatusPagePreview from '../status/preview';
+import NotificationPreview from '../notifications/preview';
+import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
 
 const actionTabs = [
   {
@@ -101,15 +100,7 @@ const LeftNavigation = ({ activeUrl }) => {
       </div>
       <div className="left-navigation-actions">{actions}</div>
 
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          paddingBottom: '1rem',
-          alignItems: 'center',
-        }}
-      >
+      <div className="navigation-settings-container">
         <div
           className="navigation-left-action"
           onClick={() => navigate('/settings')}

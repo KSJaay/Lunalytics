@@ -38,10 +38,8 @@ const IncidentContentImpact = () => {
         return toast.error('Invalid type provided');
       }
 
-      const updatedIncident = { ...incident, affect: id };
-
       const response = await createPostRequest('/api/incident/update', {
-        incident: updatedIncident,
+        incident: { ...incident, affect: id },
       });
 
       addIncident(response.data);

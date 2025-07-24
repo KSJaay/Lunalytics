@@ -14,13 +14,7 @@ const NotificationDiscordContent = ({
 
   return (
     <>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '0 1rem',
-        }}
-      >
+      <div className="notification-content-container">
         <Input
           title="Friendly Name"
           placeholder="Lunalytics"
@@ -45,11 +39,7 @@ const NotificationDiscordContent = ({
           iconRight={
             <div
               onClick={() => setShowPassword(!showPassword)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              className="notification-content-icon"
             >
               {showPassword ? (
                 <IoMdEyeOff style={{ width: '25px', height: '25px' }} />

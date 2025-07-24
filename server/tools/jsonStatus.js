@@ -108,7 +108,7 @@ const jsonStatusCheck = async (monitor) => {
 
     logger.error('JSON Query Status Check', {
       message: `Issue checking monitor ${monitor.monitorId}: ${error.message}`,
-      monitor: `${JSON.stringify(monitor)}`,
+      monitor,
     });
 
     if (error.response) {

@@ -103,15 +103,7 @@ const HomeStatusPageHeader = ({
         </div>
       </div>
 
-      <div
-        style={{
-          gap: '0.5rem',
-          display: 'flex',
-          padding: '0 0.5rem',
-          alignItems: 'center',
-          borderBottom: '1px solid var(--accent-700)',
-        }}
-      >
+      <div className="smc-options">
         {menuOptions.map(({ id, Icon }) => {
           const isActive = activePage === id;
 
@@ -122,14 +114,8 @@ const HomeStatusPageHeader = ({
                 borderBottom: isActive
                   ? '4px solid var(--primary-700)'
                   : '4px solid transparent',
-                padding: '0.25rem 1rem 0.5rem 1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
               }}
+              className="smc-options-item"
               onClick={() => setActivePage(id)}
             >
               <div style={{ width: '20px', height: '20px' }}>

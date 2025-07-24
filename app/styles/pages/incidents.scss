@@ -145,3 +145,39 @@
     }
   }
 }
+
+// incident-header-content > ihc
+
+.ihc-container {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.ihc-content {
+  background-color: var(--accent-800);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--accent-500);
+}
+
+.ihc-content-title {
+  color: var(--font-light-color);
+}
+
+// incident-content-page > icp
+
+.icp-container {
+  padding: 1rem 1rem 7rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.icp-message-container {
+  margin-top: -0.5rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+

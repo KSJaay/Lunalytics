@@ -46,15 +46,7 @@ const Home = () => {
       leftChildren={<HomeMonitorsList monitors={monitors} />}
       handleSearchUpdate={handleSearchUpdate}
       leftButton={
-        <div
-          style={{
-            display: 'flex',
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '0.5rem',
-          }}
-        >
+        <div className="monitor-left-button-container">
           <Button
             variant="flat"
             fullWidth
@@ -70,17 +62,7 @@ const Home = () => {
           >
             Add Monitor
           </Button>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '0.75rem',
-              backgroundColor: 'var(--accent-800)',
-              borderRadius: 'var(--radius-sm)',
-              cursor: 'pointer',
-            }}
-          >
+          <div className="monitor-left-menu">
             <FaEllipsisVertical size={20} />
           </div>
         </div>
@@ -89,18 +71,7 @@ const Home = () => {
       header={{ HeaderComponent: HomeMonitorHeader }}
     >
       {!activeMonitor ? (
-        <div
-          style={{
-            height: '100%',
-            width: '100%',
-            fontWeight: 'bold',
-            fontSize: 'var(--font-2xl)',
-            color: 'var(--font-light-color)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <div className="monitor-none-exist">
           <div>No monitors found</div>
         </div>
       ) : (
