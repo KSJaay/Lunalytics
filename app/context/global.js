@@ -5,13 +5,19 @@ class GlobalStore {
   constructor() {
     this.monitors = observable.map();
     this.timeouts = observable.map();
+    this.activeMonitor = null;
 
     makeObservable(this, {
       monitors: observable,
+      timeouts: observable,
+      activeMonitor: observable,
       setMonitors: action,
       setMonitor: action,
       addMonitor: action,
+      editMonitor: action,
       removeMonitor: action,
+      setActiveMonitor: action,
+      getMonitor: action,
       allMonitors: computed,
     });
   }
@@ -58,6 +64,13 @@ class GlobalStore {
   addMonitor = (monitor) => {
     this.monitors.set(monitor.monitorId, monitor);
 
+    if (
+      this.activeMonitor &&
+      this.activeMonitor.monitorId === monitor.monitorId
+    ) {
+      this.setActiveMonitor(monitor.monitorId);
+    }
+
     this.timeouts.set(
       monitor.monitorId,
       setTimeout(
@@ -78,6 +91,7 @@ class GlobalStore {
     }
 
     this.monitors.delete(monitorId);
+    this.setActiveMonitor(null);
   };
 
   getMonitor = (monitorId) => {
@@ -94,6 +108,15 @@ class GlobalStore {
     }
 
     this.addMonitor(monitor);
+  };
+
+  setActiveMonitor = (monitorId) => {
+    if (!monitorId || !this.monitors.has(monitorId)) {
+      this.activeMonitor = this.monitors.values().next().value || null;
+      return;
+    }
+
+    this.activeMonitor = this.monitors.get(monitorId);
   };
 }
 

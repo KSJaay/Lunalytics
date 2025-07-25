@@ -12,21 +12,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import local files
 import Login from './pages/login';
 import Register from './pages/register';
-import Navigation from './components/navigation';
 import Home from './pages/home';
-import Monitor from './pages/monitor';
 import GlobalLayout from './layout/global';
 import Setttings from './pages/settings';
 import Verify from './pages/verify';
 import ErrorPage from './pages/error';
 import Notifications from './pages/notifications';
 import Setup from './pages/setup';
-import Status from './pages/status-pages';
-import StatusConfigure from './pages/status-pages/configure';
+import StatusConfigure from './pages/status-page';
 import StatusLayout from './layout/status';
 import StatusPage from './pages/status';
 import Incidents from './pages/incidents';
-import IncidentUpdate from './pages/incidents/id';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -40,7 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/"
             element={
               <StatusLayout>
-                <StatusPage id={'default'} />
+                <StatusPage id="default" />
               </StatusLayout>
             }
           />
@@ -56,9 +52,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/home"
             element={
               <GlobalLayout>
-                <Navigation>
-                  <Home />
-                </Navigation>
+                <Home />
               </GlobalLayout>
             }
           />
@@ -66,24 +60,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/notifications"
             element={
               <GlobalLayout>
-                <Navigation activeUrl="/notifications">
-                  <Notifications />
-                </Navigation>
+                <Notifications />
               </GlobalLayout>
             }
           />
           <Route
             path="/status-pages"
-            element={
-              <GlobalLayout>
-                <Navigation activeUrl="/status-pages">
-                  <Status />
-                </Navigation>
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/status-pages/configure"
             element={
               <GlobalLayout>
                 <StatusConfigure />
@@ -94,19 +76,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             path="/incidents"
             element={
               <GlobalLayout>
-                <Navigation activeUrl="/incidents">
-                  <Incidents />
-                </Navigation>
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/incidents/:incidentId"
-            element={
-              <GlobalLayout>
-                <Navigation activeUrl="/incidents">
-                  <IncidentUpdate />
-                </Navigation>
+                <Incidents />
               </GlobalLayout>
             }
           />
@@ -115,16 +85,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             element={
               <GlobalLayout>
                 <Setttings />
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/monitor/:monitor_id"
-            element={
-              <GlobalLayout>
-                <Navigation>
-                  <Monitor />
-                </Navigation>
               </GlobalLayout>
             }
           />

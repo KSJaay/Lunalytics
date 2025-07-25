@@ -2,20 +2,66 @@
 import './index.scss';
 
 // import dependencies
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Input } from '@lunalytics/ui';
 
 // import local files
-import TopNavigation from './top';
 import LeftNavigation from './left';
 
-const Navigation = ({ children, activeUrl = '/home' }) => {
+const Navigation = ({
+  children,
+  leftChildren,
+  leftButton,
+  rightChildren,
+  activeUrl = '/home',
+  header = {},
+  handleSearchUpdate,
+}) => {
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
+
+  const { HeaderComponent, props } = header;
+
   return (
     <div className="navigation-container">
-      <TopNavigation />
-      <div className="navigation-content">
-        <LeftNavigation activeUrl={activeUrl} />
-        <div className="content">{children}</div>
-      </div>
+      <LeftNavigation activeUrl={activeUrl} />
+
+      <main className="navigation-content">
+        {leftChildren && (
+          <div className="navigation-sidebar">
+            <div className="navigation-input-container">
+              <Input
+                placeholder="Search..."
+                onChange={(e) => handleSearchUpdate(e.target.value)}
+              />
+            </div>
+            {leftChildren}
+
+            {leftButton && (
+              <div className="navigation-buttons">{leftButton}</div>
+            )}
+          </div>
+        )}
+        <div className="navigation-header">
+          <HeaderComponent
+            {...props}
+            isInfoOpen={isInfoOpen}
+            setIsInfoOpen={setIsInfoOpen}
+            rightChildren={!!rightChildren}
+          />
+          <div className="navigation-children">{children}</div>
+        </div>
+
+        {rightChildren ? (
+          <div
+            className={`navigation-sidebar-right ${
+              isInfoOpen ? 'open' : 'closed'
+            }`}
+          >
+            {rightChildren}
+          </div>
+        ) : null}
+      </main>
     </div>
   );
 };

@@ -1,0 +1,22 @@
+@use '../../styles/pxToRem.scss' as *;
+
+.home-header-menu-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: pxToRem(10);
+
+  svg {
+    width: pxToRem(20);
+    height: pxToRem(20);
+  }
+}
+
+.content-menu-item {
+  display: flex;
+  align-items: center;
+  gap: pxToRem(8);
+  padding-block: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 2rem;
+}

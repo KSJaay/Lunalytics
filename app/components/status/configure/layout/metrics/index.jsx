@@ -14,8 +14,9 @@ import StatusConfigureMonitor from '../../monitor';
 import useContextStore from '../../../../../context';
 import StatusConfigureLayoutMetricsOptions from './options';
 import StatusConfigureLayoutMetricsDropdown from './dropdown';
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../../context/status-page';
 import { statusGraphTypes } from '../../../../../../shared/constants/status';
+import { useMemo } from 'react';
 
 const defaultMonitorObject = { graphType: 'Basic', showPing: true };
 
@@ -50,8 +51,9 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
   const {
     globalStore: { allMonitors, getMonitor },
   } = useContextStore();
-  const { setComponentValue, getComponent, removeComponent } =
-    useStatusContext();
+  const { setComponentValue, getComponent, removeComponent, layoutItems } =
+    useStatusPageContext;
+
   const {
     monitors,
     graphType,
@@ -59,7 +61,10 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
     autoAdd,
     data: { showName, showPing } = {},
     title,
-  } = getComponent(componentId);
+  } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   const updateAutoAdd = (value) => {
     setComponentValue(componentId, 'autoAdd', value);

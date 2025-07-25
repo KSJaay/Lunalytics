@@ -1,20 +1,6 @@
 @use '../pxToRem.scss' as *;
 @use '../breakpoints.scss' as *;
 
-.settings-content {
-  display: flex;
-  flex: 1;
-  background-color: var(--accent-900);
-  margin: pxToRem(16);
-  border-radius: pxToRem(24);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  max-width: pxToRem(1400);
-  margin: pxToRem(16);
-  border: 1px solid var(--accent-700);
-  position: relative;
-}
-
 .settings-container {
   display: flex;
   width: 100vw;
@@ -56,12 +42,6 @@
 }
 
 @include mobile {
-  .settings-content {
-    display: block;
-    margin: 0;
-    border-radius: 0;
-  }
-
   .settings-close {
     top: pxToRem(8);
     right: pxToRem(8);

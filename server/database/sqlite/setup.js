@@ -21,8 +21,9 @@ export class SQLite {
 
   async connect(databaseName) {
     if (!config.get('database')?.name && process.env.NODE_ENV !== 'test') {
-      return logger.error('SQLITE', {
-        message: 'Database name is not set in config.json',
+      return logger.notice('SQLITE', {
+        message:
+          'Database name is not set in config.json, visit http://localhost:2308/setup to setup application',
       });
     }
 

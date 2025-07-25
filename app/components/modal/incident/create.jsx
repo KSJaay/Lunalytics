@@ -1,5 +1,3 @@
-import '../../../styles/pages/incidents.scss';
-
 // import dependencies
 import { toast } from 'react-toastify';
 import { Textarea, Input } from '@lunalytics/ui';

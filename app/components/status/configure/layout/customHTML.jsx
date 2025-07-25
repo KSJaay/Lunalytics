@@ -1,17 +1,22 @@
 // import dependencies
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Textarea } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
 import { FiMaximize, FiMinimize } from 'react-icons/fi';
 
 // import local files
 import { FaTrashCan } from '../../../icons';
-import useStatusContext from '../../../../hooks/useConfigureStatus';
+import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureLayoutCustomHTML = ({ componentId }) => {
   const { getComponent, setComponentValue, removeComponent } =
-    useStatusContext();
+    useStatusPageContext;
 
-  const { isMinimized, data } = getComponent(componentId);
+  const { isMinimized, data } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   return (
     <>
@@ -63,4 +68,4 @@ StatusConfigureLayoutCustomHTML.propTypes = {
   componentId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutCustomHTML;
+export default observer(StatusConfigureLayoutCustomHTML);

@@ -1,8 +1,9 @@
 // import dependencies
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 // import local files
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import Switch from '../../../../ui/switch';
 import Tabs from '../../../../ui/tabs';
 import {
@@ -10,11 +11,15 @@ import {
   statusRotations,
   statusSizes,
 } from '../../../../../../shared/constants/status';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
-  const { getComponent, setComponentValue } = useStatusContext();
+  const { getComponent, setComponentValue, layoutItems } = useStatusPageContext;
 
-  const { title = {} } = getComponent(componentId);
+  const { title = {} } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   return (
     <div style={{ flex: 1 }}>
@@ -84,4 +89,4 @@ StatusConfigureLayoutHeaderLogoOptions.propTypes = {
   componentId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutHeaderLogoOptions;
+export default observer(StatusConfigureLayoutHeaderLogoOptions);

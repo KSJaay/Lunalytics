@@ -1,7 +1,9 @@
 import './status.scss';
 
 // import dependencies
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 import { FiMinimize, FiMaximize } from 'react-icons/fi';
 
 // import local files
@@ -12,13 +14,13 @@ import {
   IoWarning,
   RiIndeterminateCircleFill,
 } from '../../../icons';
-import useStatusContext from '../../../../hooks/useConfigureStatus';
 import Tabs from '../../../ui/tabs';
 import {
   statusBarDesign,
   statusSizes,
 } from '../../../../../shared/constants/status';
 import { affectTextIds } from '../../../../../shared/constants/incident';
+import useStatusPageContext from '../../../../context/status-page';
 
 const icons = {
   Operational: <FaCircleCheck style={{ width: '32px', height: '32px' }} />,
@@ -37,10 +39,12 @@ const statusText = {
 };
 
 const StatusConfigureLayoutStatus = ({ componentId }) => {
-  const { setComponentValue, getComponent, removeComponent } =
-    useStatusContext();
-  const { icon, design, size, status, titleSize, isMinimized } =
-    getComponent(componentId);
+  const { setComponentValue, getComponent, removeComponent, layoutItems } =
+    useStatusPageContext;
+  const { icon, design, size, status, titleSize, isMinimized } = useMemo(
+    () => getComponent(componentId),
+    [componentId, JSON.stringify(layoutItems)]
+  );
 
   return (
     <>
@@ -128,4 +132,4 @@ StatusConfigureLayoutStatus.propTypes = {
   componentId: PropTypes.string.isRequired,
 };
 
-export default StatusConfigureLayoutStatus;
+export default observer(StatusConfigureLayoutStatus);

@@ -1,11 +1,37 @@
 @use '../pxToRem.scss' as *;
 
-.home-container {
+.monitor-container {
   display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  padding: pxToRem(16) pxToRem(12);
+  flex-direction: column;
   gap: pxToRem(16);
-  overflow-y: auto;
-  padding-bottom: pxToRem(48);
+  margin: pxToRem(16);
+}
+
+.monitor-left-button-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.monitor-left-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: var(--accent-800);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.monitor-none-exist {
+  height: 100%;
+  width: 100%;
+  font-weight: bold;
+  font-size: var(--font-2xl);
+  color: var(--font-light-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

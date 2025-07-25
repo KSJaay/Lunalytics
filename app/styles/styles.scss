@@ -24,17 +24,17 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--accent-500);
+  background-color: transparent;
   border-radius: var(--radius-xs);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-900);
+  background: var(--accent-400);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-900);
+  background: var(--accent-300);
 }
 
 .input-label {
@@ -201,4 +201,8 @@ body {
   @include desktop {
     display: flex !important;
   }
+}
+
+:root {
+  --status-page-max-width: 850px;
 }

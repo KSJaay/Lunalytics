@@ -1,6 +1,7 @@
 // import dependencies
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
+import { Button } from '@lunalytics/ui';
 
 // import local files
 import MembersTable from './member';
@@ -23,9 +24,7 @@ const ManageTeam = () => {
   if (isLoading) {
     return (
       <div
-        style={{
-          overflow: 'auto',
-        }}
+        style={{ overflow: 'auto' }}
         className="settings-account-container"
         id="manage"
       />
@@ -34,13 +33,17 @@ const ManageTeam = () => {
 
   return (
     <div
-      style={{
-        overflow: 'auto',
-      }}
+      style={{ overflow: 'auto' }}
       className="settings-account-container"
       id="manage"
     >
       <MembersTable members={sortedMembers} />
+
+      <div style={{ marginTop: '2rem' }}>
+        <Button fullWidth variant="flat" color="primary">
+          Invite Member
+        </Button>
+      </div>
     </div>
   );
 };

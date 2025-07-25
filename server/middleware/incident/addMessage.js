@@ -4,6 +4,7 @@ import {
   fetchIncident,
   updateIncident,
 } from '../../database/queries/incident.js';
+import { handleError } from '../../utils/errors.js';
 
 const createIncidentMessageMiddleware = async (request, response) => {
   const { message, status, monitorIds, incidentId } = request.body;
@@ -57,6 +58,7 @@ const createIncidentMessageMiddleware = async (request, response) => {
     return response.json(data);
   } catch (error) {
     console.log(error);
+    handleError(error, response);
   }
 };
 

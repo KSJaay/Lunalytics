@@ -14,7 +14,6 @@ import {
   StatusUptimeNerdyGraph,
   StatusUptimePrettyGraph,
 } from './graph';
-import useStatusContext from '../../../../../hooks/useConfigureStatus';
 import StatusConfigureMonitor from '../../monitor';
 import useContextStore from '../../../../../context';
 import {
@@ -22,18 +21,21 @@ import {
   statusIndicators,
 } from '../../../../../../shared/constants/status';
 import { affectTextIds } from '../../../../../../shared/constants/incident';
+import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutUptime = ({ componentId }) => {
   const {
     globalStore: { getMonitor, allMonitors },
   } = useContextStore();
 
-  const { getComponent, setComponentValue, removeComponent } =
-    useStatusContext();
+  const { getComponent, setComponentValue, removeComponent, layoutItems } =
+    useStatusPageContext;
 
-  const component = getComponent(componentId);
   const { title, monitors, graphType, status, statusIndicator, isMinimized } =
-    component;
+    useMemo(
+      () => getComponent(componentId),
+      [componentId, JSON.stringify(layoutItems)]
+    );
 
   const graphClass = classNames({
     'subg-container': graphType === 'Basic',
