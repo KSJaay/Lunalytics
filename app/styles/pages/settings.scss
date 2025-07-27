@@ -41,6 +41,34 @@
   }
 }
 
+.settings-manage-invites-header {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  grid-template-columns: 1fr 150px 200px 100px;
+  border-bottom: 2px solid var(--accent-600);
+  font-weight: bold;
+}
+
+.settings-manage-invites-item {
+  display: grid;
+  gap: 10px;
+  background-color: var(--accent-700);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  grid-template-columns: 1fr 150px 200px 100px;
+  color: var(--font-light-color);
+  cursor: pointer;
+  border: 1px solid var(--accent-600);
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--primary-600);
+  }
+}
+
 @include mobile {
   .settings-close {
     top: pxToRem(8);

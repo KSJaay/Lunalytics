@@ -7,8 +7,13 @@ import { Button } from '@lunalytics/ui';
 import MembersTable from './member';
 import useTeamContext from '../../../context/team';
 import useFetch from '../../../hooks/useFetch';
+import CreateInviteModal from '../../modal/settings/invite';
+import useContextStore from '../../../context';
 
 const ManageTeam = () => {
+  const {
+    modalStore: { openModal, closeModal },
+  } = useContextStore();
   const { teamMembers, setTeam } = useTeamContext();
 
   const sortedMembers = teamMembers
@@ -33,17 +38,33 @@ const ManageTeam = () => {
 
   return (
     <div
-      style={{ overflow: 'auto' }}
+      style={{ overflow: 'auto', overflowX: 'hidden' }}
       className="settings-account-container"
       id="manage"
     >
-      <MembersTable members={sortedMembers} />
-
-      <div style={{ marginTop: '2rem' }}>
-        <Button fullWidth variant="flat" color="primary">
-          Invite Member
-        </Button>
+      <div className="sat-header">
+        <div style={{ flex: 1 }}>
+          <div className="settings-subtitle" style={{ margin: '0px' }}>
+            Manage Team
+          </div>
+          <div className="sat-subheader">
+            Manage your team members and their permissions.
+          </div>
+        </div>
+        <div className="sat-create-btn">
+          <Button
+            variant="flat"
+            color="primary"
+            onClick={() =>
+              openModal(<CreateInviteModal closeModal={closeModal} />)
+            }
+          >
+            Invite Member
+          </Button>
+        </div>
       </div>
+
+      <MembersTable members={sortedMembers} />
     </div>
   );
 };
