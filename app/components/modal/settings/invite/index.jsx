@@ -1,13 +1,18 @@
 // import dependencies
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
 // import local files
 import Modal from '../../../ui/modal';
-import { createPostRequest } from '../../../../services/axios';
-import { userPropType } from '../../../../../shared/utils/propTypes';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 import SwitchWithText from '../../../ui/switch';
+import useClipboard from '../../../../hooks/useClipboard';
+import { createPostRequest } from '../../../../services/axios';
+import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import CreateInviteMaxUses from './maxUses';
+import CreateInviteExpiry from './expiry';
+import { observer } from 'mobx-react-lite';
+import useInvitesContext from '../../../../context/invites';
 
 const permissionsWithDescription = [
   {
@@ -72,8 +77,12 @@ const permissionsWithDescription = [
   },
 ];
 
-const CreateInviteModal = ({ onClose }) => {
-  const [perms, setPermission] = useState(tokenPermissions);
+const CreateInviteModal = ({ closeModal }) => {
+  const [perms, setPermission] = useState(0);
+  const [maxUses, setMaxUses] = useState(null);
+  const [expiryId, setExpiryId] = useState(null);
+  const clipboard = useClipboard();
+  const { addInvite } = useInvitesContext();
 
   const changePermission = (isChecked, permission) => {
     if (isChecked) {
@@ -85,20 +94,39 @@ const CreateInviteModal = ({ onClose }) => {
 
   const handleCreate = async () => {
     try {
-      await createPostRequest('/api/invite/create', {});
+      const response = await createPostRequest('/api/invite/create', {
+        expiry: expiryId,
+        limit: maxUses,
+        permission: perms,
+      });
 
-      toast.success('Invite has been copied to clipboard.');
-      onClose();
-    } catch {
+      const invite = response?.data?.invite;
+
+      if (invite) {
+        await clipboard(invite, 'Invite has been copied to clipboard.');
+        addInvite(invite);
+      } else {
+        toast.success('Invite has been created successfully.');
+      }
+
+      closeModal();
+    } catch (error) {
+      if (error.response?.status === 400) {
+        return toast.error(error.response.data.message);
+      }
+
       toast.error('Error creating invite.');
     }
   };
 
   return (
-    <>
-      <Modal.Title style={{ textAlign: 'center' }}>Invite user</Modal.Title>
-      <Modal.Message style={{ width: '400px' }}>
-        <div>
+    <Modal.Container contentProps={{ style: { width: '850px' } }}>
+      <Modal.Title style={{ textAlign: 'center' }}>Create Invite</Modal.Title>
+      <Modal.Message>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <CreateInviteMaxUses setMaxUses={setMaxUses} maxUses={maxUses} />
+          <CreateInviteExpiry expiryId={expiryId} setExpiryId={setExpiryId} />
+
           <div>
             <div className="input-label">Token Permissions</div>
             <div className="input-short-description">
@@ -143,20 +171,19 @@ const CreateInviteModal = ({ onClose }) => {
         </div>
       </Modal.Message>
       <Modal.Actions>
-        <Modal.Button onClick={onClose}>Cancel</Modal.Button>
-        <Modal.Button color="red" onClick={handleCreate}>
+        <Modal.Button onClick={closeModal}>Cancel</Modal.Button>
+        <Modal.Button color="green" onClick={handleCreate}>
           Create
         </Modal.Button>
       </Modal.Actions>
-    </>
+    </Modal.Container>
   );
 };
 
 CreateInviteModal.displayName = 'CreateInviteModal';
 
 CreateInviteModal.propTypes = {
-  member: userPropType.isRequired,
-  onClose: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
-export default CreateInviteModal;
+export default observer(CreateInviteModal);

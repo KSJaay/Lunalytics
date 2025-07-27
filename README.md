@@ -7,7 +7,7 @@
   <a href="https://lunalytics.xyz">Documentation</a> ·
   <a href="https://demo.lunalytics.xyz">Try live demo</a> ·
   <a href="https://roadmap.lunalytics.xyz">Roadmap</a> ·
-  <a href="https://discord.gg/cjbGmmNdcd">Discord</a>
+  <a href="https://discord.gg/HkpDnUdf4u">Discord</a>
 </div>
 
 ![Demo](https://raw.githubusercontent.com/KSJaay/Lunalytics/refs/heads/main/docs/public/demo.gif)
