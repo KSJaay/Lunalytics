@@ -14,6 +14,7 @@ import { observer } from 'mobx-react-lite';
 import Role from '../../../../../shared/permissions/role';
 import useContextStore from '../../../../context';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import ManageInvites from '../../invite';
 
 const SettingsMobile = ({ handleKeydown }) => {
   const {
@@ -61,6 +62,7 @@ const SettingsMobile = ({ handleKeydown }) => {
       {page === 'Account' && <SettingsAccount />}
       {page === 'Appearance' && <SettingsPersonalisation />}
       {isAdmin && page === 'API Token' && <ManageApiTokens />}
+      {isAdmin && page === 'Invites' && <ManageInvites />}
       {page === 'Manage Team' && <ManageTeam />}
       {page === 'About' && <SettingsAbout />}
     </div>

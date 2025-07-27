@@ -9,4 +9,5 @@ export const PermissionsBits = {
   VIEW_INCIDENTS: 1 << 7,
   MANAGE_INCIDENTS: 1 << 8,
   MANAGE_TEAM: 1 << 9,
+  CREATE_INVITE: 1 << 10,
 };

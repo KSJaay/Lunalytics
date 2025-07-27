@@ -8,6 +8,7 @@ import { certificateTable } from './tables/certificate.js';
 import { heartbeatTable } from './tables/heartbeat.js';
 import { hourlyHeartbeatTable } from './tables/hourly_heartbeat.js';
 import { incidentTable } from './tables/incident.js';
+import { inviteTable } from './tables/invite.js';
 import { monitorTable } from './tables/monitor.js';
 import { notificationsTable } from './tables/notifications.js';
 import { statusPageTable } from './tables/status_page.js';
@@ -97,6 +98,7 @@ export class SQLite {
     await heartbeatTable(this.client);
     await hourlyHeartbeatTable(this.client);
     await incidentTable(this.client);
+    await inviteTable(this.client);
     await monitorTable(this.client);
     await notificationsTable(this.client);
     await statusPageTable(this.client);

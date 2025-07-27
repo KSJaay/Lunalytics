@@ -6,7 +6,7 @@ const tabs = (isAdmin) => [
   {
     title: 'WORKSPACE',
     items: isAdmin
-      ? ['API Token', 'Manage Team', 'About']
+      ? ['API Token', 'Invites', 'Manage Team', 'About']
       : ['Manage Team', 'About'],
   },
 ];

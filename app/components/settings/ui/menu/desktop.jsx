@@ -13,6 +13,7 @@ import { observer } from 'mobx-react-lite';
 import useContextStore from '../../../../context';
 import Role from '../../../../../shared/permissions/role';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import ManageInvites from '../../invite';
 
 const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
   const {
@@ -35,6 +36,7 @@ const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
       {tab === 'Account' && <SettingsAccount />}
       {tab === 'Appearance' && <SettingsPersonalisation />}
       {isAdmin && tab === 'API Token' ? <ManageApiTokens /> : null}
+      {isAdmin && tab === 'Invites' ? <ManageInvites /> : null}
       {tab === 'Manage Team' && <ManageTeam />}
       {tab === 'About' && <SettingsAbout />}
     </>

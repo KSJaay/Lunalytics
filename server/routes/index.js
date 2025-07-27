@@ -7,6 +7,7 @@ import statusPagesRoutes from './statusPages.js';
 import statusApiRoutes from './statusApi.js';
 import incidentRoutes from './incident.js';
 import tokenRoutes from './tokens.js';
+import invitesRoutes from './invites.js';
 import defaultPageMiddleware from '../middleware/status/defaultPage.js';
 import setupExistsMiddleware from '../middleware/setupExists.js';
 import getStatusPageUsingIdMiddleware from '../middleware/status/statusPageUsingId.js';
@@ -24,6 +25,7 @@ const initialiseRoutes = async (app) => {
   app.use('/api/notifications', notificationRoutes);
   app.use('/api/incident', incidentRoutes);
   app.use('/api/tokens', tokenRoutes);
+  app.use('/api/invite', invitesRoutes);
   // Routes used for configuring status pages
   app.use('/api/status-pages', statusPagesRoutes);
 };
