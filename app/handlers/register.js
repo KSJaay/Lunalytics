@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { createPostRequest } from '../services/axios';
 import validators from '../../shared/validators';
 
-const handleRegister = async (inputs, setErrors, setPage, navigate) => {
+const handleRegister = async (inputs, setErrors, setPage, navigate, invite) => {
   try {
     const { email, username, password, confirmPassword } = inputs;
 
@@ -19,11 +19,18 @@ const handleRegister = async (inputs, setErrors, setPage, navigate) => {
       return setErrors({ confirmPassword: 'Passwords do not match' });
     }
 
-    const query = await createPostRequest('/auth/register', {
-      email,
-      username,
-      password,
-    });
+    const queryParams = invite ? { invite } : null;
+
+    const query = await createPostRequest(
+      '/auth/register',
+      {
+        email,
+        username,
+        password,
+      },
+      {},
+      queryParams
+    );
 
     toast.success('You have been successfully registered!');
 

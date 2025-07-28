@@ -69,6 +69,49 @@
   }
 }
 
+.settings-invites-item-title {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.settings-invites-item-subtitle {
+  display: flex;
+  align-items: center;
+}
+
+.settings-invites-buttons-container {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.settings-invites-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--accent-900);
+  padding: 10px;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: var(--accent-800);
+  }
+}
+
+.settings-invite-permissions-container {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0 20px 0;
+}
+
+.settings-invite-permission {
+  border-bottom: 1px solid var(--accent-700);
+  padding-bottom: 10px;
+}
+
 @include mobile {
   .settings-close {
     top: pxToRem(8);

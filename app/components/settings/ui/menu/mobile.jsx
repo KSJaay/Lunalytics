@@ -1,20 +1,20 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
+import { IoArrowBack } from 'react-icons/io5';
 
 // import local files
-import { IoArrowBack } from '../../../icons';
-import SettingsMobileTabs from '../tab/mobile';
-import SettingsAccount from '../../account';
-import SettingsPersonalisation from '../../personalisation';
-import ManageApiTokens from '../../api';
 import ManageTeam from '../../manage';
 import SettingsAbout from '../../about';
-import { observer } from 'mobx-react-lite';
-import Role from '../../../../../shared/permissions/role';
-import useContextStore from '../../../../context';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import ManageApiTokens from '../../api';
 import ManageInvites from '../../invite';
+import SettingsAccount from '../../account';
+import SettingsMobileTabs from '../tab/mobile';
+import useContextStore from '../../../../context';
+import Role from '../../../../../shared/permissions/role';
+import SettingsPersonalisation from '../../personalisation';
+import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 
 const SettingsMobile = ({ handleKeydown }) => {
   const {

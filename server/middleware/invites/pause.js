@@ -1,3 +1,7 @@
+import {
+  fetchInviteUsingId,
+  pauseInvite,
+} from '../../database/queries/invite.js';
 import { handleError } from '../../utils/errors.js';
 
 const pauseInviteMiddleware = async (request, response) => {

@@ -1,7 +1,7 @@
 import '../styles/pages/register.scss';
 
 // import dependencies
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // import local files
 import RegisterEmailForm from '../components/register/email';
@@ -23,6 +23,8 @@ const Register = () => {
 
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
+
   return (
     <div className="auth-form-container">
       <div className="auth-form">
@@ -38,7 +40,13 @@ const Register = () => {
           <RegisterPasswordForm
             handleInput={handleInput}
             handleSubmit={() =>
-              handleRegister(inputs, setErrors, handlePageChange, navigate)
+              handleRegister(
+                inputs,
+                setErrors,
+                handlePageChange,
+                navigate,
+                searchParams.get('invite')
+              )
             }
             setPassword={setPassword}
             inputs={inputs}

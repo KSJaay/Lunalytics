@@ -5,10 +5,10 @@ import { Button } from '@lunalytics/ui';
 
 // import local files
 import MembersTable from './member';
-import useTeamContext from '../../../context/team';
 import useFetch from '../../../hooks/useFetch';
-import CreateInviteModal from '../../modal/settings/invite';
 import useContextStore from '../../../context';
+import useTeamContext from '../../../context/team';
+import CreateInviteModal from '../../modal/settings/invite';
 
 const ManageTeam = () => {
   const {
