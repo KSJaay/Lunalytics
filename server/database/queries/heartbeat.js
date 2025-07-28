@@ -10,6 +10,36 @@ export const fetchHeartbeats = async (monitorId, limit = 168) => {
   return heartbeats;
 };
 
+export const isMonitorDown = async (monitorId, limit) => {
+  const heartbeats = await SQLite.client('heartbeat')
+    .where({ monitorId })
+    .orderBy('date', 'desc')
+    .limit(limit);
+
+  return heartbeats.every((heartbeat) => heartbeat.isDown)
+    ? heartbeats[heartbeats.length - 1]
+    : false;
+};
+
+export const isMonitorRecovered = async (monitorId, limit) => {
+  const newLimit = limit + 1;
+  const query = SQLite.client('heartbeat')
+    .where({ monitorId })
+    .orderBy('date', 'desc')
+    .limit(newLimit);
+
+  if (query.length === newLimit && !query[query.length - 1].isDown) {
+    const lastHeartbeat = query[query.length - 1];
+    const limitHeartbeats = query.slice(0, limit);
+
+    return limitHeartbeats.every((heartbeat) => heartbeat.isDown)
+      ? lastHeartbeat
+      : false;
+  }
+
+  return false;
+};
+
 export const fetchHeartbeatsByDate = async (monitorId, date) => {
   const isoDate = new Date(date).toISOString();
 

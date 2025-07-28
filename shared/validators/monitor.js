@@ -85,6 +85,16 @@ export const interval = (interval) => {
   }
 };
 
+const retry = (retry) => {
+  if (!retry) {
+    return 'Please enter a valid retry.';
+  }
+
+  if (retry < 1 || retry > 30) {
+    return 'Please enter a valid retry. Retry should be between 1 and 30 times.';
+  }
+};
+
 export const retryInterval = (retryInterval) => {
   if (!retryInterval) {
     return 'Please enter a valid retry interval.';
@@ -164,6 +174,7 @@ const validators = {
   tcpHost,
   tcpPort,
   interval,
+  retry,
   retryInterval,
   requestTimeout,
   notificationType,
@@ -179,6 +190,7 @@ const httpValidators = [
   ['method', 'httpMethod'],
   ['valid_status_codes', 'httpStatusCodes'],
   ['interval', 'interval'],
+  ['retry', 'retry'],
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
   ['notificationType', 'notificationType'],
@@ -192,6 +204,7 @@ const jsonValidators = [
   ['url', 'httpUrl'],
   ['method', 'httpMethod'],
   ['interval', 'interval'],
+  ['retry', 'retry'],
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
   ['notificationType', 'notificationType'],
@@ -205,6 +218,7 @@ const pingValidators = [
   ['type', 'type'],
   ['url', 'httpUrl'],
   ['interval', 'interval'],
+  ['retry', 'retry'],
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
   ['notificationType', 'notificationType'],
@@ -216,6 +230,7 @@ const tcpValidators = [
   ['url', 'tcpHost'],
   ['port', 'tcpPort'],
   ['interval', 'interval'],
+  ['retry', 'retry'],
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
   ['notificationType', 'notificationType'],
