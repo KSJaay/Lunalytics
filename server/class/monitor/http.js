@@ -9,6 +9,7 @@ const clean = (
   monitorId: monitor.monitorId,
   name: monitor.name,
   url: monitor.url,
+  retry: parseInt(monitor.retry),
   interval: parseInt(monitor.interval),
   retryInterval: parseInt(monitor.retryInterval),
   requestTimeout: parseInt(monitor.requestTimeout),

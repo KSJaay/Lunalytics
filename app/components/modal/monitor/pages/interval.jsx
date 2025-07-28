@@ -17,6 +17,18 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
       />
 
       <Input
+        id="input-retry"
+        type="number"
+        title="Retry"
+        subtitle="Max number of retries before sending a notification for service down."
+        onChange={(e) => {
+          handleInput('retry', e.target.value);
+        }}
+        value={inputs.retry}
+        error={errors.retry}
+      />
+
+      <Input
         id="input-retry-interval"
         type="number"
         title="Retry Interval"

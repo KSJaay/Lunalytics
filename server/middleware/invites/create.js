@@ -10,8 +10,6 @@ const createInviteMiddleware = async (request, response) => {
       user: { email },
     } = response.locals;
 
-    console.log('expiry:', expiry);
-
     if (!permission || !isValidBitFlags(permission)) {
       return response.status(400).send({
         message: 'Invalid permission flags provided',
