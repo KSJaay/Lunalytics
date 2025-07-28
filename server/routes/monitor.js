@@ -12,12 +12,10 @@ import monitorPause from '../middleware/monitor/pause.js';
 import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
 
-const canEditMonitors = hasRequiredPermission(PermissionsBits.MANAGE_MONITORS);
-
 router.get('/status', fetchMonitorStatus);
 router.get('/id', fetchMonitorUsingId);
 
-router.use(canEditMonitors);
+router.use(hasRequiredPermission(PermissionsBits.MANAGE_MONITORS));
 router.post('/add', monitorAdd);
 router.post('/edit', monitorEdit);
 router.get('/delete', monitorDelete);

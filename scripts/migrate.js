@@ -19,11 +19,15 @@ const migrateDatabase = async () => {
 
   const migrationListKeys = Object.keys(migrationList);
 
-  const [version, patch, minor] = config.version.split('.');
+  const [version, patch, minor] = config.version
+    .split('.')
+    .map((v) => parseInt(v));
 
   const validMigrations = migrationListKeys.filter((migration) => {
-    const [migrationVersion, migrationPatch, migrationMinor] =
-      migration.split('.');
+    const [migrationVersion, migrationPatch, migrationMinor] = migration
+      .split('.')
+      .map((v) => parseInt(v));
+
     return (
       migrationVersion > version ||
       (migrationVersion === version && migrationPatch > patch) ||

@@ -10,6 +10,7 @@ import { migrate as migrateApiToken } from './0-9-3.js';
 import { migrate as migrateIncidentEmail } from './0-9-4.js';
 import { migrate as migrateMonitor } from './0-9-5.js';
 import { migrate as migrateMonitorJson } from './0-9-7.js';
+import { migrate as migrateUiOverhaul } from './0-10-0.js';
 
 const migrationList = {
   '0.4.0': migrateTcpUpdate,
@@ -23,6 +24,7 @@ const migrationList = {
   '0.9.4': migrateIncidentEmail,
   '0.9.5': migrateMonitor,
   '0.9.7': migrateMonitorJson,
+  '0.10.0': migrateUiOverhaul,
 };
 
 export default migrationList;

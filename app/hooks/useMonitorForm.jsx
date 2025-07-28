@@ -5,6 +5,7 @@ import monitorValidators from '../../shared/validators/monitor';
 const defaultInputs = {
   type: 'http',
   method: 'HEAD',
+  retry: 1,
   interval: 60,
   retryInterval: 60,
   requestTimeout: 30,
@@ -19,7 +20,7 @@ const useMonitorForm = (
   closeModal,
   setMonitor
 ) => {
-  const [inputs, setInput] = useState(values);
+  const [inputs, setInput] = useState({ ...defaultInputs, ...values });
   const [errors, setErrors] = useState({});
 
   const handleInput = (name, value) => {

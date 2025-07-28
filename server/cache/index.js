@@ -9,7 +9,8 @@ import { fetchMonitor, fetchMonitors } from '../database/queries/monitor.js';
 import {
   createHeartbeat,
   deleteHeartbeats,
-  fetchHeartbeats,
+  isMonitorDown,
+  isMonitorRecovered,
 } from '../database/queries/heartbeat.js';
 import {
   deleteCertificate,
@@ -34,30 +35,20 @@ class Master {
     }
   }
 
-  async updateTcpStatus(monitor, heartbeat) {
-    const [lastHeartbeat] = await fetchHeartbeats(monitor.monitorId, 1);
+  async updateTimeout(monitor, heartbeat) {
     await createHeartbeat(heartbeat);
+    const isDown = await isMonitorDown(monitor.monitorId, monitor.retry);
+
+    if (isDown) {
+      await this.sendNotification(monitor, heartbeat, isDown, false);
+    }
+
+    if (!isDown) {
+      const hasRecovered = await isMonitorRecovered(monitor.monitorId, 1);
+      await this.sendNotification(monitor, heartbeat, false, hasRecovered);
+    }
 
     clearTimeout(this.timeouts.get(monitor.monitorId));
-
-    await this.sendNotification(monitor, heartbeat, lastHeartbeat);
-
-    const timeout = heartbeat.isDown ? monitor.retryInterval : monitor.interval;
-
-    this.timeouts.set(
-      monitor.monitorId,
-      setTimeout(() => this.checkStatus(monitor.monitorId), timeout * 1000)
-    );
-  }
-
-  async checkPingStatus(monitor) {
-    const [lastHeartbeat] = await fetchHeartbeats(monitor.monitorId, 1);
-    const heartbeat = await pingStatusCheck(monitor);
-    await createHeartbeat(heartbeat);
-
-    clearTimeout(this.timeouts.get(monitor.monitorId));
-
-    await this.sendNotification(monitor, heartbeat, lastHeartbeat);
 
     const timeout = heartbeat.isDown ? monitor.retryInterval : monitor.interval;
 
@@ -87,9 +78,7 @@ class Master {
     }
 
     if (monitor.type === 'http') {
-      const [lastHeartbeat] = await fetchHeartbeats(monitorId, 1);
       const heartbeat = await httpStatusCheck(monitor);
-      await createHeartbeat(heartbeat);
 
       if (monitor.url?.toLowerCase().startsWith('https')) {
         const certificate = await fetchCertificate(monitorId);
@@ -102,33 +91,23 @@ class Master {
         }
       }
 
-      await this.sendNotification(monitor, heartbeat, lastHeartbeat);
-
-      const timeout = heartbeat.isDown
-        ? monitor.retryInterval
-        : monitor.interval;
-
-      this.timeouts.set(
-        monitorId,
-        setTimeout(() => this.checkStatus(monitorId), timeout * 1000)
-      );
+      await this.updateTimeout(monitor, heartbeat);
     }
 
     if (monitor.type === 'tcp') {
       clearTimeout(this.timeouts.get(monitorId));
       const updateHeartbeat = (monitor, heartbeat) =>
-        this.updateTcpStatus(monitor, heartbeat);
-      tcpStatusCheck(monitor, updateHeartbeat);
+        this.updateTimeout(monitor, heartbeat);
+      await tcpStatusCheck(monitor, updateHeartbeat);
     }
 
     if (monitor.type === 'ping') {
-      await this.checkPingStatus(monitor);
+      const heartbeat = await pingStatusCheck(monitor);
+      await this.updateTimeout(monitor, heartbeat);
     }
 
     if (monitor.type === 'json') {
-      const [lastHeartbeat] = await fetchHeartbeats(monitorId, 1);
       const heartbeat = await jsonStatusCheck(monitor);
-      await createHeartbeat(heartbeat);
 
       if (monitor.url?.toLowerCase().startsWith('https')) {
         const certificate = await fetchCertificate(monitorId);
@@ -141,22 +120,13 @@ class Master {
         }
       }
 
-      await this.sendNotification(monitor, heartbeat, lastHeartbeat);
-
-      const timeout = heartbeat.isDown
-        ? monitor.retryInterval
-        : monitor.interval;
-
-      this.timeouts.set(
-        monitorId,
-        setTimeout(() => this.checkStatus(monitorId), timeout * 1000)
-      );
+      await this.updateTimeout(monitor, heartbeat);
     }
   }
 
-  async sendNotification(monitor, heartbeat, lastHeartbeat) {
+  async sendNotification(monitor, heartbeat, isDown, isRecovered) {
     try {
-      if (!lastHeartbeat) return;
+      if (!isDown && !isRecovered) return;
 
       const notifyOutage =
         monitor.notificationType === 'All' ||
@@ -166,11 +136,9 @@ class Master {
         monitor.notificationType === 'All' ||
         monitor.notificationType === 'Recovery';
 
-      const hasOutage =
-        notifyOutage && !lastHeartbeat?.isDown && heartbeat.isDown;
+      const hasOutage = notifyOutage && isDown;
 
-      const hasRecovered =
-        notifyRecovery && lastHeartbeat?.isDown && !heartbeat.isDown;
+      const hasRecovered = notifyRecovery && !isRecovered;
 
       if (!hasOutage && !hasRecovered) return;
       if (!monitor.notificationId) return;

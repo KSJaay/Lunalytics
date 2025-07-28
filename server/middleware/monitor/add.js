@@ -26,6 +26,7 @@ export const formatMonitorData = (body, email) => {
     url: body.url,
     interval: body.interval,
     monitorId: body.monitorId,
+    retry: body.retry,
     retryInterval: body.retryInterval,
     requestTimeout: body.requestTimeout,
     notificationId: body.notificationId,
