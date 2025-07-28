@@ -1,10 +1,10 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
-import { useMemo } from 'react';
 
 const limits = [
   { value: '30 minutes', text: '30 minutes' },

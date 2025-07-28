@@ -9,6 +9,7 @@ class Invites {
       addInvite: action,
       setInvites: action,
       removeInvite: action,
+      pauseInvite: action,
       allInvites: computed,
     });
   }
@@ -29,6 +30,14 @@ class Invites {
 
   removeInvite = (inviteId) => {
     this.invites.delete(inviteId);
+  };
+
+  pauseInvite = (inviteId, paused) => {
+    const invite = this.invites.get(inviteId);
+    if (invite) {
+      invite.paused = paused;
+      this.invites.set(inviteId, invite);
+    }
   };
 }
 

@@ -26,7 +26,13 @@ import Incidents from './pages/incidents';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ToastContainer position="top-right" theme="dark" />
+    <ToastContainer
+      position="top-right"
+      theme="dark"
+      closeOnClick
+      stacked
+      id="toast-container"
+    />
     <GlobalProvider>
       <BrowserRouter
         future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
