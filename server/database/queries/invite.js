@@ -1,6 +1,11 @@
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 import { timeToMs } from '../../../shared/utils/ms.js';
 import SQLite from '../sqlite/setup.js';
+
+const nanoid = customAlphabet(
+  '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  8
+);
 
 const getUniqueToken = async () => {
   let token = nanoid(8);
@@ -49,6 +54,7 @@ export const createInvite = async (email, expiry, limit, permission) => {
     createdAt: new Date().toISOString(),
     expiresAt,
     limit: limit ? parseInt(limit) : null,
+    uses: 0,
   };
 
   await SQLite.client('invite').insert(invite);
@@ -64,4 +70,17 @@ export const pauseInvite = async (token, paused) => {
 
 export const deleteInvite = async (token) => {
   return SQLite.client('invite').where({ token }).del();
+};
+
+export const increaseInviteUses = async (token) => {
+  const invite = await SQLite.client('invite').where({ token }).first();
+  const newUses = invite.uses ? invite.uses + 1 : 1;
+
+  if (invite.limit && newUses >= invite.limit) {
+    await deleteInvite(token);
+    return true;
+  }
+
+  await SQLite.client('invite').where({ token }).update({ uses: newUses });
+  return false;
 };

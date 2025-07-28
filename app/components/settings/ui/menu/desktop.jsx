@@ -1,19 +1,19 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
+import { IoMdClose } from 'react-icons/io';
 
 // import local files
-import SettingsTab from '../tab/desktop';
-import SettingsAccount from '../../account';
-import SettingsPersonalisation from '../../personalisation';
 import ManageTeam from '../../manage';
 import ManageApiTokens from '../../api';
 import SettingsAbout from '../../about';
-import { IoMdClose } from '../../../icons';
-import { observer } from 'mobx-react-lite';
+import ManageInvites from '../../invite';
+import SettingsTab from '../tab/desktop';
+import SettingsAccount from '../../account';
 import useContextStore from '../../../../context';
 import Role from '../../../../../shared/permissions/role';
+import SettingsPersonalisation from '../../personalisation';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
-import ManageInvites from '../../invite';
 
 const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
   const {

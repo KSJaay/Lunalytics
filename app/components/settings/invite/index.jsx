@@ -1,22 +1,24 @@
 // import dependencies
 import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
-import { Button, Tooltip } from '@lunalytics/ui';
+import { FaPause, FaPlay } from 'react-icons/fa';
 import { observer } from 'mobx-react-lite';
 import { MdGroupAdd } from 'react-icons/md';
+import { FaTrashCan } from 'react-icons/fa6';
+import { Button, Tooltip } from '@lunalytics/ui';
 
 // import local files
 import useFetch from '../../../hooks/useFetch';
 import useContextStore from '../../../context';
-import CreateInviteModal from '../../modal/settings/invite';
-import useInvitesContext from '../../../context/invites';
 import useClipboard from '../../../hooks/useClipboard';
+import useInvitesContext from '../../../context/invites';
 import useCurrentUrl from '../../../hooks/useCurrentUrl';
-import { FaTrashCan } from 'react-icons/fa6';
-import { FaPlay } from 'react-icons/fa';
+import CreateInviteModal from '../../modal/settings/invite';
+import { createPostRequest } from '../../../services/axios';
 
 const ManageInvites = () => {
-  const { allInvites, setInvites } = useInvitesContext();
+  const { allInvites, setInvites, removeInvite, pauseInvite } =
+    useInvitesContext();
   const {
     modalStore: { openModal, closeModal },
   } = useContextStore();
@@ -31,6 +33,26 @@ const ManageInvites = () => {
     onFailure: () => toast.error("Couldn't fetch api tokens"),
   });
 
+  const handleDelete = async (id) => {
+    try {
+      await createPostRequest('/api/invite/delete', { id });
+      removeInvite(id);
+      toast.success('Invite deleted successfully');
+    } catch {
+      toast.error('Failed to delete invite');
+    }
+  };
+
+  const handlePause = async (id, paused) => {
+    try {
+      await createPostRequest('/api/invite/pause', { id, paused: !paused });
+      pauseInvite(id, !paused);
+      toast.success('Invite paused successfully');
+    } catch {
+      toast.error('Failed to pause invite');
+    }
+  };
+
   return (
     <div
       style={{ overflow: 'auto', overflowX: 'hidden' }}
@@ -43,7 +65,7 @@ const ManageInvites = () => {
             Invites
           </div>
           <div className="sat-subheader">
-            Invites can be used to invite users to Lunalytics.
+            Invites codes can be used to invite users to Lunalytics.
           </div>
         </div>
         <div className="sat-create-btn">
@@ -78,7 +100,7 @@ const ManageInvites = () => {
             <div className="settings-manage-invites-item" key={invite.token}>
               <Tooltip text={'Copy invite code'}>
                 <div
-                  style={{ display: 'flex', alignItems: 'center' }}
+                  className="settings-invites-item-title"
                   onClick={() =>
                     clipboard(
                       `${currentUrl}/register/?invite=${invite.token}`,
@@ -89,51 +111,26 @@ const ManageInvites = () => {
                   {invite.token}
                 </div>
               </Tooltip>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div className="settings-invites-item-subtitle">
                 {invite.limit ? `${invite.uses}/${invite.limit}` : invite.uses}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div className="settings-invites-item-subtitle">
                 {invite.expiresAt
                   ? dayjs(invite.expiresAt).format('lll')
                   : 'Never'}
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '8px',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                }}
-              >
+              <div className="settings-invites-buttons-container">
                 <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'var(--accent-900)',
-                    padding: '10px',
-                    borderRadius: '8px',
-                  }}
-                  onClick={() => {
-                    console.log('Paused invite:', invite);
-                  }}
+                  className="settings-invites-button"
+                  onClick={() => handlePause(invite.token, invite.paused)}
                 >
-                  <FaTrashCan size={18} />
+                  {invite.paused ? <FaPlay size={18} /> : <FaPause size={18} />}
                 </div>
                 <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'var(--accent-900)',
-                    padding: '10px',
-                    borderRadius: '8px',
-                  }}
-                  onClick={() => {
-                    console.log('Paused invite:', invite);
-                  }}
+                  className="settings-invites-button"
+                  onClick={() => handleDelete(invite.token)}
                 >
-                  <FaPlay size={18} />
+                  <FaTrashCan size={18} />
                 </div>
               </div>
             </div>

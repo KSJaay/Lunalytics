@@ -27,8 +27,8 @@ const StatusPagePreview = ({ children }) => {
 
     return filteredStatusPages.map((statusPage) => {
       const handleOnClick = () => {
-        setActiveStatusPage(statusPage);
-        navigate(`/status/${statusPage.statusUrl}`);
+        setActiveStatusPage(statusPage.statusId);
+        navigate('/status-pages');
       };
 
       return (

@@ -6,10 +6,15 @@ import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/index.js';
 import { createUserSession } from '../../database/queries/session.js';
 import { parseUserAgent } from '../../utils/uaParser.js';
+import {
+  fetchInviteUsingId,
+  increaseInviteUses,
+} from '../../database/queries/invite.js';
 
 const register = async (request, response) => {
   try {
     const { email, username, password } = request.body;
+    const { invite } = request.query;
 
     const isInvalidAuth =
       validators.auth.email(email) ||
@@ -28,6 +33,20 @@ const register = async (request, response) => {
       createdAt: new Date().toISOString(),
     };
 
+    if (invite) {
+      const inviteData = await fetchInviteUsingId(invite);
+
+      if (inviteData && !inviteData.paused) {
+        const expiry =
+          inviteData.expiresAt && new Date(inviteData.expiresAt).getTime();
+
+        if (!expiry || expiry < Date.now()) {
+          await increaseInviteUses(invite);
+          data.isVerified = true;
+        }
+      }
+    }
+
     await registerUser(data);
 
     const userAgent = request.headers['user-agent'];
@@ -45,6 +64,10 @@ const register = async (request, response) => {
       sessionToken,
       request.protocol === 'https'
     );
+
+    if (data.isVerified) {
+      return response.sendStatus(201);
+    }
 
     return response.sendStatus(200);
   } catch (error) {

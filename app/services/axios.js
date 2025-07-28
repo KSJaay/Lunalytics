@@ -46,8 +46,8 @@ const createGetRequest = async (path, params, headers = {}) => {
   });
 };
 
-const createPostRequest = async (path, data = {}, headers = {}) => {
-  const url = createURL(path);
+const createPostRequest = async (path, data = {}, headers = {}, params) => {
+  const url = createURL(path, params);
 
   return axios({
     method: 'POST',

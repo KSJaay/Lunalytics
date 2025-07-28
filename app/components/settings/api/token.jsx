@@ -34,11 +34,8 @@ const ManageApiToken = ({ tokenId, tokenName, tokenPermissions }) => {
       </div>
       <div></div>
       <div className="sat-buttons">
-        <Tooltip
-          text={isHidden ? 'Show Token' : 'Hide Token'}
-          onClick={() => setIsHidden(!isHidden)}
-        >
-          <div className="button">
+        <Tooltip text={isHidden ? 'Show Token' : 'Hide Token'}>
+          <div className="button" onClick={() => setIsHidden(!isHidden)}>
             {isHidden ? <IoMdEye size={18} /> : <IoMdEyeOff size={18} />}
           </div>
         </Tooltip>
