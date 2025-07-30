@@ -3,7 +3,6 @@ import { deleteCookie } from '../../shared/utils/cookies.js';
 import { handleError } from '../utils/errors.js';
 import { userSessionExists } from '../database/queries/session.js';
 import { apiTokenExists } from '../database/queries/tokens.js';
-import { oldPermsToFlags } from '../../shared/permissions/oldPermsToFlags.js';
 
 const authorization = async (request, response, next) => {
   try {
@@ -39,11 +38,7 @@ const authorization = async (request, response, next) => {
           return response.redirect('/home');
         }
 
-        response.locals.user = {
-          ...userExistsInDatabase,
-          permission: oldPermsToFlags[userExistsInDatabase.permission],
-          isOwner: userExistsInDatabase.permission === 1,
-        };
+        response.locals.user = userExistsInDatabase;
       }
 
       if (!userExistsInDatabase) {

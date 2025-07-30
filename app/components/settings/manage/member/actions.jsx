@@ -68,8 +68,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
         onClick={() => {
           if (canManage) {
             openModal(
-              <MemberPermissionsModal member={member} onClose={closeModal} />,
-              false
+              <MemberPermissionsModal member={member} onClose={closeModal} />
             );
           }
         }}

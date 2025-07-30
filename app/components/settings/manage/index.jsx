@@ -9,10 +9,12 @@ import useFetch from '../../../hooks/useFetch';
 import useContextStore from '../../../context';
 import useTeamContext from '../../../context/team';
 import CreateInviteModal from '../../modal/settings/invite';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 
 const ManageTeam = () => {
   const {
     modalStore: { openModal, closeModal },
+    userStore: { hasPermission },
   } = useContextStore();
   const { teamMembers, setTeam } = useTeamContext();
 
@@ -51,17 +53,19 @@ const ManageTeam = () => {
             Manage your team members and their permissions.
           </div>
         </div>
-        <div className="sat-create-btn">
-          <Button
-            variant="flat"
-            color="primary"
-            onClick={() =>
-              openModal(<CreateInviteModal closeModal={closeModal} />)
-            }
-          >
-            Invite Member
-          </Button>
-        </div>
+        {hasPermission(PermissionsBits.CREATE_INVITE) ? (
+          <div className="sat-create-btn">
+            <Button
+              variant="flat"
+              color="primary"
+              onClick={() =>
+                openModal(<CreateInviteModal closeModal={closeModal} />)
+              }
+            >
+              Invite Member
+            </Button>
+          </div>
+        ) : null}
       </div>
 
       <MembersTable members={sortedMembers} />

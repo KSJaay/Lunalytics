@@ -1,51 +1,43 @@
-import './permissions.scss';
-
 // import dependencies
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import { useState } from 'react';
-import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
 
 // import local files
-import { createPostRequest } from '../../../../services/axios';
 import Modal from '../../../ui/modal';
+import SwitchWithText from '../../../ui/switch';
 import useTeamContext from '../../../../context/team';
+import { createPostRequest } from '../../../../services/axios';
 import { userPropType } from '../../../../../shared/utils/propTypes';
-
-const MemeberPermission = ({ title, description, isActive, ...props }) => {
-  const containerClasses = classNames('permissions-container', {
-    'permissions-container-active': isActive,
-  });
-
-  const titleClasses = classNames('permissions-title', {
-    'permissions-title-active': isActive,
-  });
-
-  return (
-    <div className={containerClasses} {...props}>
-      <div className={titleClasses}>{title}</div>
-      <div className="permissions-description">{description}</div>
-    </div>
-  );
-};
+import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { permissionsWithDescription } from '../../../../constant/permissions';
+import useContextStore from '../../../../context';
 
 const MemberPermissionsModal = ({ member, onClose }) => {
-  const [permission, setPermission] = useState(member?.permission);
+  const [perms, setPermission] = useState(member?.permission);
   const { updateUserPermission } = useTeamContext();
+  const {
+    userStore: { hasPermission },
+  } = useContextStore();
 
   const handleConfirm = async () => {
     try {
       await createPostRequest(`/api/user/permission/update`, {
         email: member.email,
-        permission,
+        permission: perms,
       });
 
-      updateUserPermission(member.email, permission);
+      updateUserPermission(member.email, perms);
 
       toast.success('User permissions updated successfully.');
       onClose();
     } catch (error) {
       if (error.response?.status === 400) {
+        if (error.response.data.message) {
+          return toast.error(error.response.data.message);
+        }
+
         return toast.error(
           "You don't have permission to assign this permission."
         );
@@ -55,35 +47,61 @@ const MemberPermissionsModal = ({ member, onClose }) => {
     }
   };
 
+  const changePermission = (isChecked, permission) => {
+    if (isChecked) {
+      setPermission(perms | permission);
+    } else {
+      setPermission(perms & ~permission);
+    }
+  };
+
   return (
     <>
       <Modal.Title>Change Permissions</Modal.Title>
-      <Modal.Message style={{ width: '475px' }}>
-        <div className="member-permissions-message-container">
-          <MemeberPermission
-            title={'Admin'}
-            description={
-              'Members with this permission will have access to view monitors, manage monitors, and manage members.'
-            }
-            isActive={permission === 2}
-            onClick={() => setPermission(2)}
-          />
-          <MemeberPermission
-            title={'Editor'}
-            description={
-              'Members with this permission will have access to view monitors, and manage monitors.'
-            }
-            isActive={permission === 3}
-            onClick={() => setPermission(3)}
-          />
-          <MemeberPermission
-            title={'Guest'}
-            description={
-              'Members with this permission will only have access to view all montiors.'
-            }
-            isActive={permission === 4}
-            onClick={() => setPermission(4)}
-          />
+      <Modal.Message style={{ width: '850px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div>
+            <div className="input-label">User Permissions</div>
+            <div className="input-short-description">
+              Permissions are used to restrict what the user can access.
+            </div>
+            <div
+              style={{
+                gap: '10px',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '15px 0 20px 0',
+              }}
+            >
+              {permissionsWithDescription.map((permission) => (
+                <div
+                  key={permission.title}
+                  style={{
+                    borderBottom: '1px solid var(--accent-700)',
+                    paddingBottom: '10px',
+                  }}
+                >
+                  <SwitchWithText
+                    key={permission.title}
+                    label={permission.title}
+                    shortDescription={permission.description}
+                    onChange={(event) =>
+                      changePermission(
+                        event.target.checked,
+                        permission.permission
+                      )
+                    }
+                    checked={
+                      perms & permission.permission ||
+                      perms === PermissionsBits.ADMINISTRATOR ||
+                      perms & PermissionsBits.ADMINISTRATOR
+                    }
+                    disabled={!hasPermission(permission.permission)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Modal.Message>
       <Modal.Actions>
@@ -103,12 +121,4 @@ MemberPermissionsModal.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-MemeberPermission.displayName = 'MemeberPermission';
-
-MemeberPermission.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  isActive: PropTypes.bool.isRequired,
-};
-
-export default MemberPermissionsModal;
+export default observer(MemberPermissionsModal);

@@ -5,6 +5,7 @@ import {
   ConflictError,
 } from '../../../shared/utils/errors.js';
 import { createUserSession } from './session.js';
+import { oldPermsToFlags } from '../../../shared/permissions/oldPermsToFlags.js';
 
 export const signInUser = async (email, password) => {
   const user = await SQLite.client('user').where({ email }).first();
@@ -49,7 +50,8 @@ export const getUserByEmail = async (email) => {
       'avatar',
       'isVerified',
       'permission',
-      'createdAt'
+      'createdAt',
+      'isOwner'
     )
     .first();
 };
@@ -63,7 +65,8 @@ export const emailExists = async (email) => {
       'avatar',
       'isVerified',
       'permission',
-      'createdAt'
+      'createdAt',
+      'isOwner'
     )
     .first();
 };
@@ -74,14 +77,15 @@ export const emailIsOwner = async (email) => {
 
 export const ownerExists = async () => {
   return SQLite.client('user')
-    .where({ permission: 1 })
+    .where({ permission: oldPermsToFlags[1] })
     .select(
       'email',
       'displayName',
       'avatar',
       'isVerified',
       'permission',
-      'createdAt'
+      'createdAt',
+      'isOwner'
     )
     .first();
 };
@@ -112,7 +116,8 @@ export const fetchMembers = (userHasManageTeam = false) => {
       'avatar',
       'isVerified',
       'permission',
-      'createdAt'
+      'createdAt',
+      'isOwner'
     );
   }
 
@@ -124,7 +129,8 @@ export const fetchMembers = (userHasManageTeam = false) => {
       'avatar',
       'isVerified',
       'permission',
-      'createdAt'
+      'createdAt',
+      'isOwner'
     );
 };
 
@@ -172,7 +178,7 @@ export const resetDemoUser = async () => {
       displayName: 'Demo User',
       password: 'demo',
       avatar: null,
-      permission: 4,
+      permission: oldPermsToFlags[4],
       isVerified: true,
     });
   }
@@ -187,7 +193,7 @@ export const getDemoUser = async () => {
       displayName: 'Demo User',
       password: 'demo',
       avatar: null,
-      permission: 4,
+      permission: oldPermsToFlags[4],
       isVerified: true,
     });
   }
@@ -196,10 +202,13 @@ export const getDemoUser = async () => {
 };
 
 export const transferOwnership = async (email, newOwner) => {
-  await SQLite.client('user').where({ email }).update({ permission: 4 });
+  await SQLite.client('user')
+    .where({ email })
+    .update({ permission: oldPermsToFlags[4] });
+
   return SQLite.client('user')
     .where({ email: newOwner })
-    .update({ permission: 1 });
+    .update({ permission: oldPermsToFlags[1] });
 };
 
 export const userExists = () => {};
