@@ -44,8 +44,14 @@ class Master {
     }
 
     if (!isDown) {
-      const hasRecovered = await isMonitorRecovered(monitor.monitorId, 1);
-      await this.sendNotification(monitor, heartbeat, false, hasRecovered);
+      const hasRecovered = await isMonitorRecovered(
+        monitor.monitorId,
+        monitor.retry
+      );
+
+      if (hasRecovered) {
+        await this.sendNotification(monitor, heartbeat, false, hasRecovered);
+      }
     }
 
     clearTimeout(this.timeouts.get(monitor.monitorId));
@@ -138,7 +144,7 @@ class Master {
 
       const hasOutage = notifyOutage && isDown;
 
-      const hasRecovered = notifyRecovery && !isRecovered;
+      const hasRecovered = notifyRecovery && isRecovered;
 
       if (!hasOutage && !hasRecovered) return;
       if (!monitor.notificationId) return;
