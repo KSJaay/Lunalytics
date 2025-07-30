@@ -9,15 +9,13 @@ import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
 
 const router = express.Router();
 
-const hasEditorPermissions = hasRequiredPermission(
-  PermissionsBits.MANAGE_STATUS_PAGES
-);
+router.use(hasRequiredPermission(PermissionsBits.VIEW_STATUS_PAGES));
 
 router.get('/', getAllStatusPagesMiddleware);
 
 router.get('/id', getUsingIdMiddleware);
 
-router.use(hasEditorPermissions);
+router.use(hasRequiredPermission(PermissionsBits.MANAGE_STATUS_PAGES));
 
 router.post('/create', createStatusPageMiddleware);
 
