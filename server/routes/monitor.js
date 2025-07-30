@@ -12,6 +12,7 @@ import monitorPause from '../middleware/monitor/pause.js';
 import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
 
+router.use(hasRequiredPermission(PermissionsBits.VIEW_MONITORS));
 router.get('/status', fetchMonitorStatus);
 router.get('/id', fetchMonitorUsingId);
 

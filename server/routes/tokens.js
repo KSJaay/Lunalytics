@@ -11,9 +11,7 @@ import deleteApiTokenMiddleware from '../middleware/tokens/delete.js';
 
 const router = express.Router();
 
-const isAdmin = hasRequiredPermission(PermissionsBits.ADMINISTRATOR);
-
-router.use(isAdmin);
+router.use(hasRequiredPermission(PermissionsBits.ADMINISTRATOR));
 router.get('/', getAllApiTokensMiddleware);
 router.post('/create', createApiTokenMiddleware);
 router.post('/update', updateApiTokenMiddleware);

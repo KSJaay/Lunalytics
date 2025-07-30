@@ -14,11 +14,11 @@ import deleteIncidentMessageMiddleware from '../middleware/incident/deleteMessag
 
 const router = express.Router();
 
-const canEditIncident = hasRequiredPermission(PermissionsBits.MANAGE_INCIDENTS);
+router.use(hasRequiredPermission(PermissionsBits.VIEW_INCIDENTS));
 
 router.get('/all', getAllIncidents);
 
-router.use(canEditIncident);
+router.use(hasRequiredPermission(PermissionsBits.MANAGE_INCIDENTS));
 router.post('/create', createIncidentMiddleware);
 router.post('/update', updateIncidentMiddleware);
 router.post('/messages/create', createIncidentMessageMiddleware);

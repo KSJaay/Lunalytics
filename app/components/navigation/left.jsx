@@ -16,6 +16,7 @@ import IncidentPreview from '../incident/preview';
 import StatusPagePreview from '../status/preview';
 import NotificationPreview from '../notifications/preview';
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
+import { PermissionsBits } from '../../../shared/permissions/bitFlags';
 
 const actionTabs = [
   {
@@ -23,24 +24,28 @@ const actionTabs = [
     url: '/home',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
     Preview: MonitorPreview,
+    permissionRequired: PermissionsBits.VIEW_MONITORS,
   },
   {
     name: 'Notifications',
     url: '/notifications',
     logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
     Preview: NotificationPreview,
+    permissionRequired: PermissionsBits.VIEW_NOTIFICATIONS,
   },
   {
     name: 'Status',
     url: '/status-pages',
     logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
     Preview: StatusPagePreview,
+    permissionRequired: PermissionsBits.VIEW_STATUS_PAGES,
   },
   {
     name: 'Incidents',
     url: '/incidents',
     logo: <BsFillShieldLockFill style={{ width: '25px', height: '25px' }} />,
     Preview: IncidentPreview,
+    permissionRequired: PermissionsBits.VIEW_INCIDENTS,
   },
 ];
 
@@ -57,6 +62,7 @@ const LeftNavigation = ({ activeUrl }) => {
   const {
     userStore: {
       user: { avatar, displayName },
+      hasPermission,
     },
   } = useContextStore();
 
@@ -64,7 +70,9 @@ const LeftNavigation = ({ activeUrl }) => {
   const imageUrl = isUrl ? avatar : `/icons/${avatar}.png`;
 
   const actions = actionTabs.map((action) => {
-    const { name, url, logo, Preview } = action;
+    const { name, url, logo, Preview, permissionRequired } = action;
+
+    if (!hasPermission(permissionRequired)) return null;
 
     const classes = classNames({
       'navigation-left-action': true,
