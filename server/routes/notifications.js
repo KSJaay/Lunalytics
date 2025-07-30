@@ -10,14 +10,13 @@ import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
 
 const router = Router();
 
-const hasEditorPermissions = hasRequiredPermission(
-  PermissionsBits.MANAGE_NOTIFICATIONS
-);
+router.use(hasRequiredPermission(PermissionsBits.VIEW_NOTIFICATIONS));
 
 router.get('/', NotificationGetAllMiddleware);
-
-router.use(hasEditorPermissions);
 router.get('/id', NotificationGetUsingIdMiddleware);
+
+router.use(hasRequiredPermission(PermissionsBits.MANAGE_NOTIFICATIONS));
+
 router.post('/create', NotificationCreateMiddleware);
 router.post('/edit', NotificationEditMiddleware);
 router.get('/delete', NotificationDeleteMiddleware);

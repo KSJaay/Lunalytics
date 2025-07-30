@@ -17,9 +17,8 @@ import fetchUserMiddleware from '../middleware/user/user.js';
 import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
 
-const hasManagePermissions = hasRequiredPermission(
-  PermissionsBits.MANAGE_MONITORS
-);
+const hasManagePermissions = hasRequiredPermission(PermissionsBits.MANAGE_TEAM);
+
 const hasAdminPermissions = hasRequiredPermission(
   PermissionsBits.ADMINISTRATOR
 );
