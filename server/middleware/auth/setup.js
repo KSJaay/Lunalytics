@@ -163,7 +163,7 @@ const setupMiddleware = async (request, response) => {
       displayName: username,
       password,
       avatar: null,
-      permission: 1,
+      permission: oldPermsToFlags[1],
       isVerified: true,
       createdAt: new Date().toISOString(),
     };

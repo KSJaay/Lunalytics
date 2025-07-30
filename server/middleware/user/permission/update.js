@@ -1,39 +1,33 @@
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags.js';
-import { oldPermsToFlags } from '../../../../shared/permissions/oldPermsToFlags.js';
 import Role from '../../../../shared/permissions/role.js';
-// import { isValidPermission } from '../../../../shared/permissions/validate.js';
-import { updateUserPermission } from '../../../database/queries/user.js';
 import { handleError } from '../../../utils/errors.js';
+import { updateUserPermission } from '../../../database/queries/user.js';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags.js';
+import { isValidBitFlags } from '../../../../shared/permissions/isValidBitFlags.js';
 
 const permissionUpdateMiddleware = async (request, response) => {
   try {
     const { user } = response.locals;
+    const { email, permission } = request.body;
 
-    const role = new Role('user', user.permission);
-
-    if (!role.hasPermission(PermissionsBits.ADMINISTRATOR)) {
-      return response.sendStatus(401);
+    if (!email) {
+      return response.status(400).send({ message: 'Email is required' });
     }
 
-    const { email, permission: bodyPermission } = request.body;
-
-    if (!email || !oldPermsToFlags[bodyPermission]) {
-      return response.sendStatus(400);
-    }
-
-    const permission = oldPermsToFlags[bodyPermission];
-
-    if (permission === PermissionsBits.ADMINISTRATOR) {
+    if (!isValidBitFlags(permission)) {
       return response
         .status(400)
-        .send('You cannot change this user permission.');
+        .send({ message: 'Invalid permission format' });
     }
 
-    // if (!isValidPermission(permission)) {
-    //   return response.sendStatus(400);
-    // }
+    const role = new Role('user', permission);
 
-    await updateUserPermission(email, bodyPermission);
+    if (role.hasPermission(PermissionsBits.ADMINISTRATOR) && !user.isOwner) {
+      return response
+        .status(400)
+        .send({ message: 'Only owner can give administrator permission' });
+    }
+
+    await updateUserPermission(email, permission);
 
     return response.sendStatus(200);
   } catch (error) {
