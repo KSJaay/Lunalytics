@@ -5,7 +5,11 @@ import { TbDownload, TbUpload, TbActivityHeartbeat } from 'react-icons/tb';
 const GraphPing = ({ data }) => {
   const { t } = useTranslation();
 
-  const { averageLatency, lowestLatency, highestLatency } = useMemo(() => {
+  const {
+    averageLatency = 0,
+    lowestLatency = 0,
+    highestLatency = 0,
+  } = useMemo(() => {
     const sorted = [...data].sort((a, b) => a.latency - b.latency);
     const averageLatency =
       Math.floor(
