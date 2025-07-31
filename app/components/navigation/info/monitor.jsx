@@ -43,7 +43,9 @@ const MonitorCertificate = ({ certificate }) => {
 
         <div className="navigation-info-item">
           <div>{t('home.info.days_remaining')}</div>
-          <div>{certificate.daysRemaining} days</div>
+          <div>
+            {certificate.daysRemaining} {t('common.days')}
+          </div>
         </div>
 
         <div className="navigation-info-item">
@@ -111,9 +113,7 @@ const NavigationMonitorInfo = ({ monitor }) => {
 
   return (
     <>
-      <div className="navigation-info-title">
-        {t('home.info.title')}
-      </div>
+      <div className="navigation-info-title">{t('home.info.title')}</div>
 
       <div className="navigation-info-list">
         <div className="navigation-info-item">
