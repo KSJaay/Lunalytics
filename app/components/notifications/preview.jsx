@@ -1,4 +1,5 @@
 // import dependencies
+import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
@@ -13,6 +14,7 @@ const NotificationPreview = ({ children }) => {
   const {
     notificationStore: { allNotifications = [], setActiveNotification },
   } = useContextStore();
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
 
@@ -47,7 +49,8 @@ const NotificationPreview = ({ children }) => {
 
   const input = (
     <Input
-      placeholder="Search monitors..."
+      placeholder={t('notification.search')}
+      key="search"
       onChange={(event) => {
         setSearch(event.target.value?.trim() || '');
       }}
@@ -64,7 +67,7 @@ const NotificationPreview = ({ children }) => {
                 className="navigation-preview-no-items"
                 key="no-notification-preview"
               >
-                No notifications found
+                {t('notification.none_exist')}
               </div>,
             ]
           : [input].concat(items)

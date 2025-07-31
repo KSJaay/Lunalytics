@@ -1,5 +1,6 @@
 // import dependencies
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
 
 // import local files
 import useContextStore from '../../../context';
@@ -18,6 +19,7 @@ const NotificationContent = () => {
     notification,
     true
   );
+  const { t } = useTranslation();
 
   const message =
     NotificationsTemplates[notification.platform][inputs.messageType];
@@ -40,7 +42,7 @@ const NotificationContent = () => {
         }}
       />
 
-      <label className="input-label">Payload</label>
+      <label className="input-label">{t('notification.input.payload')}</label>
       <NotificationModalPayload message={message} />
     </div>
   );

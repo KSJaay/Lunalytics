@@ -1,13 +1,14 @@
 // import dependencies
+import { useMemo, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import { fullMonitorPropType } from '../../../shared/utils/propTypes';
-import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { filterData } from '../../../shared/utils/search';
+import { fullMonitorPropType } from '../../../shared/utils/propTypes';
 
 const IncidentPreview = ({ children }) => {
   const {
@@ -15,6 +16,7 @@ const IncidentPreview = ({ children }) => {
   } = useContextStore();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const items = useMemo(() => {
     if (!allIncidents?.length) return [];
@@ -46,7 +48,8 @@ const IncidentPreview = ({ children }) => {
 
   const input = (
     <Input
-      placeholder="Search monitors..."
+      placeholder={t('incident.search')}
+      key="search"
       onChange={(event) => {
         setSearch(event.target.value?.trim() || '');
       }}
@@ -63,7 +66,7 @@ const IncidentPreview = ({ children }) => {
                 className="navigation-preview-no-items"
                 key="no-incident-preview"
               >
-                No incidents found
+                {t('incident.none_exist')}
               </div>,
             ]
           : [input].concat(items)

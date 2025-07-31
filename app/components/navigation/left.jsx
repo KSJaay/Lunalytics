@@ -17,31 +17,32 @@ import StatusPagePreview from '../status/preview';
 import NotificationPreview from '../notifications/preview';
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
 import { PermissionsBits } from '../../../shared/permissions/bitFlags';
+import { useTranslation } from 'react-i18next';
 
 const actionTabs = [
   {
-    name: 'Home',
+    key: 'common.home',
     url: '/home',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
     Preview: MonitorPreview,
     permissionRequired: PermissionsBits.VIEW_MONITORS,
   },
   {
-    name: 'Notifications',
+    key: 'common.notifications',
     url: '/notifications',
     logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
     Preview: NotificationPreview,
     permissionRequired: PermissionsBits.VIEW_NOTIFICATIONS,
   },
   {
-    name: 'Status',
+    key: 'common.status',
     url: '/status-pages',
     logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
     Preview: StatusPagePreview,
     permissionRequired: PermissionsBits.VIEW_STATUS_PAGES,
   },
   {
-    name: 'Incidents',
+    key: 'common.incidents',
     url: '/incidents',
     logo: <BsFillShieldLockFill style={{ width: '25px', height: '25px' }} />,
     Preview: IncidentPreview,
@@ -65,12 +66,13 @@ const LeftNavigation = ({ activeUrl }) => {
       hasPermission,
     },
   } = useContextStore();
+  const { t } = useTranslation();
 
   const isUrl = isImageUrl(avatar);
   const imageUrl = isUrl ? avatar : `/icons/${avatar}.png`;
 
   const actions = actionTabs.map((action) => {
-    const { name, url, logo, Preview, permissionRequired } = action;
+    const { key, url, logo, Preview, permissionRequired } = action;
 
     if (!hasPermission(permissionRequired)) return null;
 
@@ -82,7 +84,7 @@ const LeftNavigation = ({ activeUrl }) => {
     const content = (
       <div
         className={classes}
-        key={name}
+        key={key}
         tabIndex={1}
         onClick={() => navigate(url)}
       >
@@ -92,13 +94,13 @@ const LeftNavigation = ({ activeUrl }) => {
 
     if (!Preview) {
       return (
-        <Tooltip position="right" text={name} key={name} color="gray">
+        <Tooltip position="right" text={t(key)} key={key} color="gray">
           {content}
         </Tooltip>
       );
     }
 
-    return <Preview key={name}>{content}</Preview>;
+    return <Preview key={key}>{content}</Preview>;
   });
 
   return (

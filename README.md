@@ -15,14 +15,16 @@
 ## 📔 Features
 
 - Easy to self-host
-- Monitor uptime for HTTP(s)/TCP
+- Monitor uptime for HTTP(s)/TCP/PING/JSON Query/
 - Support for multiple users
 - Fully customisable status/dashboard pages
-- Role based access control
+- Incident management
+- Advance role based access control
 - Clean and easy to use UX/UI
 - Customizable user profiles/themes/colors
 - Support for notifications
   - Discord
+  - Home Assistant
   - Slack
   - Telegram
   - Webhook
@@ -63,7 +65,7 @@ services:
 
 Make sure you have the following applications installed before starting:
 
-- [Nodejs](https://nodejs.org/en/download/) (v20 or higher)
+- [Nodejs](https://nodejs.org/en/download/) (v22.14.0 or higher)
 - Npm or [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
 - [Git](https://git-scm.com/)
 
@@ -114,15 +116,15 @@ pm2 monit
 - [x] Custom status pages
 - [x] Better design for compact mode
 - [x] API keys for users
+- [x] Better role based access control
 - [ ] Move to Oauth2 for authentication
   - [x] Moved to session based system, but not full Oauth2
-- [ ] Allow session management (Track/logout from sessions)
 - [ ] Add support for multiple databases
   - [x] Add support for PostgreSQL
   - [x] Add support for SQLite
   - [ ] Add support for MongoDB
+- [ ] Allow session management (Track/logout from sessions)
 - [ ] Add support for more notification services
-- [ ] Better role based access control
 
 ## ⭐ Help us grow
 

@@ -1,0 +1,131 @@
+{
+  "common": {
+    "monitor": "Monitor",
+    "hours": "Hours",
+    "days": "Days",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "invalid": "Invalid",
+    "valid": "Valid",
+    "expired": "Expired",
+    "name": "Name",
+    "true": "True",
+    "false": "False",
+    "none": "None",
+    "id": "ID",
+    "platform": "Platform",
+    "format": "Format",
+    "type": "Type",
+    "certificate": "Certificate",
+    "unknown": "Unknown",
+    "notification": "Notification",
+    "home": "Home",
+    "notifications": "Notifications",
+    "status": "Status page",
+    "incidents": "Incidents",
+    "search": "Search",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "home": {
+    "search": "$t(common.search) $t(common.monitor)...",
+    "header": {
+      "subtitle": "monitor for"
+    },
+    "monitor": {
+      "add": "Add $t(common.monitor)",
+      "none_exist": "No monitors found",
+      "headers": {
+        "response": "Response",
+        "avg_response": "Avg Response",
+        "uptime": "Uptime",
+        "cert_expiry": "Cert expiry",
+        "latency": "Latency",
+        "current": "Current",
+        "days_left": "Days Left"
+      },
+      "graph": {
+        "average": "Average",
+        "uptime": "Uptime",
+        "response": "Response",
+        "latest": "Latest",
+        "minimum": "Minimum",
+        "maximum": "Maximum"
+      },
+      "table": {
+        "status": "Status",
+        "time": "Time",
+        "message": "Message",
+        "up": "UP",
+        "down": "DOWN"
+      }
+    },
+    "info": {
+      "title": "Monitor Info",
+      "monitor_id": "Monitor ID",
+      "url": "URL",
+      "method": "Method",
+      "valid_status_codes": "Valid Status Codes",
+      "creator": "Creator",
+      "paused": "Paused",
+      "created_at": "Created At",
+      "expires_at": "Expires At",
+      "days_remaining": "Days Remaining",
+      "valid_on": "Valid On",
+      "intervals": {
+        "interval": "Interval",
+        "request": "Request",
+        "timeout": "Timeout",
+        "retry": "Retry",
+        "retry_interval": "Retry Interval"
+      }
+    }
+  },
+  "notification": {
+    "add": "Add $t(common.notification)",
+    "none_exist": "No notifications found",
+    "search": "$t(common.search) $t(common.notification)...",
+    "message_type": "Message Type",
+    "notification_for": "Notification for",
+    "delete_modal_start": "By continuing you will be deleting",
+    "delete_modal_middle": "from all linked monitors.",
+    "delete_modal_end": "This action cannot be undone.",
+    "basic": "Basic",
+    "pretty": "Pretty",
+    "nerdy": "Nerdy",
+    "input": {
+      "friendly_name": "Friendly Name",
+      "webhook_url": "Webhook URL",
+      "webhook_username": "Webhook Username",
+      "text_message": "Text Message",
+      "enabled_title": "Enabled",
+      "enabled_description": "Enable or disable the notification globally",
+      "home_assistant_url": "HomeAssistant URL",
+      "notification_service": "Notification Service",
+      "long_lived": "Long Lived Access Token",
+      "channel": "Channel name",
+      "bot_token": "Bot Token",
+      "chat": "Chat ID",
+      "disable_notification": "Disable Notification",
+      "disable_description": "If enabled, users will recieve a notification without any sound.",
+      "protect_content": "Protect Content",
+      "protect_description": "If enabled, users cannot forward or save the bots message.",
+      "request_type": "Request Type",
+      "additional_headers": "Additional Headers",
+      "payload": "Payload"
+    }
+  },
+  "status": {
+    "add": "Add $t(common.status_page)",
+    "none_exist": "No status pages found",
+    "search": "$t(common.search) $t(common.status_page)..."
+  },
+  "incident": {
+    "add": "Add $t(common.incident)",
+    "none_exist": "No incidents found",
+    "search": "$t(common.search) $t(common.incident)..."
+  }
+}

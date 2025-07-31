@@ -1,5 +1,6 @@
 // import dependencies
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 // import local files
 import Dropdown from '../../../ui/dropdown';
@@ -7,10 +8,11 @@ import useDropdown from '../../../../hooks/useDropdown';
 
 const NotificationModalType = ({ messageType = 'basic', setMessageType }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
+  const { t } = useTranslation();
 
   return (
     <>
-      <label className="input-label">Message Type</label>
+      <label className="input-label">{t('notification.message_type')}</label>
       <Dropdown.Container
         position="right"
         isOpen={dropdownIsOpen}
@@ -25,18 +27,18 @@ const NotificationModalType = ({ messageType = 'basic', setMessageType }) => {
           {messageType.charAt(0).toUpperCase() + messageType.slice(1)}
         </Dropdown.Trigger>
         <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
-          {['Basic', 'Pretty', 'Nerdy'].map((type) => (
+          {['basic', 'pretty', 'nerdy'].map((type) => (
             <Dropdown.Item
               key={type}
               onClick={() => {
                 setMessageType({
                   key: 'messageType',
-                  value: type.toLowerCase(),
+                  value: type,
                 });
                 toggleDropdown();
               }}
             >
-              {type}
+              {t(`notification.${type}`)}
             </Dropdown.Item>
           ))}
         </Dropdown.List>

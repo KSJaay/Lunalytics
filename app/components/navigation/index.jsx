@@ -5,6 +5,7 @@ import './index.scss';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
+import { useTranslation } from 'react-i18next';
 
 // import local files
 import LeftNavigation from './left';
@@ -19,6 +20,7 @@ const Navigation = ({
   handleSearchUpdate,
 }) => {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const { t } = useTranslation();
 
   const { HeaderComponent, props } = header;
 
@@ -31,7 +33,8 @@ const Navigation = ({
           <div className="navigation-sidebar">
             <div className="navigation-input-container">
               <Input
-                placeholder="Search..."
+                placeholder={t('common.search') + '...'}
+                key="search"
                 onChange={(e) => handleSearchUpdate(e.target.value)}
               />
             </div>

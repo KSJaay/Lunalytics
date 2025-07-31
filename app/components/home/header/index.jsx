@@ -9,6 +9,7 @@ import HomeMonitorHeaderMenu from './menu';
 import useContextStore from '../../../context';
 import Role from '../../../../shared/permissions/role';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { useTranslation } from 'react-i18next';
 
 const typeToText = {
   http: 'HTTP/S',
@@ -22,6 +23,7 @@ const HomeMonitorHeader = ({ isInfoOpen, setIsInfoOpen, rightChildren }) => {
     userStore: { user },
     globalStore: { activeMonitor = {} },
   } = useContextStore();
+  const { t } = useTranslation();
 
   const role = new Role('user', user.permission);
   const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
@@ -30,7 +32,7 @@ const HomeMonitorHeader = ({ isInfoOpen, setIsInfoOpen, rightChildren }) => {
     return (
       <div className="navigation-header-content">
         <div className="navigation-header-title">
-          <div>Monitor</div>
+          <div>{t('common.monitor')}</div>
         </div>
       </div>
     );
@@ -39,11 +41,13 @@ const HomeMonitorHeader = ({ isInfoOpen, setIsInfoOpen, rightChildren }) => {
   return (
     <div className="navigation-header-content">
       <div className="navigation-header-title">
-        <div>Monitor - {activeMonitor.name}</div>
+        <div>
+          {t('common.monitor')} - {activeMonitor.name}
+        </div>
         {activeMonitor?.url ? (
           <div className="navigation-header-subtitle">
             <span>{typeToText[activeMonitor.type]} </span>
-            monitor for{' '}
+            {t('home.header.subtitle') + ' '}
             <a href={activeMonitor.url} target="_blank" rel="noreferrer">
               {activeMonitor.url}
             </a>
