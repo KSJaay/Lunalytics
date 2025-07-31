@@ -204,11 +204,9 @@ export const getDemoUser = async () => {
 export const transferOwnership = async (email, newOwner) => {
   await SQLite.client('user')
     .where({ email })
-    .update({ permission: oldPermsToFlags[4] });
+    .update({ permission: oldPermsToFlags[4], isOwner: false });
 
   return SQLite.client('user')
     .where({ email: newOwner })
-    .update({ permission: oldPermsToFlags[1] });
+    .update({ permission: oldPermsToFlags[1], isOwner: true });
 };
-
-export const userExists = () => {};
