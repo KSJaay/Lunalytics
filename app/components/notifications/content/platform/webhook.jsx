@@ -1,5 +1,6 @@
 // import dependencies
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input, Textarea } from '@lunalytics/ui';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
@@ -13,12 +14,13 @@ const NotificationDiscordContent = ({
   handleUpdate,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
       <div className="notification-content-container">
         <Input
-          title="Friendly Name"
+          title={t('notification.input.friendly_name')}
           placeholder="Lunalytics"
           id="friendly-name"
           error={errors?.friendlyName}
@@ -32,7 +34,7 @@ const NotificationDiscordContent = ({
         <Input
           type={showPassword ? 'text' : 'password'}
           id="webhook-url"
-          title="Webhook URL"
+          title={t('notification.input.webhook_url')}
           placeholder="https://lunalytics.xyz/webhooks/example"
           error={errors?.token}
           value={inputs.token || ''}
@@ -55,7 +57,7 @@ const NotificationDiscordContent = ({
         />
 
         <Input
-          title="Webhook Username"
+          title={t('notification.input.webhook_username')}
           placeholder="Lunalytics"
           id="webhook-username"
           error={errors?.username}
@@ -70,7 +72,7 @@ const NotificationDiscordContent = ({
         />
 
         <Input
-          title="Chat ID"
+          title={t('notification.input.request_type')}
           placeholder="12389741289"
           id="chat-id"
           error={errors?.chatId}
@@ -94,8 +96,8 @@ const NotificationDiscordContent = ({
         }}
       >
         <SwitchWithText
-          label="Enabled"
-          shortDescription="Enable or disable the notification globally"
+          label={t('notification.input.enabled_title')}
+          shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
           onChange={(e) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
@@ -104,7 +106,7 @@ const NotificationDiscordContent = ({
         />
 
         <SwitchWithText
-          label="Additional Headers"
+          label={t('notification.input.additional_headers')}
           id="additional-headers"
           checked={inputs.data.showAdditionalHeaders}
           onChange={(e) => {

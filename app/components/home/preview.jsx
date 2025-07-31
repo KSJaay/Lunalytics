@@ -1,12 +1,13 @@
 // import dependencies
+import { useMemo, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
 import { fullMonitorPropType } from '../../../shared/utils/propTypes';
-import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { filterData } from '../../../shared/utils/search';
 
 const MonitorPreview = ({ children }) => {
@@ -15,6 +16,7 @@ const MonitorPreview = ({ children }) => {
   } = useContextStore();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const items = useMemo(() => {
     if (!allMonitors?.length) return [];
@@ -40,7 +42,8 @@ const MonitorPreview = ({ children }) => {
 
   const input = (
     <Input
-      placeholder="Search monitors..."
+      placeholder={t('home.search')}
+      key="search"
       onChange={(event) => {
         setSearch(event.target.value?.trim() || '');
       }}
@@ -57,7 +60,7 @@ const MonitorPreview = ({ children }) => {
                 className="navigation-preview-no-items"
                 key="no-monitor-preview"
               >
-                No monitors found
+                {t('home.monitor.none_exist')}
               </div>,
             ]
           : [input, ...items]

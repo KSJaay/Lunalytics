@@ -1,6 +1,7 @@
 // import dependencies
 import PropTypes from 'prop-types';
 import { Button } from '@lunalytics/ui';
+import { useTranslation } from 'react-i18next';
 
 // import local files
 import Dropdown from '../../ui/dropdown';
@@ -9,6 +10,7 @@ import { FaEllipsisVertical } from '../../icons';
 
 const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -17,13 +19,13 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
           color={statusType === 'latest' ? 'primary' : 'gray'}
           onClick={() => setStatusType('latest')}
         >
-          Latest
+          {t('home.monitor.graph.latest')}
         </Button>
         <Button
           color={statusType === 'day' ? 'primary' : 'gray'}
           onClick={() => setStatusType('day')}
         >
-          1 Day
+          1 {t('common.day')}
         </Button>
         {showFilters ? (
           <>
@@ -31,13 +33,13 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
               color={statusType === 'week' ? 'primary' : 'gray'}
               onClick={() => setStatusType('week')}
             >
-              1 Week
+              1 {t('common.week')}
             </Button>
             <Button
               color={statusType === 'month' ? 'primary' : 'gray'}
               onClick={() => setStatusType('month')}
             >
-              1 Month
+              1 {t('common.month')}
             </Button>
           </>
         ) : null}
@@ -62,7 +64,7 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
               isSelected={statusType === 'latest'}
               onClick={() => setStatusType('latest')}
             >
-              Latest
+              {t('home.monitor.graph.latest')}
             </Dropdown.Item>
             <Dropdown.Item
               showDot
@@ -70,7 +72,7 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
               isSelected={statusType === 'day'}
               onClick={() => setStatusType('day')}
             >
-              1 Day
+              1 {t('common.day')}
             </Dropdown.Item>
             <Dropdown.Item
               showDot
@@ -78,7 +80,7 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
               isSelected={statusType === 'week'}
               onClick={() => setStatusType('week')}
             >
-              1 Week
+              1 {t('common.week')}
             </Dropdown.Item>
             <Dropdown.Item
               showDot
@@ -86,7 +88,7 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
               isSelected={statusType === 'month'}
               onClick={() => setStatusType('month')}
             >
-              1 Month
+              1 {t('common.month')}
             </Dropdown.Item>
           </Dropdown.List>
         </Dropdown.Container>

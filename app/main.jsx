@@ -1,6 +1,7 @@
 // import styles
 import './styles/styles.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import './services/i18n';
 
 // import dependencies
 import React from 'react';
@@ -26,83 +27,85 @@ import Incidents from './pages/incidents';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ToastContainer
-      position="top-right"
-      theme="dark"
-      closeOnClick
-      stacked
-      id="toast-container"
-    />
-    <GlobalProvider>
-      <BrowserRouter
-        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-      >
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <StatusLayout>
-                <StatusPage id="default" />
-              </StatusLayout>
-            }
-          />
-          <Route
-            path="/status/:statusPageId"
-            element={
-              <StatusLayout>
-                <StatusPage />
-              </StatusLayout>
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <GlobalLayout>
-                <Home />
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/notifications"
-            element={
-              <GlobalLayout>
-                <Notifications />
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/status-pages"
-            element={
-              <GlobalLayout>
-                <StatusConfigure />
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/incidents"
-            element={
-              <GlobalLayout>
-                <Incidents />
-              </GlobalLayout>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <GlobalLayout>
-                <Setttings />
-              </GlobalLayout>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/setup" element={<Setup />} />
-          <Route path="/verify" element={<Verify />} />
-          <Route path="/error" element={<ErrorPage />} />
-          <Route path="/404" element={<ErrorPage />} />
-          <Route path="/*" element={<ErrorPage />} />
-        </Routes>
-      </BrowserRouter>
-    </GlobalProvider>
+    <React.Suspense fallback={<></>}>
+      <ToastContainer
+        position="top-right"
+        theme="dark"
+        closeOnClick
+        stacked
+        id="toast-container"
+      />
+      <GlobalProvider>
+        <BrowserRouter
+          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+        >
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <StatusLayout>
+                  <StatusPage id="default" />
+                </StatusLayout>
+              }
+            />
+            <Route
+              path="/status/:statusPageId"
+              element={
+                <StatusLayout>
+                  <StatusPage />
+                </StatusLayout>
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                <GlobalLayout>
+                  <Home />
+                </GlobalLayout>
+              }
+            />
+            <Route
+              path="/notifications"
+              element={
+                <GlobalLayout>
+                  <Notifications />
+                </GlobalLayout>
+              }
+            />
+            <Route
+              path="/status-pages"
+              element={
+                <GlobalLayout>
+                  <StatusConfigure />
+                </GlobalLayout>
+              }
+            />
+            <Route
+              path="/incidents"
+              element={
+                <GlobalLayout>
+                  <Incidents />
+                </GlobalLayout>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <GlobalLayout>
+                  <Setttings />
+                </GlobalLayout>
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/setup" element={<Setup />} />
+            <Route path="/verify" element={<Verify />} />
+            <Route path="/error" element={<ErrorPage />} />
+            <Route path="/404" element={<ErrorPage />} />
+            <Route path="/*" element={<ErrorPage />} />
+          </Routes>
+        </BrowserRouter>
+      </GlobalProvider>
+    </React.Suspense>
   </React.StrictMode>
 );

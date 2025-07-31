@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Input } from '@lunalytics/ui';
+import { useTranslation } from 'react-i18next';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 import SwitchWithText from '../../../ui/switch';
@@ -11,12 +12,13 @@ const NotificationDiscordContent = ({
   handleUpdate,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
       <div className="notification-content-container">
         <Input
-          title="Friendly Name"
+          title={t('notification.input.friendly_name')}
           placeholder="Lunalytics"
           id="friendly-name"
           error={errors?.friendlyName}
@@ -30,8 +32,8 @@ const NotificationDiscordContent = ({
         <Input
           type={showPassword ? 'text' : 'password'}
           id="bot-token"
-          title="Bot Token"
-          placeholder="Bot Token"
+          title={t('notification.input.bot_token')}
+          placeholder={t('notification.input.bot_token')}
           error={errors.token}
           value={inputs.token}
           onChange={(event) =>
@@ -53,7 +55,7 @@ const NotificationDiscordContent = ({
         />
 
         <Input
-          title="Webhook Username"
+          title={t('notification.input.webhook_username')}
           placeholder="Lunalytics"
           id="webhook-username"
           error={errors?.username}
@@ -68,7 +70,7 @@ const NotificationDiscordContent = ({
         />
 
         <Input
-          title="Chat ID"
+          title={t('notification.input.chat')}
           placeholder="12389741289"
           id="chat-id"
           error={errors?.chatId}
@@ -92,8 +94,8 @@ const NotificationDiscordContent = ({
         }}
       >
         <SwitchWithText
-          label="Disable Notification"
-          shortDescription="If enabled, users will recieve a notification without any sound."
+          label={t('notification.input.disable_notification')}
+          shortDescription={t('notification.input.disable_description')}
           id="disable-notification"
           error={errors?.disableNotification}
           checked={inputs.disableNotification}
@@ -107,8 +109,8 @@ const NotificationDiscordContent = ({
         />
 
         <SwitchWithText
-          label="Protect Content"
-          shortDescription="If enabled, users cannot forward or save the bots message."
+          label={t('notification.input.protect_content')}
+          shortDescription={t('notification.input.protect_description')}
           id="protect-content"
           error={errors?.protectContent}
           checked={inputs.protectContent}
@@ -119,8 +121,8 @@ const NotificationDiscordContent = ({
         />
 
         <SwitchWithText
-          label="Enabled"
-          shortDescription="Enable or disable the notification globally"
+          label={t('notification.input.enabled_title')}
+          shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
           onChange={(e) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });

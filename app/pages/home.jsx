@@ -2,23 +2,24 @@
 import '../styles/pages/home.scss';
 
 // import dependencies
-import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useMemo, useState } from 'react';
 import { FaEllipsisVertical } from 'react-icons/fa6';
 
 // import local files
 import useContextStore from '../context';
+import Spacer from '../components/ui/spacer';
 import Navigation from '../components/navigation';
+import MonitorGraph from '../components/monitor/graph';
+import { filterData } from '../../shared/utils/search';
+import MonitorUptime from '../components/monitor/uptime';
+import MonitorStatus from '../components/monitor/status';
 import HomeMonitorHeader from '../components/home/header';
 import HomeMonitorsList from '../components/home/monitors';
-import NavigationMonitorInfo from '../components/navigation/info/monitor';
 import MonitorConfigureModal from '../components/modal/monitor/configure';
-import MonitorStatus from '../components/monitor/status';
-import MonitorGraph from '../components/monitor/graph';
-import MonitorUptime from '../components/monitor/uptime';
-import Spacer from '../components/ui/spacer';
-import { filterData } from '../../shared/utils/search';
+import NavigationMonitorInfo from '../components/navigation/info/monitor';
 
 const Home = () => {
   const {
@@ -26,6 +27,7 @@ const Home = () => {
     modalStore: { openModal, closeModal },
   } = useContextStore();
   const [search, setSearch] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!activeMonitor) setActiveMonitor(allMonitors[0]?.monitorId);
@@ -60,7 +62,7 @@ const Home = () => {
               )
             }
           >
-            Add Monitor
+            {t('home.monitor.add')}
           </Button>
           <div className="monitor-left-menu">
             <FaEllipsisVertical size={20} />
@@ -72,7 +74,7 @@ const Home = () => {
     >
       {!activeMonitor ? (
         <div className="monitor-none-exist">
-          <div>No monitors found</div>
+          <div>{t('home.monitor.none_exist')}</div>
         </div>
       ) : (
         <div className="monitor-container">
