@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
 
 import useContextStore from '../../../context';
+import { useTranslation } from 'react-i18next';
 
 const notificationText = {
   basic: 'Basic',
@@ -12,40 +13,44 @@ const notificationText = {
 };
 
 const MonitorCertificate = ({ certificate }) => {
+  const { t } = useTranslation();
+
   if (!certificate || !certificate.isValid) return null;
 
   return (
     <>
-      <div className="navigation-info-subtitle">Certificate</div>
+      <div className="navigation-info-subtitle">{t('common.certificate')}</div>
 
       <div className="navigation-info-list">
         <div className="navigation-info-item">
-          <div>Valid</div>
+          <div>{t('common.valid')}</div>
           <div>{certificate.isValid ? 'True' : 'False'}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Created At</div>
+          <div>{t('home.info.created_at')}</div>
           <div>
             {dayjs(certificate.validFrom).format('DD-MM-YYYY HH:mm:ss')}
           </div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Expires At</div>
+          <div>{t('home.info.expires_at')}</div>
           <div>
             {dayjs(certificate.validTill).format('DD-MM-YYYY HH:mm:ss')}
           </div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Days Remaining</div>
+          <div>{t('home.info.days_remaining')}</div>
           <div>{certificate.daysRemaining} days</div>
         </div>
 
         <div className="navigation-info-item">
-          <div style={{ alignItems: 'flex-start' }}>Valid On</div>
-          <div>{certificate.validOn?.join('\n') || 'Unknown'}</div>
+          <div style={{ alignItems: 'flex-start' }}>
+            {t('home.info.valid_on')}
+          </div>
+          <div>{certificate.validOn?.join('\n') || t('common.unknown')}</div>
         </div>
       </div>
     </>
@@ -57,6 +62,8 @@ const MonitorNotification = observer(({ notificationId, notificationType }) => {
     notificationStore: { getNotifciationById },
   } = useContextStore();
 
+  const { t } = useTranslation();
+
   if (!notificationId) return null;
 
   const notification = getNotifciationById(notificationId);
@@ -65,31 +72,31 @@ const MonitorNotification = observer(({ notificationId, notificationType }) => {
 
   return (
     <>
-      <div className="navigation-info-subtitle">Notification</div>
+      <div className="navigation-info-subtitle">{t('common.notification')}</div>
 
       <div className="navigation-info-list">
         <div className="navigation-info-item">
-          <div>Name</div>
+          <div>{t('common.name')}</div>
           <div>{notification.friendlyName}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Id</div>
+          <div>{t('common.id')}</div>
           <div>{notification.id}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Platform</div>
+          <div>{t('common.platform')}</div>
           <div>{notification.platform}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Format</div>
+          <div>{t('common.format')}</div>
           <div>{notificationText[notification.messageType]}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Type</div>
+          <div>{t('common.type')}</div>
           <div>{notificationType}</div>
         </div>
       </div>
@@ -98,25 +105,29 @@ const MonitorNotification = observer(({ notificationId, notificationType }) => {
 });
 
 const NavigationMonitorInfo = ({ monitor }) => {
+  const { t } = useTranslation();
+
   if (!monitor) return null;
 
   return (
     <>
-      <div className="navigation-info-title">Monitor Info</div>
+      <div className="navigation-info-title">
+        {t('home.info.title')}
+      </div>
 
       <div className="navigation-info-list">
         <div className="navigation-info-item">
-          <div>Name</div>
+          <div>{t('common.name')}</div>
           <div>{monitor.name}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Monitor ID</div>
+          <div>{t('home.info.monitor_id')}</div>
           <div>{monitor.monitorId}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>URL</div>
+          <div>{t('home.info.url')}</div>
           <div>
             {monitor.type === 'http'
               ? monitor.url
@@ -126,50 +137,67 @@ const NavigationMonitorInfo = ({ monitor }) => {
 
         {monitor.method ? (
           <div className="navigation-info-item">
-            <div>Method</div>
+            <div>{t('home.info.method')}</div>
             <div>{monitor.method}</div>
           </div>
         ) : null}
 
         {monitor.type === 'http' ? (
           <div className="navigation-info-item">
-            <div>Valid Status Codes</div>
-            <div>{monitor.valid_status_codes?.join(', ') || 'None'}</div>
+            <div>{t('home.info.valid_status_codes')}</div>
+            <div>
+              {monitor.valid_status_codes?.join(', ') || t('common.none')}
+            </div>
           </div>
         ) : null}
 
         <div className="navigation-info-item">
-          <div>Creator</div>
+          <div>{t('home.info.creator')}</div>
           <div>{monitor.email}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Paused</div>
-          <div>{monitor.paused ? 'True' : 'False'}</div>
+          <div>{t('home.info.paused')}</div>
+          <div>{monitor.paused ? t('common.true') : t('common.false')}</div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Created At</div>
+          <div>{t('home.info.created_at')}</div>
           <div>{dayjs(monitor.createdAt).format('DD-MM-YYYY HH:mm:ss')}</div>
         </div>
       </div>
 
-      <div className="navigation-info-subtitle">Intervals</div>
+      <div className="navigation-info-subtitle">
+        {t('home.info.intervals.interval')}
+      </div>
 
       <div className="navigation-info-list">
         <div className="navigation-info-item">
-          <div>Request</div>
-          <div>{monitor.interval} seconds</div>
+          <div>{t('home.info.intervals.request')}</div>
+          <div>
+            {monitor.interval} {t('common.seconds')}
+          </div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Timeout</div>
-          <div>{monitor.requestTimeout} seconds</div>
+          <div>{t('home.info.intervals.timeout')}</div>
+          <div>
+            {monitor.requestTimeout} {t('common.seconds')}
+          </div>
         </div>
 
         <div className="navigation-info-item">
-          <div>Retry</div>
-          <div>{monitor.retryInterval} seconds</div>
+          <div>{t('home.info.intervals.retry_interval')}</div>
+          <div>
+            {monitor.retryInterval} {t('common.seconds')}
+          </div>
+        </div>
+
+        <div className="navigation-info-item">
+          <div>{t('home.info.intervals.retry')}</div>
+          <div>
+            {monitor.retryInterval} {t('common.seconds')}
+          </div>
         </div>
       </div>
 

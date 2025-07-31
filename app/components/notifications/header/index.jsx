@@ -2,6 +2,7 @@
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { FaTrashCan } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
 
 // import local files
 import useContextStore from '../../../context';
@@ -20,6 +21,7 @@ const HomeNotificationHeader = () => {
       setActiveNotification,
     },
   } = useContextStore();
+  const { t } = useTranslation();
 
   if (!notification) {
     return (
@@ -55,11 +57,15 @@ const HomeNotificationHeader = () => {
   return (
     <div className="navigation-header-content">
       <div className="navigation-header-title">
-        <div>Notification - {notification.friendlyName || 'Lunalytics'}</div>
+        <div>
+          {t('common.notification')} -{' '}
+          {notification.friendlyName || 'Lunalytics'}
+        </div>
 
         {notification?.platform ? (
           <div className="navigation-header-subtitle">
-            Notification for <span>{notification.platform}</span>
+            {t('notification.notification_for')}{' '}
+            <span>{notification.platform}</span>
           </div>
         ) : null}
       </div>

@@ -1,6 +1,7 @@
 // import dependencies
 import { useState } from 'react';
 import { Input } from '@lunalytics/ui';
+import { useTranslation } from 'react-i18next';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 // import local files
@@ -13,12 +14,13 @@ const NotificationSlackContent = ({
   handleUpdate,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
       <div className="notification-content-container">
         <Input
-          title="Friendly Name"
+          title={t('notification.input.friendly_name')}
           placeholder="Lunalytics"
           id="friendly-name"
           error={errors?.friendlyName}
@@ -31,7 +33,7 @@ const NotificationSlackContent = ({
 
         <Input
           type={showPassword ? 'text' : 'password'}
-          title={'Webhook URL'}
+          title={t('notification.input.webhook_url')}
           placeholder="https://hooks.slack.com/services/..."
           id="webhook-url"
           error={errors?.token}
@@ -55,7 +57,7 @@ const NotificationSlackContent = ({
         />
 
         <Input
-          title="Webhook Username"
+          title={t('notification.input.webhook_username')}
           placeholder="Lunalytics"
           id="webhook-username"
           error={errors?.username}
@@ -70,7 +72,7 @@ const NotificationSlackContent = ({
         />
 
         <Input
-          title="Text Message"
+          title={t('notification.input.text_message')}
           placeholder="Alert @everyone"
           id="text-messsage"
           error={errors?.textMessage}
@@ -86,7 +88,7 @@ const NotificationSlackContent = ({
       </div>
 
       <Input
-        title="Channel name"
+        title={t('notification.input.channel')}
         placeholder="lunalytics-alerts"
         id="channel-name"
         error={errors?.channel}
@@ -102,8 +104,8 @@ const NotificationSlackContent = ({
 
       <div style={{ paddingTop: '1rem' }}>
         <SwitchWithText
-          label="Enabled"
-          shortDescription="Enable or disable the notification globally"
+          label={t('notification.input.enabled_title')}
+          shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
           onChange={(e) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });

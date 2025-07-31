@@ -1,7 +1,10 @@
+// import dependencies
 import { useState } from 'react';
 import { Input } from '@lunalytics/ui';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
+import { useTranslation } from 'react-i18next';
 
+// import local files
 import SwitchWithText from '../../../ui/switch';
 
 const NotificationDiscordContent = ({
@@ -11,12 +14,13 @@ const NotificationDiscordContent = ({
   handleUpdate,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
       <div className="notification-content-container">
         <Input
-          title="Friendly Name"
+          title={t('notification.input.friendly_name')}
           placeholder="Lunalytics"
           id="friendly-name"
           error={errors?.friendlyName}
@@ -30,7 +34,7 @@ const NotificationDiscordContent = ({
         <Input
           type={showPassword ? 'text' : 'password'}
           id="token"
-          title="Webhook URL"
+          title={t('notification.input.webhook_url')}
           error={errors.token}
           value={inputs.token}
           onChange={(event) =>
@@ -52,7 +56,7 @@ const NotificationDiscordContent = ({
         />
 
         <Input
-          title="Webhook Username"
+          title={t('notification.input.webhook_username')}
           placeholder="Lunalytics"
           id="webhook-username"
           error={errors?.username}
@@ -67,7 +71,7 @@ const NotificationDiscordContent = ({
         />
 
         <Input
-          title="Text Message"
+          title={t('notification.input.text_message')}
           placeholder="Alert @everyone"
           id="text-messsage"
           error={errors?.textMessage}
@@ -84,8 +88,8 @@ const NotificationDiscordContent = ({
 
       <div style={{ paddingTop: '1rem' }}>
         <SwitchWithText
-          label="Enabled"
-          shortDescription="Enable or disable the notification globally"
+          label={t('notification.input.enabled_title')}
+          shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
           onChange={(e) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });

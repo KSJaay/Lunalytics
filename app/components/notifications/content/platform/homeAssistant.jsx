@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Input } from '@lunalytics/ui';
+import { useTranslation } from 'react-i18next';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 import SwitchWithText from '../../../ui/switch';
@@ -11,12 +12,13 @@ const NotificationHomeAssistantContent = ({
   handleUpdate,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
       <div className="notification-content-container">
         <Input
-          title="Friendly Name"
+          title={t('notification.input.friendly_name')}
           placeholder="Lunalytics"
           id="friendly-name"
           error={errors?.friendlyName}
@@ -28,7 +30,7 @@ const NotificationHomeAssistantContent = ({
         />
 
         <Input
-          title={'HomeAssistant URL'}
+          title={t('notification.input.home_assistant_url')}
           placeholder="https://www.home-assistant.io/"
           id="home-assistant-url"
           error={errors?.homeAssistantUrl}
@@ -43,7 +45,7 @@ const NotificationHomeAssistantContent = ({
         />
 
         <Input
-          title={'Notification Service'}
+          title={t('notification.input.notification_service')}
           placeholder="mobile_app_<device_name>"
           id="home-assistant-notification-service"
           isRequired
@@ -63,7 +65,7 @@ const NotificationHomeAssistantContent = ({
 
         <Input
           type={showPassword ? 'text' : 'password'}
-          title={'Long Lived Access Token'}
+          title={t('notification.input.long_lived')}
           id="home-assistant-access-token"
           error={errors?.token}
           value={inputs.token || ''}
@@ -88,8 +90,8 @@ const NotificationHomeAssistantContent = ({
 
       <div style={{ paddingTop: '1rem' }}>
         <SwitchWithText
-          label="Enabled"
-          shortDescription="Enable or disable the notification globally"
+          label={t('notification.input.enabled_title')}
+          shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
           onChange={(e) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });

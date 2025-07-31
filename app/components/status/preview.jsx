@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
@@ -17,6 +18,7 @@ const StatusPagePreview = ({ children }) => {
   } = useContextStore();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const items = useMemo(() => {
     if (!allStatusPages?.length) return [];
@@ -52,7 +54,8 @@ const StatusPagePreview = ({ children }) => {
 
   const input = (
     <Input
-      placeholder="Search monitors..."
+      placeholder={t('status.search')}
+      key="search"
       onChange={(event) => {
         setSearch(event.target.value?.trim() || '');
       }}
@@ -69,7 +72,7 @@ const StatusPagePreview = ({ children }) => {
                 className="navigation-preview-no-items"
                 key="no-status-page-preview"
               >
-                No status pages found
+                {t('status.none_exist')}
               </div>,
             ]
           : [input].concat(items)

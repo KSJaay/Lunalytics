@@ -14,6 +14,7 @@ import NotificationModal from '../components/modal/notification';
 import NotificationContent from '../components/notifications/content';
 import HomeNotificationHeader from '../components/notifications/header';
 import { filterData } from '../../shared/utils/search';
+import { useTranslation } from 'react-i18next';
 
 const Notifications = () => {
   const {
@@ -25,6 +26,7 @@ const Notifications = () => {
       setActiveNotification,
     },
   } = useContextStore();
+  const { t } = useTranslation();
 
   const [search, setSearch] = useState(null);
 
@@ -63,13 +65,13 @@ const Notifications = () => {
             )
           }
         >
-          Add Notification
+          {t('notification.add')}
         </Button>
       }
       header={{ HeaderComponent: HomeNotificationHeader }}
     >
       {!activeNotification ? (
-        <div className="monitor-none-exist">No notifications found</div>
+        <div className="monitor-none-exist">{t('notification.none_exist')}</div>
       ) : (
         <NotificationContent />
       )}
