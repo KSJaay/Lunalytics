@@ -24,12 +24,6 @@ export const providers = [
     icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons/svg/google.svg',
   },
   {
-    id: 'instagram',
-    name: 'Instagram',
-    description: 'Allow users to sign in with their Instagram account',
-    icon: 'https://cdn.jsdelivr.net/gh/selfhst/icons/svg/instagram.svg',
-  },
-  {
     id: 'slack',
     name: 'Slack',
     description: 'Allow users to sign in with their Slack account',

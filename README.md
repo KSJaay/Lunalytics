@@ -27,7 +27,6 @@
   - Discord
   - Google
   - GitHub
-  - Instagram
   - Slack
   - Twitch
 - Support for notifications
