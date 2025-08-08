@@ -1,13 +1,13 @@
 const ConfigValidator = ({ nativeSignin, register }) => {
   const data = {};
 
-  if (typeof nativeSignin !== 'boolean') {
+  if (!!nativeSignin && typeof nativeSignin !== 'boolean') {
     return 'Invalid value for nativeSignin';
   } else {
-    data.register = register;
+    data.nativeSignin = nativeSignin;
   }
 
-  if (typeof register !== 'boolean') {
+  if (!!register && typeof register !== 'boolean') {
     return 'Invalid value for register';
   } else {
     data.register = register;

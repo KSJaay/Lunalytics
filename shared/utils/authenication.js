@@ -36,15 +36,15 @@ export const getAuthRedirectUrl = (provider, clientId, redirectUri) => {
     );
   }
 
-  if (provider === 'instagram') {
-    queryParams.response_type = 'code';
-    queryParams.scope = 'user_profile';
+  // if (provider === 'instagram') {
+  //   queryParams.response_type = 'code';
+  //   queryParams.scope = 'user_profile';
 
-    return (
-      'https://api.instagram.com/oauth/authorize?' +
-      new URLSearchParams(queryParams).toString()
-    );
-  }
+  //   return (
+  //     'https://api.instagram.com/oauth/authorize?' +
+  //     new URLSearchParams(queryParams).toString()
+  //   );
+  // }
 
   if (provider === 'slack') {
     queryParams.scope = 'openid profile email';
@@ -111,16 +111,16 @@ export const getAuthCallbackUrl = (
     ];
   }
 
-  if (provider === 'instagram') {
-    return [
-      'https://api.instagram.com/oauth/access_token',
-      new URLSearchParams({
-        ...queryParams,
-        grant_type: 'authorization_code',
-      }).toString(),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
-    ];
-  }
+  // if (provider === 'instagram') {
+  //   return [
+  //     'https://api.instagram.com/oauth/access_token',
+  //     new URLSearchParams({
+  //       ...queryParams,
+  //       grant_type: 'authorization_code',
+  //     }).toString(),
+  //     { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+  //   ];
+  // }
 
   if (provider === 'slack') {
     return [

@@ -35,26 +35,28 @@ const SettingsAuthentication = () => {
     },
   });
 
-  const handleRegistrationChange = async (e) => {
-    await createPostRequest('/api/auth/config/update', {
-      register: e.target.checked,
-    });
+  const handleSwitchChange = async (key, value) => {
+    try {
+      if (!config.sso && key === 'nativeSignin') {
+        return toast.error(
+          'You must enable at least one SSO provider to disable native login'
+        );
+      }
 
-    setConfigUsingKey('register', e.target.checked);
-  };
+      await createPostRequest('/api/auth/config/update', {
+        [key]: value,
+      });
 
-  const handleNativeLoginChange = async (e) => {
-    if (!config.sso) {
-      return toast.error(
-        'You must enable at least one SSO provider to disable native login'
-      );
+      setConfigUsingKey(key, value);
+
+      toast.success('Authentication configuration updated successfully');
+    } catch (error) {
+      if (error?.response?.data?.error) {
+        return toast.error(error.response.data.error);
+      }
+
+      toast.error("Couldn't update authentication configuration");
     }
-
-    await createPostRequest('/api/auth/config/update', {
-      nativeSignin: e.target.checked,
-    });
-
-    setConfigUsingKey('nativeSignin', e.target.checked);
   };
 
   if (isLoading || isConfigLoading) {
@@ -84,7 +86,7 @@ const SettingsAuthentication = () => {
           name="allowRegistration"
           shortDescription="Allow new users to register for an account"
           checked={config.register}
-          onChange={handleRegistrationChange}
+          onChange={(e) => handleSwitchChange('register', e.target.checked)}
         />
 
         <SwitchWithText
@@ -92,7 +94,7 @@ const SettingsAuthentication = () => {
           name="allowNativeLogin"
           shortDescription="Disable internal authentication and only allow SSO login"
           checked={!config.sso ? true : config.nativeSignin}
-          onChange={handleNativeLoginChange}
+          onChange={(e) => handleSwitchChange('nativeSignin', e.target.checked)}
         />
       </div>
 

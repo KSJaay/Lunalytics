@@ -2,10 +2,11 @@ import { handleError } from '../../utils/errors.js';
 import {
   createProvider,
   fetchProvider,
+  updateProvider,
 } from '../../database/queries/provider.js';
 import ProviderValidator from '../../../shared/validators/provider.js';
 
-const createProviderMiddleware = async (request, response) => {
+const configureProviderMiddleware = async (request, response) => {
   const {
     clientId,
     clientSecret,
@@ -29,26 +30,26 @@ const createProviderMiddleware = async (request, response) => {
 
     const providerExists = await fetchProvider(provider);
 
-    if (providerExists) {
-      return response.status(400).json({
-        error: 'Config for provider already exists',
-      });
-    }
-
-    await createProvider({
+    const providerObj = {
       email: response.locals.user.email,
       clientId,
       clientSecret,
       provider,
       enabled,
-      data,
-    });
+      data: JSON.stringify(data),
+    };
 
-    return response.sendStatus(200);
+    if (providerExists) {
+      await updateProvider(provider, providerObj);
+    } else {
+      await createProvider(providerObj);
+    }
+
+    return response.status(200).json(providerObj);
   } catch (error) {
     console.log(error);
     handleError(error, response);
   }
 };
 
-export default createProviderMiddleware;
+export default configureProviderMiddleware;
