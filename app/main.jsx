@@ -24,10 +24,11 @@ import StatusConfigure from './pages/status-page';
 import StatusLayout from './layout/status';
 import StatusPage from './pages/status';
 import Incidents from './pages/incidents';
+import Loading from './components/ui/loading';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <React.Suspense fallback={<></>}>
+    <React.Suspense fallback={<Loading />}>
       <ToastContainer
         position="top-right"
         theme="dark"
@@ -36,9 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         id="toast-container"
       />
       <GlobalProvider>
-        <BrowserRouter
-          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-        >
+        <BrowserRouter>
           <Routes>
             <Route
               path="/"

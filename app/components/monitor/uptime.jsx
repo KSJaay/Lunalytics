@@ -2,22 +2,26 @@ import './uptime.scss';
 
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 // import local files
 import UptimeInfo from './updateInfo';
-import { heartbeatPropType } from '../../../shared/utils/propTypes';
+import { observer } from 'mobx-react-lite';
+import useContextStore from '../../context';
 
-const MonitorUptime = ({ heartbeats = [] }) => {
+const MonitorUptime = () => {
   const { t } = useTranslation();
 
+  const {
+    globalStore: { activeMonitor },
+  } = useContextStore();
+
   const heartbeatList = useMemo(() => {
-    const highestLatency = heartbeats.reduce((acc, curr) => {
+    const highestLatency = activeMonitor?.heartbeats?.reduce((acc, curr) => {
       return Math.max(acc, curr.latency);
     }, 0);
 
-    const heartbeatList = heartbeats.map((heartbeat) => (
+    const heartbeatList = activeMonitor?.heartbeats?.map((heartbeat) => (
       <UptimeInfo
         key={heartbeat.id}
         heartbeat={heartbeat}
@@ -26,7 +30,7 @@ const MonitorUptime = ({ heartbeats = [] }) => {
     ));
 
     return heartbeatList;
-  }, [heartbeats]);
+  }, [JSON.stringify(activeMonitor)]);
 
   return (
     <div className="monitor-uptime-container">
@@ -51,8 +55,6 @@ const MonitorUptime = ({ heartbeats = [] }) => {
 
 MonitorUptime.displayName = 'MonitorUptime';
 
-MonitorUptime.propTypes = {
-  heartbeats: PropTypes.arrayOf(heartbeatPropType).isRequired,
-};
+MonitorUptime.propTypes = {};
 
-export default MonitorUptime;
+export default observer(MonitorUptime);

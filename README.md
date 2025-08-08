@@ -22,6 +22,14 @@
 - Advance role based access control
 - Clean and easy to use UX/UI
 - Customizable user profiles/themes/colors
+- Single sign on support (SSO)
+  - Custom (Authentik, Authelia, Keycloak, etc...)
+  - Discord
+  - Google
+  - GitHub
+  - Instagram
+  - Slack
+  - Twitch
 - Support for notifications
   - Discord
   - Home Assistant

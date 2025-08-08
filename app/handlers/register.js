@@ -22,7 +22,7 @@ const handleRegister = async (inputs, setErrors, setPage, navigate, invite) => {
     const queryParams = invite ? { invite } : null;
 
     const query = await createPostRequest(
-      '/auth/register',
+      '/api/auth/register',
       {
         email,
         username,

@@ -1,3 +1,5 @@
+@use '../pxToRem.scss' as *;
+
 .verify-container {
   display: flex;
   justify-content: center;
@@ -8,7 +10,16 @@
 }
 
 .verify-description {
+  font-size: var(--font-md);
+  color: var(--accent-100);
   text-align: center;
-  font-size: 24px;
+  margin: pxToRem(16) 0;
   width: 450px;
+}
+
+.verify-title {
+  font-size: var(--font-3xl);
+  font-weight: var(--weight-bold);
+  color: var(--font-color);
+  text-align: center;
 }
