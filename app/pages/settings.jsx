@@ -5,12 +5,11 @@ import { useEffect, useState } from 'react';
 
 // import local files
 import useGoBack from '../hooks/useGoBack';
-// import SettingsMobile from '../components/settings/ui/menu/mobile';
 import SetttingsDesktop from '../components/settings/ui/menu/desktop';
 import SettingsMobile from '../components/settings/ui/menu/mobile';
 
 const Settings = () => {
-  const [tab, setTab] = useState('Account');
+  const [tab, setTab] = useState('Authentication');
   const handleTabUpdate = (tab) => {
     return setTab(tab);
   };

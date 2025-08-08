@@ -20,9 +20,14 @@ const HomeMonitorsList = ({ monitors = [] }) => {
     });
 
     let heartbeats = monitor.heartbeats
-      .map((heartbeat) =>
-        heartbeat.isDown ? 'var(--red-800)' : 'var(--green-800)'
-      )
+      .map((heartbeat) => {
+        const downColor = monitor.paused ? 'var(--red-900)' : 'var(--red-800)';
+        const upColor = monitor.paused
+          ? 'var(--green-900)'
+          : 'var(--green-800)';
+
+        return heartbeat.isDown ? downColor : upColor;
+      })
       .splice(0, 12);
 
     if (heartbeats.length < 12) {

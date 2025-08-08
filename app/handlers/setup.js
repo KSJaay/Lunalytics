@@ -20,7 +20,7 @@ const submitSetup = async (setErrors, type = 'basic', inputs) => {
 
     if (errors) throw new Error('Issue occured while setting up configuration');
 
-    await createPostRequest('/auth/setup', { ...inputs, type });
+    await createPostRequest('/api/auth/setup', { ...inputs, type });
     toast.success('Setup configuration successful');
   } catch (error) {
     if (error?.response?.data) {

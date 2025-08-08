@@ -9,6 +9,7 @@ i18n
   .use(HttpApi)
   .init({
     fallbackLng: 'en',
+    supportedLngs: ['en'],
     debug: true,
     interpolation: { escapeValue: false },
     backend: { loadPath: '/locales/{{lng}}.json' },

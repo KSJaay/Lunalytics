@@ -14,6 +14,7 @@ import useContextStore from '../../../../context';
 import Role from '../../../../../shared/permissions/role';
 import SettingsPersonalisation from '../../personalisation';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import SettingsAuthentication from '../../authentication';
 
 const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
   const {
@@ -36,6 +37,7 @@ const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
       {tab === 'Account' && <SettingsAccount />}
       {tab === 'Appearance' && <SettingsPersonalisation />}
       {isAdmin && tab === 'API Token' ? <ManageApiTokens /> : null}
+      {isAdmin && tab === 'Authentication' ? <SettingsAuthentication /> : null}
       {isAdmin && tab === 'Invites' ? <ManageInvites /> : null}
       {tab === 'Manage Team' && <ManageTeam />}
       {tab === 'About' && <SettingsAbout />}
