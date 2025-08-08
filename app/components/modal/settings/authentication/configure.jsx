@@ -33,11 +33,14 @@ const SettingsAuthenticationConfigureModal = ({
         data: {},
       };
 
-      const provider = await createPostRequest('/api/providers/create', data);
+      const provider = await createPostRequest(
+        '/api/providers/configure',
+        data
+      );
       addProvider(provider.data);
       closeModal();
 
-      toast.success('Provider created successfully');
+      toast.success('Provider has been configured!');
     } catch (error) {
       if (error?.response?.data?.error) {
         return toast.error(error.response.data.error);
