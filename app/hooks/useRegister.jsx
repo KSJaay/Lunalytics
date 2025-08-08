@@ -33,7 +33,7 @@ const useRegister = () => {
       }
 
       try {
-        const emailExists = await createPostRequest('/auth/user/exists', {
+        const emailExists = await createPostRequest('/api/auth/user/exists', {
           email: values.inputs['email'],
         });
 

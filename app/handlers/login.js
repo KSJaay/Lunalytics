@@ -16,7 +16,7 @@ const handleLogin = async (inputs, setErrors, navigate) => {
       return setErrors(hasInvalidData);
     }
 
-    const query = await createPostRequest('/auth/login', { email, password });
+    const query = await createPostRequest('/api/auth/login', { email, password });
 
     if (query.status === 200) {
       return navigate('/home');

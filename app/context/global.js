@@ -36,6 +36,10 @@ class GlobalStore {
 
     this.monitors.set(data.monitorId, data);
 
+    if (this.activeMonitor && this.activeMonitor.monitorId === data.monitorId) {
+      this.setActiveMonitor(data.monitorId);
+    }
+
     this.timeouts.set(
       data.monitorId,
       setTimeout(

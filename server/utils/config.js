@@ -66,6 +66,11 @@ class Config {
   get(key) {
     return Object.keys(this.config).includes(key) ? this.config[key] : null;
   }
+
+  set(key, value) {
+    this.config[key] = value;
+    fs.writeFileSync(this.configPath, JSON.stringify(this.config, null, 2));
+  }
 }
 
 const config = new Config();

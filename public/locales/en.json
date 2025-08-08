@@ -24,8 +24,9 @@
     "notification": "Notification",
     "home": "Home",
     "notifications": "Notifications",
-    "status": "Status page",
+    "status_page": "Status page",
     "incidents": "Incidents",
+    "incident": "Incident",
     "search": "Search",
     "cancel": "Cancel",
     "confirm": "Confirm"
@@ -126,6 +127,6 @@
   "incident": {
     "add": "Add $t(common.incident)",
     "none_exist": "No incidents found",
-    "search": "$t(common.search) $t(common.incident)..."
+    "search": "$t(common.search) $t(common.incidents)..."
   }
 }

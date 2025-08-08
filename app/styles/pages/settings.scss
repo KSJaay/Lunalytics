@@ -112,6 +112,54 @@
   padding-bottom: 10px;
 }
 
+.settings-auth-switches {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-auth-providers {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.settings-auth-provider {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--accent-900);
+  border-radius: 12px;
+  border: 2px solid var(--accent-600);
+}
+
+.settings-auth-provider-img {
+  width: 36px;
+  height: 36px;
+  padding: 3px;
+  border-radius: 6px;
+}
+
+.settings-auth-provider-title {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  padding: 0 12px;
+}
+
+.settings-auth-provider-description {
+  font-size: var(--font-sm);
+  padding: 0 12px;
+  color: var(--font-light-color);
+}
+
+.settings-auth-provider-config {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  background-color: var(--accent-800);
+  padding: 12px;
+  border-radius: 0 0 12px 12px;
+}
+
 @include mobile {
   .settings-close {
     top: pxToRem(8);

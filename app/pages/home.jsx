@@ -80,7 +80,7 @@ const Home = () => {
         <div className="monitor-container">
           <MonitorStatus monitor={activeMonitor} />
           <MonitorGraph monitor={activeMonitor} />
-          <MonitorUptime heartbeats={activeMonitor.heartbeats} />
+          <MonitorUptime />
           <Spacer size={18} />
         </div>
       )}

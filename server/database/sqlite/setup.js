@@ -14,6 +14,8 @@ import { notificationsTable } from './tables/notifications.js';
 import { statusPageTable } from './tables/status_page.js';
 import { userTable } from './tables/user.js';
 import { userSessionTable } from './tables/user_session.js';
+import { connectionsTable } from './tables/connection.js';
+import { providersTable } from './tables/provider.js';
 
 export class SQLite {
   constructor() {
@@ -95,12 +97,14 @@ export class SQLite {
 
     await apiTokenTable(this.client);
     await certificateTable(this.client);
+    await connectionsTable(this.client);
     await heartbeatTable(this.client);
     await hourlyHeartbeatTable(this.client);
     await incidentTable(this.client);
     await inviteTable(this.client);
     await monitorTable(this.client);
     await notificationsTable(this.client);
+    await providersTable(this.client);
     await statusPageTable(this.client);
     await userTable(this.client);
     await userSessionTable(this.client);

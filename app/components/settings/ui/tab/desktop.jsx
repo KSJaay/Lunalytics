@@ -2,11 +2,11 @@
 import PropTypes from 'prop-types';
 
 const tabs = (isAdmin) => [
-  { title: 'GENERAL', items: ['Account', 'Appearance'] },
+  { title: 'GENERAL', items: ['Account', 'Appearance', 'Connections'] },
   {
     title: 'WORKSPACE',
     items: isAdmin
-      ? ['API Token', 'Invites', 'Manage Team', 'About']
+      ? ['API Token', 'Authentication', 'Invites', 'Manage Team', 'About']
       : ['Manage Team', 'About'],
   },
 ];
