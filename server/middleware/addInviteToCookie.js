@@ -1,19 +1,28 @@
 import { setServerSideCookie } from '../../shared/utils/cookies.js';
+import logger from '../utils/logger.js';
 
 const addInviteToCookie = (request, response, next) => {
-  const { invite } = request.query;
+  try {
+    const { invite } = request.query;
 
-  if (invite) {
-    setServerSideCookie(
-      response,
-      'invite',
-      invite,
-      request.protocol === 'https',
-      'lax'
-    );
+    if (invite) {
+      setServerSideCookie(
+        response,
+        'invite',
+        invite,
+        request.protocol === 'https',
+        'lax'
+      );
+    }
+
+    next();
+  } catch (error) {
+    logger.error('Add invite to cookie', {
+      message: error.message,
+      stack: error.stack,
+    });
+    next();
   }
-
-  next();
 };
 
 export default addInviteToCookie;

@@ -11,7 +11,6 @@ const deleteConnectionMiddleware = async (request, response) => {
     await deleteConnection(response.locals.user.email, provider);
     response.sendStatus(204);
   } catch (error) {
-    console.log(error);
     handleError(error, response);
   }
 };

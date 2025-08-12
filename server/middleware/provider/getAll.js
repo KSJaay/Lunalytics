@@ -6,7 +6,6 @@ const getAllProvidersMiddleware = async (request, response) => {
     const query = await fetchProviders();
     response.json(query);
   } catch (error) {
-    console.log(error);
     handleError(error, response);
   }
 };
