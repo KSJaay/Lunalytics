@@ -7,7 +7,6 @@ const deleteProviderMiddleware = async (request, response) => {
   try {
     await deleteProvider(provider);
   } catch (error) {
-    console.log(error);
     handleError(error, response);
   }
 };
