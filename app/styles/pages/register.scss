@@ -149,3 +149,40 @@
     color: var(--font-light-color);
   }
 }
+
+.login-text-forgot-password {
+  text-align: right;
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--font-light-color);
+  font-size: var(--font-sm);
+  padding: 12px 5px 12px 0;
+}
+
+.login-header-design {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    pointer-events: none;
+    background: radial-gradient(var(--primary-800), transparent 100%);
+    filter: blur(100px);
+    z-index: 0;
+    overflow: hidden;
+    background-size: 200% 200%;
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  background-color: var(--primary-900);
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  top: -25px;
+  left: 0;
+  border-radius: 0 0 100% 100%;
+  filter: blur(100px);
+  z-index: -1;
+}

@@ -16,19 +16,7 @@ const LoginLayout = ({
   return (
     <div className="login-page">
       <div className="login-card">
-        <div
-          style={{
-            backgroundColor: 'var(--primary-900)',
-            width: '100%',
-            height: '70px',
-            position: 'absolute',
-            top: '-25px',
-            left: 0,
-            borderRadius: '0 0 100% 100%',
-            filter: 'blur(100px)',
-            zIndex: '-1',
-          }}
-        />
+        <div className="login-header-design" />
         <header style={{ marginBottom: '1rem', textAlign: 'center' }}>
           <img
             src="/logo.svg"

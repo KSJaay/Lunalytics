@@ -18,14 +18,7 @@ const LoginForm = ({
 
       {showForgottenPasswordCta ? (
         <div
-          style={{
-            textAlign: 'right',
-            textDecoration: 'underline',
-            cursor: 'pointer',
-            color: 'var(--font-light-color)',
-            fontSize: 'var(--font-sm)',
-            padding: '12px 5px 12px 0',
-          }}
+          className="login-text-forgot-password"
           onClick={() => navigate('/forgot-password')}
         >
           Forgot password?

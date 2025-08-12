@@ -47,7 +47,6 @@ const configureProviderMiddleware = async (request, response) => {
 
     return response.status(200).json(providerObj);
   } catch (error) {
-    console.log(error);
     handleError(error, response);
   }
 };

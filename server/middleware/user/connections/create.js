@@ -7,7 +7,6 @@ const createConnectionMiddleware = async (request, response) => {
   try {
     await createConnection(response.locals.user.email, data);
   } catch (error) {
-    console.log(error);
     handleError(error, response);
   }
 };
