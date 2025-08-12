@@ -5,8 +5,9 @@ import axios from 'axios';
 import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
 import { fetchProvider } from '../../../database/queries/provider.js';
 import config from '../../../utils/config.js';
+import { handleError } from '../../../utils/errors.js';
 
-const googleCallback = async (request, response) => {
+const googleCallback = async (request, response, next) => {
   try {
     const { code } = request.query;
 
@@ -33,7 +34,7 @@ const googleCallback = async (request, response) => {
     const { access_token } = data;
 
     const userInfo = await axios.get(
-      'https://www.googleapis.com/oauth2/v2/userinfo',
+      'https://www.googleapis.com/oauth2/v2/userinfo?alt=json',
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -41,9 +42,23 @@ const googleCallback = async (request, response) => {
       }
     );
 
-    return response.send(userInfo.data);
+    const { picture, id, email, verified_email } = userInfo.data;
+
+    if (!verified_email) {
+      return response.redirect('/error?code=unverified_user&provider=google');
+    }
+
+    response.locals.authUser = {
+      id,
+      email,
+      avatar: picture,
+      username: 'unknown',
+      provider: 'google',
+    };
+
+    return next();
   } catch (error) {
-    console.log(error);
+    handleError(error, response);
   }
 };
 

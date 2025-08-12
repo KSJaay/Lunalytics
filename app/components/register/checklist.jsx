@@ -9,7 +9,7 @@ const RegisterChecklist = ({ password = '' }) => {
   const hasNumberOrSymbol = /[0-9!@#$%^&*~_\-+=]+/.test(password);
 
   return (
-    <div style={{ margin: '15px 0 15px 3px' }}>
+    <div style={{ margin: '10px 0 5px 3px' }}>
       <div className="check-title">Must contain at least:</div>
       <div>
         <div className="check-container">

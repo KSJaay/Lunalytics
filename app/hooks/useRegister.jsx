@@ -24,11 +24,7 @@ const useRegister = () => {
       if (isInvalidEmail || isInvalidUsername) {
         return setValues((prev) => ({
           ...prev,
-          errors: {
-            ...prev.errors,
-            ...isInvalidEmail,
-            ...isInvalidUsername,
-          },
+          errors: { ...prev.errors, ...isInvalidEmail, ...isInvalidUsername },
         }));
       }
 
@@ -40,10 +36,7 @@ const useRegister = () => {
         if (emailExists.data) {
           return setValues((prev) => ({
             ...prev,
-            errors: {
-              ...prev.errors,
-              email: 'Email already exists',
-            },
+            errors: { ...prev.errors, email: 'Email already exists' },
           }));
         }
       } catch {
@@ -57,10 +50,16 @@ const useRegister = () => {
   const setPassword = (event) => {
     return setValues((prev) => ({
       ...prev,
-      inputs: {
-        ...prev.inputs,
-        password: event.target.value,
-      },
+      inputs: { ...prev.inputs, password: event.target.value },
+    }));
+  };
+
+  const handleInputChange = (event) => {
+    const { id, value } = event.target;
+
+    setValues((prev) => ({
+      ...prev,
+      inputs: { ...prev.inputs, [id]: value },
     }));
   };
 
@@ -72,34 +71,19 @@ const useRegister = () => {
 
       if (isInvalid) {
         return setValues((prev) => ({
-          inputs: {
-            ...prev.inputs,
-            [id]: value,
-          },
-          errors: {
-            ...prev.errors,
-            ...isInvalid,
-          },
+          inputs: { ...prev.inputs, [id]: value },
+          errors: { ...prev.errors, ...isInvalid },
         }));
       } else {
         setValues((prev) => ({
-          inputs: {
-            ...prev.inputs,
-            [id]: value,
-          },
-          errors: {
-            ...prev.errors,
-            [id]: '',
-          },
+          inputs: { ...prev.inputs, [id]: value },
+          errors: { ...prev.errors, [id]: '' },
         }));
       }
 
       return setValues((prev) => ({
         ...prev,
-        inputs: {
-          ...prev.inputs,
-          [id]: value?.trim(),
-        },
+        inputs: { ...prev.inputs, [id]: value?.trim() },
       }));
     }
 
@@ -107,27 +91,18 @@ const useRegister = () => {
       if (value !== values.inputs['password']) {
         setValues((prev) => ({
           ...prev,
-          errors: {
-            ...prev.errors,
-            confirmPassword: 'Passwords do not match',
-          },
+          errors: { ...prev.errors, confirmPassword: 'Passwords do not match' },
         }));
       } else {
         setValues((prev) => ({
           ...prev,
-          errors: {
-            ...prev.errors,
-            confirmPassword: '',
-          },
+          errors: { ...prev.errors, confirmPassword: '' },
         }));
       }
 
       return setValues((prev) => ({
         ...prev,
-        inputs: {
-          ...prev.inputs,
-          confirmPassword: value,
-        },
+        inputs: { ...prev.inputs, confirmPassword: value },
       }));
     }
   };
@@ -143,8 +118,9 @@ const useRegister = () => {
     errors: values.errors,
     inputs: values.inputs,
     page,
-    handlePageChange,
+    setPage,
     handleInput,
+    handleInputChange,
     setErrors,
     setPassword,
   };

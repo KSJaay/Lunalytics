@@ -41,6 +41,39 @@ export const registerUser = async (data) => {
   return data;
 };
 
+export const registerSsoUser = async (data) => {
+  const {
+    avatar,
+    displayName,
+    email,
+    id,
+    provider,
+    sso,
+    isVerified = false,
+  } = data;
+
+  const createdAt = new Date().toISOString();
+
+  await SQLite.client('user').insert({
+    email,
+    displayName,
+    avatar,
+    sso,
+    createdAt,
+    isVerified,
+    password: null,
+  });
+
+  await SQLite.client('connections').insert({
+    accountId: id,
+    email,
+    provider,
+    createdAt,
+  });
+
+  return data;
+};
+
 export const getUserByEmail = async (email) => {
   return SQLite.client('user')
     .where({ email })

@@ -18,6 +18,9 @@ const migrate = async () => {
 
   await client.schema.alterTable('user', async (table) => {
     table.boolean('isOwner').defaultTo(false);
+    table.boolean('sso').defaultTo(false);
+    table.string('password').nullable().defaultTo(null).alter();
+    table.integer('permission').defaultTo(oldPermsToFlags[4]).alter();
   });
 
   await client

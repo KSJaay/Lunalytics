@@ -14,7 +14,7 @@ import {
 const register = async (request, response) => {
   try {
     const { email, username, password } = request.body;
-    const { invite } = request.query;
+    const invite = request?.query?.invite || request?.cookies?.invite;
 
     const isInvalidAuth =
       validators.auth.email(email) ||
