@@ -8,13 +8,14 @@ import compression from 'compression';
 // import local files
 import cache from './cache/index.js';
 import logger from './utils/logger.js';
-import initialiseRoutes from './routes/index.js';
+import config from './utils/config.js';
+import isDemo from './middleware/demo.js';
+import statusCache from './cache/status.js';
 import SQLite from './database/sqlite/setup.js';
+import initialiseRoutes from './routes/index.js';
 import initialiseCronJobs from './utils/cron.js';
 import migrateDatabase from '../scripts/migrate.js';
-import isDemo from './middleware/demo.js';
-import config from './utils/config.js';
-import statusCache from './cache/status.js';
+import addInviteToCookie from './middleware/addInviteToCookie.js';
 
 const app = express();
 
@@ -45,7 +46,8 @@ const init = async () => {
     .disable('x-powered-by')
     .set('trust proxy', 1)
     .use(cookieParser())
-    .use(isDemo);
+    .use(isDemo)
+    .use(addInviteToCookie);
 
   if (
     process.env.NODE_ENV !== 'production' &&

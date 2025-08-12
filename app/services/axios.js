@@ -14,7 +14,7 @@ axios.interceptors.response.use(function (response) {
 
 const createURL = (path, params) => {
   if (!path) return path;
-  if (path?.startsWith('http')) return new URL(path);
+  if (path?.startsWith('http')) return new URL(path).toString();
 
   if (import.meta.env.PROD) {
     if (!params) return path;
@@ -26,19 +26,21 @@ const createURL = (path, params) => {
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:2308';
 
-  if (!params) return new URL(`${apiUrl}${path}`);
+  if (!params) return `${apiUrl}${path}`;
 
   const searchParams = new URLSearchParams(params).toString();
-
-  return new URL(`${apiUrl}${path}?${searchParams}`);
+  return `${apiUrl}${path}?${searchParams}`;
 };
 
-const createGetRequest = async (path, params, headers = {}) => {
-  const url = createURL(path, params);
+const createGetRequest = async (path, params = {}, headers = {}) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentParams = Object.fromEntries(urlParams.entries());
+  const mergedParams = { ...currentParams, ...params };
 
   return axios({
     method: 'GET',
-    url,
+    url: createURL(path),
+    params: mergedParams,
     headers,
     withCredentials: true,
     timeout: 5000,
@@ -46,12 +48,20 @@ const createGetRequest = async (path, params, headers = {}) => {
   });
 };
 
-const createPostRequest = async (path, data = {}, headers = {}, params) => {
-  const url = createURL(path, params);
+const createPostRequest = async (
+  path,
+  data = {},
+  headers = {},
+  params = {}
+) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentParams = Object.fromEntries(urlParams.entries());
+  const mergedParams = { ...currentParams, ...params };
 
   return axios({
     method: 'POST',
-    url,
+    url: createURL(path),
+    params: mergedParams,
     data,
     headers,
     withCredentials: true,
