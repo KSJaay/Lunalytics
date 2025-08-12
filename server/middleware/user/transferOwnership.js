@@ -1,6 +1,6 @@
 import {
-  emailExists,
   emailIsOwner,
+  getUserByEmail,
   transferOwnership,
 } from '../../database/queries/user.js';
 import { handleError } from '../../utils/errors.js';
@@ -21,7 +21,7 @@ const transferOwnershipMiddleware = async (request, response) => {
       return response.sendStatus(401);
     }
 
-    const newOwnerExists = await emailExists(email);
+    const newOwnerExists = await getUserByEmail(email);
 
     if (!newOwnerExists) {
       return response.sendStatus(400);

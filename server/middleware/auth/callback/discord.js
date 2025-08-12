@@ -2,20 +2,25 @@
 import axios from 'axios';
 
 // import local files
-import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
-import { fetchProvider } from '../../../database/queries/provider.js';
 import config from '../../../utils/config.js';
+import { handleError } from '../../../utils/errors.js';
+import { fetchProvider } from '../../../database/queries/provider.js';
+import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
 
-const discordCallback = async (request, response) => {
+const discordCallback = async (request, response, next) => {
   try {
     const { code } = request.query;
 
-    if (!code) return response.status(400).send('No code provided');
+    if (!code) {
+      return response.redirect('/error?code=missing_code&provider=discord');
+    }
 
     const provider = await fetchProvider('discord');
 
     if (!provider) {
-      return response.redirect('/auth/error');
+      return response.redirect(
+        '/error?code=provider_not_found&provider=discord'
+      );
     }
 
     const websiteUrl = config.get('websiteUrl');
@@ -32,13 +37,29 @@ const discordCallback = async (request, response) => {
 
     const { access_token } = data;
 
-    const userInfo = await axios.get('https://discord.com/api/users/@me', {
+    const userQuery = await axios.get('https://discord.com/api/users/@me', {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
-    return response.send(userInfo.data);
+    const user = userQuery.data;
+
+    if (!user || !user.verified || !user.email) {
+      return response.redirect('/error?code=unverified_user&provider=discord');
+    }
+
+    const { avatar, id, username, email } = user;
+
+    response.locals.authUser = {
+      id,
+      email,
+      avatar,
+      username,
+      provider: 'discord',
+    };
+
+    return next();
   } catch (error) {
-    console.log(error);
+    handleError(error, response);
   }
 };
 

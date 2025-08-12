@@ -5,7 +5,6 @@ export const connectionsTable = async (client) => {
 
   if (!connectionsExists) {
     await client.schema.createTable('connections', (table) => {
-      table.increments('id').primary();
       table
         .string('email')
         .unsigned()
@@ -14,9 +13,10 @@ export const connectionsTable = async (client) => {
         .onDelete('CASCADE');
 
       table.string('provider').notNullable();
-      table.string('providerAccountId').notNullable();
+      table.string('accountId').notNullable();
+      table.string('createdAt').notNullable();
 
-      table.unique(['provider', 'providerAccountId']);
+      table.unique(['provider', 'accountId']);
       table.index(['email', 'provider']);
     });
   }

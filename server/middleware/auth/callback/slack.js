@@ -2,11 +2,12 @@
 import axios from 'axios';
 
 // import local files
-import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
-import { fetchProvider } from '../../../database/queries/provider.js';
 import config from '../../../utils/config.js';
+import { handleError } from '../../../utils/errors.js';
+import { fetchProvider } from '../../../database/queries/provider.js';
+import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
 
-const slackCallback = async (request, response) => {
+const slackCallback = async (request, response, next) => {
   try {
     const { code } = request.query;
 
@@ -32,15 +33,31 @@ const slackCallback = async (request, response) => {
     const { access_token } = data;
 
     const userInfo = await axios.get(
-      'https://slack.com/api/users.profile.get',
+      'https://slack.com/api/openid.connect.userInfo',
       {
         headers: { Authorization: `Bearer ${access_token}` },
       }
     );
 
-    return response.send(userInfo.data);
+    const user = userInfo.data;
+
+    if (!user || !user.email) {
+      return response.redirect(
+        '/auth/error?code=unverified_user&provider=slack'
+      );
+    }
+
+    response.locals.authUser = {
+      id: user.sub,
+      email: user.email,
+      avatar: user.picture,
+      username: user.name,
+      provider: 'slack',
+    };
+
+    return next();
   } catch (error) {
-    console.log(error);
+    handleError(error, response);
   }
 };
 

@@ -15,6 +15,7 @@ import updateConfigMiddleware from '../middleware/auth/config/update.js';
 import redirectUsingProviderMiddleware from '../middleware/auth/platform.js';
 import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
+import signInOrRegisterUsingAuth from '../middleware/auth/signInOrRegisterUsingAuth.js';
 
 router.post('/user/exists', emailExistsMiddleware);
 router.post('/register', register);
@@ -24,11 +25,11 @@ router.get('/logout', logout);
 router.get('/platform/:provider', redirectUsingProviderMiddleware);
 
 router.get('/callback/custom', customCallback);
-router.get('/callback/discord', discordCallback);
-router.get('/callback/github', githubCallback);
-router.get('/callback/google', googleCallback);
-router.get('/callback/slack', slackCallback);
-router.get('/callback/twitch', twitchCallback);
+router.get('/callback/discord', discordCallback, signInOrRegisterUsingAuth);
+router.get('/callback/github', githubCallback, signInOrRegisterUsingAuth);
+router.get('/callback/google', googleCallback, signInOrRegisterUsingAuth);
+router.get('/callback/slack', slackCallback, signInOrRegisterUsingAuth);
+router.get('/callback/twitch', twitchCallback, signInOrRegisterUsingAuth);
 
 router.get('/config', getConfigMiddleware);
 router.post(

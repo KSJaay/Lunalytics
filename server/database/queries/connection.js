@@ -15,3 +15,12 @@ export const fetchConnections = async (email) => {
 
   return connections;
 };
+
+export const fetchConnectionByEmail = async (provider, accountId) => {
+  const connection = await SQLite.client('connections')
+    .where({ provider, accountId })
+    .select('*')
+    .first();
+
+  return connection;
+};

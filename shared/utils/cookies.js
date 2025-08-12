@@ -9,13 +9,19 @@ const setClientSideCookie = (res, name, value) => {
   });
 };
 
-const setServerSideCookie = (res, name, value, isHttps = true) => {
+const setServerSideCookie = (
+  res,
+  name,
+  value,
+  isHttps = true,
+  sameSite = 'strict'
+) => {
   if (!isHttps) {
     return res.cookie(name, value, {
       expires: new Date(Date.now() + nintyDaysInMilliseconds),
       maxAge: nintyDaysInMilliseconds,
       httpOnly: true,
-      sameSite: 'strict',
+      sameSite,
     });
   }
 
@@ -24,7 +30,7 @@ const setServerSideCookie = (res, name, value, isHttps = true) => {
     maxAge: nintyDaysInMilliseconds,
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    sameSite: 'strict',
+    sameSite,
   });
 };
 

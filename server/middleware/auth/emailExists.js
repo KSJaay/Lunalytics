@@ -1,13 +1,18 @@
-import { emailExists } from '../../database/queries/user.js';
+import { getUserByEmail } from '../../database/queries/user.js';
+import { handleError } from '../../utils/errors.js';
 
 const emailExistsMiddleware = async (request, response) => {
-  const { email } = request.body;
-  if (!email) return response.status(400).send('No email provided');
+  try {
+    const { email } = request.body;
+    if (!email) return response.status(400).send('No email provided');
 
-  const user = await emailExists(email);
-  if (!user) return response.send(false);
+    const user = await getUserByEmail(email);
+    if (!user) return response.sendStatus(404);
 
-  return response.send(true);
+    return response.sendStatus(200);
+  } catch (error) {
+    handleError(error, response);
+  }
 };
 
 export default emailExistsMiddleware;
