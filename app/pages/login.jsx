@@ -17,23 +17,9 @@ import { createPostRequest } from '../services/axios';
 import RegisterChecklist from '../components/register/checklist';
 
 const EditEmail = ({ email, ...props }) => (
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '4px',
-    }}
-  >
+  <div className="login-header-subtitle">
     {email}
-    <div
-      style={{
-        color: 'var(--primary-800)',
-        cursor: 'pointer',
-        textDecoration: 'underline',
-      }}
-      {...props}
-    >
+    <div className="login-header-subtitle-link" {...props}>
       Edit email
     </div>
   </div>
