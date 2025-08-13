@@ -1,58 +1,16 @@
 // import dependencies
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 
 // import local files
-import { createPostRequest } from '../services/axios';
 import validators from '../../shared/validators';
 
-const useRegister = () => {
+const useSingleAuth = () => {
   const [values, setValues] = useState({
     inputs: {},
     errors: {},
   });
 
   const [page, setPage] = useState('email');
-
-  const handlePageChange = async (page) => {
-    if (page === 'password') {
-      const isInvalidEmail = validators.auth.email(values.inputs['email']);
-      const isInvalidUsername = validators.auth.username(
-        values.inputs['username']
-      );
-
-      if (isInvalidEmail || isInvalidUsername) {
-        return setValues((prev) => ({
-          ...prev,
-          errors: { ...prev.errors, ...isInvalidEmail, ...isInvalidUsername },
-        }));
-      }
-
-      try {
-        const emailExists = await createPostRequest('/api/auth/user/exists', {
-          email: values.inputs['email'],
-        });
-
-        if (emailExists.data) {
-          return setValues((prev) => ({
-            ...prev,
-            errors: { ...prev.errors, email: 'Email already exists' },
-          }));
-        }
-      } catch {
-        return toast.error('Error occurred while checking if email exists.');
-      }
-    }
-
-    return setPage(page);
-  };
-
-  const setPassword = (event) => {
-    return setValues((prev) => ({
-      ...prev,
-      inputs: { ...prev.inputs, password: event.target.value },
-    }));
-  };
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -122,8 +80,7 @@ const useRegister = () => {
     handleInput,
     handleInputChange,
     setErrors,
-    setPassword,
   };
 };
 
-export default useRegister;
+export default useSingleAuth;

@@ -55,7 +55,7 @@ const ManageInvites = () => {
 
   return (
     <div
-      style={{ overflow: 'auto', overflowX: 'hidden' }}
+      style={{ overflowY: 'auto', overflowX: 'hidden' }}
       className="settings-account-container"
       id="invite"
     >

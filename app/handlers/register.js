@@ -38,7 +38,7 @@ const handleRegister = async (inputs, setErrors, setPage, navigate, invite) => {
       return navigate('/home');
     }
 
-    setPage('verify');
+    navigate('/verify');
   } catch (error) {
     if (error?.response?.data?.message) {
       return setErrors(error?.response?.data?.message);
