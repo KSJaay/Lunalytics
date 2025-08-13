@@ -186,3 +186,16 @@
   filter: blur(100px);
   z-index: -1;
 }
+
+.login-header-subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.login-header-subtitle-link {
+  color: var(--primary-800);
+  cursor: pointer;
+  text-decoration: underline;
+}
