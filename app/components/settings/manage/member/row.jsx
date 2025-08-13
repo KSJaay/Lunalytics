@@ -15,7 +15,7 @@ const isImageUrl = (url) => {
   if (typeof url !== 'string') {
     return false;
   }
-  return url.match(/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/gim) !== null;
+  return url.match(/^https?:\/\//gim) !== null;
 };
 
 const MemberTableRow = ({ member = {} }) => {

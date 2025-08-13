@@ -1,18 +1,46 @@
-import '../styles/pages/register.scss';
+import '../styles/pages/login.scss';
 
 // import dependencies
+import { toast } from 'react-toastify';
 import { Input } from '@lunalytics/ui';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // import local files
 import useFetch from '../hooks/useFetch';
+import handleLogin from '../handlers/login';
+import useSingleAuth from '../hooks/useSingleAuth';
 import Loading from '../components/ui/loading';
 import LoginForm from '../components/login/form';
+import handleRegister from '../handlers/register';
 import LoginLayout from '../components/login/layout';
-import RegisterChecklist from '../components/register/checklist';
-import useRegister from '../hooks/useRegister';
 import { createPostRequest } from '../services/axios';
+import RegisterChecklist from '../components/register/checklist';
+
+const EditEmail = ({ email, ...props }) => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '4px',
+    }}
+  >
+    {email}
+    <div
+      style={{
+        color: 'var(--primary-800)',
+        cursor: 'pointer',
+        textDecoration: 'underline',
+      }}
+      {...props}
+    >
+      Edit email
+    </div>
+  </div>
+);
 
 const Login = () => {
+  const [searchParams] = useSearchParams();
   const { isLoading, data } = useFetch({
     url: '/api/auth/config',
     onFailure: (error) => {
@@ -20,8 +48,17 @@ const Login = () => {
     },
   });
 
-  const { errors, inputs, page, setPage, handleInput, handleInputChange } =
-    useRegister();
+  const {
+    errors,
+    inputs,
+    page,
+    setPage,
+    handleInput,
+    handleInputChange,
+    setErrors,
+  } = useSingleAuth();
+
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <Loading />;
@@ -32,16 +69,37 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (page === 'email') {
-      const userExists = await createPostRequest('/api/auth/user/exists', {
-        email: inputs.email,
-      }).catch((error) => ({ status: error?.response?.status || 500 }));
+    try {
+      if (page === 'email') {
+        const userExists = await createPostRequest('/api/auth/user/exists', {
+          email: inputs.email,
+        }).catch((error) => ({ status: error?.response?.status || 500 }));
 
-      if (userExists.status === 200) {
-        return setPage('password');
+        if (userExists.status === 200) {
+          return setPage('password');
+        }
+
+        setPage('register');
       }
 
-      setPage('register');
+      if (page === 'password') {
+        await handleLogin(inputs, setErrors, navigate);
+      }
+
+      if (page === 'register') {
+        await handleRegister(
+          inputs,
+          setErrors,
+          setPage,
+          navigate,
+          searchParams.get('invite')
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        'An error occurred during data submission. Please try again.'
+      );
     }
   };
 
@@ -51,14 +109,21 @@ const Login = () => {
         showProviders
         providers={providers}
         title="Welcome Back"
-        subtitle="Enter your email to sign in or register"
+        subtitle={
+          <>
+            <div>Enter your email to sign in or register</div>
+            {errors['general'] && (
+              <div className="input-error-general">{errors['general']}</div>
+            )}
+          </>
+        }
       >
         <LoginForm onSubmit={onSubmit}>
           <Input
             title="Email"
             placeholder="example@lunalytics.xyz"
             id="email"
-            value={inputs.email}
+            value={inputs.email || ''}
             error={errors.email}
             onBlur={handleInput}
             onChange={handleInputChange}
@@ -74,26 +139,18 @@ const Login = () => {
         onSubmit={onSubmit}
         title="Enter password"
         subtitle={
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '4px',
-            }}
-          >
-            ksjaay@gmail.com
-            <div
-              style={{
-                color: 'var(--primary-800)',
-                cursor: 'pointer',
-                textDecoration: 'underline',
+          <>
+            <EditEmail
+              email={inputs.email}
+              onClick={() => {
+                handleInputChange({ target: { id: 'password', value: '' } });
+                setPage('email');
               }}
-              onClick={() => handlePageChange('login')}
-            >
-              Edit email
-            </div>
-          </div>
+            />
+            {errors['general'] && (
+              <div className="input-error-general">{errors['general']}</div>
+            )}
+          </>
         }
       >
         <LoginForm buttonText="Sign in" onSubmit={onSubmit}>
@@ -103,7 +160,7 @@ const Login = () => {
             title="Password"
             onBlur={handleInput}
             onChange={handleInputChange}
-            value={inputs.password}
+            value={inputs.password || ''}
             error={errors.password}
           />
         </LoginForm>
@@ -115,16 +172,58 @@ const Login = () => {
     <LoginLayout
       onSubmit={onSubmit}
       title="Enter details"
-      subtitle="Enter your details to register"
+      subtitle={
+        <>
+          <div>Enter your details to register</div>
+
+          <EditEmail
+            email={inputs.email}
+            onClick={() => {
+              handleInputChange({ target: { id: 'password', value: '' } });
+              handleInputChange({
+                target: { id: 'confirmPassword', value: '' },
+              });
+              setPage('email');
+            }}
+          />
+
+          {errors['general'] && (
+            <div className="input-error-general">{errors['general']}</div>
+          )}
+        </>
+      }
     >
       <LoginForm buttonText="Register" onSubmit={onSubmit}>
-        <Input title="Username" id="username" />
+        <Input
+          title="Username"
+          id="username"
+          onBlur={handleInput}
+          onChange={handleInputChange}
+          value={inputs.username || ''}
+          error={errors.username}
+        />
 
-        <Input type="password" id="password" title="Password" />
+        <Input
+          type="password"
+          id="password"
+          title="Password"
+          onBlur={handleInput}
+          onChange={handleInputChange}
+          value={inputs.password || ''}
+          error={errors.password}
+        />
 
-        <RegisterChecklist password={''} />
+        <RegisterChecklist password={inputs.password} />
 
-        <Input type="password" id="confirmPassword" title="Confirm password" />
+        <Input
+          type="password"
+          id="confirmPassword"
+          title="Confirm password"
+          onBlur={handleInput}
+          onChange={handleInputChange}
+          value={inputs.confirmPassword || ''}
+          error={errors.confirmPassword}
+        />
       </LoginForm>
     </LoginLayout>
   );

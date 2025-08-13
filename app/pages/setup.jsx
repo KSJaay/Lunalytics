@@ -1,4 +1,4 @@
-import '../styles/pages/register.scss';
+import '../styles/pages/login.scss';
 
 // import local files
 import { useSetup } from '../hooks/useSetup';
