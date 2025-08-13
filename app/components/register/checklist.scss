@@ -65,16 +65,22 @@
   transition: all 0.2s linear;
 }
 
-#cbx2:checked + .check svg {
+#cbx1:checked + .check svg,
+#cbx2:checked + .check svg,
+#cbx3:checked + .check svg {
   stroke: var(--primary-700);
 }
 
-#cbx2:checked + .check svg path {
+#cbx1:checked + .check svg path,
+#cbx2:checked + .check svg path,
+#cbx3:checked + .check svg path {
   stroke-dashoffset: 60;
   transition: all 0.3s linear;
 }
 
-#cbx2:checked + .check svg polyline {
+#cbx1:checked + .check svg polyline,
+#cbx2:checked + .check svg polyline,
+#cbx3:checked + .check svg polyline {
   stroke-dashoffset: 42;
   transition: all 0.2s linear;
   transition-delay: 0.15s;

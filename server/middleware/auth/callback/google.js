@@ -16,7 +16,9 @@ const googleCallback = async (request, response, next) => {
     const provider = await fetchProvider('google');
 
     if (!provider) {
-      return response.redirect('/auth/error');
+      return response.redirect(
+        '/auth/error?code=provider_not_found&provider=google'
+      );
     }
 
     const websiteUrl = config.get('websiteUrl');

@@ -29,8 +29,10 @@ const signInOrRegisterUsingAuth = async (request, response) => {
       id,
     };
 
+    let userExists;
+
     if (!connectionExists) {
-      const userExists = await getUserByEmail(email);
+      userExists = await getUserByEmail(email);
 
       if (userExists) {
         return response.redirect(
@@ -55,6 +57,8 @@ const signInOrRegisterUsingAuth = async (request, response) => {
       await registerSsoUser(data);
     }
 
+    userExists = await getUserByEmail(email);
+
     const userAgent = request.headers['user-agent'];
     const agentData = parseUserAgent(userAgent);
 
@@ -71,7 +75,7 @@ const signInOrRegisterUsingAuth = async (request, response) => {
       request.protocol === 'https'
     );
 
-    if (data.isVerified) {
+    if (data.isVerified || userExists.isVerified) {
       return response.redirect('/home');
     }
 

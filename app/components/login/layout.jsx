@@ -32,14 +32,14 @@ const LoginLayout = ({
             {title}
           </h1>
           {subtitle ? (
-            <p
+            <div
               style={{
                 fontSize: 'var(--font-sm)',
                 color: 'var(--font-light-color)',
               }}
             >
               {subtitle}
-            </p>
+            </div>
           ) : null}
         </header>
 

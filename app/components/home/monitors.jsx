@@ -49,8 +49,13 @@ const HomeMonitorsList = ({ monitors = [] }) => {
           onClick={() => setActiveMonitor(monitor.monitorId)}
         >
           <div className="content">
-            <div>{monitor.name}</div>
-            <span>{monitor.url}</span>
+            <div>
+              <img src="/logo.svg" style={{ width: '35px' }} />
+            </div>
+            <div>
+              <div>{monitor.name}</div>
+              <span>{monitor.url}</span>
+            </div>
           </div>
           <div className="pill-container">
             <PillCircle pills={heartbeats} />
