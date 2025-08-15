@@ -6,18 +6,23 @@ import { MdEdit } from 'react-icons/md';
 import { FaTrashCan } from 'react-icons/fa6';
 import MonitorConfigureModal from '../components/modal/monitor/configure';
 import MonitorModal from '../components/modal/monitor/delete';
+import type { ContextMonitorProps } from '../types/context/global';
+
+type Monitor = ContextMonitorProps | null | undefined;
 
 const useMonitorOptions = (
-  Container,
-  monitor,
-  addMonitor,
-  editMonitor,
-  removeMonitor,
-  closeModal,
-  openModal
+  Container: React.ComponentType<any>,
+  monitor: Monitor,
+  addMonitor: (monitor: ContextMonitorProps) => void,
+  editMonitor: (monitor: ContextMonitorProps) => void,
+  removeMonitor: (monitorId: string) => void,
+  closeModal: () => void,
+  openModal: (content: React.ReactNode, isFullScreen?: boolean) => void
 ) => {
   const handleConfirm = async () => {
     try {
+      if (!monitor) return;
+
       await createGetRequest('/api/monitor/delete', {
         monitorId: monitor.monitorId,
       });
@@ -36,6 +41,8 @@ const useMonitorOptions = (
 
   const handlePause = async () => {
     try {
+      if (!monitor) return;
+
       await createPostRequest('/api/monitor/pause', {
         monitorId: monitor.monitorId,
         pause: !monitor.paused,

@@ -9,7 +9,14 @@ import useDropdown from '../../../hooks/useDropdown';
 import useContextStore from '../../../context';
 import useMonitorOptions from '../../../hooks/useMonitorOptions';
 
-const DropdownItem = ({ id, text, icon: Icon, onClick }) => (
+interface DropdownItemProps {
+  id: string;
+  text: string;
+  icon?: React.ElementType;
+  onClick: () => void;
+}
+
+const DropdownItem = ({ id, text, icon: Icon, onClick }: DropdownItemProps) => (
   <Dropdown.Item
     key={id}
     id={id}
@@ -37,6 +44,8 @@ const HomeMonitorHeaderMenu = () => {
   const { toggleDropdown, dropdownIsOpen } = useDropdown(true);
 
   const monitor = useMemo(() => {
+    if (!activeMonitor) return null;
+
     return getMonitor(activeMonitor.monitorId);
   }, [activeMonitor, getMonitor, allMonitors]);
 

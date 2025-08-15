@@ -14,7 +14,7 @@ const defaultInputs = {
 
 const inputReducer = (
   state: typeof defaultInputs,
-  action: { key: keyof typeof defaultInputs; value: any }
+  action: { key: any; value: any }
 ) => {
   return { ...state, [action.key]: action.value };
 };

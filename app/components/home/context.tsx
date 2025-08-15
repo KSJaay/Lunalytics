@@ -4,7 +4,12 @@ import { ContextMenu } from '@lunalytics/ui';
 import useContextStore from '../../context';
 import useMonitorOptions from '../../hooks/useMonitorOptions';
 
-const ItemContainer = ({ text, icon: Icon, ...props }) => {
+interface ItemContainerProps {
+  text: string;
+  icon: React.ComponentType<{ size: number }>;
+}
+
+const ItemContainer = ({ text, icon: Icon, ...props }: ItemContainerProps) => {
   return (
     <div className="content-menu-item" {...props}>
       <Icon size={16} />
@@ -13,7 +18,15 @@ const ItemContainer = ({ text, icon: Icon, ...props }) => {
   );
 };
 
-const HomeMonitorsListContext = ({ children, monitorId }) => {
+export interface HomeMonitorsListContextProps {
+  children: React.ReactNode;
+  monitorId: string;
+}
+
+const HomeMonitorsListContext = ({
+  children,
+  monitorId,
+}: HomeMonitorsListContextProps) => {
   const {
     globalStore: {
       allMonitors,

@@ -12,7 +12,7 @@ const useSingleAuth = () => {
 
   const [page, setPage] = useState('email');
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
 
     setValues((prev) => ({
@@ -21,7 +21,7 @@ const useSingleAuth = () => {
     }));
   };
 
-  const handleInput = async (event) => {
+  const handleInput = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
 
     if (validators.auth[id]) {
@@ -65,7 +65,7 @@ const useSingleAuth = () => {
     }
   };
 
-  const setErrors = (errors) => {
+  const setErrors = (errors: Record<string, string>) => {
     return setValues((prev) => ({
       ...prev,
       errors: { ...prev.errors, ...errors },
