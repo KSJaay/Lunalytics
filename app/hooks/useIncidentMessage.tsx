@@ -7,14 +7,14 @@ import { incidentMessageValidator } from '../../shared/validators/incident';
 
 const defaultInputs = { monitorIds: [], status: 'Investigating', message: '' };
 
-const inputReducer = (state, action) => {
+const inputReducer = (state: any, action: { key: any; value: any }) => {
   return { ...state, [action.key]: action.value };
 };
 
-const useIncidentMessage = (userValues = defaultInputs, incidentId) => {
+const useIncidentMessage = (userValues = defaultInputs, incidentId: string) => {
   const [values, dispatch] = useReducer(inputReducer, userValues);
 
-  const handleSubmit = async (position) => {
+  const handleSubmit = async (position: number) => {
     const result = incidentMessageValidator(values);
 
     if (result) {

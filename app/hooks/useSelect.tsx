@@ -1,7 +1,7 @@
 // import dependencies
 import { useState } from 'react';
 
-const useSelect = (closeOnSelect, defaultValue = []) => {
+const useSelect = (closeOnSelect: boolean, defaultValue: string[] = []) => {
   const [values, setValues] = useState({
     isOpen: false,
     selectedIds: defaultValue,
@@ -12,11 +12,11 @@ const useSelect = (closeOnSelect, defaultValue = []) => {
     return setValues((prev) => ({ ...prev, isOpen: !prev.isOpen }));
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     return setValues((prev) => ({ ...prev, search: e.target.value }));
   };
 
-  const handleItemSelect = (id, remove = false) => {
+  const handleItemSelect = (id: string, remove = false) => {
     if (remove) {
       return setValues((prev) => {
         const selectedIds = prev.selectedIds.filter(

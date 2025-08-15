@@ -6,8 +6,13 @@ import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
 import PillCircle from '../navigation/PillCircle';
 import HomeMonitorsListContext from './context';
+import type { ContextMonitorProps } from '../../types/context/global';
 
-const HomeMonitorsList = ({ monitors = [] }) => {
+const HomeMonitorsList = ({
+  monitors = [],
+}: {
+  monitors: ContextMonitorProps[];
+}) => {
   const {
     globalStore: { activeMonitor, setActiveMonitor },
   } = useContextStore();

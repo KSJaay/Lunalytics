@@ -4,6 +4,7 @@ import { FaClock } from 'react-icons/fa';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { IoWarning } from 'react-icons/io5';
 import { RiIndeterminateCircleFill } from 'react-icons/ri';
+import type { ContextIncidentProps } from '../../types/context/incident';
 
 const incidentTypes = {
   Outage: <RiIndeterminateCircleFill size={24} color="var(--red-700)" />,
@@ -12,11 +13,17 @@ const incidentTypes = {
   Operational: <FaCircleCheck size={24} color="var(--green-700)" />,
 };
 
+interface NotificationsListProps {
+  incidents: ContextIncidentProps[];
+  selectedIncidentId: string | null;
+  setActiveIncident: (incident: ContextIncidentProps) => void;
+}
+
 const NotificationsList = ({
   incidents = [],
   selectedIncidentId,
   setActiveIncident,
-}) => {
+}: NotificationsListProps) => {
   if (!incidents || incidents.length === 0) {
     return <div style={{ flex: 1 }}></div>;
   }

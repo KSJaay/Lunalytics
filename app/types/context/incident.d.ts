@@ -12,7 +12,7 @@ export interface ContextIncidentProps {
   incidentId: string;
   affect: 'Outage' | 'Incident' | 'Maintenance' | 'Operational';
   status: 'Investigating' | 'Identified' | 'Monitoring' | 'Resolved';
-  messages: Array<ContextIncidentMessageProps>;
+  messages: ContextIncidentMessageProps[];
   monitorIds: string[];
   createdAt: string;
   completedAt: string | null;

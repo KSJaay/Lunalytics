@@ -5,7 +5,7 @@ import type {
 
 export interface ContextStatusIncidentMessageProps {
   message: string;
-  status: string;
+  status: 'Investigating' | 'Identified' | 'Monitoring' | 'Resolved';
   email: string;
   createdAt: string;
   endedAt: string | null;
