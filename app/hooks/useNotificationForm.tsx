@@ -24,7 +24,11 @@ const errorReducer = (state, action) => {
   return { [action.key]: action.value };
 };
 
-const useNotificationForm = (values = defaultInputs, isEdit, closeModal) => {
+const useNotificationForm = (
+  values = defaultInputs,
+  isEdit: boolean,
+  closeModal: () => void
+) => {
   const [inputs, handleInput] = useReducer(inputReducer, values);
   const [errors, handleError] = useReducer(errorReducer, {});
 
@@ -32,7 +36,7 @@ const useNotificationForm = (values = defaultInputs, isEdit, closeModal) => {
     handleInput({ key: 'reset', value: values });
   }, [JSON.stringify(values)]);
 
-  const handleSubmit = async (addNotification) => {
+  const handleSubmit = async (addNotification: (notification: any) => void) => {
     try {
       const validator = NotificationValidators[inputs.platform];
       if (!validator) {

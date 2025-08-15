@@ -18,10 +18,20 @@ const typeToText = {
   tcp: 'TCP',
 };
 
-const HomeMonitorHeader = ({ isInfoOpen, setIsInfoOpen, rightChildren }) => {
+interface HomeMonitorHeaderProps {
+  isInfoOpen: boolean;
+  setIsInfoOpen: (isOpen: boolean) => void;
+  rightChildren?: React.ReactNode;
+}
+
+const HomeMonitorHeader = ({
+  isInfoOpen,
+  setIsInfoOpen,
+  rightChildren,
+}: HomeMonitorHeaderProps) => {
   const {
     userStore: { user },
-    globalStore: { activeMonitor = {} },
+    globalStore: { activeMonitor },
   } = useContextStore();
   const { t } = useTranslation();
 

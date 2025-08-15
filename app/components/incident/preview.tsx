@@ -8,9 +8,9 @@ import { Input, Preview } from '@lunalytics/ui';
 // import local files
 import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
-import { fullMonitorPropType } from '../../../shared/utils/propTypes';
+import type { ContextIncidentProps } from '../../types/context/incident';
 
-const IncidentPreview = ({ children }) => {
+const IncidentPreview = ({ children }: { children: React.ReactNode }) => {
   const {
     incidentStore: { allIncidents = [], setActiveIncident },
   } = useContextStore();
@@ -22,7 +22,7 @@ const IncidentPreview = ({ children }) => {
     if (!allIncidents?.length) return [];
 
     return filterData(allIncidents, search, ['title', 'status', 'affect']).map(
-      (incident) => {
+      (incident: ContextIncidentProps) => {
         const handleOnClick = () => {
           navigate('/incidents');
           setActiveIncident(incident.incidentId);
@@ -79,9 +79,5 @@ const IncidentPreview = ({ children }) => {
 };
 
 IncidentPreview.displayName = 'IncidentPreview';
-
-IncidentPreview.propTypes = {
-  monitor: fullMonitorPropType.isRequired,
-};
 
 export default observer(IncidentPreview);

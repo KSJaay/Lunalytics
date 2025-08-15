@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { setupData, setupPages } from '../../shared/data/setup';
 import setupValidators from '../../shared/validators/setup';
 
-const SetupFormStateContext = createContext();
+const SetupFormStateContext = createContext({});
 export const SetupFormStateProvider = SetupFormStateContext.Provider;
 const useSetupFormContext = () => useContext(SetupFormStateContext);
 
@@ -27,7 +27,6 @@ export const useSetup = (
   }
 ) => {
   const [values, setValues] = useState(defaultValues);
-
   const [page, setPage] = useState(setupData[setupPages.EMAIL_FORM]);
 
   useLayoutEffect(() => {
@@ -43,7 +42,7 @@ export const useSetup = (
     }));
   }, []);
 
-  const handleInput = async (event) => {
+  const handleInput = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
 
     return setValues((prev) => ({
@@ -52,14 +51,17 @@ export const useSetup = (
     }));
   };
 
-  const setErrors = (errors) => {
+  const setErrors = (errors: Record<string, string>) => {
     return setValues((prev) => ({
       ...prev,
       errors: { ...prev.errors, ...errors },
     }));
   };
 
-  const handlePageChange = async (pageName, preSumbit) => {
+  const handlePageChange = async (
+    pageName: string,
+    preSumbit?: (isBasic: string, inputs: Record<string, any>) => Promise<void>
+  ) => {
     if (preSumbit) {
       if (typeof preSumbit !== 'function') {
         throw new Error('preSumbit must be a function');
@@ -68,7 +70,7 @@ export const useSetup = (
       try {
         const isBasic = page.name === 'type' ? 'basic' : 'advanced';
         await preSumbit(isBasic, values.inputs);
-      } catch (error) {
+      } catch (error: any) {
         if (error?.status === 400 && error?.response?.data) {
           return setErrors(error?.response?.data);
         }

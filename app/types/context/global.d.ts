@@ -11,7 +11,7 @@ export interface ContextMonitorProps {
   body: Record<string, any>;
   valid_status_codes: string[];
   email: string;
-  type: string;
+  type: 'http' | 'json' | 'ping' | 'tcp';
   notificationId: string;
   notificationType: string;
   uptimePercentage: number;
