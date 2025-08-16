@@ -6,12 +6,20 @@ import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 // import local files
 import SwitchWithText from '../../../ui/switch';
+import type { NotificationSlack } from '../../../../types/notifications';
 
 const NotificationSlackContent = ({
   inputs,
   errors,
   handleInput,
   handleUpdate,
+}: {
+  inputs: NotificationSlack;
+  errors: Partial<Record<keyof NotificationSlack, string>>;
+  handleInput: (
+    input: Partial<Record<keyof NotificationSlack, string>>
+  ) => void;
+  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();

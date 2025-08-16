@@ -6,12 +6,20 @@ import { useTranslation } from 'react-i18next';
 
 // import local files
 import SwitchWithText from '../../../ui/switch';
+import type { NotificationDiscord } from '../../../../types/notifications';
 
 const NotificationDiscordContent = ({
   inputs,
   errors,
   handleInput,
   handleUpdate,
+}: {
+  inputs: NotificationDiscord;
+  errors: Partial<Record<keyof NotificationDiscord, string>>;
+  handleInput: (
+    input: Partial<Record<keyof NotificationDiscord, string>>
+  ) => void;
+  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
@@ -61,7 +69,7 @@ const NotificationDiscordContent = ({
           id="webhook-username"
           error={errors?.username}
           value={inputs.data.username}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, username: e.target.value },
@@ -76,7 +84,7 @@ const NotificationDiscordContent = ({
           id="text-messsage"
           error={errors?.textMessage}
           value={inputs.data.textMessage}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, textMessage: e.target.value },
@@ -91,7 +99,7 @@ const NotificationDiscordContent = ({
           label={t('notification.input.enabled_title')}
           shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
             handleUpdate();
           }}

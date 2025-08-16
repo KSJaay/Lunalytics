@@ -1,9 +1,9 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import type { ContextNotificationProps } from '../types/context/notifications';
+import type { NotificationProps } from '../types/notifications';
 
 class NotificationStore {
-  notifications: Map<string, ContextNotificationProps>;
-  activeNotification: ContextNotificationProps | null | undefined;
+  notifications: Map<string, NotificationProps>;
+  activeNotification: NotificationProps | null | undefined;
 
   constructor() {
     this.notifications = observable.map();
@@ -21,13 +21,13 @@ class NotificationStore {
     });
   }
 
-  setNotifications = (notifications: ContextNotificationProps[]) => {
+  setNotifications = (notifications: NotificationProps[]) => {
     for (const notification of notifications) {
       this.notifications.set(notification.id, notification);
     }
   };
 
-  addNotification = (notification: ContextNotificationProps) => {
+  addNotification = (notification: NotificationProps) => {
     this.notifications.set(notification.id, notification);
 
     if (notification.id === this.activeNotification?.id) {

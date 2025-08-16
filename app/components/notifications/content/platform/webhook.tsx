@@ -6,12 +6,20 @@ import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 // import local files
 import SwitchWithText from '../../../ui/switch';
+import type { NotificationWebhook } from '../../../../types/notifications';
 
 const NotificationDiscordContent = ({
   inputs,
   errors,
   handleInput,
   handleUpdate,
+}: {
+  inputs: NotificationWebhook;
+  errors: Partial<Record<keyof NotificationWebhook, string>>
+  handleInput: (
+    input: Partial<Record<keyof NotificationWebhook, string>>
+  ) => void;
+  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();

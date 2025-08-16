@@ -6,7 +6,7 @@ import {
   LocalStorageStateProvider,
   useLocalStorageState,
 } from '../hooks/useLocalstorage';
-import type { LayoutStatusProps } from '../types/layout/status';
+import type { LayoutStatusProps } from '../types/layout';
 
 const StatusLayout = ({ children }: LayoutStatusProps) => {
   const localStorageState = useLocalStorageState();
