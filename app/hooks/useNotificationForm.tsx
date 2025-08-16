@@ -27,7 +27,7 @@ const errorReducer = (state, action) => {
 const useNotificationForm = (
   values = defaultInputs,
   isEdit: boolean,
-  closeModal: () => void
+  closeModal?: () => void
 ) => {
   const [inputs, handleInput] = useReducer(inputReducer, values);
   const [errors, handleError] = useReducer(errorReducer, {});

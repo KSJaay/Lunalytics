@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 // import local files
 import { createPostRequest } from '../services/axios';
-import type { HandleMonitorProps } from '../types/handlers/monitor';
+import type { HandleMonitorProps } from '../types/handlers';
 
 const parseJson = (str: string | object) => {
   try {
