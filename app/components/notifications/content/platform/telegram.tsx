@@ -4,12 +4,20 @@ import { useTranslation } from 'react-i18next';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 import SwitchWithText from '../../../ui/switch';
+import type { NotificationTelegram } from '../../../../types/notifications';
 
 const NotificationDiscordContent = ({
   inputs,
   errors,
   handleInput,
   handleUpdate,
+}: {
+  inputs: NotificationTelegram;
+  errors: Partial<Record<keyof NotificationTelegram, string>>;
+  handleInput: (
+    input: Partial<Record<keyof NotificationTelegram, string>>
+  ) => void;
+  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();

@@ -4,12 +4,20 @@ import { useTranslation } from 'react-i18next';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 import SwitchWithText from '../../../ui/switch';
+import type { NotificationHomeAssistant } from '../../../../types/notifications';
 
 const NotificationHomeAssistantContent = ({
   inputs,
   errors,
   handleInput,
   handleUpdate,
+}: {
+  inputs: NotificationHomeAssistant;
+  errors: Partial<Record<keyof NotificationHomeAssistant, string>>;
+  handleInput: (
+    input: Partial<Record<keyof NotificationHomeAssistant, string>>
+  ) => void;
+  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();

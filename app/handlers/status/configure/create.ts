@@ -48,7 +48,7 @@ const handleCreateOrEditStatusPage = async (
     callback(query.data.data);
 
     return true;
-  } catch (error) {
+  } catch (error: any) {
     if (
       error instanceof ObjectSchemaValidatorError ||
       error instanceof StatusPageValidatorError
