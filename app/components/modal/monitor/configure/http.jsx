@@ -1,6 +1,6 @@
 // import dependencies
 import PropTypes from 'prop-types';
-import { Accordion, AccordionItem, Input } from '@lunalytics/ui';
+import { Input } from '@lunalytics/ui';
 
 // import local files
 import MonitorPageInterval from '../pages/interval';
@@ -11,46 +11,51 @@ import MonitorHttpBody from '../pages/body';
 import MonitorHttpIgnoreTls from '../pages/http/ignoreTls';
 import MonitorHttpMethods from '../pages/http/methods';
 
-const MonitorConfigureHttpModal = ({ errors, inputs, handleInput }) => {
+const MonitorConfigureHttpModal = ({ errors, inputs, handleInput, pageId }) => {
   return (
     <>
-      <Input
-        id="input-url"
-        title={'URL'}
-        value={inputs.url}
-        onChange={(event) => {
-          handleInput('url', event.target.value);
-        }}
-        error={errors.url}
-      />
-
-      <MonitorHttpMethods
-        selectValue={inputs.method}
-        handleSelect={(method) => handleInput('method', method)}
-      />
-
-      {errors.method && (
-        <label className="input-error" id="text-input-http-method-error">
-          {errors.method}
-        </label>
-      )}
-
-      <br />
-      <Accordion dark>
-        <AccordionItem
-          title="Advanced Settings"
-          subtitle={
-            'Setup advanced settings for the monitor, such as intervals, notifications, and others.'
-          }
-          id="monitor-advanced-settings"
-        >
-          <MonitorPageNotification
-            inputs={inputs}
-            errors={errors}
-            handleInput={handleInput}
+      {pageId === 'basic' ? (
+        <>
+          <Input
+            id="input-url"
+            title={'URL'}
+            value={inputs.url}
+            onChange={(event) => {
+              handleInput('url', event.target.value);
+            }}
+            error={errors.url}
+            color="var(--lunaui-accent-900)"
+            subtitle="The URL to monitor. Must start with http:// or https://"
           />
 
+          <MonitorHttpMethods
+            error={errors.method}
+            selectValue={inputs.method}
+            handleSelect={(method) => handleInput('method', method)}
+          />
+        </>
+      ) : null}
+
+      {pageId === 'interval' ? (
+        <MonitorPageInterval
+          inputs={inputs}
+          errors={errors}
+          handleInput={handleInput}
+        />
+      ) : null}
+
+      {pageId === 'notification' ? (
+        <MonitorPageNotification
+          inputs={inputs}
+          errors={errors}
+          handleInput={handleInput}
+        />
+      ) : null}
+
+      {pageId === 'advanced' ? (
+        <>
           <MonitorHttpStatusCodes
+            error={errors.valid_status_codes}
             selectedIds={inputs.valid_status_codes}
             handleStatusCodeSelect={(code) => {
               const { valid_status_codes = [] } = inputs;
@@ -59,16 +64,6 @@ const MonitorConfigureHttpModal = ({ errors, inputs, handleInput }) => {
                 : valid_status_codes.concat(code);
               handleInput('valid_status_codes', validStatusCodes);
             }}
-          />
-
-          {errors.valid_status_codes ? (
-            <label className="input-error">{errors.valid_status_codes}</label>
-          ) : null}
-
-          <MonitorPageInterval
-            inputs={inputs}
-            errors={errors}
-            handleInput={handleInput}
           />
 
           <MonitorHttpIgnoreTls
@@ -87,10 +82,8 @@ const MonitorConfigureHttpModal = ({ errors, inputs, handleInput }) => {
             errors={errors}
             handleInput={handleInput}
           />
-
-          <br />
-        </AccordionItem>
-      </Accordion>
+        </>
+      ) : null}
     </>
   );
 };

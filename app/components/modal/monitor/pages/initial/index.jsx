@@ -7,13 +7,15 @@ import MonitorInitialDropdown from './type';
 
 const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
   return (
-    <>
+    <div className="monitor-configure-container">
       <Input
         title="Name"
         id="input-name"
         value={inputs.name || ''}
         onChange={(e) => handleInput('name', e.target.value)}
         error={errors.name}
+        color="var(--lunaui-accent-900)"
+        subtitle="Friendly name used to identify the monitor"
       />
 
       {!isEdit && (
@@ -21,6 +23,7 @@ const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
           inputs={inputs}
           errors={errors}
           handleInput={handleInput}
+          color="var(--lunaui-accent-900)"
         />
       )}
 
@@ -29,9 +32,10 @@ const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
           title="Monitor Type"
           value={inputs.type?.toUpperCase()}
           readOnly
+          color="var(--lunaui-accent-900)"
         />
       )}
-    </>
+    </div>
   );
 };
 

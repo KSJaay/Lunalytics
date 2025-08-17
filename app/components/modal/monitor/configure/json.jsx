@@ -1,6 +1,6 @@
 // import dependencies
 import PropTypes from 'prop-types';
-import { Accordion, AccordionItem, Input } from '@lunalytics/ui';
+import { Input } from '@lunalytics/ui';
 
 // import local files
 import MonitorPageInterval from '../pages/interval';
@@ -11,51 +11,63 @@ import MonitorHttpIgnoreTls from '../pages/http/ignoreTls';
 import MonitorHttpMethods from '../pages/http/methods';
 import MonitorJsonQueryCheck from '../pages/json/check';
 
-const MonitorConfigureJsonQueryModal = ({ errors, inputs, handleInput }) => {
+const MonitorConfigureJsonQueryModal = ({
+  errors,
+  inputs,
+  handleInput,
+  pageId,
+}) => {
   return (
     <>
-      <Input
-        id="input-url"
-        title={'URL'}
-        value={inputs.url}
-        onChange={(event) => {
-          handleInput('url', event.target.value);
-        }}
-        error={errors.url}
-      />
+      {pageId === 'basic' ? (
+        <>
+          <Input
+            id="input-url"
+            title={'URL'}
+            value={inputs.url}
+            onChange={(event) => {
+              handleInput('url', event.target.value);
+            }}
+            error={errors.url}
+            subtitle="The URL to monitor. Must start with http:// or https://"
+            color="var(--lunaui-accent-900)"
+          />
 
-      <MonitorHttpMethods
-        selectValue={inputs.method}
-        handleSelect={(method) => handleInput('method', method)}
-      />
+          <MonitorHttpMethods
+            selectValue={inputs.method}
+            handleSelect={(method) => handleInput('method', method)}
+          />
 
-      <MonitorJsonQueryCheck
-        inputs={inputs}
-        errors={errors}
-        handleInput={handleInput}
-      />
-
-      <br />
-      <Accordion dark>
-        <AccordionItem
-          title="Advanced Settings"
-          subtitle={
-            'Setup advanced settings for the monitor, such as intervals, notifications, and others.'
-          }
-          id="monitor-advanced-settings"
-        >
-          <MonitorPageNotification
+          <MonitorJsonQueryCheck
             inputs={inputs}
             errors={errors}
             handleInput={handleInput}
           />
+        </>
+      ) : null}
 
+      {pageId === 'interval' ? (
+        <>
           <MonitorPageInterval
             inputs={inputs}
             errors={errors}
             handleInput={handleInput}
           />
+        </>
+      ) : null}
 
+      {pageId === 'notification' ? (
+        <>
+          <MonitorPageNotification
+            inputs={inputs}
+            errors={errors}
+            handleInput={handleInput}
+          />
+        </>
+      ) : null}
+
+      {pageId === 'advanced' ? (
+        <>
           <MonitorHttpIgnoreTls
             handleChange={handleInput}
             checkboxValue={inputs.ignoreTls}
@@ -72,10 +84,8 @@ const MonitorConfigureJsonQueryModal = ({ errors, inputs, handleInput }) => {
             errors={errors}
             handleInput={handleInput}
           />
-
-          <br />
-        </AccordionItem>
-      </Accordion>
+        </>
+      ) : null}
     </>
   );
 };

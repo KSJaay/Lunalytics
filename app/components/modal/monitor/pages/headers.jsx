@@ -13,9 +13,9 @@ const MonitorHttpHeaders = ({ inputs, errors, handleInput }) => {
   };
 
   return (
-    <>
+    <div className="luna-input-wrapper">
       <label className="input-label">HTTP Headers</label>
-      <div style={{ padding: '0 0 8px 4px' }}>
+      <div className="luna-input-subtitle">
         Add additional headers to be sent with the request. Make sure to follow
         JSON key/value format.
       </div>
@@ -25,10 +25,11 @@ const MonitorHttpHeaders = ({ inputs, errors, handleInput }) => {
         error={errors.headers}
         onChange={(e) => handleInput('headers', e.target.value)}
         id="http-headers-textarea"
+        color="var(--lunaui-accent-900)"
       >
         {parseHeaders(inputs.headers)}
       </Textarea>
-    </>
+    </div>
   );
 };
 

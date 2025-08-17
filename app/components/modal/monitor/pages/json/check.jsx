@@ -55,6 +55,7 @@ const MonitorJsonQueryCheck = ({ inputs, errors, handleInput }) => {
             ])
           }
           value={json_query.key}
+          color="var(--lunaui-accent-900)"
         />
         <Dropdown.Container
           isOpen={dropdownIsOpen}
@@ -65,6 +66,7 @@ const MonitorJsonQueryCheck = ({ inputs, errors, handleInput }) => {
             isOpen={dropdownIsOpen}
             toggleDropdown={toggleDropdown}
             id="http-json-dropdown"
+            color="var(--lunaui-accent-900)"
           >
             {json_operator?.value}
           </Dropdown.Trigger>
@@ -101,6 +103,7 @@ const MonitorJsonQueryCheck = ({ inputs, errors, handleInput }) => {
             ])
           }
           value={json_query.value}
+          color="var(--lunaui-accent-900)"
         />
       </div>
       {errors.json_query && (

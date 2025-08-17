@@ -4,7 +4,7 @@ import { Input } from '@lunalytics/ui';
 
 const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
   return (
-    <>
+    <div className="monitor-configure-container">
       <Input
         id="input-interval"
         type="number"
@@ -14,6 +14,8 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         }}
         value={inputs.interval}
         error={errors.interval}
+        color="var(--lunaui-accent-900)"
+        subtitle="Time in seconds between each monitor check."
       />
 
       <Input
@@ -26,6 +28,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         }}
         value={inputs.retry}
         error={errors.retry}
+        color="var(--lunaui-accent-900)"
       />
 
       <Input
@@ -37,6 +40,8 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         }}
         value={inputs.retryInterval}
         error={errors.retryInterval}
+        color="var(--lunaui-accent-900)"
+        subtitle="Time in seconds between each retry attempt once previous attempt fails."
       />
 
       <Input
@@ -48,8 +53,10 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         }}
         value={inputs.requestTimeout}
         error={errors.requestTimeout}
+        color="var(--lunaui-accent-900)"
+        subtitle="Time in seconds before the request times out."
       />
-    </>
+    </div>
   );
 };
 
