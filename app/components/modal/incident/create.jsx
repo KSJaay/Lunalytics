@@ -1,12 +1,11 @@
 // import dependencies
 import { toast } from 'react-toastify';
-import { Textarea, Input } from '@lunalytics/ui';
+import { Textarea, Input, Button, Modal } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import useIncidentForm from '../../../hooks/useIncidentForm';
 import Tabs from '../../ui/tabs';
-import Modal from '../../ui/modal';
 import IncidentMonitors from '../../incident/monitors';
 import useContextStore from '../../../context';
 
@@ -46,54 +45,59 @@ const IncidentCreateModal = () => {
   };
 
   return (
-    <Modal.Container>
-      <Modal.Title>Create an Incident</Modal.Title>
-      <Modal.Message className="modal-message ic-container">
-        <Input
-          title="Incident Title"
-          id="incident-name"
-          maxLength={100}
-          value={values.title || ''}
-          onChange={(e) => handleChange('title', e.target.value)}
-          subtitle="Breif description (maximum of 100 characters)"
-        />
+    <Modal
+      size="xl"
+      title="Create an Incident"
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button color="green" variant="flat" onClick={submitForm}>
+            Create
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+    >
+      <Input
+        title="Incident Title"
+        id="incident-name"
+        maxLength={100}
+        value={values.title || ''}
+        onChange={(e) => handleChange('title', e.target.value)}
+        subtitle="Breif description (maximum of 100 characters)"
+      />
 
-        <IncidentMonitors
-          values={values}
-          handleSelectedMonitor={handleSelectedMonitor}
-          handleChange={handleChange}
-        />
+      <IncidentMonitors
+        values={values}
+        handleSelectedMonitor={handleSelectedMonitor}
+        handleChange={handleChange}
+      />
 
-        <Textarea
-          label="Message"
-          id="incident-message"
-          disableResize
-          rows={5}
-          value={values.message || ''}
-          onChange={(e) => handleChange('message', e.target.value)}
-          shortDescription="Information about the incident"
-        />
+      <Textarea
+        label="Message"
+        id="incident-message"
+        disableResize
+        rows={5}
+        value={values.message || ''}
+        onChange={(e) => handleChange('message', e.target.value)}
+        shortDescription="Information about the incident"
+      />
 
-        <Tabs
-          label="Status:"
-          shortDescription="Current status of the incident"
-          options={[
-            { value: 'Investigating', color: 'red' },
-            { value: 'Identified', color: 'yellow' },
-            { value: 'Monitoring', color: 'blue' },
-            { value: 'Resolved', color: 'green' },
-          ]}
-          onChange={(value) => handleChange('status', value)}
-          activeOption={values.status}
-        />
-      </Modal.Message>
-      <Modal.Actions>
-        <Modal.Button onClick={closeModal}>Cancel</Modal.Button>
-        <Modal.Button color="green" onClick={submitForm}>
-          Create
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+      <Tabs
+        label="Status:"
+        shortDescription="Current status of the incident"
+        options={[
+          { value: 'Investigating', color: 'red' },
+          { value: 'Identified', color: 'yellow' },
+          { value: 'Monitoring', color: 'blue' },
+          { value: 'Resolved', color: 'green' },
+        ]}
+        onChange={(value) => handleChange('status', value)}
+        activeOption={values.status}
+      />
+    </Modal>
   );
 };
 

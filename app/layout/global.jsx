@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 
 // import local files
-import Modal from '../components/ui/modal';
 import useContextStore from '../context';
 import { fetchMonitorById } from '../services/monitor/fetch';
 import {
@@ -16,7 +15,7 @@ import useFetch from '../hooks/useFetch';
 
 const GlobalLayout = ({ children }) => {
   const {
-    modalStore: { isOpen, content, glassmorph },
+    modalStore: { isOpen, content },
     globalStore: { setMonitors, setTimeouts },
     userStore: { setUser },
     notificationStore: { setNotifications },
@@ -83,9 +82,7 @@ const GlobalLayout = ({ children }) => {
 
   return (
     <LocalStorageStateProvider value={localStorageState}>
-      {isOpen && (
-        <Modal.Container glassmorph={glassmorph}>{content}</Modal.Container>
-      )}
+      {isOpen ? content : null}
       {children}
     </LocalStorageStateProvider>
   );

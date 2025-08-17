@@ -7,12 +7,10 @@ import { useEffect, useRef } from 'react';
 import { MdHistory } from 'react-icons/md';
 import { BsGraphUp } from 'react-icons/bs';
 import { IoWarning } from 'react-icons/io5';
+import { Button, Modal } from '@lunalytics/ui';
 import { PiBroadcast, PiDotsSixVerticalBold } from 'react-icons/pi';
 import { FaSignal, FaHtml5, FaCss3Alt } from 'react-icons/fa';
 import { TbLayoutNavbarInactive } from 'react-icons/tb';
-
-// import local files
-import Modal from '../../../ui/modal';
 
 const components = {
   header: {
@@ -82,44 +80,47 @@ const StatusConfigureReorderModal = ({ closeModal, layout, reorderBlocks }) => {
   }, []);
 
   return (
-    <Modal.Container closeButton={closeModal}>
-      <Modal.Title style={{ textAlign: 'center', fontSize: 'var(--font-xl)' }}>
-        Reorder blocks
-      </Modal.Title>
-      <Modal.Message>
-        <div className="scmr-container" ref={container}>
-          {layout.map((block) => (
-            <div data-swapy-slot={block.id} key={block.id}>
-              <div data-swapy-item={block.id} className="scmr-block">
-                <div>
-                  <PiDotsSixVerticalBold
-                    style={{ width: '24px', height: '24px' }}
-                  />
-                </div>
-                <div>{components[block.type].icon(28)}</div>
-                <div>{components[block.type].name}</div>
+    <Modal
+      title="Reorder blocks"
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Close
+          </Button>
+          <Button
+            color="green"
+            variant="flat"
+            id="monitor-create-button"
+            onClick={() => {
+              reorderBlocks(
+                swapy.current.slotItemMap().asArray.map((obj) => obj.item)
+              );
+              closeModal();
+            }}
+          >
+            Update
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+      size="xs"
+    >
+      <div className="scmr-container" ref={container}>
+        {layout.map((block) => (
+          <div data-swapy-slot={block.id} key={block.id}>
+            <div data-swapy-item={block.id} className="scmr-block">
+              <div>
+                <PiDotsSixVerticalBold
+                  style={{ width: '24px', height: '24px' }}
+                />
               </div>
+              <div>{components[block.type].icon(28)}</div>
+              <div>{components[block.type].name}</div>
             </div>
-          ))}
-        </div>
-      </Modal.Message>
-
-      <Modal.Actions>
-        <Modal.Button onClick={closeModal}>Close</Modal.Button>
-        <Modal.Button
-          color="green"
-          id="monitor-create-button"
-          onClick={() => {
-            reorderBlocks(
-              swapy.current.slotItemMap().asArray.map((obj) => obj.item)
-            );
-            closeModal();
-          }}
-        >
-          Update
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+          </div>
+        ))}
+      </div>
+    </Modal>
   );
 };
 

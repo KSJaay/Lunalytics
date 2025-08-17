@@ -1,11 +1,10 @@
 // import dependencies
 import { toast } from 'react-toastify';
-import { Textarea } from '@lunalytics/ui';
+import { Button, Modal, Textarea } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import Tabs from '../../ui/tabs';
-import Modal from '../../ui/modal';
 import useContextStore from '../../../context';
 import IncidentMonitors from '../../incident/monitors';
 import useIncidentMessage from '../../../hooks/useIncidentMessage';
@@ -57,46 +56,48 @@ const IncidentEditMessageModal = ({ incidentId, incidentPosition }) => {
   if (!incident) return null;
 
   return (
-    <Modal.Container contentProps={{ style: { width: '1200px' } }}>
-      <Modal.Title style={{ textAlign: 'center', marginBottom: '0' }}>
-        Edit update
-      </Modal.Title>
-      <Modal.Message>
-        <IncidentMonitors
-          values={{ monitorIds: values?.monitorIds }}
-          handleSelectedMonitor={handleSelectedMonitor}
-        />
+    <Modal
+      title="Edit update"
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button color="green" variant="flat" onClick={updateIncidentStatus}>
+            Add Update
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+    >
+      <IncidentMonitors
+        values={{ monitorIds: values?.monitorIds }}
+        handleSelectedMonitor={handleSelectedMonitor}
+      />
 
-        <Textarea
-          label="Message"
-          id="incident-message"
-          disableResize
-          rows={5}
-          value={values.message || ''}
-          onChange={(e) => dispatch({ key: 'message', value: e.target.value })}
-          shortDescription="Information about the incident"
-        />
+      <Textarea
+        label="Message"
+        id="incident-message"
+        disableResize
+        rows={5}
+        value={values.message || ''}
+        onChange={(e) => dispatch({ key: 'message', value: e.target.value })}
+        shortDescription="Information about the incident"
+      />
 
-        <Tabs
-          label="Status:"
-          shortDescription="Current status of the incident"
-          options={[
-            { value: 'Investigating', color: 'red' },
-            { value: 'Identified', color: 'yellow' },
-            { value: 'Monitoring', color: 'blue' },
-            { value: 'Resolved', color: 'green' },
-          ]}
-          onChange={(value) => dispatch({ key: 'status', value })}
-          activeOption={values.status}
-        />
-      </Modal.Message>
-      <Modal.Actions>
-        <Modal.Button onClick={closeModal}>Cancel</Modal.Button>
-        <Modal.Button color="green" onClick={updateIncidentStatus}>
-          Add Update
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+      <Tabs
+        label="Status:"
+        shortDescription="Current status of the incident"
+        options={[
+          { value: 'Investigating', color: 'red' },
+          { value: 'Identified', color: 'yellow' },
+          { value: 'Monitoring', color: 'blue' },
+          { value: 'Resolved', color: 'green' },
+        ]}
+        onChange={(value) => dispatch({ key: 'status', value })}
+        activeOption={values.status}
+      />
+    </Modal>
   );
 };
 

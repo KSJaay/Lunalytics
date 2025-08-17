@@ -3,11 +3,10 @@ import './avatar.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import { Alert, Input } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
+import { Alert, Button, Input, Modal } from '@lunalytics/ui';
 
 // import local files
-import Modal from '../../../ui/modal';
 import { createPostRequest } from '../../../../services/axios';
 
 const SettingsAccountDeleteModal = ({ closeModal }) => {
@@ -43,47 +42,47 @@ const SettingsAccountDeleteModal = ({ closeModal }) => {
   };
 
   return (
-    <>
-      <Modal.Title style={{ textAlign: 'center' }}>Delete Account</Modal.Title>
-      <Modal.Message style={{ width: '400px' }}>
-        <Alert
-          status="error"
-          title="Warning"
-          description="The following action is not reversible. Please be certain before you proceed."
-        />
+    <Modal
+      title="Delete Account"
+      actions={
+        <>
+          <Button color="gray" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button color="red" variant="flat" onClick={handleDeleteAccount}>
+            Delete account
+          </Button>
+        </>
+      }
+    >
+      <Alert
+        status="error"
+        title="Warning"
+        description="The following action is not reversible. Please be certain before you proceed."
+      />
 
-        <Input
-          id="settings-transfer-confirm"
-          title={
-            <div style={{ fontWeight: '500', fontSize: '14px' }}>
-              To verify, type{' '}
-              <span style={{ fontWeight: '800' }}>delete account</span> below:
-            </div>
-          }
-        />
+      <Input
+        id="settings-transfer-confirm"
+        title={
+          <div style={{ fontWeight: '500', fontSize: '14px' }}>
+            To verify, type{' '}
+            <span style={{ fontWeight: '800' }}>delete account</span> below:
+          </div>
+        }
+      />
 
-        <div
-          style={{
-            fontWeight: '500',
-            fontSize: '15px',
-            color: 'var(--red-700)',
-            marginTop: '15px',
-          }}
-        >
-          By continuing, your account will be deleted, along with any access you
-          have to data.
-        </div>
-      </Modal.Message>
-
-      <Modal.Actions>
-        <Modal.Button color="red" onClick={closeModal}>
-          Cancel
-        </Modal.Button>
-        <Modal.Button color="green" onClick={handleDeleteAccount}>
-          Delete account
-        </Modal.Button>
-      </Modal.Actions>
-    </>
+      <div
+        style={{
+          fontWeight: '500',
+          fontSize: '15px',
+          color: 'var(--red-700)',
+          marginTop: '15px',
+        }}
+      >
+        By continuing, your account will be deleted, along with any access you
+        have to Lunalytics.
+      </div>
+    </Modal>
   );
 };
 
