@@ -3,9 +3,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
+import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
-import Modal from '../../../ui/modal';
 import CreateInviteExpiry from './expiry';
 import CreateInviteMaxUses from './maxUses';
 import SwitchWithText from '../../../ui/switch';
@@ -63,53 +63,55 @@ const CreateInviteModal = ({ closeModal }) => {
   };
 
   return (
-    <Modal.Container contentProps={{ style: { width: '850px' } }}>
-      <Modal.Title style={{ textAlign: 'center' }}>Create Invite</Modal.Title>
-      <Modal.Message>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <CreateInviteMaxUses setMaxUses={setMaxUses} maxUses={maxUses} />
-          <CreateInviteExpiry expiryId={expiryId} setExpiryId={setExpiryId} />
+    <Modal
+      title="Create Invite"
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button color="green" variant="flat" onClick={handleCreate}>
+            Create
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+      size="md"
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <CreateInviteMaxUses setMaxUses={setMaxUses} maxUses={maxUses} />
+        <CreateInviteExpiry expiryId={expiryId} setExpiryId={setExpiryId} />
 
-          <div>
-            <div className="input-label">Token Permissions</div>
-            <div className="input-short-description">
-              Permissions are used to restrict what the token can access.
-            </div>
-            <div className="settings-invite-permissions-container">
-              {permissionsWithDescription.map((permission) => (
-                <div
+        <div>
+          <div className="input-label">Token Permissions</div>
+          <div className="input-short-description">
+            Permissions are used to restrict what the token can access.
+          </div>
+          <div className="settings-invite-permissions-container">
+            {permissionsWithDescription.map((permission) => (
+              <div key={permission.title}>
+                <SwitchWithText
                   key={permission.title}
-                  className="settings-invite-permission"
-                >
-                  <SwitchWithText
-                    key={permission.title}
-                    label={permission.title}
-                    shortDescription={permission.description}
-                    onChange={(event) =>
-                      changePermission(
-                        event.target.checked,
-                        permission.permission
-                      )
-                    }
-                    checked={
-                      perms & permission.permission ||
-                      perms === PermissionsBits.ADMINISTRATOR ||
-                      perms & PermissionsBits.ADMINISTRATOR
-                    }
-                  />
-                </div>
-              ))}
-            </div>
+                  label={permission.title}
+                  shortDescription={permission.description}
+                  onChange={(event) =>
+                    changePermission(
+                      event.target.checked,
+                      permission.permission
+                    )
+                  }
+                  checked={
+                    perms & permission.permission ||
+                    perms === PermissionsBits.ADMINISTRATOR ||
+                    perms & PermissionsBits.ADMINISTRATOR
+                  }
+                />
+              </div>
+            ))}
           </div>
         </div>
-      </Modal.Message>
-      <Modal.Actions>
-        <Modal.Button onClick={closeModal}>Cancel</Modal.Button>
-        <Modal.Button color="green" onClick={handleCreate}>
-          Create
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+      </div>
+    </Modal>
   );
 };
 

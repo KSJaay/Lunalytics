@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
-import { Alert, Input } from '@lunalytics/ui';
+import { Alert, Button, Input, Modal } from '@lunalytics/ui';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 // import local filse
-import Modal from '../../../ui/modal';
 import useCurrentUrl from '../../../../hooks/useCurrentUrl';
 import { createPostRequest } from '../../../../services/axios';
 import useAuthenticationContext from '../../../../context/authentication';
@@ -51,57 +50,59 @@ const SettingsAuthenticationConfigureModal = ({
   };
 
   return (
-    <Modal.Container contentProps={{ style: { width: '650px' } }}>
-      <Modal.Title>Configure {integration.name} OAuth Provider</Modal.Title>
-      <Modal.Message>
-        <Input
-          id="client-id"
-          title="Client ID"
-          value={values.clientId}
-          onChange={(e) =>
-            setValues((prev) => ({ ...prev, clientId: e.target.value }))
-          }
-          isRequired
-        />
+    <Modal
+      title={`Configure ${integration.name} OAuth Provider`}
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button color="green" variant="flat" onClick={handleSumbit}>
+            Confirm
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+    >
+      <Input
+        id="client-id"
+        title="Client ID"
+        value={values.clientId}
+        onChange={(e) =>
+          setValues((prev) => ({ ...prev, clientId: e.target.value }))
+        }
+        isRequired
+      />
 
-        <Input
-          id={`client-secret`}
-          title="Client Secret"
-          value={values.clientSecret}
-          onChange={(e) =>
-            setValues((prev) => ({ ...prev, clientSecret: e.target.value }))
-          }
-          type={showPassword ? 'text' : 'password'}
-          iconRight={
-            <div onClick={() => setShowPassword((prev) => !prev)}>
-              {showPassword ? (
-                <IoMdEyeOff style={{ width: '25px', height: '25px' }} />
-              ) : (
-                <IoMdEye style={{ width: '25px', height: '25px' }} />
-              )}
-            </div>
-          }
-          isRequired
-        />
+      <Input
+        id={`client-secret`}
+        title="Client Secret"
+        value={values.clientSecret}
+        onChange={(e) =>
+          setValues((prev) => ({ ...prev, clientSecret: e.target.value }))
+        }
+        type={showPassword ? 'text' : 'password'}
+        iconRight={
+          <div onClick={() => setShowPassword((prev) => !prev)}>
+            {showPassword ? (
+              <IoMdEyeOff style={{ width: '25px', height: '25px' }} />
+            ) : (
+              <IoMdEye style={{ width: '25px', height: '25px' }} />
+            )}
+          </div>
+        }
+        isRequired
+      />
 
-        <div style={{ margin: '20px 0 10px 0' }}>
-          <Alert
-            status="warning"
-            title="Redirect URL"
-            description={`${currentUrl}/api/auth/callback/${integration.id}`}
-          />
-        </div>
-        <div>Please add this url to your Oauth provider settings</div>
-      </Modal.Message>
-      <Modal.Actions>
-        <Modal.Button onClick={closeModal} color="red">
-          Cancel
-        </Modal.Button>
-        <Modal.Button color="green" onClick={handleSumbit}>
-          Confirm
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+      <div style={{ margin: '20px 0 10px 0' }}>
+        <Alert
+          status="warning"
+          title="Redirect URL"
+          description={`${currentUrl}/api/auth/callback/${integration.id}`}
+        />
+      </div>
+      <div>Please add this url to your Oauth provider settings</div>
+    </Modal>
   );
 };
 

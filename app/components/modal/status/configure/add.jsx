@@ -8,11 +8,9 @@ import { MdHistory } from 'react-icons/md';
 import { BsGraphUp } from 'react-icons/bs';
 import { IoWarning } from 'react-icons/io5';
 import { PiBroadcast } from 'react-icons/pi';
-import { FaSignal, FaHtml5, FaCss3Alt } from 'react-icons/fa';
 import { TbLayoutNavbarInactive } from 'react-icons/tb';
-
-// import local files
-import Modal from '../../../ui/modal';
+import { FaSignal, FaHtml5, FaCss3Alt } from 'react-icons/fa';
+import { Button, Modal } from '@lunalytics/ui';
 
 const components = [
   {
@@ -79,47 +77,49 @@ const StatusConfigureAddModal = ({ closeModal, createComponent }) => {
   const [activeComponent, setActiveComponent] = useState(null);
 
   return (
-    <Modal.Container closeButton={closeModal}>
-      <Modal.Title style={{ textAlign: 'center', fontSize: 'var(--font-xl)' }}>
-        Add New Component
-      </Modal.Title>
-      <Modal.Message>
-        <div className="scma-container">
-          {components.map((component) => {
-            const classes = classNames('scma-item', {
-              active: component.type === activeComponent,
-            });
+    <Modal
+      title="Add New Component"
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Close
+          </Button>
+          <Button
+            variant="flat"
+            color="green"
+            id="monitor-create-button"
+            onClick={() => {
+              createComponent(activeComponent);
+              closeModal();
+            }}
+          >
+            Add
+          </Button>
+        </>
+      }
+      size="xs"
+    >
+      <div className="scma-container">
+        {components.map((component) => {
+          const classes = classNames('scma-item', {
+            active: component.type === activeComponent,
+          });
 
-            return (
-              <div
-                key={component.name}
-                className={classes}
-                onClick={() => {
-                  setActiveComponent(component.type);
-                }}
-              >
-                <div className="scma-item-icon">{component.icon(28)}</div>
-                <div className="scma-item-name">{component.name}</div>
-              </div>
-            );
-          })}
-        </div>
-      </Modal.Message>
-
-      <Modal.Actions>
-        <Modal.Button onClick={closeModal}>Close</Modal.Button>
-        <Modal.Button
-          color="green"
-          id="monitor-create-button"
-          onClick={() => {
-            createComponent(activeComponent);
-            closeModal();
-          }}
-        >
-          Add
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+          return (
+            <div
+              key={component.name}
+              className={classes}
+              onClick={() => {
+                setActiveComponent(component.type);
+              }}
+            >
+              <div className="scma-item-icon">{component.icon(28)}</div>
+              <div className="scma-item-name">{component.name}</div>
+            </div>
+          );
+        })}
+      </div>
+    </Modal>
   );
 };
 

@@ -1,9 +1,9 @@
 // import dependencies
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
-import Modal from '../../ui/modal';
 import NotificationModalType from './dropdown/type';
 import NotificationModalPlatform from './dropdown/platform';
 import NotificationsTemplates from '../../../../shared/notifications';
@@ -37,54 +37,51 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
   const PlatformInputs = inputForPlatform[inputs.platform];
 
   return (
-    <Modal.Container
-      closeButton={closeModal}
-      contentProps={{ style: { maxWidth: '650px', width: '100%' } }}
+    <Modal
+      title={isEdit ? 'Edit Notification' : 'Add Notification'}
+      actions={
+        <>
+          <Button color={'red'} variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button
+            color="green"
+            variant="flat"
+            onClick={() => handleSubmit(addNotification)}
+            id="notification-create-button"
+          >
+            {isEdit ? 'Update' : 'Create'}
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+      size="xl"
     >
-      <Modal.Title style={{ textAlign: 'center' }}>
-        {isEdit ? 'Edit Notification' : 'Add Notification'}
-      </Modal.Title>
-
       {errors['general'] && (
         <div className="input-error-general">{errors['general']}</div>
       )}
 
-      <Modal.Message>
-        <NotificationModalPlatform
-          isEdit={isEdit}
-          values={inputs}
-          setPlatform={handleInput}
-          platform={inputs.platform}
-        />
+      <NotificationModalPlatform
+        isEdit={isEdit}
+        values={inputs}
+        setPlatform={handleInput}
+        platform={inputs.platform}
+      />
 
-        <PlatformInputs
-          values={inputs}
-          errors={errors}
-          handleInput={handleInput}
-        />
+      <PlatformInputs
+        values={inputs}
+        errors={errors}
+        handleInput={handleInput}
+      />
 
-        <NotificationModalType
-          messageType={inputs.messageType}
-          setMessageType={handleInput}
-        />
+      <NotificationModalType
+        messageType={inputs.messageType}
+        setMessageType={handleInput}
+      />
 
-        <label className="input-label">Payload</label>
-        <NotificationModalPayload message={message} />
-      </Modal.Message>
-
-      <Modal.Actions>
-        <Modal.Button color={'red'} onClick={closeModal}>
-          Cancel
-        </Modal.Button>
-        <Modal.Button
-          color={'green'}
-          onClick={() => handleSubmit(addNotification)}
-          id="notification-create-button"
-        >
-          {isEdit ? 'Update' : 'Create'}
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+      <label className="input-label">Payload</label>
+      <NotificationModalPayload message={message} />
+    </Modal>
   );
 };
 

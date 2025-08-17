@@ -1,9 +1,9 @@
 // import dependencies
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
+import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
-import Modal from '../../ui/modal';
 import useContextStore from '../../../context';
 import { createPostRequest } from '../../../services/axios';
 
@@ -33,21 +33,25 @@ const IncidentDeleteMessageModal = ({ incidentId, incidentPosition }) => {
   };
 
   return (
-    <Modal.Container>
-      <Modal.Title style={{ textAlign: 'center' }}>
-        Delete incident message
-      </Modal.Title>
-      <Modal.Message>
+    <Modal
+      title="Delete incident message"
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button color="green" variant="flat" onClick={deleteIncidentMessage}>
+            Confirm
+          </Button>
+        </>
+      }
+      size="xs"
+    >
+      <div>
         Are you sure you want to delete this message? <br /> This is
         irreversible.
-      </Modal.Message>
-      <Modal.Actions>
-        <Modal.Button onClick={closeModal}>Cancel</Modal.Button>
-        <Modal.Button color="red" onClick={deleteIncidentMessage}>
-          Confirm
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+      </div>
+    </Modal>
   );
 };
 

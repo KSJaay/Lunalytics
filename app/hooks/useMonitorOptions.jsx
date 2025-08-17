@@ -80,7 +80,7 @@ const useMonitorOptions = (
   const handleDelete = () => {
     openModal(
       <MonitorModal
-        monitorId={monitor.monitorId}
+        name={monitor.name}
         handleConfirm={handleConfirm}
         handleClose={closeModal}
       />

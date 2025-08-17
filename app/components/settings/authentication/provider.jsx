@@ -23,7 +23,7 @@ const SettingsProviderAuthentication = ({ integration }) => {
           src={integration.icon}
           style={{
             backgroundColor:
-              integration.name === 'GitHub' ? 'var(--font-color)' : null,
+              integration.name === 'GitHub' ? 'var(--white)' : null,
           }}
           className="settings-auth-provider-img"
         />
