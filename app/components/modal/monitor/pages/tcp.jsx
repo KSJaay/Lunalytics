@@ -11,6 +11,8 @@ const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
         value={inputs.url}
         error={errors.url}
         onChange={(e) => handleInput('url', e.target.value)}
+        color="var(--lunaui-accent-900)"
+        subtitle="The hostname or IP address of the server"
       />
 
       <Input
@@ -19,6 +21,8 @@ const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
         value={inputs.port}
         error={errors.port}
         onChange={(e) => handleInput('port', e.target.value)}
+        color="var(--lunaui-accent-900)"
+        subtitle="The port number of the server"
       />
     </>
   );

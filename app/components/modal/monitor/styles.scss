@@ -1,4 +1,74 @@
+.monitor-configure {
+  display: flex;
+  height: 100%;
+  gap: 15px;
+}
+
 .monitor-configure-container {
-  min-height: 300px;
-  width: 500px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem 1rem;
+}
+
+.monitor-configure-page-button {
+  padding: 16px 12px;
+  background-color: var(--accent-800);
+  border-radius: 8px;
+  font-size: var(--font-lg);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &.active {
+    color: var(--primary-600);
+  }
+
+  &:hover {
+    background-color: var(--accent-700);
+  }
+}
+
+.monitor-configure-left-container {
+  width: 275px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.monitor-configure-left-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: var(--font-xl);
+  font-weight: 700;
+  padding: 15px 10px 5px 10px;
+}
+
+.monitor-configure-left-subtitle {
+  padding: 10px 10px 5px 10px;
+  font-size: var(--font-sm);
+  color: var(--font-light-color);
+}
+
+.monitor-configure-left-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  flex: 1;
+}
+
+.monitor-configure-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.monitor-configure-content {
+  padding: 10px;
+  background-color: var(--accent-800);
+  border-radius: 8px;
+  flex: 1;
 }

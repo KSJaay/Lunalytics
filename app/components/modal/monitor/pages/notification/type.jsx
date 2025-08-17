@@ -16,8 +16,11 @@ const MonitorNotificationType = ({ inputs, errors, handleInput }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (
-    <>
+    <div className="luna-input-wrapper">
       <label className="input-label">Notification Type</label>
+      <label className="luna-input-subtitle">
+        Select the notification type to trigger when the monitor state changes.
+      </label>
       <Dropdown.Container
         isOpen={dropdownIsOpen}
         toggleDropdown={toggleDropdown}
@@ -27,6 +30,7 @@ const MonitorNotificationType = ({ inputs, errors, handleInput }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
           id="notification-type-dropdown"
+          color="var(--lunaui-accent-900)"
         >
           {inputs.notificationType}
         </Dropdown.Trigger>
@@ -50,7 +54,7 @@ const MonitorNotificationType = ({ inputs, errors, handleInput }) => {
           {errors.notificationType}
         </label>
       )}
-    </>
+    </div>
   );
 };
 

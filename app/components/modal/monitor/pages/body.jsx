@@ -13,9 +13,9 @@ const MonitorHttpBody = ({ inputs, errors, handleInput }) => {
   };
 
   return (
-    <>
+    <div className="luna-input-wrapper">
       <label className="input-label">HTTP Body</label>
-      <div style={{ padding: '0 0 8px 4px' }}>
+      <div className="luna-input-subtitle">
         Add a request body to be sent with the request. Make sure to follow JSON
         key/value format.
       </div>
@@ -25,10 +25,11 @@ const MonitorHttpBody = ({ inputs, errors, handleInput }) => {
         error={errors.body}
         onChange={(e) => handleInput('body', e.target.value)}
         id="http-body-textarea"
+        color="var(--lunaui-accent-900)"
       >
         {parseBody(inputs.body)}
       </Textarea>
-    </>
+    </div>
   );
 };
 

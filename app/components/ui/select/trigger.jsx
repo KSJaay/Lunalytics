@@ -12,6 +12,7 @@ const Trigger = ({
   showIcon,
   toggleSelect,
   children,
+  color = 'var(--lunaui-accent-800)',
   ...props
 }) => {
   const classes = classNames('select-trigger', {
@@ -23,7 +24,12 @@ const Trigger = ({
   });
 
   return (
-    <div className={classes} onClick={toggleSelect} {...props}>
+    <div
+      className={classes}
+      onClick={toggleSelect}
+      style={{ ...props.style, backgroundColor: color }}
+      {...props}
+    >
       {children}
       {showIcon && (
         <div className={iconClasses}>

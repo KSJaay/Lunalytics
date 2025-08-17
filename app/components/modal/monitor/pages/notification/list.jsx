@@ -19,8 +19,11 @@ const MonitorNotificationList = ({ inputs, errors, handleInput }) => {
   const selectedNotification = getNotifciationById(inputs.notificationId);
 
   return (
-    <>
+    <div className="luna-input-wrapper">
       <label className="input-label">Notification</label>
+      <label className='luna-input-subtitle'>
+        Select the notification to trigger when the monitor state changes.
+      </label>
       <Dropdown.Container
         isOpen={dropdownIsOpen}
         toggleDropdown={toggleDropdown}
@@ -30,6 +33,7 @@ const MonitorNotificationList = ({ inputs, errors, handleInput }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
           id="notification-name-dropdown"
+          color="var(--lunaui-accent-900)"
         >
           {selectedNotification?.friendlyName ? (
             <NotificationIcon
@@ -63,7 +67,7 @@ const MonitorNotificationList = ({ inputs, errors, handleInput }) => {
           {errors.type}
         </label>
       )}
-    </>
+    </div>
   );
 };
 
