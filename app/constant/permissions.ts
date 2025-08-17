@@ -1,5 +1,5 @@
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
-import type { ConstantPermissionsProp } from '../types/constant/permissions.js';
+import type { ConstantPermissionsProp } from '../types/constant.ts';
 
 export const permissionsWithDescription: ConstantPermissionsProp[] = [
   {
