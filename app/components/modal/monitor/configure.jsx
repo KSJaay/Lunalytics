@@ -2,9 +2,9 @@ import './styles.scss';
 
 // import dependencies
 import PropTypes from 'prop-types';
+import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
-import Modal from '../../ui/modal';
 import MonitorPageInitial from './pages/initial';
 import useMonitorForm from '../../../hooks/useMonitorForm';
 import MonitorConfigureHttpModal from './configure/http';
@@ -26,63 +26,67 @@ const MonitorConfigureModal = ({
   );
 
   return (
-    <Modal.Container closeButton={closeModal}>
-      <Modal.Title style={{ textAlign: 'center' }}>
-        {isEdit ? 'Edit Monitor' : 'Add Monitor'}
-      </Modal.Title>
-      <Modal.Message>
-        <div className="monitor-configure-container">
-          <MonitorPageInitial
+    <Modal
+      title={isEdit ? 'Edit Monitor' : 'Add Monitor'}
+      actions={
+        <>
+          <Button
+            color="red"
+            variant="flat"
+            onClick={handleActionButtons('Cancel')}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="green"
+            variant="flat"
+            onClick={handleActionButtons('Create')}
+            id="monitor-create-button"
+          >
+            {isEdit ? 'Update' : 'Create'}
+          </Button>
+        </>
+      }
+      size="xl"
+    >
+      <div className="monitor-configure-container">
+        <MonitorPageInitial
+          inputs={inputs}
+          errors={errors}
+          handleInput={handleInput}
+          isEdit={isEdit}
+        />
+
+        {inputs.type === 'http' ? (
+          <MonitorConfigureHttpModal
             inputs={inputs}
             errors={errors}
             handleInput={handleInput}
-            isEdit={isEdit}
           />
-
-          {inputs.type === 'http' ? (
-            <MonitorConfigureHttpModal
-              inputs={inputs}
-              errors={errors}
-              handleInput={handleInput}
-            />
-          ) : null}
-          {inputs.type === 'json' ? (
-            <MonitorConfigureJsonQueryModal
-              inputs={inputs}
-              errors={errors}
-              handleInput={handleInput}
-            />
-          ) : null}
-          {inputs.type === 'ping' ? (
-            <MonitorConfigurePingModal
-              inputs={inputs}
-              errors={errors}
-              handleInput={handleInput}
-            />
-          ) : null}
-          {inputs.type === 'tcp' ? (
-            <MonitorConfigureTcpModal
-              inputs={inputs}
-              errors={errors}
-              handleInput={handleInput}
-            />
-          ) : null}
-        </div>
-      </Modal.Message>
-
-      <Modal.Actions>
-        <Modal.Button onClick={handleActionButtons('Cancel')}>
-          Cancel
-        </Modal.Button>
-        <Modal.Button
-          onClick={handleActionButtons('Create')}
-          color="green"
-          id="monitor-create-button"
-        >
-          {isEdit ? 'Update' : 'Create'}
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+        ) : null}
+        {inputs.type === 'json' ? (
+          <MonitorConfigureJsonQueryModal
+            inputs={inputs}
+            errors={errors}
+            handleInput={handleInput}
+          />
+        ) : null}
+        {inputs.type === 'ping' ? (
+          <MonitorConfigurePingModal
+            inputs={inputs}
+            errors={errors}
+            handleInput={handleInput}
+          />
+        ) : null}
+        {inputs.type === 'tcp' ? (
+          <MonitorConfigureTcpModal
+            inputs={inputs}
+            errors={errors}
+            handleInput={handleInput}
+          />
+        ) : null}
+      </div>
+    </Modal>
   );
 };
 

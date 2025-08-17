@@ -1,23 +1,28 @@
-import Modal from '../../ui/modal';
+import { Button, Modal } from '@lunalytics/ui';
 
 const ArchiveIncidentModal = ({ handleArchive, closeModal }) => {
   return (
-    <Modal.Container>
-      <Modal.Title style={{ textAlign: 'center' }}>
-        Archive Incident
-      </Modal.Title>
-      <Modal.Message>
+    <Modal
+      title="Archive Incident"
+      size="xs"
+      actions={
+        <>
+          <Button color="green" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button color="red" variant="flat" onClick={handleArchive}>
+            Archive
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+    >
+      <div>
         Are you sure you want to archive this incident?
         <br />
         This is an irreversible action.
-      </Modal.Message>
-      <Modal.Actions>
-        <Modal.Button onClick={closeModal}>Cancel</Modal.Button>
-        <Modal.Button color="red" onClick={handleArchive}>
-          Archive
-        </Modal.Button>
-      </Modal.Actions>
-    </Modal.Container>
+      </div>
+    </Modal>
   );
 };
 

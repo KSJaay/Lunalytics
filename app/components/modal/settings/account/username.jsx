@@ -1,13 +1,12 @@
 // import dependencies
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Input } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
+import { Button, Input, Modal } from '@lunalytics/ui';
 
 // import local files
-import Modal from '../../../ui/modal';
-import { useState } from 'react';
-import handleChangeUsername from '../../../../handlers/settings/account/username';
-import { observer } from 'mobx-react-lite';
 import useContextStore from '../../../../context';
+import handleChangeUsername from '../../../../handlers/settings/account/username';
 
 const SettingsAccountUsernameModal = ({
   title,
@@ -36,26 +35,28 @@ const SettingsAccountUsernameModal = ({
   };
 
   return (
-    <>
-      <Modal.Title style={{ textAlign: 'center' }}>{modalTitle}</Modal.Title>
-      <Modal.Message style={{ width: '400px' }}>
-        <Input
-          id={`settings-edit-${id}`}
-          title={title}
-          defaultValue={value}
-          error={error}
-        />
-      </Modal.Message>
-
-      <Modal.Actions>
-        <Modal.Button color="red" onClick={closeModal}>
-          Cancel
-        </Modal.Button>
-        <Modal.Button color="green" onClick={submit}>
-          Update
-        </Modal.Button>
-      </Modal.Actions>
-    </>
+    <Modal
+      title={modalTitle}
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button color="green" variant="flat" onClick={submit}>
+            Update
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+      size="xs"
+    >
+      <Input
+        id={`settings-edit-${id}`}
+        title={title}
+        defaultValue={value}
+        error={error}
+      />
+    </Modal>
   );
 };
 

@@ -3,10 +3,7 @@ import './avatar.scss';
 // import dependencies
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Input } from '@lunalytics/ui';
-
-// import local files
-import Modal from '../../../ui/modal';
+import { Button, Input, Modal } from '@lunalytics/ui';
 
 const avatars = [
   'Ape',
@@ -47,45 +44,49 @@ const SettingsAccountAvatarModal = ({
   const imageUrl = isUrl ? avatar : `/icons/${avatar}.png`;
 
   return (
-    <>
-      <Modal.Title style={{ textAlign: 'center' }}>Change Avatar</Modal.Title>
-      <Modal.Message style={{ width: '400px' }}>
-        <div className="settings-modal-avatar-container">
-          <img src={imageUrl} className="settings-modal-avatar-image" />
-        </div>
-        <Input
-          title="Input Avatar URL"
-          value={isUrl ? avatar : ''}
-          onChange={(e) => setAvatar(e.target.value)}
-        />
+    <Modal
+      title="Change Avatar"
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button
+            color="green"
+            variant="flat"
+            onClick={() => handleSumbit(avatar)}
+          >
+            Update
+          </Button>
+        </>
+      }
+    >
+      <div className="settings-modal-avatar-container">
+        <img src={imageUrl} className="settings-modal-avatar-image" />
+      </div>
+      <Input
+        title="Input Avatar URL"
+        value={isUrl ? avatar : ''}
+        onChange={(e) => setAvatar(e.target.value)}
+      />
 
-        <div className="input-label">Or select from below</div>
-        <div className="settings-modal-avatars-container">
-          {avatars.map((avatarName) => (
-            <img
-              key={avatarName}
-              src={`/icons/${avatarName}.png`}
-              className={
-                avatarName === avatar
-                  ? 'settings-modal-avatar-option-select'
-                  : 'settings-modal-avatar-option'
-              }
-              alt={avatarName}
-              onClick={() => setAvatar(avatarName)}
-            />
-          ))}
-        </div>
-      </Modal.Message>
-
-      <Modal.Actions>
-        <Modal.Button color="red" onClick={closeModal}>
-          Cancel
-        </Modal.Button>
-        <Modal.Button color="green" onClick={() => handleSumbit(avatar)}>
-          Update
-        </Modal.Button>
-      </Modal.Actions>
-    </>
+      <div className="input-label">Or select from below</div>
+      <div className="settings-modal-avatars-container">
+        {avatars.map((avatarName) => (
+          <img
+            key={avatarName}
+            src={`/icons/${avatarName}.png`}
+            className={
+              avatarName === avatar
+                ? 'settings-modal-avatar-option-select'
+                : 'settings-modal-avatar-option'
+            }
+            alt={avatarName}
+            onClick={() => setAvatar(avatarName)}
+          />
+        ))}
+      </div>
+    </Modal>
   );
 };
 

@@ -1,11 +1,11 @@
 // import dependencies
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
-import { createPostRequest } from '../../../../services/axios';
-import Modal from '../../../ui/modal';
 import useTeamContext from '../../../../context/team';
+import { createPostRequest } from '../../../../services/axios';
 import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MemberDeleteModal = ({ member, onClose }) => {
@@ -27,21 +27,24 @@ const MemberDeleteModal = ({ member, onClose }) => {
   };
 
   return (
-    <>
-      <Modal.Title>Remove user?</Modal.Title>
-      <Modal.Message style={{ width: '400px' }}>
-        By confirming you will be removing
-        <span style={{ fontWeight: '600' }}> {member.email}</span> from the
-        accessing the dashboard. Their account will be removed from the
-        database.
-      </Modal.Message>
-      <Modal.Actions>
-        <Modal.Button onClick={onClose}>Cancel</Modal.Button>
-        <Modal.Button color="red" onClick={handleConfirm}>
-          Confirm
-        </Modal.Button>
-      </Modal.Actions>
-    </>
+    <Modal
+      title="Remove user?"
+      actions={
+        <>
+          <Button color="gray" variant="flat" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button color="red" variant="flat" onClick={handleConfirm}>
+            Confirm
+          </Button>
+        </>
+      }
+      size="xs"
+    >
+      By confirming you will be removing
+      <span style={{ fontWeight: '600' }}> {member.email}</span> from the
+      accessing the dashboard. Their account will be removed from the database.
+    </Modal>
   );
 };
 

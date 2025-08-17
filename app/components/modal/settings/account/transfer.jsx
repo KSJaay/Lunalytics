@@ -4,16 +4,15 @@ import './avatar.scss';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
-import { Alert, Input } from '@lunalytics/ui';
+import { Alert, Button, Input, Modal } from '@lunalytics/ui';
 
 // import local files
-import Modal from '../../../ui/modal';
-import useTeamContext from '../../../../context/team';
-import useDropdown from '../../../../hooks/useDropdown';
 import Dropdown from '../../../ui/dropdown';
 import useContextStore from '../../../../context';
-import handleTransferAccount from '../../../../handlers/settings/account/transfer';
 import useFetch from '../../../../hooks/useFetch';
+import useTeamContext from '../../../../context/team';
+import useDropdown from '../../../../hooks/useDropdown';
+import handleTransferAccount from '../../../../handlers/settings/account/transfer';
 
 const SettingsAccountTransferModal = ({ closeModal }) => {
   const { teamMembers, setTeam } = useTeamContext();
@@ -57,93 +56,95 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
   ));
 
   return (
-    <>
-      <Modal.Title style={{ textAlign: 'center' }}>
-        Transfer ownership
-      </Modal.Title>
-      <Modal.Message style={{ width: '400px' }}>
-        <Alert
-          status="error"
-          title="Warning"
-          description="The following action is not reversible. Please be certain before you proceed."
-        />
+    <Modal
+      title="Transfer ownership"
+      actions={
+        <>
+          <Button color="red" variant="flat" onClick={closeModal}>
+            Cancel
+          </Button>
+          <Button
+            color="green"
+            variant="flat"
+            onClick={() => {
+              const transferConfirm = document.getElementById(
+                'settings-transfer-confirm'
+              ).value;
 
-        <div
-          style={{
-            fontWeight: '500',
-            fontSize: '16px',
-            color: 'var(--font-color)',
-            marginLeft: '5px',
-            marginTop: '15px',
-          }}
-        >
-          Select member to transfer ownership
-        </div>
+              if (
+                transferConfirm.toLowerCase().trim() !== 'transfer ownership'
+              ) {
+                return toast.error('Enter transfer ownership to confirm.');
+              }
 
-        <Dropdown.Container
-          position="center"
+              handleTransferAccount(selectedId, closeModal);
+            }}
+          >
+            Confirm
+          </Button>
+        </>
+      }
+      onClose={closeModal}
+      size="xs"
+    >
+      <Alert
+        status="error"
+        title="Warning"
+        description="The following action is not reversible. Please be certain before you proceed."
+      />
+
+      <div
+        style={{
+          fontWeight: '500',
+          fontSize: '16px',
+          color: 'var(--font-color)',
+          marginLeft: '5px',
+          marginTop: '15px',
+        }}
+      >
+        Select member to transfer ownership
+      </div>
+
+      <Dropdown.Container
+        position="center"
+        isOpen={dropdownIsOpen}
+        toggleDropdown={toggleDropdown}
+        id="home-menu-layout"
+      >
+        <Dropdown.Trigger
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
-          id="home-menu-layout"
+          asInput
         >
-          <Dropdown.Trigger
-            isOpen={dropdownIsOpen}
-            toggleDropdown={toggleDropdown}
-            asInput
-          >
-            {selectedId || 'Select member'}
-          </Dropdown.Trigger>
-          <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
-            {dropdownItems}
-          </Dropdown.List>
-        </Dropdown.Container>
+          {selectedId || 'Select member'}
+        </Dropdown.Trigger>
+        <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
+          {dropdownItems}
+        </Dropdown.List>
+      </Dropdown.Container>
 
-        <Input
-          id="settings-transfer-confirm"
-          title={
-            <div style={{ fontWeight: '500', fontSize: '14px' }}>
-              To verify, type{' '}
-              <span style={{ fontWeight: '800' }}>transfer ownership</span>{' '}
-              below:
-            </div>
-          }
-        />
+      <Input
+        id="settings-transfer-confirm"
+        title={
+          <div style={{ fontWeight: '500', fontSize: '14px' }}>
+            To verify, type{' '}
+            <span style={{ fontWeight: '800' }}>transfer ownership</span> below:
+          </div>
+        }
+      />
 
-        <div
-          style={{
-            fontWeight: '500',
-            fontSize: '15px',
-            color: 'var(--red-700)',
-            marginTop: '15px',
-          }}
-        >
-          By continuing, you acknowledge that the application will be
-          transferred to the selected user.
-        </div>
-      </Modal.Message>
-
-      <Modal.Actions>
-        <Modal.Button color="red" onClick={closeModal}>
-          Cancel
-        </Modal.Button>
-        <Modal.Button
-          color="green"
-          onClick={() => {
-            const transferConfirm = document.getElementById(
-              'settings-transfer-confirm'
-            ).value;
-
-            if (transferConfirm.toLowerCase().trim() !== 'transfer ownership') {
-              return toast.error('Enter transfer ownership to confirm.');
-            }
-
-            handleTransferAccount(selectedId, closeModal);
-          }}
-        >
-          Confirm
-        </Modal.Button>
-      </Modal.Actions>
-    </>
+      <div
+        style={{
+          fontWeight: '500',
+          fontSize: '15px',
+          color: 'var(--red-700)',
+          marginTop: '15px',
+        }}
+      >
+        By continuing, you acknowledge that the application will be transferred
+        to the selected user.
+      </div>
+    </Modal>
   );
 };
 

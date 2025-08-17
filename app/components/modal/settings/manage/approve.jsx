@@ -2,10 +2,10 @@
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
+import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
 import { createPostRequest } from '../../../../services/axios';
-import Modal from '../../../ui/modal';
 import useTeamContext from '../../../../context/team';
 import { userPropType } from '../../../../../shared/utils/propTypes';
 
@@ -28,27 +28,36 @@ const MemberApproveModal = ({ member, onClose }) => {
   };
 
   return (
-    <>
-      <Modal.Title>Are you sure?</Modal.Title>
-      <Modal.Message style={{ width: '400px' }}>
-        By continuing you will be allowing{' '}
-        <span style={{ fontWeight: '600' }}>{member.email} </span> to{' '}
-        <span style={{ fontWeight: '600' }}>access</span> the dashboard. The
-        user will have access to view the monitors.
-      </Modal.Message>
-      <Modal.Actions>
-        <Modal.Button id="manage-cancel-button" onClick={onClose}>
-          Cancel
-        </Modal.Button>
-        <Modal.Button
-          id="manage-approve-button"
-          color="green"
-          onClick={handleConfirm}
-        >
-          Confirm
-        </Modal.Button>
-      </Modal.Actions>
-    </>
+    <Modal
+      title="Are you sure?"
+      actions={
+        <>
+          <Button
+            color="red"
+            variant="flat"
+            id="manage-cancel-button"
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="green"
+            variant="flat"
+            id="manage-approve-button"
+            onClick={handleConfirm}
+          >
+            Confirm
+          </Button>
+        </>
+      }
+      onClose={onClose}
+      size="xs"
+    >
+      By continuing you will be allowing{' '}
+      <span style={{ fontWeight: '600' }}>{member.email} </span> to{' '}
+      <span style={{ fontWeight: '600' }}>access</span> the dashboard. The user
+      will have access to view the monitors.
+    </Modal>
   );
 };
 
