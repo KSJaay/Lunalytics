@@ -15,8 +15,11 @@ const textInputTypes = {
 const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
   return (
-    <>
+    <div className="luna-input-wrapper">
       <label className="input-label">Monitor Type</label>
+      <label className="luna-input-subtitle">
+        Select the type of monitor you want to setup
+      </label>
       <Dropdown.Container
         isOpen={dropdownIsOpen}
         toggleDropdown={toggleDropdown}
@@ -26,6 +29,7 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
           id="type-dropdown"
+          color="var(--lunaui-accent-900)"
         >
           {textInputTypes[inputs.type] || 'Select Monitor Type'}
         </Dropdown.Trigger>
@@ -76,7 +80,7 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
           {errors.type}
         </label>
       )}
-    </>
+    </div>
   );
 };
 

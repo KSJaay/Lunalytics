@@ -44,34 +44,7 @@ const StatusConfigurCreateModal = ({ closeModal }) => {
 
   return (
     <Modal
-      title={
-        <>
-          Add New Component
-          <div className="smc-options">
-            {menuOptions.map(({ id, Icon }) => {
-              const isActive = activePage === id;
-
-              return (
-                <div
-                  key={id}
-                  style={{
-                    borderBottom: isActive
-                      ? '4px solid var(--primary-700)'
-                      : '4px solid transparent',
-                  }}
-                  className="smc-options-item"
-                  onClick={() => setActivePage(id)}
-                >
-                  <div style={{ width: '20px', height: '20px' }}>
-                    <Icon style={{ width: '20px', height: '20px' }} />
-                  </div>
-                  <div>{id}</div>
-                </div>
-              );
-            })}
-          </div>
-        </>
-      }
+      title="Add New Component"
       actions={
         <>
           <Button color="red" variant="flat" onClick={closeModal}>
@@ -88,7 +61,31 @@ const StatusConfigurCreateModal = ({ closeModal }) => {
         </>
       }
       size="xl"
+      height="xl"
     >
+      <div className="smc-options">
+        {menuOptions.map(({ id, Icon }) => {
+          const isActive = activePage === id;
+
+          return (
+            <div
+              key={id}
+              style={{
+                borderBottom: isActive
+                  ? '4px solid var(--primary-700)'
+                  : '4px solid transparent',
+              }}
+              className="smc-options-item"
+              onClick={() => setActivePage(id)}
+            >
+              <div style={{ width: '20px', height: '20px' }}>
+                <Icon style={{ width: '20px', height: '20px' }} />
+              </div>
+              <div>{id}</div>
+            </div>
+          );
+        })}
+      </div>
       <StatusConfigureContent currentTab={activePage} showActionBar={false} />
     </Modal>
   );

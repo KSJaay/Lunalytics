@@ -8,12 +8,19 @@ import Dropdown from '../../../../ui/dropdown';
 const methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'PATCH', 'POST', 'PUT'];
 const defaultValue = 'Select a method';
 
-const MonitorHttpMethods = ({ handleSelect, selectValue = defaultValue }) => {
+const MonitorHttpMethods = ({
+  error,
+  handleSelect,
+  selectValue = defaultValue,
+}) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (
-    <>
+    <div className="luna-input-wrapper">
       <label className="input-label">Method</label>
+      <label className="luna-input-subtitle">
+        Select the HTTP method to use for the request
+      </label>
       <Dropdown.Container
         isOpen={dropdownIsOpen}
         toggleDropdown={toggleDropdown}
@@ -23,6 +30,7 @@ const MonitorHttpMethods = ({ handleSelect, selectValue = defaultValue }) => {
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
           id="http-method-dropdown"
+          color="var(--lunaui-accent-900)"
         >
           {selectValue}
         </Dropdown.Trigger>
@@ -41,13 +49,20 @@ const MonitorHttpMethods = ({ handleSelect, selectValue = defaultValue }) => {
           ))}
         </Dropdown.List>
       </Dropdown.Container>
-    </>
+
+      {error && (
+        <label className="input-error" id="text-input-http-method-error">
+          {error}
+        </label>
+      )}
+    </div>
   );
 };
 
 MonitorHttpMethods.displayName = 'MonitorHttpMethods';
 
 MonitorHttpMethods.propTypes = {
+  error: PropTypes.string,
   handleSelect: PropTypes.func.isRequired,
   selectValue: PropTypes.string,
 };

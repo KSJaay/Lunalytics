@@ -13,6 +13,7 @@ const Trigger = ({
   toggleDropdown,
   children,
   tabIndex = 0,
+  color = 'var(--lunaui-accent-800)',
   ...props
 }) => {
   const classes = classNames('dropdown-trigger', {
@@ -28,6 +29,7 @@ const Trigger = ({
       className={classes}
       onClick={toggleDropdown}
       tabIndex={tabIndex}
+      style={{ ...props.style, backgroundColor: color }}
       {...props}
     >
       {children}

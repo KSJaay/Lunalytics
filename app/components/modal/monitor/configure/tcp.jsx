@@ -1,45 +1,52 @@
 // import dependencies
 import PropTypes from 'prop-types';
-import { Accordion, AccordionItem } from '@lunalytics/ui';
 
 // import local files
 import MonitorPageTcp from '../pages/tcp';
 import MonitorPageInterval from '../pages/interval';
 import MonitorPageNotification from '../pages/notification';
 
-const MonitorConfigureTcpModal = ({ errors, inputs, handleInput }) => {
+const MonitorConfigureTcpModal = ({ errors, inputs, handleInput, pageId }) => {
   return (
     <>
-      <MonitorPageTcp
-        inputs={inputs}
-        errors={errors}
-        handleInput={handleInput}
-      />
+      {pageId === 'basic' ? (
+        <MonitorPageTcp
+          inputs={inputs}
+          errors={errors}
+          handleInput={handleInput}
+        />
+      ) : null}
 
-      <br />
-      <Accordion dark>
-        <AccordionItem
-          title="Advanced Settings"
-          subtitle={
-            'Setup advanced settings for the monitor, such as intervals, notifications, and others.'
-          }
-          id="monitor-advanced-settings"
+      {pageId === 'interval' ? (
+        <MonitorPageInterval
+          inputs={inputs}
+          errors={errors}
+          handleInput={handleInput}
+        />
+      ) : null}
+
+      {pageId === 'notification' ? (
+        <MonitorPageNotification
+          inputs={inputs}
+          errors={errors}
+          handleInput={handleInput}
+        />
+      ) : null}
+
+      {pageId === 'advanced' ? (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 'var(--font-xl)',
+            color: 'var(--font-light-color)',
+            fontWeight: 500,
+          }}
         >
-          <MonitorPageNotification
-            inputs={inputs}
-            errors={errors}
-            handleInput={handleInput}
-          />
-
-          <MonitorPageInterval
-            inputs={inputs}
-            errors={errors}
-            handleInput={handleInput}
-          />
-
-          <br />
-        </AccordionItem>
-      </Accordion>
+          Nothing to see here, maybe there will be more stuff here in the future
+        </div>
+      ) : null}
     </>
   );
 };

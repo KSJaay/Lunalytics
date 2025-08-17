@@ -7,6 +7,7 @@ import Select from '../../../../ui/select';
 import statusCodes from '../../../../../constant/statusCodes.json';
 
 const MonitorHttpStatusCodes = ({
+  error,
   selectedIds = [],
   handleStatusCodeSelect,
 }) => {
@@ -20,13 +21,14 @@ const MonitorHttpStatusCodes = ({
   const monitorStatusCodes = Array.isArray(selectedIds) ? selectedIds : [];
 
   return (
-    <>
+    <div className="luna-input-wrapper">
       <label className="input-label">Accepted Status Codes</label>
       <Select.Container isOpen={selectIsOpen} toggleSelect={toggleSelect}>
         <Select.Trigger
           asInput
           isOpen={selectIsOpen}
           toggleSelect={toggleSelect}
+          color="var(--lunaui-accent-900)"
         >
           {monitorStatusCodes?.join(', ')}
         </Select.Trigger>
@@ -48,13 +50,15 @@ const MonitorHttpStatusCodes = ({
           ))}
         </Select.List>
       </Select.Container>
-    </>
+      {error ? <label className="input-error">{error}</label> : null}
+    </div>
   );
 };
 
 MonitorHttpStatusCodes.displayName = 'MonitorHttpStatusCodes';
 
 MonitorHttpStatusCodes.propTypes = {
+  error: PropTypes.string,
   selectedIds: PropTypes.array,
   handleStatusCodeSelect: PropTypes.func.isRequired,
 };

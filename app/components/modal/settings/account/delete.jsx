@@ -54,6 +54,7 @@ const SettingsAccountDeleteModal = ({ closeModal }) => {
           </Button>
         </>
       }
+      size="xs"
     >
       <Alert
         status="error"
