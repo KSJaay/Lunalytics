@@ -16,6 +16,7 @@ import StatusConfigurCreateModal from '../components/modal/status/configure';
 import useStatusPageContext from '../context/status-page';
 import { toJS } from 'mobx';
 import { filterData } from '../../shared/utils/search';
+import useScreenSize from '../hooks/useScreenSize';
 
 const Notifications = () => {
   const {
@@ -26,17 +27,19 @@ const Notifications = () => {
 
   const [search, setSearch] = useState(null);
   const [activePage, setActivePage] = useState('Appearance');
+  const screenSize = useScreenSize();
+  const isDesktop = useMemo(() => screenSize === 'desktop', [screenSize]);
 
   useEffect(() => {
-    if (!activeStatusPage && allStatusPages[0]) {
-      setActiveStatusPage(allStatusPages[0].statusId);
+    if (!activeStatusPage && isDesktop) {
+      setActiveStatusPage(allStatusPages[0]?.statusId);
       setData(toJS(allStatusPages[0]));
     }
 
     if (activeStatusPage) {
       setData(toJS(activeStatusPage));
     }
-  }, [allStatusPages, activeStatusPage]);
+  }, [allStatusPages, activeStatusPage, isDesktop]);
 
   const handleSearchUpdate = (search = '') => {
     setSearch(search.trim());
@@ -47,6 +50,27 @@ const Notifications = () => {
 
     return filterData(allStatusPages, search, ['statusUrl', 'settings.title']);
   }, [search, allStatusPages]);
+
+  if (!isDesktop && activeStatusPage) {
+    return (
+      <div className="monitor-mobile-container">
+        <HomeStatusPageHeader
+          isMobile={!isDesktop}
+          activePage={activePage}
+          setActivePage={setActivePage}
+        />
+        <StatusConfigureContent currentTab={activePage} />
+      </div>
+    );
+  }
+
+  const content = isDesktop ? (
+    <div>
+      <div style={{ padding: '1rem 1rem 7rem 1rem' }}>
+        <StatusConfigureContent currentTab={activePage} />
+      </div>
+    </div>
+  ) : null;
 
   return (
     <Navigation
@@ -67,7 +91,6 @@ const Notifications = () => {
           Add Status Page
         </Button>
       }
-      onLeftClick={() => {}}
       header={{
         props: { activePage, setActivePage },
         HeaderComponent: HomeStatusPageHeader,
@@ -78,11 +101,7 @@ const Notifications = () => {
           <div>No status pages found</div>
         </div>
       ) : (
-        <div>
-          <div style={{ padding: '1rem 1rem 7rem 1rem' }}>
-            <StatusConfigureContent currentTab={activePage} />
-          </div>
-        </div>
+        content
       )}
     </Navigation>
   );

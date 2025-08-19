@@ -48,6 +48,11 @@ class IncidentStore {
   }
 
   setActiveIncident = (id?: string) => {
+    if (id === 'mobile-reset') {
+      this.activeIncident = null;
+      return;
+    }
+
     if (!id || !this.incidents.has(id)) {
       this.activeIncident = this.incidents.values().next().value || null;
       return;

@@ -13,6 +13,7 @@ import useCurrentUrl from '../../../hooks/useCurrentUrl';
 import { FaCog, FaPalette, FaRegEye } from 'react-icons/fa';
 import { TbLayoutFilled } from 'react-icons/tb';
 import StatusDeleteModal from '../../modal/status/delete';
+import { IoArrowBack } from 'react-icons/io5';
 
 const menuOptions = [
   { id: 'Appearance', Icon: FaPalette },
@@ -27,11 +28,16 @@ const HomeStatusPageHeader = ({
   rightChildren,
   activePage,
   setActivePage,
+  isMobile = false,
 }) => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },
-    statusStore: { deleteStatusPage, activeStatusPage: statusPage },
+    statusStore: {
+      deleteStatusPage,
+      activeStatusPage: statusPage,
+      setActiveStatusPage,
+    },
   } = useContextStore();
 
   const baseUrl = useCurrentUrl();
@@ -64,6 +70,14 @@ const HomeStatusPageHeader = ({
   return (
     <>
       <div className="navigation-header-content" style={{ border: 'none' }}>
+        {isMobile ? (
+          <div
+            style={{ padding: '0 12px 0 6px' }}
+            onClick={() => setActiveStatusPage('mobile-reset')}
+          >
+            <IoArrowBack size={24} />
+          </div>
+        ) : null}
         <div className="navigation-header-title">
           <div>
             Status Page

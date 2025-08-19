@@ -12,12 +12,23 @@ import DeleteIncidentModal from '../../modal/incident/delete';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 import { MdArchive } from 'react-icons/md';
 import ArchiveIncidentModal from '../../modal/incident/archive';
+import { IoArrowBack } from 'react-icons/io5';
 
-const HomeIncidentHeader = ({ isInfoOpen, setIsInfoOpen, rightChildren }) => {
+const HomeIncidentHeader = ({
+  isInfoOpen,
+  setIsInfoOpen,
+  rightChildren,
+  isMobile = false,
+}: any) => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },
-    incidentStore: { addIncident, deleteIncident, activeIncident: incident },
+    incidentStore: {
+      addIncident,
+      deleteIncident,
+      activeIncident: incident,
+      setActiveIncident,
+    },
   } = useContextStore();
 
   const role = new Role('user', user.permission);
@@ -56,56 +67,62 @@ const HomeIncidentHeader = ({ isInfoOpen, setIsInfoOpen, rightChildren }) => {
   };
 
   return (
-    <>
-      <div className="navigation-header-content">
-        <div className="navigation-header-title">
-          <div>
-            Incident
-            {incident?.title ? ` - ${incident.title || 'Lunalytics'}` : ''}
+    <div className="navigation-header-content">
+      {isMobile ? (
+        <div
+          style={{ padding: '0 12px 0 6px' }}
+          onClick={() => setActiveIncident('mobile-reset')}
+        >
+          <IoArrowBack size={24} />
+        </div>
+      ) : null}
+      <div className="navigation-header-title">
+        <div>
+          Incident
+          {incident?.title ? ` - ${incident.title || 'Lunalytics'}` : ''}
+        </div>
+        {incident?.status ? (
+          <div className="navigation-header-subtitle">
+            Current status: <a>{incident.status}</a>
           </div>
-          {incident?.status ? (
-            <div className="navigation-header-subtitle">
-              Current status: <a>{incident.status}</a>
-            </div>
-          ) : null}
-        </div>
-        <div className="navigation-header-buttons">
-          {isEditor ? (
-            <>
-              <div
-                onClick={() =>
-                  openModal(
-                    <ArchiveIncidentModal
-                      closeModal={closeModal}
-                      handleArchive={handleArchive}
-                    />
-                  )
-                }
-              >
-                <MdArchive style={{ width: '20px', height: '20px' }} />
-              </div>
-              <div
-                onClick={() =>
-                  openModal(
-                    <DeleteIncidentModal
-                      handleDelete={handleDelete}
-                      closeModal={closeModal}
-                    />
-                  )
-                }
-              >
-                <FaTrashCan style={{ width: '20px', height: '20px' }} />
-              </div>
-            </>
-          ) : null}
-          {rightChildren ? (
-            <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
-              <LuInfo size={20} />
-            </div>
-          ) : null}
-        </div>
+        ) : null}
       </div>
-    </>
+      <div className="navigation-header-buttons">
+        {isEditor ? (
+          <>
+            <div
+              onClick={() =>
+                openModal(
+                  <ArchiveIncidentModal
+                    closeModal={closeModal}
+                    handleArchive={handleArchive}
+                  />
+                )
+              }
+            >
+              <MdArchive style={{ width: '20px', height: '20px' }} />
+            </div>
+            <div
+              onClick={() =>
+                openModal(
+                  <DeleteIncidentModal
+                    handleDelete={handleDelete}
+                    closeModal={closeModal}
+                  />
+                )
+              }
+            >
+              <FaTrashCan style={{ width: '20px', height: '20px' }} />
+            </div>
+          </>
+        ) : null}
+        {rightChildren ? (
+          <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
+            <LuInfo size={20} />
+          </div>
+        ) : null}
+      </div>
+    </div>
   );
 };
 

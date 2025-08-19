@@ -96,7 +96,7 @@ const StatusConfigureMonitor = ({
       {autoAdd ? (
         <div className="scmaa-container">
           <div className="scmaa-content">
-            <div className="scmaa-title">Auto add montiors</div>
+            <div className="scmaa-title">Auto add monitors</div>
             <div className="scmaa-subtitle">
               All monitors will be visible on this page. As you create more
               monitors they will be added to this page. You can disable auto add

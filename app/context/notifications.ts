@@ -56,7 +56,12 @@ class NotificationStore {
     return Array.from(this.notifications.values()) || [];
   }
 
-  setActiveNotification = (id?: string) => {
+  setActiveNotification = (id?: string | null) => {
+    if (id === 'mobile-reset') {
+      this.activeNotification = null;
+      return;
+    }
+
     if (!id || !this.notifications.has(id)) {
       this.activeNotification =
         this.notifications.values().next().value || null;
