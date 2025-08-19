@@ -13,6 +13,11 @@ const defaultInputs = {
   notificationType: 'All',
   valid_status_codes: ['200-299'],
   json_query: [{ key: '', operator: '==', value: '' }],
+  icon: {
+    id: 'lunalytics',
+    name: 'Lunalytics',
+    url: `https://cdn.jsdelivr.net/gh/selfhst/icons/svg/lunalytics.svg`,
+  },
 };
 
 const useMonitorForm = (

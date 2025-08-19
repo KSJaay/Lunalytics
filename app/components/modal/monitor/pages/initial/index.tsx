@@ -4,6 +4,7 @@ import { Input } from '@lunalytics/ui';
 
 // import local files
 import MonitorInitialDropdown from './type';
+import MonitorIconSelect from './icons';
 
 const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
   return (
@@ -23,7 +24,6 @@ const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
           inputs={inputs}
           errors={errors}
           handleInput={handleInput}
-          color="var(--lunaui-accent-900)"
         />
       )}
 
@@ -35,6 +35,8 @@ const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
           color="var(--lunaui-accent-900)"
         />
       )}
+
+      <MonitorIconSelect inputs={inputs} handleInput={handleInput} />
     </div>
   );
 };

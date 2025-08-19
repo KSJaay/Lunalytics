@@ -24,6 +24,7 @@ export const clean = (
   paused: monitor.paused == '1',
   createdAt: monitor.createdAt,
   heartbeats: includeHeartbeats ? heartbeats : undefined,
+  icon: parseJsonOrArray(monitor.icon),
 });
 
 export default clean;

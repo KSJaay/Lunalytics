@@ -9,6 +9,7 @@ import providerRoutes from './provider.js';
 import statusApiRoutes from './statusApi.js';
 import statusPagesRoutes from './statusPages.js';
 import notificationRoutes from './notifications.js';
+import fetchIcons from '../middleware/fetchIcons.js';
 import setupExistsMiddleware from '../middleware/setupExists.js';
 import defaultPageMiddleware from '../middleware/status/defaultPage.js';
 import getStatusPageUsingIdMiddleware from '../middleware/status/statusPageUsingId.js';
@@ -30,6 +31,7 @@ const initialiseRoutes = async (app) => {
   app.use('/api/providers', providerRoutes);
   // Routes used for configuring status pages
   app.use('/api/status-pages', statusPagesRoutes);
+  app.get('/api/icons', fetchIcons);
 };
 
 export default initialiseRoutes;

@@ -29,6 +29,7 @@ const clean = (
   createdAt: monitor.createdAt,
   cert: includeCert ? cleanCertificate(cert) : undefined,
   heartbeats: includeHeartbeats ? heartbeats : undefined,
+  icon: parseJsonOrArray(monitor.icon),
 });
 
 export default clean;
