@@ -15,6 +15,7 @@ import NotificationContent from '../components/notifications/content';
 import HomeNotificationHeader from '../components/notifications/header';
 import { filterData } from '../../shared/utils/search';
 import { useTranslation } from 'react-i18next';
+import useScreenSize from '../hooks/useScreenSize';
 
 const Notifications = () => {
   const {
@@ -29,12 +30,15 @@ const Notifications = () => {
   const { t } = useTranslation();
 
   const [search, setSearch] = useState(null);
+  const screenSize = useScreenSize();
+
+  const isDesktop = useMemo(() => screenSize === 'desktop', [screenSize]);
 
   useEffect(() => {
-    if (!activeNotification && allNotifications[0]) {
-      setActiveNotification(allNotifications[0]);
+    if (!activeNotification && isDesktop) {
+      setActiveNotification(allNotifications[0]?.id);
     }
-  }, [allNotifications, activeNotification, setActiveNotification]);
+  }, [allNotifications, activeNotification, setActiveNotification, isDesktop]);
 
   const handleSearchUpdate = (search = '') => {
     setSearch(search.trim());
@@ -45,6 +49,17 @@ const Notifications = () => {
 
     return filterData(allNotifications, search, ['friendlyName', 'platform']);
   }, [search, allNotifications]);
+
+  if (!isDesktop && activeNotification) {
+    return (
+      <div className="monitor-mobile-container">
+        <HomeNotificationHeader isMobile={!isDesktop} />
+        <NotificationContent />
+      </div>
+    );
+  }
+
+  const content = isDesktop ? <NotificationContent /> : null;
 
   return (
     <Navigation
@@ -73,7 +88,7 @@ const Notifications = () => {
       {!activeNotification ? (
         <div className="monitor-none-exist">{t('notification.none_exist')}</div>
       ) : (
-        <NotificationContent />
+        content
       )}
     </Navigation>
   );

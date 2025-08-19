@@ -56,6 +56,11 @@ class StatusStore {
   }
 
   setActiveStatusPage = (id: string | null | undefined) => {
+    if (id === 'mobile-reset') {
+      this.activeStatusPage = null;
+      return;
+    }
+
     if (!id || !this.statusPages.has(id)) {
       this.activeStatusPage = this.statusPages.values().next().value || null;
       return;

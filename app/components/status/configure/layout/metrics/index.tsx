@@ -131,7 +131,7 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
             <StatusConfigureMonitor
               componentId={componentId}
               getValues={() => {
-                const monitorIds = monitors.map((montior) => montior.id);
+                const monitorIds = monitors.map((monitor) => monitor.id);
 
                 return { autoAdd, monitors: monitorIds };
               }}

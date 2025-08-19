@@ -1,4 +1,5 @@
 @use '../pxToRem.scss' as *;
+@use '../breakpoints.scss' as *;
 
 .notification-empty {
   display: flex;
@@ -88,4 +89,10 @@
   display: flex;
   flex-direction: column;
   margin: 0 1rem 1rem 1rem;
+}
+
+@include mobile {
+  .notification-content-container {
+    grid-template-columns: 1fr;
+  }
 }

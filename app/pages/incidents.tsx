@@ -15,6 +15,7 @@ import HomeIncidentHeader from '../components/incident/header';
 import IncidentContent from '../components/incident/content';
 import IncidentCreateModal from '../components/modal/incident/create';
 import { filterData } from '../../shared/utils/search';
+import useScreenSize from '../hooks/useScreenSize';
 
 const Notifications = () => {
   const {
@@ -23,12 +24,14 @@ const Notifications = () => {
   } = useContextStore();
 
   const [search, setSearch] = useState<string | null>(null);
+  const screenSize = useScreenSize();
+  const isDesktop = useMemo(() => screenSize === 'desktop', [screenSize]);
 
   useEffect(() => {
-    if (!activeIncident && allIncidents[0]) {
-      setActiveIncident(allIncidents[0]);
+    if (!activeIncident && isDesktop) {
+      setActiveIncident(allIncidents[0]?.incidentId);
     }
-  }, [allIncidents, activeIncident]);
+  }, [allIncidents, activeIncident, isDesktop]);
 
   const handleSearchUpdate = (search = '') => {
     setSearch(search.trim());
@@ -39,6 +42,17 @@ const Notifications = () => {
 
     return filterData(allIncidents, search, ['title', 'status', 'affect']);
   }, [search, allIncidents]);
+
+  if (!isDesktop && activeIncident) {
+    return (
+      <div className="monitor-mobile-container">
+        <HomeIncidentHeader isMobile={!isDesktop} />
+        <IncidentContent />
+      </div>
+    );
+  }
+
+  const content = isDesktop ? <IncidentContent /> : null;
 
   return (
     <Navigation
@@ -60,7 +74,6 @@ const Notifications = () => {
           Add Incident
         </Button>
       }
-      onLeftClick={() => {}}
       header={{ HeaderComponent: HomeIncidentHeader }}
     >
       {!activeIncident ? (
@@ -68,7 +81,7 @@ const Notifications = () => {
           <div>No incidents found</div>
         </div>
       ) : (
-        <IncidentContent />
+        content
       )}
     </Navigation>
   );

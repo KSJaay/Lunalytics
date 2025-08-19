@@ -1,15 +1,16 @@
 import '../styles.scss';
 
 // import dependencies
-import { observer } from 'mobx-react-lite';
 import { LuInfo } from 'react-icons/lu';
+import { observer } from 'mobx-react-lite';
+import { IoArrowBack } from 'react-icons/io5';
+import { useTranslation } from 'react-i18next';
 
 // import local files
 import HomeMonitorHeaderMenu from './menu';
 import useContextStore from '../../../context';
 import Role from '../../../../shared/permissions/role';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
-import { useTranslation } from 'react-i18next';
 
 const typeToText = {
   http: 'HTTP/S',
@@ -19,19 +20,21 @@ const typeToText = {
 };
 
 interface HomeMonitorHeaderProps {
-  isInfoOpen: boolean;
-  setIsInfoOpen: (isOpen: boolean) => void;
+  isInfoOpen?: boolean;
+  setIsInfoOpen?: (isOpen: boolean) => void;
   rightChildren?: React.ReactNode;
+  isMobile?: boolean;
 }
 
 const HomeMonitorHeader = ({
   isInfoOpen,
   setIsInfoOpen,
   rightChildren,
+  isMobile = false,
 }: HomeMonitorHeaderProps) => {
   const {
     userStore: { user },
-    globalStore: { activeMonitor },
+    globalStore: { activeMonitor, setActiveMonitor },
   } = useContextStore();
   const { t } = useTranslation();
 
@@ -50,6 +53,14 @@ const HomeMonitorHeader = ({
 
   return (
     <div className="navigation-header-content">
+      {isMobile ? (
+        <div
+          style={{ padding: '0 12px 0 6px' }}
+          onClick={() => setActiveMonitor('mobile-reset')}
+        >
+          <IoArrowBack size={24} />
+        </div>
+      ) : null}
       <div className="navigation-header-title">
         <div>
           {t('common.monitor')} - {activeMonitor.name}
