@@ -16,4 +16,5 @@ export interface HandleMonitorProps {
   body: string;
   ignoreTls: boolean;
   json_query: any;
+  icon: { id: string; name: string; url: string };
 }

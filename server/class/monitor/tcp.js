@@ -1,3 +1,5 @@
+import { parseJsonOrArray } from '../../utils/parser.js';
+
 const clean = ({ heartbeats = [], ...monitor }, includeHeartbeats = true) => ({
   monitorId: monitor.monitorId,
   name: monitor.name,
@@ -17,6 +19,7 @@ const clean = ({ heartbeats = [], ...monitor }, includeHeartbeats = true) => ({
   paused: monitor.paused == '1',
   createdAt: monitor.createdAt,
   heartbeats: includeHeartbeats ? heartbeats : undefined,
+  icon: parseJsonOrArray(monitor.icon),
 });
 
 export default clean;

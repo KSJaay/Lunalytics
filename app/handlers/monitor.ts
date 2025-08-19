@@ -48,6 +48,7 @@ const handleMonitor = async (
       body,
       ignoreTls,
       json_query,
+      icon,
     } = form;
 
     const parsedHeaders = parseJson(headers);
@@ -71,6 +72,7 @@ const handleMonitor = async (
       headers: parsedHeaders,
       body: parsedBody,
       json_query,
+      icon,
     });
 
     setMonitor(query.data);

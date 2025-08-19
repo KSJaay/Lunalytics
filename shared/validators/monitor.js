@@ -165,6 +165,20 @@ const jsonQuery = (value) => {
   }
 };
 
+const icon = (value) => {
+  if (!value.id) {
+    return 'Please provide a valid icon ID.';
+  }
+
+  if (!value.name) {
+    return 'Please provide a valid icon name.';
+  }
+
+  if (!value.url) {
+    return 'Please provide a valid icon URL.';
+  }
+};
+
 const validators = {
   type,
   name,
@@ -181,6 +195,7 @@ const validators = {
   headers,
   body,
   jsonQuery,
+  icon,
 };
 
 const httpValidators = [
@@ -196,6 +211,7 @@ const httpValidators = [
   ['notificationType', 'notificationType'],
   ['headers', 'headers'],
   ['body', 'body'],
+  ['icon', 'icon'],
 ];
 
 const jsonValidators = [
@@ -211,6 +227,7 @@ const jsonValidators = [
   ['headers', 'headers'],
   ['body', 'body'],
   ['json_query', 'jsonQuery'],
+  ['icon', 'icon'],
 ];
 
 const pingValidators = [
@@ -222,6 +239,7 @@ const pingValidators = [
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
   ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
 ];
 
 const tcpValidators = [
@@ -234,6 +252,7 @@ const tcpValidators = [
   ['retryInterval', 'retryInterval'],
   ['requestTimeout', 'requestTimeout'],
   ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
 ];
 
 const http = (data) => {

@@ -35,3 +35,17 @@
   align-items: center;
   justify-content: center;
 }
+
+.monitor-select-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  &:hover {
+    background-color: var(--accent-700);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+}
