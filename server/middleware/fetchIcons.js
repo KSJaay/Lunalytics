@@ -4,7 +4,7 @@ const fetchIcons = async (request, response) => {
   const { lastFetched, icons } = getIcons();
 
   if (lastFetched + 21600000 < Date.now()) {
-    await loadIcons();
+    loadIcons();
   }
 
   return response.status(200).json(icons);
