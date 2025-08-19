@@ -3,6 +3,9 @@ import { deleteCookie } from '../../shared/utils/cookies.js';
 import { handleError } from '../utils/errors.js';
 import { userSessionExists } from '../database/queries/session.js';
 import { apiTokenExists } from '../database/queries/tokens.js';
+import { timeToMs } from '../../shared/utils/ms.js';
+
+const sixtyDaysInHours = timeToMs(60, 'days');
 
 const authorization = async (request, response, next) => {
   try {
@@ -13,6 +16,14 @@ const authorization = async (request, response, next) => {
       const userSession = await userSessionExists(session_token);
 
       if (!userSession) {
+        deleteCookie(response, 'session_token');
+        return response.sendStatus(401);
+      }
+
+      const createdAt =
+        new Date(userSession.createdAt).getTime() + sixtyDaysInHours;
+
+      if (createdAt < Date.now()) {
         deleteCookie(response, 'session_token');
         return response.sendStatus(401);
       }

@@ -2,6 +2,7 @@
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { FaTrashCan } from 'react-icons/fa6';
+import { IoArrowBack } from 'react-icons/io5';
 import { useTranslation } from 'react-i18next';
 
 // import local files
@@ -10,8 +11,13 @@ import Role from '../../../../shared/permissions/role';
 import { createGetRequest } from '../../../services/axios';
 import NotificationDeleteModal from '../../modal/notification/delete';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import useScreenSize from '../../../hooks/useScreenSize';
 
-const HomeNotificationHeader = () => {
+const HomeNotificationHeader = ({
+  isMobile = false,
+}: {
+  isMobile: boolean;
+}) => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },
@@ -22,6 +28,9 @@ const HomeNotificationHeader = () => {
     },
   } = useContextStore();
   const { t } = useTranslation();
+
+  const screenSize = useScreenSize();
+  const isDesktop = screenSize === 'desktop';
 
   if (!notification) {
     return (
@@ -40,7 +49,7 @@ const HomeNotificationHeader = () => {
         notificationId: id,
       });
 
-      setActiveNotification(null);
+      setActiveNotification(isDesktop ? null : 'mobile-reset');
       deleteNotification(id);
       closeModal();
       toast.success('Notification deleted successfully!');
@@ -56,6 +65,14 @@ const HomeNotificationHeader = () => {
 
   return (
     <div className="navigation-header-content">
+      {isMobile ? (
+        <div
+          style={{ padding: '0 12px 0 6px' }}
+          onClick={() => setActiveNotification('mobile-reset')}
+        >
+          <IoArrowBack size={24} />
+        </div>
+      ) : null}
       <div className="navigation-header-title">
         <div>
           {t('common.notification')} -{' '}

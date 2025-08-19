@@ -180,3 +180,15 @@
   display: flex;
   flex-direction: column;
 }
+
+@include laptop {
+  .ihc-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@include mobile {
+  .ihc-container {
+    grid-template-columns: 1fr;
+  }
+}

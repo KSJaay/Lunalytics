@@ -20,6 +20,7 @@ import HomeMonitorHeader from '../components/home/header';
 import HomeMonitorsList from '../components/home/monitors';
 import MonitorConfigureModal from '../components/modal/monitor/configure';
 import NavigationMonitorInfo from '../components/navigation/info/monitor';
+import useScreenSize from '../hooks/useScreenSize';
 
 const Home = () => {
   const {
@@ -28,10 +29,14 @@ const Home = () => {
   } = useContextStore();
   const [search, setSearch] = useState<string | null>(null);
   const { t } = useTranslation();
+  const screenSize = useScreenSize();
+  const isDesktop = useMemo(() => screenSize === 'desktop', [screenSize]);
 
   useEffect(() => {
-    if (!activeMonitor) setActiveMonitor(allMonitors[0]?.monitorId);
-  }, [allMonitors]);
+    if (!activeMonitor && isDesktop) {
+      setActiveMonitor(allMonitors[0]?.monitorId);
+    }
+  }, [allMonitors, isDesktop]);
 
   const handleSearchUpdate = (search = '') => {
     setSearch(search.trim());
@@ -42,6 +47,27 @@ const Home = () => {
 
     return filterData(allMonitors, search, ['name', 'url']);
   }, [search, JSON.stringify(allMonitors)]);
+
+  if (!isDesktop && activeMonitor) {
+    return (
+      <div className="monitor-mobile-container">
+        <HomeMonitorHeader isMobile={!isDesktop} />
+        <MonitorStatus monitor={activeMonitor} />
+        <MonitorGraph monitor={activeMonitor} />
+        <MonitorUptime />
+        <Spacer size={18} />
+      </div>
+    );
+  }
+
+  const content = isDesktop ? (
+    <div className="monitor-container">
+      <MonitorStatus monitor={activeMonitor} />
+      <MonitorGraph monitor={activeMonitor} />
+      <MonitorUptime />
+      <Spacer size={18} />
+    </div>
+  ) : null;
 
   return (
     <Navigation
@@ -69,7 +95,9 @@ const Home = () => {
           </div>
         </div>
       }
-      rightChildren={<NavigationMonitorInfo monitor={activeMonitor} />}
+      rightChildren={
+        isDesktop ? <NavigationMonitorInfo monitor={activeMonitor} /> : null
+      }
       header={{ HeaderComponent: HomeMonitorHeader }}
     >
       {!activeMonitor ? (
@@ -77,12 +105,7 @@ const Home = () => {
           <div>{t('home.monitor.none_exist')}</div>
         </div>
       ) : (
-        <div className="monitor-container">
-          <MonitorStatus monitor={activeMonitor} />
-          <MonitorGraph monitor={activeMonitor} />
-          <MonitorUptime />
-          <Spacer size={18} />
-        </div>
+        content
       )}
     </Navigation>
   );

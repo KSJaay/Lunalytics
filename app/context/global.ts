@@ -126,6 +126,11 @@ class GlobalStore {
   };
 
   setActiveMonitor = (monitorId?: string) => {
+    if (monitorId === 'mobile-reset') {
+      this.activeMonitor = null;
+      return;
+    }
+
     if (!monitorId || !this.monitors.has(monitorId)) {
       this.activeMonitor = this.monitors.values().next().value || null;
       return;

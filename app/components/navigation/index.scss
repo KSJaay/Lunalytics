@@ -1,4 +1,5 @@
 @use '../../styles/pxToRem.scss' as *;
+@use '../../styles/breakpoints.scss' as *;
 
 .navigation-container {
   position: relative;
@@ -250,4 +251,37 @@
   gap: 1rem;
   padding-bottom: 1rem;
   align-items: center;
+}
+
+@include laptop {
+  .navigation-header {
+    display: none;
+  }
+
+  .navigation-sidebar-right {
+    display: none;
+  }
+
+  .navigation-sidebar {
+    width: auto;
+    flex: 1;
+  }
+
+  .monitor-mobile-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: var(--accent-900);
+    gap: 1rem;
+    overflow: auto;
+    height: 100vh;
+  }
+
+  .navigation-header-buttons > div {
+    background-color: var(--accent-800);
+  }
+
+  .navigation-header-content {
+    padding: 0 pxToRem(4) pxToRem(12) pxToRem(4);
+  }
 }

@@ -17,11 +17,9 @@ const HomeMonitorsList = ({
     globalStore: { activeMonitor, setActiveMonitor },
   } = useContextStore();
 
-  if (!activeMonitor) return null;
-
   const monitorsList = monitors.map((monitor) => {
     const classes = classNames('item', {
-      'item-active': activeMonitor.monitorId === monitor.monitorId,
+      'item-active': activeMonitor?.monitorId === monitor.monitorId,
     });
 
     let heartbeats = monitor.heartbeats
