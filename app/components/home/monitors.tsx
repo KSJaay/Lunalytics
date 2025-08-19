@@ -44,6 +44,8 @@ const HomeMonitorsList = ({
       heartbeats = heartbeats.concat(emptyHeartbeats);
     }
 
+    const iconUrl = monitor.icon?.url || '/logo.svg';
+
     return (
       <HomeMonitorsListContext
         monitorId={monitor.monitorId}
@@ -55,7 +57,7 @@ const HomeMonitorsList = ({
         >
           <div className="content">
             <div>
-              <img src="/logo.svg" style={{ width: '35px' }} />
+              <img src={iconUrl} style={{ width: '35px' }} />
             </div>
             <div>
               <div>{monitor.name}</div>

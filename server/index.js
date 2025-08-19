@@ -16,6 +16,7 @@ import initialiseRoutes from './routes/index.js';
 import initialiseCronJobs from './utils/cron.js';
 import migrateDatabase from '../scripts/migrate.js';
 import addInviteToCookie from './middleware/addInviteToCookie.js';
+import { loadIcons } from './utils/icons.js';
 
 const app = express();
 
@@ -38,6 +39,7 @@ const init = async () => {
   }
 
   await initialiseCronJobs();
+  await loadIcons();
 
   app
     .use(compression())

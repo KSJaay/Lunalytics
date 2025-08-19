@@ -14,6 +14,11 @@ const migrate = async () => {
 
   await client.schema.alterTable('monitor', (table) => {
     table.integer('retry').defaultTo(1);
+    table.json('icon').defaultTo({
+      id: 'lunalytics',
+      name: 'Lunalytics',
+      url: 'https://cdn.jsdelivr.net/gh/selfhst/icons/svg/lunalytics.svg',
+    });
   });
 
   await client.schema.alterTable('user', async (table) => {

@@ -22,6 +22,7 @@ export interface ContextMonitorProps {
   createdAt: string;
   cert: Certificate;
   heartbeats: Heartbeat[];
+  icon: { id: string; name: string; url: string };
 }
 
 export interface Certificate {

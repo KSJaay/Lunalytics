@@ -33,6 +33,7 @@ export const formatMonitorData = (body, email) => {
     notificationType: body.notificationType,
     ignoreTls: false,
     email,
+    icon: stringifyJson(body.icon),
   };
 
   if (body.type === 'http') {
