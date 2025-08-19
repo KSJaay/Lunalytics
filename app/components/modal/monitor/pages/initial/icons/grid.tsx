@@ -2,15 +2,17 @@
 import PropTypes from 'prop-types';
 import { FixedSizeGrid as Grid } from 'react-window';
 
+const limit = 5;
+
 const MonitorIconGrid = ({ icons, handleInput }) => {
   if (!icons) return null;
 
   return (
     <Grid
-      columnCount={5}
+      columnCount={limit}
       columnWidth={100}
       height={350}
-      rowCount={Math.ceil(icons.length / 5)}
+      rowCount={Math.ceil(icons.length / limit)}
       rowHeight={100}
       width={500}
       style={{ overflowX: 'hidden', marginTop: '20px', gap: '10px' }}
@@ -24,7 +26,7 @@ const MonitorIconGrid = ({ icons, handleInput }) => {
         rowIndex: number;
         style: React.CSSProperties;
       }) => {
-        const item = icons[rowIndex * 6 + columnIndex];
+        const item = icons[rowIndex * limit + columnIndex];
         return item ? (
           <div
             className="monitor-select-icon"
