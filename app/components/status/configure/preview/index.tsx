@@ -31,7 +31,7 @@ const StatusConfigurePreview = () => {
     },
     layoutItems,
     getComponent,
-  } = useStatusPageContext;
+  } = useStatusPageContext();
 
   const {
     globalStore: { allMonitors, getMonitor },

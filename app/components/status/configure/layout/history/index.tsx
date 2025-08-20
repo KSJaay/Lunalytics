@@ -10,7 +10,7 @@ import StatusConfigureLayoutHistoryList from './list';
 import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHistory = ({ componentId, incidents = [] }) => {
-  const { removeComponent } = useStatusPageContext;
+  const { removeComponent } = useStatusPageContext();
 
   return (
     <div className="scc-block">

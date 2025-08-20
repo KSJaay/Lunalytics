@@ -3,17 +3,18 @@ import { toast } from 'react-toastify';
 import { LuInfo } from 'react-icons/lu';
 import { observer } from 'mobx-react-lite';
 import { FaTrashCan } from 'react-icons/fa6';
+import { IoArrowBack } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { TbLayoutFilled } from 'react-icons/tb';
+import { FaCog, FaPalette, FaRegEye } from 'react-icons/fa';
 
 // import local files
 import useContextStore from '../../../context';
 import Role from '../../../../shared/permissions/role';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
-import { createPostRequest } from '../../../services/axios';
 import useCurrentUrl from '../../../hooks/useCurrentUrl';
-import { FaCog, FaPalette, FaRegEye } from 'react-icons/fa';
-import { TbLayoutFilled } from 'react-icons/tb';
 import StatusDeleteModal from '../../modal/status/delete';
-import { IoArrowBack } from 'react-icons/io5';
+import { createPostRequest } from '../../../services/axios';
+import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 
 const menuOptions = [
   { id: 'Appearance', Icon: FaPalette },
@@ -39,6 +40,7 @@ const HomeStatusPageHeader = ({
       setActiveStatusPage,
     },
   } = useContextStore();
+  const navigate = useNavigate();
 
   const baseUrl = useCurrentUrl();
 
@@ -55,11 +57,12 @@ const HomeStatusPageHeader = ({
       const statusPageId = statusPage?.statusId;
 
       await createPostRequest('/api/status-pages/delete', { statusPageId });
-      setActiveNotification(null);
+      setActiveStatusPage(null);
       deleteStatusPage(statusPageId);
       toast.success('Status page deleted successfully!');
       navigate('/status-pages');
-    } catch {
+    } catch (error) {
+      console.log(error);
       closeModal();
       toast.error('Something went wrong! Please try again later.');
     }

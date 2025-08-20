@@ -20,7 +20,7 @@ const StatusConfigureLayoutHeader = ({ componentId }) => {
   const container = useRef(null);
 
   const { getComponent, removeComponent, setComponentValue, layoutItems } =
-    useStatusPageContext;
+    useStatusPageContext();
 
   const component = useMemo(
     () => getComponent(componentId),

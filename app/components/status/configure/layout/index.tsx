@@ -32,7 +32,7 @@ const StatusConfigureLayout = () => {
     layoutItems,
     createComponent,
     reorderBlocks,
-  } = useStatusPageContext;
+  } = useStatusPageContext();
   const {
     modalStore: { openModal, closeModal },
   } = useContextStore();

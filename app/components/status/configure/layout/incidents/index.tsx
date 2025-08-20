@@ -22,7 +22,7 @@ import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutIncidents = ({ componentId }) => {
   const { setComponentValue, getComponent, removeComponent, layoutItems } =
-    useStatusPageContext;
+    useStatusPageContext();
 
   const { design, size, status, titleSize, isMinimized } = useMemo(
     () => getComponent(componentId),

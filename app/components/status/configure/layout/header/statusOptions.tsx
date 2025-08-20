@@ -13,7 +13,8 @@ import {
 import useStatusPageContext from '../../../../../context/status-page';
 
 const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
-  const { setComponentValue, getComponent, layoutItems } = useStatusPageContext;
+  const { setComponentValue, getComponent, layoutItems } =
+    useStatusPageContext();
 
   const { status = {} } = useMemo(
     () => getComponent(componentId),

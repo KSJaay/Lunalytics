@@ -12,7 +12,7 @@ const StatusConfigureLayoutHeaderLogo = ({ componentId }) => {
     settings: { textColor, title = 'Lunalytics', logo = '/logo.svg' },
     getComponent,
     layoutItems,
-  } = useStatusPageContext;
+  } = useStatusPageContext();
 
   const {
     title: { showLogo, showTitle, logoSize, rotation, titleSize, alignment },

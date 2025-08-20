@@ -22,7 +22,7 @@ const StatusConfigureContent = ({ currentTab, showActionBar = true }) => {
     statusStore: { addStatusPage, activeStatusPage: statusPage },
   } = useContextStore();
 
-  const { resetStatusPage, settings, layoutItems } = useStatusPageContext;
+  const { resetStatusPage, settings, layoutItems } = useStatusPageContext();
 
   const showSaveActionBar = useMemo(() => {
     return (
@@ -75,7 +75,7 @@ const StatusConfigureContent = ({ currentTab, showActionBar = true }) => {
                 </div>
               </div>
               <div style={{ overflow: 'auto' }}>
-                <div className="status-page-content">
+                <div className="status-page-preview-content">
                   <StatusConfigurePreview />
                 </div>
               </div>

@@ -23,9 +23,9 @@ const Notifications = () => {
     modalStore: { openModal, closeModal },
     statusStore: { allStatusPages, activeStatusPage, setActiveStatusPage },
   } = useContextStore();
-  const { setData } = useStatusPageContext;
+  const { setData } = useStatusPageContext();
 
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState<string | null>(null);
   const [activePage, setActivePage] = useState('Appearance');
   const screenSize = useScreenSize();
   const isDesktop = useMemo(() => screenSize === 'desktop', [screenSize]);
@@ -82,10 +82,7 @@ const Notifications = () => {
           variant="flat"
           fullWidth
           onClick={() =>
-            openModal(
-              <StatusConfigurCreateModal closeModal={closeModal} />,
-              false
-            )
+            openModal(<StatusConfigurCreateModal closeModal={closeModal} />)
           }
         >
           Add Status Page

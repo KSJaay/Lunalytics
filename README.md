@@ -15,7 +15,7 @@
 ## 📔 Features
 
 - Easy to self-host
-- Monitor uptime for HTTP(s)/TCP/PING/JSON Query/
+- Monitor uptime for HTTP(s)/TCP/PING/JSON Query
 - Support for multiple users
 - Fully customisable status/dashboard pages
 - Incident management

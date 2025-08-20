@@ -21,13 +21,17 @@ const menuOptions = [
   { id: 'Preview', Icon: FaRegEye },
 ];
 
-const StatusConfigurCreateModal = ({ closeModal }) => {
+const StatusConfigurCreateModal = ({
+  closeModal,
+}: {
+  closeModal: () => void;
+}) => {
   const [activePage, setActivePage] = useState('Appearance');
   const {
     statusStore: { addStatusPage },
   } = useContextStore();
 
-  const { settings, layoutItems } = useStatusPageContext;
+  const { settings, layoutItems, resetFullStatusPage } = useStatusPageContext();
 
   const handleCreate = async () => {
     const hasUpdated = await handleCreateOrEditStatusPage(
@@ -38,6 +42,7 @@ const StatusConfigurCreateModal = ({ closeModal }) => {
     );
 
     if (hasUpdated) {
+      resetFullStatusPage();
       closeModal();
     }
   };
