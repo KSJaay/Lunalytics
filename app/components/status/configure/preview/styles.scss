@@ -461,3 +461,16 @@
     }
   }
 }
+
+@include tablet {
+  .sppw-container {
+    padding: 0 pxToRem(24);
+    aspect-ratio: unset;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  .status-page-footer {
+    width: 90%;
+  }
+}

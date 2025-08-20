@@ -10,14 +10,12 @@ const NotificationDiscordContent = ({
   inputs,
   errors,
   handleInput,
-  handleUpdate,
 }: {
   inputs: NotificationTelegram;
   errors: Partial<Record<keyof NotificationTelegram, string>>;
   handleInput: (
     input: Partial<Record<keyof NotificationTelegram, string>>
   ) => void;
-  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
@@ -34,7 +32,6 @@ const NotificationDiscordContent = ({
           onChange={(e) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
-          onBlur={handleUpdate}
         />
 
         <Input
@@ -59,7 +56,6 @@ const NotificationDiscordContent = ({
               )}
             </div>
           }
-          onBlur={handleUpdate}
         />
 
         <Input
@@ -74,7 +70,6 @@ const NotificationDiscordContent = ({
               value: { ...inputs.data, username: e.target.value },
             });
           }}
-          onBlur={handleUpdate}
         />
 
         <Input
@@ -89,7 +84,6 @@ const NotificationDiscordContent = ({
               value: { ...inputs.data, chatId: e.target.value },
             });
           }}
-          onBlur={handleUpdate}
         />
       </div>
 
@@ -112,7 +106,6 @@ const NotificationDiscordContent = ({
               key: 'disableNotification',
               value: e.target.checked,
             });
-            handleUpdate();
           }}
         />
 
@@ -124,7 +117,6 @@ const NotificationDiscordContent = ({
           checked={inputs.protectContent}
           onChange={(e) => {
             handleInput({ key: 'protectContent', value: e.target.checked });
-            handleUpdate();
           }}
         />
 
@@ -134,7 +126,6 @@ const NotificationDiscordContent = ({
           checked={inputs.isEnabled}
           onChange={(e) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
-            handleUpdate();
           }}
         />
       </div>

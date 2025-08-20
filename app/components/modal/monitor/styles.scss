@@ -1,3 +1,5 @@
+@use '../../../styles//breakpoints.scss' as *;
+
 .monitor-configure {
   display: flex;
   height: 100%;
@@ -71,4 +73,26 @@
   background-color: var(--accent-800);
   border-radius: 8px;
   flex: 1;
+}
+
+@include mobile {
+  .monitor-configure {
+    flex-direction: column;
+  }
+
+  .monitor-configure-container {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-configure-left-container {
+    width: 100%;
+  }
+
+  .monitor-configure-content {
+    margin-bottom: 25px;
+  }
+
+  .monitor-configure-buttons {
+    padding: 5px 10px;
+  }
 }
