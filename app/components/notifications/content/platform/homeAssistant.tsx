@@ -10,14 +10,12 @@ const NotificationHomeAssistantContent = ({
   inputs,
   errors,
   handleInput,
-  handleUpdate,
 }: {
   inputs: NotificationHomeAssistant;
   errors: Partial<Record<keyof NotificationHomeAssistant, string>>;
   handleInput: (
     input: Partial<Record<keyof NotificationHomeAssistant, string>>
   ) => void;
-  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
@@ -34,7 +32,6 @@ const NotificationHomeAssistantContent = ({
           onChange={(e) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
-          onBlur={() => handleUpdate()}
         />
 
         <Input
@@ -49,7 +46,6 @@ const NotificationHomeAssistantContent = ({
               value: { ...inputs.data, homeAssistantUrl: e.target.value },
             });
           }}
-          onBlur={() => handleUpdate?.()}
         />
 
         <Input
@@ -68,7 +64,6 @@ const NotificationHomeAssistantContent = ({
               },
             });
           }}
-          onBlur={() => handleUpdate?.()}
         />
 
         <Input
@@ -92,7 +87,6 @@ const NotificationHomeAssistantContent = ({
           onChange={(e) => {
             handleInput({ key: 'token', value: e.target.value });
           }}
-          onBlur={() => handleUpdate?.()}
         />
       </div>
 
@@ -103,7 +97,6 @@ const NotificationHomeAssistantContent = ({
           checked={inputs.isEnabled}
           onChange={(e) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
-            handleUpdate();
           }}
         />
       </div>
