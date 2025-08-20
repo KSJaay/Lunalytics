@@ -12,14 +12,12 @@ const NotificationSlackContent = ({
   inputs,
   errors,
   handleInput,
-  handleUpdate,
 }: {
   inputs: NotificationSlack;
   errors: Partial<Record<keyof NotificationSlack, string>>;
   handleInput: (
     input: Partial<Record<keyof NotificationSlack, string>>
   ) => void;
-  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
@@ -36,7 +34,6 @@ const NotificationSlackContent = ({
           onChange={(e) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
-          onBlur={handleUpdate}
         />
 
         <Input
@@ -49,7 +46,6 @@ const NotificationSlackContent = ({
           onChange={(e) => {
             handleInput({ key: 'token', value: e.target.value });
           }}
-          onBlur={handleUpdate}
           iconRight={
             <div
               onClick={() => setShowPassword(!showPassword)}
@@ -76,7 +72,6 @@ const NotificationSlackContent = ({
               value: { ...inputs.data, username: e.target.value },
             });
           }}
-          onBlur={handleUpdate}
         />
 
         <Input
@@ -91,7 +86,6 @@ const NotificationSlackContent = ({
               value: { ...inputs.data, textMessage: e.target.value },
             });
           }}
-          onBlur={handleUpdate}
         />
       </div>
 
@@ -107,7 +101,6 @@ const NotificationSlackContent = ({
             value: { ...inputs.data, channel: e.target.value },
           });
         }}
-        onBlur={handleUpdate}
       />
 
       <div style={{ paddingTop: '1rem' }}>
@@ -117,7 +110,6 @@ const NotificationSlackContent = ({
           checked={inputs.isEnabled}
           onChange={(e) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
-            handleUpdate();
           }}
         />
       </div>

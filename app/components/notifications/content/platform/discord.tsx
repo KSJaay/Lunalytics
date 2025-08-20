@@ -12,14 +12,12 @@ const NotificationDiscordContent = ({
   inputs,
   errors,
   handleInput,
-  handleUpdate,
 }: {
   inputs: NotificationDiscord;
   errors: Partial<Record<keyof NotificationDiscord, string>>;
   handleInput: (
     input: Partial<Record<keyof NotificationDiscord, string>>
   ) => void;
-  handleUpdate: () => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
@@ -36,7 +34,6 @@ const NotificationDiscordContent = ({
           onChange={(e) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
-          onBlur={handleUpdate}
         />
 
         <Input
@@ -60,7 +57,6 @@ const NotificationDiscordContent = ({
               )}
             </div>
           }
-          onBlur={handleUpdate}
         />
 
         <Input
@@ -75,7 +71,6 @@ const NotificationDiscordContent = ({
               value: { ...inputs.data, username: e.target.value },
             });
           }}
-          onBlur={handleUpdate}
         />
 
         <Input
@@ -90,7 +85,6 @@ const NotificationDiscordContent = ({
               value: { ...inputs.data, textMessage: e.target.value },
             });
           }}
-          onBlur={handleUpdate}
         />
       </div>
 
@@ -101,7 +95,6 @@ const NotificationDiscordContent = ({
           checked={inputs.isEnabled}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
-            handleUpdate();
           }}
         />
       </div>
