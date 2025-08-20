@@ -40,7 +40,7 @@ const statusText = {
 
 const StatusConfigureLayoutStatus = ({ componentId }) => {
   const { setComponentValue, getComponent, removeComponent, layoutItems } =
-    useStatusPageContext;
+    useStatusPageContext();
   const { icon, design, size, status, titleSize, isMinimized } = useMemo(
     () => getComponent(componentId),
     [componentId, JSON.stringify(layoutItems)]

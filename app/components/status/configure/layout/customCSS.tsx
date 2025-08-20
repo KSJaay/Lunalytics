@@ -11,7 +11,7 @@ import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureLayoutCustomCSS = ({ componentId }) => {
   const { getComponent, setComponentValue, removeComponent, layoutItems } =
-    useStatusPageContext;
+    useStatusPageContext();
 
   const { isMinimized, data } = useMemo(
     () => getComponent(componentId),

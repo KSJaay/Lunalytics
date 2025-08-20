@@ -29,7 +29,7 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
   } = useContextStore();
 
   const { getComponent, setComponentValue, removeComponent, layoutItems } =
-    useStatusPageContext;
+    useStatusPageContext();
 
   const { title, monitors, graphType, status, statusIndicator, isMinimized } =
     useMemo(

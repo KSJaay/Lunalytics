@@ -13,7 +13,7 @@ const StatusConfigureAppearance = () => {
   const {
     settings: { theme = 'Auto' },
     changeValues,
-  } = useStatusPageContext;
+  } = useStatusPageContext();
 
   return (
     <div className="scc-block">

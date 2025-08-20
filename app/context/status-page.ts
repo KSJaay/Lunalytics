@@ -59,6 +59,7 @@ class StatusPageStore {
       getComponentMonitor: action,
       setMonitorValue: action,
       resetStatusPage: action,
+      resetFullStatusPage: action,
       reorderBlocks: action,
     });
   }
@@ -197,6 +198,13 @@ class StatusPageStore {
     this.setData({ settings, layout });
   };
 
+  resetFullStatusPage = () => {
+    this.setData({
+      settings: defaultStatusValues,
+      layout: defaultStatusComponents,
+    });
+  };
+
   reorderBlocks = (listOfIds: string[]) => {
     this.listOfIds = listOfIds;
   };
@@ -214,6 +222,8 @@ class StatusPageStore {
   }
 }
 
-const useStatusPageContext = new StatusPageStore();
+const statusPage = new StatusPageStore();
+
+const useStatusPageContext = () => statusPage;
 
 export default useStatusPageContext;

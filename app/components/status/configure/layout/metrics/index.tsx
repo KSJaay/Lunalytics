@@ -52,7 +52,7 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
     globalStore: { allMonitors, getMonitor },
   } = useContextStore();
   const { setComponentValue, getComponent, removeComponent, layoutItems } =
-    useStatusPageContext;
+    useStatusPageContext();
 
   const {
     monitors,
