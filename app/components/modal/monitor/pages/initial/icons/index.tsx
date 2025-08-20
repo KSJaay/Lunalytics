@@ -24,9 +24,9 @@ const MonitorIconSelect = ({ inputs, handleInput }) => {
   if (isError || isLoading || !icons)
     return (
       <div className="luna-input-wrapper">
-        <label className="input-label">Monitor Type</label>
+        <label className="input-label">Monitor Icon</label>
         <label className="luna-input-subtitle">
-          Select the type of monitor you want to setup
+          Select an icon for your monitor
         </label>
         <Popover
           color="var(--lunaui-accent-900)"
@@ -37,9 +37,9 @@ const MonitorIconSelect = ({ inputs, handleInput }) => {
 
   return (
     <div className="luna-input-wrapper">
-      <label className="input-label">Monitor Type</label>
+      <label className="input-label">Monitor Icon</label>
       <label className="luna-input-subtitle">
-        Select the type of monitor you want to setup
+        Select an icon for your monitor
       </label>
       <Popover
         color="var(--lunaui-accent-900)"
