@@ -20,7 +20,8 @@ const MemberApproveModal = ({ member, onClose }) => {
 
       toast.success('User request approved successfully.');
       onClose();
-    } catch {
+    } catch (error) {
+      console.log(error);
       toast.error("Error approving user's request.");
     }
   };

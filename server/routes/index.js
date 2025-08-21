@@ -13,6 +13,21 @@ import fetchIcons from '../middleware/fetchIcons.js';
 import setupExistsMiddleware from '../middleware/setupExists.js';
 import defaultPageMiddleware from '../middleware/status/defaultPage.js';
 import getStatusPageUsingIdMiddleware from '../middleware/status/statusPageUsingId.js';
+import { getListOfDockerContainers } from '../tools/dockerContainer.js';
+
+const getPlatform = (info) => {
+  let platform = '';
+
+  if (info.ImageManifestDescriptor?.platform?.architecture) {
+    platform += info.ImageManifestDescriptor.platform.architecture;
+  }
+
+  if (info.ImageManifestDescriptor?.platform?.os) {
+    platform += `/${info.ImageManifestDescriptor.platform.os}`;
+  }
+
+  return platform || 'unknown';
+};
 
 const initialiseRoutes = async (app) => {
   app.use(setupExistsMiddleware);
@@ -32,6 +47,19 @@ const initialiseRoutes = async (app) => {
   // Routes used for configuring status pages
   app.use('/api/status-pages', statusPagesRoutes);
   app.get('/api/icons', fetchIcons);
+  app.get('/api/docker/containers', async (request, response) => {
+    const containers = await getListOfDockerContainers();
+    response.json(
+      containers.map((info) => {
+        return {
+          id: info.Id,
+          name: info.Names?.[0]?.replace(/^\//, ''),
+          image: info.Image,
+          platform: getPlatform(info),
+        };
+      })
+    );
+  });
 };
 
 export default initialiseRoutes;

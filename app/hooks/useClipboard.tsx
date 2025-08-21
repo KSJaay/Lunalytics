@@ -13,7 +13,8 @@ const useClipboard = () => async (text: string, message: string) => {
     await navigator.clipboard.writeText(text);
     toast.success(message || 'Text has been copied to clipboard!');
     return true;
-  } catch {
+  } catch (error) {
+    console.log(error);
     toast.error('Failed to copy text to clipboard. Try again.');
     return false;
   }

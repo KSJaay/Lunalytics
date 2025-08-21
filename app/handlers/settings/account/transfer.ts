@@ -14,7 +14,8 @@ const handleTransferAccount = async (email, closeModal) => {
       toast.success('Ownership successfully transferred!');
       closeModal();
     }
-  } catch {
+  } catch (error) {
+    console.log(error);
     toast.error('Something went wrong, please try again later.');
   }
 };

@@ -16,6 +16,7 @@ import MonitorConfigureTcpModal from './configure/tcp';
 import { MdNotifications } from 'react-icons/md';
 import { useState } from 'react';
 import type { MonitorProps } from '../../../types/monitor';
+import MonitorConfigureDockerModal from './configure/docker';
 
 const pages = [
   { id: 'basic', title: 'Basic', icon: <FaCog size={20} /> },
@@ -106,6 +107,15 @@ const MonitorConfigureModal = ({
                 errors={errors}
                 handleInput={handleInput}
                 isEdit={isEdit}
+              />
+            ) : null}
+
+            {inputs.type === 'docker' ? (
+              <MonitorConfigureDockerModal
+                inputs={inputs}
+                errors={errors}
+                handleInput={handleInput}
+                pageId={pageId}
               />
             ) : null}
 
