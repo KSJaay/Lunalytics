@@ -16,7 +16,7 @@ import LoginLayout from '../components/login/layout';
 import { createPostRequest } from '../services/axios';
 import RegisterChecklist from '../components/register/checklist';
 
-const EditEmail = ({ email, ...props }) => (
+const EditEmail = ({ email, ...props }: { email: string }) => (
   <div className="login-header-subtitle">
     {email}
     <div className="login-header-subtitle-link" {...props}>

@@ -38,7 +38,8 @@ const ManageInvites = () => {
       await createPostRequest('/api/invite/delete', { id });
       removeInvite(id);
       toast.success('Invite deleted successfully');
-    } catch {
+    } catch (error) {
+      console.log(error);
       toast.error('Failed to delete invite');
     }
   };
@@ -48,7 +49,8 @@ const ManageInvites = () => {
       await createPostRequest('/api/invite/pause', { id, paused: !paused });
       pauseInvite(id, !paused);
       toast.success('Invite paused successfully');
-    } catch {
+    } catch (error) {
+      console.log(error);
       toast.error('Failed to pause invite');
     }
   };

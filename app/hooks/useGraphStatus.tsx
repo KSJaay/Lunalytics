@@ -21,7 +21,8 @@ const useGraphStatus = (monitor: ContextMonitorProps) => {
         if (query.status === 200) {
           return setStatusHeartbeats(query.data);
         }
-      } catch {
+      } catch (error) {
+        console.log(error);
         toast.error('Failed to fetch monitor heartbeats');
       }
     };
