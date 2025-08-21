@@ -1,15 +1,17 @@
 import { DiscordTemplateMessages } from './discord';
+import { HomeAssistantTemplateMessages } from './homeAssistant';
+import { PushoverTemplateMessages } from './pushover';
 import { SlackTemplateMessages } from './slack';
 import { TelegramTemplateMessages } from './telegram';
 import { WebhookTemplateMessages } from './webhook';
-import { HomeAssistantTemplateMessages } from './homeAssistant';
 
 const NotificationsTemplates = {
   Discord: DiscordTemplateMessages,
+  HomeAssistant: HomeAssistantTemplateMessages,
+  Pushover: PushoverTemplateMessages,
   Slack: SlackTemplateMessages,
   Telegram: TelegramTemplateMessages,
   Webhook: WebhookTemplateMessages,
-  HomeAssistant: HomeAssistantTemplateMessages,
 };
 
 export default NotificationsTemplates;

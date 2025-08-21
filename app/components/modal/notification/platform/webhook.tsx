@@ -67,7 +67,7 @@ const NotificationModalWebhookInput = ({
           toggleDropdown={toggleDropdown}
           id="http-form-dropdown"
         >
-          {values.requestType || 'application/json'}
+          {values.data?.requestType || 'application/json'}
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
           {[
@@ -79,7 +79,10 @@ const NotificationModalWebhookInput = ({
               key={method}
               id={method}
               onClick={() => {
-                handleInput({ key: 'requestType', value: method });
+                handleInput({
+                  key: 'data',
+                  value: { ...values.data, requestType: method },
+                });
                 toggleDropdown();
               }}
             >
@@ -112,13 +115,16 @@ const NotificationModalWebhookInput = ({
                   error={errors.additionalHeaders}
                   onChange={(e) => {
                     handleInput({
-                      key: 'additionalHeaders',
-                      value: e.target.value,
+                      key: 'data',
+                      value: {
+                        ...values.data,
+                        additionalHeaders: e.target.value,
+                      },
                     });
                   }}
                   id="additional-headers-textarea"
                 >
-                  {values.additionalHeaders}
+                  {values.data?.additionalHeaders}
                 </Textarea>
               </>
             )

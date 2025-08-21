@@ -28,7 +28,7 @@ const NotificationDiscordContent = ({
           placeholder="Lunalytics"
           id="friendly-name"
           error={errors?.friendlyName}
-          value={inputs.friendlyName}
+          value={inputs.friendlyName || ''}
           onChange={(e) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
@@ -40,7 +40,7 @@ const NotificationDiscordContent = ({
           title={t('notification.input.bot_token')}
           placeholder={t('notification.input.bot_token')}
           error={errors.token}
-          value={inputs.token}
+          value={inputs.token || ''}
           onChange={(event) =>
             handleInput({ key: 'token', value: event.target.value })
           }
@@ -59,25 +59,11 @@ const NotificationDiscordContent = ({
         />
 
         <Input
-          title={t('notification.input.webhook_username')}
-          placeholder="Lunalytics"
-          id="webhook-username"
-          error={errors?.username}
-          value={inputs.data.username}
-          onChange={(e) => {
-            handleInput({
-              key: 'data',
-              value: { ...inputs.data, username: e.target.value },
-            });
-          }}
-        />
-
-        <Input
           title={t('notification.input.chat')}
           placeholder="12389741289"
           id="chat-id"
           error={errors?.chatId}
-          value={inputs.data.chatId}
+          value={inputs.data?.chatId || ''}
           onChange={(e) => {
             handleInput({
               key: 'data',
@@ -100,11 +86,11 @@ const NotificationDiscordContent = ({
           shortDescription={t('notification.input.disable_description')}
           id="disable-notification"
           error={errors?.disableNotification}
-          checked={inputs.disableNotification}
+          checked={inputs.data?.disableNotification || ''}
           onChange={(e) => {
             handleInput({
-              key: 'disableNotification',
-              value: e.target.checked,
+              key: 'data',
+              value: { ...inputs.data, disableNotification: e.target.checked },
             });
           }}
         />
@@ -114,9 +100,12 @@ const NotificationDiscordContent = ({
           shortDescription={t('notification.input.protect_description')}
           id="protect-content"
           error={errors?.protectContent}
-          checked={inputs.protectContent}
+          checked={inputs.data?.protectContent || ''}
           onChange={(e) => {
-            handleInput({ key: 'protectContent', value: e.target.checked });
+            handleInput({
+              key: 'data',
+              value: { ...inputs.data, protectContent: e.target.checked },
+            });
           }}
         />
 

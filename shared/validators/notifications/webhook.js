@@ -23,12 +23,14 @@ const isJson = (value) => {
 };
 
 const Webhook = ({
-  additionalHeaders,
   friendlyName,
   messageType,
-  requestType = 'application/json',
-  showAdditionalHeaders = false,
   token,
+  data: {
+    additionalHeaders,
+    showAdditionalHeaders = false,
+    requestType = 'application/json',
+  } = {},
 }) => {
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(
