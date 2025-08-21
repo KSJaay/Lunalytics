@@ -1,6 +1,5 @@
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -30,7 +29,7 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
           label="Show logo"
           shortDescription="Whether or not the logo should be shown"
           checked={title.showLogo}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setComponentValue(componentId, 'title', {
               showLogo: e.target.checked,
             });
@@ -40,7 +39,7 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
           label="Show title"
           shortDescription="Whether or not the title should be shown"
           checked={title.showTitle}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setComponentValue(componentId, 'title', {
               showTitle: e.target.checked,
             });
@@ -50,7 +49,7 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
           label="Logo Size"
           options={statusSizes}
           activeOption={title.logoSize}
-          onChange={(e) => {
+          onChange={(e: string) => {
             setComponentValue(componentId, 'title', { logoSize: e });
           }}
         />
@@ -58,7 +57,7 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
           label="Title Size"
           options={statusSizes}
           activeOption={title.titleSize}
-          onChange={(e) => {
+          onChange={(e: string) => {
             setComponentValue(componentId, 'title', { titleSize: e });
           }}
         />
@@ -66,7 +65,7 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
           label="Rotation"
           options={statusRotations}
           activeOption={title.rotation}
-          onChange={(e) => {
+          onChange={(e: string) => {
             setComponentValue(componentId, 'title', { rotation: e });
           }}
         />
@@ -74,7 +73,7 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
           label="Alignment"
           options={statusAlignments}
           activeOption={title.alignment}
-          onChange={(e) => {
+          onChange={(e: string) => {
             setComponentValue(componentId, 'title', { alignment: e });
           }}
         />
@@ -85,9 +84,5 @@ const StatusConfigureLayoutHeaderLogoOptions = ({ componentId }) => {
 
 StatusConfigureLayoutHeaderLogoOptions.displayName =
   'StatusConfigureLayoutHeaderLogoOptions';
-
-StatusConfigureLayoutHeaderLogoOptions.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutHeaderLogoOptions);

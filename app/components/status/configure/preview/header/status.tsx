@@ -1,7 +1,6 @@
 // import dependencies
 import dayjs from 'dayjs';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 
 const StatusPageHeaderStatus = ({ status = {} }) => {
   if (!status.showLogo && !status.showTitle) {
@@ -34,9 +33,5 @@ const StatusPageHeaderStatus = ({ status = {} }) => {
 };
 
 StatusPageHeaderStatus.displayName = 'StatusPageHeaderStatus';
-
-StatusPageHeaderStatus.propTypes = {
-  status: PropTypes.object.isRequired,
-};
 
 export default StatusPageHeaderStatus;

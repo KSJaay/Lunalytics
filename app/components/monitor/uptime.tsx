@@ -55,6 +55,4 @@ const MonitorUptime = () => {
 
 MonitorUptime.displayName = 'MonitorUptime';
 
-MonitorUptime.propTypes = {};
-
 export default observer(MonitorUptime);

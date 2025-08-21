@@ -18,7 +18,6 @@ import timezone from 'dayjs/plugin/timezone';
 import useLocalStorageContext from '../../../hooks/useLocalstorage';
 import GraphMenu from './menu';
 import useGraphStatus from '../../../hooks/useGraphStatus';
-import { fullMonitorPropType } from '../../../../shared/utils/propTypes';
 import GraphPing from './ping';
 
 dayjs.extend(timezone);
@@ -117,9 +116,5 @@ const MonitorGraph = ({ monitor }) => {
 };
 
 MonitorGraph.displayName = 'MonitorGraph';
-
-MonitorGraph.propTypes = {
-  monitor: fullMonitorPropType.isRequired,
-};
 
 export default MonitorGraph;

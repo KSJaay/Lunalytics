@@ -29,7 +29,7 @@ const NotificationHomeAssistantContent = ({
           id="friendly-name"
           error={errors?.friendlyName}
           value={inputs.friendlyName || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
         />
@@ -40,7 +40,7 @@ const NotificationHomeAssistantContent = ({
           id="home-assistant-url"
           error={errors?.homeAssistantUrl}
           value={inputs.data?.homeAssistantUrl || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, homeAssistantUrl: e.target.value },
@@ -55,7 +55,7 @@ const NotificationHomeAssistantContent = ({
           isRequired
           error={errors?.homeAssistantNotificationService}
           value={inputs.data?.homeAssistantNotificationService || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: {
@@ -84,7 +84,7 @@ const NotificationHomeAssistantContent = ({
               )}
             </div>
           }
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'token', value: e.target.value });
           }}
         />
@@ -95,7 +95,7 @@ const NotificationHomeAssistantContent = ({
           label={t('notification.input.enabled_title')}
           shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
           }}
         />

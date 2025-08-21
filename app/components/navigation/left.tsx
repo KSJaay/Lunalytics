@@ -2,7 +2,6 @@
 import './left.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
@@ -126,9 +125,5 @@ const LeftNavigation = ({ activeUrl }) => {
 };
 
 LeftNavigation.displayName = 'LeftNavigation';
-
-LeftNavigation.propTypes = {
-  activeUrl: PropTypes.string,
-};
 
 export default observer(LeftNavigation);

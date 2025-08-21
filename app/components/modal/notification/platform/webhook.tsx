@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Textarea, Input } from '@lunalytics/ui';
 
 // import local files
@@ -136,11 +135,5 @@ const NotificationModalWebhookInput = ({
 };
 
 NotificationModalWebhookInput.displayName = 'NotificationModalWebhookInput';
-
-NotificationModalWebhookInput.propTypes = {
-  values: PropTypes.object,
-  errors: PropTypes.object,
-  handleInput: PropTypes.func,
-};
 
 export default NotificationModalWebhookInput;

@@ -1,11 +1,7 @@
 import './style.scss';
 
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import MemberTableRow from './row';
-import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MembersTable = ({ members = [] }) => {
   const membersList = members.map((member, index) => (
@@ -27,9 +23,5 @@ const MembersTable = ({ members = [] }) => {
 };
 
 MembersTable.displayName = 'MembersTable';
-
-MembersTable.propTypes = {
-  members: PropTypes.arrayOf(userPropType).isRequired,
-};
 
 export default MembersTable;

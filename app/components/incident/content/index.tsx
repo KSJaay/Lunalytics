@@ -18,11 +18,11 @@ const IncidentContent = () => {
     incidentStore: { addIncident, activeIncident: incident },
   } = useContextStore();
 
-  const [title, setTitle] = useState(incident.title);
+  const [title, setTitle] = useState(incident?.title);
 
   const handleUpdate = async () => {
     try {
-      if (!title || title === incident.title) {
+      if (!title || title === incident?.title) {
         return;
       }
 
@@ -50,7 +50,9 @@ const IncidentContent = () => {
           subtitle="Breif description (maximum of 100 characters)"
           value={title}
           maxLength={100}
-          onChange={(e) => setTitle(e.target.value?.trim())}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value?.trim())
+          }
           onBlur={handleUpdate}
         />
         <IncidentContentImpact incident={incident} />
@@ -73,7 +75,5 @@ const IncidentContent = () => {
 };
 
 IncidentContent.displayName = 'IncidentContent';
-
-IncidentContent.propTypes = {};
 
 export default observer(IncidentContent);

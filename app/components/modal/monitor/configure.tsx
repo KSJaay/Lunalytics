@@ -1,7 +1,6 @@
 import './styles.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button, Modal } from '@lunalytics/ui';
 import { CgWebsite } from 'react-icons/cg';
 import { FaClock, FaCog, FaCogs } from 'react-icons/fa';
@@ -16,6 +15,7 @@ import MonitorConfigureTcpModal from './configure/tcp';
 
 import { MdNotifications } from 'react-icons/md';
 import { useState } from 'react';
+import type { MonitorProps } from '../../../types/monitor';
 
 const pages = [
   { id: 'basic', title: 'Basic', icon: <FaCog size={20} /> },
@@ -28,12 +28,19 @@ const pages = [
   { id: 'advanced', title: 'Advanced', icon: <FaCogs size={20} /> },
 ];
 
+interface ModalProps {
+  closeModal: () => void;
+  monitor: MonitorProps;
+  handleMonitorSubmit: (monitor: Partial<MonitorProps>) => void;
+  isEdit?: boolean;
+}
+
 const MonitorConfigureModal = ({
   closeModal,
   monitor,
   handleMonitorSubmit,
   isEdit = false,
-}) => {
+}: ModalProps) => {
   const [pageId, setPageId] = useState('basic');
   const { errors, inputs, handleActionButtons, handleInput } = useMonitorForm(
     monitor,
@@ -142,12 +149,5 @@ const MonitorConfigureModal = ({
 };
 
 MonitorConfigureModal.displayName = 'MonitorConfigureModal';
-
-MonitorConfigureModal.propTypes = {
-  closeModal: PropTypes.func,
-  handleMonitorSubmit: PropTypes.func,
-  isEdit: PropTypes.bool,
-  monitor: PropTypes.object,
-};
 
 export default MonitorConfigureModal;

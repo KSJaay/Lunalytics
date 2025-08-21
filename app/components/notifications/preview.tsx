@@ -1,13 +1,12 @@
 // import dependencies
+import { useMemo, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import { fullMonitorPropType } from '../../../shared/utils/propTypes';
-import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { filterData } from '../../../shared/utils/search';
 
 const NotificationPreview = ({ children }) => {
@@ -51,7 +50,7 @@ const NotificationPreview = ({ children }) => {
     <Input
       placeholder={t('notification.search')}
       key="search"
-      onChange={(event) => {
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value?.trim() || '');
       }}
     />
@@ -80,9 +79,5 @@ const NotificationPreview = ({ children }) => {
 };
 
 NotificationPreview.displayName = 'NotificationPreview';
-
-NotificationPreview.propTypes = {
-  monitor: fullMonitorPropType.isRequired,
-};
 
 export default observer(NotificationPreview);

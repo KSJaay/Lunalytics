@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import StatusLayoutLineChart from '../../../layout/metrics/type/chart/line';
 
@@ -39,11 +36,5 @@ const StatusPageMetricsPrettyGraph = ({ title, showPing, heartbeats = [] }) => {
 };
 
 StatusPageMetricsPrettyGraph.displayName = 'StatusPageMetricsPrettyGraph';
-
-StatusPageMetricsPrettyGraph.propTypes = {
-  title: PropTypes.string.isRequired,
-  showPing: PropTypes.bool.isRequired,
-  heartbeats: PropTypes.array.isRequired,
-};
 
 export default StatusPageMetricsPrettyGraph;

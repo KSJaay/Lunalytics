@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button } from '@lunalytics/ui';
 
 // import local files
@@ -40,10 +39,5 @@ const SettingsPersonalisationTimezone = ({ timezone, setTimezone }) => {
 };
 
 SettingsPersonalisationTimezone.displayName = 'SettingsPersonalisationTimezone';
-
-SettingsPersonalisationTimezone.propTypes = {
-  timezone: PropTypes.string.isRequired,
-  setTimezone: PropTypes.func.isRequired,
-};
 
 export default SettingsPersonalisationTimezone;

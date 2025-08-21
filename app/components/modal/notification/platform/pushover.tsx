@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Dropdown, Input, PasswordInput } from '@lunalytics/ui';
 
 const NotificationModalPushoverInput = ({
@@ -19,7 +18,7 @@ const NotificationModalPushoverInput = ({
         id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName || ''}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
@@ -30,7 +29,7 @@ const NotificationModalPushoverInput = ({
         isRequired
         error={errors?.userKey}
         defaultValue={values.data?.userKey || ''}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, userKey: e.target.value },
@@ -44,7 +43,7 @@ const NotificationModalPushoverInput = ({
         isRequired
         error={errors?.token}
         defaultValue={values.token || ''}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
@@ -53,7 +52,7 @@ const NotificationModalPushoverInput = ({
         id="device"
         error={errors?.device}
         defaultValue={values.data?.device || ''}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, device: e.target.value },
@@ -109,7 +108,7 @@ const NotificationModalPushoverInput = ({
         id="message-ttl"
         error={errors?.messageTtl}
         defaultValue={values.data?.ttl || ''}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, ttl: e.target.value },
@@ -121,11 +120,5 @@ const NotificationModalPushoverInput = ({
 };
 
 NotificationModalPushoverInput.displayName = 'NotificationModalPushoverInput';
-
-NotificationModalPushoverInput.propTypes = {
-  values: PropTypes.object,
-  errors: PropTypes.object,
-  handleInput: PropTypes.func,
-};
 
 export default NotificationModalPushoverInput;

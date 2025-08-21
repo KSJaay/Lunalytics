@@ -3,12 +3,24 @@ import './index.scss';
 
 // import dependencies
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 import { useTranslation } from 'react-i18next';
 
 // import local files
 import LeftNavigation from './left';
+
+interface NavigationProps {
+  children: React.ReactNode;
+  leftChildren?: React.ReactNode;
+  leftButton: React.ReactNode;
+  rightChildren?: React.ReactNode;
+  activeUrl?: string;
+  header: {
+    HeaderComponent?: React.ComponentType<any>;
+    props?: any;
+  };
+  handleSearchUpdate: (value: string) => void;
+}
 
 const Navigation = ({
   children,
@@ -16,9 +28,9 @@ const Navigation = ({
   leftButton,
   rightChildren,
   activeUrl = '/home',
-  header = {},
+  header,
   handleSearchUpdate,
-}) => {
+}: NavigationProps) => {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -35,7 +47,9 @@ const Navigation = ({
               <Input
                 placeholder={t('common.search') + '...'}
                 key="search"
-                onChange={(e) => handleSearchUpdate(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleSearchUpdate(e.target.value?.trim())
+                }
               />
             </div>
             {leftChildren}
@@ -70,10 +84,5 @@ const Navigation = ({
 };
 
 Navigation.displayName = 'Navigation';
-
-Navigation.propTypes = {
-  children: PropTypes.node,
-  activeUrl: PropTypes.string,
-};
 
 export default Navigation;

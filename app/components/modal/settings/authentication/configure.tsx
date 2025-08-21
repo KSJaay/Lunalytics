@@ -68,7 +68,7 @@ const SettingsAuthenticationConfigureModal = ({
         id="client-id"
         title="Client ID"
         value={values.clientId}
-        onChange={(e) =>
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setValues((prev) => ({ ...prev, clientId: e.target.value }))
         }
         isRequired
@@ -78,7 +78,7 @@ const SettingsAuthenticationConfigureModal = ({
         id={`client-secret`}
         title="Client Secret"
         value={values.clientSecret}
-        onChange={(e) =>
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setValues((prev) => ({ ...prev, clientSecret: e.target.value }))
         }
         type={showPassword ? 'text' : 'password'}

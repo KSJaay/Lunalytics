@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 // import local files
@@ -56,13 +55,5 @@ const StatusPageStatus = ({
 };
 
 StatusPageStatus.displayName = 'StatusPageStatus';
-
-StatusPageStatus.propTypes = {
-  icon: PropTypes.bool.isRequired,
-  design: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  titleSize: PropTypes.string.isRequired,
-};
 
 export default StatusPageStatus;

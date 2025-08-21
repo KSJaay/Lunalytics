@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -21,7 +20,7 @@ const MonitorNotificationList = ({ inputs, errors, handleInput }) => {
   return (
     <div className="luna-input-wrapper">
       <label className="input-label">Notification</label>
-      <label className='luna-input-subtitle'>
+      <label className="luna-input-subtitle">
         Select the notification to trigger when the monitor state changes.
       </label>
       <Dropdown.Container
@@ -72,11 +71,5 @@ const MonitorNotificationList = ({ inputs, errors, handleInput }) => {
 };
 
 MonitorNotificationList.displayName = 'MonitorNotificationList';
-
-MonitorNotificationList.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-};
 
 export default observer(MonitorNotificationList);

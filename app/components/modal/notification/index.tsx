@@ -1,6 +1,5 @@
 // import dependencies
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
@@ -10,8 +9,21 @@ import NotificationsTemplates from '../../../../shared/notifications';
 import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationModalPayload from './payload';
 import * as inputForPlatform from './platform';
+import type { NotificationProps } from '../../../types/notifications';
 
-const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
+interface NotificationModalProps {
+  values?: NotificationProps;
+  isEdit?: boolean;
+  closeModal: () => void;
+  addNotification: (notification: NotificationProps) => void;
+}
+
+const NotificationModal = ({
+  values,
+  isEdit,
+  closeModal,
+  addNotification,
+}: NotificationModalProps) => {
   const { inputs, errors, handleInput, handleSubmit } = useNotificationForm(
     values,
     isEdit,
@@ -19,7 +31,7 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
   );
 
   useEffect(() => {
-    const handleKeydown = (event) => {
+    const handleKeydown = (event: KeyboardEvent) => {
       if (event?.key === 'Escape' || event?.key === 'Esc') {
         closeModal();
       }
@@ -86,12 +98,5 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
 };
 
 NotificationModal.displayName = 'NotificationModal';
-
-NotificationModal.propTypes = {
-  isEdit: PropTypes.bool,
-  values: PropTypes.object,
-  closeModal: PropTypes.func,
-  addNotification: PropTypes.func,
-};
 
 export default NotificationModal;

@@ -1,7 +1,6 @@
 // import dependencies
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -46,9 +45,5 @@ const StatusConfigureLayoutHeaderStatus = ({ componentId }) => {
 
 StatusConfigureLayoutHeaderStatus.displayName =
   'StatusConfigureLayoutHeaderStatus';
-
-StatusConfigureLayoutHeaderStatus.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutHeaderStatus);

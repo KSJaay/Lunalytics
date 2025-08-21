@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { FaTriangleExclamation } from 'react-icons/fa6';
 
 // import local files
@@ -65,11 +64,5 @@ const StatusUptimePrettyGraph = ({
 };
 
 StatusUptimePrettyGraph.displayName = 'StatusUptimePrettyGraph';
-
-StatusUptimePrettyGraph.propTypes = {
-  monitor: PropTypes.object.isRequired,
-  indicator: PropTypes.string.isRequired,
-  incidents: PropTypes.object,
-};
 
 export default StatusUptimePrettyGraph;

@@ -65,7 +65,9 @@ const IncidentCreateModal = () => {
         id="incident-name"
         maxLength={100}
         value={values.title || ''}
-        onChange={(e) => handleChange('title', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleChange('title', e.target.value)
+        }
         subtitle="Breif description (maximum of 100 characters)"
       />
 
@@ -81,7 +83,9 @@ const IncidentCreateModal = () => {
         disableResize
         rows={5}
         value={values.message || ''}
-        onChange={(e) => handleChange('message', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleChange('message', e.target.value)
+        }
         shortDescription="Information about the incident"
       />
 

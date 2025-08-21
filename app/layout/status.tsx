@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import {
   LocalStorageStateProvider,
@@ -19,9 +16,5 @@ const StatusLayout = ({ children }: LayoutStatusProps) => {
 };
 
 StatusLayout.displayName = 'StatusLayout';
-
-StatusLayout.propTypes = {
-  children: PropTypes.node,
-};
 
 export default StatusLayout;

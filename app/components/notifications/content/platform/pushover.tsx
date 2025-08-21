@@ -3,18 +3,22 @@ import { Dropdown, Input, PasswordInput } from '@lunalytics/ui';
 import { useTranslation } from 'react-i18next';
 // import local files
 import SwitchWithText from '../../../ui/switch';
-import type { NotificationSlack } from '../../../../types/notifications';
+import type {
+  NotificationPushover,
+  NotificationPushoverErrors,
+} from '../../../../types/notifications';
 
 const NotificationPushoverContent = ({
   inputs,
   errors,
   handleInput,
 }: {
-  inputs: NotificationSlack;
-  errors: Partial<Record<keyof NotificationSlack, string>>;
-  handleInput: (
-    input: Partial<Record<keyof NotificationSlack, string>>
-  ) => void;
+  inputs: NotificationPushover;
+  errors: Partial<Record<keyof NotificationPushoverErrors, string>>;
+  handleInput: (input: {
+    key: keyof NotificationPushover | 'data';
+    value: Partial<NotificationPushover['data']> | string | number | boolean;
+  }) => void;
 }) => {
   const handlePriorityChange = (value: string) => {
     handleInput({
@@ -34,7 +38,7 @@ const NotificationPushoverContent = ({
           id="friendly-name"
           error={errors?.friendlyName}
           value={inputs.friendlyName || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
         />
@@ -46,7 +50,7 @@ const NotificationPushoverContent = ({
           isRequired
           error={errors?.userKey}
           value={inputs.data?.userKey || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, userKey: e.target.value },
@@ -61,7 +65,7 @@ const NotificationPushoverContent = ({
           isRequired
           error={errors?.token}
           value={inputs.token || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'token', value: e.target.value });
           }}
         />
@@ -71,7 +75,7 @@ const NotificationPushoverContent = ({
           id="device"
           error={errors?.device}
           value={inputs.data?.device || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, device: e.target.value },
@@ -129,7 +133,7 @@ const NotificationPushoverContent = ({
         type="number"
         error={errors?.ttl}
         value={inputs.data?.ttl || ''}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...inputs.data, ttl: e.target.value },
@@ -142,7 +146,7 @@ const NotificationPushoverContent = ({
           label={t('notification.input.enabled_title')}
           shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
           }}
         />

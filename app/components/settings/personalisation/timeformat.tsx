@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button } from '@lunalytics/ui';
 
 // import local files
@@ -52,10 +51,5 @@ const SettingsPersonalisationTimeformat = ({ timeformat, setTimeformat }) => {
 
 SettingsPersonalisationTimeformat.displayName =
   'SettingsPersonalisationTimeformat';
-
-SettingsPersonalisationTimeformat.propTypes = {
-  timeformat: PropTypes.string.isRequired,
-  setTimeformat: PropTypes.func.isRequired,
-};
 
 export default SettingsPersonalisationTimeformat;

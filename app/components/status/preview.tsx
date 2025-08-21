@@ -1,7 +1,6 @@
 import './styles.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
@@ -56,7 +55,7 @@ const StatusPagePreview = ({ children }) => {
     <Input
       placeholder={t('status.search')}
       key="search"
-      onChange={(event) => {
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value?.trim() || '');
       }}
     />
@@ -85,9 +84,5 @@ const StatusPagePreview = ({ children }) => {
 };
 
 StatusPagePreview.displayName = 'StatusPagePreview';
-
-StatusPagePreview.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default observer(StatusPagePreview);

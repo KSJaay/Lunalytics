@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button } from '@lunalytics/ui';
 
 // import local files
@@ -46,10 +45,5 @@ const SettingsPersonalisationDateformat = ({ dateformat, setDateformat }) => {
 
 SettingsPersonalisationDateformat.displayName =
   'SettingsPersonalisationDateformat';
-
-SettingsPersonalisationDateformat.propTypes = {
-  dateformat: PropTypes.string.isRequired,
-  setDateformat: PropTypes.func.isRequired,
-};
 
 export default SettingsPersonalisationDateformat;

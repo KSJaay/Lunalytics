@@ -1,6 +1,5 @@
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -29,7 +28,7 @@ const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
           label="Show title"
           shortDescription="Whether or not the title should be shown"
           checked={status.showTitle}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setComponentValue(componentId, 'status', {
               showTitle: e.target.checked,
             });
@@ -39,7 +38,7 @@ const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
           label="Show service status"
           shortDescription="Whether or not the service status should be shown"
           checked={status.showStatus}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setComponentValue(componentId, 'status', {
               showStatus: e.target.checked,
             });
@@ -49,7 +48,7 @@ const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
           label="Title Size"
           options={statusSizes}
           activeOption={status.titleSize}
-          onChange={(e) => {
+          onChange={(e: string) => {
             setComponentValue(componentId, 'status', { titleSize: e });
           }}
         />
@@ -57,7 +56,7 @@ const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
           label="Status Size"
           options={statusSizes}
           activeOption={status.statusSize}
-          onChange={(e) => {
+          onChange={(e: string) => {
             setComponentValue(componentId, 'status', { statusSize: e });
           }}
         />
@@ -66,7 +65,7 @@ const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
           label="Alignment"
           options={statusAlignments}
           activeOption={status.alignment}
-          onChange={(e) => {
+          onChange={(e: string) => {
             setComponentValue(componentId, 'status', { alignment: e });
           }}
         />
@@ -77,9 +76,5 @@ const StatusConfigureLayoutHeaderStatusOptions = ({ componentId }) => {
 
 StatusConfigureLayoutHeaderStatusOptions.displayName =
   'StatusConfigureLayoutHeaderStatusOptions';
-
-StatusConfigureLayoutHeaderStatusOptions.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutHeaderStatusOptions);

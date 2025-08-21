@@ -2,9 +2,6 @@
 import classNames from 'classnames';
 import './input.scss';
 
-// import dependencies
-import PropTypes from 'prop-types';
-
 const TextInput = ({
   label,
   id,
@@ -55,17 +52,5 @@ const TextInput = ({
 };
 
 TextInput.displayName = 'TextInput';
-
-TextInput.propTypes = {
-  label: PropTypes.string,
-  id: PropTypes.string,
-  description: PropTypes.string,
-  shortDescription: PropTypes.string,
-  error: PropTypes.string,
-  iconLeft: PropTypes.node,
-  iconRight: PropTypes.node,
-  tabIndex: PropTypes.number,
-  isRequired: PropTypes.bool,
-};
 
 export default TextInput;

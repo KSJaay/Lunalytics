@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import { Input } from '@lunalytics/ui';
 
@@ -17,7 +14,7 @@ const NotificationModalHomeAssistantInput = ({
         id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
@@ -30,7 +27,7 @@ const NotificationModalHomeAssistantInput = ({
         isRequired
         error={errors?.homeAssistantUrl}
         defaultValue={values.data?.homeAssistantUrl}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, homeAssistantUrl: e.target.value },
@@ -46,7 +43,7 @@ const NotificationModalHomeAssistantInput = ({
         isRequired
         error={errors?.homeAssistantNotificationService}
         defaultValue={values.data?.homeAssistantNotificationService}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: {
@@ -69,7 +66,7 @@ const NotificationModalHomeAssistantInput = ({
         id="home-assistant-access-token"
         error={errors?.token}
         defaultValue={values.token}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
@@ -79,11 +76,5 @@ const NotificationModalHomeAssistantInput = ({
 
 NotificationModalHomeAssistantInput.displayName =
   'NotificationModalHomeAssistantInput';
-
-NotificationModalHomeAssistantInput.propTypes = {
-  values: PropTypes.object,
-  errors: PropTypes.object,
-  handleInput: PropTypes.func,
-};
 
 export default NotificationModalHomeAssistantInput;

@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import MonitorPageTcp from '../pages/tcp';
 import MonitorPageInterval from '../pages/interval';
@@ -52,12 +49,5 @@ const MonitorConfigureTcpModal = ({ errors, inputs, handleInput, pageId }) => {
 };
 
 MonitorConfigureTcpModal.displayName = 'MonitorConfigureTcpModal';
-
-MonitorConfigureTcpModal.propTypes = {
-  closeModal: PropTypes.func,
-  handleMonitorSubmit: PropTypes.func,
-  isEdit: PropTypes.bool,
-  monitor: PropTypes.object,
-};
 
 export default MonitorConfigureTcpModal;

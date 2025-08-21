@@ -1,6 +1,5 @@
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Textarea } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { FiMaximize, FiMinimize } from 'react-icons/fi';
@@ -49,7 +48,7 @@ const StatusConfigureLayoutCustomCSS = ({ componentId }) => {
           <div className="sclh-content">
             <Textarea
               rows={15}
-              onChange={(event) => {
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
                 setComponentValue(componentId, 'content', event.target.value);
               }}
               value={data}
@@ -62,9 +61,5 @@ const StatusConfigureLayoutCustomCSS = ({ componentId }) => {
 };
 
 StatusConfigureLayoutCustomCSS.displayName = 'StatusConfigureLayoutCustomCSS';
-
-StatusConfigureLayoutCustomCSS.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutCustomCSS);

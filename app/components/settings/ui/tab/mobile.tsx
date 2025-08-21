@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import {
   FaChevronRight,
   FaUserCircle,
@@ -9,7 +8,7 @@ import {
 } from '../../../icons';
 import { IoKey } from 'react-icons/io5';
 
-const tabs = (isAdmin) => [
+const tabs = (isAdmin: boolean) => [
   {
     title: 'General Settings',
     items: [
@@ -81,7 +80,5 @@ const SettingsMobileTabs = ({ handleTabChange, isAdmin }) => {
 };
 
 SettingsMobileTabs.displayName = 'SettingsMobileTabs';
-
-SettingsMobileTabs.propTypes = { handleTabChange: PropTypes.func.isRequired };
 
 export default SettingsMobileTabs;

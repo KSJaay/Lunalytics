@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import handleMonitor from '../handlers/monitor';
 import monitorValidators from '../../shared/validators/monitor';
-import type { ContextMonitorProps } from '../types/context/global';
+import type { MonitorProps } from '../types/monitor';
 
 const defaultInputs = {
-  type: 'http',
+  type: 'http' as MonitorProps['type'],
   method: 'HEAD',
   retry: 1,
   interval: 60,
@@ -21,12 +21,15 @@ const defaultInputs = {
 };
 
 const useMonitorForm = (
-  values = defaultInputs,
-  isEdit: boolean,
+  values: Partial<MonitorProps> = defaultInputs,
+  isEdit: boolean = false,
   closeModal: () => void,
-  setMonitor: (monitor: ContextMonitorProps) => void
+  setMonitor: (monitor: Partial<MonitorProps>) => void
 ) => {
-  const [inputs, setInput] = useState({ ...defaultInputs, ...values });
+  const [inputs, setInput] = useState<Partial<MonitorProps>>({
+    ...defaultInputs,
+    ...values,
+  });
   const [errors, setErrors] = useState({});
 
   const handleInput = (name: string, value: any) => {
@@ -36,7 +39,8 @@ const useMonitorForm = (
   const handleActionButtons = (action: string) => () => {
     switch (action) {
       case 'Create': {
-        const validator = monitorValidators[inputs.type];
+        const type = inputs.type ?? defaultInputs.type;
+        const validator = monitorValidators[type];
         if (!validator) return;
 
         const errorsObj = validator(inputs);

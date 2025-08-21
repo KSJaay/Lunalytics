@@ -29,7 +29,7 @@ const Notifications = () => {
   } = useContextStore();
   const { t } = useTranslation();
 
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState<string | null>(null);
   const screenSize = useScreenSize();
 
   const isDesktop = useMemo(() => screenSize === 'desktop', [screenSize]);
@@ -94,7 +94,5 @@ const Notifications = () => {
 };
 
 Notifications.displayName = 'Notifications';
-
-Notifications.propTypes = {};
 
 export default observer(Notifications);

@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button, Modal } from '@lunalytics/ui';
 import { useTranslation } from 'react-i18next';
 
@@ -39,11 +38,5 @@ const NotificationDeleteModal = ({ name, handleClose, handleConfirm }) => {
 };
 
 NotificationDeleteModal.displayName = 'NotificationDeleteModal';
-
-NotificationDeleteModal.propTypes = {
-  name: PropTypes.string.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleConfirm: PropTypes.func.isRequired,
-};
 
 export default NotificationDeleteModal;

@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { ProgressBar, Input } from '@lunalytics/ui';
 
 // import local files
@@ -61,13 +60,5 @@ const RegisterPasswordForm = ({
 };
 
 RegisterPasswordForm.displayName = 'RegisterPasswordForm';
-
-RegisterPasswordForm.propTypes = {
-  handleInput: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  setPassword: PropTypes.func.isRequired,
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-};
 
 export default RegisterPasswordForm;

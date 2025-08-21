@@ -1,7 +1,6 @@
 import './avatar.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Button, Input, Modal } from '@lunalytics/ui';
 
@@ -91,11 +90,5 @@ const SettingsAccountAvatarModal = ({
 };
 
 SettingsAccountAvatarModal.displayName = 'SettingsAccountAvatarModal';
-
-SettingsAccountAvatarModal.propTypes = {
-  value: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  handleSumbit: PropTypes.func.isRequired,
-};
 
 export default SettingsAccountAvatarModal;

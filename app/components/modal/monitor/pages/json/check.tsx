@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 import Dropdown from '../../../../ui/dropdown';
 import useDropdown from '../../../../../hooks/useDropdown';
@@ -45,7 +44,7 @@ const MonitorJsonQueryCheck = ({ inputs, errors, handleInput }) => {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <Input
           placeholder="$.body.name"
-          onChange={(e) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleInput('json_query', [
               {
                 key: e.target.value,
@@ -93,7 +92,7 @@ const MonitorJsonQueryCheck = ({ inputs, errors, handleInput }) => {
         </Dropdown.Container>
         <Input
           placeholder="$.body.name"
-          onChange={(e) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleInput('json_query', [
               {
                 key: json_query.key,
@@ -116,11 +115,5 @@ const MonitorJsonQueryCheck = ({ inputs, errors, handleInput }) => {
 };
 
 MonitorJsonQueryCheck.displayName = 'MonitorJsonQueryCheck';
-
-MonitorJsonQueryCheck.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-};
 
 export default MonitorJsonQueryCheck;

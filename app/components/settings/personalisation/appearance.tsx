@@ -1,8 +1,7 @@
 // import dependencies
 import dayjs from 'dayjs';
-import PropTypes from 'prop-types';
-import { Button, Input } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
+import { Button, Input } from '@lunalytics/ui';
 
 // import local files
 import useContextStore from '../../../context';
@@ -69,11 +68,5 @@ const SettingsPersonalisationAppearance = ({
 
 SettingsPersonalisationAppearance.displayName =
   'SettingsPersonalisationAppearance';
-
-SettingsPersonalisationAppearance.propTypes = {
-  dateformat: PropTypes.string,
-  timeformat: PropTypes.string,
-  theme: PropTypes.string,
-};
 
 export default observer(SettingsPersonalisationAppearance);

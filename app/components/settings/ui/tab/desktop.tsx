@@ -1,7 +1,4 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
-const tabs = (isAdmin) => [
+const tabs = (isAdmin: boolean) => [
   { title: 'GENERAL', items: ['Account', 'Appearance'] },
   {
     title: 'WORKSPACE',
@@ -39,10 +36,5 @@ const SettingsTab = ({ tab, handleTabUpdate, isAdmin }) => {
 };
 
 SettingsTab.displayName = 'SettingsTab';
-
-SettingsTab.propTypes = {
-  tab: PropTypes.string.isRequired,
-  handleTabUpdate: PropTypes.func.isRequired,
-};
 
 export default SettingsTab;

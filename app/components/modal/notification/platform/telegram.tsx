@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 // import local files
@@ -18,7 +17,7 @@ const NotificationModalTelegramInput = ({
         id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
@@ -44,7 +43,7 @@ const NotificationModalTelegramInput = ({
         isRequired
         error={errors?.token}
         defaultValue={values.token}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
@@ -70,7 +69,7 @@ const NotificationModalTelegramInput = ({
         isRequired
         error={errors?.chatId}
         defaultValue={values.data?.chatId}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, chatId: e.target.value },
@@ -85,7 +84,7 @@ const NotificationModalTelegramInput = ({
           id="disable-notification"
           error={errors?.disableNotification}
           checked={values.data?.disableNotification}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...values.data, disableNotification: e.target.checked },
@@ -101,7 +100,7 @@ const NotificationModalTelegramInput = ({
           id="protect-content"
           error={errors?.protectContent}
           checked={values.data?.protectContent}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...values.data, protectContent: e.target.checked },
@@ -114,11 +113,5 @@ const NotificationModalTelegramInput = ({
 };
 
 NotificationModalTelegramInput.displayName = 'NotificationModalTelegramInput';
-
-NotificationModalTelegramInput.propTypes = {
-  values: PropTypes.object,
-  errors: PropTypes.object,
-  handleInput: PropTypes.func,
-};
 
 export default NotificationModalTelegramInput;

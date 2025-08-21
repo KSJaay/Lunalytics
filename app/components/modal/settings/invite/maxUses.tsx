@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
@@ -46,9 +43,5 @@ const CreateInviteMaxUses = ({ setMaxUses, maxUses }) => {
 };
 
 CreateInviteMaxUses.displayName = 'CreateInviteMaxUses';
-
-CreateInviteMaxUses.propTypes = {
-  setMaxUses: PropTypes.func.isRequired,
-};
 
 export default CreateInviteMaxUses;

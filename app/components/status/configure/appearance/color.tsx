@@ -16,7 +16,9 @@ const StatusConfigureAppearanceColors = () => {
         <ColorPicker
           label="Header background:"
           color={headerBackground}
-          onChange={(e) => changeValues({ headerBackground: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            changeValues({ headerBackground: e.target.value })
+          }
           setColor={(value) => changeValues({ headerBackground: value })}
         />
       </div>
@@ -25,7 +27,9 @@ const StatusConfigureAppearanceColors = () => {
         <ColorPicker
           label="Header text color:"
           color={textColor}
-          onChange={(e) => changeValues({ textColor: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            changeValues({ textColor: e.target.value })
+          }
           setColor={(value) => changeValues({ textColor: value })}
         />
       </div>
@@ -34,7 +38,9 @@ const StatusConfigureAppearanceColors = () => {
         <ColorPicker
           label="Background color:"
           color={background}
-          onChange={(e) => changeValues({ background: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            changeValues({ background: e.target.value })
+          }
           setColor={(value) => changeValues({ background: value })}
         />
       </div>
@@ -43,7 +49,9 @@ const StatusConfigureAppearanceColors = () => {
         <ColorPicker
           label="Highlight color:"
           color={highlight}
-          onChange={(e) => changeValues({ highlight: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            changeValues({ highlight: e.target.value })
+          }
           setColor={(value) => changeValues({ highlight: value })}
         />
       </div>
@@ -52,7 +60,5 @@ const StatusConfigureAppearanceColors = () => {
 };
 
 StatusConfigureAppearanceColors.displayName = 'StatusConfigureAppearanceColors';
-
-StatusConfigureAppearanceColors.propTypes = {};
 
 export default observer(StatusConfigureAppearanceColors);

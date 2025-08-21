@@ -1,7 +1,6 @@
 import './colorPicker.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 
@@ -76,18 +75,5 @@ const ColorPicker = ({
 };
 
 ColorPicker.displayName = 'ColorPicker';
-
-ColorPicker.propTypes = {
-  label: PropTypes.string,
-  id: PropTypes.string,
-  description: PropTypes.string,
-  error: PropTypes.string,
-  iconLeft: PropTypes.node,
-  iconRight: PropTypes.node,
-  tabIndex: PropTypes.number,
-  isRequired: PropTypes.bool,
-  color: PropTypes.string,
-  setColor: PropTypes.func,
-};
 
 export default ColorPicker;

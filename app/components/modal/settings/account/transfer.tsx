@@ -1,7 +1,6 @@
 import './avatar.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { Alert, Button, Input, Modal } from '@lunalytics/ui';
@@ -149,9 +148,5 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
 };
 
 SettingsAccountTransferModal.displayName = 'SettingsAccountTransferModal';
-
-SettingsAccountTransferModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-};
 
 export default observer(SettingsAccountTransferModal);

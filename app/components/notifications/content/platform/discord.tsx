@@ -31,7 +31,7 @@ const NotificationDiscordContent = ({
           id="friendly-name"
           error={errors?.friendlyName}
           value={inputs.friendlyName}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
         />
@@ -42,7 +42,7 @@ const NotificationDiscordContent = ({
           title={t('notification.input.webhook_url')}
           error={errors.token}
           value={inputs.token}
-          onChange={(event) =>
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             handleInput({ key: 'token', value: event.target.value })
           }
           iconRight={

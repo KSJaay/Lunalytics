@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
@@ -63,7 +62,7 @@ const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
               placeholder="Monitors"
               shortDescription="This can be left blank if you don't want a title"
               value={title}
-              onChange={(e) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setMonitorValue(componentId, monitorId, 'title', e.target.value)
               }
             />
@@ -82,7 +81,7 @@ const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
               title="Show Ping"
               shortDescription="Show the last latency of the monitor on the graph"
               checked={showPing}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setMonitorValue(
                   componentId,
                   monitorId,
@@ -100,10 +99,5 @@ const StatusConfigureLayoutMetricsOptions = ({ componentId, monitorId }) => {
 
 StatusConfigureLayoutMetricsOptions.displayName =
   'StatusConfigureLayoutMetricsOptions';
-
-StatusConfigureLayoutMetricsOptions.propTypes = {
-  componentId: PropTypes.string.isRequired,
-  monitorId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutMetricsOptions);

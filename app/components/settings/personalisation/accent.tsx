@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import { FaCircleCheck } from '../../icons';
 import classNames from 'classnames';
@@ -47,10 +44,5 @@ const SettingsPersonalisationAccent = ({ color, setColor }) => {
 };
 
 SettingsPersonalisationAccent.displayName = 'SettingsPersonalisationAccent';
-
-SettingsPersonalisationAccent.propTypes = {
-  color: PropTypes.string.isRequired,
-  setColor: PropTypes.func.isRequired,
-};
 
 export default SettingsPersonalisationAccent;

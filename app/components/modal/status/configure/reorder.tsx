@@ -1,7 +1,6 @@
 import './reorder.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { createSwapy } from 'swapy';
 import { useEffect, useRef } from 'react';
 import { MdHistory } from 'react-icons/md';
@@ -125,11 +124,5 @@ const StatusConfigureReorderModal = ({ closeModal, layout, reorderBlocks }) => {
 };
 
 StatusConfigureReorderModal.displayName = 'StatusConfigureReorderModal';
-
-StatusConfigureReorderModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  layout: PropTypes.array.isRequired,
-  reorderBlocks: PropTypes.func.isRequired,
-};
 
 export default StatusConfigureReorderModal;

@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import TextInput from '../input';
 
@@ -27,13 +26,5 @@ const List = ({
 };
 
 List.displayName = 'Select.List';
-
-List.propTypes = {
-  fullWidth: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  selectSearch: PropTypes.string,
-  handleSearch: PropTypes.func,
-  children: PropTypes.node,
-};
 
 export default List;

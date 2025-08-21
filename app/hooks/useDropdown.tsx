@@ -2,12 +2,12 @@
 import { useState } from 'react';
 
 const useDropdown = (
-  closeOnSelect: boolean,
-  defaultValue: string | null = null
+  closeOnSelect?: boolean,
+  defaultValue?: string | null | undefined
 ) => {
   const [values, setValues] = useState({
     isOpen: false,
-    selectedId: defaultValue,
+    selectedId: defaultValue || null,
   });
 
   const toggleDropdown = () => {

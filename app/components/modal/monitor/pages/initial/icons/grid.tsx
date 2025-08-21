@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { FixedSizeGrid as Grid } from 'react-window';
 
 const limit = 5;
@@ -55,12 +54,5 @@ const MonitorIconGrid = ({ icons, handleInput }) => {
 };
 
 MonitorIconGrid.displayName = 'MonitorIconGrid';
-
-MonitorIconGrid.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-  isEdit: PropTypes.bool,
-};
 
 export default MonitorIconGrid;

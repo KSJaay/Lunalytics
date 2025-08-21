@@ -1,7 +1,6 @@
 import './styles.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -38,10 +37,5 @@ const StatusConfigureLayoutHistory = ({ componentId, incidents = [] }) => {
 };
 
 StatusConfigureLayoutHistory.displayName = 'StatusConfigureLayoutHistory';
-
-StatusConfigureLayoutHistory.propTypes = {
-  componentId: PropTypes.string.isRequired,
-  incidents: PropTypes.array.isRequired,
-};
 
 export default observer(StatusConfigureLayoutHistory);

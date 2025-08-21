@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
@@ -85,11 +82,5 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
 };
 
 MonitorInitialDropdown.displayName = 'MonitorInitialDropdown';
-
-MonitorInitialDropdown.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-};
 
 export default MonitorInitialDropdown;

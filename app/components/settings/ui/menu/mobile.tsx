@@ -1,6 +1,5 @@
 // import dependencies
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { IoArrowBack } from 'react-icons/io5';
 
@@ -70,9 +69,5 @@ const SettingsMobile = ({ handleKeydown }) => {
 };
 
 SettingsMobile.displayName = 'SettingsMobile';
-
-SettingsMobile.propTypes = {
-  handleKeydown: PropTypes.func.isRequired,
-};
 
 export default observer(SettingsMobile);

@@ -3,7 +3,6 @@ import './style.scss';
 import './row.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { FaTrashCan, MdEdit, FaCheck, IoMdClose } from '../../../icons';
@@ -14,7 +13,6 @@ import MemberDeclineModal from '../../../modal/settings/manage/decline';
 import MemberDeleteModal from '../../../modal/settings/manage/delete';
 import MemberPermissionsModal from '../../../modal/settings/manage/permissions';
 import useContextStore from '../../../../context';
-import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MemberRowActions = ({ member = {}, canManage = false }) => {
   const classes = classNames({
@@ -94,10 +92,5 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
 };
 
 MemberRowActions.displayName = 'MemberRowActions';
-
-MemberRowActions.propTypes = {
-  member: userPropType.isRequired,
-  canManage: PropTypes.bool,
-};
 
 export default observer(MemberRowActions);

@@ -6,15 +6,13 @@ import { MdEdit } from 'react-icons/md';
 import { FaTrashCan } from 'react-icons/fa6';
 import MonitorConfigureModal from '../components/modal/monitor/configure';
 import MonitorModal from '../components/modal/monitor/delete';
-import type { ContextMonitorProps } from '../types/context/global';
-
-type Monitor = ContextMonitorProps | null | undefined;
+import type { MonitorProps } from '../types/monitor';
 
 const useMonitorOptions = (
   Container: React.ComponentType<any>,
-  monitor: Monitor,
-  addMonitor: (monitor: ContextMonitorProps) => void,
-  editMonitor: (monitor: ContextMonitorProps) => void,
+  monitor: MonitorProps,
+  addMonitor: (monitor: MonitorProps) => void,
+  editMonitor: (monitor: MonitorProps) => void,
   removeMonitor: (monitorId: string) => void,
   closeModal: () => void,
   openModal: (content: React.ReactNode, isFullScreen?: boolean) => void

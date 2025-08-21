@@ -1,12 +1,23 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 // import local files
 import MonitorPageInterval from '../pages/interval';
 import MonitorPageNotification from '../pages/notification';
 
-const MonitorConfigurePingModal = ({ errors, inputs, handleInput, pageId }) => {
+interface ModalProps {
+  errors: Record<string, string>;
+  inputs: Record<string, any>;
+  handleInput: (field: string, value: any) => void;
+  pageId: string;
+}
+
+const MonitorConfigurePingModal = ({
+  errors,
+  inputs,
+  handleInput,
+  pageId,
+}: ModalProps) => {
   return (
     <>
       {pageId === 'basic' ? (
@@ -15,7 +26,7 @@ const MonitorConfigurePingModal = ({ errors, inputs, handleInput, pageId }) => {
             id="input-url"
             title="URL/IP"
             value={inputs.url}
-            onChange={(event) => {
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               handleInput('url', event.target.value);
             }}
             error={errors.url}
@@ -64,12 +75,5 @@ const MonitorConfigurePingModal = ({ errors, inputs, handleInput, pageId }) => {
 };
 
 MonitorConfigurePingModal.displayName = 'MonitorConfigurePingModal';
-
-MonitorConfigurePingModal.propTypes = {
-  closeModal: PropTypes.func,
-  handleMonitorSubmit: PropTypes.func,
-  isEdit: PropTypes.bool,
-  monitor: PropTypes.object,
-};
 
 export default MonitorConfigurePingModal;

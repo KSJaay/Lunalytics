@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 // import local files
@@ -11,7 +10,19 @@ import MonitorHttpBody from '../pages/body';
 import MonitorHttpIgnoreTls from '../pages/http/ignoreTls';
 import MonitorHttpMethods from '../pages/http/methods';
 
-const MonitorConfigureHttpModal = ({ errors, inputs, handleInput, pageId }) => {
+interface ModalProps {
+  errors: Record<string, string>;
+  inputs: Record<string, any>;
+  handleInput: (field: string, value: any) => void;
+  pageId: string;
+}
+
+const MonitorConfigureHttpModal = ({
+  errors,
+  inputs,
+  handleInput,
+  pageId,
+}: ModalProps) => {
   return (
     <>
       {pageId === 'basic' ? (
@@ -20,7 +31,7 @@ const MonitorConfigureHttpModal = ({ errors, inputs, handleInput, pageId }) => {
             id="input-url"
             title={'URL'}
             value={inputs.url}
-            onChange={(event) => {
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               handleInput('url', event.target.value);
             }}
             error={errors.url}
@@ -31,7 +42,7 @@ const MonitorConfigureHttpModal = ({ errors, inputs, handleInput, pageId }) => {
           <MonitorHttpMethods
             error={errors.method}
             selectValue={inputs.method}
-            handleSelect={(method) => handleInput('method', method)}
+            handleSelect={(method: string) => handleInput('method', method)}
           />
         </>
       ) : null}
@@ -57,10 +68,10 @@ const MonitorConfigureHttpModal = ({ errors, inputs, handleInput, pageId }) => {
           <MonitorHttpStatusCodes
             error={errors.valid_status_codes}
             selectedIds={inputs.valid_status_codes}
-            handleStatusCodeSelect={(code) => {
+            handleStatusCodeSelect={(code: string) => {
               const { valid_status_codes = [] } = inputs;
               const validStatusCodes = valid_status_codes.includes(code)
-                ? valid_status_codes.filter((id) => id !== code)
+                ? valid_status_codes.filter((id: string) => id !== code)
                 : valid_status_codes.concat(code);
               handleInput('valid_status_codes', validStatusCodes);
             }}
@@ -89,12 +100,5 @@ const MonitorConfigureHttpModal = ({ errors, inputs, handleInput, pageId }) => {
 };
 
 MonitorConfigureHttpModal.displayName = 'MonitorConfigureHttpModal';
-
-MonitorConfigureHttpModal.propTypes = {
-  closeModal: PropTypes.func,
-  handleMonitorSubmit: PropTypes.func,
-  isEdit: PropTypes.bool,
-  monitor: PropTypes.object,
-};
 
 export default MonitorConfigureHttpModal;

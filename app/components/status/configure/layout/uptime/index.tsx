@@ -1,6 +1,5 @@
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Input } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
@@ -169,7 +168,7 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
                 placeholder="Monitors"
                 subtitle="This can be left blank if you don't want a title"
                 value={title}
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setComponentValue(componentId, 'title', e.target.value)
                 }
               />
@@ -207,9 +206,5 @@ const StatusConfigureLayoutUptime = ({ componentId }) => {
 };
 
 StatusConfigureLayoutUptime.displayName = 'StatusConfigureLayoutUptime';
-
-StatusConfigureLayoutUptime.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutUptime);

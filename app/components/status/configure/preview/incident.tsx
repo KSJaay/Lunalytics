@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import StatusIncidentBasic from '../layout/incidents/design/basic';
 import StatusIncidentPretty from '../layout/incidents/design/pretty';
@@ -46,14 +43,5 @@ const StatusPageIncident = ({
 };
 
 StatusPageIncident.displayName = 'StatusPageIncident';
-
-StatusPageIncident.propTypes = {
-  incidents: PropTypes.array.isRequired,
-  incidentsStatus: PropTypes.string.isRequired,
-  design: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
-  titleSize: PropTypes.string.isRequired,
-};
 
 export default StatusPageIncident;

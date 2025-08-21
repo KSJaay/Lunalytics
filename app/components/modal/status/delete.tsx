@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button, Modal } from '@lunalytics/ui';
 
 const StatusDeleteModal = ({ closeModal, deleteStatusPage, title }) => {
@@ -37,11 +36,5 @@ const StatusDeleteModal = ({ closeModal, deleteStatusPage, title }) => {
 };
 
 StatusDeleteModal.displayName = 'StatusDeleteModal';
-
-StatusDeleteModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  deleteStatusPage: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 export default StatusDeleteModal;

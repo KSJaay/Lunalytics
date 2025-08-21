@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import StatusLayoutLineChart from './chart/line';
 
@@ -24,10 +21,5 @@ const StatusConfigureLayoutMetricsTypeBasic = ({ showPing, showTitle }) => {
 
 StatusConfigureLayoutMetricsTypeBasic.displayName =
   'StatusConfigureLayoutMetricsTypeBasic';
-
-StatusConfigureLayoutMetricsTypeBasic.propTypes = {
-  showPing: PropTypes.bool.isRequired,
-  showTitle: PropTypes.string.isRequired,
-};
 
 export default StatusConfigureLayoutMetricsTypeBasic;

@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import StatusLayoutLineChart from './chart/line';
 
@@ -44,10 +41,5 @@ const StatusConfigureLayoutMetricsTypeNerdy = ({ showPing, showTitle }) => {
 
 StatusConfigureLayoutMetricsTypeNerdy.displayName =
   'StatusConfigureLayoutMetricsTypeNerdy';
-
-StatusConfigureLayoutMetricsTypeNerdy.propTypes = {
-  showPing: PropTypes.bool.isRequired,
-  showTitle: PropTypes.string.isRequired,
-};
 
 export default StatusConfigureLayoutMetricsTypeNerdy;

@@ -23,7 +23,9 @@ const IncidentMonitorsList = ({ selectedMonitors, handleSelected }) => {
             type="checkbox"
             checked={selectedMonitors?.includes(monitor.monitorId)}
             onChange={() => handleSelected(monitor.monitorId)}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: React.MouseEvent<HTMLInputElement>) =>
+              e.stopPropagation()
+            }
           />
         </div>
       ))}

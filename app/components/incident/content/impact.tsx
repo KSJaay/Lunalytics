@@ -29,7 +29,7 @@ const IncidentContentImpact = () => {
     incidentStore: { addIncident, activeIncident: incident },
   } = useContextStore();
 
-  const updateIncidentImpact = async (id) => {
+  const updateIncidentImpact = async (id: string) => {
     try {
       toggleDropdown();
       const typeExists = impactTypes.find((type) => type.id === id);
@@ -51,8 +51,8 @@ const IncidentContentImpact = () => {
   };
 
   const selectedImpact = useMemo(() => {
-    return impactTypes.find((type) => type.id === incident.affect);
-  }, [incident.affect]);
+    return impactTypes.find((type) => type.id === incident?.affect);
+  }, [incident?.affect]);
 
   return (
     <>
@@ -87,7 +87,5 @@ const IncidentContentImpact = () => {
 };
 
 IncidentContentImpact.displayName = 'IncidentContentImpact';
-
-IncidentContentImpact.propTypes = {};
 
 export default IncidentContentImpact;

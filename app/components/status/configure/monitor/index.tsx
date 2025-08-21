@@ -1,7 +1,6 @@
 import './styles.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
@@ -117,14 +116,5 @@ const StatusConfigureMonitor = ({
 };
 
 StatusConfigureMonitor.displayName = 'StatusConfigureMonitor';
-
-StatusConfigureMonitor.propTypes = {
-  componentId: PropTypes.string.isRequired,
-  getValues: PropTypes.func.isRequired,
-  updateAutoAdd: PropTypes.func.isRequired,
-  addSelectedMonitor: PropTypes.func.isRequired,
-  addAllMonitors: PropTypes.func.isRequired,
-  removeMonitor: PropTypes.func.isRequired,
-};
 
 export default observer(StatusConfigureMonitor);

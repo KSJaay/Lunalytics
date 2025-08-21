@@ -1,12 +1,10 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
 import useTeamContext from '../../../../context/team';
 import { createPostRequest } from '../../../../services/axios';
-import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MemberDeclineModal = ({ member, onClose }) => {
   const { removeUser } = useTeamContext();
@@ -59,10 +57,5 @@ const MemberDeclineModal = ({ member, onClose }) => {
 };
 
 MemberDeclineModal.displayName = 'MemberDeclineModal';
-
-MemberDeclineModal.propTypes = {
-  member: userPropType.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default MemberDeclineModal;

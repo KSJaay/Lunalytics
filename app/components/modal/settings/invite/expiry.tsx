@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 
 // import local files
@@ -59,10 +58,5 @@ const CreateInviteExpiry = ({ setExpiryId, expiryId }) => {
 };
 
 CreateInviteExpiry.displayName = 'CreateInviteExpiry';
-
-CreateInviteExpiry.propTypes = {
-  expiryId: PropTypes.string,
-  setExpiryId: PropTypes.func.isRequired,
-};
 
 export default CreateInviteExpiry;

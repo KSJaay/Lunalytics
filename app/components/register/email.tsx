@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { ProgressBar, Input } from '@lunalytics/ui';
 
 const RegisterEmailForm = ({
@@ -58,12 +57,5 @@ const RegisterEmailForm = ({
 };
 
 RegisterEmailForm.displayName = 'RegisterEmailForm';
-
-RegisterEmailForm.propTypes = {
-  handleInput: PropTypes.func.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-};
 
 export default RegisterEmailForm;

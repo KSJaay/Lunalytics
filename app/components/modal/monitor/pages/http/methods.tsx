@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
@@ -60,11 +57,5 @@ const MonitorHttpMethods = ({
 };
 
 MonitorHttpMethods.displayName = 'MonitorHttpMethods';
-
-MonitorHttpMethods.propTypes = {
-  error: PropTypes.string,
-  handleSelect: PropTypes.func.isRequired,
-  selectValue: PropTypes.string,
-};
 
 export default MonitorHttpMethods;

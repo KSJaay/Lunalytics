@@ -75,7 +75,7 @@ const SetupForm = () => {
                 error={errors[id]}
                 onChange={handleInput}
                 value={inputs[id] || ''}
-                onBlur={(e) =>
+                onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
                   validator(e.target.value, setErrors, inputs.password)
                 }
               />
@@ -123,6 +123,5 @@ const SetupForm = () => {
 };
 
 SetupForm.displayName = 'SetupForm';
-SetupForm.propTypes = {};
 
 export default SetupForm;

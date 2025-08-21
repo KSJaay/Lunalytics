@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import dayjs from 'dayjs';
-import PropTypes from 'prop-types';
 
 // import local files
 import { defaultHeartbeats } from '../../../../../../../constant/status';
@@ -75,8 +74,6 @@ const StatusLayoutLineChart = ({ heartbeats = defaultHeartbeats }) => {
 
 StatusLayoutLineChart.displayName = 'StatusLayoutLineChart';
 
-StatusLayoutLineChart.propTypes = {
-  heartbeats: PropTypes.array.isRequired,
-};
+
 
 export default StatusLayoutLineChart;

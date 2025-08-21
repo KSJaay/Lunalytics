@@ -31,7 +31,7 @@ const NotificationDiscordContent = ({
           id="friendly-name"
           error={errors?.friendlyName}
           value={inputs.friendlyName || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
         />
@@ -43,7 +43,7 @@ const NotificationDiscordContent = ({
           placeholder="https://lunalytics.xyz/webhooks/example"
           error={errors?.token}
           value={inputs.token || ''}
-          onChange={(event) =>
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             handleInput({ key: 'token', value: event.target.value })
           }
           iconRight={
@@ -66,7 +66,7 @@ const NotificationDiscordContent = ({
           id="webhook-username"
           error={errors?.username}
           value={inputs.data.username}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, username: e.target.value },
@@ -80,7 +80,7 @@ const NotificationDiscordContent = ({
           id="chat-id"
           error={errors?.chatId}
           value={inputs.data.chatId}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, chatId: e.target.value },
@@ -101,7 +101,7 @@ const NotificationDiscordContent = ({
           label={t('notification.input.enabled_title')}
           shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
           }}
         />
@@ -110,7 +110,7 @@ const NotificationDiscordContent = ({
           label={t('notification.input.additional_headers')}
           id="additional-headers"
           checked={inputs.data.showAdditionalHeaders}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: {
@@ -127,7 +127,7 @@ const NotificationDiscordContent = ({
                 id="additional-headers-textarea"
                 placeholder='{"Content-Type": "application/json"}'
                 value={inputs.data.additionalHeaders}
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   handleInput({
                     key: 'data',
                     value: {

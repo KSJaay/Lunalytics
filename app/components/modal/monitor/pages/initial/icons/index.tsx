@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import MonitorIconGrid from './grid';
 import { Input, Popover } from '@lunalytics/ui';
 
@@ -76,12 +75,5 @@ const MonitorIconSelect = ({ inputs, handleInput }) => {
 };
 
 MonitorIconSelect.displayName = 'MonitorIconSelect';
-
-MonitorIconSelect.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-  isEdit: PropTypes.bool,
-};
 
 export default MonitorIconSelect;

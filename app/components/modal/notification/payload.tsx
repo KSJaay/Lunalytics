@@ -1,9 +1,6 @@
 import './styles.scss';
 
-// import dependencies
-import PropTypes from 'prop-types';
-
-const parseJson = (value) => {
+const parseJson = (value: object) => {
   const json = JSON.stringify(value, null, 2)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -29,16 +26,16 @@ const parseJson = (value) => {
   );
 };
 
-const NotificationModalPayload = ({ message }) => {
+const NotificationModalPayload = ({
+  message,
+}: {
+  message: string | object;
+}) => {
   const __html = typeof message === 'object' ? parseJson(message) : message;
 
   return <div className="json-format" dangerouslySetInnerHTML={{ __html }} />;
 };
 
 NotificationModalPayload.displayName = 'NotificationModalPayload';
-
-NotificationModalPayload.propTypes = {
-  message: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-};
 
 export default NotificationModalPayload;

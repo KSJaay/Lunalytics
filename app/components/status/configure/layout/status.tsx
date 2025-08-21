@@ -2,7 +2,6 @@ import './status.scss';
 
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { FiMinimize, FiMaximize } from 'react-icons/fi';
 
@@ -84,21 +83,27 @@ const StatusConfigureLayoutStatus = ({ componentId }) => {
                 label="Incident color"
                 options={affectTextIds}
                 activeOption={status}
-                onChange={(e) => setComponentValue(componentId, 'status', e)}
+                onChange={(e: string) =>
+                  setComponentValue(componentId, 'status', e)
+                }
                 shortDescription="This is for testing only and will not be saved"
               />
               <Tabs
                 label="Banner size"
                 options={statusSizes}
                 activeOption={size}
-                onChange={(e) => setComponentValue(componentId, 'size', e)}
+                onChange={(e: string) =>
+                  setComponentValue(componentId, 'size', e)
+                }
                 shortDescription="Change the size of the status banner"
               />
               <Tabs
                 label="Title size"
                 options={statusSizes}
                 activeOption={titleSize}
-                onChange={(e) => setComponentValue(componentId, 'titleSize', e)}
+                onChange={(e: string) =>
+                  setComponentValue(componentId, 'titleSize', e)
+                }
               />
             </div>
             <div style={{ flex: 1 }}>
@@ -106,7 +111,7 @@ const StatusConfigureLayoutStatus = ({ componentId }) => {
                 label="Show icon"
                 options={['Enable', 'Disable']}
                 activeOption={icon ? 'Enable' : 'Disable'}
-                onChange={(e) =>
+                onChange={(e: string) =>
                   setComponentValue(componentId, 'icon', e === 'Enable')
                 }
                 shortDescription="Show the status icon"
@@ -115,7 +120,9 @@ const StatusConfigureLayoutStatus = ({ componentId }) => {
                 label="Design"
                 options={statusBarDesign}
                 activeOption={design}
-                onChange={(e) => setComponentValue(componentId, 'design', e)}
+                onChange={(e: string) =>
+                  setComponentValue(componentId, 'design', e)
+                }
                 shortDescription="Change the design of the status banner"
               />
             </div>
@@ -127,9 +134,5 @@ const StatusConfigureLayoutStatus = ({ componentId }) => {
 };
 
 StatusConfigureLayoutStatus.displayName = 'StatusConfigureLayoutStatus';
-
-StatusConfigureLayoutStatus.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutStatus);

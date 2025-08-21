@@ -1,8 +1,5 @@
 import './style.scss';
 
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import StatusPageMetricsBasicGraph from './graph/basic';
 import StatusPageMetricsPrettyGraph from './graph/pretty';
@@ -59,11 +56,5 @@ const StatusPageMetricsSeparate = ({
 };
 
 StatusPageMetricsSeparate.displayName = 'StatusPageMetricsSeparate';
-
-StatusPageMetricsSeparate.propTypes = {
-  monitors: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
-  heartbeats: PropTypes.object,
-};
 
 export default StatusPageMetricsSeparate;

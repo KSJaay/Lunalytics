@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { FaTriangleExclamation } from 'react-icons/fa6';
 
 // import local files
@@ -80,10 +79,5 @@ const StatusUptimeNerdyGraph = ({
 };
 
 StatusUptimeNerdyGraph.displayName = 'StatusUptimeNerdyGraph';
-
-StatusUptimeNerdyGraph.propTypes = {
-  monitor: PropTypes.object.isRequired,
-  indicator: PropTypes.string.isRequired,
-};
 
 export default StatusUptimeNerdyGraph;

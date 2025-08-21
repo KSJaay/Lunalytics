@@ -50,6 +50,4 @@ const StatusConfigureAppearanceFont = () => {
 
 StatusConfigureAppearanceFont.displayName = 'StatusConfigureAppearanceFont';
 
-StatusConfigureAppearanceFont.propTypes = {};
-
 export default observer(StatusConfigureAppearanceFont);

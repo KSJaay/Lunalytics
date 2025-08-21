@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 
 // import local files
 import useLocalStorageContext from '../../hooks/useLocalstorage';
-import { heartbeatPropType } from '../../../shared/utils/propTypes';
 
 const UptimeInfo = ({ heartbeat = {}, highestLatency = 0 }) => {
   const { dateformat, timeformat, timezone } = useLocalStorageContext();
@@ -57,9 +56,5 @@ const UptimeInfo = ({ heartbeat = {}, highestLatency = 0 }) => {
 };
 
 UptimeInfo.displayName = 'UptimeInfo';
-
-UptimeInfo.propTypes = {
-  heartbeat: heartbeatPropType.isRequired,
-};
 
 export default UptimeInfo;

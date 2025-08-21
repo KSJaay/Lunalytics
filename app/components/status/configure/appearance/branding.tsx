@@ -17,7 +17,9 @@ const StatusConfigureAppearanceBranding = () => {
           title="Logo"
           value={logo || ''}
           placeholder="/logo.svg"
-          onChange={(e) => changeValues({ logo: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            changeValues({ logo: e.target.value })
+          }
         />
       </div>
       <div>
@@ -25,7 +27,9 @@ const StatusConfigureAppearanceBranding = () => {
           title="Favicon"
           value={favicon || ''}
           placeholder="/logo.svg"
-          onChange={(e) => changeValues({ favicon: e.target.value })}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            changeValues({ favicon: e.target.value })
+          }
         />
       </div>
     </div>
@@ -34,7 +38,5 @@ const StatusConfigureAppearanceBranding = () => {
 
 StatusConfigureAppearanceBranding.displayName =
   'StatusConfigureAppearanceBranding';
-
-StatusConfigureAppearanceBranding.propTypes = {};
 
 export default observer(StatusConfigureAppearanceBranding);

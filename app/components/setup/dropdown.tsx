@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import useDropdown from '../../hooks/useDropdown';
 import useSetupFormContext from '../../hooks/useSetup';
@@ -51,11 +48,5 @@ const SetupDropdown = ({ id, options, label = 'Dropdown' }) => {
 };
 
 SetupDropdown.displayName = 'SetupDropdown';
-
-SetupDropdown.propTypes = {
-  id: PropTypes.string.isRequired,
-  options: PropTypes.object.isRequired,
-  label: PropTypes.string,
-};
 
 export default SetupDropdown;

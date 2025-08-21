@@ -3,7 +3,6 @@ import './styles.scss';
 // import dependencies
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import PropTypes from 'prop-types';
 
 dayjs.extend(localizedFormat);
 
@@ -86,10 +85,5 @@ const StatusConfigureLayoutHistoryList = ({
 
 StatusConfigureLayoutHistoryList.displayName =
   'StatusConfigureLayoutHistoryList';
-
-StatusConfigureLayoutHistoryList.propTypes = {
-  incidents: PropTypes.array.isRequired,
-  size: PropTypes.number.isRequired,
-};
 
 export default StatusConfigureLayoutHistoryList;

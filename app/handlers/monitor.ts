@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 
 // import local files
 import { createPostRequest } from '../services/axios';
-import type { HandleMonitorProps } from '../types/handlers';
+import type { MonitorProps } from '../types/monitor';
 
-const parseJson = (str: string | object) => {
+const parseJson = (str: string | object | undefined) => {
   try {
     if (typeof str === 'string') {
       return JSON.parse(str);
@@ -22,7 +22,7 @@ const parseJson = (str: string | object) => {
 };
 
 const handleMonitor = async (
-  form: HandleMonitorProps,
+  form: Partial<MonitorProps>,
   isEdit: boolean,
   closeModal: () => void,
   setMonitor: (monitor: any) => void
