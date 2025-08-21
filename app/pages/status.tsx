@@ -54,7 +54,8 @@ const StatusPage = ({ id }: { id?: string }) => {
         });
 
         setStatusPage(statusPages?.data);
-      } catch {
+      } catch (error) {
+        console.log(error);
         navigate('/error');
       }
     };

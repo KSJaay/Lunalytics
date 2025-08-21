@@ -48,7 +48,8 @@ const SettingsAccountAvatar = () => {
 
       toast.success('Avatar successfully updated');
       closeModal();
-    } catch {
+    } catch (error) {
+      console.log(error);
       toast.error('Something went wrong, please try again later.');
     }
   };

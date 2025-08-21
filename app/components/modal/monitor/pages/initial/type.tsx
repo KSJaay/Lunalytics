@@ -3,6 +3,7 @@ import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
 
 const textInputTypes = {
+  docker: 'Docker Container',
   http: 'HTTP',
   json: 'JSON Query',
   ping: 'Ping',
@@ -31,6 +32,15 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
           {textInputTypes[inputs.type] || 'Select Monitor Type'}
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
+          <Dropdown.Item
+            id="type-docker"
+            onClick={() => {
+              handleInput('type', 'docker');
+              toggleDropdown();
+            }}
+          >
+            {textInputTypes.docker}
+          </Dropdown.Item>
           <Dropdown.Item
             id="type-http"
             onClick={() => {

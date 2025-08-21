@@ -16,7 +16,8 @@ const parseJson = (str: string | object | undefined) => {
     }
 
     return {};
-  } catch {
+  } catch (error) {
+    console.log(error);
     return {};
   }
 };

@@ -41,7 +41,7 @@ const useMonitorForm = (
       case 'Create': {
         const type = inputs.type ?? defaultInputs.type;
         const validator = monitorValidators[type];
-        if (!validator) return;
+        if (!validator) return console.log("Validator doesn't exist");
 
         const errorsObj = validator(inputs);
 

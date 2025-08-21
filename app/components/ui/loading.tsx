@@ -1,7 +1,7 @@
 import './loading.scss';
 
-const Loading = () => (
-  <div className="loading">
+const Loading = (props: React.HTMLProps<HTMLDivElement>) => (
+  <div className="loading" {...props}>
     <img src="/logo.svg" alt="logo" />
   </div>
 );

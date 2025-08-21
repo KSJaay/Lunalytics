@@ -6,7 +6,8 @@ const MonitorHttpBody = ({ inputs, errors, handleInput }) => {
       if (typeof body === 'object') {
         return JSON.stringify(body, null, 2);
       }
-    } catch {
+    } catch (error) {
+      console.log(error);
       return '';
     }
   };
