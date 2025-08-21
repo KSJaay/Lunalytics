@@ -1,7 +1,6 @@
 import './desktop.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
@@ -99,14 +98,5 @@ const SettingsAccountDesktopItem = ({
 };
 
 SettingsAccountDesktopItem.displayName = 'SettingsAccountDesktopItem';
-
-SettingsAccountDesktopItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  canEdit: PropTypes.bool,
-  description: PropTypes.string,
-  customButton: PropTypes.element,
-  permissionLevel: PropTypes.number,
-};
 
 export default observer(SettingsAccountDesktopItem);

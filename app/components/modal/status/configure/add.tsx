@@ -2,7 +2,6 @@ import './add.scss';
 
 // import dependencies
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { MdHistory } from 'react-icons/md';
 import { BsGraphUp } from 'react-icons/bs';
@@ -124,10 +123,5 @@ const StatusConfigureAddModal = ({ closeModal, createComponent }) => {
 };
 
 StatusConfigureAddModal.displayName = 'StatusConfigureAddModal';
-
-StatusConfigureAddModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  createComponent: PropTypes.func.isRequired,
-};
 
 export default StatusConfigureAddModal;

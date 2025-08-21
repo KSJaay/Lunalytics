@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 
 const Tabs = ({
   label,
@@ -75,18 +74,5 @@ const Tabs = ({
 };
 
 Tabs.displayName = 'Tabs';
-
-Tabs.propTypes = {
-  label: PropTypes.string,
-  id: PropTypes.string,
-  description: PropTypes.string,
-  shortDescription: PropTypes.string,
-  options: PropTypes.array,
-  activeOption: PropTypes.string,
-  tabIndex: PropTypes.number,
-  onChange: PropTypes.func,
-  color: PropTypes.string,
-  error: PropTypes.string,
-};
 
 export default Tabs;

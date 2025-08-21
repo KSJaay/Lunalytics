@@ -1,7 +1,6 @@
 import './mobile.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -85,13 +84,5 @@ const SettingsAccountMobileItem = ({
 };
 
 SettingsAccountMobileItem.displayName = 'SettingsAccountMobileItem';
-
-SettingsAccountMobileItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  canEdit: PropTypes.bool,
-  fontColor: PropTypes.string,
-  permissionLevel: PropTypes.number,
-};
 
 export default observer(SettingsAccountMobileItem);

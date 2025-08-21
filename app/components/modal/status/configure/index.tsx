@@ -2,7 +2,6 @@ import './add.scss';
 
 // import dependencies
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { Button, Modal } from '@lunalytics/ui';
 import { TbLayoutFilled } from 'react-icons/tb';
@@ -97,10 +96,5 @@ const StatusConfigurCreateModal = ({
 };
 
 StatusConfigurCreateModal.displayName = 'StatusConfigurCreateModal';
-
-StatusConfigurCreateModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  createComponent: PropTypes.func.isRequired,
-};
 
 export default observer(StatusConfigurCreateModal);

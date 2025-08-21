@@ -1,6 +1,5 @@
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -50,9 +49,5 @@ const StatusConfigureLayoutHeaderLogo = ({ componentId }) => {
 };
 
 StatusConfigureLayoutHeaderLogo.displayName = 'StatusConfigureLayoutHeaderLogo';
-
-StatusConfigureLayoutHeaderLogo.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutHeaderLogo);

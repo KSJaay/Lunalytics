@@ -2,13 +2,20 @@ import { useEffect, useReducer } from 'react';
 import NotificationValidators from '../../shared/validators/notifications';
 import { NotificationValidatorError } from '../../shared/utils/errors';
 import { createPostRequest } from '../services/axios';
+import type {
+  NotificationErrorProps,
+  NotificationProps,
+} from '../types/notifications';
 
 const defaultInputs = {
   platform: 'Discord',
   messageType: 'basic',
 };
 
-const inputReducer = (state, action) => {
+const inputReducer = (
+  state: Partial<Record<keyof NotificationProps, any>>,
+  action: { key: keyof NotificationProps | 'reset'; value: any }
+) => {
   if (action.key === 'reset') {
     return action.value;
   }
@@ -20,13 +27,16 @@ const inputReducer = (state, action) => {
   return { ...state, [action.key]: action.value };
 };
 
-const errorReducer = (state, action) => {
+const errorReducer = (
+  _: Partial<Record<keyof NotificationErrorProps, any>>,
+  action: { key: keyof NotificationErrorProps; value: string }
+) => {
   return { [action.key]: action.value };
 };
 
 const useNotificationForm = (
-  values = defaultInputs,
-  isEdit: boolean,
+  values: Partial<Record<keyof NotificationProps, any>> = defaultInputs,
+  isEdit?: boolean,
   closeModal?: () => void
 ) => {
   const [inputs, handleInput] = useReducer(inputReducer, values);

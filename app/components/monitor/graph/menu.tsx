@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button } from '@lunalytics/ui';
 import { useTranslation } from 'react-i18next';
 
@@ -98,11 +97,5 @@ const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
 };
 
 GraphMenu.displayName = 'GraphMenu';
-
-GraphMenu.propTypes = {
-  statusType: PropTypes.string.isRequired,
-  setStatusType: PropTypes.func.isRequired,
-  showFilters: PropTypes.bool.isRequired,
-};
 
 export default GraphMenu;

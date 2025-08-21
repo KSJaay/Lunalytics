@@ -50,7 +50,7 @@ const IncidentPreview = ({ children }: { children: React.ReactNode }) => {
     <Input
       placeholder={t('incident.search')}
       key="search"
-      onChange={(event) => {
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value?.trim() || '');
       }}
     />

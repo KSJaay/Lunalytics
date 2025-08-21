@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Textarea } from '@lunalytics/ui';
 
 const MonitorHttpHeaders = ({ inputs, errors, handleInput }) => {
@@ -23,7 +22,9 @@ const MonitorHttpHeaders = ({ inputs, errors, handleInput }) => {
       <Textarea
         rows={8}
         error={errors.headers}
-        onChange={(e) => handleInput('headers', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          handleInput('headers', e.target.value)
+        }
         id="http-headers-textarea"
         color="var(--lunaui-accent-900)"
       >
@@ -34,11 +35,5 @@ const MonitorHttpHeaders = ({ inputs, errors, handleInput }) => {
 };
 
 MonitorHttpHeaders.displayName = 'MonitorHttpHeaders';
-
-MonitorHttpHeaders.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-};
 
 export default MonitorHttpHeaders;

@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import StatusLayoutLineChart from '../../../layout/metrics/type/chart/line';
 
@@ -46,11 +43,5 @@ const StatusPageMetricsNerdyGraph = ({ title, showPing, heartbeats = [] }) => {
 };
 
 StatusPageMetricsNerdyGraph.displayName = 'StatusPageMetricsNerdyGraph';
-
-StatusPageMetricsNerdyGraph.propTypes = {
-  title: PropTypes.string.isRequired,
-  showPing: PropTypes.bool.isRequired,
-  heartbeats: PropTypes.array.isRequired,
-};
 
 export default StatusPageMetricsNerdyGraph;

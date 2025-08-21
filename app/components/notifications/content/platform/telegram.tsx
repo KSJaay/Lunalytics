@@ -29,7 +29,7 @@ const NotificationDiscordContent = ({
           id="friendly-name"
           error={errors?.friendlyName}
           value={inputs.friendlyName || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
         />
@@ -41,7 +41,7 @@ const NotificationDiscordContent = ({
           placeholder={t('notification.input.bot_token')}
           error={errors.token}
           value={inputs.token || ''}
-          onChange={(event) =>
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             handleInput({ key: 'token', value: event.target.value })
           }
           iconRight={
@@ -64,7 +64,7 @@ const NotificationDiscordContent = ({
           id="chat-id"
           error={errors?.chatId}
           value={inputs.data?.chatId || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, chatId: e.target.value },
@@ -87,7 +87,7 @@ const NotificationDiscordContent = ({
           id="disable-notification"
           error={errors?.disableNotification}
           checked={inputs.data?.disableNotification || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, disableNotification: e.target.checked },
@@ -101,7 +101,7 @@ const NotificationDiscordContent = ({
           id="protect-content"
           error={errors?.protectContent}
           checked={inputs.data?.protectContent || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, protectContent: e.target.checked },
@@ -113,7 +113,7 @@ const NotificationDiscordContent = ({
           label={t('notification.input.enabled_title')}
           shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
           }}
         />

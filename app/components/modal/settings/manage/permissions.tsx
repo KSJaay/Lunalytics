@@ -1,6 +1,5 @@
 // import dependencies
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { Button, Modal } from '@lunalytics/ui';
@@ -10,7 +9,6 @@ import SwitchWithText from '../../../ui/switch';
 import useContextStore from '../../../../context';
 import useTeamContext from '../../../../context/team';
 import { createPostRequest } from '../../../../services/axios';
-import { userPropType } from '../../../../../shared/utils/propTypes';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
 
@@ -97,7 +95,7 @@ const MemberPermissionsModal = ({ member, onClose }) => {
                   key={permission.title}
                   label={permission.title}
                   shortDescription={permission.description}
-                  onChange={(event) =>
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                     changePermission(
                       event.target.checked,
                       permission.permission
@@ -120,10 +118,5 @@ const MemberPermissionsModal = ({ member, onClose }) => {
 };
 
 MemberPermissionsModal.displayName = 'MemberPermissionsModal';
-
-MemberPermissionsModal.propTypes = {
-  member: userPropType.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default observer(MemberPermissionsModal);

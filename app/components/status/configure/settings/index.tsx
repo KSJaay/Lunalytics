@@ -56,7 +56,7 @@ const StatusConfigureSettings = () => {
                 id={'status-url'}
                 tabIndex={0}
                 value={settings.url}
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   changeValues({ url: e.target.value });
                 }}
                 style={{
@@ -73,7 +73,7 @@ const StatusConfigureSettings = () => {
               placeholder="Status"
               subtitle="This will be used as the page title and friendly name for the status page."
               value={settings.title}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 changeValues({ title: e.target.value });
               }}
             />
@@ -84,7 +84,7 @@ const StatusConfigureSettings = () => {
               placeholder="https://lunalytics.xyz"
               subtitle="URL for where the user will be redirect when they click the logo or title."
               value={settings.homepageUrl}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 changeValues({ homepageUrl: e.target.value });
               }}
             />
@@ -105,7 +105,7 @@ const StatusConfigureSettings = () => {
             label="Publicly available"
             shortDescription="Should the status page be visible users who are not signed into the application."
             checked={settings.isPublic}
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               changeValues({ isPublic: e.target.checked });
             }}
           />
@@ -113,7 +113,7 @@ const StatusConfigureSettings = () => {
             label="Hide paused monitors"
             shortDescription="When a monitor is paused, it will not be visible on the status page."
             checked={settings.hidePaused}
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               changeValues({ hidePaused: e.target.checked });
             }}
           />
@@ -124,7 +124,5 @@ const StatusConfigureSettings = () => {
 };
 
 StatusConfigureSettings.displayName = 'StatusConfigureSettings';
-
-StatusConfigureSettings.propTypes = {};
 
 export default observer(StatusConfigureSettings);

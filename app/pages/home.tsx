@@ -83,8 +83,7 @@ const Home = () => {
                 <MonitorConfigureModal
                   closeModal={closeModal}
                   handleMonitorSubmit={addMonitor}
-                />,
-                false
+                />
               )
             }
           >

@@ -1,6 +1,5 @@
 // import dependencies
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 
 // import local files
 import { FaChevronUp } from '../../icons';
@@ -43,15 +42,5 @@ const Trigger = ({
 };
 
 Trigger.displayName = 'DropdownTrigger';
-
-Trigger.propTypes = {
-  asInput: PropTypes.bool,
-  isOpen: PropTypes.bool.isRequired,
-  icon: PropTypes.node,
-  showIcon: PropTypes.bool,
-  toggleDropdown: PropTypes.func.isRequired,
-  tabIndex: PropTypes.number,
-  children: PropTypes.node.isRequired,
-};
 
 export default Trigger;

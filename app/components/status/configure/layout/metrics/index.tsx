@@ -1,7 +1,6 @@
 import './styles.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { FiMaximize, FiMinimize } from 'react-icons/fi';
@@ -149,7 +148,7 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
                     'This will show the monitor name for the graph'
                   }
                   checked={showName}
-                  onChange={(e) =>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setComponentValue(componentId, 'data', {
                       showName: e.target.checked,
                     })
@@ -161,7 +160,7 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
                     'This will show the current ping for the monitor'
                   }
                   checked={showPing}
-                  onChange={(e) =>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setComponentValue(componentId, 'data', {
                       showPing: e.target.checked,
                     })
@@ -174,7 +173,7 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
               title="Title"
               value={title}
               placeholder="Monitors"
-              onChange={(e) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setComponentValue(componentId, 'title', e.target.value)
               }
             />
@@ -196,9 +195,5 @@ const StatusConfigureLayoutMetrics = ({ componentId }) => {
 };
 
 StatusConfigureLayoutMetrics.displayName = 'StatusConfigureLayoutMetrics';
-
-StatusConfigureLayoutMetrics.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutMetrics);

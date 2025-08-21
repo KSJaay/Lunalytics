@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import IncidentIdMessage from '../id/message';
 import useContextStore from '../../../context';
 
-const IncidentContentMessages = ({ incidentId }) => {
+const IncidentContentMessages = ({ incidentId }: { incidentId: string }) => {
   const {
     incidentStore: { getIncidentById },
   } = useContextStore();
@@ -30,7 +30,5 @@ const IncidentContentMessages = ({ incidentId }) => {
 };
 
 IncidentContentMessages.displayName = 'IncidentContentMessages';
-
-IncidentContentMessages.propTypes = {};
 
 export default observer(IncidentContentMessages);

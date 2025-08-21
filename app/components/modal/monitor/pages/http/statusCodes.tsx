@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import useSelect from '../../../../../hooks/useSelect';
 import Select from '../../../../ui/select';
@@ -56,11 +53,5 @@ const MonitorHttpStatusCodes = ({
 };
 
 MonitorHttpStatusCodes.displayName = 'MonitorHttpStatusCodes';
-
-MonitorHttpStatusCodes.propTypes = {
-  error: PropTypes.string,
-  selectedIds: PropTypes.array,
-  handleStatusCodeSelect: PropTypes.func.isRequired,
-};
 
 export default MonitorHttpStatusCodes;

@@ -1,6 +1,5 @@
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 
 // import local files
 import {
@@ -66,13 +65,5 @@ const StatusPageUptime = ({
 };
 
 StatusPageUptime.displayName = 'StatusPageUptime';
-
-StatusPageUptime.propTypes = {
-  monitors: PropTypes.array.isRequired,
-  graphType: PropTypes.string.isRequired,
-  statusIndicator: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  incidents: PropTypes.object.isRequired,
-};
 
 export default StatusPageUptime;

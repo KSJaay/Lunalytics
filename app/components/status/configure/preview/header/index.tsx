@@ -2,7 +2,6 @@ import './style.scss';
 
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 
 // import local files
 import StatusPageHeaderStatus from './status';
@@ -68,13 +67,5 @@ const StatusPageHeader = ({
 };
 
 StatusPageHeader.displayName = 'StatusPageHeader';
-
-StatusPageHeader.propTypes = {
-  title: PropTypes.object.isRequired,
-  status: PropTypes.object.isRequired,
-  homepageUrl: PropTypes.string.isRequired,
-  logo: PropTypes.string.isRequired,
-  titleText: PropTypes.string.isRequired,
-};
 
 export default StatusPageHeader;

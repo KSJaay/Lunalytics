@@ -1,6 +1,5 @@
 // import dependencies
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Button, Input, Modal } from '@lunalytics/ui';
 
 // import local files
@@ -134,11 +133,5 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
 };
 
 SettingsAccountPasswordModal.displayName = 'SettingsAccountPasswordModal';
-
-SettingsAccountPasswordModal.propTypes = {
-  modalTitle: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired,
-};
 
 export default SettingsAccountPasswordModal;

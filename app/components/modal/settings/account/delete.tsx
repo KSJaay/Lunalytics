@@ -1,7 +1,6 @@
 import './avatar.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { Alert, Button, Input, Modal } from '@lunalytics/ui';
@@ -88,9 +87,5 @@ const SettingsAccountDeleteModal = ({ closeModal }) => {
 };
 
 SettingsAccountDeleteModal.displayName = 'SettingsAccountDeleteModal';
-
-SettingsAccountDeleteModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-};
 
 export default SettingsAccountDeleteModal;

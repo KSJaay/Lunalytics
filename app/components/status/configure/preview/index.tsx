@@ -181,6 +181,4 @@ const StatusConfigurePreview = () => {
 
 StatusConfigurePreview.displayName = 'StatusConfigurePreview';
 
-StatusConfigurePreview.propTypes = {};
-
 export default observer(StatusConfigurePreview);

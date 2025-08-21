@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { IoMdClose } from 'react-icons/io';
 
@@ -46,11 +45,5 @@ const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
 };
 
 SettingsDesktop.displayName = 'SettingsDesktop';
-
-SettingsDesktop.propTypes = {
-  tab: PropTypes.string.isRequired,
-  handleTabUpdate: PropTypes.func.isRequired,
-  handleKeydown: PropTypes.func.isRequired,
-};
 
 export default observer(SettingsDesktop);

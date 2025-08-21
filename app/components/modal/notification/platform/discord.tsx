@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 const NotificationModalDiscordInput = ({
@@ -15,7 +14,7 @@ const NotificationModalDiscordInput = ({
         id="friendly-name"
         error={errors?.friendlyName}
         value={values.friendlyName}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
@@ -40,7 +39,7 @@ const NotificationModalDiscordInput = ({
         isRequired
         error={errors?.token}
         value={values.token}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
@@ -50,7 +49,7 @@ const NotificationModalDiscordInput = ({
         id="webhook-username"
         error={errors?.username}
         value={values.data?.username}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, username: e.target.value },
@@ -63,7 +62,7 @@ const NotificationModalDiscordInput = ({
         id="text-messsage"
         error={errors?.textMessage}
         value={values.data?.textMessage}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, textMessage: e.target.value },
@@ -75,11 +74,5 @@ const NotificationModalDiscordInput = ({
 };
 
 NotificationModalDiscordInput.displayName = 'NotificationModalDiscordInput';
-
-NotificationModalDiscordInput.propTypes = {
-  values: PropTypes.object,
-  errors: PropTypes.object,
-  handleInput: PropTypes.func,
-};
 
 export default NotificationModalDiscordInput;

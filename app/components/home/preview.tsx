@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import { fullMonitorPropType } from '../../../shared/utils/propTypes';
 import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
 import type { ContextMonitorProps } from '../../types/context/global';
@@ -47,7 +46,7 @@ const MonitorPreview = ({ children }: { children: React.ReactNode }) => {
     <Input
       placeholder={t('home.search')}
       key="search"
-      onChange={(event) => {
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value?.trim() || '');
       }}
     />
@@ -76,9 +75,5 @@ const MonitorPreview = ({ children }: { children: React.ReactNode }) => {
 };
 
 MonitorPreview.displayName = 'MonitorPreview';
-
-MonitorPreview.propTypes = {
-  monitor: fullMonitorPropType.isRequired,
-};
 
 export default observer(MonitorPreview);

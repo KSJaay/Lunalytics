@@ -1,7 +1,6 @@
 import './style.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -45,13 +44,6 @@ const StatusPageMetrics = ({
 
 StatusPageMetrics.displayName = 'StatusPageMetrics';
 
-StatusPageMetrics.propTypes = {
-  title: PropTypes.string.isRequired,
-  showPing: PropTypes.bool.isRequired,
-  showName: PropTypes.bool.isRequired,
-  monitors: PropTypes.array.isRequired,
-  graphType: PropTypes.string.isRequired,
-  heartbeats: PropTypes.object,
-};
+
 
 export default observer(StatusPageMetrics);

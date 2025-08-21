@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { Button, Modal } from '@lunalytics/ui';
@@ -7,7 +6,6 @@ import { Button, Modal } from '@lunalytics/ui';
 // import local files
 import { createPostRequest } from '../../../../services/axios';
 import useTeamContext from '../../../../context/team';
-import { userPropType } from '../../../../../shared/utils/propTypes';
 
 const MemberApproveModal = ({ member, onClose }) => {
   const { updateUserVerified } = useTeamContext();
@@ -62,10 +60,5 @@ const MemberApproveModal = ({ member, onClose }) => {
 };
 
 MemberApproveModal.displayName = 'MemberApproveModal';
-
-MemberApproveModal.propTypes = {
-  member: userPropType.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default observer(MemberApproveModal);

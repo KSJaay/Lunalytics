@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 
@@ -90,9 +89,5 @@ const GlobalLayout = ({ children }: LayoutGlobalProps) => {
 };
 
 GlobalLayout.displayName = 'GlobalLayout';
-
-GlobalLayout.propTypes = {
-  children: PropTypes.node,
-};
 
 export default observer(GlobalLayout);

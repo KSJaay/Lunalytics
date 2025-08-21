@@ -9,9 +9,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import dayjs from 'dayjs';
-// import utc from 'dayjs/plugin/utc';
-// import timezone from 'dayjs/plugin/timezone';
-import PropTypes from 'prop-types';
 
 // import local files
 import { defaultHeartbeats } from '../../../../../../../constant/status';
@@ -68,9 +65,5 @@ const StatusLayoutAreaChart = ({ heartbeats = defaultHeartbeats }) => {
 };
 
 StatusLayoutAreaChart.displayName = 'StatusLayoutAreaChart';
-
-StatusLayoutAreaChart.propTypes = {
-  heartbeats: PropTypes.array.isRequired,
-};
 
 export default StatusLayoutAreaChart;

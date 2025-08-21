@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 // import local files
@@ -11,12 +10,19 @@ import MonitorHttpIgnoreTls from '../pages/http/ignoreTls';
 import MonitorHttpMethods from '../pages/http/methods';
 import MonitorJsonQueryCheck from '../pages/json/check';
 
+interface ModalProps {
+  errors: Record<string, string>;
+  inputs: Record<string, any>;
+  handleInput: (field: string, value: any) => void;
+  pageId: string;
+}
+
 const MonitorConfigureJsonQueryModal = ({
   errors,
   inputs,
   handleInput,
   pageId,
-}) => {
+}: ModalProps) => {
   return (
     <>
       {pageId === 'basic' ? (
@@ -25,7 +31,7 @@ const MonitorConfigureJsonQueryModal = ({
             id="input-url"
             title={'URL'}
             value={inputs.url}
-            onChange={(event) => {
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               handleInput('url', event.target.value);
             }}
             error={errors.url}
@@ -91,12 +97,5 @@ const MonitorConfigureJsonQueryModal = ({
 };
 
 MonitorConfigureJsonQueryModal.displayName = 'MonitorConfigureJsonQueryModal';
-
-MonitorConfigureJsonQueryModal.propTypes = {
-  closeModal: PropTypes.func,
-  handleMonitorSubmit: PropTypes.func,
-  isEdit: PropTypes.bool,
-  monitor: PropTypes.object,
-};
 
 export default MonitorConfigureJsonQueryModal;

@@ -1,6 +1,5 @@
 // import dependencies
 import dayjs from 'dayjs';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const StatusIncidentBasic = ({ incidents = [], status }) => {
@@ -27,10 +26,5 @@ const StatusIncidentBasic = ({ incidents = [], status }) => {
 };
 
 StatusIncidentBasic.displayName = 'StatusIncidentBasic';
-
-StatusIncidentBasic.propTypes = {
-  incidents: PropTypes.array.isRequired,
-  status: PropTypes.string.isRequired,
-};
 
 export default StatusIncidentBasic;

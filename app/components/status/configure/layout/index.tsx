@@ -163,6 +163,4 @@ const StatusConfigureLayout = () => {
 
 StatusConfigureLayout.displayName = 'StatusConfigureLayout';
 
-StatusConfigureLayout.propTypes = {};
-
 export default observer(StatusConfigureLayout);

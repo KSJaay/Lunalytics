@@ -80,7 +80,9 @@ const IncidentAddUpdateModal = ({ incidentId }) => {
         disableResize
         rows={5}
         value={values.message || ''}
-        onChange={(e) => dispatch({ key: 'message', value: e.target.value })}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          dispatch({ key: 'message', value: e.target.value })
+        }
         shortDescription="Information about the incident"
       />
 

@@ -4,7 +4,6 @@ import './status.scss';
 import { useTranslation } from 'react-i18next';
 
 // import local files
-import { fullMonitorPropType } from '../../../shared/utils/propTypes';
 import type { ContextMonitorProps } from '../../types/context/global';
 
 const MonitorStatus = ({
@@ -66,9 +65,5 @@ const MonitorStatus = ({
 };
 
 MonitorStatus.displayName = 'MonitorStatus';
-
-MonitorStatus.propTypes = {
-  monitor: fullMonitorPropType.isRequired,
-};
 
 export default MonitorStatus;

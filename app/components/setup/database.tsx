@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 // import local files
@@ -60,14 +59,6 @@ const DropdownItem = ({ title, img, value, handleInput, inputs }) => {
 
 DropdownItem.displayName = 'DropdownItem';
 
-DropdownItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  img: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  handleInput: PropTypes.func.isRequired,
-  inputs: PropTypes.object.isRequired,
-};
-
 const SetupDatabaseForm = () => {
   const { handleInput, inputs, errors, setErrors } = useSetupFormContext();
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false, 'SQLite');
@@ -125,7 +116,7 @@ const SetupDatabaseForm = () => {
         error={errors['databaseName']}
         value={inputs['databaseName'] || ''}
         onChange={handleInput}
-        onBlur={(e) => {
+        onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
           const nameValidator = setupValidators['databaseName'];
           if (nameValidator) {
             nameValidator(e.target.value, setErrors);
@@ -145,7 +136,9 @@ const SetupDatabaseForm = () => {
                 error={errors[input.id]}
                 onChange={handleInput}
                 value={inputs[input.id] || ''}
-                onBlur={(e) => validator(e.target.value, setErrors)}
+                onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  validator(e.target.value, setErrors)
+                }
               />
             );
           })
@@ -155,7 +148,5 @@ const SetupDatabaseForm = () => {
 };
 
 SetupDatabaseForm.displayName = 'SetupDatabaseForm';
-
-SetupDatabaseForm.propTypes = {};
 
 export default SetupDatabaseForm;

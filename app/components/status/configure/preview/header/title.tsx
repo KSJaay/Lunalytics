@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const StatusPageHeaderTitle = ({
@@ -35,12 +34,5 @@ const StatusPageHeaderTitle = ({
 };
 
 StatusPageHeaderTitle.displayName = 'StatusPageHeaderTitle';
-
-StatusPageHeaderTitle.propTypes = {
-  homepageUrl: PropTypes.string.isRequired,
-  title: PropTypes.object.isRequired,
-  logo: PropTypes.string.isRequired,
-  titleText: PropTypes.string.isRequired,
-};
 
 export default StatusPageHeaderTitle;

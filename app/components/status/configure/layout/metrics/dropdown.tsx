@@ -1,6 +1,5 @@
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
@@ -30,10 +29,5 @@ const StatusConfigureLayoutMetricsDropdown = ({ componentId, title }) => {
 
 StatusConfigureLayoutMetricsDropdown.displayName =
   'StatusConfigureLayoutMetricsDropdown';
-
-StatusConfigureLayoutMetricsDropdown.propTypes = {
-  componentId: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutMetricsDropdown);

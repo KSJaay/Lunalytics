@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useEffect, useRef } from 'react';
 
@@ -44,12 +43,5 @@ const Container = ({
 };
 
 Container.displayName = 'Select.Container';
-
-Container.propTypes = {
-  children: PropTypes.node,
-  position: PropTypes.oneOf(['left', 'right', 'center', 'top']),
-  isOpen: PropTypes.bool.isRequired,
-  toggleSelect: PropTypes.func.isRequired,
-};
 
 export default Container;

@@ -1,11 +1,11 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { fetchMonitorById } from '../services/monitor/fetch';
-import type { ContextMonitorProps } from '../types/context/global';
+import type { MonitorProps } from '../types/monitor';
 
 class GlobalStore {
-  monitors: Map<string, ContextMonitorProps>;
+  monitors: Map<string, MonitorProps>;
   timeouts: Map<string, NodeJS.Timeout>;
-  activeMonitor: ContextMonitorProps | null | undefined;
+  activeMonitor: MonitorProps | null | undefined;
 
   constructor() {
     this.monitors = observable.map();
@@ -27,16 +27,13 @@ class GlobalStore {
     });
   }
 
-  setMonitors = (monitors: ContextMonitorProps[]) => {
+  setMonitors = (monitors: MonitorProps[]) => {
     for (const monitor of monitors) {
       this.monitors.set(monitor.monitorId, monitor);
     }
   };
 
-  setMonitor = (
-    data: ContextMonitorProps,
-    func: (id: string, func: any) => void
-  ) => {
+  setMonitor = (data: MonitorProps, func: (id: string, func: any) => void) => {
     if (this.timeouts.has(data.monitorId)) {
       clearTimeout(this.timeouts.get(data.monitorId));
       this.timeouts.delete(data.monitorId);
@@ -60,7 +57,7 @@ class GlobalStore {
   };
 
   setTimeouts = (
-    monitors: ContextMonitorProps[],
+    monitors: MonitorProps[],
     func: (id: string, func: any) => void
   ) => {
     for (const monitor of monitors) {
@@ -76,7 +73,7 @@ class GlobalStore {
     }
   };
 
-  addMonitor = (monitor: ContextMonitorProps) => {
+  addMonitor = (monitor: MonitorProps) => {
     this.monitors.set(monitor.monitorId, monitor);
 
     if (
@@ -113,7 +110,7 @@ class GlobalStore {
     return this.monitors.get(monitorId);
   };
 
-  editMonitor = (monitor: ContextMonitorProps) => {
+  editMonitor = (monitor: MonitorProps) => {
     if (this.monitors.has(monitor.monitorId)) {
       if (this.timeouts.has(monitor.monitorId)) {
         clearTimeout(this.timeouts.get(monitor.monitorId));

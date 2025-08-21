@@ -106,6 +106,4 @@ const Notifications = () => {
 
 Notifications.displayName = 'Notifications';
 
-Notifications.propTypes = {};
-
 export default observer(Notifications);

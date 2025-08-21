@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
@@ -9,7 +8,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         id="input-interval"
         type="number"
         title="Interval"
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput('interval', e.target.value);
         }}
         value={inputs.interval}
@@ -23,7 +22,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         type="number"
         title="Retry"
         subtitle="Max number of retries before sending a notification for service down."
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput('retry', e.target.value);
         }}
         value={inputs.retry}
@@ -35,7 +34,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         id="input-retry-interval"
         type="number"
         title="Retry Interval"
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput('retryInterval', e.target.value);
         }}
         value={inputs.retryInterval}
@@ -48,7 +47,7 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
         id="input-request-timeout"
         type="number"
         title="Request Timeout"
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput('requestTimeout', e.target.value);
         }}
         value={inputs.requestTimeout}
@@ -61,11 +60,5 @@ const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
 };
 
 MonitorAddInterval.displayName = 'MonitorAddInterval';
-
-MonitorAddInterval.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-};
 
 export default MonitorAddInterval;

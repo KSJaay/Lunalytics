@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import { FaTrashCan } from '../../../icons';
 
@@ -24,10 +21,5 @@ const StatusConfigureMonitorItem = ({ monitor, removeMonitor }) => {
 };
 
 StatusConfigureMonitorItem.displayName = 'StatusConfigureMonitorItem';
-
-StatusConfigureMonitorItem.propTypes = {
-  monitor: PropTypes.object,
-  removeMonitor: PropTypes.func,
-};
 
 export default StatusConfigureMonitorItem;

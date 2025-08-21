@@ -1,7 +1,8 @@
 // import dependencies
 import dayjs from 'dayjs';
+import type { IncidentProps } from '../../../types/incident';
 
-const IncidentContentHeader = ({ incident }) => {
+const IncidentContentHeader = ({ incident }: { incident: IncidentProps }) => {
   return (
     <div className="ihc-container">
       <div className="ihc-content">
@@ -31,7 +32,5 @@ const IncidentContentHeader = ({ incident }) => {
 };
 
 IncidentContentHeader.displayName = 'IncidentContentHeader';
-
-IncidentContentHeader.propTypes = {};
 
 export default IncidentContentHeader;

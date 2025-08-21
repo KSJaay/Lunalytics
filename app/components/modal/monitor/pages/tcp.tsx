@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
@@ -10,7 +9,7 @@ const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
         title="Host"
         value={inputs.url}
         error={errors.url}
-        onChange={(e) => handleInput('url', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInput('url', e.target.value)}
         color="var(--lunaui-accent-900)"
         subtitle="The hostname or IP address of the server"
       />
@@ -20,7 +19,7 @@ const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
         title="Port"
         value={inputs.port}
         error={errors.port}
-        onChange={(e) => handleInput('port', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInput('port', e.target.value)}
         color="var(--lunaui-accent-900)"
         subtitle="The port number of the server"
       />
@@ -29,11 +28,5 @@ const MonitorPageTcp = ({ inputs, errors, handleInput }) => {
 };
 
 MonitorPageTcp.displayName = 'MonitorPageTcp';
-
-MonitorPageTcp.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-};
 
 export default MonitorPageTcp;

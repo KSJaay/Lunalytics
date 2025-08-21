@@ -1,8 +1,5 @@
 import './style.scss';
 
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import Dropdown from '../../../../ui/dropdown';
 import StatusPageMetricsBasicGraph from './graph/basic';
@@ -81,13 +78,5 @@ const StatusPageMetricsDropdown = ({
 };
 
 StatusPageMetricsDropdown.displayName = 'StatusPageMetricsDropdown';
-
-StatusPageMetricsDropdown.propTypes = {
-  monitors: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
-  showName: PropTypes.bool.isRequired,
-  showPing: PropTypes.bool.isRequired,
-  heartbeats: PropTypes.object,
-};
 
 export default StatusPageMetricsDropdown;

@@ -86,7 +86,9 @@ const SettingsAuthentication = () => {
           name="allowRegistration"
           shortDescription="Allow new users to register for an account"
           checked={config.register}
-          onChange={(e) => handleSwitchChange('register', e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleSwitchChange('register', e.target.checked)
+          }
         />
 
         <SwitchWithText
@@ -94,7 +96,9 @@ const SettingsAuthentication = () => {
           name="allowNativeLogin"
           shortDescription="Disable internal authentication and only allow SSO login"
           checked={!config.sso ? true : config.nativeSignin}
-          onChange={(e) => handleSwitchChange('nativeSignin', e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleSwitchChange('nativeSignin', e.target.checked)
+          }
         />
       </div>
 

@@ -1,7 +1,6 @@
 import './styles.scss';
 
 // import dependencies
-import PropTypes from 'prop-types';
 import { createSwapy } from 'swapy';
 import { useEffect, useMemo, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
@@ -99,9 +98,5 @@ const StatusConfigureLayoutHeader = ({ componentId }) => {
 };
 
 StatusConfigureLayoutHeader.displayName = 'StatusConfigureLayoutHeader';
-
-StatusConfigureLayoutHeader.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutHeader);

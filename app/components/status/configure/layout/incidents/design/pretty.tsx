@@ -1,6 +1,5 @@
 // import dependencies
 import dayjs from 'dayjs';
-import PropTypes from 'prop-types';
 
 const StatusIncidentPretty = ({
   incidents = [],
@@ -38,11 +37,5 @@ const StatusIncidentPretty = ({
 
 StatusIncidentPretty.displayName = 'StatusIncidentPretty';
 
-StatusIncidentPretty.propTypes = {
-  incidents: PropTypes.array.isRequired,
-  size: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  titleSize: PropTypes.string.isRequired,
-};
 
 export default StatusIncidentPretty;

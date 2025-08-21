@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 // import local files
@@ -48,10 +47,5 @@ const NotificationModalType = ({ messageType = 'basic', setMessageType }) => {
 };
 
 NotificationModalType.displayName = 'NotificationModalType';
-
-NotificationModalType.propTypes = {
-  messageType: PropTypes.oneOf(['basic', 'pretty', 'nerdy']),
-  setMessageType: PropTypes.func,
-};
 
 export default NotificationModalType;

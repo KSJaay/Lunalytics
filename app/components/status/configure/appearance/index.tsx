@@ -3,10 +3,10 @@ import './styles.scss';
 import { observer } from 'mobx-react-lite';
 
 // import local files
+import Tabs from '../../../ui/tabs';
+import StatusConfigureAppearanceFont from './fonts';
 import StatusConfigureAppearanceColors from './color';
 import StatusConfigureAppearanceBranding from './branding';
-import StatusConfigureAppearanceFont from './fonts';
-import Tabs from '../../../ui/tabs';
 import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureAppearance = () => {
@@ -39,7 +39,5 @@ const StatusConfigureAppearance = () => {
 };
 
 StatusConfigureAppearance.displayName = 'StatusConfigureAppearance';
-
-StatusConfigureAppearance.propTypes = {};
 
 export default observer(StatusConfigureAppearance);

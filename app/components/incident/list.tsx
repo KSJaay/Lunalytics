@@ -57,6 +57,4 @@ const NotificationsList = ({
 
 NotificationsList.displayName = 'NotificationsList';
 
-NotificationsList.propTypes = {};
-
 export default NotificationsList;

@@ -1,8 +1,17 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Button, Modal } from '@lunalytics/ui';
 
-const MonitorModal = ({ name = 'Lunalytics', handleClose, handleConfirm }) => {
+interface ModalProps {
+  name?: string;
+  handleClose: () => void;
+  handleConfirm: () => void;
+}
+
+const MonitorModal = ({
+  name = 'Lunalytics',
+  handleClose,
+  handleConfirm,
+}: ModalProps) => {
   return (
     <Modal
       title="Are you absolutely sure?"
@@ -38,11 +47,5 @@ const MonitorModal = ({ name = 'Lunalytics', handleClose, handleConfirm }) => {
 };
 
 MonitorModal.displayName = 'MonitorModal';
-
-MonitorModal.propTypes = {
-  name: PropTypes.string.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleConfirm: PropTypes.func.isRequired,
-};
 
 export default MonitorModal;

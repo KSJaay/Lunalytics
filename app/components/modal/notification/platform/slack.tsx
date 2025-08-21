@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Input } from '@lunalytics/ui';
 
 const NotificationModalSlackInput = ({
@@ -15,7 +14,7 @@ const NotificationModalSlackInput = ({
         id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
@@ -41,7 +40,7 @@ const NotificationModalSlackInput = ({
         isRequired
         error={errors?.token}
         defaultValue={values.token}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
@@ -52,7 +51,7 @@ const NotificationModalSlackInput = ({
         id="webhook-username"
         error={errors?.username}
         defaultValue={values.data?.username}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, username: e.target.value },
@@ -66,7 +65,7 @@ const NotificationModalSlackInput = ({
         id="text-messsage"
         error={errors?.textMessage}
         defaultValue={values.data?.textMessage}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, textMessage: e.target.value },
@@ -80,7 +79,7 @@ const NotificationModalSlackInput = ({
         id="channel-name"
         error={errors?.channel}
         defaultValue={values.data?.channel}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...values.data, channel: e.target.value },
@@ -92,11 +91,5 @@ const NotificationModalSlackInput = ({
 };
 
 NotificationModalSlackInput.displayName = 'NotificationModalSlackInput';
-
-NotificationModalSlackInput.propTypes = {
-  values: PropTypes.object,
-  errors: PropTypes.object,
-  handleInput: PropTypes.func,
-};
 
 export default NotificationModalSlackInput;

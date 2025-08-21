@@ -2,7 +2,6 @@ import './styles.scss';
 
 // import dependencies
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { FiMinimize, FiMaximize } from 'react-icons/fi';
 
@@ -90,14 +89,18 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
                 label="Incident color"
                 options={affectTextIds}
                 activeOption={status}
-                onChange={(e) => setComponentValue(componentId, 'status', e)}
+                onChange={(e: string) =>
+                  setComponentValue(componentId, 'status', e)
+                }
                 shortDescription="This is for testing only and will not be saved"
               />
               <Tabs
                 label="Banner size"
                 options={statusSizes}
                 activeOption={size}
-                onChange={(e) => setComponentValue(componentId, 'size', e)}
+                onChange={(e: string) =>
+                  setComponentValue(componentId, 'size', e)
+                }
                 shortDescription="Change the size of the status banner"
               />
             </div>
@@ -106,14 +109,18 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
                 label="Title size"
                 options={statusSizes}
                 activeOption={titleSize}
-                onChange={(e) => setComponentValue(componentId, 'titleSize', e)}
+                onChange={(e: string) =>
+                  setComponentValue(componentId, 'titleSize', e)
+                }
                 shortDescription="Change the size of the status banner"
               />
               <Tabs
                 label="Design"
                 options={statusDesign}
                 activeOption={design}
-                onChange={(e) => setComponentValue(componentId, 'design', e)}
+                onChange={(e: string) =>
+                  setComponentValue(componentId, 'design', e)
+                }
                 shortDescription="Change the design of the status banner"
               />
             </div>
@@ -125,9 +132,5 @@ const StatusConfigureLayoutIncidents = ({ componentId }) => {
 };
 
 StatusConfigureLayoutIncidents.displayName = 'StatusConfigureLayoutIncidents';
-
-StatusConfigureLayoutIncidents.propTypes = {
-  componentId: PropTypes.string.isRequired,
-};
 
 export default observer(StatusConfigureLayoutIncidents);

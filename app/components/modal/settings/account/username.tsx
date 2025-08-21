@@ -1,6 +1,5 @@
 // import dependencies
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 import { Button, Input, Modal } from '@lunalytics/ui';
 
@@ -61,13 +60,5 @@ const SettingsAccountUsernameModal = ({
 };
 
 SettingsAccountUsernameModal.displayName = 'SettingsAccountUsernameModal';
-
-SettingsAccountUsernameModal.propTypes = {
-  title: PropTypes.string.isRequired,
-  modalTitle: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired,
-};
 
 export default observer(SettingsAccountUsernameModal);

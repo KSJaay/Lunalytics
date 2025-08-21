@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { Tooltip } from '@lunalytics/ui';
 
 // import local files
@@ -68,10 +67,5 @@ const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
 };
 
 SettingsPersonalisationTheme.displayName = 'SettingsPersonalisationTheme';
-
-SettingsPersonalisationTheme.propTypes = {
-  theme: PropTypes.string.isRequired,
-  setTheme: PropTypes.func.isRequired,
-};
 
 export default SettingsPersonalisationTheme;

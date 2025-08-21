@@ -31,7 +31,7 @@ const NotificationSlackContent = ({
           id="friendly-name"
           error={errors?.friendlyName}
           value={inputs.friendlyName || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'friendlyName', value: e.target.value });
           }}
         />
@@ -43,7 +43,7 @@ const NotificationSlackContent = ({
           id="webhook-url"
           error={errors?.token}
           value={inputs.token || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'token', value: e.target.value });
           }}
           iconRight={
@@ -66,7 +66,7 @@ const NotificationSlackContent = ({
           id="webhook-username"
           error={errors?.username}
           value={inputs.data.username || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, username: e.target.value },
@@ -80,7 +80,7 @@ const NotificationSlackContent = ({
           id="text-messsage"
           error={errors?.textMessage}
           value={inputs.data.textMessage || ''}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({
               key: 'data',
               value: { ...inputs.data, textMessage: e.target.value },
@@ -95,7 +95,7 @@ const NotificationSlackContent = ({
         id="channel-name"
         error={errors?.channel}
         value={inputs.data.channel || ''}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({
             key: 'data',
             value: { ...inputs.data, channel: e.target.value },
@@ -108,7 +108,7 @@ const NotificationSlackContent = ({
           label={t('notification.input.enabled_title')}
           shortDescription={t('notification.input.enabled_description')}
           checked={inputs.isEnabled}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleInput({ key: 'isEnabled', value: e.target.checked });
           }}
         />

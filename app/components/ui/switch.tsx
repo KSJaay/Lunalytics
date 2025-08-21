@@ -1,8 +1,21 @@
 import './switch.scss';
-import PropTypes from 'prop-types';
+
+// import dependencies
 import { Switch } from '@lunalytics/ui';
 
-const SwitchWithText = ({ label, description, shortDescription, ...props }) => {
+interface SwitchWithTextProps
+  extends Omit<React.ComponentProps<typeof Switch>, 'label'> {
+  label: string | React.ReactNode;
+  description?: string | React.ReactNode;
+  shortDescription?: string | React.ReactNode;
+}
+
+const SwitchWithText = ({
+  label,
+  description,
+  shortDescription,
+  ...props
+}: SwitchWithTextProps) => {
   return (
     <>
       <div className="checkbox-container">
@@ -21,11 +34,5 @@ const SwitchWithText = ({ label, description, shortDescription, ...props }) => {
 };
 
 SwitchWithText.displayName = 'SwitchWithText';
-
-SwitchWithText.propTypes = {
-  label: PropTypes.string,
-  description: PropTypes.string,
-  shortDescription: PropTypes.string,
-};
 
 export default SwitchWithText;

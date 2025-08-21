@@ -112,7 +112,9 @@ const SettingsApiConfigureModal = ({
           id="name"
           type="text"
           placeholder="Lunalytics"
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setName(event.target.value)
+          }
           value={name}
           subtitle="This will be automatically generated if one is not provided."
         />
@@ -142,7 +144,7 @@ const SettingsApiConfigureModal = ({
                   key={permission.title}
                   label={permission.title}
                   shortDescription={permission.description}
-                  onChange={(event) =>
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                     changePermission(
                       event.target.checked,
                       permission.permission

@@ -34,9 +34,9 @@ const Pushover = ({ friendlyName, messageType, token, data }) => {
     );
   }
 
-  if (data?.messageTtl && !/^\d+$/.test(data.messageTtl)) {
+  if (data?.ttl && !/^\d+$/.test(data.ttl)) {
     throw new NotificationValidatorError(
-      'messageTtl',
+      'ttl',
       "Invalid Message TTL. Make sure it's a number"
     );
   }

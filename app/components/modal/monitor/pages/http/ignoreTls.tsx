@@ -1,5 +1,4 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import SwitchWithText from '../../../../ui/switch';
 
 const MonitorHttpIgnoreTls = ({ handleChange, checkboxValue = false }) => {
@@ -9,17 +8,12 @@ const MonitorHttpIgnoreTls = ({ handleChange, checkboxValue = false }) => {
         label="Ignore TLS"
         shortDescription="Ignore TLS certificate validation for the monitor."
         checked={checkboxValue}
-        onChange={(e) => handleChange('ignoreTls', e.target.checked)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('ignoreTls', e.target.checked)}
       />
     </div>
   );
 };
 
 MonitorHttpIgnoreTls.displayName = 'MonitorHttpIgnoreTls';
-
-MonitorHttpIgnoreTls.propTypes = {
-  handleSelect: PropTypes.func.isRequired,
-  selectValue: PropTypes.string,
-};
 
 export default MonitorHttpIgnoreTls;

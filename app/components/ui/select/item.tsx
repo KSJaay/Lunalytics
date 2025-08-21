@@ -1,9 +1,5 @@
 // import dependencies
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
-
-// import local files
-import { colorPropType } from '../../../../shared/utils/propTypes';
 
 const Item = ({
   dotColor,
@@ -27,13 +23,5 @@ const Item = ({
 };
 
 Item.displayName = 'Select.Item';
-
-Item.propTypes = {
-  dotColor: colorPropType,
-  showDot: PropTypes.bool,
-  isSelected: PropTypes.bool,
-  children: PropTypes.node,
-  as: PropTypes.elementType,
-};
 
 export default Item;

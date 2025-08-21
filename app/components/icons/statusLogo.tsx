@@ -1,18 +1,18 @@
 // import dependencies
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import useContextStore from '../../context';
+import type { MonitorProps } from '../../types/monitor';
 
-const StatusLogo = ({ size = 250 }) => {
+const StatusLogo = ({ size = 250 }: { size: number }) => {
   const {
     globalStore: { allMonitors },
   } = useContextStore();
 
   const totalMonitors = allMonitors.length;
   const offlineMonitors = allMonitors.filter(
-    (monitor = {}) => monitor.heartbeats[0]?.isDown
+    (monitor: MonitorProps) => monitor.heartbeats[0]?.isDown
   ).length;
 
   const color = !offlineMonitors
@@ -82,9 +82,5 @@ const StatusLogo = ({ size = 250 }) => {
 };
 
 StatusLogo.displayName = 'StatusLogo';
-
-StatusLogo.propTypes = {
-  size: PropTypes.number,
-};
 
 export default observer(StatusLogo);

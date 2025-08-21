@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
@@ -59,11 +56,5 @@ const MonitorNotificationType = ({ inputs, errors, handleInput }) => {
 };
 
 MonitorNotificationType.displayName = 'MonitorNotificationType';
-
-MonitorNotificationType.propTypes = {
-  inputs: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  handleInput: PropTypes.func.isRequired,
-};
 
 export default MonitorNotificationType;

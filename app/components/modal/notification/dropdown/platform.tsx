@@ -1,6 +1,3 @@
-// import dependencies
-import PropTypes from 'prop-types';
-
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
@@ -64,11 +61,5 @@ const NotificationModalPlatform = ({ isEdit, setPlatform, platform }) => {
 };
 
 NotificationModalPlatform.displayName = 'NotificationModalPlatform';
-
-NotificationModalPlatform.propTypes = {
-  isEdit: PropTypes.bool,
-  setPlatform: PropTypes.func.isRequired,
-  platform: PropTypes.string.isRequired,
-};
 
 export default NotificationModalPlatform;
