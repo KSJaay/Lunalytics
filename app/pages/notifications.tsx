@@ -75,8 +75,7 @@ const Notifications = () => {
               <NotificationModal
                 closeModal={closeModal}
                 addNotification={addNotification}
-              />,
-              false
+              />
             )
           }
         >

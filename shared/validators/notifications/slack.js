@@ -15,12 +15,10 @@ const tokenRegex =
 const usernameRegex = /^[a-zA-Z0-9_]{1,32}$/;
 
 const Slack = ({
-  channel,
   friendlyName,
   messageType,
-  textMessage,
   token,
-  username,
+  data: { channel, username, textMessage } = {},
 }) => {
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(

@@ -13,12 +13,15 @@ const messageTypes = ['basic', 'pretty', 'nerdy'];
 const tokenRegex = /^[0-9]+:[a-zA-Z0-9_-]{1,35}$/;
 
 const Telegram = ({
-  chatId,
-  disableNotification = false,
   friendlyName,
   messageType,
-  protectContent = false,
   token,
+  data: {
+    chatId,
+    disableNotification = false,
+    protectContent = false,
+    username,
+  } = {},
 }) => {
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(
@@ -62,6 +65,7 @@ const Telegram = ({
       chatId,
       disableNotification,
       protectContent,
+      username,
     },
   };
 };

@@ -4,10 +4,11 @@ import useContextStore from '../../context';
 
 const NotificationIcons = {
   Discord: '/notifications/discord.svg',
+  HomeAssistant: '/notifications/homeAssistant.svg',
+  Pushover: '/notifications/pushover.svg',
   Slack: '/notifications/slack.svg',
   Telegram: '/notifications/telegram.svg',
   Webhook: '/notifications/webhook.svg',
-  HomeAssistant: '/notifications/homeAssistant.svg',
 };
 
 const NotificationList = ({ notifications }) => {

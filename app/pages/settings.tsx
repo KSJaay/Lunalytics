@@ -9,7 +9,7 @@ import SetttingsDesktop from '../components/settings/ui/menu/desktop';
 import SettingsMobile from '../components/settings/ui/menu/mobile';
 
 const Settings = () => {
-  const [tab, setTab] = useState('Authentication');
+  const [tab, setTab] = useState('Account');
   const handleTabUpdate = (tab) => {
     return setTab(tab);
   };

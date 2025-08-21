@@ -14,7 +14,7 @@ const NotificationModalDiscordInput = ({
         placeholder="Lunalytics"
         id="friendly-name"
         error={errors?.friendlyName}
-        defaultValue={values.friendlyName}
+        value={values.friendlyName}
         onChange={(e) => {
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
@@ -39,7 +39,7 @@ const NotificationModalDiscordInput = ({
         id="webhook-url"
         isRequired
         error={errors?.token}
-        defaultValue={values.token}
+        value={values.token}
         onChange={(e) => {
           handleInput({ key: 'token', value: e.target.value });
         }}
@@ -49,9 +49,12 @@ const NotificationModalDiscordInput = ({
         placeholder="Lunalytics"
         id="webhook-username"
         error={errors?.username}
-        defaultValue={values.username}
+        value={values.data?.username}
         onChange={(e) => {
-          handleInput({ key: 'username', value: e.target.value });
+          handleInput({
+            key: 'data',
+            value: { ...values.data, username: e.target.value },
+          });
         }}
       />
       <Input
@@ -59,9 +62,12 @@ const NotificationModalDiscordInput = ({
         placeholder="Alert @everyone"
         id="text-messsage"
         error={errors?.textMessage}
-        defaultValue={values.textMessage}
+        value={values.data?.textMessage}
         onChange={(e) => {
-          handleInput({ key: 'textMessage', value: e.target.value });
+          handleInput({
+            key: 'data',
+            value: { ...values.data, textMessage: e.target.value },
+          });
         }}
       />
     </>

@@ -1,7 +1,8 @@
 {
   "Discord": { "name": "Discord", "icon": "discord.svg" },
+  "HomeAssistant": { "name": "HomeAssistant", "icon": "homeAssistant.svg" },
+  "Pushover": { "name": "Pushover", "icon": "pushover.svg" },
   "Slack": { "name": "Slack", "icon": "slack.svg" },
   "Telegram": { "name": "Telegram", "icon": "telegram.svg" },
-  "Webhook": { "name": "Webhook", "icon": "webhook.svg" },
-  "HomeAssistant": { "name": "HomeAssistant", "icon": "homeAssistant.svg" }
+  "Webhook": { "name": "Webhook", "icon": "webhook.svg" }
 }

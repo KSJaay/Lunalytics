@@ -32,7 +32,8 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
     };
   }, []);
 
-  const message = NotificationsTemplates[inputs.platform][inputs.messageType];
+  const message =
+    NotificationsTemplates[inputs.platform]?.[inputs.messageType] || 'basic';
 
   const PlatformInputs = inputForPlatform[inputs.platform];
 
@@ -63,7 +64,6 @@ const NotificationModal = ({ values, isEdit, closeModal, addNotification }) => {
 
       <NotificationModalPlatform
         isEdit={isEdit}
-        values={inputs}
         setPlatform={handleInput}
         platform={inputs.platform}
       />
