@@ -51,9 +51,12 @@ const NotificationModalSlackInput = ({
         placeholder="Lunalytics"
         id="webhook-username"
         error={errors?.username}
-        defaultValue={values.username}
+        defaultValue={values.data?.username}
         onChange={(e) => {
-          handleInput({ key: 'username', value: e.target.value });
+          handleInput({
+            key: 'data',
+            value: { ...values.data, username: e.target.value },
+          });
         }}
       />
 
@@ -62,9 +65,12 @@ const NotificationModalSlackInput = ({
         placeholder="Alert @here"
         id="text-messsage"
         error={errors?.textMessage}
-        defaultValue={values.textMessage}
+        defaultValue={values.data?.textMessage}
         onChange={(e) => {
-          handleInput({ key: 'textMessage', value: e.target.value });
+          handleInput({
+            key: 'data',
+            value: { ...values.data, textMessage: e.target.value },
+          });
         }}
       />
 
@@ -73,9 +79,12 @@ const NotificationModalSlackInput = ({
         placeholder="#lunalytics-alerts"
         id="channel-name"
         error={errors?.channel}
-        defaultValue={values.channel}
+        defaultValue={values.data?.channel}
         onChange={(e) => {
-          handleInput({ key: 'channel', value: e.target.value });
+          handleInput({
+            key: 'data',
+            value: { ...values.data, channel: e.target.value },
+          });
         }}
       />
     </>

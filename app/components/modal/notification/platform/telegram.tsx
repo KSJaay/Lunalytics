@@ -69,9 +69,12 @@ const NotificationModalTelegramInput = ({
         id="chat-id"
         isRequired
         error={errors?.chatId}
-        defaultValue={values.chatId}
+        defaultValue={values.data?.chatId}
         onChange={(e) => {
-          handleInput({ key: 'chatId', value: e.target.value });
+          handleInput({
+            key: 'data',
+            value: { ...values.data, chatId: e.target.value },
+          });
         }}
       />
 
@@ -81,11 +84,11 @@ const NotificationModalTelegramInput = ({
           description="If enabled, users will recieve a notification without any sound."
           id="disable-notification"
           error={errors?.disableNotification}
-          checked={values.disableNotification}
+          checked={values.data?.disableNotification}
           onChange={(e) => {
             handleInput({
-              key: 'disableNotification',
-              value: e.target.checked,
+              key: 'data',
+              value: { ...values.data, disableNotification: e.target.checked },
             });
           }}
         />
@@ -97,9 +100,12 @@ const NotificationModalTelegramInput = ({
           description="If enabled, users cannot forward or save the bots message."
           id="protect-content"
           error={errors?.protectContent}
-          checked={values.protectContent}
+          checked={values.data?.protectContent}
           onChange={(e) => {
-            handleInput({ key: 'protectContent', value: e.target.checked });
+            handleInput({
+              key: 'data',
+              value: { ...values.data, protectContent: e.target.checked },
+            });
           }}
         />
       </div>

@@ -24,6 +24,7 @@ const NotificationCreateMiddleware = async (request, response) => {
       email: user.email,
       id: uniqueId,
       isEnabled: true,
+      createdAt: new Date().toISOString(),
     });
 
     return response.status(201).send(query);
