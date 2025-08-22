@@ -1,22 +1,21 @@
 import './styles.scss';
 
 // import dependencies
-import { Button, Modal } from '@lunalytics/ui';
+import { useState } from 'react';
 import { CgWebsite } from 'react-icons/cg';
+import { Button, Modal } from '@lunalytics/ui';
+import { MdNotifications } from 'react-icons/md';
 import { FaClock, FaCog, FaCogs } from 'react-icons/fa';
 
 // import local files
 import MonitorPageInitial from './pages/initial';
-import useMonitorForm from '../../../hooks/useMonitorForm';
-import MonitorConfigureHttpModal from './configure/http';
-import MonitorConfigureJsonQueryModal from './configure/json';
-import MonitorConfigurePingModal from './configure/ping';
 import MonitorConfigureTcpModal from './configure/tcp';
-
-import { MdNotifications } from 'react-icons/md';
-import { useState } from 'react';
-import type { MonitorProps } from '../../../types/monitor';
+import MonitorConfigureHttpModal from './configure/http';
+import MonitorConfigurePingModal from './configure/ping';
+import useMonitorForm from '../../../hooks/useMonitorForm';
 import MonitorConfigureDockerModal from './configure/docker';
+import MonitorConfigureJsonQueryModal from './configure/json';
+import type { MonitorProps } from '../../../types/monitor';
 
 const pages = [
   { id: 'basic', title: 'Basic', icon: <FaCog size={20} /> },
