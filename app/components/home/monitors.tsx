@@ -58,7 +58,13 @@ const HomeMonitorsList = ({
             onClick={() => setActiveMonitor(monitor.monitorId)}
           >
             <div className="content">
-              <div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 <img src={iconUrl} style={{ width: '35px' }} />
               </div>
               <div>

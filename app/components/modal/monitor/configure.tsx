@@ -16,6 +16,7 @@ import useMonitorForm from '../../../hooks/useMonitorForm';
 import MonitorConfigureDockerModal from './configure/docker';
 import MonitorConfigureJsonQueryModal from './configure/json';
 import type { MonitorProps } from '../../../types/monitor';
+import MonitorConfigurePushModal from './configure/push';
 
 const pages = [
   { id: 'basic', title: 'Basic', icon: <FaCog size={20} /> },
@@ -126,6 +127,7 @@ const MonitorConfigureModal = ({
                 pageId={pageId}
               />
             ) : null}
+
             {inputs.type === 'json' ? (
               <MonitorConfigureJsonQueryModal
                 inputs={inputs}
@@ -134,6 +136,7 @@ const MonitorConfigureModal = ({
                 pageId={pageId}
               />
             ) : null}
+
             {inputs.type === 'ping' ? (
               <MonitorConfigurePingModal
                 inputs={inputs}
@@ -142,6 +145,17 @@ const MonitorConfigureModal = ({
                 pageId={pageId}
               />
             ) : null}
+
+            {inputs.type === 'push' ? (
+              <MonitorConfigurePushModal
+                inputs={inputs}
+                errors={errors}
+                handleInput={handleInput}
+                pageId={pageId}
+                isEdit={isEdit}
+              />
+            ) : null}
+
             {inputs.type === 'tcp' ? (
               <MonitorConfigureTcpModal
                 inputs={inputs}

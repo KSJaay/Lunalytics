@@ -19,7 +19,7 @@ const jsonOperators = [
   'not_contains',
 ];
 
-const validTypes = ['docker', 'http', 'tcp', 'ping', 'json'];
+const validTypes = ['docker', 'http', 'json', 'tcp', 'ping', 'push'];
 const notificationTypes = ['All', 'Outage', 'Recovery'];
 const urlRegex = /^https?:\/\//;
 
@@ -78,6 +78,12 @@ export const tcpPort = (port) => {
 export const dockerUrl = (url) => {
   if (!url) {
     return 'Please enter a valid Docker Container ID.';
+  }
+};
+
+export const pushUrl = (token) => {
+  if (!token) {
+    return 'Please enter a valid push token.';
   }
 };
 
@@ -192,6 +198,7 @@ const validators = {
   httpUrl,
   httpMethod,
   httpStatusCodes,
+  pushUrl,
   tcpHost,
   tcpPort,
   interval,
@@ -253,6 +260,18 @@ const pingValidators = [
   ['name', 'name'],
   ['type', 'type'],
   ['url', 'httpUrl'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
+];
+
+const pushValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'pushUrl'],
   ['interval', 'interval'],
   ['retry', 'retry'],
   ['retryInterval', 'retryInterval'],
@@ -342,6 +361,23 @@ const ping = (data) => {
   return false;
 };
 
+const push = (data) => {
+  const errors = {};
+
+  pushValidators.forEach((validator) => {
+    const error = validators[validator[1]](data[validator[0]], data.type);
+    if (error) {
+      errors[validator[0]] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
 const tcp = (data) => {
   const errors = {};
   tcpValidators.forEach((validator) => {
@@ -358,4 +394,4 @@ const tcp = (data) => {
   return false;
 };
 
-export default { ...validators, docker, http, json, tcp, ping };
+export default { ...validators, docker, http, json, tcp, ping, push };

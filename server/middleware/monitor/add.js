@@ -39,9 +39,14 @@ export const formatMonitorData = (body, email) => {
   if (body.type === 'docker') {
     monitor = {
       ...monitor,
-      port: body.port,
       valid_status_codes: '',
       type: 'docker',
+    };
+  } else if (body.type === 'push') {
+    monitor = {
+      ...monitor,
+      valid_status_codes: '',
+      type: 'push',
     };
   } else if (body.type === 'http') {
     monitor = {

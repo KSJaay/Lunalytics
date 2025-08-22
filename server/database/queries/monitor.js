@@ -126,6 +126,16 @@ const pauseMonitor = async (monitorId, paused) => {
   await SQLite.client('monitor').where({ monitorId }).update({ paused });
 };
 
+const fetchUsingUrl = async (url) => {
+  const monitor = await SQLite.client('monitor').where({ url }).first();
+
+  if (!monitor) {
+    throw new UnprocessableError('Monitor does not exist');
+  }
+
+  return monitor;
+};
+
 export {
   createMonitor,
   monitorExists,
@@ -136,4 +146,5 @@ export {
   fetchUptimePercentage,
   fetchMonitorUptime,
   pauseMonitor,
+  fetchUsingUrl,
 };

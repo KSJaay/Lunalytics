@@ -22,6 +22,7 @@ import pingStatusCheck from '../tools/icmpPing.js';
 import jsonStatusCheck from '../tools/jsonStatus.js';
 import { cleanMonitor } from '../class/monitor/index.js';
 import dockerStatusCheck from '../tools/docker.js';
+import pushStatusCheck from '../tools/push.js';
 
 class Master {
   constructor() {
@@ -55,8 +56,6 @@ class Master {
       }
     }
 
-    clearTimeout(this.timeouts.get(monitor.monitorId));
-
     const timeout = heartbeat.isDown ? monitor.retryInterval : monitor.interval;
 
     this.timeouts.set(
@@ -78,7 +77,13 @@ class Master {
 
     const monitor = cleanMonitor(query, false, false);
 
-    if (monitor.paused) return;
+    if (monitor.paused) {
+      if (this.timeouts.has(monitorId)) {
+        clearTimeout(this.timeouts.get(monitorId));
+      }
+
+      return;
+    }
 
     if (this.timeouts.has(monitorId)) {
       clearTimeout(this.timeouts.get(monitorId));
@@ -102,16 +107,52 @@ class Master {
     }
 
     if (monitor.type === 'docker') {
-      clearTimeout(this.timeouts.get(monitorId));
       const heartbeat = await dockerStatusCheck(monitor);
       await this.updateTimeout(monitor, heartbeat);
     }
 
     if (monitor.type === 'tcp') {
-      clearTimeout(this.timeouts.get(monitorId));
       const updateHeartbeat = (monitor, heartbeat) =>
         this.updateTimeout(monitor, heartbeat);
       await tcpStatusCheck(monitor, updateHeartbeat);
+    }
+
+    if (monitor.type === 'push') {
+      const heartbeat = await pushStatusCheck(monitor);
+
+      if (!heartbeat) {
+        const hasRecovered = await isMonitorRecovered(
+          monitor.monitorId,
+          monitor.retry
+        );
+
+        if (hasRecovered) {
+          await this.sendNotification(
+            monitor,
+            {
+              monitorId: monitor.monitorId,
+              status: 'RUNNING',
+              latency: 0,
+              message: 'PUSH notification received',
+              isDown: false,
+            },
+            false,
+            hasRecovered
+          );
+        }
+
+        this.timeouts.set(
+          monitor.monitorId,
+          setTimeout(
+            () => this.checkStatus(monitor.monitorId),
+            monitor.interval * 1000
+          )
+        );
+
+        return;
+      }
+
+      await this.updateTimeout(monitor, heartbeat);
     }
 
     if (monitor.type === 'ping') {

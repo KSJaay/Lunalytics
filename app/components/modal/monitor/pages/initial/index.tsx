@@ -32,6 +32,7 @@ const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
           value={inputs.type?.toUpperCase()}
           readOnly
           color="var(--lunaui-accent-900)"
+          subtitle="Monitor type cannot be changed after creation"
         />
       )}
 
