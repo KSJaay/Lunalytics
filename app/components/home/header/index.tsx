@@ -13,6 +13,7 @@ import Role from '../../../../shared/permissions/role';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 
 const typeToText = {
+  docker: 'Docker Container',
   http: 'HTTP/S',
   json: 'JSON Query',
   ping: 'Ping',

@@ -1,4 +1,5 @@
 export * from './statusPage.js';
+import { default as docker } from './docker.js';
 import { default as http } from './http.js';
 import { default as json } from './json.js';
 import { default as ping } from './ping.js';
@@ -12,6 +13,8 @@ export const cleanMonitor = (
   const type = monitor?.type?.toLowerCase();
 
   switch (type) {
+    case 'docker':
+      return docker(monitor, includeHeartbeats, includeCert);
     case 'http':
       return http(monitor, includeHeartbeats, includeCert);
     case 'json':
