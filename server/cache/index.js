@@ -21,6 +21,7 @@ import { fetchNotificationById } from '../database/queries/notification.js';
 import pingStatusCheck from '../tools/icmpPing.js';
 import jsonStatusCheck from '../tools/jsonStatus.js';
 import { cleanMonitor } from '../class/monitor/index.js';
+import dockerStatusCheck from '../tools/docker.js';
 
 class Master {
   constructor() {
@@ -97,6 +98,13 @@ class Master {
         }
       }
 
+      await this.updateTimeout(monitor, heartbeat);
+    }
+
+    if (monitor.type === 'docker') {
+      clearTimeout(this.timeouts.get(monitorId));
+      const heartbeat = await dockerStatusCheck(monitor);
+      console.log('heartbeat:  ', heartbeat);
       await this.updateTimeout(monitor, heartbeat);
     }
 
