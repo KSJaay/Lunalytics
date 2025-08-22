@@ -19,7 +19,7 @@ const jsonOperators = [
   'not_contains',
 ];
 
-const validTypes = ['http', 'tcp', 'ping', 'json'];
+const validTypes = ['docker', 'http', 'tcp', 'ping', 'json'];
 const notificationTypes = ['All', 'Outage', 'Recovery'];
 const urlRegex = /^https?:\/\//;
 
@@ -72,6 +72,12 @@ export const tcpHost = (host) => {
 export const tcpPort = (port) => {
   if (!port || port < 1 || port > 65535) {
     return 'Please enter a valid port.';
+  }
+};
+
+export const dockerUrl = (url) => {
+  if (!url) {
+    return 'Please enter a valid Docker Container ID.';
   }
 };
 
@@ -182,6 +188,7 @@ const icon = (value) => {
 const validators = {
   type,
   name,
+  dockerUrl,
   httpUrl,
   httpMethod,
   httpStatusCodes,
@@ -211,6 +218,18 @@ const httpValidators = [
   ['notificationType', 'notificationType'],
   ['headers', 'headers'],
   ['body', 'body'],
+  ['icon', 'icon'],
+];
+
+const dockerValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'dockerUrl'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
   ['icon', 'icon'],
 ];
 
@@ -259,6 +278,23 @@ const http = (data) => {
   const errors = {};
 
   httpValidators.forEach((validator) => {
+    const error = validators[validator[1]](data[validator[0]]);
+    if (error) {
+      errors[validator[0]] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const docker = (data) => {
+  const errors = {};
+
+  dockerValidators.forEach((validator) => {
     const error = validators[validator[1]](data[validator[0]]);
     if (error) {
       errors[validator[0]] = error;
@@ -322,4 +358,4 @@ const tcp = (data) => {
   return false;
 };
 
-export default { ...validators, http, json, tcp, ping };
+export default { ...validators, docker, http, json, tcp, ping };

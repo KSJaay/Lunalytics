@@ -24,7 +24,11 @@ router.get('/', fetchUserMiddleware);
 
 router.post('/exists', userExistsMiddleware);
 
-router.get('/monitors', userMonitorsMiddleware);
+router.get(
+  '/monitors',
+  hasRequiredPermission(PermissionsBits.VIEW_MONITORS),
+  userMonitorsMiddleware
+);
 
 router.post('/update/username', userUpdateUsername);
 

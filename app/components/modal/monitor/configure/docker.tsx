@@ -3,7 +3,7 @@ import MonitorPageInterval from '../pages/interval';
 import MonitorPageNotification from '../pages/notification';
 import useFetch from '../../../../hooks/useFetch';
 import Loading from '../../../ui/loading';
-import { Button } from '@lunalytics/ui';
+import { Alert, Button } from '@lunalytics/ui';
 
 interface ModalProps {
   errors: Record<string, string>;
@@ -32,7 +32,15 @@ const MonitorConfigureDockerModal = ({
             />
           ) : null}
           {isError || !data?.length ? (
-            <div>Unable to find any Docker containers</div>
+            <div style={{ margin: '25px 0' }}>
+              <Alert
+                status="error"
+                description="Unable to find any Docker containers. Please make sure the Docker daemon is running and you have the necessary permissions to access it."
+                title="Missing Containers"
+                variant="border"
+                style={{ backgroundColor: 'var(--accent-900)' }}
+              />
+            </div>
           ) : null}
           {data?.length ? (
             <div>

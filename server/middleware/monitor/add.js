@@ -36,7 +36,14 @@ export const formatMonitorData = (body, email) => {
     icon: stringifyJson(body.icon),
   };
 
-  if (body.type === 'http') {
+  if (body.type === 'docker') {
+    monitor = {
+      ...monitor,
+      port: body.port,
+      valid_status_codes: '',
+      type: 'docker',
+    };
+  } else if (body.type === 'http') {
     monitor = {
       ...monitor,
       method: body.method,
