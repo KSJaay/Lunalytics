@@ -75,6 +75,34 @@
   flex: 1;
 }
 
+.monitor-configure-docker-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 16px 4px 6px 4px;
+  border-bottom: 2px solid var(--accent-500);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.monitor-configure-docker-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  background-color: var(--accent-900);
+  padding: 8px 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.monitor-configure-docker-item-platform {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-xs);
+  color: var(--font-light-color);
+}
+
 @include mobile {
   .monitor-configure {
     flex-direction: column;
