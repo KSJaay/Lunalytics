@@ -104,7 +104,6 @@ class Master {
     if (monitor.type === 'docker') {
       clearTimeout(this.timeouts.get(monitorId));
       const heartbeat = await dockerStatusCheck(monitor);
-      console.log('heartbeat:  ', heartbeat);
       await this.updateTimeout(monitor, heartbeat);
     }
 

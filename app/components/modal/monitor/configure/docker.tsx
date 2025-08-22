@@ -44,17 +44,7 @@ const MonitorConfigureDockerModal = ({
           ) : null}
           {data?.length ? (
             <div>
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: '12px',
-                  padding: '16px 4px 6px 4px',
-                  borderBottom: '2px solid var(--accent-500)',
-                  marginBottom: '12px',
-                  fontWeight: 600,
-                }}
-              >
+              <div className="monitor-configure-docker-header">
                 <div>Container Name</div>
                 <div>Image</div>
                 <div style={{ textAlign: 'right', paddingRight: '12px' }}>
@@ -65,27 +55,11 @@ const MonitorConfigureDockerModal = ({
               {data.map((container) => (
                 <div
                   key={container.id}
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr 1fr',
-                    gap: '12px',
-                    backgroundColor: 'var(--accent-900)',
-                    padding: '8px 12px',
-                    fontWeight: 500,
-                    borderRadius: '8px',
-                    margin: '12px 0',
-                  }}
+                  className="monitor-configure-docker-item"
                 >
                   <div>
                     <div>{container.name}</div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        fontSize: 'var(--font-xs)',
-                        color: 'var(--font-light-color)',
-                      }}
-                    >
+                    <div className="monitor-configure-docker-item-platform">
                       {container.platform}
                     </div>
                   </div>
