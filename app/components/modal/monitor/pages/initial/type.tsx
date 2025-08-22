@@ -7,6 +7,7 @@ const textInputTypes = {
   http: 'HTTP',
   json: 'JSON Query',
   ping: 'Ping',
+  push: 'Push',
   tcp: 'TCP',
 };
 
@@ -69,6 +70,16 @@ const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
             }}
           >
             {textInputTypes.ping}
+          </Dropdown.Item>
+
+          <Dropdown.Item
+            id="type-push"
+            onClick={() => {
+              handleInput('type', 'push');
+              toggleDropdown();
+            }}
+          >
+            {textInputTypes.push}
           </Dropdown.Item>
 
           <Dropdown.Item

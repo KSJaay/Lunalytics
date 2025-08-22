@@ -1,4 +1,3 @@
-import authorization from '../middleware/authorization.js';
 import authRoutes from './auth.js';
 import userRoutes from './user.js';
 import tokenRoutes from './tokens.js';
@@ -10,10 +9,12 @@ import statusApiRoutes from './statusApi.js';
 import statusPagesRoutes from './statusPages.js';
 import notificationRoutes from './notifications.js';
 import fetchIcons from '../middleware/fetchIcons.js';
+import authorization from '../middleware/authorization.js';
 import setupExistsMiddleware from '../middleware/setupExists.js';
 import defaultPageMiddleware from '../middleware/status/defaultPage.js';
 import getAllDockerContainers from '../middleware/getDockerContainers.js';
 import getStatusPageUsingIdMiddleware from '../middleware/status/statusPageUsingId.js';
+import createPushHeartbeat from '../middleware/createPushHeartbeat.js';
 
 const initialiseRoutes = async (app) => {
   app.use(setupExistsMiddleware);
@@ -22,6 +23,7 @@ const initialiseRoutes = async (app) => {
   app.get('/status/:id', getStatusPageUsingIdMiddleware);
   // Routes used for fetching public status pages
   app.use('/api/status', statusApiRoutes);
+  app.post('/api/push', createPushHeartbeat);
   app.use(authorization);
   app.use('/api/monitor', monitorRoutes);
   app.use('/api/user', userRoutes);

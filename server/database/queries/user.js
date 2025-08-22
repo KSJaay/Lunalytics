@@ -14,6 +14,10 @@ export const signInUser = async (email, password) => {
     throw new AuthorizationError('User does not exist');
   }
 
+  if (user.sso) {
+    throw new AuthorizationError('User is signed in with SSO');
+  }
+
   const passwordMatches = verifyPassword(password, user.password);
 
   if (!passwordMatches) {
@@ -84,7 +88,8 @@ export const getUserByEmail = async (email) => {
       'isVerified',
       'permission',
       'createdAt',
-      'isOwner'
+      'isOwner',
+      'sso'
     )
     .first();
 };
@@ -99,7 +104,8 @@ export const emailExists = async (email) => {
       'isVerified',
       'permission',
       'createdAt',
-      'isOwner'
+      'isOwner',
+      'sso'
     )
     .first();
 };
@@ -118,7 +124,8 @@ export const ownerExists = async () => {
       'isVerified',
       'permission',
       'createdAt',
-      'isOwner'
+      'isOwner',
+      'sso'
     )
     .first();
 };
@@ -150,7 +157,8 @@ export const fetchMembers = (userHasManageTeam = false) => {
       'isVerified',
       'permission',
       'createdAt',
-      'isOwner'
+      'isOwner',
+      'sso'
     );
   }
 
@@ -163,7 +171,8 @@ export const fetchMembers = (userHasManageTeam = false) => {
       'isVerified',
       'permission',
       'createdAt',
-      'isOwner'
+      'isOwner',
+      'sso'
     );
 };
 
