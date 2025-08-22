@@ -1,4 +1,4 @@
-type Type = 'docker' | 'http' | 'json' | 'ping' | 'tcp';
+type Type = 'docker' | 'http' | 'json' | 'ping' | 'push' | 'tcp';
 
 export interface MonitorProps {
   monitorId: string;

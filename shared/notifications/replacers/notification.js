@@ -70,10 +70,9 @@ const NotificationReplacers = (
       '{{service_email}}': service.email,
       '{{service_type}}': service.type,
       '{{service_port}}': service.port,
-      '{{service_address}}':
-        service.type === 'http'
-          ? service.url
-          : `${service.url}:${service.port}`,
+      '{{service_address}}': !service.port
+        ? service.url
+        : `${service.url}:${service.port}`,
       '{{service_json}}': parseJson(service, true),
       '{{service_parsed_json}}': parseService(service),
       '{{heartbeat_status}}': heartbeat.status,
