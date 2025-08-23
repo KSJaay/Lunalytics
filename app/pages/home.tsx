@@ -12,8 +12,8 @@ import { FaEllipsisVertical } from 'react-icons/fa6';
 import useContextStore from '../context';
 import Spacer from '../components/ui/spacer';
 import Navigation from '../components/navigation';
+import MonitorPush from '../components/monitor/push';
 import MonitorGraph from '../components/monitor/graph';
-import { filterData } from '../../shared/utils/search';
 import MonitorUptime from '../components/monitor/uptime';
 import MonitorStatus from '../components/monitor/status';
 import HomeMonitorHeader from '../components/home/header';
@@ -21,6 +21,7 @@ import HomeMonitorsList from '../components/home/monitors';
 import MonitorConfigureModal from '../components/modal/monitor/configure';
 import NavigationMonitorInfo from '../components/navigation/info/monitor';
 import useScreenSize from '../hooks/useScreenSize';
+import { filterData } from '../../shared/utils/search';
 
 const Home = () => {
   const {
@@ -53,6 +54,7 @@ const Home = () => {
       <div className="monitor-mobile-container">
         <HomeMonitorHeader isMobile={!isDesktop} />
         <MonitorStatus monitor={activeMonitor} />
+        {activeMonitor?.type === 'push' ? <MonitorPush /> : null}
         <MonitorGraph monitor={activeMonitor} />
         <MonitorUptime />
         <Spacer size={18} />
@@ -63,6 +65,7 @@ const Home = () => {
   const content = isDesktop ? (
     <div className="monitor-container">
       <MonitorStatus monitor={activeMonitor} />
+      {activeMonitor?.type === 'push' ? <MonitorPush /> : null}
       <MonitorGraph monitor={activeMonitor} />
       <MonitorUptime />
       <Spacer size={18} />
