@@ -49,7 +49,7 @@ const CodeDisplayer = ({
   );
 };
 
-const MonitorPush = () => {
+const MonitorPush = ({ token }: { token: string }) => {
   const currentUrl = useCurrentUrl();
 
   return (
@@ -61,7 +61,7 @@ const MonitorPush = () => {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    token: 'YOUR_TOKEN_HERE',
+    token: '${token}',
     status: 'online', 
     message: 'Service is running smoothly.',
     latency: 123 // in ms

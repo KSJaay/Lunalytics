@@ -73,6 +73,13 @@ describe('Add Monitor - Middleware', () => {
         port: null,
         retryInterval: 60,
         requestTimeout: 60,
+        ignoreTls: false,
+        retry: 1,
+        icon: {
+          id: 'lunalytics',
+          url: 'https://demo.lunalytics.xyz/logo.svg',
+          name: 'Lunalytics',
+        },
       };
     });
 
@@ -155,6 +162,13 @@ describe('Add Monitor - Middleware', () => {
             fakeRequest.body.valid_status_codes
           ),
           type: 'http',
+          retry: 1,
+          ignoreTls: false,
+          icon: JSON.stringify({
+            id: 'lunalytics',
+            url: 'https://demo.lunalytics.xyz/logo.svg',
+            name: 'Lunalytics',
+          }),
         });
       });
 
@@ -189,6 +203,13 @@ describe('Add Monitor - Middleware', () => {
         port: 2308,
         retryInterval: 60,
         requestTimeout: 60,
+        ignoreTls: false,
+        retry: 1,
+        icon: {
+          id: 'lunalytics',
+          url: 'https://demo.lunalytics.xyz/logo.svg',
+          name: 'Lunalytics',
+        },
       };
     });
 
@@ -260,6 +281,12 @@ describe('Add Monitor - Middleware', () => {
           valid_status_codes: '',
           type: 'tcp',
           ignoreTls: false,
+          retry: 1,
+          icon: JSON.stringify({
+            id: 'lunalytics',
+            url: 'https://demo.lunalytics.xyz/logo.svg',
+            name: 'Lunalytics',
+          }),
         });
       });
 

@@ -54,7 +54,9 @@ const Home = () => {
       <div className="monitor-mobile-container">
         <HomeMonitorHeader isMobile={!isDesktop} />
         <MonitorStatus monitor={activeMonitor} />
-        {activeMonitor?.type === 'push' ? <MonitorPush /> : null}
+        {activeMonitor?.type === 'push' ? (
+          <MonitorPush token={activeMonitor.url} />
+        ) : null}
         <MonitorGraph monitor={activeMonitor} />
         <MonitorUptime />
         <Spacer size={18} />
@@ -65,7 +67,9 @@ const Home = () => {
   const content = isDesktop ? (
     <div className="monitor-container">
       <MonitorStatus monitor={activeMonitor} />
-      {activeMonitor?.type === 'push' ? <MonitorPush /> : null}
+      {activeMonitor?.type === 'push' ? (
+        <MonitorPush token={activeMonitor.url} />
+      ) : null}
       <MonitorGraph monitor={activeMonitor} />
       <MonitorUptime />
       <Spacer size={18} />

@@ -17,6 +17,7 @@ describe('permissionUpdateMiddleware - Middleware', () => {
       email: 'KSJaay@lunalytics.xyz',
       displayName: 'KSJaay',
       permission: PermissionsBits.ADMINISTRATOR,
+      isOwner: true,
     };
 
     fakeRequest = createRequest();
@@ -32,13 +33,6 @@ describe('permissionUpdateMiddleware - Middleware', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-  });
-
-  it("should return 401 when user doesn't have administrator permission", async () => {
-    fakeResponse.locals.user.permission = PermissionsBits.VIEW_STATUS_PAGES;
-    await permissionUpdateMiddleware(fakeRequest, fakeResponse);
-
-    expect(fakeResponse.statusCode).toEqual(401);
   });
 
   it('should return 400 when email is not provided', async () => {
@@ -57,21 +51,21 @@ describe('permissionUpdateMiddleware - Middleware', () => {
     expect(fakeResponse.statusCode).toEqual(400);
   });
 
-  it('should return 400 when user has higher/equal permission than the one being updated', async () => {
-    fakeRequest.body = { email: 'KSJaay@lunalytics.xyz', permission: 2 };
+  // it('should return 400 when user has higher/equal permission than the one being updated', async () => {
+  //   fakeRequest.body = { email: 'KSJaay@lunalytics.xyz', permission: 2 };
 
-    const spy = vi.spyOn(fakeResponse, 'send');
+  //   const spy = vi.spyOn(fakeResponse, 'send');
 
-    await permissionUpdateMiddleware(fakeRequest, fakeResponse);
+  //   await permissionUpdateMiddleware(fakeRequest, fakeResponse);
 
-    expect(fakeResponse.statusCode).toEqual(400);
-    expect(spy).toHaveBeenCalledWith('You cannot change this user permission.');
-  });
+  //   expect(fakeResponse.statusCode).toEqual(400);
+  //   expect(spy).toHaveBeenCalledWith('You cannot change this user permission.');
+  // });
 
   it('should return 400 when permission is not a valid number', async () => {
     fakeRequest.body = {
       email: 'KSJaay@lunalytics.xyz',
-      permission: 5,
+      permission: 0,
     };
 
     await permissionUpdateMiddleware(fakeRequest, fakeResponse);

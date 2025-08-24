@@ -13,7 +13,7 @@ const permissionUpdateMiddleware = async (request, response) => {
       return response.status(400).send({ message: 'Email is required' });
     }
 
-    if (!isValidBitFlags(permission)) {
+    if (!permission || !isValidBitFlags(permission)) {
       return response
         .status(400)
         .send({ message: 'Invalid permission format' });

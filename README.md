@@ -15,7 +15,13 @@
 ## 📔 Features
 
 - Easy to self-host
-- Monitor uptime for HTTP(s)/TCP/PING/JSON Query
+- Monitor uptime for:
+  - HTTP(s)
+  - TCP
+  - PING
+  - JSON Query
+  - PUSH
+  - Docker Containers
 - Support for multiple users
 - Fully customisable status/dashboard pages
 - Incident management
@@ -32,6 +38,7 @@
 - Support for notifications
   - Discord
   - Home Assistant
+  - Pushover
   - Slack
   - Telegram
   - Webhook

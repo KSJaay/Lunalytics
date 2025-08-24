@@ -73,6 +73,13 @@ describe('Edit Monitor - Middleware', () => {
         port: null,
         retryInterval: 60,
         requestTimeout: 60,
+        retry: 1,
+        icon: {
+          id: 'lunalytics',
+          url: 'https://demo.lunalytics.xyz/logo.svg',
+          name: 'Lunalytics',
+        },
+        ignoreTls: false,
       };
     });
 
@@ -135,7 +142,7 @@ describe('Edit Monitor - Middleware', () => {
     });
 
     describe('when valid data is provided', () => {
-      it('should call updateMonitor with body, email, and isHttp', async () => {
+      it('should call updateMonitor with body, email', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
 
         expect(updateMonitor).toHaveBeenCalledWith({
@@ -155,6 +162,13 @@ describe('Edit Monitor - Middleware', () => {
             fakeRequest.body.valid_status_codes
           ),
           type: 'http',
+          ignoreTls: false,
+          retry: 1,
+          icon: JSON.stringify({
+            id: 'lunalytics',
+            url: 'https://demo.lunalytics.xyz/logo.svg',
+            name: 'Lunalytics',
+          }),
         });
       });
 
@@ -189,6 +203,12 @@ describe('Edit Monitor - Middleware', () => {
         port: 2308,
         retryInterval: 60,
         requestTimeout: 60,
+        retry: 1,
+        icon: {
+          id: 'lunalytics',
+          url: 'https://demo.lunalytics.xyz/logo.svg',
+          name: 'Lunalytics',
+        },
       };
     });
 
@@ -260,6 +280,12 @@ describe('Edit Monitor - Middleware', () => {
           valid_status_codes: '',
           type: 'tcp',
           ignoreTls: false,
+          retry: 1,
+          icon: JSON.stringify({
+            id: 'lunalytics',
+            url: 'https://demo.lunalytics.xyz/logo.svg',
+            name: 'Lunalytics',
+          }),
         });
       });
 
