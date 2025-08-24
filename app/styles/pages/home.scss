@@ -49,3 +49,198 @@
     cursor: pointer;
   }
 }
+
+:root {
+  --cd-bg: var(--accent-900);
+  --cd-border: var(--accent-700);
+  --cd-header-bg: var(--accent-800);
+  --cd-fg: var(--font-color);
+  --cd-dim: var(--font-light-color);
+  --cd-accent: var(--primary-700);
+  --cd-token-keyword: #7c3aed;
+  --cd-token-string: #b45309;
+  --cd-token-number: #dc2626;
+  --cd-token-function: #1d4ed8;
+  --cd-token-comment: #9aa3af;
+}
+
+.code-displayer {
+  background: var(--cd-bg);
+  color: var(--cd-fg);
+  border: 1px solid var(--cd-border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+}
+
+.code-displayer.is-collapsed .cd-body {
+  display: none;
+}
+
+.cd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--cd-header-bg);
+  border-bottom: 1px solid var(--cd-border);
+}
+
+.cd-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cd-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'Montserrat';
+}
+
+.cd-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cd-btn {
+  appearance: none;
+  border: 1px solid var(--cd-border);
+  background: transparent;
+  color: var(--cd-fg);
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.cd-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.cd-btn:active {
+  transform: translateY(1px);
+}
+
+.cd-body {
+  position: relative;
+}
+.cd-body.nowrap code {
+  white-space: pre;
+}
+.cd-body.wrap code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.cd-pre {
+  margin: 0;
+  padding: 14px 0;
+  overflow: auto;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.cd-pre code {
+  display: block;
+  counter-reset: lineNumber;
+  padding: 0 16px 0 48px;
+}
+
+.cd-pre.with-lines .cd-line {
+  position: relative;
+  display: block;
+  padding-left: 0;
+}
+
+.cd-pre.with-lines .cd-line::before {
+  counter-increment: lineNumber;
+  content: counter(lineNumber);
+  position: absolute;
+  left: -36px;
+  width: 28px;
+  text-align: right;
+  color: var(--cd-dim);
+  opacity: 0.6;
+}
+
+code .token-comment,
+code .token-prolog,
+code .token-doctype,
+code .token-cdata {
+  color: var(--cd-token-comment);
+  font-style: italic;
+}
+
+code .token-punctuation {
+  opacity: 0.9;
+}
+
+code .token-property,
+code .token-tag,
+code .token-constant,
+code .token-symbol,
+code .token-deleted {
+  color: var(--cd-token-number);
+}
+
+code .token-boolean,
+code .token-number {
+  color: var(--cd-token-number);
+}
+
+code .token-selector,
+code .token-attr-name,
+code .token-string,
+code .token-char,
+code .token-builtin,
+code .token-inserted {
+  color: var(--cd-token-string);
+}
+
+code .token-operator,
+code .token-entity,
+code .token-url {
+  color: var(--cd-fg);
+}
+
+code .token-atrule,
+code .token-attr-value,
+code .token-keyword {
+  color: var(--cd-token-keyword);
+}
+
+code .token-function,
+code .token-class-name {
+  color: var(--cd-token-function);
+}
+
+code .token-regex,
+code .token-important,
+code .token-variable {
+  color: var(--cd-accent);
+}
+
+.cd-pre::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.cd-pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+}
+.cd-pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (max-width: 640px) {
+  .cd-pre code {
+    padding-left: 42px;
+  }
+  .cd-pre.with-lines .cd-line::before {
+    left: -32px;
+    width: 24px;
+  }
+}

@@ -17,7 +17,7 @@ const transferOwnershipMiddleware = async (request, response) => {
 
     const userIsOwner = await emailIsOwner(user.email);
 
-    if (userIsOwner.permission !== 1) {
+    if (!userIsOwner?.isOwner) {
       return response.sendStatus(401);
     }
 

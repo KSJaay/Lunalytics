@@ -111,7 +111,7 @@ export const emailExists = async (email) => {
 };
 
 export const emailIsOwner = async (email) => {
-  return SQLite.client('user').where({ email }).select('permission').first();
+  return SQLite.client('user').where({ email }).select('isOwner').first();
 };
 
 export const ownerExists = async () => {

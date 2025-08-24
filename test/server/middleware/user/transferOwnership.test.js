@@ -1,9 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import {
-  emailExists,
+  emailIsOwner,
   emailIsOwner,
   transferOwnership,
+  getUserByEmail,
 } from '../../../../server/database/queries/user';
 import transferOwnershipMiddleware from '../../../../server/middleware/user/transferOwnership';
 
@@ -21,12 +22,9 @@ describe('transferOwnershipMiddleware - Middleware', () => {
   let fakeResponse;
 
   beforeEach(() => {
-    emailExists = vi
-      .fn()
-      .mockReturnValue({ email: 'KSJaay@lunalytics.xyz', permission: 1 });
-    emailExists = vi.fn().mockReturnValue(true);
     transferOwnership = vi.fn();
-    emailIsOwner = vi.fn().mockReturnValue({ permission: 1 });
+    emailIsOwner = vi.fn().mockReturnValue({ isOwner: true });
+    getUserByEmail = vi.fn().mockReturnValue(true);
 
     fakeRequest = createRequest();
     fakeResponse = createResponse();
@@ -56,18 +54,18 @@ describe('transferOwnershipMiddleware - Middleware', () => {
     expect(fakeResponse.statusCode).toEqual(401);
   });
 
-  it('should call emailExists with body email', async () => {
+  it('should call emailIsOwner with locals email', async () => {
     await transferOwnershipMiddleware(fakeRequest, fakeResponse);
 
-    expect(emailExists).toHaveBeenCalledWith('123@lunalytics.xyz');
+    expect(emailIsOwner).toHaveBeenCalledWith('KSJaay@lunalytics.xyz');
   });
 
   it('should return 400 when email does not exist', async () => {
-    emailExists = vi.fn().mockReturnValue(false);
+    emailIsOwner = vi.fn().mockReturnValue(false);
 
     await transferOwnershipMiddleware(fakeRequest, fakeResponse);
 
-    expect(fakeResponse.statusCode).toEqual(400);
+    expect(fakeResponse.statusCode).toEqual(401);
 
     expect(transferOwnership).not.toHaveBeenCalled();
   });

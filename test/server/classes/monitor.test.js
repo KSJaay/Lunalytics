@@ -27,6 +27,12 @@ describe('Monitor - Class', () => {
     ]),
     showFilters: false,
     paused: false,
+    icon: {
+      id: 'lunalytics',
+      url: 'https://demo.lunalytics.xyz/logo.svg',
+      name: 'Lunalytics',
+    },
+    retry: 1,
   };
 
   const certificate = {
@@ -63,6 +69,12 @@ describe('Monitor - Class', () => {
       paused: false,
       heartbeats: undefined,
       cert: undefined,
+      retry: 1,
+      icon: {
+        id: 'lunalytics',
+        name: 'Lunalytics',
+        url: 'https://demo.lunalytics.xyz/logo.svg',
+      },
     });
   });
 
@@ -104,6 +116,12 @@ describe('Monitor - Class', () => {
         nextCheck: 1715646231877,
       },
       heartbeats: [],
+      retry: 1,
+      icon: {
+        id: 'lunalytics',
+        name: 'Lunalytics',
+        url: 'https://demo.lunalytics.xyz/logo.svg',
+      },
     });
   });
 });

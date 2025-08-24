@@ -14,6 +14,7 @@ import client from '../../database/sqlite/setup.js';
 import config from '../../utils/config.js';
 import { createUserSession } from '../../database/queries/session.js';
 import { parseUserAgent } from '../../utils/uaParser.js';
+import { oldPermsToFlags } from '../../../shared/permissions/oldPermsToFlags.js';
 
 const packageJson = loadJSON('package.json');
 
