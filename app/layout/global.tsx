@@ -11,7 +11,7 @@ import {
 } from '../hooks/useLocalstorage';
 import Loading from '../components/ui/loading';
 import useFetch from '../hooks/useFetch';
-import type { LayoutGlobalProps } from '../types/layout/global';
+import type { LayoutGlobalProps } from '../types/layout';
 
 const GlobalLayout = ({ children }: LayoutGlobalProps) => {
   const {
@@ -27,20 +27,32 @@ const GlobalLayout = ({ children }: LayoutGlobalProps) => {
 
   const localStorageState = useLocalStorageState();
 
+  const onFailure = (error: any) => {
+    if (error.response?.status === 401) {
+      return navigate('/login');
+    }
+
+    if (error.response?.status === 403) {
+      return navigate('/verify');
+    }
+
+    navigate('/error');
+  };
+
+  const { isLoading: isSetupLoading } = useFetch({
+    url: '/api/auth/setup/exists',
+    onSuccess: (data) => {
+      if (data.setupRequired) {
+        navigate('/setup');
+      }
+    },
+    onFailure,
+  });
+
   const { isLoading: isUserLoading } = useFetch({
     url: '/api/user',
     onSuccess: (data) => setUser(data),
-    onFailure: (error) => {
-      if (error.response?.status === 401) {
-        return navigate('/login');
-      }
-
-      if (error.response?.status === 403) {
-        return navigate('/verify');
-      }
-
-      navigate('/error');
-    },
+    onFailure,
   });
 
   const { isLoading: isMonitorsLoading } = useFetch({
@@ -49,25 +61,25 @@ const GlobalLayout = ({ children }: LayoutGlobalProps) => {
       setMonitors(data);
       setTimeouts(data, fetchMonitorById);
     },
-    onFailure: () => navigate('/error'),
+    onFailure,
   });
 
   const { isLoading: isNotificationsLoading } = useFetch({
     url: '/api/notifications',
     onSuccess: (data) => setNotifications(data),
-    onFailure: () => navigate('/error'),
+    onFailure,
   });
 
   const { isLoading: isStatusPagesLoading } = useFetch({
     url: '/api/status-pages',
     onSuccess: (data) => setStatusPages(data),
-    onFailure: () => navigate('/error'),
+    onFailure,
   });
 
   const { isLoading: isIncidentsLoading } = useFetch({
     url: '/api/incident/all',
     onSuccess: (data) => setIncidents(data),
-    onFailure: () => navigate('/error'),
+    onFailure,
   });
 
   if (
@@ -75,7 +87,8 @@ const GlobalLayout = ({ children }: LayoutGlobalProps) => {
     isMonitorsLoading ||
     isNotificationsLoading ||
     isStatusPagesLoading ||
-    isIncidentsLoading
+    isIncidentsLoading ||
+    isSetupLoading
   ) {
     return <Loading />;
   }

@@ -1,5 +1,6 @@
 // import dependencies
 import axios from 'axios';
+import https from 'https';
 
 // import local files
 import logger from '../utils/logger.js';

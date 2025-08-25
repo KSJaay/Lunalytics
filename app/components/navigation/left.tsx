@@ -5,7 +5,7 @@ import './left.scss';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Tooltip } from '@lunalytics/ui';
+import { Avatar, Dropdown, Tooltip } from '@lunalytics/ui';
 import { BsFillShieldLockFill } from 'react-icons/bs';
 
 // import local files
@@ -116,9 +116,23 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
         >
           <FaCog size={28} />
         </div>
-        <div style={{ borderRadius: '100%', overflow: 'hidden' }}>
-          <Avatar avatar={imageUrl} name={displayName} showName={false} />
-        </div>
+        <Dropdown
+          items={[
+            {
+              id: 'logout',
+              text: 'Logout',
+              type: 'item',
+              onClick: () => navigate('/api/auth/logout'),
+            },
+          ]}
+          position="right"
+          hideIcon
+          className="navigation-avatar-dropdown"
+        >
+          <div style={{ borderRadius: '100%', overflow: 'hidden' }}>
+            <Avatar avatar={imageUrl} name={displayName} showName={false} />
+          </div>
+        </Dropdown>
       </div>
     </aside>
   );

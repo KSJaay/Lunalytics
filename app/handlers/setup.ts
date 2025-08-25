@@ -26,7 +26,7 @@ const submitSetup = async (
 
     await createPostRequest('/api/auth/setup', { ...inputs, type });
     toast.success('Setup configuration successful');
-  } catch (error) {
+  } catch (error: any) {
     if (error?.response?.data) {
       toast.error(error?.response?.data?.general);
     } else {

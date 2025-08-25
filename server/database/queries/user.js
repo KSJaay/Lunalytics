@@ -115,7 +115,7 @@ export const emailIsOwner = async (email) => {
 };
 
 export const ownerExists = async () => {
-  return SQLite.client('user')
+  return SQLite?.client('user')
     .where({ permission: oldPermsToFlags[1] })
     .select(
       'email',

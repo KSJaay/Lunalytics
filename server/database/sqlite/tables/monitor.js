@@ -10,6 +10,7 @@ export const monitorTable = async (client) => {
       table.integer('port').defaultTo(null);
       table.string('type').defaultTo('http');
       table.integer('interval').defaultTo(30);
+      table.integer('retry').defaultTo(1);
       table.integer('retryInterval').defaultTo(30);
       table.integer('requestTimeout').defaultTo(30);
       table.string('method').defaultTo(null);
