@@ -1,11 +1,31 @@
 // import dependencies
 import { Input } from '@lunalytics/ui';
 
+interface NotificationModalSlackInputProps {
+  values: {
+    friendlyName: string;
+    token: string;
+    data: {
+      username: string;
+      textMessage: string;
+      channel: string;
+    };
+  };
+  errors: {
+    friendlyName?: string;
+    token?: string;
+    username?: string;
+    textMessage?: string;
+    channel?: string;
+  };
+  handleInput: (input: { key: string; value: any }) => void;
+}
+
 const NotificationModalSlackInput = ({
-  values = {},
-  errors = {},
+  values,
+  errors,
   handleInput,
-}) => {
+}: NotificationModalSlackInputProps) => {
   return (
     <>
       <Input

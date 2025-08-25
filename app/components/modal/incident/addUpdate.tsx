@@ -9,7 +9,7 @@ import useContextStore from '../../../context';
 import IncidentMonitors from '../../incident/monitors';
 import useIncidentMessage from '../../../hooks/useIncidentMessage';
 
-const IncidentAddUpdateModal = ({ incidentId }) => {
+const IncidentAddUpdateModal = ({ incidentId }: { incidentId: string }) => {
   const {
     incidentStore: { getIncidentById, addIncident },
     modalStore: { closeModal },
@@ -26,13 +26,13 @@ const IncidentAddUpdateModal = ({ incidentId }) => {
     incidentId
   );
 
-  const handleSelectedMonitor = async (monitorId) => {
+  const handleSelectedMonitor = async (monitorId: string) => {
     const monitorIds = values.monitorIds;
 
     if (monitorIds.includes(monitorId)) {
       dispatch({
         key: 'monitorIds',
-        value: monitorIds.filter((id) => id !== monitorId),
+        value: monitorIds.filter((id: string) => id !== monitorId),
       });
     } else {
       dispatch({ key: 'monitorIds', value: [...monitorIds, monitorId] });
@@ -45,9 +45,9 @@ const IncidentAddUpdateModal = ({ incidentId }) => {
 
       addIncident(data);
       closeModal();
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      toast.error(error.message);
+      toast.error(error?.message);
     }
   };
 
@@ -87,6 +87,7 @@ const IncidentAddUpdateModal = ({ incidentId }) => {
       />
 
       <Tabs
+        id="incident-status-update"
         label="Status:"
         shortDescription="Current status of the incident"
         options={[

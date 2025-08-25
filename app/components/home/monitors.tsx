@@ -24,7 +24,7 @@ const HomeMonitorsList = ({
         'item-active': activeMonitor?.monitorId === monitor.monitorId,
       });
 
-      let heartbeats = monitor.heartbeats
+      let heartbeats: string[] = monitor.heartbeats
         .map((heartbeat) => {
           const downColor = monitor.paused
             ? 'var(--red-900)'

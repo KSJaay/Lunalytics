@@ -1,12 +1,36 @@
 // import dependencies
 import { Dropdown, Input, PasswordInput } from '@lunalytics/ui';
 
+interface NotificationModalPushoverInputProps {
+  values: {
+    friendlyName: string;
+    token: string;
+    data: {
+      userKey: string;
+      applicationToken: string;
+      device: string;
+      priority: string;
+      ttl: string;
+    };
+  };
+  errors: {
+    friendlyName?: string;
+    token?: string;
+    userKey?: string;
+    applicationToken?: string;
+    device?: string;
+    priority?: string;
+    messageTtl?: string;
+  };
+  handleInput: (input: { key: string; value: any }) => void;
+}
+
 const NotificationModalPushoverInput = ({
-  values = {},
-  errors = {},
+  values,
+  errors,
   handleInput,
-}) => {
-  const handlePriorityChange = (value) => {
+}: NotificationModalPushoverInputProps) => {
+  const handlePriorityChange = (value: string) => {
     handleInput({ key: 'data', value: { ...values.data, priority: value } });
   };
 

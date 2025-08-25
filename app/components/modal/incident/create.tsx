@@ -16,7 +16,7 @@ const IncidentCreateModal = () => {
   } = useContextStore();
   const { values, dispatch, handleSubmit } = useIncidentForm();
 
-  const handleSelectedMonitor = (monitorId) => {
+  const handleSelectedMonitor = (monitorId: never) => {
     const monitors = values.monitorIds;
 
     if (monitors.includes(monitorId)) {
@@ -29,17 +29,17 @@ const IncidentCreateModal = () => {
     }
   };
 
-  const handleChange = (key, value) => {
+  const handleChange = (key: string, value: any) => {
     dispatch({ key, value });
   };
 
-  const submitForm = async (isEdit) => {
+  const submitForm = async () => {
     try {
-      const incident = await handleSubmit(isEdit);
+      const incident = await handleSubmit();
 
       addIncident(incident);
       closeModal();
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.message);
     }
   };
@@ -90,6 +90,7 @@ const IncidentCreateModal = () => {
       />
 
       <Tabs
+        id="incident-status-create"
         label="Status:"
         shortDescription="Current status of the incident"
         options={[

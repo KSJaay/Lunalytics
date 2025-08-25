@@ -49,7 +49,7 @@ const actionTabs = [
   },
 ];
 
-const isImageUrl = (url) => {
+const isImageUrl = (url: string) => {
   if (typeof url !== 'string') {
     return false;
   }
@@ -57,7 +57,7 @@ const isImageUrl = (url) => {
   return url.match(/^https?:\/\//gim);
 };
 
-const LeftNavigation = ({ activeUrl }) => {
+const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
   const navigate = useNavigate();
   const {
     userStore: {

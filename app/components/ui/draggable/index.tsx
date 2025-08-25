@@ -7,6 +7,7 @@ import {
   useSensor,
   useSensors,
   PointerSensor,
+  type DragEndEvent,
 } from '@dnd-kit/core';
 import {
   arrayMove,
@@ -15,20 +16,24 @@ import {
 } from '@dnd-kit/sortable';
 import DraggableItem from './item';
 
-const DraggableList = ({ list }) => {
+interface DraggableListProps {
+  list: Array<{ id: string; content: React.ReactNode }>;
+}
+
+const DraggableList = ({ list }: DraggableListProps) => {
   const [items, setItems] = useState(list);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
   );
 
-  const handleDragEnd = (event) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (active.id !== over?.id) {
       setItems((items) => {
         const oldIndex = items.findIndex((i) => i.id === active.id);
-        const newIndex = items.findIndex((i) => i.id === over.id);
+        const newIndex = items.findIndex((i) => i.id === over?.id);
 
         return arrayMove(items, oldIndex, newIndex);
       });

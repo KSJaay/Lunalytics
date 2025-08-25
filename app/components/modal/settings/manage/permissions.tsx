@@ -12,7 +12,13 @@ import { createPostRequest } from '../../../../services/axios';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
 
-const MemberPermissionsModal = ({ member, onClose }) => {
+const MemberPermissionsModal = ({
+  member,
+  onClose,
+}: {
+  member: any;
+  onClose: () => void;
+}) => {
   const [perms, setPermission] = useState(member?.permission);
   const { updateUserPermission } = useTeamContext();
   const {
@@ -30,7 +36,7 @@ const MemberPermissionsModal = ({ member, onClose }) => {
 
       toast.success('User permissions updated successfully.');
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       if (error.response?.status === 400) {
         if (error.response.data.message) {
           return toast.error(error.response.data.message);
@@ -45,7 +51,7 @@ const MemberPermissionsModal = ({ member, onClose }) => {
     }
   };
 
-  const changePermission = (isChecked, permission) => {
+  const changePermission = (isChecked: boolean, permission: number) => {
     if (isChecked) {
       setPermission(perms | permission);
     } else {

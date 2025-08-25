@@ -1,6 +1,13 @@
 // import dependencies
 import classNames from 'classnames';
 
+interface SelectItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  dotColor?: 'red' | 'green' | 'blue';
+  showDot?: boolean;
+  isSelected?: boolean;
+  as?: React.ElementType;
+}
+
 const Item = ({
   dotColor,
   showDot = false,
@@ -8,7 +15,7 @@ const Item = ({
   children,
   as: Wrapper = 'div',
   ...props
-}) => {
+}: SelectItemProps) => {
   const classes = classNames('select-item-dot', {
     'select-item-selected': isSelected,
     [`select-item-dot--${dotColor}`]: dotColor,

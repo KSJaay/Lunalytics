@@ -1,13 +1,21 @@
 import { useMemo, useState } from 'react';
 import useCurrentUrl from '../../hooks/useCurrentUrl';
 
+interface CodeDisplayerProps {
+  code: string;
+  title: string;
+  showLineNumbers?: boolean;
+  wrapLines?: boolean;
+  initialCollapsed?: boolean;
+}
+
 const CodeDisplayer = ({
   code = '',
   title = '',
   showLineNumbers = true,
   wrapLines = false,
   initialCollapsed = false,
-}) => {
+}: CodeDisplayerProps) => {
   const [collapsed, setCollapsed] = useState(initialCollapsed);
 
   const htmlLines = useMemo(() => {

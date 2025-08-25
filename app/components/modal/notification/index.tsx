@@ -44,10 +44,17 @@ const NotificationModal = ({
     };
   }, []);
 
-  const message =
-    NotificationsTemplates[inputs.platform]?.[inputs.messageType] || 'basic';
+  type Platform = keyof typeof NotificationsTemplates;
+  type MessageType = keyof (typeof NotificationsTemplates)[Platform];
 
-  const PlatformInputs = inputForPlatform[inputs.platform];
+  const platform = inputs.platform as Platform;
+  const messageType = inputs.messageType as MessageType;
+
+  const message = NotificationsTemplates[platform]?.[messageType] || 'basic';
+
+  const PlatformInputs = inputForPlatform[
+    inputs.platform as Platform
+  ] as React.ComponentType<any>;
 
   return (
     <Modal

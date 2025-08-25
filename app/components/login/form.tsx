@@ -1,12 +1,19 @@
 import { Button } from '@lunalytics/ui';
 import { useNavigate } from 'react-router-dom';
 
+interface LoginFormProps {
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  buttonText?: string;
+  children?: React.ReactNode;
+  showForgottenPasswordCta?: boolean;
+}
+
 const LoginForm = ({
   onSubmit,
   buttonText = 'Continue',
   children,
   showForgottenPasswordCta = true,
-}) => {
+}: LoginFormProps) => {
   const navigate = useNavigate();
 
   return (

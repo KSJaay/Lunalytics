@@ -14,7 +14,7 @@ import { TbLayoutNavbarInactive } from 'react-icons/tb';
 const components = {
   header: {
     name: 'Header',
-    icon: (size) => (
+    icon: (size: any) => (
       <TbLayoutNavbarInactive
         style={{ width: `${size}px`, height: `${size}px` }}
       />
@@ -22,51 +22,61 @@ const components = {
   },
   status: {
     name: 'Status',
-    icon: (size) => (
+    icon: (size: any) => (
       <PiBroadcast style={{ width: `${size}px`, height: `${size}px` }} />
     ),
   },
   incidents: {
     name: 'Incidents',
-    icon: (size) => (
+    icon: (size: any) => (
       <IoWarning style={{ width: `${size}px`, height: `${size}px` }} />
     ),
   },
   uptime: {
     name: 'Uptime',
-    icon: (size) => (
+    icon: (size: any) => (
       <FaSignal style={{ width: `${size}px`, height: `${size}px` }} />
     ),
   },
   metrics: {
     name: 'Metrics',
-    icon: (size) => (
+    icon: (size: any) => (
       <BsGraphUp style={{ width: `${size}px`, height: `${size}px` }} />
     ),
   },
   history: {
     name: 'History',
-    icon: (size) => (
+    icon: (size: any) => (
       <MdHistory style={{ width: `${size}px`, height: `${size}px` }} />
     ),
   },
   customHTML: {
     name: 'Custom HTML',
-    icon: (size) => (
+    icon: (size: any) => (
       <FaHtml5 style={{ width: `${size}px`, height: `${size}px` }} />
     ),
   },
   customCSS: {
     name: 'Custom CSS',
-    icon: (size) => (
+    icon: (size: any) => (
       <FaCss3Alt style={{ width: `${size}px`, height: `${size}px` }} />
     ),
   },
 };
 
-const StatusConfigureReorderModal = ({ closeModal, layout, reorderBlocks }) => {
-  const swapy = useRef(null);
-  const container = useRef(null);
+interface StatusConfigureReorderModalProps {
+  closeModal: () => void;
+  layout: Array<any>;
+  reorderBlocks: (newLayout: Array<any>) => void;
+}
+
+const StatusConfigureReorderModal = ({
+  closeModal,
+  layout,
+  reorderBlocks,
+}: StatusConfigureReorderModalProps) => {
+  const swapy = useRef<any>(null);
+  const container = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (container.current) {
@@ -92,7 +102,7 @@ const StatusConfigureReorderModal = ({ closeModal, layout, reorderBlocks }) => {
             id="monitor-create-button"
             onClick={() => {
               reorderBlocks(
-                swapy.current.slotItemMap().asArray.map((obj) => obj.item)
+                swapy.current.slotItemMap().asArray.map((obj: any) => obj.item)
               );
               closeModal();
             }}
@@ -105,19 +115,32 @@ const StatusConfigureReorderModal = ({ closeModal, layout, reorderBlocks }) => {
       size="xs"
     >
       <div className="scmr-container" ref={container}>
-        {layout.map((block) => (
-          <div data-swapy-slot={block.id} key={block.id}>
-            <div data-swapy-item={block.id} className="scmr-block">
-              <div>
-                <PiDotsSixVerticalBold
-                  style={{ width: '24px', height: '24px' }}
-                />
+        {layout.map(
+          (block: {
+            id: string;
+            type:
+              | 'header'
+              | 'status'
+              | 'incidents'
+              | 'uptime'
+              | 'metrics'
+              | 'history'
+              | 'customHTML'
+              | 'customCSS';
+          }) => (
+            <div data-swapy-slot={block.id} key={block.id}>
+              <div data-swapy-item={block.id} className="scmr-block">
+                <div>
+                  <PiDotsSixVerticalBold
+                    style={{ width: '24px', height: '24px' }}
+                  />
+                </div>
+                <div>{components[block.type].icon(28)}</div>
+                <div>{components[block.type].name}</div>
               </div>
-              <div>{components[block.type].icon(28)}</div>
-              <div>{components[block.type].name}</div>
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </Modal>
   );

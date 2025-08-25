@@ -5,7 +5,13 @@ import { Input, Popover } from '@lunalytics/ui';
 import useFetch from '../../../../../../hooks/useFetch';
 import { useMemo, useState } from 'react';
 
-const MonitorIconSelect = ({ inputs, handleInput }) => {
+const MonitorIconSelect = ({
+  inputs,
+  handleInput,
+}: {
+  inputs: any;
+  handleInput: (key: string, value: any) => void;
+}) => {
   const [search, setSearch] = useState('');
 
   const { data, isLoading, isError } = useFetch({
@@ -14,7 +20,7 @@ const MonitorIconSelect = ({ inputs, handleInput }) => {
 
   const icons = useMemo(() => {
     return (
-      data?.filter((icon) =>
+      data?.filter((icon: { u: string; n: string; f: string }) =>
         icon.n.toLowerCase().includes(search.toLowerCase())
       ) || data
     );

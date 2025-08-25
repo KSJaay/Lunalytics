@@ -2,13 +2,20 @@
 import classNames from 'classnames';
 import { useEffect, useRef } from 'react';
 
+interface SelectContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  position?: 'left' | 'right' | 'center' | 'top';
+  isOpen: boolean;
+  toggleSelect: () => void;
+  children: React.ReactNode;
+}
+
 const Container = ({
   position = 'left',
   isOpen,
   toggleSelect,
   children,
   ...props
-}) => {
+}: SelectContainerProps) => {
   const classes = classNames('select', {
     'select-position--right': position === 'right',
     'select-position--left': position === 'left',
@@ -16,12 +23,13 @@ const Container = ({
     'select-position--top': position === 'top',
   });
 
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       const isClickOutside =
-        containerRef.current && !containerRef.current.contains(event.target);
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node);
 
       if (isClickOutside && isOpen) {
         toggleSelect();

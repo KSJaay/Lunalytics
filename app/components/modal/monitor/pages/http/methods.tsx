@@ -9,6 +9,10 @@ const MonitorHttpMethods = ({
   error,
   handleSelect,
   selectValue = defaultValue,
+}: {
+  error?: string;
+  selectValue: string;
+  handleSelect: (method: string) => void;
 }) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 

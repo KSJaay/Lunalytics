@@ -7,7 +7,17 @@ import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
 import { FaEllipsisVertical } from '../../icons';
 
-const GraphMenu = ({ statusType, setStatusType, showFilters }) => {
+interface GraphMenuProps {
+  statusType: string;
+  setStatusType: (status: 'latest' | 'day' | 'week' | 'month') => void;
+  showFilters: boolean;
+}
+
+const GraphMenu = ({
+  statusType,
+  setStatusType,
+  showFilters,
+}: GraphMenuProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
   const { t } = useTranslation();
 

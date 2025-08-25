@@ -6,8 +6,14 @@ import { useTranslation } from 'react-i18next';
 
 // import local files
 import useLocalStorageContext from '../../hooks/useLocalstorage';
+import type { HeartbeatProps } from '../../types/monitor';
 
-const UptimeInfo = ({ heartbeat = {}, highestLatency = 0 }) => {
+interface UptimeInfoProps {
+  heartbeat: HeartbeatProps;
+  highestLatency: number;
+}
+
+const UptimeInfo = ({ heartbeat, highestLatency = 0 }: UptimeInfoProps) => {
   const { dateformat, timeformat, timezone } = useLocalStorageContext();
   const { t } = useTranslation();
 

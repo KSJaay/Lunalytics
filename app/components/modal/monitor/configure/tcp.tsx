@@ -3,7 +3,19 @@ import MonitorPageTcp from '../pages/tcp';
 import MonitorPageInterval from '../pages/interval';
 import MonitorPageNotification from '../pages/notification';
 
-const MonitorConfigureTcpModal = ({ errors, inputs, handleInput, pageId }) => {
+interface ModalProps {
+  errors: Record<string, string>;
+  inputs: Record<string, any>;
+  handleInput: (field: string, value: any) => void;
+  pageId: string;
+}
+
+const MonitorConfigureTcpModal = ({
+  errors,
+  inputs,
+  handleInput,
+  pageId,
+}: ModalProps) => {
   return (
     <>
       {pageId === 'basic' ? (

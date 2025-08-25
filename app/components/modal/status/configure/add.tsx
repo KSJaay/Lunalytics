@@ -14,7 +14,7 @@ import { Button, Modal } from '@lunalytics/ui';
 const components = [
   {
     name: 'Header',
-    icon: (size) => (
+    icon: (size: number) => (
       <TbLayoutNavbarInactive
         style={{ width: `${size}px`, height: `${size}px` }}
       />
@@ -23,57 +23,63 @@ const components = [
   },
   {
     name: 'Status',
-    icon: (size) => (
+    icon: (size: number) => (
       <PiBroadcast style={{ width: `${size}px`, height: `${size}px` }} />
     ),
     type: 'status',
   },
   {
     name: 'Incidents',
-    icon: (size) => (
+    icon: (size: number) => (
       <IoWarning style={{ width: `${size}px`, height: `${size}px` }} />
     ),
     type: 'incidents',
   },
   {
     name: 'Uptime',
-    icon: (size) => (
+    icon: (size: number) => (
       <FaSignal style={{ width: `${size}px`, height: `${size}px` }} />
     ),
     type: 'uptime',
   },
   {
     name: 'Metrics',
-    icon: (size) => (
+    icon: (size: number) => (
       <BsGraphUp style={{ width: `${size}px`, height: `${size}px` }} />
     ),
     type: 'metrics',
   },
   {
     name: 'History',
-    icon: (size) => (
+    icon: (size: number) => (
       <MdHistory style={{ width: `${size}px`, height: `${size}px` }} />
     ),
     type: 'history',
   },
   {
     name: 'Custom HTML',
-    icon: (size) => (
+    icon: (size: number) => (
       <FaHtml5 style={{ width: `${size}px`, height: `${size}px` }} />
     ),
     type: 'customHTML',
   },
   {
     name: 'Custom CSS',
-    icon: (size) => (
+    icon: (size: number) => (
       <FaCss3Alt style={{ width: `${size}px`, height: `${size}px` }} />
     ),
     type: 'customCSS',
   },
 ];
 
-const StatusConfigureAddModal = ({ closeModal, createComponent }) => {
-  const [activeComponent, setActiveComponent] = useState(null);
+const StatusConfigureAddModal = ({
+  closeModal,
+  createComponent,
+}: {
+  closeModal: () => void;
+  createComponent: (type: string) => void;
+}) => {
+  const [activeComponent, setActiveComponent] = useState<string | null>(null);
 
   return (
     <Modal
@@ -88,6 +94,8 @@ const StatusConfigureAddModal = ({ closeModal, createComponent }) => {
             color="green"
             id="monitor-create-button"
             onClick={() => {
+              if (!activeComponent) return;
+
               createComponent(activeComponent);
               closeModal();
             }}

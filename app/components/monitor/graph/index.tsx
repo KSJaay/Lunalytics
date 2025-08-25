@@ -19,24 +19,25 @@ import useLocalStorageContext from '../../../hooks/useLocalstorage';
 import GraphMenu from './menu';
 import useGraphStatus from '../../../hooks/useGraphStatus';
 import GraphPing from './ping';
+import type { MonitorProps } from '../../../types/monitor';
 
 dayjs.extend(timezone);
 dayjs.extend(utc);
 
-const MonitorGraph = ({ monitor }) => {
+const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
   const { dateformat, timeformat, theme, timezone } = useLocalStorageContext();
 
   const { statusType, statusHeartbeats, setStatusType } =
     useGraphStatus(monitor);
 
   const data = statusHeartbeats
-    .map(({ latency = 0, date = 0 } = {}) => {
+    .map(({ latency = 0, date = 0 }) => {
       return { latency, time: date };
     })
     .reverse();
 
   const gridColor =
-    theme.type === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+    theme === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
 
   return (
     <div className="monitor-chart-container">

@@ -4,11 +4,31 @@ import { Input } from '@lunalytics/ui';
 // import local files
 import Switch from '../../../ui/switch';
 
+interface NotificationModalTelegramInputProps {
+  values: {
+    friendlyName: string;
+    token: string;
+    data: {
+      chatId: string;
+      disableNotification: boolean;
+      protectContent: boolean;
+    };
+  };
+  errors: {
+    friendlyName?: string;
+    token?: string;
+    chatId?: string;
+    disableNotification?: string;
+    protectContent?: string;
+  };
+  handleInput: (input: { key: string; value: any }) => void;
+}
+
 const NotificationModalTelegramInput = ({
-  values = {},
-  errors = {},
+  values,
+  errors,
   handleInput,
-}) => {
+}: NotificationModalTelegramInputProps) => {
   return (
     <>
       <Input

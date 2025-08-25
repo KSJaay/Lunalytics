@@ -3,7 +3,13 @@ import { FixedSizeGrid as Grid } from 'react-window';
 
 const limit = 5;
 
-const MonitorIconGrid = ({ icons, handleInput }) => {
+const MonitorIconGrid = ({
+  icons,
+  handleInput,
+}: {
+  icons: { u: string; n: string; f: string }[];
+  handleInput: (key: string, value: any) => void;
+}) => {
   if (!icons) return null;
 
   return (

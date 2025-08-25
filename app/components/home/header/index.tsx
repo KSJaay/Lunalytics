@@ -17,6 +17,7 @@ const typeToText = {
   http: 'HTTP/S',
   json: 'JSON Query',
   ping: 'Ping',
+  push: 'Push',
   tcp: 'TCP',
 };
 
@@ -79,7 +80,7 @@ const HomeMonitorHeader = ({
       <div className="navigation-header-buttons">
         {isEditor ? <HomeMonitorHeaderMenu /> : null}
         {rightChildren ? (
-          <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
+          <div onClick={() => setIsInfoOpen?.(!isInfoOpen)}>
             <LuInfo size={20} />
           </div>
         ) : null}

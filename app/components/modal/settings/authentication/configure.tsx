@@ -9,11 +9,17 @@ import useCurrentUrl from '../../../../hooks/useCurrentUrl';
 import { createPostRequest } from '../../../../services/axios';
 import useAuthenticationContext from '../../../../context/authentication';
 
+interface SettingsAuthenticationConfigureModalProps {
+  closeModal: () => void;
+  integration: any;
+  provider: any;
+}
+
 const SettingsAuthenticationConfigureModal = ({
   closeModal,
   integration,
   provider,
-}) => {
+}: SettingsAuthenticationConfigureModalProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [values, setValues] = useState({
     clientId: provider?.clientId || '',
@@ -40,7 +46,7 @@ const SettingsAuthenticationConfigureModal = ({
       closeModal();
 
       toast.success('Provider has been configured!');
-    } catch (error) {
+    } catch (error: any) {
       if (error?.response?.data?.error) {
         return toast.error(error.response.data.error);
       }

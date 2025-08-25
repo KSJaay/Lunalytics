@@ -1,12 +1,19 @@
 // import dependencies
 import { ProgressBar, Input } from '@lunalytics/ui';
 
+interface RegisterEmailFormProps {
+  handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handlePageChange: (page: string) => void;
+  inputs?: Record<string, any>;
+  errors?: Record<string, any>;
+}
+
 const RegisterEmailForm = ({
   handleInput,
   handlePageChange,
   inputs = {},
   errors = {},
-}) => {
+}: RegisterEmailFormProps) => {
   return (
     <>
       <div className="auth-form-title">Create your account</div>

@@ -15,7 +15,13 @@ const limits = [
   { value: null, text: 'Never' },
 ];
 
-const CreateInviteExpiry = ({ setExpiryId, expiryId }) => {
+const CreateInviteExpiry = ({
+  setExpiryId,
+  expiryId,
+}: {
+  setExpiryId: (id: string | null) => void;
+  expiryId: string | null;
+}) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const selectedLimit = useMemo(() => {

@@ -7,7 +7,13 @@ import { Button, Modal } from '@lunalytics/ui';
 import useContextStore from '../../../context';
 import { createPostRequest } from '../../../services/axios';
 
-const IncidentDeleteMessageModal = ({ incidentId, incidentPosition }) => {
+const IncidentDeleteMessageModal = ({
+  incidentId,
+  incidentPosition,
+}: {
+  incidentId: string;
+  incidentPosition: number;
+}) => {
   const {
     incidentStore: { addIncident },
     modalStore: { closeModal },
@@ -23,7 +29,7 @@ const IncidentDeleteMessageModal = ({ incidentId, incidentPosition }) => {
       addIncident(query.data);
       closeModal();
       toast.success('Incident message deleted successfully!');
-    } catch (error) {
+    } catch (error: any) {
       if (error?.response?.data?.message) {
         return toast.error(error.response.data.message);
       }

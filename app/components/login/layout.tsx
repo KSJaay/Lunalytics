@@ -4,13 +4,21 @@ import { useNavigate } from 'react-router-dom';
 // import local files
 import { getProviderById } from '../../../shared/constants/provider';
 
+interface LoginLayoutProps {
+  showProviders?: boolean;
+  providers?: Array<string>;
+  title?: string;
+  subtitle?: string;
+  children?: React.ReactNode;
+}
+
 const LoginLayout = ({
   showProviders = false,
   providers = [],
   title = 'Welcome Back',
   subtitle,
   children,
-}) => {
+}: LoginLayoutProps) => {
   const navigate = useNavigate();
 
   return (

@@ -1,6 +1,12 @@
 import { Button, Modal } from '@lunalytics/ui';
 
-const DeleteIncidentModal = ({ handleDelete, closeModal }) => {
+const DeleteIncidentModal = ({
+  handleDelete,
+  closeModal,
+}: {
+  handleDelete: () => void;
+  closeModal: () => void;
+}) => {
   return (
     <Modal
       title="Delete Incident"

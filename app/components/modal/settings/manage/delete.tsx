@@ -6,7 +6,13 @@ import { Button, Modal } from '@lunalytics/ui';
 import useTeamContext from '../../../../context/team';
 import { createPostRequest } from '../../../../services/axios';
 
-const MemberDeleteModal = ({ member, onClose }) => {
+const MemberDeleteModal = ({
+  member,
+  onClose,
+}: {
+  member: any;
+  onClose: () => void;
+}) => {
   const { removeUser } = useTeamContext();
 
   const handleConfirm = async () => {

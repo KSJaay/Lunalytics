@@ -1,6 +1,6 @@
 import { makeAutoObservable, observable } from 'mobx';
 import Incident from './incident';
-import type { ContextIncidentProps } from '../../types/context/incident';
+import type { IncidentProps } from '../../types/incident';
 
 class IncidentStore {
   incidents: Map<string, Incident>;
@@ -13,13 +13,13 @@ class IncidentStore {
     makeAutoObservable(this);
   }
 
-  setIncidents = (incidents: ContextIncidentProps[]) => {
+  setIncidents = (incidents: IncidentProps[]) => {
     for (const incident of incidents) {
       this.incidents.set(incident.incidentId, new Incident(incident));
     }
   };
 
-  addIncident = (incident: ContextIncidentProps) => {
+  addIncident = (incident: IncidentProps) => {
     this.incidents.set(incident.incidentId, new Incident(incident));
 
     if (incident.incidentId === this.activeIncident?.incidentId) {

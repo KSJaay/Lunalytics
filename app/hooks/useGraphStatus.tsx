@@ -4,9 +4,9 @@ import { toast } from 'react-toastify';
 
 // import local files
 import { createGetRequest } from '../services/axios';
-import type { ContextMonitorProps, Heartbeat } from '../types/context/global';
+import type { HeartbeatProps, MonitorProps } from '../types/monitor';
 
-const useGraphStatus = (monitor: ContextMonitorProps) => {
+const useGraphStatus = (monitor: MonitorProps) => {
   const [statusType, setStatus] = useState('latest');
   const [statusHeartbeats, setHeartbeats] = useState(monitor.heartbeats || []);
 
@@ -34,7 +34,7 @@ const useGraphStatus = (monitor: ContextMonitorProps) => {
     setStatus(statusType);
   };
 
-  const setStatusHeartbeats = (statusHeartbeats: Heartbeat[]) => {
+  const setStatusHeartbeats = (statusHeartbeats: HeartbeatProps[]) => {
     setHeartbeats(statusHeartbeats);
   };
 

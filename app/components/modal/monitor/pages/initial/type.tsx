@@ -11,7 +11,22 @@ const textInputTypes = {
   tcp: 'TCP',
 };
 
-const MonitorInitialDropdown = ({ inputs, errors, handleInput }) => {
+interface InputProps {
+  type: 'docker' | 'http' | 'json' | 'ping' | 'push' | 'tcp';
+  [key: string]: any;
+}
+
+interface MonitorInitialDropdownProps {
+  inputs: InputProps;
+  errors: any;
+  handleInput: (key: string, value: any) => void;
+}
+
+const MonitorInitialDropdown = ({
+  inputs,
+  errors,
+  handleInput,
+}: MonitorInitialDropdownProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
   return (
     <div className="luna-input-wrapper">

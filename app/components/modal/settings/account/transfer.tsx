@@ -13,7 +13,11 @@ import useTeamContext from '../../../../context/team';
 import useDropdown from '../../../../hooks/useDropdown';
 import handleTransferAccount from '../../../../handlers/settings/account/transfer';
 
-const SettingsAccountTransferModal = ({ closeModal }) => {
+const SettingsAccountTransferModal = ({
+  closeModal,
+}: {
+  closeModal: () => void;
+}) => {
   const { teamMembers, setTeam } = useTeamContext();
   const {
     userStore: { user },
@@ -29,7 +33,7 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
     url: '/api/user/team',
     onSuccess: (data) => {
       const filteredMembers = data?.filter(
-        (member) => member.email !== user.email
+        (member: any) => member.email !== user.email
       );
 
       setTeam(filteredMembers);
@@ -66,9 +70,9 @@ const SettingsAccountTransferModal = ({ closeModal }) => {
             color="green"
             variant="flat"
             onClick={() => {
-              const transferConfirm = document.getElementById(
+              const transferConfirm = (document.getElementById(
                 'settings-transfer-confirm'
-              ).value;
+              ) as HTMLInputElement).value;
 
               if (
                 transferConfirm.toLowerCase().trim() !== 'transfer ownership'

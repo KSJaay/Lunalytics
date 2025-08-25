@@ -15,15 +15,15 @@ import { createPostRequest } from '../../../../services/axios';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
 
-const CreateInviteModal = ({ closeModal }) => {
-  const [perms, setPermission] = useState(0);
-  const [maxUses, setMaxUses] = useState(null);
-  const [expiryId, setExpiryId] = useState(null);
+const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
+  const [perms, setPermission] = useState<number>(0);
+  const [maxUses, setMaxUses] = useState<number | null>(null);
+  const [expiryId, setExpiryId] = useState<string | null>(null);
   const { addInvite } = useInvitesContext();
   const clipboard = useClipboard();
   const currentUrl = useCurrentUrl();
 
-  const changePermission = (isChecked, permission) => {
+  const changePermission = (isChecked: boolean, permission: number) => {
     if (isChecked) {
       setPermission(perms | permission);
     } else {
@@ -52,7 +52,7 @@ const CreateInviteModal = ({ closeModal }) => {
 
       addInvite(invite);
       closeModal();
-    } catch (error) {
+    } catch (error: any) {
       if (error.response?.status === 400) {
         return toast.error(error.response.data.message);
       }

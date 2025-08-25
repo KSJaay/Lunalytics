@@ -1,17 +1,37 @@
 // import local files
+import NotificationIcon from './icon';
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
-import NotificationIcon from './icon';
 import notificationsIcons from '../../../../constant/notifications.json';
+import type { NotificationProps } from '../../../../types/notifications';
 
-const NotificationModalPlatform = ({ isEdit, setPlatform, platform }) => {
+interface NotificationModalPlatformProps {
+  isEdit?: boolean;
+  setPlatform: (platform: {
+    key: keyof NotificationProps;
+    value: string;
+  }) => void;
+  platform:
+    | 'Discord'
+    | 'HomeAssistant'
+    | 'Pushover'
+    | 'Slack'
+    | 'Telegram'
+    | 'Webhook';
+}
+
+const NotificationModalPlatform = ({
+  isEdit,
+  setPlatform,
+  platform,
+}: NotificationModalPlatformProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (
     <>
       <label className="input-label">Notification Type</label>
       {isEdit && (
-        <Dropdown.Trigger asInput>
+        <Dropdown.Trigger asInput isOpen={dropdownIsOpen}>
           <NotificationIcon
             name={notificationsIcons[platform].name}
             icon={notificationsIcons[platform].icon}

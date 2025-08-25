@@ -2,7 +2,17 @@
 import { Button, Modal } from '@lunalytics/ui';
 import { useTranslation } from 'react-i18next';
 
-const NotificationDeleteModal = ({ name, handleClose, handleConfirm }) => {
+interface NotificationDeleteModalProps {
+  name: string;
+  handleClose: () => void;
+  handleConfirm: () => void;
+}
+
+const NotificationDeleteModal = ({
+  name,
+  handleClose,
+  handleConfirm,
+}: NotificationDeleteModalProps) => {
   const { t } = useTranslation();
 
   return (

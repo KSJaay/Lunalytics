@@ -11,19 +11,27 @@ import TokenValidator from '../../../../../shared/validators/token';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
 
+interface SettingsApiConfigureModalProps {
+  closeModal: () => void;
+  tokenId?: string;
+  tokenName?: string;
+  tokenPermissions?: number;
+  isEdit?: boolean;
+}
+
 const SettingsApiConfigureModal = ({
   closeModal,
   tokenId = '',
   tokenName = '',
   tokenPermissions = 0,
   isEdit = false,
-}) => {
+}: SettingsApiConfigureModalProps) => {
   const { addToken, updateTokenPermission } = useTokensContext();
 
   const [name, setName] = useState(tokenName);
   const [perms, setPermission] = useState(tokenPermissions);
 
-  const changePermission = (isChecked, permission) => {
+  const changePermission = (isChecked: boolean, permission: number) => {
     if (isChecked) {
       setPermission(perms | permission);
     } else {
@@ -67,7 +75,7 @@ const SettingsApiConfigureModal = ({
       toast.success(message);
 
       closeModal();
-    } catch (error) {
+    } catch (error: any) {
       if (error.response?.status === 401) {
         closeModal();
         return;

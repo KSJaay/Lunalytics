@@ -5,3 +5,10 @@ export interface UseFetchProps {
   onSuccess?: (data: any) => void;
   onFailure?: (error: any) => void;
 }
+
+export interface UseFetchResponse<T> {
+  data: T | null;
+  error: any | null;
+  isLoading: boolean;
+  isError: boolean;
+}

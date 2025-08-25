@@ -1,11 +1,29 @@
 // import dependencies
 import { Input } from '@lunalytics/ui';
 
+interface NotificationModalDiscordInputProps {
+  values: {
+    friendlyName: string;
+    token: string;
+    data: {
+      username: string;
+      textMessage: string;
+    };
+  };
+  errors: {
+    friendlyName?: string;
+    token?: string;
+    username?: string;
+    textMessage?: string;
+  };
+  handleInput: (input: { key: string; value: any }) => void;
+}
+
 const NotificationModalDiscordInput = ({
-  values = {},
-  errors = {},
+  values,
+  errors,
   handleInput,
-}) => {
+}: NotificationModalDiscordInputProps) => {
   return (
     <>
       <Input

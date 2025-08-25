@@ -5,14 +5,28 @@ import { Input } from '@lunalytics/ui';
 import MonitorInitialDropdown from './type';
 import MonitorIconSelect from './icons';
 
-const MonitorInitialType = ({ inputs, errors, handleInput, isEdit }) => {
+interface MonitorInitialTypeProps {
+  inputs: any;
+  errors: any;
+  handleInput: (key: string, value: any) => void;
+  isEdit: boolean;
+}
+
+const MonitorInitialType = ({
+  inputs,
+  errors,
+  handleInput,
+  isEdit,
+}: MonitorInitialTypeProps) => {
   return (
     <div className="monitor-configure-container">
       <Input
         title="Name"
         id="input-name"
         value={inputs.name || ''}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInput('name', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleInput('name', e.target.value)
+        }
         error={errors.name}
         color="var(--lunaui-accent-900)"
         subtitle="Friendly name used to identify the monitor"

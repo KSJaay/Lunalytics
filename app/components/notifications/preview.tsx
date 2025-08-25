@@ -8,8 +8,9 @@ import { Input, Preview } from '@lunalytics/ui';
 // import local files
 import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
+import type { NotificationProps } from '../../types/notifications';
 
-const NotificationPreview = ({ children }) => {
+const NotificationPreview = ({ children }: { children: React.ReactNode }) => {
   const {
     notificationStore: { allNotifications = [], setActiveNotification },
   } = useContextStore();
@@ -23,7 +24,7 @@ const NotificationPreview = ({ children }) => {
     return filterData(allNotifications, search, [
       'friendlyName',
       'platform',
-    ]).map((notification) => {
+    ]).map((notification: NotificationProps) => {
       const handleOnClick = () => {
         navigate('/notifications');
         setActiveNotification(notification.id);

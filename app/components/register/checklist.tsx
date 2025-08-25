@@ -1,6 +1,6 @@
 import './checklist.scss';
 
-const RegisterChecklist = ({ password = '' }) => {
+const RegisterChecklist = ({ password = '' }: { password: string }) => {
   const handEightCharacters = password.length >= 8;
   const hasLetter = /[a-zA-Z]+/.test(password);
   const hasNumberOrSymbol = /[0-9!@#$%^&*~_\-+=]+/.test(password);

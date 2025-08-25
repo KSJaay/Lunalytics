@@ -2,7 +2,17 @@
 import MonitorNotificationList from './list';
 import MonitorNotificationType from './type';
 
-const MonitorNotificationPage = ({ inputs, errors, handleInput }) => {
+interface MonitorNotificationPageProps {
+  inputs: any;
+  errors: any;
+  handleInput: (key: string, value: any) => void;
+}
+
+const MonitorNotificationPage = ({
+  inputs,
+  errors,
+  handleInput,
+}: MonitorNotificationPageProps) => {
   return (
     <>
       <MonitorNotificationList

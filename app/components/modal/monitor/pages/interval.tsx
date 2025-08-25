@@ -1,7 +1,17 @@
 // import dependencies
 import { Input } from '@lunalytics/ui';
 
-const MonitorAddInterval = ({ inputs, errors, handleInput }) => {
+interface MonitorAddIntervalProps {
+  inputs: any;
+  errors: any;
+  handleInput: (key: string, value: any) => void;
+}
+
+const MonitorAddInterval = ({
+  inputs,
+  errors,
+  handleInput,
+}: MonitorAddIntervalProps) => {
   return (
     <div className="monitor-configure-container">
       <Input

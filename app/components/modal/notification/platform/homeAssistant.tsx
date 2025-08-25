@@ -1,11 +1,29 @@
 // import local files
 import { Input } from '@lunalytics/ui';
 
+interface NotificationModalHomeAssistantInputProps {
+  values: {
+    friendlyName: string;
+    token: string;
+    data: {
+      homeAssistantUrl: string;
+      homeAssistantNotificationService: string;
+    };
+  };
+  errors: {
+    friendlyName?: string;
+    token?: string;
+    homeAssistantUrl?: string;
+    homeAssistantNotificationService?: string;
+  };
+  handleInput: (input: { key: string; value: any }) => void;
+}
+
 const NotificationModalHomeAssistantInput = ({
-  values = {},
-  errors = {},
+  values,
+  errors,
   handleInput,
-}) => {
+}: NotificationModalHomeAssistantInputProps) => {
   return (
     <>
       <Input

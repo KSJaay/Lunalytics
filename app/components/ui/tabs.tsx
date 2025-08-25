@@ -1,5 +1,19 @@
 import classNames from 'classnames';
 
+interface TabsProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  label?: string;
+  id: string;
+  description?: string;
+  shortDescription?: string;
+  options?: Array<string | { value: string; color: string }>;
+  activeOption?: string;
+  tabIndex?: number;
+  onChange?: (value: string | { value: string; color: string }) => void;
+  color?: string;
+  error?: string;
+}
+
 const Tabs = ({
   label,
   id,
@@ -12,7 +26,7 @@ const Tabs = ({
   color,
   error,
   ...props
-}) => {
+}: TabsProps) => {
   const colorName = color ? `var(--${color}-700)` : 'var(--accent-700)';
 
   return (
@@ -22,7 +36,7 @@ const Tabs = ({
         <div className="input-short-description">{shortDescription}</div>
       )}
       <div className="input-theme-container">
-        {options.map((item) => {
+        {options.map((item: string | { value: string; color: string }) => {
           if (typeof item === 'object') {
             const classes = classNames('input-theme-item', {
               [item.color]: item.color,
@@ -37,7 +51,7 @@ const Tabs = ({
                 style={{
                   backgroundColor: activeOption === item.value ? colorName : '',
                 }}
-                onClick={() => onChange(item.value)}
+                onClick={() => onChange?.(item.value)}
                 {...props}
               >
                 {item.value}
@@ -54,7 +68,7 @@ const Tabs = ({
               style={{
                 backgroundColor: activeOption === item ? colorName : '',
               }}
-              onClick={() => onChange(item)}
+              onClick={() => onChange?.(item)}
               {...props}
             >
               {item}

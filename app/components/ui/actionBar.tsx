@@ -3,6 +3,15 @@ import './actionBar.scss';
 // import dependencies
 import classNames from 'classnames';
 
+interface ActionBarProps {
+  show: boolean;
+  variant?: 'full' | 'compact';
+  position?: 'top' | 'bottom';
+  slideDirection?: 'up' | 'down' | 'left' | 'right';
+  className?: string;
+  children?: React.ReactNode;
+}
+
 const ActionBar = ({
   show,
   variant = 'full',
@@ -11,7 +20,7 @@ const ActionBar = ({
   className,
   children,
   ...props
-}) => {
+}: ActionBarProps) => {
   const classes = classNames(
     className,
     'action-bar',

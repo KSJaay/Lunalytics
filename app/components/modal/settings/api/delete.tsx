@@ -6,7 +6,13 @@ import useTokensContext from '../../../../context/tokens';
 import { createPostRequest } from '../../../../services/axios';
 import { Button, Modal } from '@lunalytics/ui';
 
-const SettingsApiCloseModal = ({ tokenId = '', tokenName = '' }) => {
+const SettingsApiCloseModal = ({
+  tokenId = '',
+  tokenName = '',
+}: {
+  tokenId?: string;
+  tokenName?: string;
+}) => {
   const { removeToken } = useTokensContext();
   const {
     modalStore: { closeModal },
@@ -19,7 +25,7 @@ const SettingsApiCloseModal = ({ tokenId = '', tokenName = '' }) => {
       removeToken(tokenId);
 
       closeModal();
-    } catch (error) {
+    } catch (error: any) {
       if (error.response.status === 401) {
         closeModal();
         return;
