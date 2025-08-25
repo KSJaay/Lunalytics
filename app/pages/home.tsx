@@ -6,7 +6,7 @@ import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
-import { FaEllipsisVertical } from 'react-icons/fa6';
+// import { FaEllipsisVertical } from 'react-icons/fa6';
 
 // import local files
 import useContextStore from '../context';
@@ -96,9 +96,9 @@ const Home = () => {
           >
             {t('home.monitor.add')}
           </Button>
-          <div className="monitor-left-menu">
+          {/* <div className="monitor-left-menu">
             <FaEllipsisVertical size={20} />
-          </div>
+          </div> */}
         </div>
       }
       rightChildren={

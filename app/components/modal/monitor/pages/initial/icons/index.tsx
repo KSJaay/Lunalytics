@@ -70,9 +70,20 @@ const MonitorIconSelect = ({
             placeholder="Search for an icon..."
             value={search}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSearch(e.target.value.trim());
+              setSearch(e.target.value);
             }}
           />
+          <div style={{ padding: '12px 0 0 5px' }}>
+            The following icons are provided by{' '}
+            <a
+              href="https://selfh.st"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'var(--primary-700)' }}
+            >
+              Selfh.st
+            </a>
+          </div>
           <MonitorIconGrid icons={icons} handleInput={handleInput} />
         </div>
       </Popover>

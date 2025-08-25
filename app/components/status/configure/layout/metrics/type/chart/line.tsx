@@ -74,6 +74,4 @@ const StatusLayoutLineChart = ({ heartbeats = defaultHeartbeats }) => {
 
 StatusLayoutLineChart.displayName = 'StatusLayoutLineChart';
 
-
-
 export default StatusLayoutLineChart;

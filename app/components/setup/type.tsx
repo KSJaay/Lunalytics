@@ -12,7 +12,9 @@ const SetupTypeForm = () => {
       await submitSetup(setErrors, 'basic', inputs);
 
       return navigate('/home');
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error);
+
       if (error?.response?.data) {
         if (error?.response?.data?.errorType === 'ownerExists') {
           return navigate('/login');

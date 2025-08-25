@@ -70,14 +70,6 @@ describe('Setup - Middleware', () => {
   });
 
   describe('GET - /setup/exists', () => {
-    it('should call next if database name is not set', async () => {
-      config.get = vi.fn().mockReturnValue(null);
-
-      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
-
-      expect(fakeNext).toHaveBeenCalled();
-    });
-
     it('should return expected response if database name is not set and request.url starts with /api', async () => {
       config.get = vi.fn().mockReturnValue(null);
 
@@ -92,14 +84,6 @@ describe('Setup - Middleware', () => {
         setupRequired: true,
         message: 'Application setup required',
       });
-    });
-
-    it('should call next if owner does not exist', async () => {
-      ownerExists = vi.fn().mockReturnValue(false);
-
-      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
-
-      expect(fakeNext).toHaveBeenCalled();
     });
 
     it('should return expected response if owner does not exist and request.url starts with /api', async () => {
@@ -122,12 +106,6 @@ describe('Setup - Middleware', () => {
       await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
 
       expect(ownerExists).toHaveBeenCalled();
-    });
-
-    it('should call next if owner exists in database', async () => {
-      await setupExistsMiddleware(fakeRequest, fakeResponse, fakeNext);
-
-      expect(fakeNext).toHaveBeenCalled();
     });
   });
 

@@ -195,7 +195,7 @@ const StatusPage = ({ id }: { id?: string }) => {
             case 'metrics': {
               const monitors = item.autoAdd
                 ? Object.keys(statusPage.monitors)
-                : item.monitors;
+                : item.monitors.map((m) => m.id);
 
               const allMonitors = monitors
                 .map((monitorId) => {

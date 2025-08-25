@@ -51,7 +51,7 @@ const LoginLayout = ({
           ) : null}
         </header>
 
-        {showProviders ? (
+        {showProviders && providers.length ? (
           <>
             <div className="providers">
               {providers.map((providerId) => {
