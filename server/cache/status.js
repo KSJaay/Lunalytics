@@ -52,6 +52,11 @@ class Status {
   async loadMonitorData(monitorId, monitor) {
     if (!monitor) {
       const monitor = await monitorExists(monitorId);
+
+      if (!monitor) {
+        return;
+      }
+
       this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));
     } else {
       this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));

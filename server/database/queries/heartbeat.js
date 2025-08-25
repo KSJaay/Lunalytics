@@ -10,14 +10,16 @@ export const fetchHeartbeats = async (monitorId, limit = 168) => {
   return heartbeats;
 };
 
-export const isMonitorDown = async (monitorId, limit) => {
+export const isMonitorDown = async (monitorId, limit = 1) => {
+  const newLimit = limit || 1;
+
   const heartbeats = await SQLite.client('heartbeat')
     .where({ monitorId })
     .orderBy('date', 'desc')
-    .limit(limit + 1);
+    .limit(newLimit + 1);
 
   const oldestHeartbeat = heartbeats[heartbeats.length - 1];
-  const limitHeartbeats = heartbeats.slice(0, limit);
+  const limitHeartbeats = heartbeats.slice(0, newLimit);
   const allDown = limitHeartbeats.every((heartbeat) => heartbeat.isDown);
 
   if (oldestHeartbeat.isDown && allDown) {
@@ -34,8 +36,8 @@ export const isMonitorDown = async (monitorId, limit) => {
   return false;
 };
 
-export const isMonitorRecovered = async (monitorId, limit) => {
-  const newLimit = limit + 1;
+export const isMonitorRecovered = async (monitorId, limit = 1) => {
+  const newLimit = limit + 1 || 1;
   const query = await SQLite.client('heartbeat')
     .where({ monitorId })
     .orderBy('date', 'desc')
