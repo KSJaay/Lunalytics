@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 
 import useContextStore from '../../../context';
 import { useTranslation } from 'react-i18next';
+import type { CertificateProps, MonitorProps } from '../../../types/monitor';
 
 const notificationText = {
   basic: 'Basic',
@@ -12,7 +13,11 @@ const notificationText = {
   nerdy: 'Nerdy',
 };
 
-const MonitorCertificate = ({ certificate }) => {
+const MonitorCertificate = ({
+  certificate,
+}: {
+  certificate: CertificateProps;
+}) => {
   const { t } = useTranslation();
 
   if (!certificate || !certificate.isValid) return null;
@@ -59,54 +64,64 @@ const MonitorCertificate = ({ certificate }) => {
   );
 };
 
-const MonitorNotification = observer(({ notificationId, notificationType }) => {
-  const {
-    notificationStore: { getNotifciationById },
-  } = useContextStore();
+const MonitorNotification = observer(
+  ({
+    notificationId,
+    notificationType,
+  }: {
+    notificationId: string;
+    notificationType: string;
+  }) => {
+    const {
+      notificationStore: { getNotifciationById },
+    } = useContextStore();
 
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  if (!notificationId) return null;
+    if (!notificationId) return null;
 
-  const notification = getNotifciationById(notificationId);
+    const notification = getNotifciationById(notificationId);
 
-  if (!notification) return null;
+    if (!notification) return null;
 
-  return (
-    <>
-      <div className="navigation-info-subtitle">{t('common.notification')}</div>
-
-      <div className="navigation-info-list">
-        <div className="navigation-info-item">
-          <div>{t('common.name')}</div>
-          <div>{notification.friendlyName}</div>
+    return (
+      <>
+        <div className="navigation-info-subtitle">
+          {t('common.notification')}
         </div>
 
-        <div className="navigation-info-item">
-          <div>{t('common.id')}</div>
-          <div>{notification.id}</div>
-        </div>
+        <div className="navigation-info-list">
+          <div className="navigation-info-item">
+            <div>{t('common.name')}</div>
+            <div>{notification.friendlyName}</div>
+          </div>
 
-        <div className="navigation-info-item">
-          <div>{t('common.platform')}</div>
-          <div>{notification.platform}</div>
-        </div>
+          <div className="navigation-info-item">
+            <div>{t('common.id')}</div>
+            <div>{notification.id}</div>
+          </div>
 
-        <div className="navigation-info-item">
-          <div>{t('common.format')}</div>
-          <div>{notificationText[notification.messageType]}</div>
-        </div>
+          <div className="navigation-info-item">
+            <div>{t('common.platform')}</div>
+            <div>{notification.platform}</div>
+          </div>
 
-        <div className="navigation-info-item">
-          <div>{t('common.type')}</div>
-          <div>{notificationType}</div>
-        </div>
-      </div>
-    </>
-  );
-});
+          <div className="navigation-info-item">
+            <div>{t('common.format')}</div>
+            <div>{notificationText[notification.messageType]}</div>
+          </div>
 
-const NavigationMonitorInfo = ({ monitor }) => {
+          <div className="navigation-info-item">
+            <div>{t('common.type')}</div>
+            <div>{notificationType}</div>
+          </div>
+        </div>
+      </>
+    );
+  }
+);
+
+const NavigationMonitorInfo = ({ monitor }: { monitor: MonitorProps }) => {
   const { t } = useTranslation();
 
   if (!monitor) return null;

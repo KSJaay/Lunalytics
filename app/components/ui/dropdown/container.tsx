@@ -2,6 +2,14 @@
 import classNames from 'classnames';
 import { useEffect, useRef } from 'react';
 
+interface DropdownContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  position?: 'left' | 'right' | 'center' | 'top';
+  isOpen: boolean;
+  toggleDropdown: () => void;
+  children: React.ReactNode;
+  className?: string;
+}
+
 const Container = ({
   position = 'left',
   isOpen,
@@ -9,7 +17,7 @@ const Container = ({
   children,
   className = '',
   ...props
-}) => {
+}: DropdownContainerProps) => {
   const classes = classNames('dropdown', {
     'dropdown-position--right': position === 'right',
     'dropdown-position--left': position === 'left',
@@ -17,12 +25,13 @@ const Container = ({
     'dropdown-position--top': position === 'top',
   });
 
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       const isClickOutside =
-        containerRef.current && !containerRef.current.contains(event.target);
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node);
 
       if (isClickOutside && isOpen) {
         toggleDropdown();

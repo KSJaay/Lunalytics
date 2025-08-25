@@ -109,7 +109,6 @@ const StatusConfigurePreview = () => {
               <StatusPageIncident
                 key={item.id}
                 incidents={defaultIncidents}
-                incidentsStatus={component.incidentsStatus}
                 design={component.design}
                 status={component.status}
                 size={component.size}

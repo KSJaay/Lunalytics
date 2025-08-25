@@ -7,12 +7,27 @@ import {
   StatusPageValidatorError,
 } from '../../../../shared/utils/errors';
 
+interface SettingsProps {
+  font: string;
+  theme: string;
+  headerBackground: string;
+  background: string;
+  textColor: string;
+  highlight: string;
+  url: string;
+  logo: string;
+  title: string;
+  homepageUrl: string;
+  isPublic: boolean;
+  hidePaused: boolean;
+}
+
 const handleCreateOrEditStatusPage = async (
-  settings = {},
-  layout = [],
-  callback,
-  isEdit,
-  statusPageId
+  settings: SettingsProps,
+  layout: Array<any> = [],
+  callback: (data: any) => void,
+  isEdit: boolean,
+  statusPageId?: string
 ) => {
   try {
     validateStatusSettings(settings);

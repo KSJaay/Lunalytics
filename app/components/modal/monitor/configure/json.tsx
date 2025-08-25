@@ -41,7 +41,7 @@ const MonitorConfigureJsonQueryModal = ({
 
           <MonitorHttpMethods
             selectValue={inputs.method}
-            handleSelect={(method) => handleInput('method', method)}
+            handleSelect={(method: string) => handleInput('method', method)}
           />
 
           <MonitorJsonQueryCheck

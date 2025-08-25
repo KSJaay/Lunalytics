@@ -1,7 +1,17 @@
 // import dependencies
 import { Button, Modal } from '@lunalytics/ui';
 
-const StatusDeleteModal = ({ closeModal, deleteStatusPage, title }) => {
+interface StatusDeleteModalProps {
+  closeModal: () => void;
+  deleteStatusPage: () => void;
+  title: string;
+}
+
+const StatusDeleteModal = ({
+  closeModal,
+  deleteStatusPage,
+  title,
+}: StatusDeleteModalProps) => {
   return (
     <Modal
       title="Are you absolutely sure?"

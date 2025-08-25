@@ -4,6 +4,15 @@ import classNames from 'classnames';
 // import local files
 import { FaChevronUp } from '../../icons';
 
+interface SelectTriggerProps extends React.HTMLAttributes<HTMLDivElement> {
+  asInput?: boolean;
+  isOpen: boolean;
+  icon?: React.ReactNode;
+  showIcon?: boolean;
+  color?: string;
+  toggleSelect: () => void;
+}
+
 const Trigger = ({
   asInput,
   isOpen,
@@ -13,7 +22,7 @@ const Trigger = ({
   children,
   color = 'var(--lunaui-accent-800)',
   ...props
-}) => {
+}: SelectTriggerProps) => {
   const classes = classNames('select-trigger', {
     'select-trigger-input': asInput,
   });

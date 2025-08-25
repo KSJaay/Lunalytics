@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createGetRequest } from '../services/axios';
-import type { UseFetchProps } from '../types/hooks';
+import type { UseFetchProps, UseFetchResponse } from '../types/hooks';
 
 function useFetch({
   url,
@@ -32,7 +32,12 @@ function useFetch({
       });
   }, [url, JSON.stringify(params), JSON.stringify(headers)]);
 
-  return { data, error, isLoading, isError: error !== null };
+  return {
+    data,
+    error,
+    isLoading,
+    isError: error !== null,
+  } as UseFetchResponse<any>;
 }
 
 export default useFetch;

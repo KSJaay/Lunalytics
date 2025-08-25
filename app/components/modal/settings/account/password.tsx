@@ -8,8 +8,31 @@ import RegisterChecklist from '../../../register/checklist';
 import validators from '../../../../../shared/validators';
 import handleChangePassword from '../../../../handlers/settings/account/password';
 
-const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
-  const [values, setValues] = useState({
+interface SettingsAccountPasswordModalProps {
+  modalTitle: string;
+  id: string;
+  closeModal: () => void;
+}
+
+interface PasswordErrors {
+  current?: string;
+  new?: string;
+  repeat?: string;
+}
+
+const SettingsAccountPasswordModal = ({
+  modalTitle,
+  id,
+  closeModal,
+}: SettingsAccountPasswordModalProps) => {
+  const [values, setValues] = useState<{
+    current: string;
+    new: string;
+    repeat: string;
+    showPassword: boolean;
+    showNewPassword: boolean;
+    errors: PasswordErrors;
+  }>({
     current: '',
     new: '',
     repeat: '',
@@ -18,19 +41,22 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
     errors: {},
   });
 
-  const handleOnBlur = (key, value) => {
+  const handleOnBlur = (key: string, value: any) => {
     const isInvalidPassword = validators.auth.password(value);
-    handleErrors(key, isInvalidPassword?.password || null);
+
+    if (isInvalidPassword && isInvalidPassword.password) {
+      handleErrors(key, isInvalidPassword.password || null);
+    }
   };
 
-  const handlePasswordChange = (key, value) => {
+  const handlePasswordChange = (key: string, value: any) => {
     setValues((prev) => ({
       ...prev,
       [key]: value,
     }));
   };
 
-  const handleErrors = (key, error) => {
+  const handleErrors = (key: string, error: any) => {
     setValues((prev) => ({
       ...prev,
       errors: {
@@ -76,8 +102,12 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
         id={`settings-current-password-${id}`}
         title="Current Password"
         value={values.current}
-        onChange={(e) => handlePasswordChange('current', e.target.value)}
-        onBlur={(e) => handleOnBlur('current', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handlePasswordChange('current', e.target.value)
+        }
+        onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+          handleOnBlur('current', e.target.value)
+        }
         type={values.showPassword ? 'text' : 'password'}
         iconRight={
           <div
@@ -97,8 +127,12 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
       <Input
         id={`settings-new-password-${id}`}
         title="New Password"
-        onChange={(e) => handlePasswordChange('new', e.target.value)}
-        onBlur={(e) => handleOnBlur('new', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handlePasswordChange('new', e.target.value)
+        }
+        onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+          handleOnBlur('new', e.target.value)
+        }
         type={values.showNewPassword ? 'text' : 'password'}
         value={values.new}
         iconRight={
@@ -122,8 +156,12 @@ const SettingsAccountPasswordModal = ({ modalTitle, id, closeModal }) => {
       <Input
         id={`settings-repeat-password-${id}`}
         title="Repeat New Password"
-        onChange={(e) => handlePasswordChange('repeat', e.target.value)}
-        onBlur={(e) => handleOnBlur('repeat', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handlePasswordChange('repeat', e.target.value)
+        }
+        onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+          handleOnBlur('repeat', e.target.value)
+        }
         type="password"
         value={values.repeat}
         error={values.errors.repeat}

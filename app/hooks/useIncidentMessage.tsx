@@ -14,7 +14,7 @@ const inputReducer = (state: any, action: { key: any; value: any }) => {
 const useIncidentMessage = (userValues = defaultInputs, incidentId: string) => {
   const [values, dispatch] = useReducer(inputReducer, userValues);
 
-  const handleSubmit = async (position: number) => {
+  const handleSubmit = async (position?: number) => {
     const result = incidentMessageValidator(values);
 
     if (result) {

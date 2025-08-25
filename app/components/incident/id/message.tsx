@@ -11,13 +11,21 @@ import useContextStore from '../../../context';
 import IncidentEditMessageModal from '../../modal/incident/editUpdate';
 import IncidentDeleteMessageModal from '../../modal/incident/deleteMessage';
 
+interface IncidentIdMessageProps {
+  incidentId: string;
+  message?: string;
+  status?: string;
+  createdAt?: string | null;
+  incidentPosition: number;
+}
+
 const IncidentIdMessage = ({
   incidentId,
   message = '',
   status = '',
   createdAt = null,
   incidentPosition,
-}) => {
+}: IncidentIdMessageProps) => {
   const {
     modalStore: { openModal },
   } = useContextStore();
@@ -37,8 +45,7 @@ const IncidentIdMessage = ({
               <IncidentEditMessageModal
                 incidentId={incidentId}
                 incidentPosition={incidentPosition}
-              />,
-              false
+              />
             )
           }
         >
@@ -51,8 +58,7 @@ const IncidentIdMessage = ({
               <IncidentDeleteMessageModal
                 incidentId={incidentId}
                 incidentPosition={incidentPosition}
-              />,
-              false
+              />
             )
           }
         >
@@ -65,7 +71,9 @@ const IncidentIdMessage = ({
       <div className="iid-footer">
         Created at{' '}
         <span>
-          {dayjs(new Date(createdAt)).format('MMMM DD, YYYY HH:mm A')}
+          {createdAt
+            ? dayjs(new Date(createdAt)).format('MMMM DD, YYYY HH:mm A')
+            : null}
         </span>
       </div>
     </div>

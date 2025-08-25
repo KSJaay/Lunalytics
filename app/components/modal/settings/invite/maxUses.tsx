@@ -4,7 +4,13 @@ import useDropdown from '../../../../hooks/useDropdown';
 
 const limits = [1, 5, 10, 25, 50, 100];
 
-const CreateInviteMaxUses = ({ setMaxUses, maxUses }) => {
+const CreateInviteMaxUses = ({
+  setMaxUses,
+  maxUses,
+}: {
+  setMaxUses: (id: number | null) => void;
+  maxUses: number | null;
+}) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (

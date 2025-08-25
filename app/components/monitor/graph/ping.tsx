@@ -2,7 +2,11 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbDownload, TbUpload, TbActivityHeartbeat } from 'react-icons/tb';
 
-const GraphPing = ({ data }) => {
+const GraphPing = ({
+  data,
+}: {
+  data: { latency: number; time: string | number }[];
+}) => {
   const { t } = useTranslation();
 
   const {

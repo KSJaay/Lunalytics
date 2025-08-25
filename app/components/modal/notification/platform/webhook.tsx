@@ -6,16 +6,35 @@ import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
 import Switch from '../../../ui/switch';
 
+interface NotificationModalWebhookInputProps {
+  values: {
+    showAdditionalHeaders: boolean;
+    friendlyName: string;
+    token: string;
+    data: {
+      requestType: string;
+      additionalHeaders: string;
+    };
+  };
+  errors: {
+    friendlyName?: string;
+    token?: string;
+    requestType?: string;
+    additionalHeaders?: string;
+  };
+  handleInput: (input: { key: string; value: any }) => void;
+}
+
 const NotificationModalWebhookInput = ({
-  values = {},
-  errors = {},
+  values,
+  errors,
   handleInput,
-}) => {
+}: NotificationModalWebhookInputProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const showAdditionalHeaders =
     typeof values.showAdditionalHeaders !== 'boolean'
-      ? values.additionalHeaders
+      ? values.data?.additionalHeaders
       : values.showAdditionalHeaders;
 
   return (
@@ -26,7 +45,7 @@ const NotificationModalWebhookInput = ({
         id="friendly-name"
         error={errors?.friendlyName}
         defaultValue={values.friendlyName}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'friendlyName', value: e.target.value });
         }}
       />
@@ -51,7 +70,7 @@ const NotificationModalWebhookInput = ({
         isRequired
         error={errors?.token}
         defaultValue={values.token}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput({ key: 'token', value: e.target.value });
         }}
       />
@@ -96,7 +115,7 @@ const NotificationModalWebhookInput = ({
           label="Additional Headers"
           id="additional-headers"
           checked={showAdditionalHeaders}
-          onChange={(e) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleInput({
               key: 'showAdditionalHeaders',
               value: e.target.checked,
@@ -112,7 +131,7 @@ const NotificationModalWebhookInput = ({
                 <Textarea
                   rows={8}
                   error={errors.additionalHeaders}
-                  onChange={(e) => {
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     handleInput({
                       key: 'data',
                       value: {

@@ -1,8 +1,25 @@
 import { useContext, createContext, useState, useLayoutEffect } from 'react';
 
-const LocalStorageStateContext = createContext({});
+const LocalStorageStateContext = createContext({} as LocalStorageContextProps);
 export const LocalStorageStateProvider = LocalStorageStateContext.Provider;
 const useLocalStorageContext = () => useContext(LocalStorageStateContext);
+
+export interface LocalStorageContextProps {
+  timezone: string;
+  dateformat: string;
+  timeformat: string;
+  theme: string;
+  color: string;
+  layout: string;
+  status: string;
+  setTimezone: (timezone: string) => void;
+  setDateformat: (dateformat: string) => void;
+  setTimeformat: (timeformat: string) => void;
+  setTheme: (theme: string) => void;
+  setColor: (color: string) => void;
+  setLayout: (layout: string) => void;
+  setStatus: (status: string) => void;
+}
 
 export const useLocalStorageState = () => {
   const [values, setValues] = useState({

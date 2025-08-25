@@ -1,9 +1,16 @@
+interface PillCircleProps {
+  size?: number;
+  pillWidth?: number;
+  pillHeight?: number;
+  pills: string[];
+}
+
 const PillCircle = ({
   size = 35,
   pillWidth = 10,
   pillHeight = 3,
   pills = [],
-}) => {
+}: PillCircleProps) => {
   const radius = size / 2;
 
   const count = pills.length;

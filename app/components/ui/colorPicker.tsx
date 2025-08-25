@@ -4,6 +4,17 @@ import './colorPicker.scss';
 import { useEffect, useRef, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 
+interface ColorPickerProps {
+  label?: string;
+  id: string;
+  error?: string;
+  description?: string;
+  isRequired?: boolean;
+  tabIndex?: number;
+  color?: string;
+  setColor: (color: string) => void;
+}
+
 const ColorPicker = ({
   label,
   id,
@@ -14,14 +25,14 @@ const ColorPicker = ({
   color = '#17c964',
   setColor,
   ...props
-}) => {
+}: ColorPickerProps) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       const isClickOutside =
-        containerRef.current && !containerRef.current.contains(event.target);
+        containerRef.current && !containerRef.current.contains(event.target as Node);
 
       if (isClickOutside && showColorPicker) {
         setShowColorPicker(false);

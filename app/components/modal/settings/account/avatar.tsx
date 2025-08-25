@@ -24,7 +24,7 @@ const avatars = [
   'Tiger',
 ];
 
-const isImageUrl = (url) => {
+const isImageUrl = (url: string) => {
   if (typeof url !== 'string') {
     return false;
   }
@@ -32,11 +32,17 @@ const isImageUrl = (url) => {
   return url.match(/^https?:\/\//gim);
 };
 
+interface SettingsAccountAvatarModalProps {
+  value?: string;
+  closeModal: () => void;
+  handleSubmit: (avatar: string) => void;
+}
+
 const SettingsAccountAvatarModal = ({
   value = 'Panda',
   closeModal,
-  handleSumbit,
-}) => {
+  handleSubmit,
+}: SettingsAccountAvatarModalProps) => {
   const [avatar, setAvatar] = useState(value);
 
   const isUrl = isImageUrl(avatar);
@@ -53,7 +59,7 @@ const SettingsAccountAvatarModal = ({
           <Button
             color="green"
             variant="flat"
-            onClick={() => handleSumbit(avatar)}
+            onClick={() => handleSubmit(avatar)}
           >
             Update
           </Button>
@@ -66,7 +72,9 @@ const SettingsAccountAvatarModal = ({
       <Input
         title="Input Avatar URL"
         value={isUrl ? avatar : ''}
-        onChange={(e) => setAvatar(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setAvatar(e.target.value)
+        }
       />
 
       <div className="input-label">Or select from below</div>

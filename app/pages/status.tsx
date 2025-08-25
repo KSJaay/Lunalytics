@@ -34,7 +34,7 @@ const StatusPage = ({ id }: { id?: string }) => {
     layout = [],
   } = statusPage || {};
 
-  function injectStylesheet(id, content = '') {
+  function injectStylesheet(id: string, content: string = '') {
     let styleSheet = document.getElementById(id);
 
     if (!styleSheet) {
@@ -144,7 +144,6 @@ const StatusPage = ({ id }: { id?: string }) => {
                 <StatusPageIncident
                   key={item.id}
                   incidents={incident.messages}
-                  incidentsStatus={incident.affect}
                   design={item.design}
                   status={incident.affect}
                   size={item.size}
@@ -168,13 +167,13 @@ const StatusPage = ({ id }: { id?: string }) => {
                   );
                   const monitorStatus =
                     monitorHasIncident &&
-                    monitorHasIncident.status !== 'Resolved'
-                      ? monitorHasIncident.affect
+                    monitorHasIncident?.status !== 'Resolved'
+                      ? monitorHasIncident?.affect
                       : 'Operational';
 
                   const monitorHeartbeats =
                     statusPage.heartbeats[monitorId]?.[0];
-                  const status = monitorHeartbeats.isDown
+                  const status = monitorHeartbeats?.isDown
                     ? 'Degraded'
                     : monitorStatus;
 

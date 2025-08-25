@@ -9,7 +9,17 @@ const notificationTypes = [
   'Recovery',
 ];
 
-const MonitorNotificationType = ({ inputs, errors, handleInput }) => {
+interface MonitorNotificationTypeProps {
+  inputs: any;
+  errors: any;
+  handleInput: (key: string, value: any) => void;
+}
+
+const MonitorNotificationType = ({
+  inputs,
+  errors,
+  handleInput,
+}: MonitorNotificationTypeProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (

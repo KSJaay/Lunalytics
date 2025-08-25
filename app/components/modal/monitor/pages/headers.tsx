@@ -1,7 +1,17 @@
 import { Textarea } from '@lunalytics/ui';
 
-const MonitorHttpHeaders = ({ inputs, errors, handleInput }) => {
-  const parseHeaders = (body) => {
+interface MonitorHttpHeadersProps {
+  inputs: any;
+  errors: any;
+  handleInput: (key: string, value: any) => void;
+}
+
+const MonitorHttpHeaders = ({
+  inputs,
+  errors,
+  handleInput,
+}: MonitorHttpHeadersProps) => {
+  const parseHeaders = (body: Record<string, any>) => {
     try {
       if (typeof body === 'object') {
         return JSON.stringify(body, null, 2);

@@ -55,17 +55,19 @@ const IncidentContent = () => {
           }
           onBlur={handleUpdate}
         />
-        <IncidentContentImpact incident={incident} />
+        <IncidentContentImpact />
       </div>
 
-      <IncidentContentMessages incidentId={incident.incidentId} />
+      <IncidentContentMessages incidentId={incident?.incidentId || ''} />
 
       <Button
         fullWidth
         color="gray"
         variant="flat"
         onClick={() =>
-          openModal(<IncidentAddUpdateModal incidentId={incident.incidentId} />)
+          openModal(
+            <IncidentAddUpdateModal incidentId={incident?.incidentId || ''} />
+          )
         }
       >
         Add an update

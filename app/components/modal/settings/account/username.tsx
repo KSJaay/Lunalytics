@@ -7,25 +7,41 @@ import { Button, Input, Modal } from '@lunalytics/ui';
 import useContextStore from '../../../../context';
 import handleChangeUsername from '../../../../handlers/settings/account/username';
 
+interface SettingsAccountUsernameModalProps {
+  title: string;
+  modalTitle: string;
+  id: string;
+  value: string;
+  closeModal: () => void;
+}
+
 const SettingsAccountUsernameModal = ({
   title,
   modalTitle,
   id,
   value,
   closeModal,
-}) => {
-  const [error, setError] = useState(null);
+}: SettingsAccountUsernameModalProps) => {
+  const [error, setError] = useState<string | null>(null);
 
   const {
     userStore: { updateUsingKey },
   } = useContextStore();
 
-  const handleError = (error) => {
+  const handleError = (error: string) => {
     setError(error);
   };
 
   const submit = async () => {
-    const value = document.getElementById(`settings-edit-${id}`).value;
+    const inputElement = document.getElementById(
+      `settings-edit-${id}`
+    ) as HTMLInputElement | null;
+
+    if (!inputElement) {
+      setError('Error finding user input.');
+      return;
+    }
+    const value = inputElement.value;
     const query = await handleChangeUsername(value, handleError, closeModal);
 
     if (query === true) {

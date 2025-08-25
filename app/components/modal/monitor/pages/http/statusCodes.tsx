@@ -3,11 +3,17 @@ import useSelect from '../../../../../hooks/useSelect';
 import Select from '../../../../ui/select';
 import statusCodes from '../../../../../constant/statusCodes.json';
 
+interface ModalProps {
+  error?: string;
+  selectedIds?: string[];
+  handleStatusCodeSelect: (code: string) => void;
+}
+
 const MonitorHttpStatusCodes = ({
   error,
   selectedIds = [],
   handleStatusCodeSelect,
-}) => {
+}: ModalProps) => {
   const { selectIsOpen, selectSearch, handleSearch, toggleSelect } =
     useSelect(false);
 

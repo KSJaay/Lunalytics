@@ -17,9 +17,10 @@ const MonitorUptime = () => {
   } = useContextStore();
 
   const heartbeatList = useMemo(() => {
-    const highestLatency = activeMonitor?.heartbeats?.reduce((acc, curr) => {
-      return Math.max(acc, curr.latency);
-    }, 0);
+    const highestLatency =
+      activeMonitor?.heartbeats?.reduce((acc, curr) => {
+        return Math.max(acc, curr.latency);
+      }, 0) || 0;
 
     const heartbeatList = activeMonitor?.heartbeats?.map((heartbeat) => (
       <UptimeInfo

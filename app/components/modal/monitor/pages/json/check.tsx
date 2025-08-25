@@ -14,7 +14,17 @@ const JsonChecks = [
   { id: 'not_contains', value: 'Does not contain' },
 ];
 
-const MonitorJsonQueryCheck = ({ inputs, errors, handleInput }) => {
+interface MonitorJsonQueryCheckProps {
+  inputs: any;
+  errors: any;
+  handleInput: (key: string, value: any) => void;
+}
+
+const MonitorJsonQueryCheck = ({
+  inputs,
+  errors,
+  handleInput,
+}: MonitorJsonQueryCheckProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown(
     true,
     JsonChecks[0].id

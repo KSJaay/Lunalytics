@@ -2,7 +2,13 @@
 import dayjs from 'dayjs';
 import type { IncidentProps } from '../../../types/incident';
 
-const IncidentContentHeader = ({ incident }: { incident: IncidentProps }) => {
+const IncidentContentHeader = ({
+  incident,
+}: {
+  incident?: IncidentProps | null;
+}) => {
+  if (!incident) return null;
+
   return (
     <div className="ihc-container">
       <div className="ihc-content">

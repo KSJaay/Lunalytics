@@ -52,46 +52,55 @@ const MonitorConfigureDockerModal = ({
                 </div>
               </div>
 
-              {data.map((container) => (
-                <div
-                  key={container.id}
-                  className="monitor-configure-docker-item"
-                >
-                  <div>
-                    <div>{container.name}</div>
-                    <div className="monitor-configure-docker-item-platform">
-                      {container.platform}
+              {data.map(
+                (container: {
+                  id: string;
+                  name: string;
+                  platform: string;
+                  image: string;
+                }) => (
+                  <div
+                    key={container.id}
+                    className="monitor-configure-docker-item"
+                  >
+                    <div>
+                      <div>{container.name}</div>
+                      <div className="monitor-configure-docker-item-platform">
+                        {container.platform}
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      {container.image}
+                    </div>
+                    <div
+                      style={{ display: 'flex', justifyContent: 'flex-end' }}
+                    >
+                      {inputs.url === container.id ? (
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            color: 'var(--green-700)',
+                            paddingRight: '8px  ',
+                          }}
+                        >
+                          Selected
+                        </div>
+                      ) : (
+                        <Button
+                          variant="border"
+                          color="green"
+                          onClick={() => {
+                            handleInput('url', container.id);
+                          }}
+                        >
+                          Select
+                        </Button>
+                      )}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    {container.image}
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    {inputs.url === container.id ? (
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          color: 'var(--green-700)',
-                          paddingRight: '8px  ',
-                        }}
-                      >
-                        Selected
-                      </div>
-                    ) : (
-                      <Button
-                        variant="border"
-                        color="green"
-                        onClick={() => {
-                          handleInput('url', container.id);
-                        }}
-                      >
-                        Select
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           ) : null}
         </div>

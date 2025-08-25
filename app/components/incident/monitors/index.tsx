@@ -10,15 +10,35 @@ import {
   getIncidentAffect,
 } from '../../../../shared/constants/incident';
 
+interface IncidentMonitorsProps {
+  values?: {
+    monitorIds: string[];
+    affect: string;
+  };
+  handleSelectedMonitor: (id: string) => void;
+  handleChange: (field: string, value: string) => void;
+}
+
 const IncidentMonitors = ({
-  values = {},
+  values,
   handleSelectedMonitor,
   handleChange,
-}) => {
-  const { monitorIds, affect } = values;
+}: IncidentMonitorsProps) => {
+  const { monitorIds = [], affect } = values || {};
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
-  const selectedStatusInforamtion = getIncidentAffect(affect);
+  const selectedStatusInformation = getIncidentAffect(affect, false);
+
+  const color =
+    typeof selectedStatusInformation === 'object' &&
+    selectedStatusInformation !== null
+      ? selectedStatusInformation.color
+      : undefined;
+  const text =
+    typeof selectedStatusInformation === 'object' &&
+    selectedStatusInformation !== null
+      ? selectedStatusInformation.text
+      : selectedStatusInformation;
 
   return (
     <div>
@@ -40,9 +60,7 @@ const IncidentMonitors = ({
                 isOpen={dropdownIsOpen}
                 toggleDropdown={toggleDropdown}
               >
-                <div style={{ color: selectedStatusInforamtion.color }}>
-                  {selectedStatusInforamtion.text}
-                </div>
+                <div style={{ color }}>{text}</div>
               </Dropdown.Trigger>
               <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
                 {affectTextArray.map(({ id, color, text }) => (

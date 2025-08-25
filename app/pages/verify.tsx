@@ -28,7 +28,7 @@ const Verify = () => {
   return (
     <div className="verify-container">
       <div style={{ marginBottom: '25px' }}>
-        <StatusLogo size="150" />
+        <StatusLogo size={150} />
       </div>
       <div className="verify-title">Verify your account</div>
       <div className="verify-description">

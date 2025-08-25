@@ -4,13 +4,21 @@ import { ProgressBar, Input } from '@lunalytics/ui';
 // import local files
 import RegisterChecklist from './checklist';
 
+interface RegisterPasswordFormProps {
+  handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: () => void;
+  setPassword: (password: string) => void;
+  inputs?: Record<string, any>;
+  errors?: Record<string, any>;
+}
+
 const RegisterPasswordForm = ({
   handleInput,
   handleSubmit,
   setPassword,
   inputs = {},
   errors = {},
-}) => {
+}: RegisterPasswordFormProps) => {
   return (
     <>
       <div className="auth-form-title">Choose a password</div>

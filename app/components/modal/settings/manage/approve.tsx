@@ -7,7 +7,13 @@ import { Button, Modal } from '@lunalytics/ui';
 import { createPostRequest } from '../../../../services/axios';
 import useTeamContext from '../../../../context/team';
 
-const MemberApproveModal = ({ member, onClose }) => {
+const MemberApproveModal = ({
+  member,
+  onClose,
+}: {
+  member: any;
+  onClose: () => void;
+}) => {
   const { updateUserVerified } = useTeamContext();
 
   const handleConfirm = async () => {

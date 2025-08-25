@@ -4,8 +4,20 @@ import { useTranslation } from 'react-i18next';
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
+import type { NotificationProps } from '../../../../types/notifications';
 
-const NotificationModalType = ({ messageType = 'basic', setMessageType }) => {
+interface NotificationModalTypeProps {
+  messageType: 'basic' | 'pretty' | 'nerdy';
+  setMessageType: (type: {
+    key: keyof NotificationProps;
+    value: string;
+  }) => void;
+}
+
+const NotificationModalType = ({
+  messageType = 'basic',
+  setMessageType,
+}: NotificationModalTypeProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
   const { t } = useTranslation();
 

@@ -3,7 +3,17 @@ import useDropdown from '../../hooks/useDropdown';
 import useSetupFormContext from '../../hooks/useSetup';
 import Dropdown from '../ui/dropdown';
 
-const SetupDropdown = ({ id, options, label = 'Dropdown' }) => {
+interface SetupDropdownProps {
+  id: string;
+  options: Record<string, any>;
+  label?: string;
+}
+
+const SetupDropdown = ({
+  id,
+  options,
+  label = 'Dropdown',
+}: SetupDropdownProps) => {
   const { handleInput, inputs } = useSetupFormContext();
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false, 'Automatic');
   const value = inputs[id] || 'automatic';

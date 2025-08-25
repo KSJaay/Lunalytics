@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
+import type { NotificationProps } from '../../types/notifications';
 
 const NotificationIcons = {
   Discord: '/notifications/discord.svg',
@@ -11,7 +12,11 @@ const NotificationIcons = {
   Webhook: '/notifications/webhook.svg',
 };
 
-const NotificationList = ({ notifications }) => {
+const NotificationList = ({
+  notifications,
+}: {
+  notifications: NotificationProps[];
+}) => {
   const {
     notificationStore: { activeNotification, setActiveNotification },
   } = useContextStore();

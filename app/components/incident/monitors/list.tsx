@@ -1,7 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import useContextStore from '../../../context';
 
-const IncidentMonitorsList = ({ selectedMonitors, handleSelected }) => {
+const IncidentMonitorsList = ({
+  selectedMonitors,
+  handleSelected,
+}: {
+  selectedMonitors: string[];
+  handleSelected: (id: string) => void;
+}) => {
   const {
     globalStore: { allMonitors },
   } = useContextStore();

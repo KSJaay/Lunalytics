@@ -60,12 +60,14 @@ const Navigation = ({
           </div>
         )}
         <div className="navigation-header">
-          <HeaderComponent
-            {...props}
-            isInfoOpen={isInfoOpen}
-            setIsInfoOpen={setIsInfoOpen}
-            rightChildren={!!rightChildren}
-          />
+          {HeaderComponent ? (
+            <HeaderComponent
+              {...props}
+              isInfoOpen={isInfoOpen}
+              setIsInfoOpen={setIsInfoOpen}
+              rightChildren={!!rightChildren}
+            />
+          ) : null}
           <div className="navigation-children">{children}</div>
         </div>
 

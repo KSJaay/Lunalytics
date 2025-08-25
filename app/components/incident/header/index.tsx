@@ -14,12 +14,19 @@ import { MdArchive } from 'react-icons/md';
 import ArchiveIncidentModal from '../../modal/incident/archive';
 import { IoArrowBack } from 'react-icons/io5';
 
+interface HomeIncidentHeaderProps {
+  isInfoOpen: boolean;
+  setIsInfoOpen: (isOpen: boolean) => void;
+  rightChildren?: React.ReactNode;
+  isMobile?: boolean;
+}
+
 const HomeIncidentHeader = ({
   isInfoOpen,
   setIsInfoOpen,
   rightChildren,
   isMobile = false,
-}: any) => {
+}: HomeIncidentHeaderProps) => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },
@@ -36,6 +43,8 @@ const HomeIncidentHeader = ({
 
   const handleDelete = async () => {
     try {
+      if (!incident) return;
+
       await createPostRequest('/api/incident/delete', {
         incidentId: incident.incidentId,
       });
@@ -52,7 +61,19 @@ const HomeIncidentHeader = ({
 
   const handleArchive = async () => {
     try {
-      const updatedIncident = { ...incident, isClosed: true };
+      if (!incident) return;
+
+      const updatedIncident = {
+        ...incident,
+        isClosed: true,
+        title: incident.title ?? '',
+        incidentId: incident.incidentId ?? '',
+        affect: incident.affect ?? 'Incident',
+        status: incident.status ?? 'Investigating',
+        messages: incident.messages ?? [],
+        monitorIds: incident.monitorIds ?? [],
+      };
+
       await createPostRequest('/api/incident/update', {
         incident: updatedIncident,
       });

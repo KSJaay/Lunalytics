@@ -15,9 +15,7 @@ const NotificationDiscordContent = ({
 }: {
   inputs: NotificationWebhook;
   errors: Partial<Record<keyof NotificationWebhook, string>>;
-  handleInput: (
-    input: Partial<Record<keyof NotificationWebhook, string>>
-  ) => void;
+  handleInput: (input: { key: keyof NotificationWebhook; value: any }) => void;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();

@@ -8,16 +8,22 @@ import { Alert, Button, Input, Modal } from '@lunalytics/ui';
 // import local files
 import { createPostRequest } from '../../../../services/axios';
 
-const SettingsAccountDeleteModal = ({ closeModal }) => {
+const SettingsAccountDeleteModal = ({
+  closeModal,
+}: {
+  closeModal: () => void;
+}) => {
   const navigate = useNavigate();
 
   const handleDeleteAccount = async () => {
     try {
-      const transferConfirm = document.getElementById(
-        'settings-transfer-confirm'
-      ).value;
+      const transferConfirm = (
+        document.getElementById(
+          'settings-transfer-confirm'
+        ) as HTMLInputElement | null
+      )?.value;
 
-      if (transferConfirm.toLowerCase().trim() !== 'delete account') {
+      if (transferConfirm?.toLowerCase().trim() !== 'delete account') {
         toast.error('Enter delete account to confirm.');
         return;
       }
@@ -31,7 +37,7 @@ const SettingsAccountDeleteModal = ({ closeModal }) => {
       }
 
       toast.error('Something went wrong, please try again later.');
-    } catch (error) {
+    } catch (error: any) {
       if (error.response?.status === 403) {
         return toast.error(error.response.data);
       }

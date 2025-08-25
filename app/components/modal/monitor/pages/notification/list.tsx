@@ -8,7 +8,17 @@ import useContextStore from '../../../../../context';
 import NotificationIcon from '../../../notification/dropdown/icon';
 import notificationsIcons from '../../../../../constant/notifications.json';
 
-const MonitorNotificationList = ({ inputs, errors, handleInput }) => {
+interface MonitorNotificationListProps {
+  inputs: any;
+  errors: any;
+  handleInput: (key: string, value: any) => void;
+}
+
+const MonitorNotificationList = ({
+  inputs,
+  errors,
+  handleInput,
+}: MonitorNotificationListProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const {

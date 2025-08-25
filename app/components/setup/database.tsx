@@ -39,7 +39,21 @@ const pgInputs = [
   },
 ];
 
-const DropdownItem = ({ title, img, value, handleInput, inputs }) => {
+interface DropdownItemProps {
+  title: string;
+  img: string;
+  value: string;
+  handleInput: (value: string) => void;
+  inputs: Record<string, any>;
+}
+
+const DropdownItem = ({
+  title,
+  img,
+  value,
+  handleInput,
+  inputs,
+}: DropdownItemProps) => {
   return (
     <Dropdown.Item
       showDot
@@ -63,7 +77,7 @@ const SetupDatabaseForm = () => {
   const { handleInput, inputs, errors, setErrors } = useSetupFormContext();
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false, 'SQLite');
 
-  const changeDatabaseType = (value) => {
+  const changeDatabaseType = (value: 'better-sqlite3' | 'pg') => {
     handleInput({ target: { id: 'databaseType', value } });
     toggleDropdown();
   };

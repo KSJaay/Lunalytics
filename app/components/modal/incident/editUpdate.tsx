@@ -9,7 +9,13 @@ import useContextStore from '../../../context';
 import IncidentMonitors from '../../incident/monitors';
 import useIncidentMessage from '../../../hooks/useIncidentMessage';
 
-const IncidentEditMessageModal = ({ incidentId, incidentPosition }) => {
+const IncidentEditMessageModal = ({
+  incidentId,
+  incidentPosition,
+}: {
+  incidentId: string;
+  incidentPosition: number;
+}) => {
   const {
     incidentStore: { getIncidentById, addIncident },
     modalStore: { closeModal },
@@ -27,13 +33,13 @@ const IncidentEditMessageModal = ({ incidentId, incidentPosition }) => {
     incidentId
   );
 
-  const handleSelectedMonitor = async (monitorId) => {
+  const handleSelectedMonitor = async (monitorId: string) => {
     const monitorIds = values.monitorIds;
 
     if (monitorIds.includes(monitorId)) {
       dispatch({
         key: 'monitorIds',
-        value: monitorIds.filter((id) => id !== monitorId),
+        value: monitorIds.filter((id: string) => id !== monitorId),
       });
     } else {
       dispatch({ key: 'monitorIds', value: [...monitorIds, monitorId] });
@@ -47,7 +53,7 @@ const IncidentEditMessageModal = ({ incidentId, incidentPosition }) => {
       addIncident(data);
 
       closeModal();
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       toast.error(error.message);
     }
@@ -88,6 +94,7 @@ const IncidentEditMessageModal = ({ incidentId, incidentPosition }) => {
       />
 
       <Tabs
+        id="incident-status-edit"
         label="Status:"
         shortDescription="Current status of the incident"
         options={[

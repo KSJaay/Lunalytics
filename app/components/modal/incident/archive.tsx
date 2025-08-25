@@ -1,6 +1,12 @@
 import { Button, Modal } from '@lunalytics/ui';
 
-const ArchiveIncidentModal = ({ handleArchive, closeModal }) => {
+const ArchiveIncidentModal = ({
+  handleArchive,
+  closeModal,
+}: {
+  handleArchive: () => void;
+  closeModal: () => void;
+}) => {
   return (
     <Modal
       title="Archive Incident"
