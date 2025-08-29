@@ -17,6 +17,7 @@ import NotificationPreview from '../notifications/preview';
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
 import { PermissionsBits } from '../../../shared/permissions/bitFlags';
 import { useTranslation } from 'react-i18next';
+import LeftUpdateButton from './left/update';
 
 const actionTabs = [
   {
@@ -64,6 +65,7 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
       user: { avatar, displayName },
       hasPermission,
     },
+    modalStore: { closeModal, openModal },
   } = useContextStore();
   const { t } = useTranslation();
 
@@ -110,6 +112,8 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
       <div className="left-navigation-actions">{actions}</div>
 
       <div className="navigation-settings-container">
+        <LeftUpdateButton closeModal={closeModal} openModal={openModal} />
+
         <div
           className="navigation-left-action"
           onClick={() => navigate('/settings')}
