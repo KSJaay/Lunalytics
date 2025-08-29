@@ -17,6 +17,7 @@ import initialiseCronJobs from './utils/cron.js';
 import migrateDatabase from '../scripts/migrate.js';
 import addInviteToCookie from './middleware/addInviteToCookie.js';
 import { loadIcons } from './utils/icons.js';
+import { getVersionInfo, startVersionCheck } from './utils/checkVersion.js';
 
 const app = express();
 
@@ -40,6 +41,7 @@ const init = async () => {
 
   await initialiseCronJobs();
   await loadIcons();
+  startVersionCheck();
 
   app
     .use(compression())
@@ -69,6 +71,10 @@ const init = async () => {
 
   app.get('/api/ping', (req, res) => {
     return res.status(200).send('Everything looks good :D');
+  });
+
+  app.get('/api/version', (req, res) => {
+    return res.status(200).json(getVersionInfo());
   });
 
   if (isDemoMode) {
