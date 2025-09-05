@@ -4,7 +4,7 @@ import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/monitor.js';
 import cache from '../../cache/index.js';
 import { cleanMonitor } from '../../class/monitor/index.js';
-import { formatMonitorData } from './add.js';
+import { defaultMonitorData, formatMonitorData } from './add.js';
 import { updateMonitor } from '../../database/queries/monitor.js';
 import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
@@ -15,7 +15,13 @@ const monitorEdit = async (request, response) => {
     const { type } = request.body;
 
     const validator = validators[type];
-    const isInvalidMonitor = validator(request.body);
+
+    if (!validator) {
+      throw new UnprocessableError('Invalid monitor type');
+    }
+
+    const body = defaultMonitorData(request.body);
+    const isInvalidMonitor = validator(body);
 
     if (isInvalidMonitor) {
       throw new UnprocessableError(isInvalidMonitor);
@@ -23,8 +29,8 @@ const monitorEdit = async (request, response) => {
 
     const { user } = response.locals;
 
-    const montior_data = formatMonitorData(request.body, user.email);
-    const data = await updateMonitor(montior_data);
+    const monitor_data = formatMonitorData(body, user.email);
+    const data = await updateMonitor(monitor_data);
 
     cache.checkStatus(data.monitorId)?.catch(() => false);
 
