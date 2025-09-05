@@ -80,7 +80,7 @@ const SettingsAccountAvatar = () => {
               <SettingsAccountAvatarModal
                 closeModal={closeModal}
                 value={avatar}
-                handleSumbit={handleAvatarChange}
+                handleSubmit={handleAvatarChange}
               />
             )
           }
