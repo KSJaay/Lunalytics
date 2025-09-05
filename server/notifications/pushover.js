@@ -70,6 +70,21 @@ class Pushover extends NotificationBase {
       this.handleError(error);
     }
   }
+
+  async test(notification) {
+    try {
+      const data = this.getConfig(notification);
+
+      await axios.post('https://api.pushover.net/1/messages.json', {
+        ...data,
+        message: 'This is a test message from Lunalytics',
+        title: 'Lunalytics Test Message',
+      });
+      return this.success;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
 }
 
 export default Pushover;

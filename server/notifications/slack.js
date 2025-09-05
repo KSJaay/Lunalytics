@@ -41,6 +41,33 @@ class Slack extends NotificationBase {
     }
   }
 
+  async test(notification) {
+    try {
+      await axios.post(notification.token, {
+        text: 'This is a test message from Lunalytics',
+        channel: notification.channel,
+        username: notification.username,
+        attachments: [
+          {
+            color: '#36a64f',
+            blocks: [
+              {
+                type: 'section',
+                text: {
+                  type: 'mrkdwn',
+                  text: 'This is a test message from Lunalytics',
+                },
+              },
+            ],
+          },
+        ],
+      });
+      return this.success;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   async sendRecovery(notification, monitor, heartbeat) {
     try {
       const template = SlackTemplateMessages.recovery;

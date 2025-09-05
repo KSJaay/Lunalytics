@@ -21,6 +21,17 @@ class Discord extends NotificationBase {
     }
   }
 
+  async test(notification) {
+    try {
+      await axios.post(notification.token, {
+        content: 'This is a test message',
+      });
+      return this.success;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   async sendRecovery(notification, monitor, heartbeat) {
     try {
       const template = DiscordTemplateMessages.recovery;
