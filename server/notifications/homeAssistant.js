@@ -7,35 +7,68 @@ class HomeAssistant extends NotificationBase {
   name = 'HomeAssistant';
 
   async send(notification, monitor, heartbeat) {
-      const template = HomeAssistantTemplateMessages[notification.messageType] ||
-        notification.payload;
+    const template =
+      HomeAssistantTemplateMessages[notification.messageType] ||
+      notification.payload;
 
-      this.sendNotification(notification, monitor, heartbeat, template);
+    this.sendNotification(notification, monitor, heartbeat, template);
   }
 
   async sendRecovery(notification, monitor, heartbeat) {
-      this.sendNotification(notification, monitor, heartbeat, HomeAssistantTemplateMessages.recovery);
+    this.sendNotification(
+      notification,
+      monitor,
+      heartbeat,
+      HomeAssistantTemplateMessages.recovery
+    );
   }
 
   async sendNotification(notification, monitor, heartbeat, template) {
     try {
-
       const embed = NotificationReplacers(template, monitor, heartbeat);
 
       await axios.post(
-        `${notification.data.homeAssistantUrl.trim().replace(/\/*$/, "")}/api/services/notify/${notification.data.homeAssistantNotificationService}`,
+        `${notification.data.homeAssistantUrl
+          .trim()
+          .replace(/\/*$/, '')}/api/services/notify/${
+          notification.data.homeAssistantNotificationService
+        }`,
         { ...embed },
         {
           headers: {
-            'Authorization': `Bearer ${notification.token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${notification.token}`,
+            'Content-Type': 'application/json',
+          },
         }
       );
 
       return this.success;
+    } catch (error) {
+      this.handleError(error);
     }
-    catch (error) {
+  }
+
+  async test(notification) {
+    try {
+      await axios.post(
+        `${notification.data.homeAssistantUrl
+          .trim()
+          .replace(/\/*$/, '')}/api/services/notify/${
+          notification.data.homeAssistantNotificationService
+        }`,
+        {
+          message: 'This is a test message from Lunalytics',
+          title: 'Lunalytics Test Message',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${notification.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      return this.success;
+    } catch (error) {
       this.handleError(error);
     }
   }

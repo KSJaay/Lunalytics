@@ -10,6 +10,8 @@ import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationModalPayload from './payload';
 import * as inputForPlatform from './platform';
 import type { NotificationProps } from '../../../types/notifications';
+import { toast } from 'react-toastify';
+import { createPostRequest } from '../../../services/axios';
 
 interface NotificationModalProps {
   values?: NotificationProps;
@@ -56,23 +58,49 @@ const NotificationModal = ({
     inputs.platform as Platform
   ] as React.ComponentType<any>;
 
+  const testNotification = async () => {
+    try {
+      await createPostRequest('/api/notifications/test', inputs);
+      toast.success('Test notification sent successfully');
+      return;
+    } catch (error) {
+      console.error('Error sending test notification:', error);
+      toast.error('Failed to send test notification');
+      return;
+    }
+  };
+
   return (
     <Modal
       title={isEdit ? 'Edit Notification' : 'Add Notification'}
       actions={
-        <>
-          <Button color={'red'} variant="flat" onClick={closeModal}>
-            Cancel
-          </Button>
-          <Button
-            color="green"
-            variant="flat"
-            onClick={() => handleSubmit(addNotification)}
-            id="notification-create-button"
-          >
-            {isEdit ? 'Update' : 'Create'}
-          </Button>
-        </>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <div>
+            <Button color="gray" variant="flat" onClick={testNotification}>
+              Test
+            </Button>
+          </div>
+
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <Button color="red" variant="flat" onClick={closeModal}>
+              Cancel
+            </Button>
+            <Button
+              color="green"
+              variant="flat"
+              onClick={() => handleSubmit(addNotification)}
+              id="notification-create-button"
+            >
+              {isEdit ? 'Update' : 'Create'}
+            </Button>
+          </div>
+        </div>
       }
       onClose={closeModal}
       size="xl"

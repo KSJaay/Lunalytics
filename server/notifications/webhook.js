@@ -34,6 +34,17 @@ class Webhook extends NotificationBase {
     }
   }
 
+  async test(notification) {
+    try {
+      await axios.post(notification.token, {
+        message: 'This is a test message from Lunalytics',
+      });
+      return this.success;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   async sendRecovery(notification, monitor, heartbeat) {
     try {
       const template = WebhookTemplateMessages.recovery;

@@ -7,6 +7,7 @@ import NotificationDeleteMiddleware from '../middleware/notifications/delete.js'
 import NotificationToggleMiddleware from '../middleware/notifications/disable.js';
 import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
+import NotificationTestMiddleware from '../middleware/notifications/test.js';
 
 const router = Router();
 
@@ -21,5 +22,6 @@ router.post('/create', NotificationCreateMiddleware);
 router.post('/edit', NotificationEditMiddleware);
 router.get('/delete', NotificationDeleteMiddleware);
 router.get('/toggle', NotificationToggleMiddleware);
+router.post('/test', NotificationTestMiddleware);
 
 export default router;

@@ -8,10 +8,11 @@ import { useTranslation } from 'react-i18next';
 // import local files
 import useContextStore from '../../../context';
 import Role from '../../../../shared/permissions/role';
-import { createGetRequest } from '../../../services/axios';
+import { createGetRequest, createPostRequest } from '../../../services/axios';
 import NotificationDeleteModal from '../../modal/notification/delete';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 import useScreenSize from '../../../hooks/useScreenSize';
+import { BsFillSendFill } from 'react-icons/bs';
 
 const HomeNotificationHeader = ({
   isMobile = false,
@@ -60,6 +61,16 @@ const HomeNotificationHeader = ({
     }
   };
 
+  const testNotification = async () => {
+    try {
+      await createPostRequest('/api/notifications/test', notification);
+      toast.success('Test notification sent successfully');
+    } catch (error) {
+      console.error('Error sending test notification:', error);
+      toast.error('Failed to send test notification');
+    }
+  };
+
   const role = new Role('user', user.permission);
   const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
 
@@ -88,19 +99,24 @@ const HomeNotificationHeader = ({
       </div>
       <div className="navigation-header-buttons">
         {isEditor ? (
-          <div
-            onClick={() =>
-              openModal(
-                <NotificationDeleteModal
-                  name={notification.friendlyName}
-                  handleClose={closeModal}
-                  handleConfirm={handleDelete}
-                />
-              )
-            }
-          >
-            <FaTrashCan style={{ width: '20px', height: '20px' }} />
-          </div>
+          <>
+            <div onClick={() => testNotification(notification)}>
+              <BsFillSendFill />
+            </div>
+            <div
+              onClick={() =>
+                openModal(
+                  <NotificationDeleteModal
+                    name={notification.friendlyName}
+                    handleClose={closeModal}
+                    handleConfirm={handleDelete}
+                  />
+                )
+              }
+            >
+              <FaTrashCan style={{ width: '20px', height: '20px' }} />
+            </div>
+          </>
         ) : null}
       </div>
     </div>
