@@ -20,6 +20,31 @@ const stringifyJson = (obj, asArray = false) => {
   }
 };
 
+export const defaultMonitorData = (body) => ({
+  name: body.name ?? 'Lunalytics',
+  url: body.url,
+  interval: body.interval ?? 60,
+  monitorId: body.monitorId,
+  retry: body.retry ?? 1,
+  retryInterval: body.retryInterval ?? 60,
+  requestTimeout: body.requestTimeout ?? 60,
+  notificationId: body.notificationId,
+  notificationType: body.notificationType,
+  ignoreTls: body.ignoreTls ?? false,
+  icon: body.icon ?? {
+    id: 'lunalytics',
+    name: 'Lunalytics',
+    url: `https://cdn.jsdelivr.net/gh/selfhst/icons/svg/lunalytics.svg`,
+  },
+  valid_status_codes: body.valid_status_codes ?? [],
+  method: body.method ?? 'GET',
+  headers: body.headers ?? {},
+  body: body.body ?? {},
+  port: body.port,
+  json_query: body.json_query ?? [{ key: '', operator: '==', value: '' }],
+  type: body.type ?? 'http',
+});
+
 export const formatMonitorData = (body, email) => {
   let monitor = {
     name: body.name,
@@ -96,7 +121,8 @@ const monitorAdd = async (request, response) => {
       throw new UnprocessableError('Invalid monitor type');
     }
 
-    const isInvalidMonitor = validator(request.body);
+    const body = defaultMonitorData(request.body);
+    const isInvalidMonitor = validator(body);
 
     if (isInvalidMonitor) {
       throw new UnprocessableError(isInvalidMonitor);
@@ -104,8 +130,8 @@ const monitorAdd = async (request, response) => {
 
     const { user } = response.locals;
 
-    const montior_data = formatMonitorData(request.body, user.email);
-    const data = await createMonitor(montior_data);
+    const monitor_data = formatMonitorData(body, user.email);
+    const data = await createMonitor(monitor_data);
 
     cache.checkStatus(data.monitorId)?.catch(() => false);
 
