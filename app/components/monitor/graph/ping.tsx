@@ -1,12 +1,9 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbDownload, TbUpload, TbActivityHeartbeat } from 'react-icons/tb';
+import type { HeartbeatProps } from '../../../types/monitor';
 
-const GraphPing = ({
-  data,
-}: {
-  data: { latency: number; time: string | number }[];
-}) => {
+const GraphPing = ({ data }: { data: HeartbeatProps[] }) => {
   const { t } = useTranslation();
 
   const {

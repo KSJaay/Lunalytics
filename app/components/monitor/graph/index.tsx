@@ -9,8 +9,10 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  ReferenceDot,
 } from 'recharts';
 import dayjs from 'dayjs';
+import { toJS } from 'mobx';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
@@ -30,11 +32,7 @@ const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
   const { statusType, statusHeartbeats, setStatusType } =
     useGraphStatus(monitor);
 
-  const data = statusHeartbeats
-    .map(({ latency = 0, date = 0 }) => {
-      return { latency, time: date };
-    })
-    .reverse();
+  const data = [...toJS(statusHeartbeats)]?.reverse();
 
   const gridColor =
     theme === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
@@ -65,7 +63,7 @@ const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
             </defs>
             <XAxis
               type="category"
-              dataKey="time"
+              dataKey="date"
               style={{ fill: 'var(--accent-200)' }}
               tick={{ fontSize: 12 }}
               tickFormatter={(value) => {
@@ -107,6 +105,20 @@ const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
               stroke="var(--primary-800)"
               fill="url(#colorPrimary)"
             />
+
+            {data
+              .filter((item) => item.isDown)
+              .map((item, index) => (
+                <ReferenceDot
+                  key={index}
+                  x={item.date}
+                  y={item.latency}
+                  r={2}
+                  fill="var(--red-700)"
+                  stroke="var(--red-700)"
+                  strokeWidth={2}
+                />
+              ))}
           </AreaChart>
         </ResponsiveContainer>
       </div>
