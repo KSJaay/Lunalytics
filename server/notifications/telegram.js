@@ -28,10 +28,10 @@ class Telegram extends NotificationBase {
 
       const params = {
         text: escapedText,
-        chat_id: notification.chatId,
-        disable_notification: notification.disableNotification ?? false,
-        parse_mode: notification.parseMode || 'MarkdownV2',
-        protect_content: notification.protectContent ?? false,
+        chat_id: notification.data?.chatId,
+        disable_notification: notification.data?.disableNotification ?? false,
+        parse_mode: notification.data?.parseMode || 'MarkdownV2',
+        protect_content: notification.data?.protectContent ?? false,
       };
 
       await axios.get(`${url}${notification.token}/sendMessage`, { params });
@@ -47,10 +47,10 @@ class Telegram extends NotificationBase {
 
       const params = {
         text: 'This is a test message from Lunalytics',
-        chat_id: notification.chatId,
-        disable_notification: notification.disableNotification ?? false,
-        parse_mode: notification.parseMode || 'MarkdownV2',
-        protect_content: notification.protectContent ?? false,
+        chat_id: notification.data?.chatId,
+        disable_notification: notification.data?.disableNotification ?? false,
+        parse_mode: notification.data?.parseMode || 'MarkdownV2',
+        protect_content: notification.data?.protectContent ?? false,
       };
 
       await axios.get(`${url}${notification.token}/sendMessage`, { params });
@@ -76,10 +76,10 @@ class Telegram extends NotificationBase {
 
       const params = {
         text: escapedText,
-        chat_id: notification.chatId,
-        disable_notification: notification.disableNotification ?? false,
-        parse_mode: notification.parseMode || 'MarkdownV2',
-        protect_content: notification.protectContent ?? false,
+        chat_id: notification.data?.chatId,
+        disable_notification: notification.data?.disableNotification ?? false,
+        parse_mode: notification.data?.parseMode || 'MarkdownV2',
+        protect_content: notification.data?.protectContent ?? false,
       };
 
       await axios.get(`${url}${notification.token}/sendMessage`, { params });
