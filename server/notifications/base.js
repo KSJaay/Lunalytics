@@ -1,6 +1,6 @@
 const parseErrorData = (data) => {
   try {
-    JSON.stringify(data);
+    return JSON.stringify(data);
   } catch {
     return data;
   }
@@ -30,7 +30,10 @@ class NotificationBase {
   }
 
   handleError(error) {
-    let info = 'Error: ' + error + '\n';
+    const message =
+      error?.message || typeof error === 'string' ? error : 'Unknown error';
+
+    let info = 'Error: ' + message + '\n';
 
     if (error?.response?.data) {
       info += parseErrorData(error.response.data);
