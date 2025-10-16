@@ -27,7 +27,7 @@ dayjs.extend(timezone);
 dayjs.extend(utc);
 
 const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
-  const { dateformat, timeformat, theme, timezone } = useLocalStorageContext();
+  const { theme, timezone } = useLocalStorageContext();
 
   const { statusType, statusHeartbeats, setStatusType } =
     useGraphStatus(monitor);
@@ -67,7 +67,7 @@ const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
               style={{ fill: 'var(--accent-200)' }}
               tick={{ fontSize: 12 }}
               tickFormatter={(value) => {
-                return dayjs(value).tz(timezone).format(timeformat);
+                return dayjs(value).tz(timezone).format('HH:mm');
               }}
               interval={8}
             />
@@ -86,7 +86,7 @@ const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
               labelFormatter={(value) => {
                 return dayjs(value)
                   .tz(timezone)
-                  .format(`${dateformat} - ${timeformat}`);
+                  .format(`DD MMM YYYY - HH:mm:ss`);
               }}
               separator=": "
               contentStyle={{
