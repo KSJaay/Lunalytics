@@ -69,7 +69,8 @@ const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
               tickFormatter={(value) => {
                 return dayjs(value).tz(timezone).format('HH:mm');
               }}
-              interval={8}
+              interval="preserveStartEnd"
+              minTickGap={30}
             />
             <YAxis
               label={{
