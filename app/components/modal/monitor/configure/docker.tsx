@@ -75,7 +75,7 @@ const MonitorConfigureDockerModal = ({
                     <div
                       style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
-                      {inputs.url === container.id ? (
+                      {inputs.url === container.name ? (
                         <div
                           style={{
                             display: 'flex',
@@ -91,7 +91,7 @@ const MonitorConfigureDockerModal = ({
                           variant="border"
                           color="green"
                           onClick={() => {
-                            handleInput('url', container.id);
+                            handleInput('url', container.name);
                           }}
                         >
                           Select

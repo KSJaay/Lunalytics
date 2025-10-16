@@ -69,6 +69,7 @@ const HomeMonitorHeaderMenu = () => {
         <Dropdown.Trigger
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
+          color="transparent"
         >
           <LuEllipsis size={20} onClick={toggleDropdown} />
         </Dropdown.Trigger>
