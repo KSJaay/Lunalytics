@@ -18,7 +18,7 @@ import createPushHeartbeat from '../middleware/createPushHeartbeat.js';
 
 const initialiseRoutes = async (app) => {
   app.use('/api/auth', authRoutes);
-  app.use('/api/auth/setup/exists', setupExistsMiddleware);
+  app.get('/api/auth/setup/exists', setupExistsMiddleware);
   app.get('/', defaultPageMiddleware);
   app.get('/status/:id', getStatusPageUsingIdMiddleware);
   // Routes used for fetching public status pages
