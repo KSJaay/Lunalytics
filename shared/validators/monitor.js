@@ -122,7 +122,7 @@ export const requestTimeout = (requestTimeout) => {
     return 'Please enter a valid request timeout.';
   }
 
-  if (requestTimeout < 5 || requestTimeout > 600) {
+  if (requestTimeout < 20 || requestTimeout > 600) {
     return 'Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds.';
   }
 };
