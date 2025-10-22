@@ -11,20 +11,21 @@ import { GlobalProvider } from '@lunalytics/ui';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // import local files
-import Login from './pages/login';
-import Register from './pages/register';
-import Home from './pages/home';
-import GlobalLayout from './layout/global';
-import Setttings from './pages/settings';
-import Verify from './pages/verify';
-import ErrorPage from './pages/error';
-import Notifications from './pages/notifications';
-import Setup from './pages/setup';
-import StatusConfigure from './pages/status-page';
-import StatusLayout from './layout/status';
-import StatusPage from './pages/status';
-import Incidents from './pages/incidents';
 import Loading from './components/ui/loading';
+
+const Home = React.lazy(() => import('./pages/home'));
+const Settings = React.lazy(() => import('./pages/settings'));
+const Notifications = React.lazy(() => import('./pages/notifications'));
+const StatusConfigure = React.lazy(() => import('./pages/status-page'));
+const StatusPage = React.lazy(() => import('./pages/status'));
+const Incidents = React.lazy(() => import('./pages/incidents'));
+const GlobalLayout = React.lazy(() => import('./layout/global'));
+const Login = React.lazy(() => import('./pages/login'));
+const Register = React.lazy(() => import('./pages/register'));
+const Setup = React.lazy(() => import('./pages/setup'));
+const Verify = React.lazy(() => import('./pages/verify'));
+const ErrorPage = React.lazy(() => import('./pages/error'));
+const StatusLayout = React.lazy(() => import('./layout/status'));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -36,66 +37,129 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route
               path="/"
               element={
-                <StatusLayout>
-                  <StatusPage id="default" />
-                </StatusLayout>
+                <React.Suspense fallback={<Loading />}>
+                  <StatusLayout>
+                    <StatusPage id="default" />
+                  </StatusLayout>
+                </React.Suspense>
               }
             />
             <Route
               path="/status/:statusPageId"
               element={
-                <StatusLayout>
-                  <StatusPage />
-                </StatusLayout>
+                <React.Suspense fallback={<Loading />}>
+                  <StatusLayout>
+                    <StatusPage />
+                  </StatusLayout>
+                </React.Suspense>
               }
             />
             <Route
               path="/home"
               element={
-                <GlobalLayout>
-                  <Home />
-                </GlobalLayout>
+                <React.Suspense fallback={<Loading />}>
+                  <GlobalLayout>
+                    <Home />
+                  </GlobalLayout>
+                </React.Suspense>
               }
             />
             <Route
               path="/notifications"
               element={
-                <GlobalLayout>
-                  <Notifications />
-                </GlobalLayout>
+                <React.Suspense fallback={<Loading />}>
+                  <GlobalLayout>
+                    <Notifications />
+                  </GlobalLayout>
+                </React.Suspense>
               }
             />
             <Route
               path="/status-pages"
               element={
-                <GlobalLayout>
-                  <StatusConfigure />
-                </GlobalLayout>
+                <React.Suspense fallback={<Loading />}>
+                  <GlobalLayout>
+                    <StatusConfigure />
+                  </GlobalLayout>
+                </React.Suspense>
               }
             />
             <Route
               path="/incidents"
               element={
-                <GlobalLayout>
-                  <Incidents />
-                </GlobalLayout>
+                <React.Suspense fallback={<Loading />}>
+                  <GlobalLayout>
+                    <Incidents />
+                  </GlobalLayout>
+                </React.Suspense>
               }
             />
             <Route
               path="/settings"
               element={
-                <GlobalLayout>
-                  <Setttings />
-                </GlobalLayout>
+                <React.Suspense fallback={<Loading />}>
+                  <GlobalLayout>
+                    <Settings />
+                  </GlobalLayout>
+                </React.Suspense>
               }
             />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/setup" element={<Setup />} />
-            <Route path="/verify" element={<Verify />} />
-            <Route path="/error" element={<ErrorPage />} />
-            <Route path="/404" element={<ErrorPage />} />
-            <Route path="/*" element={<ErrorPage />} />
+            <Route
+              path="/login"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <Login />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <Register />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/setup"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <Setup />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/verify"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <Verify />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/error"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <ErrorPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/404"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <ErrorPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/*"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <ErrorPage />
+                </React.Suspense>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </GlobalProvider>
