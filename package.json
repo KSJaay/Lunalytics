@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -34,9 +34,6 @@
     "server:watch": "nodemon --inspect --delay 2 --watch server --watch shared ./server/index.js",
     "setup": "npm install && node ./scripts/setup.js && npm run build",
     "start": "cross-env NODE_ENV=production node server/index.js",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
     "unused": "npx unimported"
   },
   "dependencies": {
@@ -45,7 +42,7 @@
     "@dnd-kit/sortable": "10.0.0",
     "@dnd-kit/utilities": "3.2.2",
     "@lunalytics/ui": "0.1.19",
-    "axios": "1.10.0",
+    "axios": "^1.12.2",
     "bcryptjs": "3.0.2",
     "better-sqlite3": "11.10.0",
     "classnames": "2.5.1",
@@ -78,7 +75,7 @@
     "react-router-dom": "7.6.2",
     "react-toastify": "11.0.5",
     "react-window": "1.8.11",
-    "recharts": "^3.2.1",
+    "recharts": "3.2.1",
     "swapy": "1.0.5",
     "ua-parser-js": "2.0.3",
     "uuid": "11.1.0",
@@ -110,9 +107,8 @@
     "sass": "1.89.2",
     "typescript": "5.9.2",
     "typescript-eslint": "8.39.1",
-    "vite": "7.1.2",
+    "vite": "7.1.11",
     "vite-plugin-compression2": "2.2.0",
-    "vitepress": "1.6.3",
     "vitest": "3.2.4"
   }
 }
