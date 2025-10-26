@@ -1,3 +1,4 @@
+import { createRequest, createResponse } from 'node-mocks-http';
 import config from '../../../../../server/utils/config.js';
 import { handleError } from '../../../../../server/utils/errors.js';
 import ConfigValidator from '../../../../../shared/validators/config.js';
@@ -13,12 +14,12 @@ describe('updateConfigMiddleware', () => {
   let fakeRequest, fakeResponse;
 
   beforeEach(() => {
-    fakeRequest = { body: { nativeSignin: true, register: true } };
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
 
-    fakeResponse = {
-      status: vi.fn().mockReturnThis(),
-      json: vi.fn().mockReturnThis(),
-    };
+    fakeRequest.body = { nativeSignin: true, register: true };
+    fakeResponse.status = vi.fn().mockReturnThis();
+    fakeResponse.json = vi.fn().mockReturnThis();
   });
 
   afterEach(() => {

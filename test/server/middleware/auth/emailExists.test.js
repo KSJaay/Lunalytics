@@ -1,4 +1,4 @@
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { createRequest, createResponse } from 'node-mocks-http';
 import emailExistsMiddleware from '../../../../server/middleware/auth/emailExists.js';
 import { getUserByEmail } from '../../../../server/database/queries/user.js';
 
@@ -9,12 +9,13 @@ describe('emailExistsMiddleware', () => {
   let fakeResponse;
 
   beforeEach(() => {
-    fakeRequest = { body: { email: 'test@example.com' } };
-    fakeResponse = {
-      status: vi.fn().mockReturnThis(),
-      send: vi.fn().mockReturnThis(),
-      sendStatus: vi.fn().mockReturnThis(),
-    };
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
+
+    fakeRequest.body = { email: 'test@example.com' };
+    fakeResponse.status = vi.fn().mockReturnThis();
+    fakeResponse.send = vi.fn().mockReturnThis();
+    fakeResponse.sendStatus = vi.fn().mockReturnThis();
   });
   afterEach(() => {
     vi.restoreAllMocks();

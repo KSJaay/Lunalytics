@@ -3,6 +3,7 @@ import config from '../../../../../server/utils/config.js';
 import { handleError } from '../../../../../server/utils/errors.js';
 import { fetchProvider } from '../../../../../server/database/queries/provider.js';
 import discordCallback from '../../../../../server/middleware/auth/callback/discord.js';
+import { createRequest, createResponse } from 'node-mocks-http';
 
 vi.mock('axios');
 vi.mock('../../../../../server/database/queries/provider.js');
@@ -12,14 +13,14 @@ vi.mock('../../../../../server/utils/errors.js');
 describe('discordCallback', () => {
   let fakeRequest, fakeResponse, fakeNext;
   beforeEach(() => {
-    fakeRequest = { query: { code: 'abc' } };
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
 
-    fakeResponse = {
-      redirect: vi.fn(),
-      status: vi.fn().mockReturnThis(),
-      send: vi.fn(),
-      locals: {},
-    };
+    fakeRequest.query = { code: 'abc' };
+    fakeResponse.redirect = vi.fn();
+    fakeResponse.status = vi.fn().mockReturnThis();
+    fakeResponse.send = vi.fn();
+    fakeResponse.locals = {};
 
     fakeNext = vi.fn();
   });

@@ -1,4 +1,3 @@
-import { beforeEach, describe, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
 import SQLite from '../../../../server/database/sqlite/setup';
 import login from '../../../../server/middleware/auth/login';

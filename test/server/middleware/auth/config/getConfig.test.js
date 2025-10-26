@@ -1,7 +1,8 @@
-import getConfigMiddleware from '../../../../../server/middleware/auth/config/getConfig.js';
-import { fetchProviders } from '../../../../../server/database/queries/provider.js';
+import { createRequest, createResponse } from 'node-mocks-http';
 import config from '../../../../../server/utils/config.js';
 import { handleError } from '../../../../../server/utils/errors.js';
+import { fetchProviders } from '../../../../../server/database/queries/provider.js';
+import getConfigMiddleware from '../../../../../server/middleware/auth/config/getConfig.js';
 
 vi.mock('../../../../../server/database/queries/provider.js');
 vi.mock('../../../../../server/utils/config.js');
@@ -11,8 +12,9 @@ describe('getConfigMiddleware', () => {
   let fakeRequest, fakeResponse;
 
   beforeEach(() => {
-    fakeRequest = {};
-    fakeResponse = { json: vi.fn() };
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
+    fakeResponse.json = vi.fn();
   });
 
   afterEach(() => {

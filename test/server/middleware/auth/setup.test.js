@@ -1,3 +1,4 @@
+import { createRequest, createResponse } from 'node-mocks-http';
 import { ownerExists } from '../../../../server/database/queries/user.js';
 import setupMiddleware from '../../../../server/middleware/auth/setup.js';
 import config from '../../../../server/utils/config.js';
@@ -8,26 +9,26 @@ vi.mock('../../../../server/database/queries/user.js');
 describe('setupMiddleware', () => {
   let fakeRequest, fakeResponse;
   beforeEach(() => {
-    fakeRequest = {
-      body: {
-        type: 'basic',
-        email: 'test@example.com',
-        username: 'user',
-        password: 'pass',
-        databaseType: 'sqlite',
-        databaseName: 'db',
-        websiteUrl: 'http://localhost',
-        migrationType: 'none',
-      },
-      headers: { 'user-agent': 'test-agent' },
-      protocol: 'http',
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
+
+    fakeRequest.body = {
+      type: 'basic',
+      email: 'test@example.com',
+      username: 'user',
+      password: 'pass',
+      databaseType: 'sqlite',
+      databaseName: 'db',
+      websiteUrl: 'http://localhost',
+      migrationType: 'none',
     };
 
-    fakeResponse = {
-      status: vi.fn().mockReturnThis(),
-      send: vi.fn().mockReturnThis(),
-      sendStatus: vi.fn().mockReturnThis(),
-    };
+    fakeRequest.headers = { 'user-agent': 'test-agent' };
+
+    fakeRequest.protocol = 'http';
+    fakeResponse.status = vi.fn().mockReturnThis();
+    fakeResponse.send = vi.fn().mockReturnThis();
+    fakeResponse.sendStatus = vi.fn().mockReturnThis();
   });
 
   afterEach(() => {

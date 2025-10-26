@@ -1,46 +1,44 @@
-import { fetchConnectionByEmail } from '../../../../server/database/queries/connection.js';
-import { createUserSession } from '../../../../server/database/queries/session.js';
+import { createRequest, createResponse } from 'node-mocks-http';
 import {
   getUserByEmail,
   registerSsoUser,
 } from '../../../../server/database/queries/user.js';
-import signInOrRegisterUsingAuth from '../../../../server/middleware/auth/signInOrRegisterUsingAuth.js';
 import { handleError } from '../../../../server/utils/errors.js';
 import { parseUserAgent } from '../../../../server/utils/uaParser.js';
-import { setServerSideCookie } from '../../../../shared/utils/cookies.js';
+import { createUserSession } from '../../../../server/database/queries/session.js';
+import { fetchConnectionByEmail } from '../../../../server/database/queries/connection.js';
+import signInOrRegisterUsingAuth from '../../../../server/middleware/auth/signInOrRegisterUsingAuth.js';
 
-vi.mock('../../../../server/database/queries/connection.js');
-vi.mock('../../../../server/database/queries/session.js');
-vi.mock('../../../../server/database/queries/user.js');
-vi.mock('../../../../server/utils/uaParser.js');
-vi.mock('../../../../shared/utils/cookies.js');
 vi.mock('../../../../server/utils/errors.js');
+vi.mock('../../../../shared/utils/cookies.js');
+vi.mock('../../../../server/utils/uaParser.js');
+vi.mock('../../../../server/database/queries/user.js');
+vi.mock('../../../../server/database/queries/session.js');
+vi.mock('../../../../server/database/queries/connection.js');
 
 describe('signInOrRegisterUsingAuth', () => {
   let fakeRequest, fakeResponse;
   beforeEach(() => {
-    fakeRequest = {
-      query: {},
-      cookies: {},
-      headers: { 'user-agent': 'test-agent' },
-      protocol: 'http',
-    };
-    fakeResponse = {
-      locals: {
-        authUser: {
-          avatar: 'a',
-          id: 'id',
-          username: 'user',
-          email: 'test@example.com',
-          provider: 'google',
-        },
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
+
+    fakeRequest.headers = { 'user-agent': 'test-agent' };
+    fakeRequest.protocol = 'http';
+
+    fakeResponse.locals = {
+      authUser: {
+        avatar: 'a',
+        id: 'id',
+        username: 'user',
+        email: 'test@example.com',
+        provider: 'google',
       },
-      redirect: vi.fn().mockReturnThis(),
-      json: vi.fn().mockReturnThis(),
-      status: vi.fn().mockReturnThis(),
-      send: vi.fn().mockReturnThis(),
-      sendStatus: vi.fn().mockReturnThis(),
     };
+    fakeResponse.redirect = vi.fn().mockReturnThis();
+    fakeResponse.json = vi.fn().mockReturnThis();
+    fakeResponse.status = vi.fn().mockReturnThis();
+    fakeResponse.send = vi.fn().mockReturnThis();
+    fakeResponse.sendStatus = vi.fn().mockReturnThis();
 
     parseUserAgent.mockReturnValue({ device: 'dev', data: {} });
     createUserSession.mockResolvedValue('token');
