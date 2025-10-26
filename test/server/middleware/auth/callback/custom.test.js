@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '../../../../../server/utils/config.js';
 import { fetchProvider } from '../../../../../server/database/queries/provider.js';
 import customCallback from '../../../../../server/middleware/auth/callback/custom.js';
+import { createRequest, createResponse } from 'node-mocks-http';
 
 vi.mock('axios');
 vi.mock('../../../../../server/database/queries/provider.js');
@@ -10,14 +11,14 @@ vi.mock('../../../../../server/utils/config.js');
 describe('customCallback', () => {
   let fakeRequest, fakeResponse;
   beforeEach(() => {
-    fakeRequest = { query: { code: 'abc' } };
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
 
-    fakeResponse = {
-      redirect: vi.fn(),
-      status: vi.fn().mockReturnThis(),
-      send: vi.fn(),
-      locals: {},
-    };
+    fakeRequest.query = { code: 'abc' };
+    fakeResponse.redirect = vi.fn();
+    fakeResponse.status = vi.fn().mockReturnThis();
+    fakeResponse.send = vi.fn();
+    fakeResponse.locals = {};
   });
 
   afterEach(() => {

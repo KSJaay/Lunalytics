@@ -1,9 +1,9 @@
 import axios from 'axios';
+import { createRequest, createResponse } from 'node-mocks-http';
 import config from '../../../../../server/utils/config.js';
 import { handleError } from '../../../../../server/utils/errors.js';
 import { fetchProvider } from '../../../../../server/database/queries/provider.js';
 import twitchCallback from '../../../../../server/middleware/auth/callback/twitch.js';
-import { afterEach } from 'vitest';
 
 vi.mock('axios');
 vi.mock('../../../../../server/database/queries/provider.js');
@@ -13,13 +13,14 @@ vi.mock('../../../../../server/utils/errors.js');
 describe('twitchCallback', () => {
   let fakeRequest, fakeResponse, fakeNext;
   beforeEach(() => {
-    fakeRequest = { query: { code: 'abc' } };
-    fakeResponse = {
-      redirect: vi.fn(),
-      status: vi.fn().mockReturnThis(),
-      send: vi.fn(),
-      locals: {},
-    };
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
+
+    fakeRequest.query = { code: 'abc' };
+    fakeResponse.redirect = vi.fn();
+    fakeResponse.status = vi.fn().mockReturnThis();
+    fakeResponse.send = vi.fn();
+    fakeResponse.locals = {};
     fakeNext = vi.fn();
   });
 

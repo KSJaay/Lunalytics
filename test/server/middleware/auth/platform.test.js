@@ -1,7 +1,8 @@
-import redirectUsingProviderMiddleware from '../../../../server/middleware/auth/platform.js';
-import { fetchProvider } from '../../../../server/database/queries/provider.js';
 import config from '../../../../server/utils/config.js';
+import { createRequest, createResponse } from 'node-mocks-http';
 import { getAuthRedirectUrl } from '../../../../shared/utils/authenication.js';
+import { fetchProvider } from '../../../../server/database/queries/provider.js';
+import redirectUsingProviderMiddleware from '../../../../server/middleware/auth/platform.js';
 
 vi.mock('../../../../server/utils/config.js');
 vi.mock('../../../../shared/utils/authenication.js');
@@ -11,12 +12,13 @@ describe('redirectUsingProviderMiddleware', () => {
   let fakeRequest, fakeResponse;
 
   beforeEach(() => {
-    fakeRequest = { params: { provider: 'google' } };
-    fakeResponse = {
-      status: vi.fn().mockReturnThis(),
-      send: vi.fn().mockReturnThis(),
-      redirect: vi.fn().mockReturnThis(),
-    };
+    fakeRequest = createRequest();
+    fakeResponse = createResponse();
+
+    fakeRequest.params = { provider: 'google' };
+    fakeResponse.status = vi.fn().mockReturnThis();
+    fakeResponse.send = vi.fn().mockReturnThis();
+    fakeResponse.redirect = vi.fn().mockReturnThis();
   });
 
   afterEach(() => {
