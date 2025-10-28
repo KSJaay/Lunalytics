@@ -12,7 +12,9 @@ describe('getAllProvidersMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchProviders = vi.fn(() => Promise.resolve([{ provider: 'github' }]));
+    fetchProviders = vi.fn(function () {
+      return Promise.resolve([{ provider: 'github' }]);
+    });
   });
 
   afterEach(() => {

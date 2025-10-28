@@ -16,11 +16,17 @@ describe('defaultPageMiddleware', () => {
     fakeResponse = createResponse();
     fakeNext = vi.fn();
 
-    userSessionExists = vi.fn(() => true);
-    fetchStatusPageUsingUrl = vi.fn(() => ({
-      settings: JSON.stringify({ isPublic: true }),
-    }));
-    getUserByEmail = vi.fn(() => true);
+    userSessionExists = vi.fn(function () {
+      return true;
+    });
+    fetchStatusPageUsingUrl = vi.fn(function () {
+      return Promise.resolve({
+        settings: JSON.stringify({ isPublic: true }),
+      });
+    });
+    getUserByEmail = vi.fn(function () {
+      return true;
+    });
   });
 
   afterEach(() => {

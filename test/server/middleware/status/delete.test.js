@@ -14,7 +14,9 @@ describe('deleteStatusPageMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    deleteStatusPage = vi.fn(() => Promise.resolve());
+    deleteStatusPage = vi.fn(function () {
+      return Promise.resolve();
+    });
     statusCache.deleteStatusPage = vi.fn();
   });
 

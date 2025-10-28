@@ -4,7 +4,6 @@ import userUpdateAvatar from '../../../../../server/middleware/user/update/avata
 import validators from '../../../../../shared/validators';
 
 vi.mock('../../../../../server/database/queries/user');
-vi.mock('../../../../../shared/validators');
 
 describe('userUpdateAvatar - Middleware', () => {
   const user = {
@@ -54,7 +53,7 @@ describe('userUpdateAvatar - Middleware', () => {
   });
 
   it('should return 400 when avatar is invalid', async () => {
-    validators.user.isAvatar = vi.fn().mockReturnValue(true);
+    fakeRequest.body.avatar = '!@#%#$^&$%&';
 
     await userUpdateAvatar(fakeRequest, fakeResponse);
 

@@ -13,9 +13,9 @@ describe('getUsingIdMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchStatusPageUsingUrl = vi.fn((id) =>
-      id === 'exists' ? { id: 'exists' } : null
-    );
+    fetchStatusPageUsingUrl = vi.fn(function (id) {
+      return id === 'exists' ? { id: 'exists' } : null;
+    });
   });
 
   afterEach(() => {

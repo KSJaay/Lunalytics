@@ -1,10 +1,8 @@
 import { createRequest, createResponse } from 'node-mocks-http';
 import { updateUserDisplayname } from '../../../../../server/database/queries/user';
 import userUpdateUsername from '../../../../../server/middleware/user/update/username';
-import validators from '../../../../../shared/validators';
 
 vi.mock('../../../../../server/database/queries/user');
-vi.mock('../../../../../shared/validators');
 
 describe('userUpdateUsername - Middleware', () => {
   const user = {
@@ -29,7 +27,7 @@ describe('userUpdateUsername - Middleware', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return 200 when username is missing', async () => {
@@ -53,7 +51,7 @@ describe('userUpdateUsername - Middleware', () => {
   });
 
   it('should return 400 when username is invalid', async () => {
-    validators.auth.username = vi.fn().mockReturnValue(true);
+    fakeRequest.body.displayName = '*^%$#!@#';
 
     await userUpdateUsername(fakeRequest, fakeResponse);
 

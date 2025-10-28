@@ -12,7 +12,9 @@ describe('NotificationGetAllMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchNotifications = vi.fn(() => Promise.resolve([{ id: 'id' }]));
+    fetchNotifications = vi.fn(function () {
+      return Promise.resolve([{ id: 'id' }]);
+    });
   });
 
   afterEach(() => {

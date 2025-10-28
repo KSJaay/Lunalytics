@@ -18,8 +18,12 @@ describe('editStatusPageMiddleware', () => {
     fakeResponse = createResponse();
     fakeResponse.locals = { user: { email: 'test' } };
 
-    updateStatusPage = vi.fn(() => Promise.resolve({ id: 'id' }));
-    statusCache.updateStatusPage = vi.fn(() => Promise.resolve());
+    updateStatusPage = vi.fn(function () {
+      return Promise.resolve({ id: 'id' });
+    });
+    statusCache.updateStatusPage = vi.fn(function () {
+      return Promise.resolve();
+    });
   });
 
   afterEach(() => {

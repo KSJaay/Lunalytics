@@ -16,15 +16,17 @@ describe('NotificationEditMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    editNotification = vi.fn(() =>
-      Promise.resolve({ id: 'id', email: 'test', isEnabled: true })
-    );
+    editNotification = vi.fn(function () {
+      return Promise.resolve({ id: 'id', email: 'test', isEnabled: true });
+    });
 
-    NotificationValidators.Discord = vi.fn((data) => ({
-      ...data,
-      platform: 'Discord',
-      valid: true,
-    }));
+    NotificationValidators.Discord = vi.fn(function (data) {
+      return {
+        ...data,
+        platform: 'Discord',
+        valid: true,
+      };
+    });
   });
 
   afterEach(() => {

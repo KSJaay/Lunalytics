@@ -13,7 +13,9 @@ describe('getAllStatusPagesMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchAllStatusPages = vi.fn(() => Promise.resolve([{ id: 'id' }]));
+    fetchAllStatusPages = vi.fn(function () {
+      return Promise.resolve([{ id: 'id' }]);
+    });
   });
 
   afterEach(() => {
