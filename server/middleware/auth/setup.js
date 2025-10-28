@@ -189,8 +189,6 @@ const setupMiddleware = async (request, response) => {
 
     return response.sendStatus(200);
   } catch (error) {
-    console.log('Setup error: ', error);
-
     logger.error('SETUP', {
       message: 'Unable to setup application. Please try again.',
       error: error.message,
