@@ -16,15 +16,21 @@ describe('NotificationTestMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    NotificationServices.Discord = vi
-      .fn()
-      .mockImplementation(() => ({ test: vi.fn(() => Promise.resolve()) }));
+    NotificationServices.Discord = vi.fn().mockImplementation(function () {
+      return {
+        test: vi.fn(function () {
+          return Promise.resolve();
+        }),
+      };
+    });
 
-    NotificationValidators.Discord = vi.fn((data) => ({
-      ...data,
-      platform: 'Discord',
-      valid: true,
-    }));
+    NotificationValidators.Discord = vi.fn(function (data) {
+      return {
+        ...data,
+        platform: 'Discord',
+        valid: true,
+      };
+    });
   });
 
   afterEach(() => {
@@ -71,7 +77,7 @@ describe('NotificationTestMiddleware', () => {
 
   it('should call handleError if service.test throws', async () => {
     NotificationServices.Discord.mockImplementationOnce(() => ({
-      test: vi.fn(() => {
+      test: vi.fn(function () {
         throw new Error('fail');
       }),
     }));

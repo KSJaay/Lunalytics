@@ -19,10 +19,18 @@ describe('configureProviderMiddleware', () => {
     fakeResponse = createResponse();
     fakeResponse.locals = { user: { email: 'test@example.com' } };
 
-    ProviderValidator = vi.fn(() => false);
-    createProvider = vi.fn(() => Promise.resolve());
-    fetchProvider = vi.fn(() => null);
-    updateProvider = vi.fn(() => Promise.resolve());
+    ProviderValidator = vi.fn(function () {
+      return false;
+    });
+    createProvider = vi.fn(function () {
+      return Promise.resolve();
+    });
+    fetchProvider = vi.fn(function () {
+      return null;
+    });
+    updateProvider = vi.fn(function () {
+      return Promise.resolve();
+    });
   });
 
   afterEach(() => {

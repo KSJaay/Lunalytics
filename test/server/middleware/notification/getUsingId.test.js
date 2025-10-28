@@ -14,9 +14,9 @@ describe('NotificationGetUsingIdMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchNotificationById = vi.fn((id) =>
-      id === 'exists' ? { id: 'exists' } : null
-    );
+    fetchNotificationById = vi.fn(function (id) {
+      return id === 'exists' ? { id: 'exists' } : null;
+    });
 
     logger.error = vi.fn();
   });

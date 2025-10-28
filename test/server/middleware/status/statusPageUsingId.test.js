@@ -16,13 +16,17 @@ describe('getStatusPageUsingIdMiddleware', () => {
     fakeNext = vi.fn();
 
     fakeResponse.redirect = vi.fn();
-    getUserByEmail = vi.fn(() => true);
+    getUserByEmail = vi.fn(function () {
+      return true;
+    });
 
-    fetchStatusPageUsingUrl = vi.fn((id) =>
-      id === 'exists' ? { settings: { isPublic: true } } : null
-    );
+    fetchStatusPageUsingUrl = vi.fn(function (id) {
+      return id === 'exists' ? { settings: { isPublic: true } } : null;
+    });
 
-    userSessionExists = vi.fn(() => true);
+    userSessionExists = vi.fn(function () {
+      return true;
+    });
   });
 
   afterEach(() => {

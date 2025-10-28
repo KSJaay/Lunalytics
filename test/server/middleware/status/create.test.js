@@ -19,8 +19,12 @@ describe('createStatusPageMiddleware', () => {
 
     fakeResponse.locals = { user: { email: 'test' } };
 
-    statusCache.addNewStatusPage = vi.fn(() => Promise.resolve());
-    createStatusPage = vi.fn(() => Promise.resolve({ id: 'id' }));
+    statusCache.addNewStatusPage = vi.fn(function () {
+      return Promise.resolve();
+    });
+    createStatusPage = vi.fn(function () {
+      return Promise.resolve({ id: 'id' });
+    });
   });
 
   afterEach(() => {
