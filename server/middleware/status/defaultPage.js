@@ -31,7 +31,7 @@ const defaultPageMiddleware = async (request, response, next) => {
       }
     }
 
-    next();
+    return next();
   } catch {
     return response.redirect('/home');
   }

@@ -3,13 +3,13 @@ import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { deleteNotification } from '../../database/queries/notification.js';
 
 const NotificationDeleteMiddleware = async (request, response) => {
-  const { notificationId } = request.query;
-
-  if (!notificationId) {
-    throw new UnprocessableError('No notificationId provided');
-  }
-
   try {
+    const { notificationId } = request.query;
+
+    if (!notificationId) {
+      throw new UnprocessableError('No notificationId provided');
+    }
+
     await deleteNotification(notificationId);
     return response.status(200).send('Notification deleted');
   } catch (error) {

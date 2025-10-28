@@ -5,15 +5,15 @@ import { toggleNotification } from '../../database/queries/notification.js';
 const NotificationToggleMiddleware = async (request, response) => {
   const { notificationId, isEnabled } = request.query;
 
-  if (!notificationId) {
-    throw new UnprocessableError('No notificationId provided');
-  }
-
-  if (isEnabled !== 'true' && isEnabled !== 'false') {
-    throw new UnprocessableError('isEnabled is not a boolean');
-  }
-
   try {
+    if (!notificationId) {
+      throw new UnprocessableError('No notificationId provided');
+    }
+
+    if (isEnabled !== 'true' && isEnabled !== 'false') {
+      throw new UnprocessableError('isEnabled is not a boolean');
+    }
+
     await toggleNotification(notificationId, isEnabled === 'true');
     return response.sendStatus(200);
   } catch (error) {

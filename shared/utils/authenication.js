@@ -145,6 +145,7 @@ export const getAuthCallbackUrl = (
   }
 
   if (provider === 'custom') {
+    return [];
   }
 
   return null;
