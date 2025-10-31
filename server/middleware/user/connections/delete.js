@@ -1,3 +1,4 @@
+import { deleteConnection } from '../../../database/queries/connection.js';
 import { handleError } from '../../../utils/errors.js';
 
 const deleteConnectionMiddleware = async (request, response) => {
