@@ -19,7 +19,7 @@ const SwitchWithText = ({
   return (
     <>
       <div className="checkbox-container">
-        <div>
+        <div style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>
           <label className="checkbox-input-label">{label}</label>
           {shortDescription && (
             <div className="input-short-description">{shortDescription}</div>

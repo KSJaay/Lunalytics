@@ -1,4 +1,4 @@
-type Type = 'docker' | 'http' | 'json' | 'ping' | 'push' | 'tcp';
+export type MonitorType = 'docker' | 'http' | 'json' | 'ping' | 'push' | 'tcp';
 
 export interface MonitorProps {
   monitorId: string;
@@ -13,7 +13,7 @@ export interface MonitorProps {
   body: Record<string, any>;
   valid_status_codes: string[];
   email: string;
-  type: Type;
+  type: MonitorType;
   notificationId: string;
   notificationType: string;
   uptimePercentage: number;

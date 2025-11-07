@@ -2,15 +2,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
 import type { NotificationProps } from '../../types/notifications';
-
-const NotificationIcons = {
-  Discord: '/notifications/discord.svg',
-  HomeAssistant: '/notifications/homeAssistant.svg',
-  Pushover: '/notifications/pushover.svg',
-  Slack: '/notifications/slack.svg',
-  Telegram: '/notifications/telegram.svg',
-  Webhook: '/notifications/webhook.svg',
-};
+import notificationsIcons from '../../constant/notifications.json';
 
 const NotificationList = ({
   notifications,
@@ -40,7 +32,9 @@ const NotificationList = ({
           >
             <div className="icon-container">
               <img
-                src={NotificationIcons[notification.platform]}
+                src={`/notifications/${
+                  notificationsIcons[notification.platform]?.icon
+                }`}
                 style={{ width: '40px', height: '40px' }}
               />
             </div>

@@ -3,7 +3,10 @@ import NotificationIcon from './icon';
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
 import notificationsIcons from '../../../../constant/notifications.json';
-import type { NotificationProps } from '../../../../types/notifications';
+import type {
+  NotificationPlatforms,
+  NotificationProps,
+} from '../../../../types/notifications';
 
 interface NotificationModalPlatformProps {
   isEdit?: boolean;
@@ -11,13 +14,7 @@ interface NotificationModalPlatformProps {
     key: keyof NotificationProps;
     value: string;
   }) => void;
-  platform:
-    | 'Discord'
-    | 'HomeAssistant'
-    | 'Pushover'
-    | 'Slack'
-    | 'Telegram'
-    | 'Webhook';
+  platform: NotificationPlatforms;
 }
 
 const NotificationModalPlatform = ({
@@ -60,11 +57,11 @@ const NotificationModalPlatform = ({
             {Object.values(notificationsIcons).map((notification) => (
               <Dropdown.Item
                 onClick={() => {
-                  setPlatform({ key: 'platform', value: notification.name });
+                  setPlatform({ key: 'platform', value: notification.id });
                   toggleDropdown();
                 }}
-                key={notification.name}
-                id={`notification-type-${notification.name}`}
+                key={notification.id}
+                id={`notification-type-${notification.id}`}
               >
                 <img
                   src={`/notifications/${notification.icon}`}

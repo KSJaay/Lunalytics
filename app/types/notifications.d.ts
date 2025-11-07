@@ -1,6 +1,7 @@
 export type NotificationMessageType = 'basic' | 'pretty' | 'nerdy';
 export type NotificationPlatforms =
   | 'Discord'
+  | 'Email'
   | 'HomeAssistant'
   | 'Pushover'
   | 'Slack'
