@@ -38,7 +38,7 @@ export class SQLite {
     if (databaseType === 'pg') {
       this.client = knex({
         client: databaseType,
-        connection: { ...config.get('database')?.config },
+        connection: { ...config.get('database')?.config, database: dbName },
         useNullAsDefault: true,
       });
 
