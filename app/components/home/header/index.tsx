@@ -11,9 +11,11 @@ import HomeMonitorHeaderMenu from './menu';
 import useContextStore from '../../../context';
 import Role from '../../../../shared/permissions/role';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import type { MonitorType } from '../../../types/monitor';
 
 const typeToText = {
   docker: 'Docker Container',
+  email: 'Email (SMTP)',
   http: 'HTTP/S',
   json: 'JSON Query',
   ping: 'Ping',
@@ -27,6 +29,31 @@ interface HomeMonitorHeaderProps {
   rightChildren?: React.ReactNode;
   isMobile?: boolean;
 }
+
+const HeaderSubtitle = ({ type, url }: { type: MonitorType; url: string }) => {
+  const { t } = useTranslation();
+
+  if (!type || !url) return null;
+
+  if (type === 'push') {
+    return (
+      <div className="navigation-header-subtitle">
+        <span>Passive push </span>
+        monitor
+      </div>
+    );
+  }
+
+  return (
+    <div className="navigation-header-subtitle">
+      <span>{typeToText[type]} </span>
+      {t('home.header.subtitle') + ' '}
+      <a href={url} target="_blank" rel="noreferrer">
+        {url}
+      </a>
+    </div>
+  );
+};
 
 const HomeMonitorHeader = ({
   isInfoOpen,
@@ -67,15 +94,7 @@ const HomeMonitorHeader = ({
         <div>
           {t('common.monitor')} - {activeMonitor.name}
         </div>
-        {activeMonitor?.url ? (
-          <div className="navigation-header-subtitle">
-            <span>{typeToText[activeMonitor.type]} </span>
-            {t('home.header.subtitle') + ' '}
-            <a href={activeMonitor.url} target="_blank" rel="noreferrer">
-              {activeMonitor.url}
-            </a>
-          </div>
-        ) : null}
+        <HeaderSubtitle type={activeMonitor.type} url={activeMonitor.url} />
       </div>
       <div className="navigation-header-buttons">
         {isEditor ? <HomeMonitorHeaderMenu /> : null}
