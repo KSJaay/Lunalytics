@@ -3,19 +3,19 @@ import '../styles/pages/notifications.scss';
 
 // import dependencies
 import { Button } from '@lunalytics/ui';
-import { useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useMemo, useState } from 'react';
 
 // import local files
 import useContextStore from '../context';
 import Navigation from '../components/navigation';
+import useScreenSize from '../hooks/useScreenSize';
+import { filterData } from '../../shared/utils/search';
 import NotificationList from '../components/notifications/list';
 import NotificationModal from '../components/modal/notification';
-import NotificationContent from '../components/notifications/content';
 import HomeNotificationHeader from '../components/notifications/header';
-import { filterData } from '../../shared/utils/search';
-import { useTranslation } from 'react-i18next';
-import useScreenSize from '../hooks/useScreenSize';
+import NotificationRender from '../components/notifications/content';
 
 const Notifications = () => {
   const {
@@ -54,12 +54,12 @@ const Notifications = () => {
     return (
       <div className="monitor-mobile-container">
         <HomeNotificationHeader isMobile={!isDesktop} />
-        <NotificationContent />
+        <NotificationRender isEdit />
       </div>
     );
   }
 
-  const content = isDesktop ? <NotificationContent /> : null;
+  const content = isDesktop ? <NotificationRender isEdit /> : null;
 
   return (
     <Navigation
