@@ -1,4 +1,6 @@
-export const EmailLayout = [
+import type { NotificationInputLayoutType } from '../../../types/constant/notifications';
+
+export const EmailLayout: NotificationInputLayoutType[] = [
   {
     type: 'input',
     isDataField: false,

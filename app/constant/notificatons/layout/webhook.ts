@@ -1,4 +1,6 @@
-export const WebhookLayout = [
+import type { NotificationInputLayoutType } from '../../../types/constant/notifications';
+
+export const WebhookLayout: NotificationInputLayoutType[] = [
   {
     type: 'group',
     items: [

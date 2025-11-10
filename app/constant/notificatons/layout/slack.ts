@@ -1,4 +1,6 @@
-export const SlackLayout = [
+import type { NotificationInputLayoutType } from '../../../types/constant/notifications';
+
+export const SlackLayout: NotificationInputLayoutType[] = [
   {
     type: 'group',
     items: [

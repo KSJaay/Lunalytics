@@ -1,4 +1,6 @@
-export const PushoverLayout = [
+import type { NotificationInputLayoutType } from '../../../types/constant/notifications';
+
+export const PushoverLayout: NotificationInputLayoutType[] = [
   {
     type: 'group',
     items: [
