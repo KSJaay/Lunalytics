@@ -1,4 +1,6 @@
-export const TelegramLayout = [
+import type { NotificationInputLayoutType } from '../../../types/constant/notifications';
+
+export const TelegramLayout: NotificationInputLayoutType[] = [
   {
     type: 'group',
     items: [

@@ -1,4 +1,6 @@
-export const DiscordLayout = [
+import type { NotificationInputLayoutType } from '../../../types/constant/notifications';
+
+export const DiscordLayout: NotificationInputLayoutType[] = [
   {
     type: 'group',
     items: [

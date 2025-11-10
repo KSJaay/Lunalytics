@@ -10,7 +10,7 @@ import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationsTemplates from '../../../../shared/notifications';
 import NotificationModalPayload from '../../modal/notification/payload';
 import NotificationModalType from '../../modal/notification/dropdown/type';
-import * as NotificationPlatformContent from '../../../../shared/notifications/layout';
+import * as NotificationPlatformContent from '../../../constant/notificatons/layout';
 import NotificationRenderer from './renderer';
 
 const NotificationRender = ({ isEdit = false }: { isEdit: boolean }) => {

@@ -1,4 +1,6 @@
-export const HomeAssistantLayout = [
+import type { NotificationInputLayoutType } from '../../../types/constant/notifications';
+
+export const HomeAssistantLayout: NotificationInputLayoutType[] = [
   {
     type: 'group',
     items: [
