@@ -1,40 +1,63 @@
-// import dependencies
+import { useMemo } from 'react';
+import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 
-// import local files
+import ActionBar from '../../ui/actionBar';
+import SwitchWithText from '../../ui/switch';
 import useContextStore from '../../../context';
 import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationsTemplates from '../../../../shared/notifications';
 import NotificationModalPayload from '../../modal/notification/payload';
 import NotificationModalType from '../../modal/notification/dropdown/type';
-import * as NotificationPlatformContent from './platform';
-import ActionBar from '../../ui/actionBar';
-import { useMemo } from 'react';
-import { Button } from '@lunalytics/ui';
+import * as NotificationPlatformContent from '../../../../shared/notifications/layout';
+import NotificationRenderer from './renderer';
 
-const NotificationContent = () => {
+const NotificationRender = ({ isEdit = false }: { isEdit: boolean }) => {
   const {
     notificationStore: { addNotification, activeNotification: notification },
   } = useContextStore();
+
+  const { t } = useTranslation();
 
   const { inputs, errors, handleInput, handleSubmit } = useNotificationForm(
     notification,
     true
   );
-  const { t } = useTranslation();
 
   const showSaveActionBar = useMemo(() => {
     return JSON.stringify(notification) !== JSON.stringify(inputs);
   }, [JSON.stringify(notification), JSON.stringify(inputs)]);
 
+  const components =
+    notification && NotificationPlatformContent[notification?.platform];
+
+  if (!components) {
+    return null;
+  }
+
   const message =
     NotificationsTemplates[notification.platform][inputs.messageType];
-  const Content = NotificationPlatformContent[notification.platform];
 
   return (
-    <div className="notication-container">
-      <Content inputs={inputs} errors={errors} handleInput={handleInput} />
+    <div className="notification-container">
+      <NotificationRenderer
+        inputs={inputs}
+        errors={errors}
+        handleInput={handleInput}
+        isEdit={isEdit}
+      />
+
+      <div style={{ paddingTop: '1rem' }}>
+        <SwitchWithText
+          label={t('notification.input.enabled_title')}
+          shortDescription={t('notification.input.enabled_description')}
+          checked={inputs.isEnabled}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            handleInput({ key: 'isEnabled', value: e.target.checked });
+          }}
+        />
+      </div>
 
       <NotificationModalType
         messageType={inputs.messageType}
@@ -77,4 +100,4 @@ const NotificationContent = () => {
   );
 };
 
-export default observer(NotificationContent);
+export default observer(NotificationRender);

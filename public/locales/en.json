@@ -117,6 +117,9 @@
       "request_type": "Request Type",
       "additional_headers": "Additional Headers",
       "payload": "Payload"
+    },
+    "discord": {
+      "token_description": "For more information about how to create a Discord webhook checkout this guide: "
     }
   },
   "status": {

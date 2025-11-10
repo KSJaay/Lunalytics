@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 interface ActionBarProps {
   show: boolean;
-  variant?: 'full' | 'compact';
+  variant?: 'full' | 'compact' | 'floating';
   position?: 'top' | 'bottom';
   slideDirection?: 'up' | 'down' | 'left' | 'right';
   className?: string;

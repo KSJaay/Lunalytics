@@ -1,17 +1,17 @@
 // import dependencies
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
-import NotificationModalType from './dropdown/type';
-import NotificationModalPlatform from './dropdown/platform';
-import NotificationsTemplates from '../../../../shared/notifications';
-import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationModalPayload from './payload';
-import * as inputForPlatform from './platform';
-import type { NotificationProps } from '../../../types/notifications';
-import { toast } from 'react-toastify';
+import NotificationModalType from './dropdown/type';
 import { createPostRequest } from '../../../services/axios';
+import NotificationModalPlatform from './dropdown/platform';
+import useNotificationForm from '../../../hooks/useNotificationForm';
+import NotificationsTemplates from '../../../../shared/notifications';
+import type { NotificationProps } from '../../../types/notifications';
+import NotificationRenderer from '../../notifications/content/renderer';
 
 interface NotificationModalProps {
   values?: NotificationProps;
@@ -53,10 +53,6 @@ const NotificationModal = ({
   const messageType = inputs.messageType as MessageType;
 
   const message = NotificationsTemplates[platform]?.[messageType] || 'basic';
-
-  const PlatformInputs = inputForPlatform[
-    inputs.platform as Platform
-  ] as React.ComponentType<any>;
 
   const testNotification = async () => {
     try {
@@ -115,8 +111,9 @@ const NotificationModal = ({
         platform={inputs.platform}
       />
 
-      <PlatformInputs
-        values={inputs}
+      <NotificationRenderer
+        isEdit={false}
+        inputs={inputs}
         errors={errors}
         handleInput={handleInput}
       />
