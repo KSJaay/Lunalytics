@@ -1,3 +1,4 @@
+import Apprise from './apprise.js';
 import Discord from './discord.js';
 import Email from './email.js';
 import HomeAssistant from './homeAssistant.js';
@@ -7,6 +8,7 @@ import Telegram from './telegram.js';
 import Webhook from './webhook.js';
 
 const NotificationValidators = {
+  Apprise,
   Discord,
   Email,
   HomeAssistant,

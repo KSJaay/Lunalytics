@@ -36,7 +36,9 @@
   - Slack
   - Twitch
 - Support for notifications
+  - Apprise
   - Discord
+  - Email (SMTP)
   - Home Assistant
   - Pushover
   - Slack

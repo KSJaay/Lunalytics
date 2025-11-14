@@ -32,7 +32,12 @@ const appriseDirs = [
     extension: '.ts',
   },
   {
-    directory: path.resolve(process.cwd(), 'shared', 'validators'),
+    directory: path.resolve(
+      process.cwd(),
+      'shared',
+      'validators',
+      'notifications'
+    ),
     extension: '.js',
   },
 ];
@@ -41,7 +46,7 @@ appriseDirs.forEach(({ directory, extension }) => {
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
   }
-  const filePath = path.join(directory, fileName + extension);
+  const filePath = path.join(directory, fileName.toLowerCase() + extension);
   try {
     fs.writeFileSync(filePath, '', { flag: 'wx' });
     logger.info(`File created: ${filePath}`);
@@ -53,3 +58,42 @@ appriseDirs.forEach(({ directory, extension }) => {
     }
   }
 });
+
+const notificationJson = path.resolve(
+  process.cwd(),
+  'app',
+  'constant',
+  'notifications.json'
+);
+
+const data = fs.readFileSync(notificationJson, 'utf-8');
+const notifications = JSON.parse(data);
+
+const notificationName =
+  fileName.charAt(0).toUpperCase() + fileName.slice(1).toLowerCase();
+
+if (!notifications[notificationName]) {
+  notifications[notificationName] = {
+    id: notificationName,
+    name: notificationName,
+    icon: `${notificationName.toLowerCase()}.svg`,
+  };
+
+  fs.writeFileSync(
+    notificationJson,
+    JSON.stringify(
+      Object.keys(notifications)
+        .sort()
+        .reduce((obj, key) => {
+          obj[key] = notifications[key];
+          return obj;
+        }, {}),
+      null,
+      2
+    ),
+    'utf-8'
+  );
+  logger.info(
+    `Notification entry added for ${notificationName} in notifications.json. Please add ${notificationName.toLowerCase()}.svg`
+  );
+}

@@ -1,4 +1,9 @@
 {
+  "Apprise": {
+    "id": "Apprise",
+    "name": "Apprise",
+    "icon": "apprise.svg"
+  },
   "Discord": {
     "id": "Discord",
     "name": "Discord",
