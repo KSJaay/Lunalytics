@@ -10,8 +10,55 @@ import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationsTemplates from '../../../../shared/notifications';
 import NotificationModalPayload from '../../modal/notification/payload';
 import NotificationModalType from '../../modal/notification/dropdown/type';
-import * as NotificationPlatformContent from '../../../constant/notificatons/layout';
+import * as NotificationPlatformContent from '../../../constant/notifications/layout';
 import NotificationRenderer from './renderer';
+import {
+  NotificationBasicEmailTemplate,
+  NotificationNerdyEmailTemplate,
+  NotificationPrettyEmailTemplate,
+} from '../emails';
+
+export const EmailComponent = ({ type }: { type: string }) => {
+  if (type === 'basic') {
+    return (
+      <NotificationBasicEmailTemplate
+        serviceName="Lunalytics"
+        dashboardUrl="https://lunalytics.xyz"
+        timestamp={new Date().toUTCString()}
+      />
+    );
+  }
+
+  if (type === 'pretty') {
+    return (
+      <NotificationPrettyEmailTemplate
+        serviceName="Lunalytics"
+        dashboardUrl="https://lunalytics.xyz"
+        timestamp={new Date().toUTCString()}
+        latency={54}
+        status="504 Gateway Timeout"
+        message="The service is currently unreachable."
+      />
+    );
+  }
+  if (type === 'nerdy') {
+    return (
+      <NotificationNerdyEmailTemplate
+        id="23c91eb7-e56d-4b6d-a7b8-51bf99f04b76"
+        serviceName="Lunalytics"
+        timestamp={new Date().toUTCString()}
+        address="example.com"
+        type="HTTP"
+        statusCode={504}
+        latency={1832}
+        statusMessage="Gateway Timeout"
+        dashboardUrl="https://lunalytics.xyz"
+      />
+    );
+  }
+
+  return null;
+};
 
 const NotificationRender = ({ isEdit = false }: { isEdit: boolean }) => {
   const {
@@ -67,7 +114,13 @@ const NotificationRender = ({ isEdit = false }: { isEdit: boolean }) => {
       />
 
       <label className="input-label">{t('notification.input.payload')}</label>
-      <NotificationModalPayload message={message} />
+      {notification.platform !== 'Email' && (
+        <NotificationModalPayload message={message} />
+      )}
+
+      {notification.platform === 'Email' && (
+        <EmailComponent type={inputs.messageType} />
+      )}
 
       <ActionBar position="bottom" variant="floating" show={showSaveActionBar}>
         <div className="status-action-bar-container">

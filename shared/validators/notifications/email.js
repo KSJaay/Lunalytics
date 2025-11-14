@@ -4,15 +4,14 @@ const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];
 const tokenRegex =
   /^https:\/\/(?:discord\.com|discordapp\.com)\/api\/webhooks\/[0-9]+\/[0-9a-zA-Z_.-]+$/;
-const usernameRegex = /^[a-zA-Z0-9_]{1,32}$/;
 
 const Email = ({
   friendlyName,
   token,
   messageType,
   data: {
-    port,
-    security,
+    port = 587,
+    security = true,
     username,
     password,
     fromEmail,
@@ -28,7 +27,7 @@ const Email = ({
     );
   }
 
-  if (!tokenRegex) {
+  if (!token) {
     throw new NotificationValidatorError('token', 'Invalid Email Webhook URL');
   }
 
@@ -47,7 +46,7 @@ const Email = ({
     );
   }
 
-  if (!username || !usernameRegex.test(username)) {
+  if (!username) {
     throw new NotificationValidatorError('username', 'Invalid Username');
   }
 
