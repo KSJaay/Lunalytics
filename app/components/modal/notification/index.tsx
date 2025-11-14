@@ -12,6 +12,7 @@ import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationsTemplates from '../../../../shared/notifications';
 import type { NotificationProps } from '../../../types/notifications';
 import NotificationRenderer from '../../notifications/content/renderer';
+import { EmailComponent } from '../../notifications/content';
 
 interface NotificationModalProps {
   values?: NotificationProps;
@@ -124,7 +125,14 @@ const NotificationModal = ({
       />
 
       <label className="input-label">Payload</label>
-      <NotificationModalPayload message={message} />
+
+      {inputs.platform !== 'Email' && (
+        <NotificationModalPayload message={message} />
+      )}
+
+      {inputs.platform === 'Email' && (
+        <EmailComponent type={inputs.messageType} />
+      )}
     </Modal>
   );
 };

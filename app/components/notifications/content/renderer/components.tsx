@@ -2,9 +2,10 @@ import { Trans } from 'react-i18next';
 import { Dropdown, Input, PasswordInput, Textarea } from '@lunalytics/ui';
 
 import SwitchWithText from '../../../ui/switch';
+import type { NotificationInputInputType } from '../../../../types/constant/notifications';
 
 export const getNotificationComponent = (
-  component,
+  component: NotificationInputInputType,
   value: string | number | boolean,
   error: string | undefined,
   onChange: (
@@ -122,9 +123,9 @@ export const getNotificationComponent = (
         <label className="luna-input-title">Priority</label>
         <Dropdown
           fullWidth
-          items={options.map((item) => {
+          items={options?.map((item) => {
             return {
-              id: item.id || item.text,
+              id: item.id,
               text: item.id,
               type: 'item',
               onClick: () => onChange(item.id, key, isDataField),

@@ -1,5 +1,5 @@
 import { getNotificationComponent } from './components';
-import * as NotificationPlatformContent from '../../../../constant/notificatons/layout';
+import * as NotificationPlatformContent from '../../../../constant/notifications/layout';
 import type {
   NotificationErrorProps,
   NotificationProps,
