@@ -1,3 +1,5 @@
+import '../components/status/configure/preview/styles.scss';
+
 // import dependencies
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
