@@ -1,3 +1,4 @@
+import { AppriseTemplateMessages } from './apprise';
 import { DiscordTemplateMessages } from './discord';
 import { EmailTemplateMessages } from './email';
 import { HomeAssistantTemplateMessages } from './homeAssistant';
@@ -7,6 +8,7 @@ import { TelegramTemplateMessages } from './telegram';
 import { WebhookTemplateMessages } from './webhook';
 
 const NotificationsTemplates = {
+  Apprise: AppriseTemplateMessages,
   Discord: DiscordTemplateMessages,
   Email: EmailTemplateMessages,
   HomeAssistant: HomeAssistantTemplateMessages,

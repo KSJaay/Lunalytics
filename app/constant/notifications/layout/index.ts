@@ -1,3 +1,4 @@
+export { AppriseLayout as Apprise } from './apprise';
 export { DiscordLayout as Discord } from './discord';
 export { EmailLayout as Email } from './email';
 export { HomeAssistantLayout as HomeAssistant } from './homeAssistant';
