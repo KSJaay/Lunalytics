@@ -49,14 +49,14 @@ const NavigationUpdateModal = ({
             up update <span style={{ fontWeight: 600 }}>{version}</span> for
             you! Please have a read through our{' '}
             <a
-              href="https://lunalytics.xyz/guides/internals/changelog"
+              href="https://github.com/KSJaay/Lunalytics/releases"
               style={{ color: 'var(--primary-700)' }}
               target="_blank"
               rel="noreferrer"
             >
-              documentation
+              releases
             </a>{' '}
-            to find out how to update your application easily.
+            to find out more about the update.
           </div>
         </div>
 
