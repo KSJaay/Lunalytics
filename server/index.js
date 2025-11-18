@@ -19,7 +19,7 @@ import addInviteToCookie from './middleware/addInviteToCookie.js';
 import { loadIcons } from './utils/icons.js';
 import {
   getVersionInfo,
-  // startVersionCheck
+  startVersionCheck
 } from './utils/checkVersion.js';
 
 const app = express();
@@ -44,7 +44,7 @@ const init = async () => {
 
   await initialiseCronJobs();
   await loadIcons();
-  // startVersionCheck();
+  startVersionCheck();
 
   app
     .use(compression())
