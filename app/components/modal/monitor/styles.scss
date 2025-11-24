@@ -13,6 +13,7 @@
 }
 
 .monitor-configure-page-button {
+  position: relative;
   padding: 12px;
   background-color: var(--accent-800);
   border-radius: 8px;
@@ -30,6 +31,17 @@
 
   &:hover {
     background-color: var(--accent-700);
+  }
+  
+  &.error-circle::after {
+    content: "";
+    position: absolute;
+    top: 40%;
+    right: 10px; 
+    width: 10px; 
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
   }
 }
 
