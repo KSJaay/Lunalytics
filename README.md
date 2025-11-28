@@ -10,7 +10,7 @@
   <a href="https://discord.gg/HkpDnUdf4u">Discord</a>
 </div>
 
-![Demo](https://raw.githubusercontent.com/KSJaay/Lunalytics/refs/heads/main/docs/public/demo.gif)
+![Demo](https://raw.githubusercontent.com/KSJaay/Lunalytics/refs/heads/main/public/demo.gif)
 
 ## 📔 Features
 
