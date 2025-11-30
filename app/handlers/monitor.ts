@@ -33,6 +33,7 @@ const handleMonitor = async (
 
     const {
       name,
+      parentId,
       type,
       url,
       method,
@@ -57,6 +58,7 @@ const handleMonitor = async (
 
     const query = await createPostRequest(apiPath, {
       name,
+      parentId,
       type,
       url,
       method,

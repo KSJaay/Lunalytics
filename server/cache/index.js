@@ -197,6 +197,21 @@ class Master {
       if (!hasOutage && !hasRecovered) return;
       if (!monitor.notificationId) return;
 
+      if (hasOutage && monitor.parentId) {
+        const parentMonitor = await fetchMonitor(monitor.parentId).catch(
+          () => false
+        );
+
+        if (parentMonitor) {
+          const isDown = await isMonitorDown(
+            parentMonitor.monitorId,
+            parentMonitor.retry
+          );
+
+          if (isDown) return;
+        }
+      }
+
       const notification = await fetchNotificationById(monitor.notificationId);
 
       if (

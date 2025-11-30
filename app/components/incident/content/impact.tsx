@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { observer } from 'mobx-react-lite';
 
 // import local files
 import Dropdown from '../../ui/dropdown';
@@ -88,4 +89,4 @@ const IncidentContentImpact = () => {
 
 IncidentContentImpact.displayName = 'IncidentContentImpact';
 
-export default IncidentContentImpact;
+export default observer(IncidentContentImpact);

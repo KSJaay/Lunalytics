@@ -17,10 +17,7 @@ import initialiseCronJobs from './utils/cron.js';
 import migrateDatabase from '../scripts/migrate.js';
 import addInviteToCookie from './middleware/addInviteToCookie.js';
 import { loadIcons } from './utils/icons.js';
-import {
-  getVersionInfo,
-  startVersionCheck
-} from './utils/checkVersion.js';
+import { getVersionInfo, startVersionCheck } from './utils/checkVersion.js';
 
 const app = express();
 

@@ -7,6 +7,7 @@ export const clean = (
   includeCert = true
 ) => ({
   monitorId: monitor.monitorId,
+  parentId: monitor.parentId || null,
   name: monitor.name,
   url: monitor.url,
   retry: parseInt(monitor.retry),

@@ -2,6 +2,7 @@ import { parseJsonOrArray } from '../../utils/parser.js';
 
 const clean = ({ heartbeats = [], ...monitor }, includeHeartbeats = true) => ({
   monitorId: monitor.monitorId,
+  parentId: monitor.parentId || null,
   name: monitor.name,
   url: monitor.url,
   retry: parseInt(monitor.retry),

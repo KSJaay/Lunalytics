@@ -11,6 +11,7 @@ import { migrate as migrateIncidentEmail } from './0-9-4.js';
 import { migrate as migrateMonitor } from './0-9-5.js';
 import { migrate as migrateMonitorJson } from './0-9-7.js';
 import { migrate as migrateUiOverhaul } from './0-10-0.js';
+import { migrate as migrateMonitorParent } from './0-10-13.js';
 
 const migrationList = {
   '0.4.0': migrateTcpUpdate,
@@ -25,6 +26,7 @@ const migrationList = {
   '0.9.5': migrateMonitor,
   '0.9.7': migrateMonitorJson,
   '0.10.0': migrateUiOverhaul,
+  '0.10.13': migrateMonitorParent,
 };
 
 export default migrationList;

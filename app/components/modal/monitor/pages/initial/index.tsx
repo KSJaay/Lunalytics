@@ -4,6 +4,7 @@ import { Input } from '@lunalytics/ui';
 // import local files
 import MonitorInitialDropdown from './type';
 import MonitorIconSelect from './icons';
+import MonitorParentSelect from './parent';
 
 interface MonitorInitialTypeProps {
   inputs: any;
@@ -51,6 +52,8 @@ const MonitorInitialType = ({
       )}
 
       <MonitorIconSelect inputs={inputs} handleInput={handleInput} />
+
+      <MonitorParentSelect inputs={inputs} handleInput={handleInput} />
     </div>
   );
 };
