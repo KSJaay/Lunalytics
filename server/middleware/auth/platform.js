@@ -19,7 +19,8 @@ const redirectUsingProviderMiddleware = async (request, response) => {
     const redirectUrl = getAuthRedirectUrl(
       provider.provider,
       provider.clientId,
-      `${websiteUrl}/api/auth/callback/${provider.provider}`
+      `${websiteUrl}/api/auth/callback/${provider.provider}`,
+      provider.data?.authUrl
     );
 
     return response.redirect(redirectUrl);

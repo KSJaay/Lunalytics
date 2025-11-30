@@ -24,7 +24,7 @@ router.post('/login', login);
 router.get('/logout', logout);
 router.get('/platform/:provider', redirectUsingProviderMiddleware);
 
-router.get('/callback/custom', customCallback);
+router.get('/callback/custom', customCallback, signInOrRegisterUsingAuth);
 router.get('/callback/discord', discordCallback, signInOrRegisterUsingAuth);
 router.get('/callback/github', githubCallback, signInOrRegisterUsingAuth);
 router.get('/callback/google', googleCallback, signInOrRegisterUsingAuth);

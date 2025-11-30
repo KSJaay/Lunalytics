@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.10.13",
+  "version": "0.10.14",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -55,7 +55,6 @@
     "cors": "2.8.5",
     "cron": "4.3.1",
     "cross-env": "7.0.3",
-    "curlconverter": "4.12.0",
     "dayjs": "1.11.13",
     "express": "4.21.2",
     "i18next": "25.3.2",

@@ -1,5 +1,11 @@
 // List of providers type
-export type Providers = 'discord' | 'github' | 'google' | 'slack' | 'twitch';
+export type Providers =
+  | 'custom'
+  | 'discord'
+  | 'github'
+  | 'google'
+  | 'slack'
+  | 'twitch';
 
 export interface ContextAuthenticationConfigProps {
   nativeSignin: boolean;

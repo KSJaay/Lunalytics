@@ -1,4 +1,9 @@
-export const getAuthRedirectUrl = (provider, clientId, redirectUri) => {
+export const getAuthRedirectUrl = (
+  provider,
+  clientId,
+  redirectUri,
+  authUrl
+) => {
   const queryParams = {
     client_id: clientId,
     redirect_uri: redirectUri,
@@ -67,6 +72,10 @@ export const getAuthRedirectUrl = (provider, clientId, redirectUri) => {
   }
 
   if (provider === 'custom') {
+    queryParams.response_type = 'code';
+    queryParams.scope = 'openid profile email';
+
+    return authUrl + '?' + new URLSearchParams(queryParams).toString();
   }
 
   return null;
@@ -145,7 +154,13 @@ export const getAuthCallbackUrl = (
   }
 
   if (provider === 'custom') {
-    return [];
+    return [
+      new URLSearchParams({
+        ...queryParams,
+        grant_type: 'authorization_code',
+      }).toString(),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+    ];
   }
 
   return null;

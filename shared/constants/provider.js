@@ -1,10 +1,10 @@
 export const providers = [
-  // {
-  //   id: 'custom',
-  //   name: 'Custom Provider',
-  //   description: 'Setup a custom provider like Authentik, Keycloak, etc.',
-  //   icon: '/logo.svg',
-  // },
+  {
+    id: 'custom',
+    name: 'Custom Provider',
+    description: 'Setup a custom provider like Authentik, Keycloak, etc.',
+    icon: '/logo.svg',
+  },
   {
     id: 'discord',
     name: 'Discord',

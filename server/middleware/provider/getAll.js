@@ -4,9 +4,15 @@ import { fetchProviders } from '../../database/queries/provider.js';
 const getAllProvidersMiddleware = async (request, response) => {
   try {
     const query = await fetchProviders();
-    response.json(query);
+
+    const providers = query.map((provider) => ({
+      ...provider,
+      data: provider.data ? JSON.parse(provider.data) : {},
+    }));
+
+    return response.json(providers);
   } catch (error) {
-    handleError(error, response);
+    return handleError(error, response);
   }
 };
 

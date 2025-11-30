@@ -24,7 +24,12 @@ const SettingsAuthenticationConfigureModal = ({
   const [values, setValues] = useState({
     clientId: provider?.clientId || '',
     clientSecret: provider?.clientSecret || '',
+    authUrl: provider?.data?.authUrl || '',
+    tokenUrl: provider?.data?.tokenUrl || '',
+    userInfoUrl: provider?.data?.userInfoUrl || '',
+    name: provider?.data?.name || '',
   });
+
   const currentUrl = useCurrentUrl();
   const { addProvider } = useAuthenticationContext();
 
@@ -35,7 +40,12 @@ const SettingsAuthenticationConfigureModal = ({
         clientId: values.clientId,
         clientSecret: values.clientSecret,
         enabled: true,
-        data: {},
+        data: {
+          tokenUrl: values.tokenUrl,
+          name: values.name,
+          authUrl: values.authUrl,
+          userInfoUrl: values.userInfoUrl,
+        },
       };
 
       const provider = await createPostRequest(
@@ -70,6 +80,49 @@ const SettingsAuthenticationConfigureModal = ({
       }
       onClose={closeModal}
     >
+      {integration.id === 'custom' && (
+        <>
+          <Input
+            id="name"
+            title="Name"
+            value={values.name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setValues((prev) => ({ ...prev, name: e.target.value }))
+            }
+            isRequired
+          />
+
+          <Input
+            id="auth-url"
+            title="Authorization URL"
+            value={values.authUrl}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setValues((prev) => ({ ...prev, authUrl: e.target.value }))
+            }
+            isRequired
+          />
+
+          <Input
+            id="token-url"
+            title="Token URL"
+            value={values.tokenUrl}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setValues((prev) => ({ ...prev, tokenUrl: e.target.value }))
+            }
+            isRequired
+          />
+
+          <Input
+            id="user-info-url"
+            title="User Info URL"
+            value={values.userInfoUrl}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setValues((prev) => ({ ...prev, userInfoUrl: e.target.value }))
+            }
+            isRequired
+          />
+        </>
+      )}
       <Input
         id="client-id"
         title="Client ID"

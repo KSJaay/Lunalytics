@@ -58,6 +58,10 @@ const MonitorParentSelect = ({
                 key={monitor.monitorId}
                 onClick={() => onSelect(monitor.monitorId)}
               >
+                <img
+                  src={monitor?.icon?.url}
+                  style={{ width: '20px', height: '20px' }}
+                />
                 {monitor.name}
               </Dropdown.Item>
             ))}
