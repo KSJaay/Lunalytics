@@ -5,6 +5,7 @@ export const monitorTable = async (client) => {
     await client.schema.createTable('monitor', (table) => {
       table.increments('id');
       table.string('monitorId').notNullable().primary();
+      table.string('parentId').defaultTo(null);
       table.string('name').notNullable();
       table.string('url').notNullable();
       table.integer('port').defaultTo(null);

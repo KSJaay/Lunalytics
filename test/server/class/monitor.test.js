@@ -4,6 +4,7 @@ import { cleanMonitor } from '../../../server/class/monitor/index';
 describe('Monitor - Class', () => {
   const monitor = {
     monitorId: '4d048471-9e85-428b-8050-4238f6033478',
+    parentId: '4d048471-9e85-428b-8050-4238f6033479',
     name: 'Lunalytics',
     url: 'https://demo.lunalytics.xyz/api/status',
     createdAt: '2025-08-23T17:00:00.000Z',
@@ -48,6 +49,7 @@ describe('Monitor - Class', () => {
   it('should return valid monitor using cleanPartialMonitor', () => {
     expect(cleanMonitor(monitor, false, false)).toEqual({
       monitorId: '4d048471-9e85-428b-8050-4238f6033478',
+      parentId: '4d048471-9e85-428b-8050-4238f6033479',
       name: 'Lunalytics',
       url: 'https://demo.lunalytics.xyz/api/status',
       createdAt: '2025-08-23T17:00:00.000Z',
@@ -87,6 +89,7 @@ describe('Monitor - Class', () => {
       })
     ).toEqual({
       monitorId: '4d048471-9e85-428b-8050-4238f6033478',
+      parentId: '4d048471-9e85-428b-8050-4238f6033479',
       name: 'Lunalytics',
       url: 'https://demo.lunalytics.xyz/api/status',
       createdAt: '2025-08-23T17:00:00.000Z',
