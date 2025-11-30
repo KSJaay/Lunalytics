@@ -17,6 +17,7 @@ import MonitorConfigureDockerModal from './configure/docker';
 import MonitorConfigureJsonQueryModal from './configure/json';
 import type { MonitorProps } from '../../../types/monitor';
 import MonitorConfigurePushModal from './configure/push';
+import classNames from 'classnames';
 
 const pages = [
   { id: 'basic', title: 'Basic', icon: <FaCog size={20} /> },
@@ -43,7 +44,14 @@ const MonitorConfigureModal = ({
   isEdit = false,
 }: ModalProps) => {
   const [pageId, setPageId] = useState('basic');
-  const { errors, inputs, handleActionButtons, handleInput, errorPages, setErrorPages } = useMonitorForm(
+  const {
+    errors,
+    inputs,
+    handleActionButtons,
+    handleInput,
+    errorPages,
+    setErrorPages,
+  } = useMonitorForm(
     monitor,
     isEdit,
     closeModal,
@@ -64,27 +72,30 @@ const MonitorConfigureModal = ({
             settings to your liking.
           </div>
           <div className="monitor-configure-left-pages">
-            {pages.map((page) => (
-              <div
-                className={`monitor-configure-page-button 
-                  ${page.id === pageId ? 'active' : ''}
-                  ${errorPages.has(page.id) ? 'error-circle' : ''}`}
+            {pages.map((page) => {
+              const classes = classNames('monitor-configure-page-button', {
+                active: page.id === pageId,
+                'error-circle': errorPages.has(page.id),
+              });
 
-                onClick={() => {
-                  setErrorPages(oldSet => {
-                    const trimmedErrorPages = new Set([...oldSet])
-                    trimmedErrorPages.delete(pageId)
-                    return trimmedErrorPages
-                  })
-                  setPageId(page.id)
-                  
-                }}
-                key={page.id}
-              >
-                {page.icon}
-                <div>{page.title}</div>
-              </div>
-            ))}
+              return (
+                <div
+                  className={classes}
+                  onClick={() => {
+                    setErrorPages((oldSet) => {
+                      const trimmedErrorPages = new Set([...oldSet]);
+                      trimmedErrorPages.delete(pageId);
+                      return trimmedErrorPages;
+                    });
+                    setPageId(page.id);
+                  }}
+                  key={page.id}
+                >
+                  {page.icon}
+                  <div>{page.title}</div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="monitor-configure-buttons">
