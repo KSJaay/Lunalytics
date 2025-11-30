@@ -24,6 +24,8 @@ router.get('/', fetchUserMiddleware);
 
 router.post('/exists', userExistsMiddleware);
 
+router.post('/delete/account', deleteAccountMiddleware);
+
 router.get(
   '/monitors',
   hasRequiredPermission(PermissionsBits.VIEW_MONITORS),
@@ -57,7 +59,5 @@ router.use(hasRequiredPermission(PermissionsBits.ADMINISTRATOR));
 router.post('/permission/update', permissionUpdateMiddleware);
 
 router.post('/transfer/ownership', transferOwnershipMiddleware);
-
-router.post('/delete/account', deleteAccountMiddleware);
 
 export default router;
