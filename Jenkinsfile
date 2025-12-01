@@ -5,45 +5,42 @@ pipeline {
 
         stage('Source Checkout') {
             steps {
+                echo "Checking out source code from GitHub..."
                 git branch: 'dev', url: 'https://github.com/ayesha-3/Lunalytics.git'
             }
         }
 
-        stage('Setup Python Environment') {
+        stage('Build') {
             steps {
-                bat '''
-                python --version
-                python -m venv venv
-                venv\\Scripts\\activate && pip install --upgrade pip
-                venv\\Scripts\\activate && pip install -r requirements.txt
-                '''
+                echo "Running build stage..."
+                 sh 'npm install'
+                 sh 'npm run build'
             }
         }
 
-        stage('Run Django Checks') {
+        stage('Test') {
             steps {
-                bat '''
-                venv\\Scripts\\activate && python manage.py check
-                '''
+                echo "Running test stage..."
+                // Add your test commands here
+                // Example:
+                 sh 'npm test'
             }
         }
 
-        stage('Run Tests') {
+        stage('Deploy') {
             steps {
-                bat '''
-                venv\\Scripts\\activate && python manage.py test
-                '''
+                echo "Deployment step (optional)..."
+                // Add deployment commands if needed
             }
         }
-
     }
 
     post {
         success {
-            echo 'CI Pipeline Completed Successfully!'
+            echo "Build completed successfully!"
         }
         failure {
-            echo 'CI Pipeline Failed!'
+            echo "Build failed!"
         }
     }
 }
