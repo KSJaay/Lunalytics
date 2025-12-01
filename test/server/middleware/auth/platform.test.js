@@ -59,7 +59,8 @@ describe('redirectUsingProviderMiddleware', () => {
     expect(getAuthRedirectUrl).toHaveBeenCalledWith(
       'google',
       'abc',
-      'https://site.com/api/auth/callback/google'
+      'https://site.com/api/auth/callback/google',
+      undefined
     );
     expect(fakeResponse.redirect).toHaveBeenCalledWith('https://auth.url');
   });

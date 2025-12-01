@@ -25,7 +25,9 @@ describe('getAllProvidersMiddleware', () => {
     await getAllProvidersMiddleware(fakeRequest, fakeResponse);
 
     expect(fetchProviders).toHaveBeenCalled();
-    expect(fakeResponse._getJSONData()).toEqual([{ provider: 'github' }]);
+    expect(fakeResponse._getJSONData()).toEqual([
+      { provider: 'github', data: {} },
+    ]);
     expect(handleError).not.toHaveBeenCalled();
   });
 
