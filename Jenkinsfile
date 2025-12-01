@@ -13,8 +13,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Running build stage..."
-                 sh 'npm install'
-                 sh 'npm run build'
+                 bat 'npm install'
+                 bat 'npm run build'
             }
         }
 
@@ -23,7 +23,7 @@ pipeline {
                 echo "Running test stage..."
                 // Add your test commands here
                 // Example:
-                 sh 'npm test'
+                 bat 'npm test'
             }
         }
 
