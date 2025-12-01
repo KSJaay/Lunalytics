@@ -9,21 +9,30 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Setup Python Environment') {
             steps {
-                bat 'npm install'
+                bat '''
+                python --version
+                python -m venv venv
+                venv\\Scripts\\activate && pip install --upgrade pip
+                venv\\Scripts\\activate && pip install -r requirements.txt
+                '''
             }
         }
 
-        stage('Run Build') {
+        stage('Run Django Checks') {
             steps {
-                bat 'npm run build'
+                bat '''
+                venv\\Scripts\\activate && python manage.py check
+                '''
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'npm test'
+                bat '''
+                venv\\Scripts\\activate && python manage.py test
+                '''
             }
         }
 
