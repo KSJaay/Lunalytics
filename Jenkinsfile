@@ -34,7 +34,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deployment step (optional)..."
+                echo "Deployment step to be implemented later (optional)..."
                 // Add deployment commands if needed
             }
         }
