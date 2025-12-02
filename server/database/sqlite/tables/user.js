@@ -14,6 +14,7 @@ export const userTable = async (client) => {
       table.boolean('sso').defaultTo(0);
       table.integer('permission').defaultTo(oldPermsToFlags[4]);
       table.datetime('createdAt');
+      table.jsonb('settings').defaultTo(JSON.stringify({}));
 
       table.index('email');
       table.index('isVerified');
