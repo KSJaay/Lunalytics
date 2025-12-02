@@ -2,7 +2,7 @@
 import dayjs from 'dayjs';
 import classNames from 'classnames';
 
-const StatusPageHeaderStatus = ({ status = {} }) => {
+const StatusPageHeaderStatus = ({ status = {}, lastUpdated }) => {
   if (!status.showLogo && !status.showTitle) {
     return null;
   }
@@ -25,7 +25,7 @@ const StatusPageHeaderStatus = ({ status = {} }) => {
       {status.showStatus && <div className={titleClasses}>Service Status</div>}
       {status.showTitle && (
         <div className={subtitleClasses}>
-          Last check: {dayjs().format('HH:mm:ss')}
+          Last check: {dayjs(lastUpdated).format('HH:mm:ss')}
         </div>
       )}
     </a>

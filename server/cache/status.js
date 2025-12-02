@@ -1,7 +1,10 @@
 // import local files
 import Collection from '../../shared/utils/collection.js';
 import { cleanMonitorForStatusPage } from '../class/monitor/index.js';
-import { fetchDailyHeartbeats } from '../database/queries/heartbeat.js';
+import {
+  fetchDailyHeartbeats,
+  isMonitorDown,
+} from '../database/queries/heartbeat.js';
 import { fetchMonitor, monitorExists } from '../database/queries/monitor.js';
 import {
   fetchAllMonitors,
@@ -44,7 +47,10 @@ class Status {
       }
 
       for (const statusPage of statusPages) {
-        this.statusPages.set(statusPage.statusId, statusPage);
+        this.statusPages.set(statusPage.statusId, {
+          ...statusPage,
+          lastUpdated: new Date().toISOString(),
+        });
       }
     }
   }
@@ -57,9 +63,19 @@ class Status {
         return;
       }
 
-      this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));
+      const isDown = await isMonitorDown(monitor.monitorId, monitor.retry);
+
+      this.monitors.set(
+        monitorId,
+        cleanMonitorForStatusPage({ ...monitor, isDown })
+      );
     } else {
-      this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));
+      const isDown = await isMonitorDown(monitor.monitorId, monitor.retry);
+
+      this.monitors.set(
+        monitorId,
+        cleanMonitorForStatusPage({ ...monitor, isDown })
+      );
     }
 
     const heartbeats = await fetchDailyHeartbeats(monitorId);

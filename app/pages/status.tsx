@@ -14,6 +14,30 @@ import StatusPageIncident from '../components/status/configure/preview/incident'
 import StatusPageMetrics from '../components/status/configure/preview/metrics';
 import StatusConfigureLayoutHistoryList from '../components/status/configure/layout/history/list';
 
+const getMonitorStatus = (incident, monitor) => {
+  if (incident?.status && incident?.status !== 'Resolved') {
+    return incident?.affect;
+  }
+
+  if (monitor.isDown) {
+    return 'Incident';
+  }
+
+  return 'Operational';
+};
+
+const getOverallStatus = (incident, monitors) => {
+  if (incident?.status && incident?.status !== 'Resolved') {
+    return incident?.affect;
+  }
+
+  if (monitors?.some((monitor) => monitor.isDown)) {
+    return 'Incident';
+  }
+
+  return 'Operational';
+};
+
 const StatusPage = ({ id }: { id?: string }) => {
   const [statusPage, setStatusPage] = useState(null);
   const navigate = useNavigate();
@@ -86,7 +110,7 @@ const StatusPage = ({ id }: { id?: string }) => {
     highlight,
   ]);
 
-  if (!layout.length) {
+  if (!statusPage || !layout.length) {
     return null;
   }
 
@@ -104,15 +128,16 @@ const StatusPage = ({ id }: { id?: string }) => {
                   homepageUrl={homepageUrl}
                   logo={logo}
                   titleText={titleText}
+                  lastUpdated={statusPage.lastUpdated}
                 />
               );
             }
             case 'status': {
               const incident = statusPage.incidents[0] || {};
-              const incidentStatus =
-                incident.status === 'Resolved'
-                  ? 'Operational'
-                  : incident?.affect;
+              const incidentStatus = getOverallStatus(
+                incident,
+                Object.values(statusPage.monitors)
+              );
 
               const incidentsComponentExists = layout.find(
                 (item) => item.type === 'incidents'
@@ -164,20 +189,11 @@ const StatusPage = ({ id }: { id?: string }) => {
                   const monitor = statusPage?.monitors[monitorId];
                   if (!monitor || monitor.paused) return null;
 
-                  const monitorHasIncident = statusPage.incidents.find(
+                  const monitorIncident = statusPage.incidents.find(
                     (incident) => incident?.monitorIds?.includes(monitorId)
                   );
-                  const monitorStatus =
-                    monitorHasIncident &&
-                    monitorHasIncident?.status !== 'Resolved'
-                      ? monitorHasIncident?.affect
-                      : 'Operational';
 
-                  const monitorHeartbeats =
-                    statusPage.heartbeats[monitorId]?.[0];
-                  const status = monitorHeartbeats?.isDown
-                    ? 'Degraded'
-                    : monitorStatus;
+                  const status = getMonitorStatus(monitorIncident, monitor);
 
                   return { ...monitor, status };
                 })
