@@ -8,7 +8,7 @@ export interface NotificationInputInputType {
     | 'group'
     | 'textarea'
     | 'empty';
-  isDataField: boolean;
+  isDataField?: boolean;
   key: string;
   title: string;
   placeholder?: string;

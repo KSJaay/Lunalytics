@@ -19,6 +19,7 @@ import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
 import deleteConnectionMiddleware from '../middleware/user/connections/delete.js';
 import getAllConnectionMiddleware from '../middleware/user/connections/getAll.js';
 import createConnectionMiddleware from '../middleware/user/connections/create.js';
+import userUpdateSettings from '../middleware/user/update/settings.js';
 
 router.get('/', fetchUserMiddleware);
 
@@ -37,6 +38,8 @@ router.post('/update/username', userUpdateUsername);
 router.post('/update/password', userUpdatePassword);
 
 router.post('/update/avatar', userUpdateAvatar);
+
+router.post('/update/settings', userUpdateSettings);
 
 router.get('/team', teamMembersListMiddleware);
 

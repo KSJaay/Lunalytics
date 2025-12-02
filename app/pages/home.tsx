@@ -6,7 +6,6 @@ import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
-// import { FaEllipsisVertical } from 'react-icons/fa6';
 
 // import local files
 import useContextStore from '../context';
@@ -22,6 +21,7 @@ import MonitorConfigureModal from '../components/modal/monitor/configure';
 import NavigationMonitorInfo from '../components/navigation/info/monitor';
 import useScreenSize from '../hooks/useScreenSize';
 import { filterData } from '../../shared/utils/search';
+import HomeMenu from '../components/home/menu';
 
 const Home = () => {
   const {
@@ -96,9 +96,7 @@ const Home = () => {
           >
             {t('home.monitor.add')}
           </Button>
-          {/* <div className="monitor-left-menu">
-            <FaEllipsisVertical size={20} />
-          </div> */}
+          <HomeMenu />
         </div>
       }
       rightChildren={

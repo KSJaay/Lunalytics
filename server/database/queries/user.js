@@ -79,7 +79,7 @@ export const registerSsoUser = async (data) => {
 };
 
 export const getUserByEmail = async (email) => {
-  return SQLite.client('user')
+  let user = await SQLite.client('user')
     .where({ email })
     .select(
       'email',
@@ -89,25 +89,20 @@ export const getUserByEmail = async (email) => {
       'permission',
       'createdAt',
       'isOwner',
-      'sso'
+      'sso',
+      'settings'
     )
     .first();
-};
 
-export const emailExists = async (email) => {
-  return SQLite.client('user')
-    .where({ email })
-    .select(
-      'email',
-      'displayName',
-      'avatar',
-      'isVerified',
-      'permission',
-      'createdAt',
-      'isOwner',
-      'sso'
-    )
-    .first();
+  if (user && user.settings) {
+    try {
+      user.settings = JSON.parse(user.settings);
+    } catch {
+      user.settings = {};
+    }
+  }
+
+  return user;
 };
 
 export const emailIsOwner = async (email) => {
@@ -115,7 +110,7 @@ export const emailIsOwner = async (email) => {
 };
 
 export const ownerExists = async () => {
-  return SQLite?.client('user')
+  let user = await SQLite?.client('user')
     .where({ permission: oldPermsToFlags[1] })
     .select(
       'email',
@@ -125,9 +120,20 @@ export const ownerExists = async () => {
       'permission',
       'createdAt',
       'isOwner',
-      'sso'
+      'sso',
+      'settings'
     )
     .first();
+
+  if (user && user.settings) {
+    try {
+      user.settings = JSON.parse(user.settings);
+    } catch {
+      user.settings = {};
+    }
+  }
+
+  return user;
 };
 
 export const getUserPasswordUsingEmail = async (email) => {
@@ -209,6 +215,12 @@ export const updateUserPassword = (email, password) => {
   return SQLite.client('user')
     .where({ email })
     .update({ password: hashedPassword });
+};
+
+export const updateUserSettings = (email, settings) => {
+  return SQLite.client('user')
+    .where({ email })
+    .update({ settings: JSON.stringify(settings) });
 };
 
 export const resetDemoUser = async () => {
