@@ -7,4 +7,5 @@ export const cleanMonitorForStatusPage = (monitor) => ({
   createdAt: monitor.createdAt,
   paused: monitor.paused == '1',
   icon: parseJsonOrArray(monitor.icon),
+  isDown: monitor.isDown ?? false,
 });

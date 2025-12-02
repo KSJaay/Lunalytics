@@ -13,6 +13,7 @@ const StatusPageHeader = ({
   homepageUrl = '/',
   logo = '/logo.svg',
   titleText = 'Lunalytics',
+  lastUpdated = new Date().toISOString(),
 }) => {
   const orders = useMemo(() => {
     const positions = [];
@@ -57,7 +58,7 @@ const StatusPageHeader = ({
         logo={logo}
         titleText={titleText}
       />
-      <StatusPageHeaderStatus status={status} />
+      <StatusPageHeaderStatus status={status} lastUpdated={lastUpdated} />
 
       {orders.map((order, index) => (
         <div key={index} style={{ order: order }}></div>

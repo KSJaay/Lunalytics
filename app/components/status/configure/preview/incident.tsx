@@ -1,3 +1,5 @@
+import '../layout/incidents/styles.scss';
+
 // import local files
 import StatusIncidentBasic from '../layout/incidents/design/basic';
 import StatusIncidentPretty from '../layout/incidents/design/pretty';

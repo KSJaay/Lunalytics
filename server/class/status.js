@@ -16,6 +16,7 @@ export const cleanStatusPage = (status) => ({
   layout: parseJson(status.layout, true),
   email: status.email,
   createdAt: status.createdAt,
+  lastUpdated: status.lastUpdated,
 });
 
 export const cleanStatusPageWithMonitors = (status) => ({
@@ -32,4 +33,5 @@ export const cleanStatusApiResponse = (data) => ({
   monitors: data.monitors,
   incidents: data.incidents,
   heartbeats: data.heartbeats,
+  lastUpdated: data.lastUpdated,
 });
