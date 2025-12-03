@@ -114,10 +114,7 @@ const NavigationReorderModal = ({
         </>
       }
     >
-      <div
-        style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}
-        ref={container}
-      >
+      <div className="nrm-container" ref={container}>
         {monitorOrder.map((item) => {
           const monitor = allMonitors.find(
             (m) => m.monitorId === item.monitorId
@@ -127,49 +124,19 @@ const NavigationReorderModal = ({
 
           return (
             <div data-swapy-slot={item.monitorId} key={item.monitorId}>
-              <div
-                style={{
-                  display: 'flex',
-                  border: '2px solid var(--accent-700)',
-                  padding: '8px 12px',
-                  borderRadius: '8px',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  backgroundColor: 'var(--accent-800)',
-                }}
-                data-swapy-item={item.monitorId}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: '6px',
-                    fontSize: 'var(--font-lg)',
-                  }}
-                >
-                  <img
-                    src={monitor.icon.url}
-                    alt={monitor.name}
-                    style={{ width: '24px', height: '24px' }}
-                  />
+              <div className="nrm-item" data-swapy-item={item.monitorId}>
+                <div className="nrm-name">
+                  <img src={monitor.icon.url} alt={monitor.name} />
                   <div>{monitor.name}</div>
                 </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '4px',
-                  }}
-                >
+                <div className="nrm-actions">
                   {/* {monitorOrder.find((m) => m.monitorId === item.monitorId)
                     ?.isHidden ? (
                     <IoMdEyeOff size={24} />
                   ) : (
                     <IoMdEye size={24} />
                   )} */}
-                  <PiDotsSixVerticalBold
-                    style={{ width: '24px', height: '24px' }}
-                  />
+                  <PiDotsSixVerticalBold />
                 </div>
               </div>
             </div>

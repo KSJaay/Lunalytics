@@ -72,7 +72,9 @@ const HomeMonitorsList = ({
             </div>
             <div>
               <div>{monitor.name}</div>
-              <span>{monitor.url}</span>
+              <span>
+                {monitor.type === 'push' ? 'Passive monitor' : monitor.url}
+              </span>
             </div>
           </div>
           <div className="pill-container">
