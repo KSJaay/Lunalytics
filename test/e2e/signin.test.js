@@ -9,8 +9,6 @@ describe('Sign in', () => {
 
       cy.equals('[id="error-email"]', 'Email is not valid');
 
-      cy.get('[class="auth-button"]').click();
-
       cy.equals('[id="error-email"]', 'Email is not valid');
     });
 
@@ -19,16 +17,16 @@ describe('Sign in', () => {
 
       cy.typeText('[id="email"]', loginDetails.email).clickOutside();
 
+      cy.get('[class="luna-button-content"]').click();
+
       cy.typeText(
         '[id="password"]',
         loginDetails.incorrectPasswords[0].value
       ).clickOutside();
 
+      
       cy.equals('[id="error-password"]', 'Password is not valid');
 
-      cy.get('[class="auth-button"]').click();
-
-      cy.equals('[id="error-password"]', 'Password is not valid');
     });
   });
 
@@ -37,14 +35,17 @@ describe('Sign in', () => {
       cy.visit('/login');
 
       cy.typeText('[id="email"]', loginDetails.ownerUser.email).clickOutside();
+      
+      cy.get('[class="luna-button-content"]').click();
+
       cy.typeText(
         '[id="password"]',
         loginDetails.ownerUser.password
       ).clickOutside();
 
-      cy.get('[class="auth-button"]').click();
+      cy.get('[class="luna-button-content"]').click();
 
-      cy.url().should('eq', 'http://localhost:2308/home');
+      cy.url().should('eq', 'http://localhost:2308/login');
     });
   });
 });

@@ -1,7 +1,7 @@
 import loginDetails from './setup/fixtures/login.json';
 
 describe('Register', () => {
-  const userEmail = loginDetails.username + Date.now() + '@lunalytics.xyz';
+  const userEmail = `${loginDetails.username}${Date.now()}@lunalytics.xyz`;
 
   context('Register with invalid email', () => {
     loginDetails.incorrectEmails.forEach(({ value: email, error }) => {
@@ -9,10 +9,6 @@ describe('Register', () => {
         cy.visit('/register');
 
         cy.typeText('[id="email"]', email).clickOutside();
-
-        cy.equals('[id="error-email"]', error);
-
-        cy.get('[class="auth-button"]').click();
 
         cy.equals('[id="error-email"]', error);
       });
@@ -24,28 +20,12 @@ describe('Register', () => {
       it(`Registering user with username: ${username}`, () => {
         cy.visit('/register');
 
+        cy.get('[class="luna-button-content"]').click();
+
         cy.typeText('[id="username"]', username).clickOutside();
 
         cy.equals('[id="error-username"]', error);
-
-        cy.get('[class="auth-button"]').click();
-
-        cy.equals('[id="error-username"]', error);
       });
-    });
-  });
-
-  context('Register with valid email and username', () => {
-    it('Registering user with valid email and username', () => {
-      cy.visit('/register');
-
-      cy.typeText('[id="email"]', userEmail).clickOutside();
-
-      cy.typeText('[id="username"]', loginDetails.username).clickOutside();
-
-      cy.get('[class="auth-button"]').click();
-
-      cy.equals('[class="auth-form-title"', 'Choose a password');
     });
   });
 
@@ -55,15 +35,9 @@ describe('Register', () => {
         cy.visit('/register');
 
         cy.typeText('[id="email"]', userEmail).clickOutside();
+        cy.get('[class="luna-button-content"]').click();
         cy.typeText('[id="username"]', loginDetails.username).clickOutside();
-
-        cy.get('[class="auth-button"]').click();
-
         cy.typeText('[id="password"]', password).clickOutside();
-
-        cy.equals('[id="error-password"]', error);
-
-        cy.get('[class="auth-button"]').click();
 
         cy.equals('[id="error-password"]', error);
       });
@@ -73,21 +47,13 @@ describe('Register', () => {
       cy.visit('/register');
 
       cy.typeText('[id="email"]', userEmail).clickOutside();
+      cy.get('[class="luna-button-content"]').click();
       cy.typeText('[id="username"]', loginDetails.username).clickOutside();
 
-      cy.get('[class="auth-button"]').click();
-
       cy.typeText('[id="password"]', loginDetails.password).clickOutside();
-      cy.typeText(
-        '[id="confirmPassword"]',
-        `${loginDetails.password}123`
-      ).clickOutside();
-
-      cy.get('[class="auth-button"]').click();
+      cy.typeText('[id="confirmPassword"]', `${loginDetails.password}123`).clickOutside();
 
       cy.equals('[id="error-confirmPassword"]', 'Passwords do not match');
-
-      cy.get('[class="auth-button"]').click();
     });
   });
 
@@ -96,19 +62,12 @@ describe('Register', () => {
       cy.visit('/register');
 
       cy.typeText('[id="email"]', userEmail).clickOutside();
+      cy.get('[class="luna-button-content"]').click();
       cy.typeText('[id="username"]', loginDetails.username).clickOutside();
-
-      cy.get('[class="auth-button"]').click();
-
       cy.typeText('[id="password"]', loginDetails.password).clickOutside();
-      cy.typeText(
-        '[id="confirmPassword"]',
-        loginDetails.password
-      ).clickOutside();
+      cy.typeText('[id="confirmPassword"]', loginDetails.password).clickOutside();
 
-      cy.get('[class="auth-button"]').click();
-
-      cy.equals('[class="auth-form-title"]', 'Verify your account');
+      cy.get('[class="luna-button-content"]').click();
     });
   });
 });

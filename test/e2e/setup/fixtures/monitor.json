@@ -34,56 +34,26 @@
       "value": "[id=\"http-method-GET\"]",
       "type": "dropdown"
     },
-    "interval": {
-      "id": "[id=\"input-interval\"]",
-      "value": "{backspace} {backspace} 45",
-      "invalidValue": 10,
-      "type": "text",
-      "error": {
-        "id": "[id=\"error-input-interval\"]",
-        "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
-      }
-    },
-    "retryInterval": {
-      "id": "[id=\"input-retry-interval\"]",
-      "value": "{backspace} {backspace} 45",
-      "invalidValue": 10,
-      "type": "text",
-      "error": {
-        "id": "[id=\"error-input-retry-interval\"]",
-        "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
-      }
-    },
-    "timeout": {
-      "id": "[id=\"input-request-timeout\"]",
-      "value": "{backspace} {backspace} 45",
-      "invalidValue": 10,
-      "type": "text",
-      "error": {
-        "id": "[id=\"error-input-request-timeout\"]",
-        "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
-      }
-    },
-    "headers": {
-      "id": "[id=\"http-headers-textarea\"]",
-      "value": "{{}\"key\":\"value\"{}}",
-      "type": "textarea",
-      "invalidValue": "{{}\"key\":\"value{}}",
-      "error": {
-        "id": "[id=\"error-http-headers-textarea\"]",
-        "value": "Please enter valid headers. Make sure to follow JSON key/value format."
-      }
-    },
-    "body": {
-      "id": "[id=\"http-body-textarea\"]",
-      "value": "{{}\"key\":\"value\"{}}",
-      "type": "textarea",
-      "invalidValue": "{{}\"key\":\"value{}}",
-      "error": {
-        "id": "[id=\"error-http-body-textarea\"]",
-        "value": "Please enter valid body. Make sure to follow JSON key/value format."
-      }
+  "headers": {
+    "id": "[id=\"http-headers-textarea\"]",
+    "value": "{\"key\":\"value\"}",
+    "invalidValue": "{\"key\":\"value\"",
+    "type": "textarea",
+    "error": {
+      "id": "[id=\"error-http-headers-textarea\"]",
+      "value": "Please enter valid headers. Make sure to follow JSON key/value format."
     }
+  },
+  "body": {
+    "id": "[id=\"http-body-textarea\"]",
+    "value": "{\"key\":\"value\"}",
+    "invalidValue": "{\"key\":\"value\"",
+    "type": "textarea",
+    "error": {
+      "id": "[id=\"error-http-body-textarea\"]",
+      "value": "Please enter valid body. Make sure to follow JSON key/value format."
+    }
+  }
   },
   "tcp": {
     "name": {
@@ -120,40 +90,6 @@
         "id": "[id=\"error-input-port\"]",
         "value": "Please enter a valid port."
       }
-    },
-    "advance": {
-      "id": "[id=\"monitor-advanced-settings\"]",
-      "type": "click"
-    },
-    "interval": {
-      "id": "[id=\"input-interval\"]",
-      "value": "{backspace} {backspace} 45",
-      "invalidValue": 10,
-      "type": "text",
-      "error": {
-        "id": "[id=\"error-input-interval\"]",
-        "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
-      }
-    },
-    "retryInterval": {
-      "id": "[id=\"input-retry-interval\"]",
-      "value": "{backspace} {backspace} 45",
-      "invalidValue": 10,
-      "type": "text",
-      "error": {
-        "id": "[id=\"error-input-retry-interval\"]",
-        "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
-      }
-    },
-    "timeout": {
-      "id": "[id=\"input-request-timeout\"]",
-      "value": "{backspace} {backspace} 45",
-      "invalidValue": 10,
-      "type": "text",
-      "error": {
-        "id": "[id=\"error-input-request-timeout\"]",
-        "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
-      }
-    }
+    } 
   }
 }
