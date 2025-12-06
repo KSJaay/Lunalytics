@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 7
+    },
+    "auditLog": "C:\\Users\\Uchiha\\Desktop\\Lunalytics\\server\\notifications\\logs\\.3aca977bccfd5c4de00854e9e473c1db131f557c-audit.json",
+    "files": [
+        {
+            "date": 1764968616352,
+            "name": "C:\\Users\\Uchiha\\Desktop\\Lunalytics\\server\\notifications\\logs\\log-49-2025.log",
+            "hash": "aef1e73cc63a5272895c5d7c76c6469891e5d2f25589d46a0bffdf9867a3edb6"
+        }
+    ],
+    "hashType": "sha256"
+}
