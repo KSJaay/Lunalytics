@@ -94,7 +94,7 @@ jobs:
           {
             "database": {
               "type": "sqlite",
-              "name": "test_lunalytics.db",
+              "name": "e2etest.db",
               "path": "./data"
             },
             "server": {
@@ -104,20 +104,20 @@ jobs:
           }
           EOF
 
-      - name: Start test server in background
+      - name: Start test server directly (bypassing test:db)
         run: |
-          npm run test:server > server.log 2>&1 &
+          NODE_ENV=test node server/index.js > server.log 2>&1 &
           echo $! > server.pid
-        env:
-          NODE_ENV: test
 
       - name: Wait for server to be ready
         run: |
+          echo "Waiting for server to start..."
           npx wait-on http://localhost:3000 --timeout 60000 || {
-            echo "Server failed to start. Server logs:"
+            echo "❌ Server failed to start. Server logs:"
             cat server.log
             exit 1
           }
+          echo "✅ Server is ready!"
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
