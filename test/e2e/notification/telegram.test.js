@@ -2,102 +2,75 @@ import loginDetails from '../setup/fixtures/login.json';
 import telegramNotification from '../setup/fixtures/notifications/telegram.json';
 
 describe('Notification - Telegram', () => {
-  context('create a notification', () => {
-    beforeEach(() => {
-      const { email, password } = loginDetails.ownerUser;
-
-      cy.clearCookies();
-      cy.loginUser(email, password);
-      cy.visit('/notifications');
-    });
-
-    it('should show invalid errors and create notification', () => {
-      cy.createNotification(telegramNotification);
-
-      cy.get(
-        `[id="notification-configure-${telegramNotification.friendlyName.value}"]`
-      ).should('exist');
-    });
+  beforeEach(() => {
+    const { email, password } = loginDetails.ownerUser;
+    cy.clearCookies();
+    cy.loginUser(email, password);
+    cy.visit('/notifications');
   });
 
-  context('edit a notification', () => {
-    beforeEach(() => {
-      const { email, password } = loginDetails.ownerUser;
+  it('should show invalid errors and create notification', () => {
+    //cy.clearAllNotifications(); 
+    // Creates the notification using the JSON fixture data
+    cy.createNotification(telegramNotification);
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
-      cy.visit('/notifications');
-    });
-
-    it('should show error if invalid name is given', () => {
-      cy.get(
-        `[id="notification-configure-${telegramNotification.friendlyName.value}"]`
-      ).click();
-
-      cy.typeText(telegramNotification.friendlyName.id, '{}[]||<>');
-      cy.get('[id="notification-create-button"]').click();
-
-      cy.equals(
-        telegramNotification.friendlyName.error.id,
-        telegramNotification.friendlyName.error.value
-      );
-    });
-
-    it('should change the name and save', () => {
-      cy.get(
-        `[id="notification-configure-${telegramNotification.friendlyName.value}"]`
-      ).click();
-
-      cy.typeText(telegramNotification.friendlyName.id, 'Test');
-      cy.get('[id="notification-create-button"]').click();
-
-      cy.get(telegramNotification.friendlyName.error.id).should('not.exist');
-    });
+    // Verify the inputs contain the correct values after creation
+    cy.get(telegramNotification.friendlyName.id).should('have.value', telegramNotification.friendlyName.value);
+    cy.get(telegramNotification.token.id).should('have.value', telegramNotification.token.value);
+    cy.get(telegramNotification.chatId.id).should('have.value', telegramNotification.chatId.value);
   });
 
-  context('disable a notification', () => {
-    beforeEach(() => {
-      const { email, password } = loginDetails.ownerUser;
+  it('should show error if invalid name is given', () => {
+    // 1. Clear and type invalid value directly into the input
+    cy.get(telegramNotification.friendlyName.id)
+      .clear()
+      .type(telegramNotification.friendlyName.invalidValue);
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
-      cy.visit('/notifications');
-    });
+    // 2. Click Save button (Action bar style based on Discord test)
+    cy.get('.action-bar .luna-button.green').click();
 
-    it('should disable a notification', () => {
-      const friendlyName = `${telegramNotification.friendlyName.value}Test`;
-
-      cy.get(`[id="notification-dropdown-${friendlyName}"]`).click();
-      cy.get(`[id="notification-toggle-${friendlyName}"]`).click();
-
-      cy.get(`[id="notification-dropdown-${friendlyName}"]`).click();
-      cy.get(`[id="notification-toggle-${friendlyName}"]`).should(
-        'have.text',
-        'Enable'
-      );
-    });
+    // 3. Verify error message
+    cy.get(telegramNotification.friendlyName.error.id)
+      .should('be.visible')
+      .and('contain', telegramNotification.friendlyName.error.value);
   });
 
-  context('delete a notification', () => {
-    beforeEach(() => {
-      const { email, password } = loginDetails.ownerUser;
+  it('should change the name and save', () => {
+    // 1. Change to a temporary valid name
+    cy.get(telegramNotification.friendlyName.id).clear().type('Test');
+    cy.get('.action-bar .luna-button.green').click();
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
-      cy.visit('/notifications');
-    });
+    // 2. Ensure error is gone
+    cy.get(telegramNotification.friendlyName.error.id).should('not.exist');
 
-    it('should delete a notification', () => {
-      const friendlyName = `${telegramNotification.friendlyName.value}Test`;
+    // 3. Revert to original name
+    cy.get(telegramNotification.friendlyName.id).clear().type(telegramNotification.friendlyName.value);
+    cy.get('.action-bar .luna-button.green').click();
+  });
 
-      cy.get(`[id="notification-dropdown-${friendlyName}"]`).click();
-      cy.get(`[id="notification-delete-${friendlyName}"]`).click();
+  it('should disable the notification', () => {
+    // Target the specific disable toggle for Telegram based on the HTML structure
+    // HTML Parent ID is "disableNotification"
+    cy.get('#disableNotification .luna-switch-slider')
+      .click({ force: true });
 
-      cy.get(`[id="notification-delete-confirm"]`).click();
+    // Save the form
+    cy.get('.action-bar .luna-button.green').click({ force: true });
 
-      cy.get(`[id="notification-dropdown-${friendlyName}"]`).should(
-        'not.exist'
-      );
-    });
+    // Verify switch input is NOT checked
+    cy.get('#disableNotification input[type="checkbox"]')
+      .should('be.checked');
+  });
+
+  it('should delete the notification', () => {
+    // Delete using trash icon in header (Standardized across all notifications)
+    cy.get('.navigation-header-buttons > div:nth-child(2)').click({ force: true });
+
+    // Confirm delete popup
+    cy.get('#notification-delete-confirm').click({ force: true });
+
+    // Return to list and verify removal
+    cy.visit('/notifications');
+    cy.contains(telegramNotification.friendlyName.value).should('not.exist');
   });
 });

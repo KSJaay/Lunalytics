@@ -1,9 +1,19 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import { deleteCookie } from '../../../../shared/utils/cookies';
-import logout from '../../../../server/middleware/auth/logout';
-import { createURL } from '../../../../shared/utils/url';
 
-vi.mock('../../../../shared/utils/cookies');
+// --- 1. DEFINE MOCKS ---
+// Mock the cookies utility before importing it
+jest.mock('../../../../shared/utils/cookies.js', () => ({
+  deleteCookie: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import logout from '../../../../server/middleware/auth/logout.js';
+import { deleteCookie } from '../../../../shared/utils/cookies.js';
+import { createURL } from '../../../../shared/utils/url.js';
 
 describe('Logout - Middleware', () => {
   let fakeRequest;
@@ -13,12 +23,11 @@ describe('Logout - Middleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    deleteCookie = vi.fn();
-    fakeResponse.redirect = vi.fn();
-  });
+    // Spy on the redirect method
+    fakeResponse.redirect = jest.fn();
 
-  afterEach(() => {
-    vi.restoreAllMocks();
+    // Clear mock history
+    jest.clearAllMocks();
   });
 
   it('should call deleteCookie with response and "session_token"', async () => {

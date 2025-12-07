@@ -1,29 +1,58 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
+import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Database (Prevents potential ESM/nanoid crashes)
+jest.mock('../../../../server/database/queries/incident.js', () => ({
+  fetchIncident: jest.fn(),
+  updateIncident: jest.fn(),
+}));
+
+// Mock Cache
+jest.mock('../../../../server/cache/status.js', () => ({
+  __esModule: true,
+  default: {
+    addIncident: jest.fn(),
+  },
+}));
+
+// Mock Error Handler
+jest.mock('../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import deleteIncidentMessageMiddleware from '../../../../server/middleware/incident/deleteMessage.js';
 import {
   fetchIncident,
   updateIncident,
 } from '../../../../server/database/queries/incident.js';
 import statusCache from '../../../../server/cache/status.js';
 import { handleError } from '../../../../server/utils/errors.js';
-import deleteIncidentMessageMiddleware from '../../../../server/middleware/incident/deleteMessage.js';
-import { createRequest, createResponse } from 'node-mocks-http';
-
-vi.mock('../../../../server/database/queries/incident.js');
-vi.mock('../../../../server/cache/status.js');
-vi.mock('../../../../server/utils/errors.js');
 
 describe('deleteIncidentMessageMiddleware', () => {
   let fakeRequest, fakeResponse;
+
   beforeEach(() => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
     fakeRequest.body = { incidentId: 'id', position: 0 };
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.json = vi.fn();
+    
+    // Setup spies
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.json = jest.fn();
+
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should return 400 if incidentId is missing', async () => {
@@ -49,6 +78,7 @@ describe('deleteIncidentMessageMiddleware', () => {
   });
 
   it('should return 404 if position is invalid', async () => {
+    // Return empty messages array, so position 0 is invalid
     fetchIncident.mockResolvedValue({ messages: [] });
 
     await deleteIncidentMessageMiddleware(fakeRequest, fakeResponse);
@@ -59,10 +89,10 @@ describe('deleteIncidentMessageMiddleware', () => {
     });
   });
 
-  it('should return 404 if only one message', async () => {
-    fetchIncident.mockResolvedValue({ messages: [{}, {}] });
-
+  it('should return 404 if only one message (cannot delete last message)', async () => {
     fakeRequest.body.position = 0;
+    
+    // Return array with only 1 item
     fetchIncident.mockResolvedValue({ messages: [{}] });
 
     await deleteIncidentMessageMiddleware(fakeRequest, fakeResponse);
@@ -74,6 +104,7 @@ describe('deleteIncidentMessageMiddleware', () => {
   });
 
   it('should update incident and return data if valid', async () => {
+    // Setup: 2 messages. We delete index 0 ('old'), leaving index 1 ('new').
     const responseQuery = {
       messages: [{ status: 'old' }, { status: 'new' }],
       status: 'unknown',
@@ -81,13 +112,14 @@ describe('deleteIncidentMessageMiddleware', () => {
     };
 
     fetchIncident.mockResolvedValue(responseQuery);
-
     updateIncident.mockResolvedValue({ updated: true });
 
     await deleteIncidentMessageMiddleware(fakeRequest, fakeResponse);
 
     expect(updateIncident).toHaveBeenCalled();
     expect(statusCache.addIncident).toHaveBeenCalled();
+    
+    // Expect the logic to have picked up the status from the remaining message ('new')
     expect(fakeResponse.json).toHaveBeenCalledWith({
       ...responseQuery,
       status: 'new',

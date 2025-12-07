@@ -1,14 +1,33 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import axios from 'axios';
 import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+jest.mock('../../../../../server/database/queries/provider.js', () => ({
+  fetchProvider: jest.fn(),
+}));
+
+jest.mock('../../../../../server/utils/config.js', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+  },
+}));
+
+jest.mock('../../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+jest.mock('axios');
+
+// --- 2. IMPORT FILES ---
 import config from '../../../../../server/utils/config.js';
 import { handleError } from '../../../../../server/utils/errors.js';
 import { fetchProvider } from '../../../../../server/database/queries/provider.js';
 import googleCallback from '../../../../../server/middleware/auth/callback/google.js';
-
-vi.mock('axios');
-vi.mock('../../../../../server/database/queries/provider.js');
-vi.mock('../../../../../server/utils/config.js');
-vi.mock('../../../../../server/utils/errors.js');
 
 describe('googleCallback', () => {
   let fakeRequest, fakeResponse, fakeNext;
@@ -18,15 +37,17 @@ describe('googleCallback', () => {
     fakeResponse = createResponse();
 
     fakeRequest.query = { code: 'abc' };
-    fakeResponse.redirect = vi.fn();
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.send = vi.fn();
+    
+    // Setup spies
+    fakeResponse.redirect = jest.fn();
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.send = jest.fn();
     fakeResponse.locals = {};
-    fakeNext = vi.fn();
-  });
 
-  afterEach(() => {
-    vi.clearAllMocks();
+    fakeNext = jest.fn();
+    
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   it('should return 400 if no code provided', async () => {
@@ -49,15 +70,23 @@ describe('googleCallback', () => {
   });
 
   it('should redirect if user not verified', async () => {
+    // Mock Provider
     fetchProvider.mockResolvedValue({
       provider: 'google',
       clientId: 'id',
       clientSecret: 'secret',
     });
 
+    // Mock Config
     config.get.mockReturnValue('https://site.com');
+
+    // Mock Token Exchange
     axios.post.mockResolvedValue({ data: { access_token: 'token' } });
-    axios.get.mockResolvedValue({ data: { verified_email: false } });
+    
+    // Mock User Info (Unverified)
+    axios.get.mockResolvedValue({ 
+      data: { verified_email: false, email: 'test@test.com' } 
+    });
 
     await googleCallback(fakeRequest, fakeResponse, fakeNext);
 
@@ -75,6 +104,8 @@ describe('googleCallback', () => {
 
     config.get.mockReturnValue('https://site.com');
     axios.post.mockResolvedValue({ data: { access_token: 'token' } });
+    
+    // Mock User Info (Verified)
     axios.get.mockResolvedValue({
       data: { picture: 'p', id: 'i', email: 'e', verified_email: true },
     });
@@ -88,6 +119,7 @@ describe('googleCallback', () => {
       username: 'unknown',
       provider: 'google',
     });
+    
     expect(fakeNext).toHaveBeenCalled();
   });
 

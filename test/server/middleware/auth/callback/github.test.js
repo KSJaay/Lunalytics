@@ -1,32 +1,55 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import axios from 'axios';
 import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+// These must be defined before the actual file imports to stop config.js from crashing.
+
+jest.mock('../../../../../server/database/queries/provider.js', () => ({
+  fetchProvider: jest.fn(),
+}));
+
+jest.mock('../../../../../server/utils/config.js', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+  },
+}));
+
+jest.mock('../../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+jest.mock('axios');
+
+// --- 2. IMPORT FILES ---
 import config from '../../../../../server/utils/config.js';
 import { handleError } from '../../../../../server/utils/errors.js';
 import { fetchProvider } from '../../../../../server/database/queries/provider.js';
 import githubCallback from '../../../../../server/middleware/auth/callback/github.js';
 
-vi.mock('axios');
-vi.mock('../../../../../server/database/queries/provider.js');
-vi.mock('../../../../../server/utils/config.js');
-vi.mock('../../../../../server/utils/errors.js');
-
 describe('githubCallback', () => {
   let fakeRequest, fakeResponse, fakeNext;
+
   beforeEach(() => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
     fakeRequest.query = { code: 'abc' };
-    fakeResponse.redirect = vi.fn();
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.send = vi.fn();
+    
+    // Setup spies
+    fakeResponse.redirect = jest.fn();
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.send = jest.fn();
     fakeResponse.locals = {};
 
-    fakeNext = vi.fn();
-  });
+    fakeNext = jest.fn();
 
-  afterEach(() => {
-    vi.clearAllMocks();
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   it('should return 400 if no code provided', async () => {
@@ -46,7 +69,7 @@ describe('githubCallback', () => {
     expect(fakeResponse.redirect).toHaveBeenCalledWith('/auth/error');
   });
 
-  it('should redirect if not a user', async () => {
+  it('should redirect if not a user (e.g. Bot)', async () => {
     fetchProvider.mockResolvedValue({
       provider: 'github',
       clientId: 'id',
@@ -54,7 +77,11 @@ describe('githubCallback', () => {
     });
 
     config.get.mockReturnValue('https://site.com');
+    
+    // 1. Post to get Token
     axios.post.mockResolvedValue({ data: { access_token: 'token' } });
+    
+    // 2. Get User Profile (Return Bot)
     axios.get.mockResolvedValueOnce({ data: { type: 'Bot' } });
 
     await githubCallback(fakeRequest, fakeResponse, fakeNext);
@@ -64,7 +91,7 @@ describe('githubCallback', () => {
     );
   });
 
-  it('should redirect if missing email', async () => {
+  it('should redirect if missing valid email', async () => {
     fetchProvider.mockResolvedValue({
       provider: 'github',
       clientId: 'id',
@@ -73,11 +100,15 @@ describe('githubCallback', () => {
 
     config.get.mockReturnValue('https://site.com');
     axios.post.mockResolvedValue({ data: { access_token: 'token' } });
+    
+    // 1. Get User Profile (Valid)
     axios.get.mockResolvedValueOnce({
       data: { type: 'User', id: 'i', login: 'l', avatar_url: 'a' },
     });
+    
+    // 2. Get Emails (None primary/verified)
     axios.get.mockResolvedValueOnce({
-      data: [{ primary: false, verified: false }],
+      data: [{ primary: false, verified: false, email: 'bad@email.com' }],
     });
 
     await githubCallback(fakeRequest, fakeResponse, fakeNext);
@@ -96,9 +127,13 @@ describe('githubCallback', () => {
 
     config.get.mockReturnValue('https://site.com');
     axios.post.mockResolvedValue({ data: { access_token: 'token' } });
+
+    // 1. Get User Profile
     axios.get.mockResolvedValueOnce({
       data: { type: 'User', id: 'i', login: 'l', avatar_url: 'a' },
     });
+
+    // 2. Get Emails (Valid)
     axios.get.mockResolvedValueOnce({
       data: [{ primary: true, verified: true, email: 'e' }],
     });

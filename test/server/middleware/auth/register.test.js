@@ -1,15 +1,37 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import register from '../../../../server/middleware/auth/register';
-import { registerUser } from '../../../../server/database/queries/user';
-import { setServerSideCookie } from '../../../../shared/utils/cookies';
-import { parseUserAgent } from '../../../../server/utils/uaParser';
-import { createUserSession } from '../../../../server/database/queries/session';
 
-vi.mock('../../../../server/database/queries/user');
-vi.mock('../../../../shared/utils/cookies');
-vi.mock('../../../../server/utils/uaParser');
-vi.mock('../../../../server/database/queries/session');
+
+jest.mock('../../../../server/database/queries/invite.js', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+jest.mock('../../../../server/database/queries/user.js', () => ({
+  registerUser: jest.fn(),
+}));
+
+jest.mock('../../../../shared/utils/cookies.js', () => ({
+  setServerSideCookie: jest.fn(),
+}));
+
+jest.mock('../../../../server/utils/uaParser.js', () => ({
+  parseUserAgent: jest.fn(),
+}));
+
+jest.mock('../../../../server/database/queries/session.js', () => ({
+  createUserSession: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import register from '../../../../server/middleware/auth/register.js';
+import { registerUser } from '../../../../server/database/queries/user.js';
+import { setServerSideCookie } from '../../../../shared/utils/cookies.js';
+import { parseUserAgent } from '../../../../server/utils/uaParser.js';
+import { createUserSession } from '../../../../server/database/queries/session.js';
 
 describe('Register - Middleware', () => {
   const fakeUserAgentData = {
@@ -30,46 +52,42 @@ describe('Register - Middleware', () => {
       username: 'KSJaay',
     };
 
-    vi.useFakeTimers({
-      now: new Date('2023-01-01T00:00:00.000Z').getTime(),
-    });
-
-    registerUser = vi.fn().mockReturnValue('test');
-    setServerSideCookie = vi.fn();
-    parseUserAgent = vi.fn().mockReturnValue(fakeUserAgentData);
-    createUserSession = vi.fn().mockReturnValue('test');
-
     fakeRequest.headers = {
       'user-agent': 'fakeUserAgent',
     };
+
+    // --- SETUP TIMERS & MOCKS ---
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2023-01-01T00:00:00.000Z'));
+
+    registerUser.mockResolvedValue('test'); 
+    createUserSession.mockResolvedValue('test');
+    parseUserAgent.mockReturnValue(fakeUserAgentData);
+    
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    jest.useRealTimers();
+    jest.clearAllMocks();
   });
 
   describe('when email, password, or username is invalid', () => {
     it('should return 422 when email is invalid', async () => {
       fakeRequest.body.email = '@lunalytics';
-
       await register(fakeRequest, fakeResponse);
-
       expect(fakeResponse.statusCode).toEqual(422);
     });
 
     it('should return 422 when password is invalid', async () => {
       fakeRequest.body.password = 'test';
-
       await register(fakeRequest, fakeResponse);
-
       expect(fakeResponse.statusCode).toEqual(422);
     });
 
     it('should return 422 when username is invalid', async () => {
       fakeRequest.body.username = '!"£$%^&*(){}[]';
-
       await register(fakeRequest, fakeResponse);
-
       expect(fakeResponse.statusCode).toEqual(422);
     });
   });
@@ -89,15 +107,11 @@ describe('Register - Middleware', () => {
 
     it('should call parseUserAgent with headers', async () => {
       await register(fakeRequest, fakeResponse);
-
-      expect(parseUserAgent).toHaveBeenCalledWith(
-        fakeRequest.headers['user-agent']
-      );
+      expect(parseUserAgent).toHaveBeenCalledWith(fakeRequest.headers['user-agent']);
     });
 
     it('should call createUserSession with email, device, and data', async () => {
       await register(fakeRequest, fakeResponse);
-
       expect(createUserSession).toHaveBeenCalledWith(
         fakeRequest.body.email.toLowerCase(),
         fakeUserAgentData.device,
@@ -107,7 +121,6 @@ describe('Register - Middleware', () => {
 
     it('should call setServerSideCookie with response, "session_token", and jwt', async () => {
       await register(fakeRequest, fakeResponse);
-
       expect(setServerSideCookie).toHaveBeenCalledWith(
         fakeResponse,
         'session_token',
@@ -118,7 +131,6 @@ describe('Register - Middleware', () => {
 
     it('should return 200 when user has been created', async () => {
       await register(fakeRequest, fakeResponse);
-
       expect(fakeResponse.statusCode).toEqual(200);
     });
   });

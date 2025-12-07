@@ -1,28 +1,55 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import logger from '../../../../server/utils/logger.js';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Server Errors
+jest.mock('../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// Mock Database Queries
+jest.mock('../../../../server/database/queries/notification.js', () => ({
+  fetchNotificationById: jest.fn(),
+}));
+
+// Mock Logger
+jest.mock('../../../../server/utils/logger.js', () => ({
+  __esModule: true,
+  default: {
+    error: jest.fn(),
+  },
+}));
+
+// --- 2. IMPORT FILES ---
+import NotificationGetUsingIdMiddleware from '../../../../server/middleware/notifications/getUsingId.js';
 import { handleError } from '../../../../server/utils/errors.js';
 import { fetchNotificationById } from '../../../../server/database/queries/notification.js';
-import NotificationGetUsingIdMiddleware from '../../../../server/middleware/notifications/getUsingId.js';
-
-vi.mock('../../../../server/utils/errors.js');
-vi.mock('../../../../server/database/queries/notification.js');
-vi.mock('../../../../server/utils/logger.js');
+import logger from '../../../../server/utils/logger.js';
 
 describe('NotificationGetUsingIdMiddleware', () => {
-  let fakeRequest, fakeResponse;
+  let fakeRequest;
+  let fakeResponse;
+
   beforeEach(() => {
+    // Reset mocks
+    jest.clearAllMocks();
+
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchNotificationById = vi.fn(function (id) {
-      return id === 'exists' ? { id: 'exists' } : null;
+    // Replicate logic: Return object if id is 'exists', else null
+    // Must return a Promise because DB queries are async
+    fetchNotificationById.mockImplementation((id) => {
+      return Promise.resolve(id === 'exists' ? { id: 'exists' } : null);
     });
-
-    logger.error = vi.fn();
   });
 
-  beforeEach(() => {
-    vi.clearAllMocks();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should return 200 and notification if found', async () => {
@@ -31,21 +58,30 @@ describe('NotificationGetUsingIdMiddleware', () => {
     await NotificationGetUsingIdMiddleware(fakeRequest, fakeResponse);
 
     expect(fetchNotificationById).toHaveBeenCalledWith('exists');
-    expect(fakeResponse._getStatusCode()).toBe(200);
-    expect(fakeResponse._getData()).toEqual({ id: 'exists' });
+    expect(fakeResponse.statusCode).toBe(200);
+
+    // FIX: Do NOT use JSON.parse here. _getData() is already the object.
+    const data = fakeResponse._getData();
+    expect(data).toEqual({ id: 'exists' });
+    
     expect(logger.error).not.toHaveBeenCalled();
     expect(handleError).not.toHaveBeenCalled();
   });
 
   it('should return 404 and log error if not found', async () => {
     fakeRequest.query = { notificationId: 'notfound' };
+    
     await NotificationGetUsingIdMiddleware(fakeRequest, fakeResponse);
 
     expect(fetchNotificationById).toHaveBeenCalledWith('notfound');
-    expect(fakeResponse._getStatusCode()).toBe(404);
-    expect(fakeResponse._getData()).toEqual({
+    expect(fakeResponse.statusCode).toBe(404);
+
+    // FIX: Do NOT use JSON.parse here.
+    const data = fakeResponse._getData();
+    expect(data).toEqual({
       message: 'Notification not found',
     });
+
     expect(logger.error).toHaveBeenCalledWith(
       'Notification - getById',
       expect.objectContaining({ notificationId: 'notfound' })
@@ -54,9 +90,8 @@ describe('NotificationGetUsingIdMiddleware', () => {
   });
 
   it('should call handleError if fetchNotificationById throws', async () => {
-    fetchNotificationById.mockImplementationOnce(() => {
-      throw new Error('fail');
-    });
+    // Simulate Async DB Failure
+    fetchNotificationById.mockRejectedValueOnce(new Error('fail'));
 
     fakeRequest.query = { notificationId: 'exists' };
 

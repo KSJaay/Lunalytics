@@ -1,12 +1,32 @@
-import config from '../../../../server/utils/config.js';
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+// Define these before imports to prevent config.js logger from crashing
+
+jest.mock('../../../../server/utils/config.js', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+  },
+}));
+
+jest.mock('../../../../shared/utils/authenication.js', () => ({
+  getAuthRedirectUrl: jest.fn(),
+}));
+
+jest.mock('../../../../server/database/queries/provider.js', () => ({
+  fetchProvider: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import config from '../../../../server/utils/config.js';
 import { getAuthRedirectUrl } from '../../../../shared/utils/authenication.js';
 import { fetchProvider } from '../../../../server/database/queries/provider.js';
 import redirectUsingProviderMiddleware from '../../../../server/middleware/auth/platform.js';
-
-vi.mock('../../../../server/utils/config.js');
-vi.mock('../../../../shared/utils/authenication.js');
-vi.mock('../../../../server/database/queries/provider.js');
 
 describe('redirectUsingProviderMiddleware', () => {
   let fakeRequest, fakeResponse;
@@ -16,13 +36,14 @@ describe('redirectUsingProviderMiddleware', () => {
     fakeResponse = createResponse();
 
     fakeRequest.params = { provider: 'google' };
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.send = vi.fn().mockReturnThis();
-    fakeResponse.redirect = vi.fn().mockReturnThis();
-  });
+    
+    // Setup spies
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.send = jest.fn().mockReturnThis();
+    fakeResponse.redirect = jest.fn().mockReturnThis();
 
-  afterEach(() => {
-    vi.restoreAllMocks();
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   it('should return 400 if no provider provided', async () => {
@@ -46,12 +67,16 @@ describe('redirectUsingProviderMiddleware', () => {
   });
 
   it('should redirect to provider URL if provider found', async () => {
+    // 1. Mock Database
     fetchProvider.mockResolvedValue({
       provider: 'google',
       clientId: 'abc',
     });
 
+    // 2. Mock Config
     config.get.mockReturnValue('https://site.com');
+    
+    // 3. Mock Auth Utils
     getAuthRedirectUrl.mockReturnValue('https://auth.url');
 
     await redirectUsingProviderMiddleware(fakeRequest, fakeResponse);

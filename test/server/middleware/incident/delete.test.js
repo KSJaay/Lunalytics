@@ -1,11 +1,28 @@
-import { afterEach } from 'vitest';
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import statusCache from '../../../../server/cache/status.js';
-import { deleteIncident } from '../../../../server/database/queries/incident.js';
-import deleteIncidentMiddleware from '../../../../server/middleware/incident/delete.js';
 
-vi.mock('../../../../server/database/queries/incident.js');
-vi.mock('../../../../server/cache/status.js');
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Database (Prevents potential ESM/nanoid crashes)
+jest.mock('../../../../server/database/queries/incident.js', () => ({
+  deleteIncident: jest.fn(),
+}));
+
+// Mock Cache
+jest.mock('../../../../server/cache/status.js', () => ({
+  __esModule: true,
+  default: {
+    deleteIncident: jest.fn(),
+  },
+}));
+
+// --- 2. IMPORT FILES ---
+import deleteIncidentMiddleware from '../../../../server/middleware/incident/delete.js';
+import { deleteIncident } from '../../../../server/database/queries/incident.js';
+import statusCache from '../../../../server/cache/status.js';
 
 describe('deleteIncidentMiddleware', () => {
   let fakeRequest, fakeResponse;
@@ -15,12 +32,17 @@ describe('deleteIncidentMiddleware', () => {
     fakeResponse = createResponse();
 
     fakeRequest.body = { incidentId: 'id' };
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.json = vi.fn();
+    
+    // Setup spies
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.json = jest.fn();
+
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should return 400 if incidentId is missing', async () => {
@@ -46,6 +68,7 @@ describe('deleteIncidentMiddleware', () => {
   });
 
   it('should handle errors and return 400', async () => {
+    // Force DB error
     deleteIncident.mockImplementation(() => {
       throw new Error('fail');
     });

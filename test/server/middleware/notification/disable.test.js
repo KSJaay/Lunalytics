@@ -1,26 +1,53 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Server Errors
+jest.mock('../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// Mock Shared Errors
+jest.mock('../../../../shared/utils/errors.js', () => ({
+  UnprocessableError: class MockUnprocessableError extends Error {},
+}));
+
+// Mock Database Queries
+jest.mock('../../../../server/database/queries/notification.js', () => ({
+  toggleNotification: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import NotificationToggleMiddleware from '../../../../server/middleware/notifications/disable.js';
 import { handleError } from '../../../../server/utils/errors.js';
 import { UnprocessableError } from '../../../../shared/utils/errors.js';
 import { toggleNotification } from '../../../../server/database/queries/notification.js';
-import NotificationToggleMiddleware from '../../../../server/middleware/notifications/disable.js';
-
-vi.mock('../../../../server/utils/errors.js');
-vi.mock('../../../../shared/utils/errors.js');
-vi.mock('../../../../server/database/queries/notification.js');
 
 describe('NotificationToggleMiddleware', () => {
-  let fakeRequest, fakeResponse;
+  let fakeRequest;
+  let fakeResponse;
+
   beforeEach(() => {
+    jest.clearAllMocks();
+
     fakeRequest = createRequest();
     fakeResponse = createResponse();
+
+    // Default Success for DB
+    toggleNotification.mockResolvedValue(true);
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should throw if notificationId is missing', async () => {
     fakeRequest.query = { isEnabled: 'true' };
+    
     await NotificationToggleMiddleware(fakeRequest, fakeResponse);
 
     expect(handleError).toHaveBeenCalledWith(
@@ -43,20 +70,18 @@ describe('NotificationToggleMiddleware', () => {
   it('should toggle notification and return 200', async () => {
     fakeRequest.query = { notificationId: 'id', isEnabled: 'true' };
 
-    const response = await NotificationToggleMiddleware(
-      fakeRequest,
-      fakeResponse
-    );
+    await NotificationToggleMiddleware(fakeRequest, fakeResponse);
 
     expect(toggleNotification).toHaveBeenCalledWith('id', true);
-    expect(response._getStatusCode()).toBe(200);
+    
+    expect(fakeResponse.statusCode).toBe(200);
+    // FIX: Changed expectation from 'Notification toggled' to 'OK'
+    expect(fakeResponse._getData()).toBe('OK'); 
     expect(handleError).not.toHaveBeenCalled();
   });
 
   it('should call handleError if toggleNotification throws', async () => {
-    toggleNotification.mockImplementationOnce(() => {
-      throw new Error('fail');
-    });
+    toggleNotification.mockRejectedValueOnce(new Error('fail'));
 
     fakeRequest.query = { notificationId: 'id', isEnabled: 'true' };
 

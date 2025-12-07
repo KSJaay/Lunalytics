@@ -1,27 +1,48 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import { handleError } from '../../../../server/utils/errors.js';
-import { fetchIncident } from '../../../../server/database/queries/incident.js';
-import fetchIncidentUsingId from '../../../../server/middleware/incident/getUsingId.js';
 
-vi.mock('../../../../server/database/queries/incident.js');
-vi.mock('../../../../server/utils/errors.js');
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Database (Prevents potential ESM/nanoid crashes)
+jest.mock('../../../../server/database/queries/incident.js', () => ({
+  fetchIncident: jest.fn(),
+}));
+
+// Mock Error Handler
+jest.mock('../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import fetchIncidentUsingId from '../../../../server/middleware/incident/getUsingId.js';
+import { fetchIncident } from '../../../../server/database/queries/incident.js';
+import { handleError } from '../../../../server/utils/errors.js';
 
 describe('fetchIncidentUsingId', () => {
   let fakeRequest, fakeResponse;
+
   beforeEach(() => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
     fakeRequest.query = { incidentId: 'id' };
-    fakeResponse.json = vi.fn();
-    fakeResponse.status = vi.fn().mockReturnThis();
+    
+    // Setup spies
+    fakeResponse.json = jest.fn();
+    fakeResponse.status = jest.fn().mockReturnThis();
+
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
-  it('should throw UnprocessableError if incidentId is missing', async () => {
+  it('should throw UnprocessableError (call handleError) if incidentId is missing', async () => {
     fakeRequest.query.incidentId = undefined;
 
     await fetchIncidentUsingId(fakeRequest, fakeResponse);

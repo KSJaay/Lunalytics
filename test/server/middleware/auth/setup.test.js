@@ -1,13 +1,38 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import { ownerExists } from '../../../../server/database/queries/user.js';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// [NEW] Mock Session to avoid 'nanoid' ESM crash
+jest.mock('../../../../server/database/queries/session.js', () => ({
+  __esModule: true,
+  // Mock any functions exported by session.js that setup.js might use
+  createUserSession: jest.fn(),
+  getUniqueSessionId: jest.fn(),
+}));
+
+jest.mock('../../../../server/utils/config.js', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+  },
+}));
+
+jest.mock('../../../../server/database/queries/user.js', () => ({
+  ownerExists: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
 import setupMiddleware from '../../../../server/middleware/auth/setup.js';
 import config from '../../../../server/utils/config.js';
-
-vi.mock('../../../../server/utils/config.js');
-vi.mock('../../../../server/database/queries/user.js');
+import { ownerExists } from '../../../../server/database/queries/user.js';
 
 describe('setupMiddleware', () => {
   let fakeRequest, fakeResponse;
+
   beforeEach(() => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
@@ -24,15 +49,17 @@ describe('setupMiddleware', () => {
     };
 
     fakeRequest.headers = { 'user-agent': 'test-agent' };
-
     fakeRequest.protocol = 'http';
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.send = vi.fn().mockReturnThis();
-    fakeResponse.sendStatus = vi.fn().mockReturnThis();
+
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.send = jest.fn().mockReturnThis();
+    fakeResponse.sendStatus = jest.fn().mockReturnThis();
+
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should return 400 for invalid setup type', async () => {
@@ -48,7 +75,7 @@ describe('setupMiddleware', () => {
 
   it('should return 400 if database and owner exists', async () => {
     config.get.mockReturnValue({ name: 'db' });
-    ownerExists.mockImplementation(() => Promise.resolve(true));
+    ownerExists.mockResolvedValue(true);
 
     await setupMiddleware(fakeRequest, fakeResponse);
 
