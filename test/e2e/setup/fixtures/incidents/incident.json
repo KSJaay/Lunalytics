@@ -1,0 +1,38 @@
+{
+  "openButton": {
+    "selector": ".luna-button.primary.flat",
+    "text": "Add Incident"
+  },
+  "title": {
+    "id": "#incident-name",
+    "validValue": "Database Connectivity Issue",
+    "longValue": "This is a very long text string that is intended to test the maximum length character limit of one hundred characters exactly to see if it cuts off",
+    "error": {
+      "id": "#error-incident-name", 
+      "value": "Title is required"
+    }
+  },
+  "affectedMonitors": {
+    "trigger": ".icm-dropdown .dropdown-trigger",
+    "optionAll": "All Systems Operational",
+    "optionDegraded": "Partially Degraded Service",
+    "optionOutage": "Major Outage"
+  },
+  "message": {
+    "id": "#incident-message",
+    "validValue": "We are currently investigating an issue with the primary database replica."
+  },
+  "status": {
+    "selector": ".input-theme-item",
+    "investigating": "Investigating",
+    "identified": "Identified",
+    "monitoring": "Monitoring",
+    "resolved": "Resolved"
+  },
+  "createButton": {
+    "selector": ".modal-actions .luna-button.green"
+  },
+  "cancelButton": {
+    "selector": ".modal-actions .luna-button.red"
+  }
+}
