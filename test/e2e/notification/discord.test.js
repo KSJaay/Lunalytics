@@ -10,7 +10,7 @@ describe('Notification - Discord', () => {
   });
 
   it('should show invalid errors and create notification', () => {
-     //cy.clearAllNotifications(); 
+    cy.clearAllNotifications(); 
     cy.createNotification(discordNotification);
 
     // You can directly target the inputs after creation

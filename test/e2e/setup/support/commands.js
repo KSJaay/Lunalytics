@@ -63,12 +63,12 @@ Cypress.Commands.add('createMonitor', (details = {}) => {
 
     // Handle invalid value tests first (optional)
     if (invalidValue) {
-      if (type === 'text' || type === 'textarea') {
-        cy.get(id).type(invalidValue, { parseSpecialCharSequences: false });
-      } else if (type === 'dropdown') {
-        cy.get(id).click();
-        cy.get(invalidValue).click();
-      }
+  if (type === 'text' || type === 'textarea') {
+    cy.typeText(id, invalidValue); // use helper
+  } else if (type === 'dropdown') {
+    cy.get(id).click();
+    cy.get(invalidValue).click();
+  }
 
       cy.get('[class="luna-button green flat"]', { timeout: 15000 }).click();
 
@@ -78,17 +78,18 @@ Cypress.Commands.add('createMonitor', (details = {}) => {
       }
     }
 
-    // Apply valid value
-    if (value !== undefined) {
-      if (type === 'text' || type === 'textarea') {
-        cy.get(id).clear().type(value, { parseSpecialCharSequences: true });
-      } else if (type === 'dropdown') {
-        cy.get(id).click();
-        cy.get(value).click();
-      } else if (type === 'switch') {
-        if (value) cy.get(id).click({ force: true });
-      }
-    }
+// Apply valid value
+if (value !== undefined) {
+  if (type === 'text' || type === 'textarea') {
+    cy.clearText(id);
+    cy.typeText(id, value); // use helper
+  } else if (type === 'dropdown') {
+    cy.get(id).click();
+    cy.get(value).click();
+  } else if (type === 'switch') {
+    if (value) cy.get(id).click({ force: true });
+  }
+}
   });
 
   // Save monitor

@@ -10,6 +10,7 @@ describe('Notification - HomeAssistant', () => {
   });
 
   it('should show invalid errors and create notification', () => {
+    cy.clearAllNotifications();
     // Uses the custom command with the updated JSON structure
     cy.createNotification(homeAssistantNotification);
 

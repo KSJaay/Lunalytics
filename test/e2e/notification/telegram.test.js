@@ -10,6 +10,7 @@ describe('Notification - Telegram', () => {
   });
 
   it('should show invalid errors and create notification', () => {
+    cy.clearAllNotifications();
     //cy.clearAllNotifications(); 
     // Creates the notification using the JSON fixture data
     cy.createNotification(telegramNotification);

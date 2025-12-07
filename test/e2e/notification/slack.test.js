@@ -10,6 +10,7 @@ describe('Notification - Slack', () => {
   });
 
   it('should show invalid errors and create notification', () => {
+    cy.clearAllNotifications();
     // Creates the notification using the JSON fixture data
     cy.createNotification(slackNotification);
 
