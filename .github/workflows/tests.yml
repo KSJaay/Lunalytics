@@ -1,0 +1,217 @@
+name: Run All Tests - Cypress & Jest
+
+# Trigger this workflow on push and pull requests
+on:
+  push:
+    branches: [ dev, main, master ]
+  pull_request:
+    branches: [ dev, main, master ]
+  # Allow manual trigger from Actions tab
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  # ============================================
+  # JOB 1: JEST UNIT TESTS (Whitebox Testing)
+  # ============================================
+  jest-tests:
+    name: Jest Unit Tests (Whitebox)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install Dependencies
+        run: npm ci
+        
+      - name: 🧪 Run Jest Unit Tests
+        run: npm run test:unit
+        continue-on-error: false
+        env:
+          # Jest will look for tests in these locations
+          JEST_TEST_PATHS: "test/whitebox/**/*.test.js app/**/__tests__/**/*.test.js"
+        
+      - name: 📊 Generate Coverage Report
+        if: always()
+        run: npm run test:coverage || echo "Coverage generation skipped"
+        
+      - name: 📤 Upload Jest Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-test-results
+          path: |
+            coverage/
+            junit.xml
+          retention-days: 30
+          if-no-files-found: ignore
+          
+      - name: 📝 Jest Test Summary
+        if: always()
+        run: |
+          echo "## 🧪 Jest Unit Tests (Whitebox)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Test Type:** Unit Testing (Whitebox)" >> $GITHUB_STEP_SUMMARY
+          echo "**Framework:** Jest" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f coverage/coverage-summary.json ]; then
+            echo "✅ Coverage report generated" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # ============================================
+  # JOB 2: CYPRESS E2E TESTS (Blackbox Testing)
+  # ============================================
+  cypress-tests:
+    name: Cypress E2E Tests (Blackbox)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install Dependencies
+        run: npm ci
+        
+      - name: 🏗️ Build Application
+        run: npm run build
+        
+      - name: 🚀 Start Application Server
+        run: |
+          npm run preview &
+          echo "Waiting for server to start..."
+          sleep 10
+          
+      - name: 🔍 Verify Server is Running
+        run: |
+          max_attempts=30
+          attempt=0
+          until curl -f http://localhost:4173 || [ $attempt -eq $max_attempts ]; do
+            echo "Waiting for server... (attempt $((attempt+1))/$max_attempts)"
+            sleep 2
+            attempt=$((attempt+1))
+          done
+          
+          if [ $attempt -eq $max_attempts ]; then
+            echo "❌ Server failed to start"
+            exit 1
+          fi
+          echo "✅ Server is running"
+          
+      - name: 🧪 Run Cypress E2E Tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          wait-on: 'http://localhost:4173'
+          wait-on-timeout: 120
+          browser: chrome
+          config-file: cypress.config.js
+        env:
+          CYPRESS_BASE_URL: http://localhost:4173
+          
+      - name: 📸 Upload Cypress Screenshots (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          retention-days: 30
+          if-no-files-found: ignore
+          
+      - name: 🎥 Upload Cypress Videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          retention-days: 30
+          if-no-files-found: ignore
+          
+      - name: 📝 Cypress Test Summary
+        if: always()
+        run: |
+          echo "## 🎭 Cypress E2E Tests (Blackbox)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Test Type:** End-to-End Testing (Blackbox)" >> $GITHUB_STEP_SUMMARY
+          echo "**Framework:** Cypress" >> $GITHUB_STEP_SUMMARY
+          echo "**Browser:** Chrome" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" == "failure" ]; then
+            echo "⚠️ Tests failed - check screenshots and videos in artifacts" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # ============================================
+  # JOB 3: TEST RESULTS SUMMARY
+  # ============================================
+  test-summary:
+    name: Test Results Summary
+    runs-on: ubuntu-latest
+    needs: [jest-tests, cypress-tests]
+    if: always()
+    
+    steps:
+      - name: 📊 Generate Final Summary
+        run: |
+          echo "# 🎯 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Test Type | Framework | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|-----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Unit Tests (Whitebox) | Jest | ${{ needs.jest-tests.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| E2E Tests (Blackbox) | Cypress | ${{ needs.cypress-tests.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.jest-tests.result }}" == "success" ] && [ "${{ needs.cypress-tests.result }}" == "success" ]; then
+            echo "### ✅ All Tests Passed!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "All test suites executed successfully. Code is ready for deployment." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Some Tests Failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Please check the failed test jobs for details." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+          
+      - name: 🎉 Success Notification
+        if: needs.jest-tests.result == 'success' && needs.cypress-tests.result == 'success'
+        run: |
+          echo "=================================="
+          echo "✅ ALL TESTS PASSED SUCCESSFULLY!"
+          echo "=================================="
+          echo ""
+          echo "Jest Unit Tests: ✅ PASSED"
+          echo "Cypress E2E Tests: ✅ PASSED"
+          echo ""
+          echo "Your code is ready for deployment! 🚀"
+          
+      - name: ❌ Failure Notification
+        if: needs.jest-tests.result != 'success' || needs.cypress-tests.result != 'success'
+        run: |
+          echo "=================================="
+          echo "❌ SOME TESTS FAILED"
+          echo "=================================="
+          echo ""
+          echo "Jest Unit Tests: ${{ needs.jest-tests.result == 'success' && '✅ PASSED' || '❌ FAILED' }}"
+          echo "Cypress E2E Tests: ${{ needs.cypress-tests.result == 'success' && '✅ PASSED' || '❌ FAILED' }}"
+          echo ""
+          echo "Please review the test results and fix the issues."
+          exit 1
