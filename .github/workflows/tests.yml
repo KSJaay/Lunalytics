@@ -1,4 +1,4 @@
-name: Test Suite Workflow
+name: Test Suite
 
 on:
   push:
@@ -21,8 +21,10 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Run Jest tests
         run: npm run test:coverage:jest
@@ -48,8 +50,10 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Run Vitest tests
         run: npm run test:coverage
@@ -75,8 +79,10 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Build application
         run: npm run build
@@ -105,6 +111,7 @@ jobs:
         with:
           name: cypress-screenshots
           path: cypress/screenshots/
+          if-no-files-found: ignore
 
       - name: Upload Cypress videos
         uses: actions/upload-artifact@v4
@@ -112,6 +119,7 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos/
+          if-no-files-found: ignore
 
   test-summary:
     name: Test Summary
