@@ -87,16 +87,37 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Setup test database
-        run: npm run test:db
+      - name: Create test database config
+        run: |
+          mkdir -p data
+          cat > data/config.json << 'EOF'
+          {
+            "database": {
+              "type": "sqlite",
+              "name": "test_lunalytics.db",
+              "path": "./data"
+            },
+            "server": {
+              "port": 3000,
+              "host": "localhost"
+            }
+          }
+          EOF
 
-      - name: Start test server
-        run: npm run test:server &
+      - name: Start test server in background
+        run: |
+          npm run test:server > server.log 2>&1 &
+          echo $! > server.pid
         env:
           NODE_ENV: test
 
-      - name: Wait for server
-        run: npx wait-on http://localhost:3000 --timeout 60000
+      - name: Wait for server to be ready
+        run: |
+          npx wait-on http://localhost:3000 --timeout 60000 || {
+            echo "Server failed to start. Server logs:"
+            cat server.log
+            exit 1
+          }
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
@@ -104,6 +125,21 @@ jobs:
           install: false
           wait-on: 'http://localhost:3000'
           browser: chrome
+
+      - name: Stop test server
+        if: always()
+        run: |
+          if [ -f server.pid ]; then
+            kill $(cat server.pid) || true
+          fi
+
+      - name: Upload server logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-logs
+          path: server.log
+          if-no-files-found: ignore
 
       - name: Upload Cypress screenshots
         uses: actions/upload-artifact@v4
