@@ -22,7 +22,7 @@ const setupDatabase = async () => {
 
   const { username, email, password } = loginDetails.ownerUser;
 
-  const ownerExists = await sqlite.('user').where({ email }).first();
+  const ownerExists = await sqlite.client('user').where({ email }).first();
 
   if (ownerExists) {
     logger.info('SETUP', { message: 'Owner user already exists' });
