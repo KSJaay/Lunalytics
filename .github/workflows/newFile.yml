@@ -1,0 +1,136 @@
+name: Test Suite Workflow
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  jest-tests:
+    name: Jest Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest tests
+        run: npm run test:coverage:jest
+
+      - name: Upload Jest coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jest-coverage
+          path: coverage/
+
+  vitest-tests:
+    name: Vitest Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Vitest tests
+        run: npm run test:coverage
+
+      - name: Upload Vitest coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vitest-coverage
+          path: coverage/
+
+  cypress-tests:
+    name: Cypress E2E Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Setup test database
+        run: npm run test:db
+
+      - name: Start test server
+        run: npm run test:server &
+        env:
+          NODE_ENV: test
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000 --timeout 60000
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          wait-on: 'http://localhost:3000'
+          browser: chrome
+
+      - name: Upload Cypress screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots/
+
+      - name: Upload Cypress videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos/
+
+  test-summary:
+    name: Test Summary
+    runs-on: ubuntu-latest
+    needs: [jest-tests, vitest-tests, cypress-tests]
+    if: always()
+    
+    steps:
+      - name: Check test results
+        run: |
+          echo "Jest Tests: ${{ needs.jest-tests.result }}"
+          echo "Vitest Tests: ${{ needs.vitest-tests.result }}"
+          echo "Cypress Tests: ${{ needs.cypress-tests.result }}"
+          
+          if [ "${{ needs.jest-tests.result }}" != "success" ] || \
+             [ "${{ needs.vitest-tests.result }}" != "success" ] || \
+             [ "${{ needs.cypress-tests.result }}" != "success" ]; then
+            echo "❌ Some tests failed"
+            exit 1
+          else
+            echo "✅ All tests passed"
+          fi
