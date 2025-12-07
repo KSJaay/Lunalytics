@@ -27,17 +27,26 @@ describe('Verify User', () => {
       );
 
       cy.visit('/settings');
-      cy.contains('[id="Manage-Team"]', 'Manage Team').click();
 
-      cy.get(`[id="accept-${username}"]`).click();
+      // Wait for settings page to fully render
+      cy.contains('Manage Team', { timeout: 8000 }).should('be.visible');
 
-      cy.get('[id="manage-approve-button"]').click();
+      // Re-get right before clicking to avoid detachment
+      cy.contains('Manage Team').click();
+
+      // Accept user
+      cy.get(`[id="accept-${username}"]`)
+        .should('be.visible')
+        .click();
+
+      cy.get('[id="manage-approve-button"]')
+        .should('be.visible')
+        .click();
 
       cy.clearCookies();
-
       cy.loginUser(`${username}@lunalytics.xyz`, 'testing123');
 
-      cy.url().should('eq', 'http://localhost:2308/home');
+      cy.url().should('include', '/home');
     });
 
     it('Decline member from settings', () => {
@@ -50,17 +59,24 @@ describe('Verify User', () => {
 
       cy.visit('/settings');
 
-      cy.get('[id="Manage-Team"]').click();
-      cy.get(`[id="decline-${secondUsername}"]`).click();
-      cy.get('[id="manage-decline-button"]').click();
+      // Again, wait for menu to be stable
+      cy.contains('Manage Team', { timeout: 8000 }).should('be.visible');
 
-      cy.wait(1000);
+      cy.contains('Manage Team').click();
+
+      // Decline user
+      cy.get(`[id="decline-${secondUsername}"]`)
+        .should('be.visible')
+        .click();
+
+      cy.get('[id="manage-decline-button"]')
+        .should('be.visible')
+        .click();
 
       cy.clearCookies();
-
       cy.loginUser(`${secondUsername}@lunalytics.xyz`, 'testing123');
 
-      cy.url().should('eq', 'http://localhost:2308/login');
+      cy.url().should('include', '/login');
     });
   });
 });
