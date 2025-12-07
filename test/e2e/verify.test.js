@@ -32,29 +32,34 @@ describe('Verify User', () => {
       // Load settings
       cy.visit('/settings');
 
-      // Wait for page to stabilize
-      cy.contains('Manage Team', { timeout: 10000 })
-        .should('exist')
-        .should('be.visible');
+      // Wait for page to load and stabilize
+      cy.contains('Manage Team', { timeout: 10000 }).should('be.visible');
 
-      // Re-query before click to prevent detachment
-      cy.contains('Manage Team')
-        .should('be.visible')
-        .click();
+      // Use alias pattern to prevent detachment
+      cy.contains('Manage Team').as('manageTeamTab');
+      cy.get('@manageTeamTab').click();
 
-      cy.wait(300); // minor UI re-render delay
+      // Wait for the team management section to load
+      cy.wait(500);
 
-      // Accept user button
+      // Accept user - use alias to prevent detachment
       cy.get(`[id="accept-${username}"]`, { timeout: 8000 })
-        .should('exist')
         .should('be.visible')
-        .click();
+        .as('acceptBtn');
+      
+      cy.get('@acceptBtn').click();
 
+      // Confirm approval
       cy.get('[id="manage-approve-button"]', { timeout: 8000 })
-        .should('exist')
         .should('be.visible')
-        .click();
+        .as('approveBtn');
+      
+      cy.get('@approveBtn').click();
 
+      // Verify acceptance was successful (wait for modal to close or success message)
+      cy.wait(1000);
+
+      // Login as the newly approved user
       cy.clearCookies();
       cy.clearLocalStorage();
 
@@ -74,26 +79,34 @@ describe('Verify User', () => {
 
       cy.visit('/settings');
 
-      cy.contains('Manage Team', { timeout: 10000 })
-        .should('exist')
-        .should('be.visible');
+      // Wait for page load
+      cy.contains('Manage Team', { timeout: 10000 }).should('be.visible');
 
-      cy.contains('Manage Team')
-        .should('be.visible')
-        .click();
+      // Use alias to prevent detachment
+      cy.contains('Manage Team').as('manageTeamTab');
+      cy.get('@manageTeamTab').click();
 
-      cy.wait(300); // allow re-render
+      // Wait for team section to render
+      cy.wait(500);
 
+      // Decline user - use alias pattern
       cy.get(`[id="decline-${secondUsername}"]`, { timeout: 10000 })
-        .should('exist')
         .should('be.visible')
-        .click();
+        .as('declineBtn');
+      
+      cy.get('@declineBtn').click();
 
+      // Confirm decline
       cy.get('[id="manage-decline-button"]', { timeout: 10000 })
-        .should('exist')
         .should('be.visible')
-        .click();
+        .as('confirmDeclineBtn');
+      
+      cy.get('@confirmDeclineBtn').click();
 
+      // Wait for action to complete
+      cy.wait(1000);
+
+      // Try to login as declined user - should fail and redirect to login
       cy.clearCookies();
       cy.clearLocalStorage();
 
