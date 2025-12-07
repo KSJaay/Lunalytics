@@ -1,4 +1,4 @@
-// __tests__/monitor.test.ts
+d// __tests__/monitor.test.ts
 import handleMonitor from '../monitor';
 import { toast } from 'react-toastify';
 
@@ -61,7 +61,7 @@ describe('handleMonitor', () => {
     });
 
     expect(setMonitor).toHaveBeenCalledWith({ id: 1 });
-    expect(toast.success).toHaveBeenCalledWith('Monitor been added successfully');
+    expect(toast.success).toHaveBeenCalledWith('Monitor been edited successfully');
     expect(closeModal).toHaveBeenCalled();
   });
 
@@ -76,7 +76,7 @@ describe('handleMonitor', () => {
       body: {},
     });
 
-    expect(toast.success).toHaveBeenCalledWith('Monitor been edited successfully');
+    expect(toast.success).toHaveBeenCalledWith('Monitor been added successfully');
     expect(closeModal).toHaveBeenCalled();
   });
 
