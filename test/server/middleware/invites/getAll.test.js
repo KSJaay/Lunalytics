@@ -1,23 +1,43 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import { handleError } from '../../../../server/utils/errors.js';
-import { fetchAllInvites } from '../../../../server/database/queries/invite.js';
-import getAllInvitesMiddleware from '../../../../server/middleware/invites/getAll.js';
 
-vi.mock('../../../../server/database/queries/invite.js');
-vi.mock('../../../../server/utils/errors.js');
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Database (Critical: Prevents 'nanoid' ESM crash)
+jest.mock('../../../../server/database/queries/invite.js', () => ({
+  fetchAllInvites: jest.fn(),
+}));
+
+// Mock Error Handler
+jest.mock('../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import getAllInvitesMiddleware from '../../../../server/middleware/invites/getAll.js';
+import { fetchAllInvites } from '../../../../server/database/queries/invite.js';
+import { handleError } from '../../../../server/utils/errors.js';
 
 describe('getAllInvitesMiddleware', () => {
   let fakeRequest, fakeResponse;
+
   beforeEach(() => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.send = vi.fn();
+    // Setup spies
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.send = jest.fn();
+
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should return invites on success', async () => {
@@ -30,6 +50,7 @@ describe('getAllInvitesMiddleware', () => {
   });
 
   it('should handle errors gracefully', async () => {
+    // Force Error
     fetchAllInvites.mockImplementation(() => {
       throw new Error('fail');
     });

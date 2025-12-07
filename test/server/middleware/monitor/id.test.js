@@ -1,13 +1,39 @@
-import { describe, expect, it, vi } from 'vitest';
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Database Queries (Certificate)
+jest.mock('../../../../server/database/queries/certificate', () => ({
+  fetchCertificate: jest.fn(),
+}));
+
+// Mock Database Queries (Monitor)
+jest.mock('../../../../server/database/queries/monitor', () => ({
+  fetchMonitor: jest.fn(),
+}));
+
+// Mock Database Queries (Heartbeat)
+jest.mock('../../../../server/database/queries/heartbeat', () => ({
+  fetchHeartbeats: jest.fn(),
+}));
+
+// Mock SQLite Setup (Safety mock to prevent connection attempts)
+jest.mock('../../../../server/database/sqlite/setup', () => ({
+  __esModule: true,
+  default: {
+    client: jest.fn(),
+  },
+}));
+
+// --- 2. IMPORT FILES ---
 import fetchMonitorUsingId from '../../../../server/middleware/monitor/id';
 import { fetchCertificate } from '../../../../server/database/queries/certificate';
 import { fetchMonitor } from '../../../../server/database/queries/monitor';
 import { fetchHeartbeats } from '../../../../server/database/queries/heartbeat';
-
-vi.mock('../../../../server/database/queries/certificate');
-vi.mock('../../../../server/database/queries/monitor');
-vi.mock('../../../../server/database/queries/heartbeat');
 
 describe('Fetch Monitor Using Id - Middleware', () => {
   const monitorId = 'test_monitor_id';
@@ -16,12 +42,17 @@ describe('Fetch Monitor Using Id - Middleware', () => {
   let fakeResponse;
 
   beforeEach(() => {
+    // Reset call counts
+    jest.clearAllMocks();
+
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchCertificate = vi.fn().mockReturnValue({ isValid: false });
-    fetchMonitor = vi.fn().mockReturnValue({ monitorId: 'test_monitor_id' });
-    fetchHeartbeats = vi.fn().mockReturnValue([]);
+    // --- 3. SETUP DEFAULT MOCK RETURNS ---
+    // Use mockResolvedValue because database calls are async
+    fetchCertificate.mockResolvedValue({ isValid: false });
+    fetchMonitor.mockResolvedValue({ monitorId: 'test_monitor_id' });
+    fetchHeartbeats.mockResolvedValue([]);
 
     fakeRequest.query = {
       monitorId,
@@ -29,7 +60,7 @@ describe('Fetch Monitor Using Id - Middleware', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   describe('when monitorId is invalid', () => {
@@ -45,12 +76,12 @@ describe('Fetch Monitor Using Id - Middleware', () => {
   describe('when monitorId is valid', () => {
     it('should call fetchMonitor with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
-
       expect(fetchMonitor).toHaveBeenCalledWith(monitorId);
     });
 
     it('should return 404 when monitor is not found', async () => {
-      fetchMonitor.mockReturnValue(null);
+      // Override the default mock for this specific test
+      fetchMonitor.mockResolvedValue(null);
 
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
@@ -59,19 +90,16 @@ describe('Fetch Monitor Using Id - Middleware', () => {
 
     it('should call fetchHeartbeats with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
-
       expect(fetchHeartbeats).toHaveBeenCalledWith(monitorId);
     });
 
     it('should call fetchCertificate with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
-
       expect(fetchCertificate).toHaveBeenCalledWith(monitorId);
     });
 
     it('should return 200 when data is valid', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
-
       expect(fakeResponse.statusCode).toEqual(200);
     });
   });

@@ -1,36 +1,69 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Server Errors
+jest.mock('../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// Mock Shared Errors
+jest.mock('../../../../shared/utils/errors.js', () => ({
+  UnprocessableError: class MockUnprocessableError extends Error {},
+}));
+
+// Mock Validators
+jest.mock('../../../../shared/validators/notifications/index.js', () => ({
+  __esModule: true,
+  default: {
+    Discord: jest.fn(),
+    Slack: jest.fn(),
+  },
+}));
+
+// Mock Database Queries
+jest.mock('../../../../server/database/queries/notification.js', () => ({
+  editNotification: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import NotificationEditMiddleware from '../../../../server/middleware/notifications/edit.js';
 import { handleError } from '../../../../server/utils/errors.js';
 import { UnprocessableError } from '../../../../shared/utils/errors.js';
 import { editNotification } from '../../../../server/database/queries/notification.js';
 import NotificationValidators from '../../../../shared/validators/notifications/index.js';
-import NotificationEditMiddleware from '../../../../server/middleware/notifications/edit.js';
-
-vi.mock('../../../../server/utils/errors.js');
-vi.mock('../../../../shared/utils/errors.js');
-vi.mock('../../../../shared/validators/notifications/index.js');
-vi.mock('../../../../server/database/queries/notification.js');
 
 describe('NotificationEditMiddleware', () => {
-  let fakeRequest, fakeResponse;
+  let fakeRequest;
+  let fakeResponse;
+
   beforeEach(() => {
+    jest.clearAllMocks();
+
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    editNotification = vi.fn(function () {
-      return Promise.resolve({ id: 'id', email: 'test', isEnabled: true });
+    // Default DB Success
+    editNotification.mockResolvedValue({
+      id: 'id',
+      email: 'test',
+      isEnabled: true,
     });
 
-    NotificationValidators.Discord = vi.fn(function (data) {
-      return {
-        ...data,
-        platform: 'Discord',
-        valid: true,
-      };
-    });
+    // Default Validator Behavior
+    NotificationValidators.Discord.mockImplementation((data) => ({
+      ...data,
+      platform: 'Discord',
+      valid: true,
+    }));
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should call handleError if platform is invalid', async () => {
@@ -62,16 +95,18 @@ describe('NotificationEditMiddleware', () => {
     expect(editNotification).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'id', email: 'test', isEnabled: true })
     );
-    expect(response._getJSONData()).toEqual(
+
+    // FIX: Parse the stringified JSON response
+    const data = JSON.parse(response._getData());
+    
+    expect(data).toEqual(
       expect.objectContaining({ id: 'id' })
     );
     expect(handleError).not.toHaveBeenCalled();
   });
 
   it('should call handleError if editNotification throws', async () => {
-    editNotification.mockImplementationOnce(() => {
-      throw new Error('fail');
-    });
+    editNotification.mockRejectedValueOnce(new Error('fail'));
 
     fakeRequest.body = {
       platform: 'Discord',

@@ -1,32 +1,64 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import axios from 'axios';
+import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- MOCKS MUST BE DEFINED BEFORE IMPORTS ---
+
+// 1. Mock Provider Database Query
+jest.mock('../../../../../server/database/queries/provider.js', () => ({
+  fetchProvider: jest.fn(),
+}));
+
+// 2. Mock Config (To prevent Winston Logger crash)
+jest.mock('../../../../../server/utils/config.js', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+  },
+}));
+
+// 3. Mock Error Handler
+jest.mock('../../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// 4. Mock Axios
+jest.mock('axios');
+
+// --- IMPORTS ---
 import config from '../../../../../server/utils/config.js';
 import { handleError } from '../../../../../server/utils/errors.js';
 import { fetchProvider } from '../../../../../server/database/queries/provider.js';
 import discordCallback from '../../../../../server/middleware/auth/callback/discord.js';
-import { createRequest, createResponse } from 'node-mocks-http';
-
-vi.mock('axios');
-vi.mock('../../../../../server/database/queries/provider.js');
-vi.mock('../../../../../server/utils/config.js');
-vi.mock('../../../../../server/utils/errors.js');
 
 describe('discordCallback', () => {
   let fakeRequest, fakeResponse, fakeNext;
+
   beforeEach(() => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
     fakeRequest.query = { code: 'abc' };
-    fakeResponse.redirect = vi.fn();
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.send = vi.fn();
+    
+    // Setup generic spies
+    fakeResponse.redirect = jest.fn();
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.send = jest.fn();
     fakeResponse.locals = {};
 
-    fakeNext = vi.fn();
+    fakeNext = jest.fn();
+    
+    // Reset specific mocks to clean state
+    fetchProvider.mockReset();
+    handleError.mockReset();
+    config.get.mockReset();
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should redirect if no code provided', async () => {
@@ -50,13 +82,20 @@ describe('discordCallback', () => {
   });
 
   it('should redirect if user not verified', async () => {
+    // Mock Provider
     fetchProvider.mockResolvedValue({
       provider: 'discord',
       clientId: 'id',
       clientSecret: 'secret',
     });
+
+    // Mock Config
     config.get.mockReturnValue('https://site.com');
+
+    // Mock Axios Post (Token exchange)
     axios.post.mockResolvedValue({ data: { access_token: 'token' } });
+    
+    // Mock Axios Get (User Profile) - Return verified: false
     axios.get.mockResolvedValue({
       data: { verified: false, email: null },
     });
@@ -74,8 +113,11 @@ describe('discordCallback', () => {
       clientId: 'id',
       clientSecret: 'secret',
     });
+    
     config.get.mockReturnValue('https://site.com');
     axios.post.mockResolvedValue({ data: { access_token: 'token' } });
+    
+    // Return valid user
     axios.get.mockResolvedValue({
       data: { avatar: 'a', id: 'i', username: 'u', email: 'e', verified: true },
     });
@@ -93,6 +135,7 @@ describe('discordCallback', () => {
   });
 
   it('should handle errors gracefully', async () => {
+    // Force an error in fetchProvider
     fetchProvider.mockImplementation(() => {
       throw new Error('fail');
     });

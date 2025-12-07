@@ -96,41 +96,85 @@ if (value !== undefined) {
   cy.get('[class="luna-button green flat"]', { timeout: 10000 }).click();
 });
 
+Cypress.Commands.add('typeTextSafe', (selector, text) => {
+  cy.get(selector, { timeout: 10000 })
+    .should('be.visible')
+    .then($el => {
+      cy.wrap($el).clear().type(text, { parseSpecialCharSequences: false });
+    });
+});
+
+Cypress.Commands.add('typeTextSafe', (selector, text) => {
+  cy.get(selector, { timeout: 10000 })
+    .should('be.visible')
+    .then($el => {
+      cy.wrap($el).clear().type(text, { parseSpecialCharSequences: false });
+    });
+});
+
 Cypress.Commands.add('createNotification', (details = {}) => {
-  cy.get('[id="home-add-notification-button"]').click();
+  // Open Add Notification modal
+  cy.get('.luna-button-content')
+    .contains('Add Notification')
+    .click({ force: true });
 
   Object.keys(details).forEach((key) => {
-    const value = details[key];
-    const { id, type, value: elementValue, error, invalidValue } = value;
+    const field = details[key];
+    if (!field) return;
 
-    if (invalidValue) {
-      if (type === 'text') {
-        cy.typeText(id, invalidValue);
+    const { id, type, value: elementValue, error, invalidValue } = field;
+
+    // Handle invalid value first, only if error element exists
+    if (invalidValue && error && error.id) {
+      if (type === 'text' || type === 'textarea') {
+        cy.typeTextSafe(id, invalidValue);
       } else if (type === 'dropdown') {
         cy.get(id).click();
         cy.get(invalidValue).click();
       }
 
-      cy.get('[id="notification-create-button"]').click();
+      cy.get('#notification-create-button').click();
 
-      cy.get(error.id).should('be.visible');
-      cy.equals(error.id, error.value);
+      cy.get(error.id, { timeout: 10000 })
+        .should('be.visible')
+        .and('contain', error.value);
     }
 
-    if (elementValue) {
-      if (type === 'text') {
-        cy.clearText(id);
-        cy.typeText(id, elementValue);
+    // Handle valid value
+    if (elementValue !== undefined) {
+      if (type === 'text' || type === 'textarea') {
+        cy.typeTextSafe(id, elementValue);
       } else if (type === 'dropdown') {
         cy.get(id).click();
         cy.get(elementValue).click();
+      } else if (type === 'checkbox' || type === 'switch') {
+        if (elementValue) cy.get(id).click({ force: true });
       }
-    }
-
-    if (type === 'checkbox') {
-      cy.get(id).click();
     }
   });
 
-  cy.get('[id="notification-create-button"]').click();
+  // Final Create button click **only once**
+  cy.get('#notification-create-button').click();
+
+  // Wait for modal to close (optional, improves stability)
+  cy.get('.modal-container', { timeout: 10000 }).should('not.exist');
 });
+// In commands.js
+Cypress.Commands.add('clearAllNotifications', () => {
+  cy.get('.navigation-notification-items .item', { timeout: 5000 }).then(($items) => {
+    if ($items.length > 0) {
+      cy.wrap($items).each(($item) => {
+        cy.wrap($item).click();
+        cy.get('.navigation-header-buttons > div:nth-child(2)').click({ force: true });
+        cy.get('#notification-delete-confirm').click({ force: true });
+      });
+    }
+  });
+  cy.get('.navigation-notification-items .item', { timeout: 5000 }).should('have.length', 0);
+});
+
+
+
+
+
+

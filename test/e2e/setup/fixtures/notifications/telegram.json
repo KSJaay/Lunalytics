@@ -1,36 +1,36 @@
 {
   "type": {
-    "id": "[id=\"notification-type-dropdown\"]",
-    "value": "[id=\"notification-type-Telegram\"]",
+    "id": "#notification-type-dropdown",
+    "value": "#notification-type-Telegram",
     "type": "dropdown"
   },
   "friendlyName": {
-    "id": "[id=\"friendly-name\"]",
-    "value": "Slack",
+    "id": "#friendlyName",
+    "value": "Telegram",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-friendly-name\"]",
+      "id": "#error-friendlyName",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
-  "url": {
-    "id": "[id=\"bot-token\"]",
-    "value": "123123:123123",
-    "invalidValue": "{}[]||<>",
+  "token": {
+    "id": "#token",
+    "value": "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11",
+    "invalidValue": "invalid-token",
     "type": "text",
     "error": {
-      "id": "[id=\"error-bot-token\"]",
+      "id": "#error-token",
       "value": "Invalid Telegram Bot Token"
     }
   },
   "chatId": {
-    "id": "[id=\"chat-id\"]",
-    "value": "123123123",
+    "id": "#chatId",
+    "value": "123456789",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-chat-id\"]",
+      "id": "#error-chatId",
       "value": "Invalid Chat ID"
     }
   }

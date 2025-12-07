@@ -1,12 +1,48 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import SQLite from '../../../../server/database/sqlite/setup';
-import cache from '../../../../server/cache';
-import monitorEdit from '../../../../server/middleware/monitor/edit';
-import { updateMonitor } from '../../../../server/database/queries/monitor';
 
-vi.mock('../../../../server/cache');
-vi.mock('../../../../server/database/queries/monitor');
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Cache
+jest.mock('../../../../server/cache', () => ({
+  __esModule: true,
+  default: {
+    checkStatus: jest.fn(),
+  },
+}));
+
+// Mock Database Queries (Monitor)
+jest.mock('../../../../server/database/queries/monitor', () => ({
+  updateMonitor: jest.fn(),
+}));
+
+// Mock Database Queries (Heartbeat) - FIX: Added to prevent crashes
+jest.mock('../../../../server/database/queries/heartbeat', () => ({
+  fetchHeartbeats: jest.fn(),
+}));
+
+// Mock Database Queries (Certificate) - FIX: Added to prevent crashes
+jest.mock('../../../../server/database/queries/certificate', () => ({
+  fetchCertificate: jest.fn(),
+}));
+
+// Mock SQLite Setup
+jest.mock('../../../../server/database/sqlite/setup', () => ({
+  __esModule: true,
+  default: {
+    client: jest.fn(),
+  },
+}));
+
+// --- 2. IMPORT FILES ---
+import monitorEdit from '../../../../server/middleware/monitor/edit.js';
+import cache from '../../../../server/cache';
+import { updateMonitor } from '../../../../server/database/queries/monitor';
+import { fetchHeartbeats } from '../../../../server/database/queries/heartbeat';
+import { fetchCertificate } from '../../../../server/database/queries/certificate';
 
 describe('Edit Monitor - Middleware', () => {
   const user = {
@@ -18,33 +54,18 @@ describe('Edit Monitor - Middleware', () => {
 
   let fakeRequest;
   let fakeResponse;
-  let SQLiteBuilders;
 
   beforeEach(() => {
-    SQLiteBuilders = {
-      insert: vi.fn().mockImplementation(() => {
-        return { returning: vi.fn().mockReturnValue([{ id: 1 }]) };
-      }),
-      where: vi.fn().mockImplementation(() => {
-        return {
-          first: vi.fn().mockReturnValue(null),
-          select: vi.fn().mockImplementation(() => {
-            return {
-              orderBy: vi.fn().mockImplementation(() => {
-                return { limit: vi.fn() };
-              }),
-            };
-          }),
-        };
-      }),
-      update: vi.fn(),
-    };
+    // Reset Mocks
+    jest.clearAllMocks();
 
-    SQLite.client = () => SQLiteBuilders;
-    cache = { checkStatus: vi.fn() };
+    // --- 3. SETUP MOCK RETURNS ---
+    // Prevent crashes by returning resolved promises for DB queries
+    updateMonitor.mockResolvedValue({ monitorId: 'test' });
+    fetchHeartbeats.mockResolvedValue([]);
+    fetchCertificate.mockResolvedValue([]);
 
-    updateMonitor = vi.fn().mockReturnValue({ monitorId: 'test' });
-
+    // Setup Request/Response
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
@@ -53,10 +74,10 @@ describe('Edit Monitor - Middleware', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
-  describe('HTTP - Add Monitor', () => {
+  describe('HTTP - Edit Monitor', () => {
     beforeEach(() => {
       fakeRequest.body = {
         type: 'http',
@@ -86,57 +107,43 @@ describe('Edit Monitor - Middleware', () => {
     describe('when invalid data is provided', () => {
       it('should return 422 when name is invalid', async () => {
         fakeRequest.body.name = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when url is invalid', async () => {
         fakeRequest.body.url = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when method is invalid', async () => {
         fakeRequest.body.method = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when statusCodes is invalid', async () => {
         fakeRequest.body.valid_status_codes = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when interval is invalid', async () => {
         fakeRequest.body.interval = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when retryInterval is invalid', async () => {
         fakeRequest.body.retryInterval = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when requestTimeout is invalid', async () => {
         fakeRequest.body.requestTimeout = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
     });
@@ -175,19 +182,17 @@ describe('Edit Monitor - Middleware', () => {
 
       it('should call checkStatus with monitorId and interval', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(cache.checkStatus).toHaveBeenCalledWith('test');
       });
 
       it('should return 200 when data is valid', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(200);
       });
     });
   });
 
-  describe('TCP - Add Monitor', () => {
+  describe('TCP - Edit Monitor', () => {
     beforeEach(() => {
       fakeRequest.body = {
         type: 'tcp',
@@ -216,55 +221,43 @@ describe('Edit Monitor - Middleware', () => {
     describe('when invalid data is provided', () => {
       it('should return 422 when name is invalid', async () => {
         fakeRequest.body.name = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when host is invalid', async () => {
         fakeRequest.body.url = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when port is invalid', async () => {
         fakeRequest.body.port = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when interval is invalid', async () => {
         fakeRequest.body.interval = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when retryInterval is invalid', async () => {
         fakeRequest.body.retryInterval = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
 
       it('should return 422 when requestTimeout is invalid', async () => {
         fakeRequest.body.requestTimeout = '';
-
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(422);
       });
     });
 
     describe('when valid data is provided', () => {
-      it('should call addOrEdit with body, email, and isHttp', async () => {
+      it('should call updateMonitor with body, email, and isHttp', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
 
         expect(updateMonitor).toHaveBeenCalledWith({
@@ -293,13 +286,11 @@ describe('Edit Monitor - Middleware', () => {
 
       it('should call checkStatus with monitorId and interval', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(cache.checkStatus).toHaveBeenCalledWith('test');
       });
 
       it('should return 200 when data is valid', async () => {
         await monitorEdit(fakeRequest, fakeResponse);
-
         expect(fakeResponse.statusCode).toEqual(200);
       });
     });

@@ -1,43 +1,75 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Server Errors
+jest.mock('../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// Mock Shared Errors
+jest.mock('../../../../shared/utils/errors.js', () => ({
+  UnprocessableError: class MockUnprocessableError extends Error {},
+}));
+
+// Mock Validators
+jest.mock('../../../../shared/validators/notifications/index.js', () => ({
+  __esModule: true,
+  default: {
+    Discord: jest.fn(),
+  },
+}));
+
+// Mock Notification Services (The classes/functions used to send alerts)
+jest.mock('../../../../server/notifications/index.js', () => ({
+  __esModule: true,
+  default: {
+    Discord: jest.fn(),
+  },
+}));
+
+// --- 2. IMPORT FILES ---
+import NotificationTestMiddleware from '../../../../server/middleware/notifications/test.js';
 import { handleError } from '../../../../server/utils/errors.js';
 import { UnprocessableError } from '../../../../shared/utils/errors.js';
 import NotificationServices from '../../../../server/notifications/index.js';
 import NotificationValidators from '../../../../shared/validators/notifications/index.js';
-import NotificationTestMiddleware from '../../../../server/middleware/notifications/test.js';
-
-vi.mock('../../../../server/utils/errors.js');
-vi.mock('../../../../shared/utils/errors.js');
-vi.mock('../../../../shared/validators/notifications/index.js');
-vi.mock('../../../../server/notifications/index.js');
 
 describe('NotificationTestMiddleware', () => {
-  let fakeRequest, fakeResponse;
+  let fakeRequest;
+  let fakeResponse;
+
   beforeEach(() => {
+    // Reset mocks
+    jest.clearAllMocks();
+
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    NotificationServices.Discord = vi.fn().mockImplementation(function () {
-      return {
-        test: vi.fn(function () {
-          return Promise.resolve();
-        }),
-      };
-    });
+    // 1. Setup Service Mock
+    // When "new NotificationServices.Discord()" is called, return an object with a test() method
+    NotificationServices.Discord.mockImplementation(() => ({
+      test: jest.fn().mockResolvedValue(true), // Async success
+    }));
 
-    NotificationValidators.Discord = vi.fn(function (data) {
-      return {
-        ...data,
-        platform: 'Discord',
-        valid: true,
-      };
-    });
+    // 2. Setup Validator Mock
+    NotificationValidators.Discord.mockImplementation((data) => ({
+      ...data,
+      platform: 'Discord',
+      valid: true,
+    }));
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should call handleError if platform is invalid', async () => {
+    // 'invalid' key does not exist in our mocked Validators object
     fakeRequest.body = { platform: 'invalid' };
 
     await NotificationTestMiddleware(fakeRequest, fakeResponse);
@@ -49,6 +81,7 @@ describe('NotificationTestMiddleware', () => {
   });
 
   it('should call handleError if service class is missing', async () => {
+    // Force validator to return a platform that doesn't exist in NotificationServices
     NotificationValidators.Discord.mockReturnValueOnce({
       platform: 'notfound',
     });
@@ -70,16 +103,18 @@ describe('NotificationTestMiddleware', () => {
 
     expect(NotificationValidators.Discord).toHaveBeenCalled();
     expect(NotificationServices.Discord).toHaveBeenCalled();
-    expect(fakeResponse._getStatusCode()).toBe(200);
+    
+    expect(fakeResponse.statusCode).toBe(200);
+    // Assuming res.send('...') is used, _getData() returns the string directly
     expect(fakeResponse._getData()).toBe('Test notification sent');
+    
     expect(handleError).not.toHaveBeenCalled();
   });
 
   it('should call handleError if service.test throws', async () => {
+    // Simulate Service Failure
     NotificationServices.Discord.mockImplementationOnce(() => ({
-      test: vi.fn(function () {
-        throw new Error('fail');
-      }),
+      test: jest.fn().mockRejectedValue(new Error('fail')),
     }));
 
     fakeRequest.body = { platform: 'Discord', data: {} };

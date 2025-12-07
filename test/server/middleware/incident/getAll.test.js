@@ -1,10 +1,29 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
-import logger from '../../../../server/utils/logger.js';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Database Queries
+jest.mock('../../../../server/database/queries/incident.js', () => ({
+  fetchAllIncidents: jest.fn(),
+}));
+
+// Mock Logger
+jest.mock('../../../../server/utils/logger.js', () => ({
+  __esModule: true,
+  default: {
+    error: jest.fn(),
+    info: jest.fn(),
+  },
+}));
+
+// --- 2. IMPORT FILES ---
 import getAllIncidents from '../../../../server/middleware/incident/getAll.js';
 import { fetchAllIncidents } from '../../../../server/database/queries/incident.js';
-
-vi.mock('../../../../server/database/queries/incident.js');
-vi.mock('../../../../server/utils/logger.js');
+import logger from '../../../../server/utils/logger.js';
 
 describe('getAllIncidents', () => {
   let fakeRequest, fakeResponse;
@@ -13,13 +32,17 @@ describe('getAllIncidents', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fakeResponse.json = vi.fn();
-    fakeResponse.status = vi.fn().mockReturnThis();
-    fakeResponse.send = vi.fn().mockReturnThis();
+    // Setup spies
+    fakeResponse.json = jest.fn();
+    fakeResponse.status = jest.fn().mockReturnThis();
+    fakeResponse.send = jest.fn().mockReturnThis();
+
+    // Reset mocks
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should return incidents on success', async () => {
@@ -31,9 +54,8 @@ describe('getAllIncidents', () => {
   });
 
   it('should handle errors and log', async () => {
-    fetchAllIncidents.mockImplementation(() => {
-      throw new Error('fail');
-    });
+    // Force DB Error
+    fetchAllIncidents.mockRejectedValue(new Error('fail'));
 
     await getAllIncidents(fakeRequest, fakeResponse);
 

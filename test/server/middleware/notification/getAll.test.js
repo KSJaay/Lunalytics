@@ -1,38 +1,60 @@
+/**
+ * @jest-environment node
+ */
+import { jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http';
+
+// --- 1. DEFINE MOCKS (Factory Pattern) ---
+
+// Mock Server Errors
+jest.mock('../../../../server/utils/errors.js', () => ({
+  handleError: jest.fn(),
+}));
+
+// Mock Database Queries
+jest.mock('../../../../server/database/queries/notification.js', () => ({
+  fetchNotifications: jest.fn(),
+}));
+
+// --- 2. IMPORT FILES ---
+import NotificationGetAllMiddleware from '../../../../server/middleware/notifications/getAll.js';
 import { handleError } from '../../../../server/utils/errors.js';
 import { fetchNotifications } from '../../../../server/database/queries/notification.js';
-import NotificationGetAllMiddleware from '../../../../server/middleware/notifications/getAll.js';
-
-vi.mock('../../../../server/utils/errors.js');
-vi.mock('../../../../server/database/queries/notification.js');
 
 describe('NotificationGetAllMiddleware', () => {
-  let fakeRequest, fakeResponse;
+  let fakeRequest;
+  let fakeResponse;
+
   beforeEach(() => {
+    // Reset mocks
+    jest.clearAllMocks();
+
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchNotifications = vi.fn(function () {
-      return Promise.resolve([{ id: 'id' }]);
-    });
+    // Default Success (Async)
+    fetchNotifications.mockResolvedValue([{ id: 'id' }]);
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it('should fetch notifications and return them', async () => {
     await NotificationGetAllMiddleware(fakeRequest, fakeResponse);
 
     expect(fetchNotifications).toHaveBeenCalled();
-    expect(fakeResponse._getJSONData()).toEqual([{ id: 'id' }]);
+
+    // FIX: Parse the stringified JSON response
+    const data = JSON.parse(fakeResponse._getData());
+    expect(data).toEqual([{ id: 'id' }]);
+    
     expect(handleError).not.toHaveBeenCalled();
   });
 
   it('should call handleError if fetchNotifications throws', async () => {
-    fetchNotifications.mockImplementationOnce(() => {
-      throw new Error('fail');
-    });
+    // Simulate Async Failure
+    fetchNotifications.mockRejectedValueOnce(new Error('fail'));
 
     await NotificationGetAllMiddleware(fakeRequest, fakeResponse);
 

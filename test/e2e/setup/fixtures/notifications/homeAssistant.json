@@ -1,47 +1,47 @@
 {
   "type": {
-    "id": "[id=\"notification-type-dropdown\"]",
-    "value": "[id=\"notification-type-HomeAssistant\"]",
+    "id": "#notification-type-dropdown",
+    "value": "#notification-type-HomeAssistant",
     "type": "dropdown"
   },
   "friendlyName": {
-    "id": "[id=\"friendly-name\"]",
+    "id": "#friendlyName",
     "value": "HomeAssistant",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-friendly-name\"]",
+      "id": "#error-friendlyName",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
-  "token": {
-    "id": "[id=\"home-assistant-access-token\"]",
-    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
-    "invalidValue": "",
-    "type": "text",
-    "error": {
-      "id": "[id=\"error-home-assistant-access-token\"]",
-      "value": "Invalid Access Token"
-    }
-  },
   "homeAssistantUrl": {
-    "id": "[id=\"home-assistant-url\"]",
+    "id": "#homeAssistantUrl",
     "value": "https://home-assistant.local:8123",
     "invalidValue": "",
     "type": "text",
     "error": {
-      "id": "[id=\"error-home-assistant-url\"]",
+      "id": "#error-homeAssistantUrl",
       "value": "Invalid HomeAssistant URL"
     }
   },
   "homeAssistantNotificationService": {
-    "id": "[id=\"home-assistant-notification-service\"]",
-    "value": "mobile_app_test_device",
+    "id": "#homeAssistantNotificationService",
+    "value": "mobile_app_device",
     "invalidValue": "",
     "type": "text",
     "error": {
-      "id": "[id=\"error-home-assistant-notification-service\"]",
+      "id": "#error-homeAssistantNotificationService",
       "value": "Invalid HomeAssistant Notification Service"
     }
+  },
+  "token": {
+    "id": "#token",
+    "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIzM...",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "#error-token",
+      "value": "Invalid Access Token"
+    }
   }
-} 
+}
