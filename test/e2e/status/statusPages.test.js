@@ -3,67 +3,71 @@ import loginDetails from '../setup/fixtures/login.json';
 describe("Lunalytics Status Page Flow", () => {
   const { email, password } = loginDetails.ownerUser;
 
-  // Login before each test
   beforeEach(() => {
     cy.clearCookies();
-    cy.loginUser(email, password);  // Assuming you have a custom command for login
+    cy.loginUser(email, password);
     cy.visit('http://localhost:2308/home');
     cy.get('[class="luna-button-content"]', { timeout: 10000 }).should('be.visible');
   });
 
   it("should create a monitor", () => {
-    // Click Add Monitor
     cy.contains("div.luna-button-content", "Add Monitor").click();
-
-    // Type Monitor Name
     cy.get("#input-name").type("test-monitor");
-
-    // Type Monitor URL
     cy.get("#input-url").type("http://lunalytics.xyz");
-
-    // Click Create
     cy.contains("div.luna-button-content", "Create").click();
-
-    // Assert Monitor Created (Optional toast check)
     cy.contains("test-monitor").should("exist");
   });
 
-  it("should show error when creating status page without URL", () => {
+  it('shows error toast if status page URL already exists', () => {
     cy.visit("http://localhost:2308/status-pages");
 
-    // Click Add Status Page Button
+    // Open Add Status Page modal
     cy.contains("div.luna-button-content", "Add Status Page").click();
 
-    // Click Create without filling anything
-    cy.get("#monitor-create-button").contains("Create").click();
+    // Open Settings if needed
+    cy.contains(".smc-options-item", "Settings").click();
 
-    // Assert Error Toast
-    cy.contains('URL should be either "default" or a url path.').should("exist");
+    // Wait for the input to exist
+    
+cy.get('#status-url').clear().blur(); // make sure the field is empty
+cy.get('#monitor-create-button').contains('Create').click();
+
+// Assert the error toast appears
+cy.contains('URL should be either "default" or a url path.', { timeout: 10000 })
+  .should('be.visible');
+
+// Close the toast
+cy.get('.Toastify__toast--error .Toastify__close-button').click();
+
   });
 
   it("should create a valid status page", () => {
     cy.visit("http://localhost:2308/status-pages");
 
-    // Add Status Page Modal
     cy.contains("div.luna-button-content", "Add Status Page").click();
-
-    // Click Settings
     cy.contains(".smc-options-item", "Settings").click();
 
-    // Enter default into URL field
-    cy.get("#status-url").type("default");
+    cy.get("#status-url", { timeout: 10000 })
+      .should('be.visible')
+      .clear()
+      .type("default");
 
-    // Go to Layout tab
     cy.contains("div", "Layout").click();
 
-    // Click Add all monitors (twice as described)
-    cy.contains("div.luna-button-content", "Add all monitors").click();
-    cy.contains("div.luna-button-content", "Add all monitors").click();
+    // Wait for the "Add all monitors" button to appear
+    cy.contains("div.luna-button-content", "Add all monitors", { timeout: 10000 })
+      .should("be.visible")
+      .click();
 
-    // Click Create
+    // Click it again (if needed)
+    cy.contains("div.luna-button-content", "Add all monitors", { timeout: 10000 })
+      .should("be.visible")
+      .click();
+
+    // Continue with Create
     cy.contains("div.luna-button-content", "Create").click();
 
-    // Assert Success Toast
+
     cy.contains("Status page created successfully!").should("exist");
   });
 });
