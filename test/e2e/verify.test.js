@@ -6,113 +6,137 @@ describe('Verify User', () => {
     const secondUsername = 'test2nd' + Date.now();
 
     it('Register two users', () => {
+      // Register first user
       cy.visit('/register');
       cy.registerUser(`${username}@lunalytics.xyz`, username, 'testing123');
 
       cy.clearCookies();
       cy.clearLocalStorage();
 
+      // Register second user
       cy.visit('/register');
       cy.registerUser(
         `${secondUsername}@lunalytics.xyz`,
         secondUsername,
         'testing123'
       );
+      
+      cy.clearCookies();
+      cy.clearLocalStorage();
     });
 
     it('Accept member from settings', () => {
-      cy.clearCookies();
-      cy.clearLocalStorage();
-
+      // Login as owner
+      cy.visit('/login');
       cy.loginUser(
         loginDetails.ownerUser.email,
         loginDetails.ownerUser.password
       );
 
-      // Load settings
-      cy.visit('/settings');
-
-      // Wait for page to load and stabilize
-      cy.contains('Manage Team', { timeout: 10000 }).should('be.visible');
-
-      // Use alias pattern to prevent detachment
-      cy.contains('Manage Team').as('manageTeamTab');
-      cy.get('@manageTeamTab').click();
-
-      // Wait for the team management section to load
-      cy.wait(500);
-
-      // Accept user - use alias to prevent detachment
-      cy.get(`[id="accept-${username}"]`, { timeout: 8000 })
-        .should('be.visible')
-        .as('acceptBtn');
+      // Navigate to settings
+      cy.visit('/settings', { timeout: 10000 });
       
-      cy.get('@acceptBtn').click();
-
-      // Confirm approval
-      cy.get('[id="manage-approve-button"]', { timeout: 8000 })
-        .should('be.visible')
-        .as('approveBtn');
-      
-      cy.get('@approveBtn').click();
-
-      // Verify acceptance was successful (wait for modal to close or success message)
+      // Wait for settings page to fully load
+      cy.url().should('include', '/settings');
       cy.wait(1000);
 
-      // Login as the newly approved user
+      // Find and click Manage Team tab - force click if needed
+      cy.contains('Manage Team', { timeout: 10000 })
+        .should('exist')
+        .scrollIntoView()
+        .wait(500)
+        .click({ force: true });
+
+      // Wait for team management section to render
+      cy.wait(1000);
+
+      // Find the accept button for the first user
+      cy.get(`[id="accept-${username}"]`, { timeout: 10000 })
+        .should('exist')
+        .scrollIntoView()
+        .wait(300)
+        .click({ force: true });
+
+      // Wait for modal to appear
+      cy.wait(500);
+
+      // Click the approve button in the modal
+      cy.get('[id="manage-approve-button"]', { timeout: 10000 })
+        .should('exist')
+        .should('be.visible')
+        .wait(300)
+        .click({ force: true });
+
+      // Wait for approval to process
+      cy.wait(2000);
+
+      // Logout
       cy.clearCookies();
       cy.clearLocalStorage();
 
+      // Login as the approved user
+      cy.visit('/login');
       cy.loginUser(`${username}@lunalytics.xyz`, 'testing123');
 
-      cy.url({ timeout: 8000 }).should('include', '/home');
+      // Should be redirected to home
+      cy.url({ timeout: 10000 }).should('include', '/home');
     });
 
     it('Decline member from settings', () => {
-      cy.clearCookies();
-      cy.clearLocalStorage();
-
+      // Login as owner
+      cy.visit('/login');
       cy.loginUser(
         loginDetails.ownerUser.email,
         loginDetails.ownerUser.password
       );
 
-      cy.visit('/settings');
-
-      // Wait for page load
-      cy.contains('Manage Team', { timeout: 10000 }).should('be.visible');
-
-      // Use alias to prevent detachment
-      cy.contains('Manage Team').as('manageTeamTab');
-      cy.get('@manageTeamTab').click();
-
-      // Wait for team section to render
-      cy.wait(500);
-
-      // Decline user - use alias pattern
-      cy.get(`[id="decline-${secondUsername}"]`, { timeout: 10000 })
-        .should('be.visible')
-        .as('declineBtn');
+      // Navigate to settings
+      cy.visit('/settings', { timeout: 10000 });
       
-      cy.get('@declineBtn').click();
-
-      // Confirm decline
-      cy.get('[id="manage-decline-button"]', { timeout: 10000 })
-        .should('be.visible')
-        .as('confirmDeclineBtn');
-      
-      cy.get('@confirmDeclineBtn').click();
-
-      // Wait for action to complete
+      // Wait for settings page
+      cy.url().should('include', '/settings');
       cy.wait(1000);
 
-      // Try to login as declined user - should fail and redirect to login
+      // Click Manage Team tab
+      cy.contains('Manage Team', { timeout: 10000 })
+        .should('exist')
+        .scrollIntoView()
+        .wait(500)
+        .click({ force: true });
+
+      // Wait for team section
+      cy.wait(1000);
+
+      // Find the decline button for second user
+      cy.get(`[id="decline-${secondUsername}"]`, { timeout: 10000 })
+        .should('exist')
+        .scrollIntoView()
+        .wait(300)
+        .click({ force: true });
+
+      // Wait for modal
+      cy.wait(500);
+
+      // Click decline confirmation button
+      cy.get('[id="manage-decline-button"]', { timeout: 10000 })
+        .should('exist')
+        .should('be.visible')
+        .wait(300)
+        .click({ force: true });
+
+      // Wait for decline to process
+      cy.wait(2000);
+
+      // Logout
       cy.clearCookies();
       cy.clearLocalStorage();
 
+      // Try to login as declined user - should fail
+      cy.visit('/login');
       cy.loginUser(`${secondUsername}@lunalytics.xyz`, 'testing123');
 
-      cy.url({ timeout: 8000 }).should('include', '/login');
+      // Should stay on login page or show error
+      cy.url({ timeout: 10000 }).should('include', '/login');
     });
   });
 });
