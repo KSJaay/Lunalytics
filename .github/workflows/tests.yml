@@ -98,7 +98,7 @@ jobs:
               "path": "./data"
             },
             "server": {
-              "port": 3000,
+              "port": 2308,
               "host": "localhost"
             }
           }
@@ -112,7 +112,7 @@ jobs:
       - name: Wait for server to be ready
         run: |
           echo "Waiting for server to start..."
-          npx wait-on http://localhost:3000 --timeout 60000 || {
+          npx wait-on http://localhost:2308 --timeout 60000 || {
             echo "❌ Server failed to start. Server logs:"
             cat server.log
             exit 1
