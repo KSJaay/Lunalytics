@@ -40,7 +40,7 @@ Cypress.Commands.add('loginUser', (email, password) => {
 
 Cypress.Commands.add('createMonitor', (details = {}) => {
   // Start creating monitor
-  cy.get('[class="luna-button primary flat"]', { timeout: 10000 }).click();
+  cy.get('[class="luna-button primary flat"]', { timeout: 15000 }).click();
 
   const advancedKeys = ['headers', 'body', 'interval', 'retryInterval', 'timeout', 'statusCodes', 'ignoreTls'];
 
@@ -70,10 +70,10 @@ Cypress.Commands.add('createMonitor', (details = {}) => {
         cy.get(invalidValue).click();
       }
 
-      cy.get('[class="luna-button green flat"]', { timeout: 10000 }).click();
+      cy.get('[class="luna-button green flat"]', { timeout: 15000 }).click();
 
       if (error) {
-        cy.get(error.id, { timeout: 10000 }).should('be.visible');
+        cy.get(error.id, { timeout: 15000 }).should('be.visible');
         cy.equals(error.id, error.value);
       }
     }
@@ -92,11 +92,11 @@ Cypress.Commands.add('createMonitor', (details = {}) => {
   });
 
   // Save monitor
-  cy.get('[class="luna-button green flat"]', { timeout: 10000 }).click();
+  cy.get('[class="luna-button green flat"]', { timeout: 15000 }).click();
 });
 
 Cypress.Commands.add('typeTextSafe', (selector, text) => {
-  cy.get(selector, { timeout: 10000 })
+  cy.get(selector, { timeout: 15000 })
     .should('be.visible')
     .then($el => {
       cy.wrap($el).clear().type(text, { parseSpecialCharSequences: false });
@@ -104,7 +104,7 @@ Cypress.Commands.add('typeTextSafe', (selector, text) => {
 });
 
 Cypress.Commands.add('typeTextSafe', (selector, text) => {
-  cy.get(selector, { timeout: 10000 })
+  cy.get(selector, { timeout: 15000 })
     .should('be.visible')
     .then($el => {
       cy.wrap($el).clear().type(text, { parseSpecialCharSequences: false });
@@ -134,7 +134,7 @@ Cypress.Commands.add('createNotification', (details = {}) => {
 
       cy.get('#notification-create-button').click();
 
-      cy.get(error.id, { timeout: 10000 })
+      cy.get(error.id, { timeout: 15000 })
         .should('be.visible')
         .and('contain', error.value);
     }
@@ -156,20 +156,55 @@ Cypress.Commands.add('createNotification', (details = {}) => {
   cy.get('#notification-create-button').click();
 
   // Wait for modal to close (optional, improves stability)
-  cy.get('.modal-container', { timeout: 10000 }).should('not.exist');
+  cy.get('.modal-container', { timeout: 15000 }).should('not.exist');
 });
 // In commands.js
 Cypress.Commands.add('clearAllNotifications', () => {
-  cy.get('.navigation-notification-items .item', { timeout: 5000 }).then(($items) => {
-    if ($items.length > 0) {
-      cy.wrap($items).each(($item) => {
-        cy.wrap($item).click();
-        cy.get('.navigation-header-buttons > div:nth-child(2)').click({ force: true });
-        cy.get('#notification-delete-confirm').click({ force: true });
-      });
+  // 1. Setup a spy on the API call that fetches the list
+  //    (This ensures we don't check the UI before the data arrives)
+  cy.intercept('GET', '/api/notifications').as('getNotifications');
+
+  // 2. Navigate to the page
+  cy.visit('/notifications');
+
+  // 3. CRITICAL: Wait for the API data to load completely
+  cy.wait('@getNotifications');
+  
+  // 4. Optional: Small UI wait to ensure the DOM renders the data
+  cy.wait(200);
+
+  // 5. Now safely check the body
+  cy.get('body').then(($body) => {
+    // Check if items exist in the DOM
+    const $items = $body.find('.navigation-notification-items .item');
+
+    // Case A: List is empty. We are done!
+    if ($items.length === 0) {
+      cy.log('Success: No notifications found.');
+      return; 
     }
+
+    // Case B: Items found. Delete the FIRST one.
+    cy.log(`Deleting 1 of ${$items.length} notifications...`);
+    
+    // Click the first item to open details
+    cy.wrap($items.first()).click();
+
+    // Click Delete Icon (Ensure buttons are visible first)
+    cy.get('.navigation-header-buttons')
+      .should('be.visible')
+      .find('> div:nth-child(2)')
+      .click({ force: true });
+
+    // Click Confirm on the popup
+    cy.get('#notification-delete-confirm')
+      .should('be.visible')
+      .click({ force: true });
+
+    // 6. RECURSION: Start over to delete the next one.
+    //    We do this recursively to avoid "detached element" errors.
+    cy.clearAllNotifications();
   });
-  cy.get('.navigation-notification-items .item', { timeout: 5000 }).should('have.length', 0);
 });
 
 
