@@ -3,7 +3,7 @@
 set -e
 
 AGENT_NAME="lunalytics_agent"
-INSTALL_DIR="/usr/local/bin"
+INSTALL_DIR="/usr/local/lunalytics"
 SERVICE_FILE="/etc/systemd/system/$AGENT_NAME.service"
 
 if systemctl list-units --type=service | grep -q "$AGENT_NAME"; then
