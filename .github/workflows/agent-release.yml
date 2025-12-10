@@ -1,0 +1,36 @@
+name: Build Linux Agent Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-linux-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Build Linux AMD64 Agent
+        run: |
+          cd agent
+          GOOS=linux GOARCH=amd64 go build -o ./releases/lunalytics-agent-linux-amd64 ./main.go
+
+      - name: Build Linux ARM64 Agent
+        run: |
+          cd agent
+          GOOS=linux GOARCH=arm64 go build -o ./releases/lunalytics-agent-linux-arm64 ./main.go
+
+      - name: Upload Release Agent Binaries
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            agent/releases/lunalytics-agent-linux-amd64
+            agent/releases/lunalytics-agent-linux-arm64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -19,6 +19,7 @@ public/kanban.json
 test/e2e/setup/downloads
 /docker/data
 /docker/logs
+/agent/releases
 
 # misc
 .DS_Store
