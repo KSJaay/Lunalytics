@@ -78,10 +78,6 @@ func GetNetworkInformation() []NetInfo {
 	}
 
 	for _, ni := range interfaces {
-		var addrs []string
-		for _, a := range ni.Addrs {
-			addrs = append(addrs, a.Addr)
-		}
 
 		netType := "wired"
 		speed := 0
@@ -106,7 +102,6 @@ func GetNetworkInformation() []NetInfo {
 			OperState: operState,
 			Type:      netType,
 			Speed:     speed,
-			Addrs:     addrs,
 			MAC:       ni.HardwareAddr,
 		}
 
@@ -123,5 +118,4 @@ func GetNetworkInformation() []NetInfo {
 	}
 
 	return netInfos
-
 }

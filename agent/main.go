@@ -22,7 +22,7 @@ type SystemInfo struct {
 	CPU     statistics.CPUInfo               `json:"cpu"`
 	Memory  statistics.MemoryInfo            `json:"memory"`
 	Disks   []statistics.DiskInfo            `json:"disks"`
-	Network []statistics.NetInfo             `json:"network"`
+	Network []statistics.NetInfo             `json:"networks"`
 	Docker  []statistics.DockerContainerInfo `json:"docker"`
 	GPU     []gpu.GPUInfo                    `json:"gpu"`
 }
@@ -74,12 +74,17 @@ func main() {
 		startTime := time.Now()
 		sysInfo := getStatistics()
 
-		// Uncomment for testing to see the JSON output
+		// // Uncomment for testing to see the JSON output
 		// if jsonData, err := json.MarshalIndent(sysInfo, "", "  "); err == nil {
 		// 	fmt.Println(string(jsonData))
+
 		// } else {
 		// 	log.Fatal(err)
 		// }
+
+		// // Wait for enter before closing
+		// fmt.Println("Press Enter to exit...")
+		// fmt.Scanln()
 
 		// return
 

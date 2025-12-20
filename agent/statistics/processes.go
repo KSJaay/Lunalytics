@@ -15,6 +15,48 @@ type ProcessInfo struct {
 	UsedBytes uint64  `json:"mem_bytes"`
 }
 
+func getTopRAMProcesses(processes []ProcessInfo, n int) ProcessesInfos {
+	var ramProcesses ProcessesInfos
+
+	procs := append([]ProcessInfo(nil), processes...) 
+
+	sort.Slice(procs, func(i, j int) bool {
+		return procs[i].Memory > procs[j].Memory
+	})
+
+	ramProcesses.TotalProcesses = int32(len(procs))
+
+	if len(procs) > n {
+		ramProcesses.Processes = procs[:n]
+	} else {
+		ramProcesses.Processes = procs
+	}
+
+	return ramProcesses
+}
+
+func getTopCPUProcesses(processes []ProcessInfo, n int) ProcessesInfos {
+	var cpuProcesses ProcessesInfos
+
+	procs := append([]ProcessInfo(nil), processes...) 
+
+	sort.Slice(procs, func(i, j int) bool {
+		return procs[i].CPU > procs[j].CPU
+	})
+
+	cpuProcesses.TotalProcesses = int32(len(procs))
+
+	if len(procs) > n {
+		cpuProcesses.Processes = procs[:n]
+	} else {
+		cpuProcesses.Processes = procs
+	}
+
+	return cpuProcesses
+}
+
+
+
 func GetTopProcesses(n int) (ProcessesInfos, ProcessesInfos) {
 	pids, err := process.Pids()
 	if err != nil {
@@ -61,35 +103,5 @@ func GetTopProcesses(n int) (ProcessesInfos, ProcessesInfos) {
 		processes = append(processes, *proccessInfo)
 	}
 
-	sort.Slice(processes, func(i, j int) bool {
-		return processes[i].CPU > processes[j].CPU
-	})
-
-	totalProcesses := int32(len(processes))
-
-	cpuProcInfo := ProcessesInfos{
-		TotalProcesses: totalProcesses,
-		Processes:      processes,
-	}
-
-	sort.Slice(processes, func(i, j int) bool {
-		return processes[i].Memory > processes[j].Memory
-	})
-
-	memoryProcInfo := ProcessesInfos{
-		TotalProcesses: totalProcesses,
-		Processes:      processes,
-	}
-
-	if len(processes) > n {
-		return ProcessesInfos{
-				TotalProcesses: totalProcesses,
-				Processes:      cpuProcInfo.Processes[:n],
-			}, ProcessesInfos{
-				TotalProcesses: totalProcesses,
-				Processes:      memoryProcInfo.Processes[n:],
-			}
-	}
-
-	return cpuProcInfo, memoryProcInfo
+	return getTopCPUProcesses(processes, n), getTopRAMProcesses(processes, n)
 }

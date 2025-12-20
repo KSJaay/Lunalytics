@@ -1,15 +1,15 @@
 package gpu
 
 type GPUInfo struct {
-	Name        string
-	VRAM        uint64  // bytes
-	MemUsed     uint64  // bytes
-	Usage       float64 // percent
-	Driver      string
-	Vendor      string
-	DeviceID    string
-	Details     string
-	Temperature float64 // Celsius
-	PowerDraw   float64 // Watts
-	PowerLimit  float64 // Watts
+	Name        string  `json:"name"`
+	VRAM        uint64  `json:"vram"`     // bytes
+	MemUsed     uint64  `json:"mem_used"` // bytes
+	Usage       float64 `json:"usage"`    // percent
+	Driver      string  `json:"driver"`
+	Vendor      string  `json:"vendor"`
+	DeviceID    string  `json:"device_id"`
+	Details     string  `json:"details"`
+	Temperature float64 `json:"temperature"` // Celsius
+	PowerDraw   float64 `json:"power_draw"`  // Watts
+	PowerLimit  float64 `json:"power_limit"` // Watts
 }
