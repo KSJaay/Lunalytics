@@ -1,6 +1,6 @@
 {
   "name": "lunalytics",
-  "version": "0.10.17",
+  "version": "0.11.0",
   "description": "Open source Node.js server/website monitoring tool",
   "private": true,
   "author": "KSJaay <ksjaay@gmail.com>",
@@ -86,7 +86,6 @@
     "react-window": "1.8.11",
     "recharts": "3.2.1",
     "swapy": "1.0.5",
-    "systeminformation": "^5.27.11",
     "ua-parser-js": "2.0.3",
     "uuid": "11.1.0",
     "winston": "3.17.0",
