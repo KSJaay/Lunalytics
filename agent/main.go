@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"log"
 	"net/url"
-	"os"
 	"time"
 )
 
@@ -56,18 +55,18 @@ func main() {
 	flag.Parse()
 
 	if *urlFlag == "" {
-		fmt.Println("url flags are required.")
-		os.Exit(1)
+		fmt.Print("Enter the API endpoint URL: ")
+		fmt.Scanln(urlFlag)
 	}
 
 	if *apiKey == "" {
-		fmt.Println("apiKey flags are required.")
-		os.Exit(1)
+		fmt.Print("Enter the API key for Authorization header: ")
+		fmt.Scanln(apiKey)
 	}
 
 	if *serverId == "" {
-		fmt.Println("serverId flags are required.")
-		os.Exit(1)
+		fmt.Print("Enter the Server ID: ")
+		fmt.Scanln(serverId)
 	}
 
 	for {
@@ -85,7 +84,6 @@ func main() {
 		// // Wait for enter before closing
 		// fmt.Println("Press Enter to exit...")
 		// fmt.Scanln()
-
 		// return
 
 		u, err := url.Parse(*urlFlag)

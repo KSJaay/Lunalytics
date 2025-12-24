@@ -23,6 +23,7 @@
     "docker:release": "./docker/release.bash",
     "docker:build-local": "docker buildx build --platform linux/amd64 --tag 'lunalocal' .",
     "docker:deploy-local": "docker run -d -p 2306:2308 -v ./docker/data:/app/data -v ./docker/logs:/app/logs lunalocal",
+    "go:run": "cd ./agent && go run ./main.go --url=http://localhost:2308/api/server/heartbeat --apiKey=not-here --interval=5 --serverId=1290-323478912390-5789123-123123",
     "go:format": "gofmt -w ./agent/",
     "go:build-linux": "cd ./agent && GOOS=linux GOARCH=amd64 go build -o ./releases/lunalytics-agent-linux-amd64 ./main.go",
     "go:build-windows": "cd ./agent && GOOS=windows GOARCH=amd64 go build -o ./releases/lunalytics-agent-windows-amd64.exe ./main.go",

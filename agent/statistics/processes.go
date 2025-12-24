@@ -18,7 +18,7 @@ type ProcessInfo struct {
 func getTopRAMProcesses(processes []ProcessInfo, n int) ProcessesInfos {
 	var ramProcesses ProcessesInfos
 
-	procs := append([]ProcessInfo(nil), processes...) 
+	procs := append([]ProcessInfo(nil), processes...)
 
 	sort.Slice(procs, func(i, j int) bool {
 		return procs[i].Memory > procs[j].Memory
@@ -38,7 +38,7 @@ func getTopRAMProcesses(processes []ProcessInfo, n int) ProcessesInfos {
 func getTopCPUProcesses(processes []ProcessInfo, n int) ProcessesInfos {
 	var cpuProcesses ProcessesInfos
 
-	procs := append([]ProcessInfo(nil), processes...) 
+	procs := append([]ProcessInfo(nil), processes...)
 
 	sort.Slice(procs, func(i, j int) bool {
 		return procs[i].CPU > procs[j].CPU
@@ -54,8 +54,6 @@ func getTopCPUProcesses(processes []ProcessInfo, n int) ProcessesInfos {
 
 	return cpuProcesses
 }
-
-
 
 func GetTopProcesses(n int) (ProcessesInfos, ProcessesInfos) {
 	pids, err := process.Pids()
