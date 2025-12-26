@@ -1,36 +1,41 @@
 {
+  "type": {
+    "id": "[id=\"notification-type-dropdown\"]",
+    "value": "[id=\"notification-type-Discord\"]",
+    "type": "dropdown"
+  },
   "friendlyName": {
-    "id": "[id=\"friendly-name\"]",
+    "id": "[id=\"friendlyName\"]",
     "value": "Discord",
-    "invalidValue": "{}[]||<>",
+    "invalidValue": "^%$@#@#$",
     "type": "text",
     "error": {
-      "id": "[id=\"error-friendly-name\"]",
+      "id": "[id=\"error-friendlyName\"]",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
   "url": {
-    "id": "[id=\"webhook-url\"]",
+    "id": "[id=\"token\"]",
     "value": "https://discord.com/api/webhooks/082399/lunalytics",
     "invalidValue": "https://discord.com/api/webhook/082399/lunalytics",
     "type": "text",
     "error": {
-      "id": "[id=\"error-webhook-url\"]",
+      "id": "[id=\"error-token\"]",
       "value": "Invalid Discord Webhook URL"
     }
   },
   "username": {
-    "id": "[id=\"webhook-username\"]",
+    "id": "[id=\"username\"]",
     "value": "Lunalytics",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-webhook-username\"]",
+      "id": "[id=\"error-username\"]",
       "value": "Invalid Discord Webhook Username"
     }
   },
   "message": {
-    "id": "[id=\"text-messsage\"]",
+    "id": "[id=\"textMessage\"]",
     "value": "@everyone Alert!",
     "type": "text"
   }

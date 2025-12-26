@@ -1,0 +1,81 @@
+{
+  "type": {
+    "id": "[id=\"type-dropdown\"]",
+    "value": "[id=\"type-tcp\"]",
+    "type": "dropdown"
+  },
+  "name": {
+    "id": "[id=\"input-name\"]",
+    "value": "test-monitor",
+    "type": "text",
+    "invalidValue": "12345678123456781234567812345678123456781234567812345678123456789",
+    "error": {
+      "id": "[id=\"error-input-name\"]",
+      "value": "Please enter a valid name. Maximum length is 64 characters."
+    }
+  },
+  "host": {
+    "id": "[id=\"input-host\"]",
+    "value": "127.0.0.1",
+    "type": "text",
+    "invalidValue": "@#${}[]||<>",
+    "error": {
+      "id": "[id=\"error-input-host\"]",
+      "value": "Please enter a valid host (Only IPv4 is valid)."
+    }
+  },
+  "port": {
+    "id": "[id=\"input-port\"]",
+    "value": "8080",
+    "type": "text",
+    "invalidValue": "abcde",
+    "error": {
+      "id": "[id=\"error-input-port\"]",
+      "value": "Please enter a valid port."
+    }
+  },
+  "intervals": {
+    "id": "[id=\"monitor-modal-interval\"]",
+    "type": "click"
+  },
+  "interval": {
+    "id": "[id=\"input-interval\"]",
+    "value": "45",
+    "invalidValue": 10,
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-input-interval\"]",
+      "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
+    }
+  },
+  "retry": {
+    "id": "[id=\"input-retry\"]",
+    "value": 3,
+    "invalidValue": 40,
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-input-retry\"]",
+      "value": "Please enter a valid retry. Retry should be between 1 and 30 times."
+    }
+  },
+  "retryInterval": {
+    "id": "[id=\"input-retry-interval\"]",
+    "value": "45",
+    "invalidValue": 10,
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-input-retry-interval\"]",
+      "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
+    }
+  },
+  "timeout": {
+    "id": "[id=\"input-request-timeout\"]",
+    "value": "45",
+    "invalidValue": 10,
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-input-request-timeout\"]",
+      "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
+    }
+  }
+}

@@ -90,8 +90,8 @@ const HomeMonitorHeader = ({
           <IoArrowBack size={24} />
         </div>
       ) : null}
-      <div className="navigation-header-title">
-        <div>
+      <div className="navigation-header-title" id="monitor-view-menu-header">
+        <div id="monitor-view-menu-name">
           {t('common.monitor')} - {activeMonitor.name}
         </div>
         <HeaderSubtitle type={activeMonitor.type} url={activeMonitor.url} />

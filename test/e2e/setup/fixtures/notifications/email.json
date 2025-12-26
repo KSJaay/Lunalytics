@@ -1,0 +1,57 @@
+{
+  "type": {
+    "id": "[id=\"notification-type-dropdown\"]",
+    "value": "[id=\"notification-type-Email\"]",
+    "type": "dropdown"
+  },
+  "friendlyName": {
+    "id": "[id=\"friendlyName\"]",
+    "value": "Email",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-friendlyName\"]",
+      "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
+    }
+  },
+  "token": {
+    "id": "[id=\"token\"]",
+    "value": "smtp.lunalytics.xyz",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-token\"]",
+      "value": "Invalid Email Webhook URL"
+    }
+  },
+  "port": {
+    "id": "[id=\"port\"]",
+    "value": "587",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-port\"]",
+      "value": "Invalid Port"
+    }
+  },
+  "username": {
+    "id": "[id=\"username\"]",
+    "value": "Lunalytics",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-username\"]",
+      "value": "Invalid Username"
+    }
+  },
+  "password": {
+    "id": "[id=\"password\"]",
+    "value": "ReallySecurePassword123!",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-password\"]",
+      "value": "Invalid Password"
+    }
+  }
+}

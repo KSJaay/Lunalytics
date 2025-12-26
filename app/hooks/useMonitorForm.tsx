@@ -25,48 +25,46 @@ const useMonitorForm = (
   isEdit: boolean = false,
   closeModal: () => void,
   setMonitor: (monitor: Partial<MonitorProps>) => void,
-  setPageId: (id: string) => void,
+  setPageId: (id: string) => void
 ) => {
   const [inputs, setInput] = useState<Partial<MonitorProps>>({
     ...defaultInputs,
     ...values,
   });
   const [errors, setErrors] = useState({});
-  const [errorPages, setErrorPages] = useState<Set<string>>(new Set())
+  const [errorPages, setErrorPages] = useState<Set<string>>(new Set());
 
   const handleInput = (name: string, value: any) => {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
-  const getPagesWithErrors = (errorsObj: Record<string,string>) => {
-    
+  const getPagesWithErrors = (errorsObj: Record<string, string>) => {
     const associatedPage: Record<string, string> = {
-      'name': "basic",
-      'type': "basic",
-      'url': "basic",
-      'port': "basic",
-      'icon': "basic",
-      'method': "basic",
-      'json_query': "basic",
-      'interval': "interval",
-      'retry': "interval",
-      'retryInterval': "interval",
-      'requestTimeout': "interval",
-      'notificationType': "notification",
-      'headers': "advanced",
-      'body': "advanced",
-      'valid_status_codes': "advanced",
-    }
+      name: 'basic',
+      type: 'basic',
+      url: 'basic',
+      port: 'basic',
+      icon: 'basic',
+      method: 'basic',
+      json_query: 'basic',
+      interval: 'interval',
+      retry: 'interval',
+      retryInterval: 'interval',
+      requestTimeout: 'interval',
+      notificationType: 'notification',
+      headers: 'advanced',
+      body: 'advanced',
+      valid_status_codes: 'advanced',
+    };
     const pagesWithError = new Set<string>();
-    
-    Object.keys(errorsObj).forEach(error => {
-      const page = associatedPage[error]
-      if(error && page) pagesWithError.add(page)
-    })
 
-    return pagesWithError
-  }
+    Object.keys(errorsObj).forEach((error) => {
+      const page = associatedPage[error];
+      if (error && page) pagesWithError.add(page);
+    });
 
+    return pagesWithError;
+  };
 
   const handleActionButtons = (action: string) => () => {
     switch (action) {
@@ -78,17 +76,17 @@ const useMonitorForm = (
         const errorsObj = validator(inputs) as Record<string, string> | false;
 
         if (errorsObj !== false) {
-          const pagesWithErrors = getPagesWithErrors(errorsObj)
+          const pagesWithErrors = getPagesWithErrors(errorsObj);
           setErrorPages(pagesWithErrors);
-          setPageId(Array.from(pagesWithErrors)[0])
+          setPageId(Array.from(pagesWithErrors)[0]);
 
-          setErrors(errorsObj);     
+          setErrors(errorsObj);
           break;
         }
 
-        setErrorPages(new Set<string>())
+        setErrorPages(new Set<string>());
         setErrors({});
-        
+
         handleMonitor(inputs, isEdit, closeModal, setMonitor);
         break;
       }
@@ -103,7 +101,14 @@ const useMonitorForm = (
     }
   };
 
-  return { inputs, errors, handleActionButtons, handleInput, errorPages, setErrorPages };
+  return {
+    inputs,
+    errors,
+    handleActionButtons,
+    handleInput,
+    errorPages,
+    setErrorPages,
+  };
 };
 
 export default useMonitorForm;

@@ -134,6 +134,7 @@ const NotificationRender = ({ isEdit = false }: { isEdit: boolean }) => {
               onClick={() => {
                 handleInput({ key: 'reset', value: notification });
               }}
+              id="notification-edit-cancel-button"
             >
               Cancel
             </Button>
@@ -143,6 +144,7 @@ const NotificationRender = ({ isEdit = false }: { isEdit: boolean }) => {
               onClick={() => {
                 handleSubmit(addNotification);
               }}
+              id="notification-edit-save-button"
             >
               Save
             </Button>

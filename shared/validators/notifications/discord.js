@@ -14,9 +14,8 @@ const usernameRegex = /^[a-zA-Z0-9_]{1,32}$/;
 const Discord = ({
   messageType,
   friendlyName,
-  textMessage,
   token,
-  username,
+  data: { textMessage, username } = {},
 }) => {
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(
@@ -35,6 +34,11 @@ const Discord = ({
       'Invalid Discord Webhook URL'
     );
   }
+
+  console.log(
+    'username && !usernameRegex',
+    username && !usernameRegex.test(username)
+  );
 
   if (username && !usernameRegex.test(username)) {
     throw new NotificationValidatorError(

@@ -5,17 +5,21 @@ describe('Verify User', () => {
     const username = 'test' + Date.now();
     const secondUsername = 'test2nd' + Date.now();
 
-    it('Register two users', () => {
-      cy.visit('/register');
-      cy.registerUser(`${username}@lunalytics.xyz`, username, 'testing123');
+    before(() => {
+      cy.clearCookies();
+
+      cy.registerUser(
+        `${username}@lunalytics.xyz`,
+        username,
+        'Lunalytics12345!$#'
+      );
 
       cy.clearCookies();
 
-      cy.visit('/register');
       cy.registerUser(
         `${secondUsername}@lunalytics.xyz`,
         secondUsername,
-        'testing123'
+        'Lunalytics12345!$#'
       );
     });
 
@@ -35,9 +39,13 @@ describe('Verify User', () => {
 
       cy.clearCookies();
 
-      cy.loginUser(`${username}@lunalytics.xyz`, 'testing123');
+      cy.loginUser(`${username}@lunalytics.xyz`, 'Lunalytics12345!$#');
 
       cy.url().should('eq', 'http://localhost:2308/home');
+
+      cy.clearCookies();
+
+      cy.deleteUserAccount(`${username}@lunalytics.xyz`, 'Lunalytics12345!$#');
     });
 
     it('Decline member from settings', () => {
@@ -58,9 +66,16 @@ describe('Verify User', () => {
 
       cy.clearCookies();
 
-      cy.loginUser(`${secondUsername}@lunalytics.xyz`, 'testing123');
+      cy.visit('/login');
 
-      cy.url().should('eq', 'http://localhost:2308/login');
+      cy.typeText(
+        '[id="email"]',
+        `${secondUsername}@lunalytics.xyz`
+      ).clickOutside();
+
+      cy.get('[id="auth-button"]').click();
+
+      cy.equals('[id="auth-title"]', 'Enter details');
     });
   });
 });

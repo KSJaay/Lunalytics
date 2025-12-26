@@ -5,32 +5,32 @@
     "type": "dropdown"
   },
   "friendlyName": {
-    "id": "[id=\"friendly-name\"]",
-    "value": "Slack",
+    "id": "[id=\"friendlyName\"]",
+    "value": "Telegram",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-friendly-name\"]",
+      "id": "[id=\"error-friendlyName\"]",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
   "url": {
-    "id": "[id=\"bot-token\"]",
+    "id": "[id=\"token\"]",
     "value": "123123:123123",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-bot-token\"]",
+      "id": "[id=\"error-token\"]",
       "value": "Invalid Telegram Bot Token"
     }
   },
   "chatId": {
-    "id": "[id=\"chat-id\"]",
+    "id": "[id=\"chatId\"]",
     "value": "123123123",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-chat-id\"]",
+      "id": "[id=\"error-chatId\"]",
       "value": "Invalid Chat ID"
     }
   }

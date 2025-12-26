@@ -1,0 +1,32 @@
+{
+  "friendlyName": {
+    "id": "[id=\"friendlyName\"]",
+    "value": "TelegramUpdated",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-friendlyName\"]",
+      "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
+    }
+  },
+  "url": {
+    "id": "[id=\"token\"]",
+    "value": "123123:141141",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-token\"]",
+      "value": "Invalid Telegram Bot Token"
+    }
+  },
+  "chatId": {
+    "id": "[id=\"chatId\"]",
+    "value": "123123141",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-chatId\"]",
+      "value": "Invalid Chat ID"
+    }
+  }
+}

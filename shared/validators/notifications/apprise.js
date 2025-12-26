@@ -3,7 +3,7 @@ import { NotificationValidatorError } from '../../utils/errors.js';
 const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];
 
-const Apprise = ({ messageType, friendlyName, token, urls }) => {
+const Apprise = ({ messageType, friendlyName, token, data: { urls } = {} }) => {
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(
       'friendlyName',

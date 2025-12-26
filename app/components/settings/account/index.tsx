@@ -42,7 +42,7 @@ const accountItems = [
     description: 'Your account will be removed from our database',
     customButton: (
       <div className="settings-account-item-buttons">
-        <Button color="red" variant="outline">
+        <Button color="red" variant="outline" id="delete-account-button">
           Delete Account
         </Button>
       </div>

@@ -17,13 +17,13 @@ const SettingsAccountDeleteModal = ({
 
   const handleDeleteAccount = async () => {
     try {
-      const transferConfirm = (
+      const deleteConfirm = (
         document.getElementById(
-          'settings-transfer-confirm'
+          'settings-delete-account-confirm'
         ) as HTMLInputElement | null
       )?.value;
 
-      if (transferConfirm?.toLowerCase().trim() !== 'delete account') {
+      if (deleteConfirm?.toLowerCase().trim() !== 'delete account') {
         toast.error('Enter delete account to confirm.');
         return;
       }
@@ -51,10 +51,19 @@ const SettingsAccountDeleteModal = ({
       title="Delete Account"
       actions={
         <>
-          <Button color="gray" onClick={closeModal}>
+          <Button
+            id="delete-account-cancel-button"
+            color="gray"
+            onClick={closeModal}
+          >
             Cancel
           </Button>
-          <Button color="red" variant="flat" onClick={handleDeleteAccount}>
+          <Button
+            id="delete-account-confirm-button"
+            color="red"
+            variant="flat"
+            onClick={handleDeleteAccount}
+          >
             Delete account
           </Button>
         </>
@@ -68,7 +77,7 @@ const SettingsAccountDeleteModal = ({
       />
 
       <Input
-        id="settings-transfer-confirm"
+        id="settings-delete-account-confirm"
         title={
           <div style={{ fontWeight: '500', fontSize: '14px' }}>
             To verify, type{' '}

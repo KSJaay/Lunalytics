@@ -1,7 +1,7 @@
 import loginDetails from '../setup/fixtures/login.json';
-import monitorDetails from '../setup/fixtures/monitor.json';
+import httpMonitorDetails from '../setup/fixtures/monitors/http.json';
 
-describe('Monitor HTTP - Advance', () => {
+describe('Monitor HTTP', () => {
   context('create a monitor with basic information', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
@@ -12,7 +12,7 @@ describe('Monitor HTTP - Advance', () => {
     });
 
     it('should show errors for invalid values and create a monitor with valid values', () => {
-      cy.createMonitor(monitorDetails.http);
+      cy.createMonitor(httpMonitorDetails);
     });
   });
 
@@ -26,17 +26,17 @@ describe('Monitor HTTP - Advance', () => {
     });
 
     it('Edit monitor name', () => {
-      cy.get(`[id="monitor-${monitorDetails.http.name.value}"]`).click();
+      cy.get('[id="monitor-options-button"]').click();
 
       cy.get('[id="monitor-edit-button"]').click();
 
-      cy.typeText(monitorDetails.http.name.id, '-Edited');
+      cy.typeText(httpMonitorDetails.name.id, '-Edited');
 
-      cy.get('[id="monitor-create-button"]').click();
+      cy.get('[id="monitor-configure-submit-button"]').click();
 
       cy.equals(
         '[id="monitor-view-menu-name"]',
-        `${monitorDetails.http.name.value}-Edited`
+        `Monitor - ${httpMonitorDetails.name.value}-Edited`
       );
     });
   });
@@ -51,15 +51,17 @@ describe('Monitor HTTP - Advance', () => {
     });
 
     it('Delete monitor', () => {
-      cy.get(`[id="monitor-${monitorDetails.http.name.value}-Edited"]`).click();
+      cy.get('[id="monitor-options-button"]').click();
 
       cy.get('[id="monitor-delete-button"]').click();
 
       cy.get('[id="monitor-delete-confirm-button"]').click();
 
-      cy.get(`[id="monitor-${monitorDetails.http.name.value}-Edited"]`).should(
-        'not.exist'
-      );
+      cy.get(`[id="monitor-view-menu-name"]`).should('not.exist');
+
+      cy.get('[class="monitor-none-exist"]')
+        .should('be.visible')
+        .contains('No monitors found');
     });
   });
 });

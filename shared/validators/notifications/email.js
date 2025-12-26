@@ -18,7 +18,7 @@ const Email = ({
     toEmail,
     ccEmail,
     bccEmail,
-  },
+  } = {},
 }) => {
   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
     throw new NotificationValidatorError(

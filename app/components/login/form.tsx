@@ -31,7 +31,7 @@ const LoginForm = ({
           Forgot password?
         </div>
       ) : null}
-      <Button fullWidth variant="border" onClick={onSubmit}>
+      <Button fullWidth variant="border" onClick={onSubmit} id="auth-button">
         {buttonText}
       </Button>
     </form>

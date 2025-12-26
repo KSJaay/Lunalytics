@@ -12,6 +12,10 @@ const authorization = async (request, response, next) => {
     const { session_token } = request.cookies;
     const { authorization } = request.headers;
 
+    if (request.url.startsWith('/assets')) {
+      return next();
+    }
+
     if (session_token) {
       const userSession = await userSessionExists(session_token);
 
