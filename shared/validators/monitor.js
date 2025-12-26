@@ -70,7 +70,9 @@ export const tcpHost = (host) => {
 };
 
 export const tcpPort = (port) => {
-  if (!port || port < 1 || port > 65535) {
+  const portNumber = Number(port);
+
+  if (!portNumber || portNumber < 1 || portNumber > 65535) {
     return 'Please enter a valid port.';
   }
 };

@@ -5,48 +5,48 @@
     "type": "dropdown"
   },
   "friendlyName": {
-    "id": "[id=\"friendly-name\"]",
+    "id": "[id=\"friendlyName\"]",
     "value": "Slack",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-friendly-name\"]",
+      "id": "[id=\"error-friendlyName\"]",
       "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
     }
   },
 
   "url": {
-    "id": "[id=\"webhook-url\"]",
+    "id": "[id=\"token\"]",
     "value": "https://hooks.slack.com/services/123123/123123/123123",
     "invalidValue": "https://hooks.slack.com/service/123123/123123/123123",
     "type": "text",
     "error": {
-      "id": "[id=\"error-webhook-url\"]",
+      "id": "[id=\"error-token\"]",
       "value": "Invalid Slack Webhook URL"
     }
   },
   "username": {
-    "id": "[id=\"webhook-username\"]",
+    "id": "[id=\"username\"]",
     "value": "Lunalytics",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-webhook-username\"]",
+      "id": "[id=\"error-username\"]",
       "value": "Invalid Slack Webhook Username"
     }
   },
   "channel": {
-    "id": "[id=\"channel-name\"]",
+    "id": "[id=\"channel\"]",
     "value": "general",
     "invalidValue": "{}[]||<>",
     "type": "text",
     "error": {
-      "id": "[id=\"error-channel-name\"]",
+      "id": "[id=\"error-channel\"]",
       "value": "Invalid Channel Name"
     }
   },
   "message": {
-    "id": "[id=\"text-messsage\"]",
+    "id": "[id=\"textMessage\"]",
     "value": "@everyone Alert!",
     "type": "text"
   }

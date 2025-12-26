@@ -78,6 +78,7 @@ const Notifications = () => {
               />
             )
           }
+          id="add-notification-button"
         >
           {t('notification.add')}
         </Button>

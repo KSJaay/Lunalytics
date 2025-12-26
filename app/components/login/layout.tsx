@@ -36,6 +36,7 @@ const LoginLayout = ({
               fontWeight: 'bold',
               marginBottom: '8px',
             }}
+            id="auth-title"
           >
             {title}
           </h1>
@@ -45,6 +46,7 @@ const LoginLayout = ({
                 fontSize: 'var(--font-sm)',
                 color: 'var(--font-light-color)',
               }}
+              id="auth-subtitle"
             >
               {subtitle}
             </div>

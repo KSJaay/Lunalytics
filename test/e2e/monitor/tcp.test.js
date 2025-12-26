@@ -1,7 +1,7 @@
 import loginDetails from '../setup/fixtures/login.json';
-import monitorDetails from '../setup/fixtures/monitor.json';
+import tcpMonitorDetails from '../setup/fixtures/monitors/tcp.json';
 
-describe('Monitor TCP - Advance', () => {
+describe('Monitor TCP', () => {
   context('create a monitor with basic information', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
@@ -12,7 +12,7 @@ describe('Monitor TCP - Advance', () => {
     });
 
     it('should show errors for invalid values and create a monitor with valid values', () => {
-      cy.createMonitor(monitorDetails.tcp);
+      cy.createMonitor(tcpMonitorDetails);
     });
   });
 
@@ -26,17 +26,17 @@ describe('Monitor TCP - Advance', () => {
     });
 
     it('Edit monitor name', () => {
-      cy.get(`[id="monitor-${monitorDetails.tcp.name.value}"]`).click();
+      cy.get('[id="monitor-options-button"]').click();
 
       cy.get('[id="monitor-edit-button"]').click();
 
-      cy.typeText(monitorDetails.tcp.name.id, '-Edited');
+      cy.typeText(tcpMonitorDetails.name.id, '-Edited');
 
-      cy.get('[id="monitor-create-button"]').click();
+      cy.get('[id="monitor-configure-submit-button"]').click();
 
       cy.equals(
         '[id="monitor-view-menu-name"]',
-        `${monitorDetails.tcp.name.value}-Edited`
+        `Monitor - ${tcpMonitorDetails.name.value}-Edited`
       );
     });
   });
@@ -50,16 +50,18 @@ describe('Monitor TCP - Advance', () => {
       cy.visit('/home');
     });
 
-    it('should delete a monitor', () => {
-      cy.get(`[id="monitor-${monitorDetails.tcp.name.value}-Edited"]`).click();
+    it('Delete monitor', () => {
+      cy.get('[id="monitor-options-button"]').click();
 
       cy.get('[id="monitor-delete-button"]').click();
 
       cy.get('[id="monitor-delete-confirm-button"]').click();
 
-      cy.get(`[id="monitor-${monitorDetails.tcp.name.value}-Edited"]`).should(
-        'not.exist'
-      );
+      cy.get(`[id="monitor-view-menu-name"]`).should('not.exist');
+
+      cy.get('[class="monitor-none-exist"]')
+        .should('be.visible')
+        .contains('No monitors found');
     });
   });
 });

@@ -1,0 +1,42 @@
+{
+  "type": {
+    "id": "[id=\"notification-type-dropdown\"]",
+    "value": "[id=\"notification-type-Pushover\"]",
+    "type": "dropdown"
+  },
+  "friendlyName": {
+    "id": "[id=\"friendlyName\"]",
+    "value": "Pushover",
+    "invalidValue": "^%$@#@#$",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-friendlyName\"]",
+      "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
+    }
+  },
+  "token": {
+    "id": "[id=\"token\"]",
+    "value": "xxxxxxxxxxxxxxx",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-token\"]",
+      "value": "Invalid Pushover API Token"
+    }
+  },
+  "userKey": {
+    "id": "[id=\"userKey\"]",
+    "value": "xxxxxxxxxxxxxxx",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-userKey\"]",
+      "value": "Invalid Pushover User Key"
+    }
+  },
+  "ttl": {
+    "id": "[id=\"ttl\"]",
+    "value": "12",
+    "type": "text"
+  }
+}

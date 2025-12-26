@@ -53,6 +53,7 @@ const MonitorJsonQueryCheck = ({
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <Input
+          id="http-json-key-input"
           placeholder="$.body.name"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleInput('json_query', [
@@ -83,15 +84,17 @@ const MonitorJsonQueryCheck = ({
             {JsonChecks.map((check) => (
               <Dropdown.Item
                 key={check.id}
-                onClick={() =>
+                id={check.id}
+                onClick={() => {
                   handleInput('json_query', [
                     {
                       key: json_query.key,
                       operator: check.id,
                       value: json_query.value,
                     },
-                  ])
-                }
+                  ]);
+                  toggleDropdown();
+                }}
                 showDot
                 isSelected={json_query.operator === check.id}
               >
@@ -101,6 +104,7 @@ const MonitorJsonQueryCheck = ({
           </Dropdown.List>
         </Dropdown.Container>
         <Input
+          id="http-json-value-input"
           placeholder="$.body.name"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleInput('json_query', [

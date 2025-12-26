@@ -60,7 +60,7 @@ const HomeMonitorHeaderMenu = () => {
   );
 
   return (
-    <div onClick={toggleDropdown}>
+    <div onClick={toggleDropdown} id="monitor-options-button">
       <Dropdown.Container
         isOpen={dropdownIsOpen}
         toggleDropdown={toggleDropdown}

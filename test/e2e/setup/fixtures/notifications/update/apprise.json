@@ -1,0 +1,32 @@
+{
+  "friendlyName": {
+    "id": "[id=\"friendlyName\"]",
+    "value": "AppriseUpdated",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-friendlyName\"]",
+      "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
+    }
+  },
+  "token": {
+    "id": "[id=\"token\"]",
+    "value": "https://apprise.lunalytics.xyz/notify/Updated",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-token\"]",
+      "value": "Invalid Apprise Webhook URL"
+    }
+  },
+  "urls": {
+    "id": "[id=\"urls\"]",
+    "value": "discord://webhook_id/webhook_token_updated, pushover://user_key/app_token_updated",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-urls\"]",
+      "value": "Invalid Apprise URLs"
+    }
+  }
+}

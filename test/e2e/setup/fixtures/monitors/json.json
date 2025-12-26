@@ -1,0 +1,125 @@
+{
+  "type": {
+    "id": "[id=\"type-dropdown\"]",
+    "value": "[id=\"type-json\"]",
+    "type": "dropdown"
+  },
+  "name": {
+    "id": "[id=\"input-name\"]",
+    "value": "test-monitor",
+    "type": "text",
+    "invalidValue": "12345678123456781234567812345678123456781234567812345678123456789",
+    "error": {
+      "id": "[id=\"error-input-name\"]",
+      "value": "Please enter a valid name. Maximum length is 64 characters."
+    }
+  },
+  "url": {
+    "id": "[id=\"input-url\"]",
+    "value": "http://lunalytics.xyz/api/status",
+    "type": "text",
+    "invalidValue": "@#${}[]||<>",
+    "error": {
+      "id": "[id=\"error-input-url\"]",
+      "value": "Please enter a valid URL. Only http:// or https:// is allowed."
+    }
+  },
+  "method": {
+    "id": "[id=\"http-method-dropdown\"]",
+    "value": "[id=\"http-method-GET\"]",
+    "type": "dropdown"
+  },
+  "json_key": {
+    "id": "[id=\"http-json-key-input\"]",
+    "value": "$.data.messsage",
+    "type": "text",
+    "invalidValue": "",
+    "error": {
+      "id": "[id=\"text-input-http-json-error\"]",
+      "value": "Please provide a valid JSON query."
+    }
+  },
+  "json_operator": {
+    "id": "[id=\"http-json-dropdown\"]",
+    "value": "[id=\"contains\"]",
+    "type": "dropdown"
+  },
+  "json_value": {
+    "id": "[id=\"http-json-value-input\"]",
+    "value": "hello",
+    "type": "text",
+    "invalidValue": "",
+    "error": {
+      "id": "[id=\"text-input-http-json-error\"]",
+      "value": "Please provide a valid value."
+    }
+  },
+  "intervals": {
+    "id": "[id=\"monitor-modal-interval\"]",
+    "type": "click"
+  },
+  "interval": {
+    "id": "[id=\"input-interval\"]",
+    "value": "45",
+    "invalidValue": 10,
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-input-interval\"]",
+      "value": "Please enter a valid interval. Interval should be between 20 and 600 seconds."
+    }
+  },
+  "retry": {
+    "id": "[id=\"input-retry\"]",
+    "value": 3,
+    "invalidValue": 40,
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-input-retry\"]",
+      "value": "Please enter a valid retry. Retry should be between 1 and 30 times."
+    }
+  },
+  "retryInterval": {
+    "id": "[id=\"input-retry-interval\"]",
+    "value": "45",
+    "invalidValue": 10,
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-input-retry-interval\"]",
+      "value": "Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds."
+    }
+  },
+  "timeout": {
+    "id": "[id=\"input-request-timeout\"]",
+    "value": "45",
+    "invalidValue": 10,
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-input-request-timeout\"]",
+      "value": "Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds."
+    }
+  },
+  "advance": {
+    "id": "[id=\"monitor-modal-advanced\"]",
+    "type": "click"
+  },
+  "headers": {
+    "id": "[id=\"http-headers-textarea\"]",
+    "value": "{{}\"key\":\"value\"{}}",
+    "type": "textarea",
+    "invalidValue": "{{}\"key\":\"value{}}",
+    "error": {
+      "id": "[id=\"error-http-headers-textarea\"]",
+      "value": "Please enter valid headers. Make sure to follow JSON key/value format."
+    }
+  },
+  "body": {
+    "id": "[id=\"http-body-textarea\"]",
+    "value": "{{}\"key\":\"value\"{}}",
+    "type": "textarea",
+    "invalidValue": "{{}\"key\":\"value{}}",
+    "error": {
+      "id": "[id=\"error-http-body-textarea\"]",
+      "value": "Please enter valid body. Make sure to follow JSON key/value format."
+    }
+  }
+}

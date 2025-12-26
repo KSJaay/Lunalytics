@@ -93,6 +93,7 @@ const Home = () => {
                 />
               )
             }
+            id="home-add-monitor-button"
           >
             {t('home.monitor.add')}
           </Button>

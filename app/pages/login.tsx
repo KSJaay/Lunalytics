@@ -159,7 +159,7 @@ const Login = () => {
       title="Enter details"
       subtitle={
         <>
-          <div>Enter your details to register</div>
+          <div >Enter your details to register</div>
 
           <EditEmail
             email={inputs.email}

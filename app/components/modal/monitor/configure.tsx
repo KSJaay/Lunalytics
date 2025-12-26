@@ -90,6 +90,7 @@ const MonitorConfigureModal = ({
                     setPageId(page.id);
                   }}
                   key={page.id}
+                  id={`monitor-modal-${page.id}`}
                 >
                   {page.icon}
                   <div>{page.title}</div>
@@ -104,6 +105,7 @@ const MonitorConfigureModal = ({
               variant="flat"
               fullWidth
               onClick={handleActionButtons('Cancel')}
+              id="monitor-configure-cancel-button"
             >
               Cancel
             </Button>
@@ -113,6 +115,7 @@ const MonitorConfigureModal = ({
               fullWidth
               disabled={Object.keys(errors).length > 0}
               onClick={handleActionButtons('Create')}
+              id="monitor-configure-submit-button"
             >
               {isEdit ? 'Update' : 'Create'}
             </Button>

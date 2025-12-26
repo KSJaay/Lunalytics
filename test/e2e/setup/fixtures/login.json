@@ -1,7 +1,7 @@
 {
   "username": "testuser",
   "email": "test@lunalytics.xyz",
-  "password": "TestUser123",
+  "password": "Lunalytics12345!$#",
   "incorrectUsernames": [
     { "value": "a", "error": "Username must be between 3 and 32 characters." },
     {
@@ -53,21 +53,21 @@
   "ownerUser": {
     "username": "owner",
     "email": "owner@lunalytics.xyz",
-    "password": "TestUser123"
+    "password": "Lunalytics12345!$#"
   },
   "adminUser": {
     "username": "admin",
     "email": "admin@lunalytics.xyz",
-    "password": "TestUser123"
+    "password": "Lunalytics12345!$#"
   },
   "editorUser": {
     "username": "editor",
     "email": "editor@lunalytics.xyz",
-    "password": "TestUser123"
+    "password": "Lunalytics12345!$#"
   },
   "viewerUser": {
     "username": "viewer",
     "email": "viewer@lunalytics.xyz",
-    "password": "TestUser123"
+    "password": "Lunalytics12345!$#"
   }
 }

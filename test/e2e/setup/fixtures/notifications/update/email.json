@@ -1,0 +1,52 @@
+{
+  "friendlyName": {
+    "id": "[id=\"friendlyName\"]",
+    "value": "EmailUpdated",
+    "invalidValue": "{}[]||<>",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-friendlyName\"]",
+      "value": "Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only."
+    }
+  },
+  "token": {
+    "id": "[id=\"token\"]",
+    "value": "smtp.lunalyticsupdated.xyz",
+    "invalidValue": "",
+  "type": "text",
+    "error": {
+      "id": "[id=\"error-token\"]",
+      "value": "Invalid Email Webhook URL"
+    }
+  },
+  "port": {
+    "id": "[id=\"port\"]",
+    "value": "586",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-port\"]",
+      "value": "Invalid Port"
+    }
+  },
+  "username": {
+    "id": "[id=\"username\"]",
+    "value": "LunalyticsUpdated",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-username\"]",
+      "value": "Invalid Username"
+    }
+  },
+  "password": {
+    "id": "[id=\"password\"]",
+    "value": "ReallySecureUpdated123!",
+    "invalidValue": "",
+    "type": "text",
+    "error": {
+      "id": "[id=\"error-password\"]",
+      "value": "Invalid Password"
+    }
+  }
+}

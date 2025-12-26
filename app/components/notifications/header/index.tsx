@@ -50,8 +50,8 @@ const HomeNotificationHeader = ({
         notificationId: id,
       });
 
-      setActiveNotification(isDesktop ? null : 'mobile-reset');
       deleteNotification(id);
+      setActiveNotification(isDesktop ? null : 'mobile-reset');
       closeModal();
       toast.success('Notification deleted successfully!');
     } catch (error) {
@@ -100,10 +100,14 @@ const HomeNotificationHeader = ({
       <div className="navigation-header-buttons">
         {isEditor ? (
           <>
-            <div onClick={() => testNotification(notification)}>
+            <div
+              onClick={() => testNotification(notification)}
+              id="notification-header-test-button"
+            >
               <BsFillSendFill />
             </div>
             <div
+              id="notification-header-delete-button"
               onClick={() =>
                 openModal(
                   <NotificationDeleteModal
