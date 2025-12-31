@@ -98,6 +98,7 @@ export interface ContextStatusPageSettingsProps {
   homepageUrl: string;
   isPublic: boolean;
   hidePaused: boolean;
+  customDomains?: string[];
 }
 
 export type ContextStatusPageLayoutProps =

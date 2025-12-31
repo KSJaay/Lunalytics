@@ -1,10 +1,23 @@
 import express from 'express';
-import { fetchStatusPageUsingUrl } from '../database/queries/status.js';
+import {
+  fetchStatusPageUsingDomain,
+  fetchStatusPageUsingUrl,
+} from '../database/queries/status.js';
 import { handleError } from '../utils/errors.js';
 import { cleanStatusApiResponse, cleanStatusPage } from '../class/status.js';
 import statusCache from '../cache/status.js';
 import { userSessionExists } from '../database/queries/session.js';
 import { getUserByEmail } from '../database/queries/user.js';
+
+const fetchStatusPage = async (statusPageId, domain) => {
+  let statusPage = await fetchStatusPageUsingUrl(statusPageId);
+
+  if (!statusPage && domain) {
+    statusPage = await fetchStatusPageUsingDomain(domain);
+  }
+
+  return statusPage;
+};
 
 const router = express.Router();
 
@@ -16,7 +29,7 @@ router.get('/', async (request, response) => {
       return response.status(400).json({ message: 'statusPageId is required' });
     }
 
-    const status = await fetchStatusPageUsingUrl(statusPageId);
+    const status = await fetchStatusPage(statusPageId, request.headers.host);
 
     if (!status) {
       return response.status(404).json({ message: 'status not found' });

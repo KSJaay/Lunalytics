@@ -21,6 +21,17 @@ export const fetchStatusPageUsingUrl = async (url) => {
   return SQLite.client('status_page').where({ statusUrl: url }).first();
 };
 
+export const fetchStatusPageUsingDomain = async (domain) => {
+  const statusPage = await SQLite.client('status_page')
+    .whereRaw(
+      "EXISTS (SELECT 1 FROM json_each(settings, '$.customDomains') WHERE value = ?)",
+      [domain]
+    )
+    .first();
+
+  return statusPage;
+};
+
 export const createStatusPage = async (settings, layout, user) => {
   const statusExists = await fetchStatusPageUsingUrl(settings.url);
 

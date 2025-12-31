@@ -35,11 +35,6 @@ const Discord = ({
     );
   }
 
-  console.log(
-    'username && !usernameRegex',
-    username && !usernameRegex.test(username)
-  );
-
   if (username && !usernameRegex.test(username)) {
     throw new NotificationValidatorError(
       'username',
