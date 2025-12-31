@@ -55,8 +55,6 @@ const useNotificationForm = (
 
       const result = validator(inputs);
 
-      console.log('result', result, inputs);
-
       const path = isEdit
         ? '/api/notifications/edit'
         : '/api/notifications/create';
@@ -74,8 +72,6 @@ const useNotificationForm = (
         handleError({ key: error.key, value: error.message });
         return;
       }
-
-      console.log('error: ', error);
 
       handleError({
         key: 'general',

@@ -1,19 +1,29 @@
-import { Input } from '@lunalytics/ui';
+import { observer } from 'mobx-react-lite';
+import { FaTrashCan } from 'react-icons/fa6';
+import { Button, Input } from '@lunalytics/ui';
+import { useEffect, useMemo, useState } from 'react';
 
 // import local files
 import Switch from '../../../ui/switch';
 import useStatusPageContext from '../../../../context/status-page';
-import { observer } from 'mobx-react-lite';
 
 const StatusConfigureSettings = () => {
-  const { changeValues, settings = {} } = useStatusPageContext();
+  const [domainSize, setDomainSize] = useState(1);
+  const { changeValues, settings } = useStatusPageContext();
+  const domains = useMemo(
+    () => settings.customDomains || [],
+    [settings.customDomains]
+  );
+
+  useEffect(() => {
+    setDomainSize(domains.length || 1);
+  }, [domains]);
 
   return (
     <>
       <div className="scc-block">
         <div>
           <div className="scc-title">Name and homepage</div>
-          <div className="scc-description"></div>
         </div>
 
         <div style={{ gap: '12px' }}>
@@ -89,6 +99,80 @@ const StatusConfigureSettings = () => {
               }}
             />
           </div>
+        </div>
+      </div>
+
+      <div className="scc-block">
+        <div>
+          <div className="scc-title">Custom Domain</div>
+          <div className="scc-description">
+            Custom domains will show the status page on that domain.
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+          }}
+        >
+          {Array.from({ length: domainSize }).map((_, index) => (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr auto',
+                gap: '12px',
+              }}
+              key={index}
+            >
+              <Input
+                key={index}
+                value={domains[index] || ''}
+                placeholder="status.yourdomain.com"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  changeValues({
+                    customDomains: [
+                      ...domains.slice(0, index),
+                      e.target.value,
+                      ...domains.slice(index + 1),
+                    ],
+                  });
+                }}
+                style={{ flex: 1 }}
+                fullWidth
+              />
+
+              <div
+                style={{
+                  cursor: 'pointer',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  display: 'flex',
+                  borderRadius: 'var(--radius-md)',
+                  transition: 'var(--transition-base)',
+                  backgroundColor: 'var(--accent-800)',
+                  aspectRatio: '1 / 1',
+                }}
+                onClick={() => {
+                  changeValues({
+                    customDomains: domains.filter((_, i) => i !== index),
+                  });
+                  setDomainSize(domainSize - 1);
+                }}
+              >
+                <FaTrashCan size={18} />
+              </div>
+            </div>
+          ))}
+
+          <Button
+            fullWidth
+            variant="flat"
+            onClick={() => setDomainSize(domainSize + 1)}
+          >
+            Add Custom Domain
+          </Button>
         </div>
       </div>
 
