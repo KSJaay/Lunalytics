@@ -17,6 +17,8 @@ export const fetchProvider = async (provider) => {
     .where({ provider })
     .first();
 
+  if (!providerData) return null;
+
   return { ...providerData, data: JSON.parse(providerData?.data || '{}') };
 };
 
