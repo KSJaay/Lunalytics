@@ -1,12 +1,15 @@
 import { deleteCookie } from '../../../shared/utils/cookies.js';
 import { cleanStatusPage } from '../../class/status.js';
 import { userSessionExists } from '../../database/queries/session.js';
-import { fetchStatusPageUsingUrl } from '../../database/queries/status.js';
 import { getUserByEmail } from '../../database/queries/user.js';
+import { fetchStatusPageUsingIdOrDomain } from '../../routes/statusApi.js';
 
 const defaultPageMiddleware = async (request, response, next) => {
   try {
-    const statusPage = await fetchStatusPageUsingUrl('default');
+    const statusPage = await fetchStatusPageUsingIdOrDomain(
+      'default',
+      request.headers.host
+    );
 
     if (!statusPage) {
       return response.redirect('/home');

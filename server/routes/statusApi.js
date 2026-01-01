@@ -9,7 +9,7 @@ import statusCache from '../cache/status.js';
 import { userSessionExists } from '../database/queries/session.js';
 import { getUserByEmail } from '../database/queries/user.js';
 
-const fetchStatusPage = async (statusPageId, domain) => {
+export const fetchStatusPageUsingIdOrDomain = async (statusPageId, domain) => {
   let statusPage = await fetchStatusPageUsingUrl(statusPageId);
 
   if (!statusPage && domain) {
@@ -29,7 +29,10 @@ router.get('/', async (request, response) => {
       return response.status(400).json({ message: 'statusPageId is required' });
     }
 
-    const status = await fetchStatusPage(statusPageId, request.headers.host);
+    const status = await fetchStatusPageUsingIdOrDomain(
+      statusPageId,
+      request.headers.host
+    );
 
     if (!status) {
       return response.status(404).json({ message: 'status not found' });

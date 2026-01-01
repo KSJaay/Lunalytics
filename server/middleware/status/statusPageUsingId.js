@@ -1,8 +1,8 @@
 import { deleteCookie } from '../../../shared/utils/cookies.js';
 import { cleanStatusPage } from '../../class/status.js';
 import { userSessionExists } from '../../database/queries/session.js';
-import { fetchStatusPageUsingUrl } from '../../database/queries/status.js';
 import { getUserByEmail } from '../../database/queries/user.js';
+import { fetchStatusPageUsingIdOrDomain } from '../../routes/statusApi.js';
 
 const getStatusPageUsingIdMiddleware = async (request, response, next) => {
   try {
@@ -12,7 +12,10 @@ const getStatusPageUsingIdMiddleware = async (request, response, next) => {
       return response.redirect('/');
     }
 
-    const statusPage = await fetchStatusPageUsingUrl(statusPageId);
+    const statusPage = await fetchStatusPageUsingIdOrDomain(
+      statusPageId,
+      request.headers.host
+    );
 
     if (!statusPage) {
       return response.redirect('/404');
