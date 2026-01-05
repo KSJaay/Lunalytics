@@ -1,6 +1,3 @@
-// import dependencies
-import { useNavigate } from 'react-router-dom';
-
 // import local files
 import { getProviderById } from '../../../shared/constants/provider';
 
@@ -19,8 +16,6 @@ const LoginLayout = ({
   subtitle,
   children,
 }: LoginLayoutProps) => {
-  const navigate = useNavigate();
-
   return (
     <div className="login-page">
       <div className="login-card">
@@ -62,19 +57,17 @@ const LoginLayout = ({
                 if (!provider) return null;
 
                 return (
-                  <div
+                  <a
                     key={provider.id}
                     className="provider-btn"
-                    onClick={() =>
-                      navigate(`/api/auth/platform/${provider.id}`)
-                    }
+                    href={`/api/auth/platform/${provider.id}`}
                   >
                     <img
                       src={provider.icon}
                       alt={provider.name}
                       style={{ width: '25px' }}
                     />
-                  </div>
+                  </a>
                 );
               })}
             </div>

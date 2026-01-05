@@ -5,7 +5,7 @@ export const providersTable = async (client) => {
 
   if (!providersExists) {
     await client.schema.createTable('providers', (table) => {
-      table.increments('id').primary();
+      table.increments('id');
       table.string('email');
       table.string('provider').notNullable();
       table.string('clientId').notNullable();

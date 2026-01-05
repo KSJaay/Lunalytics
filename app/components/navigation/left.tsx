@@ -126,7 +126,7 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
               id: 'logout',
               text: 'Logout',
               type: 'item',
-              onClick: () => navigate('/api/auth/logout'),
+              onClick: () => (window.location.href = '/api/auth/logout'),
             },
           ]}
           position="right"

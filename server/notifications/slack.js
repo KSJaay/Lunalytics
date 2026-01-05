@@ -102,7 +102,7 @@ class Slack extends NotificationBase {
     return blocks.every((block = {}) => {
       if (
         block.type === 'section' &&
-        !block.text?.trim() &&
+        !block.text?.text?.trim() &&
         !block.fields?.length
       ) {
         return false; // Both fields and text is missing
