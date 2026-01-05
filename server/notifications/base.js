@@ -31,12 +31,12 @@ class NotificationBase {
 
   handleError(error) {
     const message =
-      error?.message || typeof error === 'string' ? error : 'Unknown error';
+      error?.message || (typeof error === 'string' ? error : 'Unknown error');
 
-    let info = 'Error: ' + message + '\n';
+    let info = 'Error: ' + message;
 
     if (error?.response?.data) {
-      info += parseErrorData(error.response.data);
+      info += '\n' + parseErrorData(error.response.data);
     }
 
     throw new Error(info);

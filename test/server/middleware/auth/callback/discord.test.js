@@ -94,7 +94,7 @@ describe('discordCallback', () => {
 
   it('should handle errors gracefully', async () => {
     fetchProvider.mockImplementation(() => {
-      throw new Error('fail');
+      throw new Error('fail', );
     });
 
     await discordCallback(fakeRequest, fakeResponse, fakeNext);
