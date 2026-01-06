@@ -13,7 +13,7 @@ describe('cleanMonitorForStatusPage', () => {
     const result = cleanMonitorForStatusPage(monitor);
     expect(result.monitorId).toBe('s1');
     expect(result.name).toBe('StatusPage Monitor');
-    expect(result.url).toBe('http://localhost');
+    expect(result.url).toBeUndefined();
     expect(result.createdAt).toBe('2025-10-25T10:00:00Z');
     expect(result.paused).toBe(true);
     expect(result.icon).toEqual(['icon1']);
