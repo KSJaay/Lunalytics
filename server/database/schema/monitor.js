@@ -24,12 +24,22 @@ export const monitorTable = async (client) => {
       table.boolean('paused').defaultTo(false);
       table.boolean('ignoreTls').defaultTo(false);
       table.json('json_query');
-      table.datetime('createdAt');
       table.json('icon').defaultTo({
         id: 'lunalytics',
         name: 'Lunalytics',
         url: 'https://cdn.jsdelivr.net/gh/selfhst/icons/svg/lunalytics.svg',
       });
+      table
+        .uuid('workspaceId')
+        .notNullable()
+        .references('id')
+        .inTable('workspace');
+
+      table.timestamps(true, true);
+
+      table.index('workspaceId');
+      table.index(['workspaceId', 'monitorId']);
+      table.index(['workspaceId', 'parentId']);
     });
   }
 };

@@ -7,9 +7,18 @@ export const apiTokenTable = async (client) => {
       table.string('name').notNullable();
       table.string('permission').notNullable();
       table.string('email').notNullable();
-      table.datetime('createdAt');
+      table.datetime('created_at');
+
+      table
+        .uuid('workspaceId')
+        .notNullable()
+        .references('id')
+        .inTable('workspace');
 
       table.index('email');
+      table.index('workspaceId');
+      table.index(['workspaceId', 'token']);
+      table.index(['workspaceId', 'email']);
     });
   }
 };

@@ -157,6 +157,10 @@
   color: var(--font-light-color);
   font-size: var(--font-sm);
   padding: 12px 5px 12px 0;
+
+  &:hover {
+    color: var(--primary-700);
+  }
 }
 
 .login-header-design {

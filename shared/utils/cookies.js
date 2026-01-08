@@ -1,10 +1,12 @@
 const nintyDaysInMilliseconds = 2592000000 * 3;
 
+const isProduction = process.env?.NODE_ENV === 'production';
+
 const setClientSideCookie = (res, name, value) => {
   return res.cookie(name, value, {
     expires: new Date(Date.now() + nintyDaysInMilliseconds),
     maxAge: nintyDaysInMilliseconds,
-    secure: process.env.NODE_ENV === 'production',
+    secure: isProduction,
     sameSite: 'strict',
   });
 };
@@ -28,7 +30,7 @@ const setServerSideCookie = (
   return res.cookie(name, value, {
     expires: new Date(Date.now() + nintyDaysInMilliseconds),
     maxAge: nintyDaysInMilliseconds,
-    secure: process.env.NODE_ENV === 'production',
+    secure: isProduction,
     httpOnly: true,
     sameSite,
   });
@@ -36,7 +38,7 @@ const setServerSideCookie = (
 
 const setDemoCookie = (res, name, value) => {
   return res.cookie(name, value, {
-    secure: process.env.NODE_ENV === 'production',
+    secure: isProduction,
     httpOnly: true,
     sameSite: 'strict',
   });

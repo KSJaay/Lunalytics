@@ -1,9 +1,14 @@
+import {
+  SESSION_TOKEN,
+  WORKSPACE_ID_COOKIE,
+} from '../../../shared/constants/cookies.js';
 import { setServerSideCookie } from '../../../shared/utils/cookies.js';
 import { fetchConnectionByEmail } from '../../database/queries/connection.js';
 import {
   fetchInviteUsingId,
   increaseInviteUses,
 } from '../../database/queries/invite.js';
+import { createMember } from '../../database/queries/member.js';
 import { createUserSession } from '../../database/queries/session.js';
 import {
   getUserByEmail,
@@ -51,18 +56,28 @@ const signInOrRegisterUsingAuth = async (request, response) => {
             await increaseInviteUses(invite);
             data.isVerified = true;
           }
+          data.workspaceId = inviteData?.workspaceId;
         }
+      }
+
+      if (data.workspaceId) {
+        await createMember({
+          email: data.email,
+          workspaceId: data.workspaceId,
+        });
+
+        setClientSideCookie(response, WORKSPACE_ID_COOKIE, data.workspaceId);
       }
 
       await registerSsoUser(data);
     }
 
-    userExists = await getUserByEmail(email);
+    userExists = await getUserByEmail(data.email);
 
     const userAgent = request.headers['user-agent'];
     const agentData = parseUserAgent(userAgent);
 
-    const sessionToken = await createUserSession(email, agentData.device, {
+    const sessionToken = await createUserSession(data.email, agentData.device, {
       ...agentData.data,
       provider,
       accountId: id,
@@ -70,7 +85,7 @@ const signInOrRegisterUsingAuth = async (request, response) => {
 
     setServerSideCookie(
       response,
-      'session_token',
+      SESSION_TOKEN,
       sessionToken,
       request.protocol === 'https'
     );

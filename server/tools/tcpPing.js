@@ -24,6 +24,7 @@ const tcpStatusCheck = async (monitor, callback) => {
 
     callback(monitor, {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 504,
       latency,
       message: 'Ping timed out!',
@@ -37,6 +38,7 @@ const tcpStatusCheck = async (monitor, callback) => {
 
     callback(monitor, {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 200,
       latency,
       message: 'Up and running!',
@@ -54,6 +56,7 @@ const tcpStatusCheck = async (monitor, callback) => {
 
     callback(monitor, {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 503,
       latency,
       message: error.message,

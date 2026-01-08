@@ -1,8 +1,8 @@
 import ping from 'ping';
 
 const pingStatusCheck = async (monitor) => {
-  const timeout = monitor.requestTimeout || 5000;
-  const config = { timeout: Math.ceil(timeout / 1000) };
+  const timeout = monitor.requestTimeout || 5;
+  const config = { timeout: Math.ceil(timeout) };
   const startTime = Date.now();
 
   try {
@@ -11,6 +11,7 @@ const pingStatusCheck = async (monitor) => {
     if (result.alive) {
       return {
         monitorId: monitor.monitorId,
+        workspaceId: monitor.workspaceId,
         status: 200,
         latency: Date.now() - startTime,
         message: 'Up and running!',
@@ -20,6 +21,7 @@ const pingStatusCheck = async (monitor) => {
 
     return {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 200,
       latency: Date.now() - startTime,
       message: 'Ping timed out!',
@@ -32,6 +34,7 @@ const pingStatusCheck = async (monitor) => {
 
     return {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 200,
       latency: Date.now() - startTime,
       message: 'Ping timed out!',

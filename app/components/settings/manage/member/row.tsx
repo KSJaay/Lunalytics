@@ -35,8 +35,8 @@ const MemberTableRow = ({ member = {} }) => {
     ? 'Owner'
     : 'Member';
 
-  const date = dayjs(member.createdAt).format('MMM DD, YYYY');
-  const time = dayjs(member.createdAt).format('hh:mm A');
+  const date = dayjs(member.created_at).format('MMM DD, YYYY');
+  const time = dayjs(member.created_at).format('hh:mm A');
 
   const avatarUrl = isImageUrl(member.avatar)
     ? member.avatar

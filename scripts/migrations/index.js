@@ -14,6 +14,7 @@ import { migrate as migrateUiOverhaul } from './0-10-0.js';
 import { migrate as migrateMonitorParent } from './0-10-13.js';
 import { migrate as migrateUserSettings } from './0-10-16.js';
 import { migrate as migrateIndexes } from './0-10-21.js';
+import { migrate as migrateWorkspaceSupport } from './0-10-20.js';
 
 const migrationList = {
   '0.4.0': migrateTcpUpdate,
@@ -31,6 +32,7 @@ const migrationList = {
   '0.10.13': migrateMonitorParent,
   '0.10.16': migrateUserSettings,
   '0.10.21': migrateIndexes,
+  '0.10.20': migrateWorkspaceSupport,
 };
 
 export default migrationList;

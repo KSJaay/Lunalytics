@@ -21,7 +21,12 @@ const createApiTokenMiddleware = async (request, response) => {
       user: { email },
     } = response.locals;
 
-    const query = await apiTokenCreate(email, permission, name);
+    const query = await apiTokenCreate(
+      email,
+      permission,
+      name,
+      response.locals.user.workspaceId
+    );
 
     return response.status(200).send(query);
   } catch (error) {

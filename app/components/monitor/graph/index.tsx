@@ -70,7 +70,7 @@ const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
                 return dayjs(value).tz(timezone).format('HH:mm');
               }}
               interval="preserveStartEnd"
-              minTickGap={30}
+              minTickGap={data?.length < 10 ? 5 : 30}
             />
             <YAxis
               label={{

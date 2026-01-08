@@ -2,7 +2,7 @@
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/monitor.js';
-import cache from '../../cache/index.js';
+import cache from '../../cache/monitor/index.js';
 import { cleanMonitor } from '../../class/monitor/index.js';
 import { createMonitor } from '../../database/queries/monitor.js';
 import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
@@ -46,12 +46,13 @@ export const defaultMonitorData = (body) => ({
   type: body.type ?? 'http',
 });
 
-export const formatMonitorData = (body, email) => {
+export const formatMonitorData = (body, email, workspaceId) => {
   let monitor = {
     name: body.name,
     url: body.url,
     interval: body.interval,
     monitorId: body.monitorId,
+    workspaceId,
     parentId: body.parentId,
     retry: body.retry,
     retryInterval: body.retryInterval,
@@ -132,13 +133,13 @@ const monitorAdd = async (request, response) => {
 
     const { user } = response.locals;
 
-    const monitor_data = formatMonitorData(body, user.email);
+    const monitor_data = formatMonitorData(body, user.email, user.workspaceId);
     const data = await createMonitor(monitor_data);
 
-    cache.checkStatus(data.monitorId)?.catch(() => false);
+    cache.checkStatus(data.monitorId, data.workspaceId)?.catch(() => false);
 
-    const heartbeats = await fetchHeartbeats(data.monitorId);
-    const cert = await fetchCertificate(data.monitorId);
+    const heartbeats = await fetchHeartbeats(data.monitorId, data.workspaceId);
+    const cert = await fetchCertificate(data.monitorId, data.workspaceId);
 
     const monitor = cleanMonitor({
       ...data,

@@ -18,7 +18,7 @@ const StatusConfigureLayoutHistoryList = ({
     const ms = today - 86400000 * i;
 
     const exists = incidents.filter((incident) => {
-      const createdAt = new Date(incident.createdAt).getTime();
+      const createdAt = new Date(incident.created_at).getTime();
       return createdAt >= ms && createdAt < ms + 86400000;
     });
 
@@ -38,7 +38,7 @@ const StatusConfigureLayoutHistoryList = ({
           return (
             <div key={index}>
               <div className="sclh-date">
-                {dayjs(incident[0].createdAt).format('MMM DD, YYYY')}
+                {dayjs(incident[0].created_at).format('MMM DD, YYYY')}
               </div>
               {incident.map((item) => {
                 return (
@@ -55,7 +55,7 @@ const StatusConfigureLayoutHistoryList = ({
                               - {message.message}
                             </div>
                             <div className="sclhi-date">
-                              {dayjs(message.createdAt).format('lll')}
+                              {dayjs(message.created_at).format('lll')}
                             </div>
                           </div>
                         );
@@ -71,7 +71,7 @@ const StatusConfigureLayoutHistoryList = ({
         return (
           <div key={index}>
             <div className="sclh-date">
-              {dayjs(incident.createdAt).format('MMM DD, YYYY')}
+              {dayjs(incident.created_at).format('MMM DD, YYYY')}
             </div>
             <div className="sclh-subtitle">
               {!incident?.title ? 'No incidents reported.' : incident.title}

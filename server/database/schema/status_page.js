@@ -9,7 +9,19 @@ export const statusPageTable = async (client) => {
       table.json('settings').notNullable();
       table.json('layout').notNullable();
       table.string('email').notNullable();
-      table.datetime('createdAt');
+      table
+        .uuid('workspaceId')
+        .notNullable()
+        .references('id')
+        .inTable('workspace');
+
+      table.timestamps(true, true);
+
+      table.index('statusId');
+      table.index('statusUrl');
+      table.index('workspaceId');
+      table.index(['workspaceId', 'statusId']);
+      table.index(['workspaceId', 'statusUrl']);
     });
   }
 };

@@ -14,12 +14,11 @@ const monitorDelete = async (request, response) => {
       throw new UnprocessableError('No monitorId provided');
     }
 
-    await deleteMonitor(monitorId);
-    await deleteHeartbeats(monitorId);
-    await deleteCertificate(monitorId);
+    await deleteMonitor(monitorId, response.locals.user.workspaceId);
+    await deleteHeartbeats(monitorId, response.locals.user.workspaceId);
+    await deleteCertificate(monitorId, response.locals.user.workspaceId);
 
-    statusCache.removeMonitor(monitorId);
-
+    statusCache.removeMonitor(monitorId, response.locals.user.workspaceId);
     return response.sendStatus(200);
   } catch (error) {
     return handleError(error, response);

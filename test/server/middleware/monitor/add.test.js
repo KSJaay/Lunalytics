@@ -1,12 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
-import SQLite from '../../../../server/database/sqlite/setup';
+import database from '../../../../server/database/connection';
 import cache from '../../../../server/cache';
 import monitorAdd from '../../../../server/middleware/monitor/add';
 import { createMonitor } from '../../../../server/database/queries/monitor';
 
 vi.mock('../../../../server/cache');
 vi.mock('../../../../server/database/queries/monitor');
+vi.mock('../../../../server/database/connection');
 
 describe('Add Monitor - Middleware', () => {
   const user = {
@@ -18,10 +19,10 @@ describe('Add Monitor - Middleware', () => {
 
   let fakeRequest;
   let fakeResponse;
-  let SQLiteBuilders;
+  let databaseBuilders;
 
   beforeEach(() => {
-    SQLiteBuilders = {
+    databaseBuilders = {
       insert: vi.fn().mockImplementation(() => {
         return { returning: vi.fn().mockReturnValue([{ id: 1 }]) };
       }),
@@ -40,7 +41,8 @@ describe('Add Monitor - Middleware', () => {
       update: vi.fn(),
     };
 
-    SQLite.client = () => SQLiteBuilders;
+    database.client = () => databaseBuilders;
+    database.connect = vi.fn().mockResolvedValue(() => databaseBuilders);
     cache = { checkStatus: vi.fn() };
 
     createMonitor = vi.fn().mockReturnValue({ monitorId: 'test' });

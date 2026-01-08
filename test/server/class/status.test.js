@@ -13,7 +13,7 @@ describe('cleanStatusPage', () => {
       settings: '{"theme":"dark"}',
       layout: '["row1","row2"]',
       email: 'test@example.com',
-      createdAt: '2025-10-25T10:00:00Z',
+      created_at: '2025-10-25T10:00:00Z',
     };
     const result = cleanStatusPage(status);
     expect(result.id).toBe('1');
@@ -23,7 +23,7 @@ describe('cleanStatusPage', () => {
     expect(Array.isArray(result.layout)).toBe(true);
     expect(result.layout).toEqual(['row1', 'row2']);
     expect(result.email).toBe('test@example.com');
-    expect(result.createdAt).toBe('2025-10-25T10:00:00Z');
+    expect(result.created_at).toBe('2025-10-25T10:00:00Z');
   });
 
   it('should handle malformed settings/layout JSON gracefully', () => {
@@ -34,7 +34,7 @@ describe('cleanStatusPage', () => {
       settings: '{bad:json}',
       layout: '[malformed',
       email: 'bad@example.com',
-      createdAt: '2025-10-25T11:00:00Z',
+      created_at: '2025-10-25T11:00:00Z',
     };
     const result = cleanStatusPage(status);
     expect(typeof result.settings).toBe('object');
@@ -51,7 +51,7 @@ describe('cleanStatusPage', () => {
     };
     const result = cleanStatusPage(status);
     expect(result.email).toBeUndefined();
-    expect(result.createdAt).toBeUndefined();
+    expect(result.created_at).toBeUndefined();
   });
 });
 

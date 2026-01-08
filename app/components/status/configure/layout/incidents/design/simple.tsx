@@ -22,7 +22,7 @@ const StatusIncidentSimple = ({
               <span>{incident.status}</span> - {incident.message}
             </div>
             <div className="scil-timestamp">
-              {dayjs(incident.createdAt).format('MMM DD YYYY, HH:mm')}
+              {dayjs(incident.created_at).format('MMM DD YYYY, HH:mm')}
             </div>
           </div>
         ))}

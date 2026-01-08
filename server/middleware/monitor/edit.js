@@ -2,7 +2,7 @@
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/monitor.js';
-import cache from '../../cache/index.js';
+import cache from '../../cache/monitor/index.js';
 import { cleanMonitor } from '../../class/monitor/index.js';
 import { defaultMonitorData, formatMonitorData } from './add.js';
 import { updateMonitor } from '../../database/queries/monitor.js';
@@ -29,15 +29,19 @@ const monitorEdit = async (request, response) => {
 
     const { user } = response.locals;
 
-    const monitor_data = formatMonitorData(body, user.email);
+    const monitor_data = formatMonitorData(body, user.email, user.workspaceId);
     const data = await updateMonitor(monitor_data);
 
-    cache.checkStatus(data.monitorId)?.catch(() => false);
+    cache
+      .checkMonitorStatus(data.monitorId, data.workspaceId)
+      ?.catch(() => false);
 
-    const heartbeats = await fetchHeartbeats(data.monitorId);
-    const cert = await fetchCertificate(data.monitorId);
+    const heartbeats = await fetchHeartbeats(data.monitorId, data.workspaceId);
+    const cert = await fetchCertificate(data.monitorId, data.workspaceId);
 
-    statusCache.reloadMonitor(data.monitorId).catch(() => false);
+    statusCache
+      .reloadMonitor(data.monitorId, data.workspaceId)
+      .catch(() => false);
 
     const monitor = cleanMonitor({
       ...data,

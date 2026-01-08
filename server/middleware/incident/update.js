@@ -20,7 +20,11 @@ const updateIncidentMiddleware = async (request, response) => {
         new Date().toISOString();
     }
 
-    const query = await updateIncident(incident.incidentId, incident);
+    const query = await updateIncident(
+      incident.incidentId,
+      response.locals.user.workspaceId,
+      incident
+    );
 
     statusCache.addIncident(query);
 

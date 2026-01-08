@@ -2,6 +2,7 @@ import { parseJsonOrArray } from '../../utils/parser.js';
 
 const clean = ({ heartbeats = [], ...monitor }, includeHeartbeats = true) => ({
   monitorId: monitor.monitorId,
+  workspaceId: monitor.workspaceId,
   parentId: monitor.parentId || null,
   name: monitor.name,
   url: monitor.url,
@@ -18,7 +19,7 @@ const clean = ({ heartbeats = [], ...monitor }, includeHeartbeats = true) => ({
   averageHeartbeatLatency: monitor.averageHeartbeatLatency,
   showFilters: monitor.showFilters,
   paused: monitor.paused == '1',
-  createdAt: monitor.createdAt,
+  created_at: monitor.created_at,
   heartbeats: includeHeartbeats ? heartbeats : undefined,
   statusChanged: includeHeartbeats ? monitor.statusChanged : undefined,
   icon: parseJsonOrArray(monitor.icon),

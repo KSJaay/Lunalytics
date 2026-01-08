@@ -47,6 +47,14 @@ class ObjectSchemaValidatorError extends Error {
   }
 }
 
+class MissingDatabaseConnectionError extends Error {
+  constructor() {
+    super();
+    this.name = 'MissingDatabaseConnectionError';
+    this.message = 'Database connection could not be established';
+  }
+}
+
 export {
   AuthorizationError,
   ConflictError,
@@ -54,4 +62,5 @@ export {
   UnprocessableError,
   StatusPageValidatorError,
   ObjectSchemaValidatorError,
+  MissingDatabaseConnectionError,
 };

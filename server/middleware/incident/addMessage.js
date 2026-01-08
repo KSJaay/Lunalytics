@@ -20,7 +20,10 @@ const createIncidentMessageMiddleware = async (request, response) => {
       return response.status(400).json({ message: isInvalid });
     }
 
-    const query = await fetchIncident(incidentId);
+    const query = await fetchIncident(
+      incidentId,
+      response.locals.user.workspaceId
+    );
 
     if (!query) {
       return response.status(404).json({ message: 'Incident not found' });
@@ -36,7 +39,7 @@ const createIncidentMessageMiddleware = async (request, response) => {
           message,
           status,
           email: response.locals.user.email,
-          createdAt: new Date().toISOString(),
+          created_at: new Date().toISOString(),
           endedAt: null,
           monitorIds: monitorIds || query.monitorIds,
         },
@@ -51,7 +54,11 @@ const createIncidentMessageMiddleware = async (request, response) => {
         new Date().toISOString();
     }
 
-    const data = await updateIncident(incidentId, incident);
+    const data = await updateIncident(
+      incidentId,
+      response.locals.user.workspaceId,
+      incident
+    );
 
     statusCache.addIncident(data);
 

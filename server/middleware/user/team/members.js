@@ -10,7 +10,10 @@ const teamMembersListMiddleware = async (request, response) => {
     const role = new Role('user', user.permission);
     const userHasManageTeam = role.hasPermission(PermissionsBits.MANAGE_TEAM);
 
-    const members = await fetchMembers(userHasManageTeam);
+    const members = await fetchMembers(
+      userHasManageTeam,
+      response.locals.user.workspaceId
+    );
 
     return response.send(members);
   } catch (error) {

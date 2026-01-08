@@ -12,7 +12,17 @@ export const notificationsTable = async (client) => {
       table.text('content').defaultTo(null);
       table.string('friendlyName');
       table.text('data');
-      table.datetime('createdAt');
+      table
+        .uuid('workspaceId')
+        .notNullable()
+        .references('id')
+        .inTable('workspace');
+
+      table.timestamps(true, true);
+
+      table.index('id');
+      table.index('workspaceId');
+      table.index(['workspaceId', 'id']);
     });
   }
 };

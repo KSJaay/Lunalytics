@@ -19,7 +19,7 @@ const createIncidentMiddleware = async (request, response) => {
       affect: body.affect,
       status: body.status,
       messages: [],
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
       completedAt: null,
       isClosed: false,
     };
@@ -28,14 +28,17 @@ const createIncidentMiddleware = async (request, response) => {
       message: body.message,
       status: body.status,
       email: response.locals.user.email,
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
       endedAt: null,
       monitorIds: body.monitorIds,
     };
 
     data.messages.push(msg);
 
-    const incident = await createIncident(data);
+    const incident = await createIncident(
+      data,
+      response.locals.user.workspaceId
+    );
 
     statusCache.addIncident(incident);
 

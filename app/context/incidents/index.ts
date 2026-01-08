@@ -42,7 +42,7 @@ class IncidentStore {
   get allIncidents() {
     return (
       Array.from(this.incidents.values()).sort((a, b) =>
-        a.createdAt > b.createdAt ? -1 : 1
+        a.created_at > b.created_at ? -1 : 1
       ) || []
     );
   }

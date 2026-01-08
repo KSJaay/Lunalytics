@@ -1,5 +1,5 @@
 // import local files
-import SQLite from '../../server/database/sqlite/setup.js';
+import database from '../../server/database/connection.js';
 import logger from '../../server/utils/logger.js';
 
 const infomation = {
@@ -11,11 +11,11 @@ const infomation = {
 };
 
 const migrate = async () => {
-  const client = await SQLite.connect();
+  const client = await database.connect();
 
   // Changes for user
   logger.info('User - Fetching users...');
-  const users = await SQLite.client('user').where({});
+  const users = await client('user').where({});
 
   logger.info('User - Dropping createdAt column...');
   await client.schema.alterTable('user', (table) => {
@@ -30,14 +30,14 @@ const migrate = async () => {
   logger.info('User - Updating createdAt...');
   for (const user of users) {
     const date = new Date(user.createdAt).toISOString();
-    await SQLite.client('user')
+    await client('user')
       .where({ email: user.email })
       .update({ createdAt: date });
   }
 
   // Changes for notifications
   logger.info('Notifications - Fetching notifications...');
-  const notifications = await SQLite.client('notifications').where({});
+  const notifications = await client('notifications').where({});
 
   logger.info('Notifications - Dropping createdAt column...');
   await client.schema.alterTable('notifications', (table) => {
@@ -52,14 +52,14 @@ const migrate = async () => {
   logger.info('Notifications - Updating createdAt...');
   for (const notification of notifications) {
     const date = new Date(notification.createdAt).toISOString();
-    await SQLite.client('notifications')
+    await client('notifications')
       .where({ id: notification.id })
       .update({ createdAt: date });
   }
 
   // Changes for heartbeats
   logger.info('Heartbeats - Fetching heartbeats...');
-  const heartbeats = await SQLite.client('heartbeat').where({});
+  const heartbeats = await client('heartbeat').where({});
 
   logger.info('Heartbeats - Dropping createdAt column...');
   await client.schema.alterTable('heartbeat', (table) => {
@@ -74,14 +74,12 @@ const migrate = async () => {
   logger.info('Heartbeats - Updating createdAt...');
   for (const heartbeat of heartbeats) {
     const date = new Date(heartbeat.date).toISOString();
-    await SQLite.client('heartbeat')
-      .where({ id: heartbeat.id })
-      .update({ date });
+    await client('heartbeat').where({ id: heartbeat.id }).update({ date });
   }
 
   // Changes for hourly heartbeats
   logger.info('Hourly Heartbeats - Fetching hourly heartbeats...');
-  const hourlyHeartbeats = await SQLite.client('hourly_heartbeat').where({});
+  const hourlyHeartbeats = await client('hourly_heartbeat').where({});
 
   logger.info('Hourly Heartbeats - Dropping date column...');
   await client.schema.alterTable('hourly_heartbeat', (table) => {
@@ -96,14 +94,14 @@ const migrate = async () => {
   logger.info('Hourly Heartbeats - Updating date...');
   for (const heartbeat of hourlyHeartbeats) {
     const date = new Date(heartbeat.date).toISOString();
-    await SQLite.client('hourly_heartbeat')
+    await client('hourly_heartbeat')
       .where({ id: heartbeat.id })
       .update({ date });
   }
 
   // Changes for certificates
   logger.info('Certificates - Fetching certificates...');
-  const certificates = await SQLite.client('certificate').where({});
+  const certificates = await client('certificate').where({});
 
   logger.info(
     'Certificates - Dropping nextCheck, validFrom, and validTill column...'
@@ -132,7 +130,7 @@ const migrate = async () => {
     const date = new Date(certificate.nextCheck).toISOString();
     const fromDate = new Date(certificate.validFrom).toISOString();
     const tillDate = new Date(certificate.validTill).toISOString();
-    await SQLite.client('certificate')
+    await client('certificate')
       .where({ monitorId: certificate.monitorId })
       .update({
         nextCheck: date,

@@ -8,11 +8,12 @@ import {
   createHourlyHeartbeat,
   fetchHeartbeatsByDate,
 } from '../database/queries/heartbeat.js';
-import { fetchMonitors } from '../database/queries/monitor.js';
+import { fetchAllMonitors } from '../database/queries/monitor.js';
 import config from './config.js';
 import { stringToMs } from '../../shared/utils/ms.js';
 import statusCache from '../cache/status.js';
-import sqlite from '../database/sqlite/setup.js';
+import database from '../database/connection.js';
+import { cleanUserSessions } from '../database/queries/session.js';
 
 async function initialiseCronJobs() {
   logger.info('Cron', { message: 'Initialising cron jobs' });
@@ -22,7 +23,7 @@ async function initialiseCronJobs() {
     '*/5 * * * *',
     async function () {
       try {
-        if (!sqlite.client) return;
+        await database.connect();
 
         logger.info('Cron', {
           message: 'Loading all status pages',
@@ -45,14 +46,13 @@ async function initialiseCronJobs() {
     '0 * * * *',
     async function () {
       try {
-        if (!sqlite.client) return;
+        await database.connect();
 
         logger.info('Cron', {
           message: 'Running hourly cron job for creating heartbeat',
         });
 
-        const monitorsList = await fetchMonitors();
-        const monitors = monitorsList.map((monitor) => monitor.monitorId);
+        const monitors = await fetchAllMonitors();
 
         if (monitors.length === 0) {
           return;
@@ -62,8 +62,12 @@ async function initialiseCronJobs() {
         const date = Date.now();
         const lastHour = date - 3600000 - (date % 3600000);
 
-        for (const monitorId of monitors) {
-          const query = await fetchHeartbeatsByDate(monitorId, lastHour);
+        for (const monitor of monitors) {
+          const query = await fetchHeartbeatsByDate(
+            monitor.monitorId,
+            monitor.workspaceId,
+            lastHour
+          );
 
           if (query.length === 0) {
             continue;
@@ -83,7 +87,8 @@ async function initialiseCronJobs() {
           );
 
           const data = {
-            monitorId,
+            monitorId: monitor.monitorId,
+            workspaceId: monitor.workspaceId,
             date: new Date(lastHour).toISOString(),
             status: lastMonitor.status,
             latency: averageLatency,
@@ -108,7 +113,7 @@ async function initialiseCronJobs() {
     '0 0 * * *',
     async function () {
       try {
-        if (!sqlite.client) return;
+        await database.connect();
 
         logger.info('Cron', {
           message: 'Running daily cron job for creating heartbeat',
@@ -119,6 +124,7 @@ async function initialiseCronJobs() {
         const date = new Date(Date.now() - rententionMs).toISOString();
 
         await cleanHeartbeats(date);
+        await cleanUserSessions();
 
         logger.info('Cron', {
           message: 'Daily cron job complete',

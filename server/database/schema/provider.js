@@ -1,8 +1,6 @@
 export const providersTable = async (client) => {
   const providersExists = await client.schema.hasTable('providers');
 
-  // await client.schema.dropTableIfExists('providers');
-
   if (!providersExists) {
     await client.schema.createTable('providers', (table) => {
       table.increments('id');

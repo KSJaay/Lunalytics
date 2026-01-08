@@ -21,7 +21,7 @@ export interface MonitorProps {
   showFilters: boolean;
   paused: boolean;
   ignoreTls: boolean;
-  createdAt: string;
+  created_at: string;
   cert: CertificateProps;
   heartbeats: HeartbeatProps[];
   statusChanged: HeartbeatProps[];

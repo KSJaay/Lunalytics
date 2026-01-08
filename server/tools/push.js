@@ -17,6 +17,7 @@ const pushStatusCheck = async (monitor) => {
     if (Date.now() > expiryDate) {
       return {
         monitorId: monitor.monitorId,
+        workspaceId: monitor.workspaceId,
         status: 'Unknown',
         latency: Date.now() - startTime,
         message: 'No PUSH notification received',
@@ -32,6 +33,7 @@ const pushStatusCheck = async (monitor) => {
 
     return {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 'Unknown',
       latency: Date.now() - startTime,
       message: 'No PUSH notification received',

@@ -7,7 +7,7 @@ export interface ContextStatusIncidentMessageProps {
   message: string;
   status: 'Investigating' | 'Identified' | 'Monitoring' | 'Resolved';
   email: string;
-  createdAt: string;
+  created_at: string;
   endedAt: string | null;
   monitorIds: string[];
 }
@@ -19,7 +19,7 @@ export interface ContextStatusIncidentProps {
   messages: ContextStatusIncidentMessageProps[];
   affect: 'Outage' | 'Incident' | 'Maintenance' | 'Operational';
   status: 'Investigating' | 'Identified' | 'Monitoring' | 'Resolved';
-  createdAt: string;
+  created_at: string;
   completedAt: string | null;
   isClosed: boolean;
 }
@@ -28,7 +28,7 @@ export interface ContextStatusMonitorProps {
   monitorId: string;
   name: string;
   url: string;
-  createdAt: string;
+  created_at: string;
   paused: boolean;
 }
 

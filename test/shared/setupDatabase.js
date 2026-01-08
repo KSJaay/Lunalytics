@@ -2,7 +2,7 @@
 import fs from 'fs';
 
 // import local files
-import { SQLite } from '../../server/database/sqlite/setup.js';
+import { Database } from '../../server/database/connection.js';
 import { generateHash } from '../../server/utils/hashPassword.js';
 import logger from '../../server/utils/logger.js';
 import { loadJSON } from '../../shared/parseJson.js';
@@ -15,21 +15,21 @@ const setupDatabase = async () => {
     logger.info('SETUP', { message: 'Removed old database' });
   }
 
-  const sqlite = new SQLite();
+  const database = new Database();
 
-  await sqlite.connect('e2etest');
-  await sqlite.setup();
+  await database.connect('e2etest');
+  await database.setup();
 
   const { username, email, password } = loginDetails.ownerUser;
 
-  const ownerExists = await sqlite.client('user').where({ email }).first();
+  const ownerExists = await database.client('user').where({ email }).first();
 
   if (ownerExists) {
     logger.info('SETUP', { message: 'Owner user already exists' });
-    return sqlite.client.destroy();
+    return database.client.destroy();
   }
 
-  await sqlite.client('user').insert({
+  await database.client('user').insert({
     email: email.toLowerCase(),
     displayName: username,
     password: generateHash(password),
@@ -40,7 +40,7 @@ const setupDatabase = async () => {
 
   logger.info('SETUP', { message: 'Created owner user' });
 
-  return sqlite.client.destroy();
+  return database.client.destroy();
 };
 
 setupDatabase();
