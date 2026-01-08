@@ -1,33 +1,38 @@
 import { existsSync, closeSync, openSync } from 'fs';
 import knex from 'knex';
 
-import logger from '../../utils/logger.js';
-import config from '../../utils/config.js';
-import { apiTokenTable } from './tables/api_token.js';
-import { certificateTable } from './tables/certificate.js';
-import { heartbeatTable } from './tables/heartbeat.js';
-import { hourlyHeartbeatTable } from './tables/hourly_heartbeat.js';
-import { incidentTable } from './tables/incident.js';
-import { inviteTable } from './tables/invite.js';
-import { monitorTable } from './tables/monitor.js';
-import { notificationsTable } from './tables/notifications.js';
-import { statusPageTable } from './tables/status_page.js';
-import { userTable } from './tables/user.js';
-import { userSessionTable } from './tables/user_session.js';
-import { connectionsTable } from './tables/connection.js';
-import { providersTable } from './tables/provider.js';
+import logger from '../utils/logger.js';
+import config from '../utils/config.js';
+import { apiTokenTable } from './schema/api_token.js';
+import { certificateTable } from './schema/certificate.js';
+import { heartbeatTable } from './schema/heartbeat.js';
+import { hourlyHeartbeatTable } from './schema/hourly_heartbeat.js';
+import { incidentTable } from './schema/incident.js';
+import { inviteTable } from './schema/invite.js';
+import { monitorTable } from './schema/monitor.js';
+import { notificationsTable } from './schema/notifications.js';
+import { statusPageTable } from './schema/status_page.js';
+import { userTable } from './schema/user.js';
+import { userSessionTable } from './schema/user_session.js';
+import { connectionsTable } from './schema/connection.js';
+import { providersTable } from './schema/provider.js';
+import { workspaceTable } from './schema/workspace.js';
+import { memberTable } from './schema/member.js';
+import { MissingDatabaseConnectionError } from '../../shared/utils/errors.js';
 
-export class SQLite {
+export class Database {
   constructor() {
     this.client = null;
   }
 
   async connect(databaseName) {
     if (!config.get('database')?.name && process.env.NODE_ENV !== 'test') {
-      return logger.notice('SQLITE', {
+      logger.notice('DATABASE', {
         message:
           'Database name is not set in config.json, visit http://localhost:2308/setup to setup application',
       });
+
+      return;
     }
 
     const dbName = databaseName || config.get('database')?.name || 'lunalytics';
@@ -52,7 +57,7 @@ export class SQLite {
       if (!databaseExists) {
         await this.client.raw(`CREATE DATABASE ${dbName}`);
 
-        logger.info('PostgreSQL', { message: 'Created PostgreSQL database' });
+        logger.info('DATABASE', { message: 'Created PostgreSQL database' });
       }
 
       this.client.destroy();
@@ -63,7 +68,7 @@ export class SQLite {
         useNullAsDefault: true,
       });
 
-      logger.info('PostgreSQL', {
+      logger.info('DATABASE', {
         message: 'Connected to PostgreSQL database',
       });
     }
@@ -87,9 +92,13 @@ export class SQLite {
       await this.client.raw('PRAGMA journal_mode = WAL'); // Better concurrency
       await this.client.raw('PRAGMA cache_size = -12000'); // 12 MB cache
 
-      logger.info('SQLite', {
+      logger.info('DATABASE', {
         message: 'Connected to SQLite database',
       });
+    }
+
+    if (!this.client) {
+      throw new MissingDatabaseConnectionError();
     }
 
     return this.client;
@@ -111,11 +120,13 @@ export class SQLite {
     await statusPageTable(this.client);
     await userTable(this.client);
     await userSessionTable(this.client);
+    await workspaceTable(this.client);
+    await memberTable(this.client);
 
     return true;
   }
 }
 
-const client = new SQLite();
+const database = new Database();
 
-export default client;
+export default database;

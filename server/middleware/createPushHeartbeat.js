@@ -1,5 +1,5 @@
 import { createHeartbeat } from '../database/queries/heartbeat.js';
-import { fetchUsingUrl } from '../database/queries/monitor.js';
+import { fetchUsingToken } from '../database/queries/monitor.js';
 import { handleError } from '../utils/errors.js';
 
 const createPushHeartbeat = async (request, response) => {
@@ -10,7 +10,7 @@ const createPushHeartbeat = async (request, response) => {
       return response.status(401).json({ error: 'Unauthorized' });
     }
 
-    const monitor = await fetchUsingUrl(token);
+    const monitor = await fetchUsingToken(token);
 
     if (!monitor) {
       return response.status(404).json({ error: 'Monitor not found' });
@@ -18,6 +18,7 @@ const createPushHeartbeat = async (request, response) => {
 
     const heartbeat = {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: status || 'unknown',
       latency: latency || 0,
       message: message || 'Up and running',

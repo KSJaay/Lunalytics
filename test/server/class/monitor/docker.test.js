@@ -19,7 +19,7 @@ describe('docker clean', () => {
       showFilters: true,
       paused: '1',
       ignoreTls: '1',
-      createdAt: '2025-10-25T10:00:00Z',
+      created_at: '2025-10-25T10:00:00Z',
       icon: '["icon1"]',
       heartbeats: [{ status: 'ok' }],
     };

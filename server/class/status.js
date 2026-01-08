@@ -10,12 +10,13 @@ const parseJson = (obj, isArray = false) => {
 
 export const cleanStatusPage = (status) => ({
   id: status.id,
+  workspaceId: status.workspaceId,
   statusId: status.statusId,
   statusUrl: status.statusUrl,
   settings: { ...defaultStatusValues, ...parseJson(status.settings) },
   layout: parseJson(status.layout, true),
   email: status.email,
-  createdAt: status.createdAt,
+  created_at: status.created_at,
   lastUpdated: status.lastUpdated,
 });
 
@@ -26,6 +27,7 @@ export const cleanStatusPageWithMonitors = (status) => ({
 
 export const cleanStatusApiResponse = (data) => ({
   id: data.id,
+  workspaceId: data.workspaceId,
   statusId: data.statusId,
   statusUrl: data.statusUrl,
   settings: data.settings,

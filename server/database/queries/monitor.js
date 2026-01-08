@@ -1,39 +1,49 @@
-import SQLite from '../sqlite/setup.js';
+import database from '../connection.js';
 import randomId from '../../utils/randomId.js';
 import { timeToMs } from '../../../shared/utils/ms.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 
-const monitorExists = async (monitorId) => {
-  return SQLite.client('monitor').where({ monitorId }).first();
+const monitorExists = async (monitorId, workspaceId) => {
+  const client = await database.connect();
+  return client('monitor').where({ monitorId, workspaceId }).first();
 };
 
 const createMonitor = async (monitor) => {
   const monitorId = randomId();
 
-  const createdAt = new Date().toISOString();
+  const created_at = new Date().toISOString();
+  const client = await database.connect();
 
   // insert and return row
-  const data = await SQLite.client('monitor')
-    .insert({ ...monitor, createdAt, monitorId })
+  const data = await client('monitor')
+    .insert({ ...monitor, created_at, monitorId })
     .returning('*');
 
   return data[0];
 };
 
 const updateMonitor = async (monitor) => {
-  await SQLite.client('monitor')
-    .where({ monitorId: monitor.monitorId })
+  const client = await database.connect();
+
+  await client('monitor')
+    .where({ monitorId: monitor.monitorId, workspaceId: monitor.workspaceId })
     .update(monitor);
 
   return monitor;
 };
 
-const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
+const fetchUptimePercentage = async (
+  monitorId,
+  workspaceId,
+  duration = 24,
+  type
+) => {
   const time = new Date(Date.now() - timeToMs(duration, type)).toISOString();
+  const client = await database.connect();
 
-  const heartbeats = await SQLite.client('heartbeat')
+  const heartbeats = await client('heartbeat')
     .select()
-    .where('monitorId', monitorId)
+    .where({ monitorId, workspaceId })
     .andWhere('date', '>', time);
 
   const totalHeartbeats = heartbeats.length;
@@ -51,18 +61,19 @@ const fetchUptimePercentage = async (monitorId, duration = 24, type) => {
   return { uptimePercentage, averageHeartbeatLatency };
 };
 
-const fetchMonitorUptime = async (monitorId) => {
-  const lastDownHeartbeat = await SQLite.client('heartbeat')
+const fetchMonitorUptime = async (monitorId, workspaceId) => {
+  const client = await database.connect();
+  const lastDownHeartbeat = await client('heartbeat')
     .select()
-    .where('monitorId', monitorId)
+    .where({ monitorId, workspaceId })
     .andWhere('isDown', true)
     .orderBy('date', 'desc')
     .first();
 
   if (!lastDownHeartbeat) {
-    const firstEverHeartbeat = await SQLite.client('heartbeat')
+    const firstEverHeartbeat = await client('heartbeat')
       .select()
-      .where('monitorId', monitorId)
+      .where({ monitorId, workspaceId })
       .orderBy('date', 'asc')
       .first();
 
@@ -71,9 +82,9 @@ const fetchMonitorUptime = async (monitorId) => {
       : new Date(firstEverHeartbeat.date).getTime();
   }
 
-  const newestUptimeHeartbeat = await SQLite.client('heartbeat')
+  const newestUptimeHeartbeat = await client('heartbeat')
     .select()
-    .where('monitorId', monitorId)
+    .where({ monitorId, workspaceId })
     .andWhere('isDown', false)
     .andWhere('date', '>', new Date(lastDownHeartbeat.date).toISOString())
     .orderBy('date', 'asc')
@@ -84,13 +95,17 @@ const fetchMonitorUptime = async (monitorId) => {
     : new Date(newestUptimeHeartbeat.date).getTime();
 };
 
-const fetchMonitors = async () => {
-  const mointors = await SQLite.client('monitor').select();
+const fetchAllMonitors = async () => {
+  const client = await database.connect();
+  const mointors = await client('monitor').select();
 
   const monitorWithHeartbeats = [];
 
   for (const monitor of mointors) {
-    const uptime = await fetchUptimePercentage(monitor.monitorId);
+    const uptime = await fetchUptimePercentage(
+      monitor.monitorId,
+      monitor.workspaceId
+    );
 
     monitorWithHeartbeats.push({ ...monitor, ...uptime });
   }
@@ -98,36 +113,62 @@ const fetchMonitors = async () => {
   return monitorWithHeartbeats;
 };
 
-const fetchMonitor = async (monitorId) => {
-  const monitor = await SQLite.client('monitor').where({ monitorId }).first();
+const fetchMonitors = async (workspaceId) => {
+  const client = await database.connect();
+  const mointors = await client('monitor').where({ workspaceId }).select();
+
+  const monitorWithHeartbeats = [];
+
+  for (const monitor of mointors) {
+    const uptime = await fetchUptimePercentage(
+      monitor.monitorId,
+      monitor.workspaceId
+    );
+
+    monitorWithHeartbeats.push({ ...monitor, ...uptime });
+  }
+
+  return monitorWithHeartbeats;
+};
+
+const fetchMonitor = async (monitorId, workspaceId) => {
+  const client = await database.connect();
+  const monitor = await client('monitor')
+    .where({ monitorId, workspaceId })
+    .first();
 
   if (!monitor) {
     throw new UnprocessableError('Monitor does not exist');
   }
 
-  const uptime = await fetchUptimePercentage(monitorId);
+  const uptime = await fetchUptimePercentage(monitorId, workspaceId);
 
   return { ...monitor, ...uptime };
 };
 
-const deleteMonitor = async (monitorId) => {
-  await SQLite.client('monitor').where({ monitorId }).del();
+const deleteMonitor = async (monitorId, workspaceId) => {
+  const client = await database.connect();
+  await client('monitor').where({ monitorId, workspaceId }).del();
 
   return true;
 };
 
-const pauseMonitor = async (monitorId, paused) => {
-  const monitor = await SQLite.client('monitor').where({ monitorId }).first();
+const pauseMonitor = async (monitorId, workspaceId, paused) => {
+  const client = await database.connect();
+  const monitor = await client('monitor')
+    .where({ monitorId, workspaceId })
+    .first();
 
   if (!monitor) {
     throw new UnprocessableError('Monitor does not exist');
   }
 
-  await SQLite.client('monitor').where({ monitorId }).update({ paused });
+  await client('monitor').where({ monitorId, workspaceId }).update({ paused });
 };
 
-const fetchUsingUrl = async (url) => {
-  const monitor = await SQLite.client('monitor').where({ url }).first();
+const fetchUsingToken = async (token) => {
+  const client = await database.connect();
+  const monitor = await client('monitor').where({ url: token }).first();
 
   if (!monitor) {
     throw new UnprocessableError('Monitor does not exist');
@@ -140,11 +181,12 @@ export {
   createMonitor,
   monitorExists,
   updateMonitor,
+  fetchAllMonitors,
   fetchMonitors,
   fetchMonitor,
   deleteMonitor,
   fetchUptimePercentage,
   fetchMonitorUptime,
   pauseMonitor,
-  fetchUsingUrl,
+  fetchUsingToken,
 };

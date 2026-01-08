@@ -1,6 +1,9 @@
 // import local files
 import { registerUser } from '../../database/queries/user.js';
-import { setServerSideCookie } from '../../../shared/utils/cookies.js';
+import {
+  setClientSideCookie,
+  setServerSideCookie,
+} from '../../../shared/utils/cookies.js';
 import { handleError } from '../../utils/errors.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 import validators from '../../../shared/validators/index.js';
@@ -10,6 +13,11 @@ import {
   fetchInviteUsingId,
   increaseInviteUses,
 } from '../../database/queries/invite.js';
+import {
+  SESSION_TOKEN,
+  WORKSPACE_ID_COOKIE,
+} from '../../../shared/constants/cookies.js';
+import { createMember } from '../../database/queries/member.js';
 
 const register = async (request, response) => {
   try {
@@ -30,7 +38,7 @@ const register = async (request, response) => {
       displayName: username,
       password,
       avatar: null,
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     };
 
     if (invite) {
@@ -43,8 +51,14 @@ const register = async (request, response) => {
         if (!expiry || expiry < Date.now()) {
           await increaseInviteUses(invite);
           data.isVerified = true;
+          data.workspaceId = inviteData.workspaceId;
         }
       }
+    }
+
+    if (data.workspaceId) {
+      await createMember(data);
+      setClientSideCookie(response, WORKSPACE_ID_COOKIE, data.workspaceId);
     }
 
     await registerUser(data);
@@ -60,7 +74,7 @@ const register = async (request, response) => {
 
     setServerSideCookie(
       response,
-      'session_token',
+      SESSION_TOKEN,
       sessionToken,
       request.protocol === 'https'
     );

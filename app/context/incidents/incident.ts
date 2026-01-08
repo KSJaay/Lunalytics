@@ -11,7 +11,7 @@ class Incident {
   status: 'Investigating' | 'Identified' | 'Monitoring' | 'Resolved';
   messages: Array<ContextIncidentMessageProps>;
   monitorIds: string[];
-  createdAt: string;
+  created_at: string;
   completedAt: string | null;
   isClosed: boolean;
 
@@ -22,7 +22,7 @@ class Incident {
     status,
     messages,
     monitorIds,
-    createdAt,
+    created_at,
     completedAt,
     isClosed,
   }: ContextIncidentProps) {
@@ -32,7 +32,7 @@ class Incident {
     this.status = status;
     this.messages = messages;
     this.monitorIds = monitorIds;
-    this.createdAt = createdAt;
+    this.created_at = created_at;
     this.completedAt = completedAt;
     this.isClosed = isClosed;
 

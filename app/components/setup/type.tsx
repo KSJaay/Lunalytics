@@ -11,7 +11,7 @@ const SetupTypeForm = () => {
     try {
       await submitSetup(setErrors, 'basic', inputs);
 
-      return navigate('/home');
+      return navigate('/workspace/create');
     } catch (error: any) {
       console.log(error);
 

@@ -1,44 +1,42 @@
 import { nanoid } from 'nanoid';
-import SQLite from '../sqlite/setup.js';
+import database from '../connection.js';
 import { generateRandomAnimalName } from '../../../shared/utils/animal.js';
 
 export const apiTokenExists = async (token) => {
-  return SQLite.client('api_token').where({ token }).first();
+  const client = await database.connect();
+
+  return client('api_token').where({ token }).first();
 };
 
-const getUniqueToken = async () => {
-  let token = nanoid(64);
+export const getAllApiTokens = async (workspaceId) => {
+  const client = await database.connect();
 
-  while (await SQLite.client('api_token').where({ token }).first()) {
-    token = nanoid(64);
-  }
-
-  return token;
+  return client('api_token').where({ workspaceId }).select();
 };
 
-export const getAllApiTokens = async () => {
-  return SQLite.client('api_token').select();
-};
+export const apiTokenCreate = async (email, permission, name, workspaceId) => {
+  const client = await database.connect();
+  const token = nanoid(92);
 
-export const apiTokenCreate = async (email, permission, name) => {
-  const token = await getUniqueToken();
-
-  const query = await SQLite.client('api_token')
+  const query = await client('api_token')
     .insert({
       token,
+      workspaceId,
       name: name || generateRandomAnimalName(),
       permission,
       email,
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     })
     .returning('*');
 
   return query[0];
 };
 
-export const apiTokenUpdate = async (token, name, permission) => {
-  const query = await SQLite.client('api_token')
-    .where({ token })
+export const apiTokenUpdate = async (token, name, permission, workspaceId) => {
+  const client = await database.connect();
+
+  const query = await client('api_token')
+    .where({ token, workspaceId })
     .update({
       name: name || generateRandomAnimalName(),
       permission,
@@ -48,6 +46,8 @@ export const apiTokenUpdate = async (token, name, permission) => {
   return query[0];
 };
 
-export const apiTokenDelete = async (token) => {
-  return SQLite.client('api_token').where({ token }).delete();
+export const apiTokenDelete = async (token, workspaceId) => {
+  const client = await database.connect();
+
+  return client('api_token').where({ token, workspaceId }).delete();
 };

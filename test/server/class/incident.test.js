@@ -9,7 +9,7 @@ describe('cleanIncident', () => {
       messages: '[{"msg":"down"},{"msg":"up"}]',
       affect: 'partial',
       status: 'investigating',
-      createdAt: '2025-10-25T10:00:00Z',
+      created_at: '2025-10-25T10:00:00Z',
       completedAt: null,
       isClosed: '1',
     };
@@ -20,7 +20,7 @@ describe('cleanIncident', () => {
     expect(result.messages).toEqual([{ msg: 'down' }, { msg: 'up' }]);
     expect(result.affect).toBe('partial');
     expect(result.status).toBe('investigating');
-    expect(result.createdAt).toBe('2025-10-25T10:00:00Z');
+    expect(result.created_at).toBe('2025-10-25T10:00:00Z');
     expect(result.completedAt).toBeNull();
     expect(result.isClosed).toBe(true);
   });
@@ -33,7 +33,7 @@ describe('cleanIncident', () => {
       messages: [{ msg: 'ok' }],
       affect: 'none',
       status: 'resolved',
-      createdAt: '2025-10-25T11:00:00Z',
+      created_at: '2025-10-25T11:00:00Z',
       completedAt: '2025-10-25T12:00:00Z',
       isClosed: '0',
     };
@@ -51,7 +51,7 @@ describe('cleanIncident', () => {
       messages: '{bad:json}',
       affect: 'major',
       status: 'error',
-      createdAt: '2025-10-25T13:00:00Z',
+      created_at: '2025-10-25T13:00:00Z',
       completedAt: null,
       isClosed: '1',
     };
@@ -69,14 +69,14 @@ describe('cleanIncident', () => {
       messages: '[]',
       affect: undefined,
       status: undefined,
-      createdAt: undefined,
+      created_at: undefined,
       completedAt: undefined,
       isClosed: undefined,
     };
     const result = cleanIncident(incident);
     expect(result.affect).toBeUndefined();
     expect(result.status).toBeUndefined();
-    expect(result.createdAt).toBeUndefined();
+    expect(result.created_at).toBeUndefined();
     expect(result.completedAt).toBeUndefined();
     expect(result.isClosed).toBe(false);
   });

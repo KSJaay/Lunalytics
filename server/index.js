@@ -6,12 +6,12 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 
 // import local files
-import cache from './cache/index.js';
+import cache from './cache/monitor/index.js';
 import logger from './utils/logger.js';
 import config from './utils/config.js';
 import isDemo from './middleware/demo.js';
 import statusCache from './cache/status.js';
-import SQLite from './database/sqlite/setup.js';
+import database from './database/connection.js';
 import initialiseRoutes from './routes/index.js';
 import initialiseCronJobs from './utils/cron.js';
 import migrateDatabase from '../scripts/migrate.js';
@@ -25,17 +25,16 @@ const isProductionOrTest =
   process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
 
 const corsList = config.get('cors');
-const isDemoMode = config.get('isDemo');
 const port = config.get('port');
 
 const init = async () => {
   // connect to database and setup database tables
-  await SQLite.connect();
-  const databaseExists = await SQLite.setup();
+  await database.connect();
+  const databaseExists = await database.setup();
 
   if (databaseExists) {
-    await cache.initialise();
     await migrateDatabase();
+    await cache.initialise();
     await statusCache.loadAllStatusPages(true);
   }
 
@@ -76,12 +75,6 @@ const init = async () => {
   app.get('/api/version', (req, res) => {
     return res.status(200).json(getVersionInfo());
   });
-
-  if (isDemoMode) {
-    app.get('/api/kanban', (req, res) => {
-      return res.sendFile(path.join(process.cwd(), '/public/kanban.json'));
-    });
-  }
 
   logger.notice('Express', { message: 'Initialising routes' });
   initialiseRoutes(app);

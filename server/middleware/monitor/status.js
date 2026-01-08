@@ -20,7 +20,10 @@ const fetchMonitorStatus = async (request, response) => {
       throw new UnprocessableError('Invalid type');
     }
 
-    const monitorExists = await fetchMonitor(monitorId);
+    const monitorExists = await fetchMonitor(
+      monitorId,
+      response.locals.user.workspaceId
+    );
 
     if (!monitorExists) {
       return response.status(404).json({
@@ -31,18 +34,32 @@ const fetchMonitorStatus = async (request, response) => {
     let heartbeats = [];
 
     if (type === 'latest') {
-      heartbeats = await fetchHeartbeats(monitorId);
+      heartbeats = await fetchHeartbeats(
+        monitorId,
+        response.locals.user.workspaceId
+      );
     }
     if (type === 'day') {
-      heartbeats = await fetchDailyHeartbeats(monitorId);
+      heartbeats = await fetchDailyHeartbeats(
+        monitorId,
+        response.locals.user.workspaceId
+      );
     }
 
     if (type === 'week') {
-      heartbeats = await fetchHourlyHeartbeats(monitorId, 168);
+      heartbeats = await fetchHourlyHeartbeats(
+        monitorId,
+        response.locals.user.workspaceId,
+        168
+      );
     }
 
     if (type === 'month') {
-      heartbeats = await fetchHourlyHeartbeats(monitorId, 720);
+      heartbeats = await fetchHourlyHeartbeats(
+        monitorId,
+        response.locals.user.workspaceId,
+        720
+      );
     }
 
     if (type !== 'latest' && heartbeats.length < 2) {

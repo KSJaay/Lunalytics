@@ -118,5 +118,5 @@ export interface ContextStatusPageProps {
   settings: ContextStatusPageSettingsProps;
   layout: ContextStatusPageLayoutProps[];
   email: string;
-  createdAt: string;
+  created_at: string;
 }

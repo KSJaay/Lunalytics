@@ -58,6 +58,7 @@ const dockerStatusCheck = async (monitor) => {
 
     return {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: health,
       latency: Date.now() - startTime,
       message: getMessage(container),
@@ -70,6 +71,7 @@ const dockerStatusCheck = async (monitor) => {
 
     return {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 'down',
       latency: Date.now() - startTime,
       message: `Unknown container state`,
@@ -78,9 +80,12 @@ const dockerStatusCheck = async (monitor) => {
   }
 };
 
-export const getListOfDockerContainers = async () => {
+export const getListOfDockerContainers = async (socketUrl) => {
   try {
-    const containers = await dockerRequest('/containers/json?all=true');
+    const containers = await dockerRequest(
+      '/containers/json?all=true',
+      socketUrl
+    );
 
     return containers;
   } catch (err) {

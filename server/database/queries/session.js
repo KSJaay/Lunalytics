@@ -1,34 +1,40 @@
-import SQLite from '../sqlite/setup.js';
+import { timeToMs } from '../../../shared/utils/ms.js';
+import database from '../connection.js';
 import { nanoid } from 'nanoid';
 
-const getUniqueSessionId = async () => {
-  let sessionId = nanoid(64);
-
-  while (await userSessionExists(sessionId)) {
-    sessionId = await getUniqueSessionId();
-  }
-
-  return sessionId;
-};
-
 export const createUserSession = async (email, device, data) => {
-  const sessionId = await getUniqueSessionId();
+  const sessionId = nanoid(92);
 
-  await SQLite.client('user_session').insert({
+  const client = await database.connect();
+
+  await client('user_session').insert({
     email,
     sessionId,
     device,
     data,
-    createdAt: new Date().toISOString(),
+    created_at: new Date().toISOString(),
   });
 
   return sessionId;
 };
 
 export const userSessionExists = async (sessionId) => {
-  return SQLite.client('user_session').where({ sessionId }).first();
+  const client = await database.connect();
+
+  return client('user_session').where({ sessionId }).first();
 };
 
 export const deleteUserSession = async (sessionId) => {
-  return SQLite.client('user_session').where({ sessionId }).del();
+  const client = await database.connect();
+
+  return client('user_session').where({ sessionId }).del();
+};
+
+export const cleanUserSessions = async () => {
+  const client = await database.connect();
+
+  const retentionMs = timeToMs(60, 'days');
+  const date = new Date(Date.now() - retentionMs).toISOString();
+
+  return client('user_session').where('created_at', '<', date).del();
 };

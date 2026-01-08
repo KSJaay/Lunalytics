@@ -98,6 +98,7 @@ const jsonStatusCheck = async (monitor) => {
 
     return {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status,
       latency,
       message: isDown ? 'JSON Query failed' : 'JSON Query successful',
@@ -128,6 +129,7 @@ const jsonStatusCheck = async (monitor) => {
 
       return {
         monitorId: monitor.monitorId,
+        workspaceId: monitor.workspaceId,
         status,
         latency,
         message: 'JSON Query failed',
@@ -137,6 +139,7 @@ const jsonStatusCheck = async (monitor) => {
 
     return {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 0,
       latency: endTime - startTime,
       message: error.message,

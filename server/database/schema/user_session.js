@@ -8,7 +8,7 @@ export const userSessionTable = async (client) => {
       table.string('email').notNullable().references('email').inTable('user');
       table.jsonb('device');
       table.jsonb('data');
-      table.datetime('createdAt');
+      table.datetime('created_at');
 
       table.index('email');
     });

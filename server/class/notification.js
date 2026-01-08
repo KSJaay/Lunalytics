@@ -16,6 +16,7 @@ const stringifyJson = (obj) => {
 
 export const cleanNotification = (notification) => ({
   id: notification.id,
+  workspaceId: notification.workspaceId,
   platform: notification.platform,
   messageType: notification.messageType,
   token: notification.token,
@@ -30,6 +31,7 @@ export const cleanNotification = (notification) => ({
 
 export const stringifyNotification = (notification) => ({
   id: notification.id,
+  workspaceId: notification.workspaceId,
   platform: notification.platform,
   messageType: notification.messageType,
   token: notification.token,

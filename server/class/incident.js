@@ -19,23 +19,25 @@ export const cleanIncident = (incident) => {
   const {
     title,
     incidentId,
+    workspaceId,
     affect,
     status,
     messages,
     monitorIds,
-    createdAt,
+    created_at,
     completedAt,
     isClosed,
   } = incident;
 
   return {
     incidentId,
+    workspaceId,
     title,
     monitorIds: cleanJson(monitorIds),
     messages: cleanJson(messages),
     affect,
     status,
-    createdAt,
+    created_at,
     completedAt,
     isClosed: isClosed == '1',
   };

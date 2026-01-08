@@ -1,5 +1,3 @@
-import { oldPermsToFlags } from '../../../../shared/permissions/oldPermsToFlags.js';
-
 export const userTable = async (client) => {
   const userExists = await client.schema.hasTable('user');
 
@@ -10,10 +8,8 @@ export const userTable = async (client) => {
       table.string('password').defaultTo(null);
       table.string('avatar');
       table.boolean('isVerified').defaultTo(0);
-      table.boolean('isOwner').defaultTo(0);
       table.boolean('sso').defaultTo(0);
-      table.integer('permission').defaultTo(oldPermsToFlags[4]);
-      table.datetime('createdAt');
+      table.datetime('created_at');
       table.jsonb('settings').defaultTo(JSON.stringify({}));
 
       table.index('isVerified');

@@ -22,7 +22,7 @@ const IncidentContentMessages = ({ incidentId }: { incidentId: string }) => {
           incidentId={incident.incidentId}
           message={message.message}
           status={message.status}
-          createdAt={message.createdAt}
+          createdAt={message.created_at}
         />
       ))}
     </div>

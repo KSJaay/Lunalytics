@@ -1,11 +1,11 @@
 import { createRequest, createResponse } from 'node-mocks-http';
-import cache from '../../../../server/cache/index.js';
+import cache from '../../../../server/cache/monitor/index.js';
 import statusCache from '../../../../server/cache/status.js';
 import { handleError } from '../../../../server/utils/errors.js';
 import monitorPause from '../../../../server/middleware/monitor/pause.js';
 import { pauseMonitor } from '../../../../server/database/queries/monitor.js';
 
-vi.mock('../../../../server/cache/index.js');
+vi.mock('../../../../server/cache/monitor/index.js');
 vi.mock('../../../../server/cache/status.js');
 vi.mock('../../../../server/database/queries/monitor.js');
 vi.mock('../../../../server/utils/errors.js');

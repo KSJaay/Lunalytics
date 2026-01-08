@@ -1,6 +1,8 @@
 // import dependencies
 import axios from 'axios';
 import https from 'https';
+import dns from 'dns';
+import { performance } from 'perf_hooks';
 
 // import local files
 import logger from '../utils/logger.js';
@@ -21,6 +23,71 @@ const isDown = (monitor, status) => {
   }
 
   return true;
+};
+
+const httpWebsitePingCheck = (options) => {
+  return new Promise((resolve, reject) => {
+    const timings = {};
+    const parsedUrl = new URL(options.url);
+    const hostname = parsedUrl.hostname;
+
+    const dnsStart = performance.now();
+
+    dns.lookup(hostname, (err) => {
+      if (err) {
+        return reject(err);
+      }
+
+      timings.dnsLookup = Math.round(performance.now() - dnsStart);
+
+      const requestStart = performance.now();
+
+      const req = https.get(options.url, (res) => {
+        timings.firstByte = Math.round(performance.now() - requestStart);
+        timings.totalTime = Math.round(performance.now() - requestStart);
+
+        res.on('data', () => {});
+        res.on('end', () =>
+          resolve({
+            status: res.statusCode,
+            latency: timings.totalTime,
+            message: `${res.statusCode} - ${res.statusMessage}`,
+            data: timings,
+          })
+        );
+      });
+
+      req.on('socket', (socket) => {
+        socket.on('lookup', () => {
+          timings.dnsLookup = Math.round(performance.now() - requestStart);
+        });
+
+        socket.on('connect', () => {
+          timings.tcpConnection = Math.round(performance.now() - requestStart);
+        });
+
+        socket.on('secureConnect', () => {
+          timings.sslHandshake =
+            Math.round(performance.now() - requestStart) -
+            timings.tcpConnection;
+        });
+      });
+
+      req.on('error', (err) => reject(err));
+    });
+  });
+};
+
+const makeRequest = async (options) => {
+  const startTime = performance.now();
+
+  const query = await axios.request(options);
+
+  const latency = Math.round(performance.now() - startTime);
+  const message = `${query.status} - ${query.statusText}`;
+  const status = query.status;
+
+  return { status, latency, message };
 };
 
 const httpStatusCheck = async (monitor) => {
@@ -48,18 +115,15 @@ const httpStatusCheck = async (monitor) => {
   const startTime = Date.now();
 
   try {
-    const query = await axios.request(options);
-
-    const latency = Date.now() - startTime;
-    const message = `${query.status} - ${query.statusText}`;
-    const status = query.status;
+    const query = monitor.url.toLowerCase().startsWith('https')
+      ? await httpWebsitePingCheck(options)
+      : await makeRequest(options);
 
     return {
       monitorId: monitor.monitorId,
-      status,
-      latency,
-      message,
-      isDown: isDown(monitor, status),
+      workspaceId: monitor.workspaceId,
+      isDown: isDown(monitor, query.status),
+      ...query,
     };
   } catch (error) {
     const endTime = Date.now();
@@ -76,6 +140,7 @@ const httpStatusCheck = async (monitor) => {
 
       return {
         monitorId: monitor.monitorId,
+        workspaceId: monitor.workspaceId,
         status,
         latency,
         message,
@@ -85,6 +150,7 @@ const httpStatusCheck = async (monitor) => {
 
     return {
       monitorId: monitor.monitorId,
+      workspaceId: monitor.workspaceId,
       status: 0,
       latency: endTime - startTime,
       message: error.message,
@@ -94,53 +160,3 @@ const httpStatusCheck = async (monitor) => {
 };
 
 export default httpStatusCheck;
-
-// Ping check that provides a lot more information
-// import dns from 'dns';
-// import https from 'https';
-// import { performance } from 'perf_hooks';
-
-// export const pingWebsite = (url) => {
-//   return new Promise((resolve, reject) => {
-//     const timings = {};
-//     const parsedUrl = new URL(url);
-//     const hostname = parsedUrl.hostname;
-
-//     const dnsStart = performance.now();
-
-//     dns.lookup(hostname, (err) => {
-//       if (err) {
-//         return reject(err);
-//       }
-
-//       timings.dnsLookup = performance.now() - dnsStart;
-
-//       const requestStart = performance.now();
-
-//       const req = https.get(url, (res) => {
-//         timings.firstByte = performance.now() - requestStart;
-//         timings.totalTime = performance.now() - start;
-
-//         res.on('data', () => {}); // Prevents memory leak
-//         res.on('end', () => resolve(timings));
-//       });
-
-//       req.on('socket', (socket) => {
-//         socket.on('lookup', () => {
-//           timings.dnsLookup = performance.now() - start;
-//         });
-
-//         socket.on('connect', () => {
-//           timings.tcpConnection = performance.now() - requestStart;
-//         });
-
-//         socket.on('secureConnect', () => {
-//           timings.sslHandshake =
-//             performance.now() - requestStart - timings.tcpConnection;
-//         });
-//       });
-
-//       req.on('error', (err) => reject(err));
-//     });
-//   });
-// };

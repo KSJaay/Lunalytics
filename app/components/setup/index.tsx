@@ -32,7 +32,7 @@ const SetupForm = () => {
       try {
         await submitSetup(setErrors, 'advanced', inputs);
 
-        return navigate('/home');
+        return navigate('/workspace/create');
       } catch (error: any) {
         console.log(error);
         if (error?.response?.data) {

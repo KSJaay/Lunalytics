@@ -6,7 +6,7 @@ describe('cleanMonitorForStatusPage', () => {
       monitorId: 's1',
       name: 'StatusPage Monitor',
       url: 'http://localhost',
-      createdAt: '2025-10-25T10:00:00Z',
+      created_at: '2025-10-25T10:00:00Z',
       paused: '1',
       icon: '["icon1"]',
     };
@@ -14,7 +14,7 @@ describe('cleanMonitorForStatusPage', () => {
     expect(result.monitorId).toBe('s1');
     expect(result.name).toBe('StatusPage Monitor');
     expect(result.url).toBeUndefined();
-    expect(result.createdAt).toBe('2025-10-25T10:00:00Z');
+    expect(result.created_at).toBe('2025-10-25T10:00:00Z');
     expect(result.paused).toBe(true);
     expect(result.icon).toEqual(['icon1']);
   });
@@ -24,7 +24,7 @@ describe('cleanMonitorForStatusPage', () => {
       monitorId: 's2',
       name: 'Paused False',
       url: 'http://localhost',
-      createdAt: '2025-10-25T11:00:00Z',
+      created_at: '2025-10-25T11:00:00Z',
       paused: '0',
       icon: '[]',
     };

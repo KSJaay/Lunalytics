@@ -6,7 +6,14 @@ const NotificationGetUsingIdMiddleware = async (request, response) => {
   const { notificationId } = request.query;
 
   try {
-    const notification = await fetchNotificationById(notificationId);
+    if (!notificationId) {
+      throw new Error('No notificationId provided');
+    }
+
+    const notification = await fetchNotificationById(
+      notificationId,
+      response.locals.user.workspaceId
+    );
 
     if (!notification) {
       logger.error('Notification - getById', {

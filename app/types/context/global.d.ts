@@ -19,7 +19,7 @@ export interface ContextMonitorProps {
   showFilters: boolean;
   paused: boolean;
   ignoreTls: boolean;
-  createdAt: string;
+  created_at: string;
   cert: Certificate;
   heartbeats: Heartbeat[];
   icon: { id: string; name: string; url: string };

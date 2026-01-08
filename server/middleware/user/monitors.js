@@ -9,27 +9,39 @@ import { handleError } from '../../utils/errors.js';
 
 const userMonitorsMiddleware = async (request, response) => {
   try {
-    const monitors = await fetchMonitors();
+    const monitors = await fetchMonitors(response.locals.user.workspaceId);
     const query = [];
 
     for (const monitor of monitors) {
-      const heartbeats = await fetchHeartbeats(monitor.monitorId, 12);
+      const heartbeats = await fetchHeartbeats(
+        monitor.monitorId,
+        response.locals.user.workspaceId,
+        12
+      );
+      monitor.heartbeats = heartbeats;
+
       // const statusChanged = await fetchStatusChangeHeartbeats(
       //   monitor.monitorId,
       //   20
       // );
 
-      monitor.heartbeats = heartbeats;
       // monitor.statusChanged = statusChanged;
 
       monitor.cert = { isValid: false };
 
       if (monitor.type === 'http') {
-        const cert = await fetchCertificate(monitor.monitorId);
+        const cert = await fetchCertificate(
+          monitor.monitorId,
+          response.locals.user.workspaceId
+        );
         monitor.cert = cert;
       }
 
-      const filters = await fetchHourlyHeartbeats(monitor.monitorId, 2);
+      const filters = await fetchHourlyHeartbeats(
+        monitor.monitorId,
+        response.locals.user.workspaceId,
+        2
+      );
       monitor.showFilters = filters.length === 2;
 
       query.push(cleanMonitor(monitor));

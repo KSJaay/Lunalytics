@@ -17,6 +17,17 @@ export const heartbeatTable = async (client) => {
       table.datetime('date').notNullable();
       table.boolean('isDown').defaultTo(false);
       table.text('message').notNullable();
+      table.jsonb('data').defaultTo(null);
+
+      table
+        .uuid('workspaceId')
+        .notNullable()
+        .references('id')
+        .inTable('workspace');
+
+      table.index('workspaceId');
+      table.index(['workspaceId', 'monitorId']);
+      table.index(['workspaceId', 'monitorId', 'date']);
     });
 
     client.raw(

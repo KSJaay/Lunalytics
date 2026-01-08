@@ -1,12 +1,12 @@
 import { createRequest, createResponse } from 'node-mocks-http';
-import SQLite from '../../../../server/database/sqlite/setup';
+import database from '../../../../server/database/connection';
 import login from '../../../../server/middleware/auth/login';
 import { setServerSideCookie } from '../../../../shared/utils/cookies';
 import { signInUser } from '../../../../server/database/queries/user';
 import { parseUserAgent } from '../../../../server/utils/uaParser';
 import { createUserSession } from '../../../../server/database/queries/session';
 
-vi.mock('../../../../server/database/sqlite/setup');
+vi.mock('../../../../server/database/connection');
 vi.mock('../../../../server/database/queries/user');
 vi.mock('../../../../shared/utils/cookies');
 vi.mock('../../../../server/utils/uaParser');
@@ -37,7 +37,7 @@ describe('Login - Middleware', () => {
       update: vi.fn(),
     };
 
-    SQLite.client = () => builders;
+    database.client = () => builders;
     signInUser = vi.fn().mockReturnValue(user);
     setServerSideCookie = vi.fn();
     parseUserAgent = vi.fn().mockReturnValue(fakeUserAgentData);

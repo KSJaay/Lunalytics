@@ -43,6 +43,7 @@ const useMonitorOptions = (
 
       await createPostRequest('/api/monitor/pause', {
         monitorId: monitor.monitorId,
+        workspaceId: monitor.workspaceId,
         pause: !monitor.paused,
       });
 
