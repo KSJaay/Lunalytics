@@ -1,9 +1,10 @@
 // import dependencies
-import MonitorIconGrid from './grid';
+import { useMemo, useState } from 'react';
 import { Input, Popover } from '@lunalytics/ui';
 
+// import local files
+import MonitorIconGrid from './grid';
 import useFetch from '../../../../../../hooks/useFetch';
-import { useMemo, useState } from 'react';
 
 const MonitorIconSelect = ({
   inputs,
@@ -19,11 +20,17 @@ const MonitorIconSelect = ({
   });
 
   const icons = useMemo(() => {
-    return (
-      data?.filter((icon: { u: string; n: string; f: string }) =>
-        icon.n.toLowerCase().includes(search.toLowerCase())
-      ) || data
-    );
+    return {
+      'selfh.st':
+        data?.['selfh.st']?.filter(
+          (icon: { u: string; n: string; f: string }) =>
+            icon.n.toLowerCase().includes(search.toLowerCase())
+        ) || data?.['selfh.st'],
+      custom:
+        data?.custom?.filter((icon: { u: string; n: string; id: string }) =>
+          icon.n.toLowerCase().includes(search.toLowerCase())
+        ) || data?.custom,
+    };
   }, [search, data]);
 
   if (isError || isLoading || !icons)
@@ -73,8 +80,9 @@ const MonitorIconSelect = ({
               setSearch(e.target.value);
             }}
           />
+
           <div style={{ padding: '12px 0 0 5px' }}>
-            The following icons are provided by{' '}
+            Some of the following icons are provided by{' '}
             <a
               href="https://selfh.st"
               target="_blank"
@@ -84,7 +92,11 @@ const MonitorIconSelect = ({
               Selfh.st
             </a>
           </div>
-          <MonitorIconGrid icons={icons} handleInput={handleInput} />
+          <MonitorIconGrid
+            customIcons={icons['custom']}
+            icons={icons['selfh.st']}
+            handleInput={handleInput}
+          />
         </div>
       </Popover>
     </div>
