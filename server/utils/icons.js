@@ -1,36 +1,46 @@
 import axios from 'axios';
 import logger from './logger.js';
+import { loadJSON } from '../../shared/parseJson.js';
 
-let icons = [];
+let icons = {
+  'selfh.st': [],
+  custom: [],
+};
 let lastFetched;
 
 export const loadIcons = async () => {
   try {
-    const query = await axios.get(
-      'https://raw.githubusercontent.com/selfhst/cdn/refs/heads/main/directory/icons.json'
-    );
+    let query = await axios
+      .get('https://lunalytics.xyz/api/v1/icons')
+      .catch(() => null);
+
+    if (!query || !query?.data?.length || query?.data?.length < 1) {
+      query = await axios
+        .get('https://lunalytics.xyz/backup-icons.json')
+        .catch(() => null);
+    }
 
     if (query.data && Array.isArray(query.data)) {
-      const formattedIcons = query.data
-        .map(({ Name, Reference, SVG, PNG, WebP }) => {
-          let format;
+      if (query.data?.length) {
+        icons['selfh.st'] = query.data;
+      }
 
-          if (SVG === 'Yes') {
-            format = 'svg';
-          } else if (PNG === 'Yes') {
-            format = 'png';
-          } else if (WebP === 'Yes') {
-            format = 'webp';
-          }
+      const customIcons = loadJSON('data/icons.json');
 
-          if (!format) return null;
+      if (Array.isArray(customIcons)) {
+        const formattedCustomIcons = customIcons
+          .map(({ id, name, url }) => {
+            if (!name || !url || !id) return null;
+            return { n: name, u: url, id };
+          })
+          .filter(Boolean);
 
-          return { n: Name, u: Reference, f: format };
-        })
-        .filter(Boolean);
+        const existingNames = new Set(icons['selfh.st'].map((icon) => icon.n));
+        const uniqueCustomIcons = formattedCustomIcons.filter(
+          (icon) => !existingNames.has(icon.n)
+        );
 
-      if (formattedIcons.length) {
-        icons = formattedIcons;
+        icons['custom'] = uniqueCustomIcons;
       }
 
       logger.info('Icons have been loaded successfully!');
@@ -38,7 +48,10 @@ export const loadIcons = async () => {
       lastFetched = Date.now();
     }
   } catch (error) {
-    logger.error('Error loading icons', { error: error.message });
+    logger.error('Error loading icons', {
+      error: error.message,
+      stack: error.stack,
+    });
   }
 };
 
