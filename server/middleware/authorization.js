@@ -4,31 +4,35 @@ import { handleError } from '../utils/errors.js';
 import { userSessionExists } from '../database/queries/session.js';
 import { apiTokenExists } from '../database/queries/tokens.js';
 import { timeToMs } from '../../shared/utils/ms.js';
+import {
+  SESSION_TOKEN,
+  WORKSPACE_ID_COOKIE,
+} from '../../shared/constants/cookies.js';
 
 const sixtyDaysInHours = timeToMs(60, 'days');
 
 const authorization = async (request, response, next) => {
   try {
-    const { session_token } = request.cookies;
-    const { authorization } = request.headers;
+    const { [SESSION_TOKEN]: session_token } = request.cookies;
 
-    if (request.url.startsWith('/assets')) {
-      return next();
-    }
+    const authorization =
+      request.headers.authorization || request.headers.Authorization;
 
-    if (session_token) {
+    if (request.url.startsWith('/api') && session_token) {
       const userSession = await userSessionExists(session_token);
 
       if (!userSession) {
-        deleteCookie(response, 'session_token');
+        deleteCookie(response, SESSION_TOKEN);
+        deleteCookie(response, WORKSPACE_ID_COOKIE);
         return response.sendStatus(401);
       }
 
       const createdAt =
-        new Date(userSession.createdAt).getTime() + sixtyDaysInHours;
+        new Date(userSession.created_at).getTime() + sixtyDaysInHours;
 
       if (createdAt < Date.now()) {
-        deleteCookie(response, 'session_token');
+        deleteCookie(response, SESSION_TOKEN);
+        deleteCookie(response, WORKSPACE_ID_COOKIE);
         return response.sendStatus(401);
       }
 
@@ -57,7 +61,8 @@ const authorization = async (request, response, next) => {
       }
 
       if (!userExistsInDatabase) {
-        deleteCookie(response, 'session_token');
+        deleteCookie(response, SESSION_TOKEN);
+        deleteCookie(response, WORKSPACE_ID_COOKIE);
         return response.sendStatus(401);
       }
     }
@@ -69,7 +74,10 @@ const authorization = async (request, response, next) => {
         return response.sendStatus(401);
       }
 
-      response.locals.user = { ...authorizationTokenExists, isApiToken: true };
+      response.locals.user = {
+        ...authorizationTokenExists,
+        isApiToken: true,
+      };
     }
 
     if (request.url.startsWith('/api') && !session_token && !authorization) {

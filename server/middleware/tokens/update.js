@@ -19,7 +19,12 @@ const updateApiTokenMiddleware = async (request, response) => {
       });
     }
 
-    const query = await apiTokenUpdate(token, name, permission);
+    const query = await apiTokenUpdate(
+      token,
+      name,
+      permission,
+      response.locals.user.workspaceId
+    );
 
     return response.status(200).send(query);
   } catch (error) {

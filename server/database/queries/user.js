@@ -1,4 +1,4 @@
-import SQLite from '../sqlite/setup.js';
+import database from '../connection.js';
 import { generateHash, verifyPassword } from '../../utils/hashPassword.js';
 import {
   AuthorizationError,
@@ -8,7 +8,8 @@ import { createUserSession } from './session.js';
 import { oldPermsToFlags } from '../../../shared/permissions/oldPermsToFlags.js';
 
 export const signInUser = async (email, password) => {
-  const user = await SQLite.client('user').where({ email }).first();
+  const client = await database.connect();
+  const user = await client('user').where({ email }).first();
 
   if (!user) {
     throw new AuthorizationError('User does not exist');
@@ -30,7 +31,8 @@ export const signInUser = async (email, password) => {
 export const registerUser = async (data) => {
   const { email, password } = data;
 
-  const userEmail = await SQLite.client('user').where({ email }).first();
+  const client = await database.connect();
+  const userEmail = await client('user').where({ email }).first();
 
   if (userEmail) {
     throw new ConflictError('Another user already exists with this email');
@@ -38,11 +40,16 @@ export const registerUser = async (data) => {
 
   const hashedPassword = generateHash(password);
 
-  data.password = hashedPassword;
+  const user = {
+    email: email.toLowerCase(),
+    displayName: data.displayName,
+    password: hashedPassword,
+    avatar: data.avatar,
+    isVerified: data.isVerified || false,
+  };
 
-  await SQLite.client('user').insert(data);
-
-  return data;
+  await client('user').insert(user);
+  return user;
 };
 
 export const registerSsoUser = async (data) => {
@@ -56,39 +63,40 @@ export const registerSsoUser = async (data) => {
     isVerified = false,
   } = data;
 
-  const createdAt = new Date().toISOString();
+  const created_at = new Date().toISOString();
 
-  await SQLite.client('user').insert({
+  const client = await database.connect();
+
+  await client('user').insert({
     email,
     displayName,
     avatar,
     sso,
-    createdAt,
+    created_at,
     isVerified,
     password: null,
   });
 
-  await SQLite.client('connections').insert({
+  await client('connections').insert({
     accountId: id,
     email,
     provider,
-    createdAt,
+    created_at,
   });
 
   return data;
 };
 
 export const getUserByEmail = async (email) => {
-  let user = await SQLite.client('user')
+  const client = await database.connect();
+  let user = await client('user')
     .where({ email })
     .select(
       'email',
       'displayName',
       'avatar',
       'isVerified',
-      'permission',
-      'createdAt',
-      'isOwner',
+      'created_at',
       'sso',
       'settings'
     )
@@ -106,23 +114,16 @@ export const getUserByEmail = async (email) => {
 };
 
 export const emailIsOwner = async (email) => {
-  return SQLite.client('user').where({ email }).select('isOwner').first();
+  const client = await database.connect();
+
+  return client('user').where({ email }).select('isOwner').first();
 };
 
 export const ownerExists = async () => {
-  let user = await SQLite?.client('user')
-    .where({ permission: oldPermsToFlags[1] })
-    .select(
-      'email',
-      'displayName',
-      'avatar',
-      'isVerified',
-      'permission',
-      'createdAt',
-      'isOwner',
-      'sso',
-      'settings'
-    )
+  const client = await database.connect();
+
+  let user = await client('user')
+    .select('email', 'displayName', 'avatar', 'isVerified', 'sso', 'settings')
     .first();
 
   if (user && user.settings) {
@@ -137,7 +138,8 @@ export const ownerExists = async () => {
 };
 
 export const getUserPasswordUsingEmail = async (email) => {
-  const user = await SQLite.client('user').where({ email }).first();
+  const client = await database.connect();
+  const user = await client('user').where({ email }).first();
 
   if (!user) {
     throw new AuthorizationError('User does not exist');
@@ -146,88 +148,94 @@ export const getUserPasswordUsingEmail = async (email) => {
   return user.password;
 };
 
-export const updateUserDisplayname = (email, displayName) => {
-  return SQLite.client('user').where({ email }).update({ displayName });
+export const updateUserDisplayname = async (email, displayName) => {
+  const client = await database.connect();
+  return client('user').where({ email }).update({ displayName });
 };
 
-export const updateUserAvatar = (email, avatar) => {
-  return SQLite.client('user').where({ email }).update({ avatar });
+export const updateUserAvatar = async (email, avatar) => {
+  const client = await database.connect();
+  return client('user').where({ email }).update({ avatar });
 };
 
-export const fetchMembers = (userHasManageTeam = false) => {
+export const fetchMembers = async (userHasManageTeam = false) => {
+  const client = await database.connect();
+
   if (userHasManageTeam) {
-    return SQLite.client('user').select(
+    return client('user').select(
       'email',
       'displayName',
       'avatar',
       'isVerified',
-      'permission',
-      'createdAt',
-      'isOwner',
+      'created_at',
       'sso'
     );
   }
 
-  return SQLite.client('user')
+  return client('user')
     .where({ isVerified: true })
     .select(
       'email',
       'displayName',
       'avatar',
       'isVerified',
-      'permission',
-      'createdAt',
-      'isOwner',
+      'created_at',
       'sso'
     );
 };
 
 export const declineAccess = async (email) => {
-  await SQLite.client('user_session').where({ email }).del();
-  return SQLite.client('user').where({ email }).del();
+  const client = await database.connect();
+
+  await client('user_session').where({ email }).del();
+
+  return client('user').where({ email }).del();
 };
 
-export const approveAccess = (email) => {
+export const approveAccess = async (email) => {
   // check user using email and update isVerified to true
 
-  const userExists = SQLite.client('user').where({ email }).first();
+  const client = await database.connect();
+  const userExists = await client('user').where({ email }).first();
 
   if (!userExists) {
     throw new AuthorizationError('User does not exist');
   }
 
-  return SQLite.client('user').where({ email }).update({ isVerified: true });
+  return client('user').where({ email }).update({ isVerified: true });
 };
 
-export const updateUserPermission = (email, permission) => {
-  const userExists = SQLite.client('user').where({ email }).first();
+export const updateUserPermission = async (email, permission) => {
+  const client = await database.connect();
+  const userExists = await client('user').where({ email }).first();
 
   if (!userExists) {
     throw new AuthorizationError('User does not exist');
   }
 
-  return SQLite.client('user').where({ email }).update({ permission });
+  return client('user').where({ email }).update({ permission });
 };
 
-export const updateUserPassword = (email, password) => {
+export const updateUserPassword = async (email, password) => {
+  const client = await database.connect();
   const hashedPassword = generateHash(password);
 
-  return SQLite.client('user')
-    .where({ email })
-    .update({ password: hashedPassword });
+  return client('user').where({ email }).update({ password: hashedPassword });
 };
 
-export const updateUserSettings = (email, settings) => {
-  return SQLite.client('user')
+export const updateUserSettings = async (email, settings) => {
+  const client = await database.connect();
+  return client('user')
     .where({ email })
     .update({ settings: JSON.stringify(settings) });
 };
 
 export const resetDemoUser = async () => {
-  const demoUser = await SQLite.client('user').where({ email: 'demo' }).first();
+  const client = await database.connect();
+  const demoUser = await client('user').where({ email: 'demo' }).first();
 
   if (demoUser) {
-    await SQLite.client('user').where({ email: 'demo' }).update({
+    await client('user').where({ email: 'demo' }).update({
       email: 'demo',
       displayName: 'Demo User',
       password: 'demo',
@@ -239,10 +247,11 @@ export const resetDemoUser = async () => {
 };
 
 export const getDemoUser = async () => {
-  const demoUser = await SQLite.client('user').where({ email: 'demo' }).first();
+  const client = await database.connect();
+  const demoUser = await client('user').where({ email: 'demo' }).first();
 
   if (!demoUser) {
-    await SQLite.client('user').insert({
+    await client('user').insert({
       email: 'demo',
       displayName: 'Demo User',
       password: 'demo',
@@ -256,11 +265,12 @@ export const getDemoUser = async () => {
 };
 
 export const transferOwnership = async (email, newOwner) => {
-  await SQLite.client('user')
+  const client = await database.connect();
+  await client('user')
     .where({ email })
-    .update({ permission: oldPermsToFlags[4], isOwner: false });
+    .update({ permission: oldPermsToFlags[4] });
 
-  return SQLite.client('user')
+  return client('user')
     .where({ email: newOwner })
-    .update({ permission: oldPermsToFlags[1], isOwner: true });
+    .update({ permission: oldPermsToFlags[1] });
 };

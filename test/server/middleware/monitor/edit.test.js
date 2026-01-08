@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createRequest, createResponse } from 'node-mocks-http';
-import SQLite from '../../../../server/database/sqlite/setup';
+import database from '../../../../server/database/connection';
 import cache from '../../../../server/cache';
 import monitorEdit from '../../../../server/middleware/monitor/edit';
 import { updateMonitor } from '../../../../server/database/queries/monitor';
@@ -18,10 +18,10 @@ describe('Edit Monitor - Middleware', () => {
 
   let fakeRequest;
   let fakeResponse;
-  let SQLiteBuilders;
+  let databaseBuilders;
 
   beforeEach(() => {
-    SQLiteBuilders = {
+    databaseBuilders = {
       insert: vi.fn().mockImplementation(() => {
         return { returning: vi.fn().mockReturnValue([{ id: 1 }]) };
       }),
@@ -40,7 +40,7 @@ describe('Edit Monitor - Middleware', () => {
       update: vi.fn(),
     };
 
-    SQLite.client = () => SQLiteBuilders;
+    database.client = () => databaseBuilders;
     cache = { checkStatus: vi.fn() };
 
     updateMonitor = vi.fn().mockReturnValue({ monitorId: 'test' });

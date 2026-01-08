@@ -1,6 +1,7 @@
 import { getDemoUser, resetDemoUser } from '../database/queries/user.js';
 import { setDemoCookie } from '../../shared/utils/cookies.js';
 import config from '../utils/config.js';
+import { SESSION_TOKEN } from '../../shared/constants/cookies.js';
 
 const isDemoMode = config.get('isDemo');
 
@@ -13,8 +14,8 @@ const isDemo = async (request, response, next) => {
       !request.url.startsWith('/login')
     ) {
       const cookie = await getDemoUser();
-      setDemoCookie(response, 'session_token', cookie);
-      request.cookies['session_token'] = cookie;
+      setDemoCookie(response, SESSION_TOKEN, cookie);
+      request.cookies[SESSION_TOKEN] = cookie;
     }
   }
 

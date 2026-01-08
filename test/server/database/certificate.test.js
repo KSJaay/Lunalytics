@@ -4,10 +4,10 @@ import {
   updateCertificate,
   deleteCertificate,
 } from '../../../server/database/queries/certificate';
-import SQLite from '../../../server/database/sqlite/setup';
+import database from '../../../server/database/connection';
 import cleanCertificate from '../../../server/class/certificate';
 
-vi.mock('../../../server/database/sqlite/setup');
+vi.mock('../../../server/database/connection');
 
 describe('Certificate - Database queries', () => {
   const certificate = {
@@ -37,7 +37,8 @@ describe('Certificate - Database queries', () => {
         update: vi.fn(),
       };
 
-      return vi.fn().mockImplementation(() => builders);
+      const client = vi.fn().mockImplementation(() => builders);
+      return () => client;
     };
   });
 
@@ -47,7 +48,7 @@ describe('Certificate - Database queries', () => {
 
   describe('fetchCertificate', () => {
     it('Should call where with the monitorId', async () => {
-      SQLite.client = mockClient();
+      database.connect = mockClient();
 
       const spy = vi.spyOn(builders, 'where');
 
@@ -57,7 +58,7 @@ describe('Certificate - Database queries', () => {
     });
 
     it('should return invalid when certificate is not found', async () => {
-      SQLite.client = mockClient();
+      database.connect = mockClient();
 
       const certificate = await fetchCertificate(monitorId);
 
@@ -65,7 +66,7 @@ describe('Certificate - Database queries', () => {
     });
 
     it('should return valid when certificate is found', async () => {
-      SQLite.client = mockClient(certificate);
+      database.connect = mockClient(certificate);
 
       const cert = await fetchCertificate(monitorId);
 
@@ -75,7 +76,7 @@ describe('Certificate - Database queries', () => {
 
   describe('updateCertificate', () => {
     it("should insert the certificate when once doesn't exist", async () => {
-      SQLite.client = mockClient();
+      database.connect = mockClient();
       const spy = vi.spyOn(builders, 'insert');
 
       await updateCertificate(monitorId, certificate);
@@ -84,7 +85,7 @@ describe('Certificate - Database queries', () => {
     });
 
     it('should update cert if one already exists', async () => {
-      SQLite.client = mockClient(certificate);
+      database.connect = mockClient(certificate);
       const spy = vi.spyOn(whereBuilders, 'update');
 
       await updateCertificate(monitorId, {
@@ -101,7 +102,7 @@ describe('Certificate - Database queries', () => {
 
   describe('deleteCertificate', () => {
     it('should call where with the monitorId', async () => {
-      SQLite.client = mockClient();
+      database.connect = mockClient();
       const spy = vi.spyOn(builders, 'where');
 
       await deleteCertificate(monitorId);
@@ -110,7 +111,7 @@ describe('Certificate - Database queries', () => {
     });
 
     it('should delete the certificate', async () => {
-      SQLite.client = mockClient(certificate);
+      database.connect = mockClient(certificate);
       const spy = vi.spyOn(whereBuilders, 'del');
 
       await deleteCertificate(monitorId);

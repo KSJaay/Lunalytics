@@ -12,7 +12,7 @@ export interface ContextUserProps {
   avatar: string;
   isVerified: boolean;
   permission: number;
-  createdAt: string;
+  created_at: string;
   isOwner: boolean;
   settings: UserSettings;
 }

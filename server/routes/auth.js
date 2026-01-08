@@ -12,6 +12,7 @@ import slackCallback from '../middleware/auth/callback/slack.js';
 import twitchCallback from '../middleware/auth/callback/twitch.js';
 import getConfigMiddleware from '../middleware/auth/config/getConfig.js';
 import updateConfigMiddleware from '../middleware/auth/config/update.js';
+import setupExistsMiddleware from '../middleware/setupExists.js';
 import redirectUsingProviderMiddleware from '../middleware/auth/platform.js';
 import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
@@ -23,6 +24,7 @@ router.post('/setup', setup);
 router.post('/login', login);
 router.get('/logout', logout);
 router.get('/platform/:provider', redirectUsingProviderMiddleware);
+router.get('/setup/exists', setupExistsMiddleware);
 
 router.get('/callback/custom', customCallback, signInOrRegisterUsingAuth);
 router.get('/callback/discord', discordCallback, signInOrRegisterUsingAuth);

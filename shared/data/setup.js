@@ -103,7 +103,7 @@ const setupData = {
       },
       {
         id: 'migrationType',
-        title: 'Migration Type',
+        label: 'Migration Type',
         type: 'dropdown',
         options: ['automatic', 'manual'],
       },

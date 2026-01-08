@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 
 // import local files
 import logger from '../server/utils/logger.js';
-import SQLite from '../server/database/sqlite/setup.js';
+import database from '../server/database/connection.js';
 import { generateHash } from '../server/utils/hashPassword.js';
 
 const questions = [
@@ -33,7 +33,7 @@ inquirer
     }
 
     const email = answers.email.toLowerCase().trim();
-    const client = await SQLite.connect();
+    const client = await database.connect();
 
     const emailExists = await client('user').where({ email }).first();
 

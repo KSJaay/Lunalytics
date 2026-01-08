@@ -21,10 +21,11 @@ const NotificationCreateMiddleware = async (request, response) => {
     const uniqueId = randomId();
     const query = await createNotification({
       ...result,
+      workspaceId: user.workspaceId,
       email: user.email,
       id: uniqueId,
       isEnabled: true,
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     });
 
     return response.status(201).send(query);

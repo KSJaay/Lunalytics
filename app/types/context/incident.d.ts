@@ -1,5 +1,5 @@
 interface ContextIncidentMessageProps {
-  createdAt: string;
+  created_at: string;
   email: string;
   endedAt: string;
   message: string;
@@ -14,7 +14,7 @@ export interface ContextIncidentProps {
   status: 'Investigating' | 'Identified' | 'Monitoring' | 'Resolved';
   messages: ContextIncidentMessageProps[];
   monitorIds: string[];
-  createdAt: string;
+  created_at: string;
   completedAt: string | null;
   isClosed: boolean;
 }

@@ -17,6 +17,16 @@ export const hourlyHeartbeatTable = async (client) => {
       table.integer('status').notNullable();
       table.integer('latency').notNullable();
       table.datetime('date').notNullable();
+
+      table
+        .uuid('workspaceId')
+        .notNullable()
+        .references('id')
+        .inTable('workspace');
+
+      table.index('workspaceId');
+      table.index(['workspaceId', 'monitorId']);
+      table.index(['workspaceId', 'monitorId', 'date']);
     });
 
     client.raw(

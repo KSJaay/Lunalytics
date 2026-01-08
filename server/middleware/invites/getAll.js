@@ -3,7 +3,7 @@ import { handleError } from '../../utils/errors.js';
 
 const getAllInvitesMiddleware = async (request, response) => {
   try {
-    const invites = await fetchAllInvites();
+    const invites = await fetchAllInvites(response.locals.user.workspaceId);
 
     return response.status(200).send({ invites });
   } catch (error) {

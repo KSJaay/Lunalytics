@@ -1,20 +1,24 @@
-import SQLite from '../sqlite/setup.js';
+import database from '../connection.js';
 import {
   cleanNotification,
   stringifyNotification,
 } from '../../class/notification.js';
 
-export const fetchNotifications = async () => {
-  const notifications = await SQLite.client('notifications').select();
+export const fetchNotifications = async (workspaceId) => {
+  const client = await database.connect();
+  const notifications = await client('notifications')
+    .where({ workspaceId })
+    .select();
 
   return notifications.map((notification) => cleanNotification(notification));
 };
 
-export const fetchNotificationById = async (id) => {
-  if (!id) return null;
+export const fetchNotificationById = async (id, workspaceId) => {
+  if (!id || !workspaceId) return null;
 
-  const notification = await SQLite.client('notifications')
-    .where({ id })
+  const client = await database.connect();
+  const notification = await client('notifications')
+    .where({ id, workspaceId })
     .select()
     .first();
 
@@ -24,31 +28,40 @@ export const fetchNotificationById = async (id) => {
 };
 
 export const createNotification = async (notification) => {
-  await SQLite.client('notifications').insert(
-    stringifyNotification(notification)
-  );
+  const client = await database.connect();
+
+  await client('notifications').insert(stringifyNotification(notification));
 
   return cleanNotification(notification);
 };
 
 export const editNotification = async (notification) => {
-  await SQLite.client('notifications')
-    .where({ id: notification.id })
+  const client = await database.connect();
+
+  await client('notifications')
+    .where({ id: notification.id, workspaceId: notification.workspaceId })
     .update(stringifyNotification(notification));
 
   return cleanNotification(notification);
 };
 
-export const toggleNotification = async (id, isEnabled = true) => {
-  await SQLite.client('notifications').where({ id }).update({ isEnabled });
+export const toggleNotification = async (id, workspaceId, isEnabled = true) => {
+  const client = await database.connect();
+
+  await client('notifications')
+    .where({ id, workspaceId })
+    .update({ isEnabled });
 
   return;
 };
 
-export const deleteNotification = async (id) => {
-  await SQLite.client('notifications').where({ id }).del();
-  await SQLite.client('monitor')
-    .where({ notificationId: id })
+export const deleteNotification = async (id, workspaceId) => {
+  const client = await database.connect();
+
+  await client('notifications').where({ id, workspaceId }).del();
+  await client('monitor')
+    .where({ notificationId: id, workspaceId })
     .update({ notificationId: null });
+
   return;
 };

@@ -10,7 +10,7 @@ const messagesValidator = (messages) => {
   let errorMessage;
 
   for (const index in messages) {
-    const { message, status, createdAt, email } = messages[index] || {};
+    const { message, status, created_at, email } = messages[index] || {};
 
     if (!message) {
       errorMessage = 'Please eneter a message';
@@ -22,7 +22,7 @@ const messagesValidator = (messages) => {
       break;
     }
 
-    if (!createdAt) {
+    if (!created_at) {
       errorMessage = 'Please select a date for the message';
       break;
     }

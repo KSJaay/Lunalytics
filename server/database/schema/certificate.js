@@ -20,7 +20,14 @@ export const certificateTable = async (client) => {
       table.integer('daysRemaining').defaultTo(0);
       table.datetime('nextCheck');
 
-      table.index('monitorId');
+      table
+        .uuid('workspaceId')
+        .notNullable()
+        .references('id')
+        .inTable('workspace');
+
+      table.index('workspaceId');
+      table.index(['workspaceId', 'monitorId']);
     });
   }
 };

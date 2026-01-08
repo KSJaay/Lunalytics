@@ -1,21 +1,27 @@
-import SQLite from '../sqlite/setup.js';
+import database from '../connection.js';
 
 export const createProvider = async (data) => {
-  await SQLite?.client('providers').insert(data);
+  const client = await database.connect();
+
+  await client('providers').insert(data);
 };
 
 export const updateProvider = async (provider, data) => {
-  await SQLite?.client('providers').where({ provider }).update(data);
+  const client = await database.connect();
+
+  await client('providers').where({ provider }).update(data);
 };
 
 export const deleteProvider = async (provider) => {
-  await SQLite?.client('providers').where({ provider }).delete();
+  const client = await database.connect();
+
+  await client('providers').where({ provider }).delete();
 };
 
 export const fetchProvider = async (provider) => {
-  const providerData = await SQLite?.client('providers')
-    .where({ provider })
-    .first();
+  const client = await database.connect();
+
+  const providerData = await client('providers').where({ provider }).first();
 
   if (!providerData) return null;
 
@@ -23,7 +29,9 @@ export const fetchProvider = async (provider) => {
 };
 
 export const fetchProviders = async () => {
-  const providers = await SQLite?.client('providers').select('*');
+  const client = await database.connect();
+
+  const providers = await client('providers').select('*');
 
   return providers;
 };

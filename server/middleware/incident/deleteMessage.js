@@ -13,7 +13,10 @@ const deleteIncidentMessageMiddleware = async (request, response) => {
       return response.status(400).json({ message: 'Incident id is required' });
     }
 
-    const query = await fetchIncident(incidentId);
+    const query = await fetchIncident(
+      incidentId,
+      response.locals.user.workspaceId
+    );
 
     if (!query) {
       return response.status(404).json({ message: 'Incident not found' });
@@ -38,7 +41,11 @@ const deleteIncidentMessageMiddleware = async (request, response) => {
     query.messages.splice(parsedPosition, 1);
     query.status = query.messages[query.messages.length - 1].status;
 
-    const data = await updateIncident(incidentId, query);
+    const data = await updateIncident(
+      incidentId,
+      response.locals.user.workspaceId,
+      query
+    );
 
     statusCache.addIncident(data);
 

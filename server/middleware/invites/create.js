@@ -16,7 +16,13 @@ const createInviteMiddleware = async (request, response) => {
       });
     }
 
-    const invite = await createInvite(email, expiry, limit, permission);
+    const invite = await createInvite(
+      email,
+      expiry,
+      limit,
+      permission,
+      response.locals.user.workspaceId
+    );
 
     return response.status(200).send({ invite });
   } catch (error) {

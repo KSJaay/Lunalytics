@@ -1,5 +1,5 @@
 export interface ContextInviteProps {
-  createdAt: string;
+  created_at: string;
   email: string;
   expiresAt: string | null;
   limit: number | null;

@@ -1,17 +1,17 @@
 import { customAlphabet } from 'nanoid';
 import { timeToMs } from '../../../shared/utils/ms.js';
-import SQLite from '../sqlite/setup.js';
+import database from '../connection.js';
 
 const nanoid = customAlphabet(
   '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-  8
+  12
 );
 
-const getUniqueToken = async () => {
-  let token = nanoid(8);
+const getUniqueToken = async (client) => {
+  let token = nanoid(12);
 
-  while (await SQLite.client('invite').where({ token }).first()) {
-    token = nanoid(8);
+  while (await client('invite').where({ token }).first()) {
+    token = nanoid(12);
   }
 
   return token;
@@ -30,19 +30,28 @@ const getExpiryDate = (expiry) => {
 };
 
 export const fetchInviteUsingId = async (token) => {
-  const invite = await SQLite.client('invite').where({ token }).first();
+  const client = await database.connect();
+  const invite = await client('invite').where({ token }).first();
 
   return invite;
 };
 
-export const fetchAllInvites = async () => {
-  const invites = await SQLite.client('invite').select();
+export const fetchAllInvites = async (workspaceId) => {
+  const client = await database.connect();
+  const invites = await client('invite').where({ workspaceId }).select();
 
   return invites;
 };
 
-export const createInvite = async (email, expiry, limit, permission) => {
-  const token = await getUniqueToken();
+export const createInvite = async (
+  email,
+  expiry,
+  limit,
+  permission,
+  workspaceId
+) => {
+  const client = await database.connect();
+  const token = await getUniqueToken(client);
 
   const expiresAt = !expiry ? null : getExpiryDate(expiry);
 
@@ -51,29 +60,33 @@ export const createInvite = async (email, expiry, limit, permission) => {
     token,
     permission,
     paused: false,
-    createdAt: new Date().toISOString(),
+    created_at: new Date().toISOString(),
     expiresAt,
     limit: limit ? parseInt(limit) : null,
     uses: 0,
+    workspaceId,
   };
 
-  await SQLite.client('invite').insert(invite);
+  await client('invite').insert(invite);
 
   return invite;
 };
 
 export const pauseInvite = async (token, paused) => {
-  await SQLite.client('invite').where({ token }).update({ paused });
+  const client = await database.connect();
+  await client('invite').where({ token }).update({ paused });
 
   return true;
 };
 
 export const deleteInvite = async (token) => {
-  return SQLite.client('invite').where({ token }).del();
+  const client = await database.connect();
+  return client('invite').where({ token }).del();
 };
 
 export const increaseInviteUses = async (token) => {
-  const invite = await SQLite.client('invite').where({ token }).first();
+  const client = await database.connect();
+  const invite = await client('invite').where({ token }).first();
   const newUses = invite.uses ? invite.uses + 1 : 1;
 
   if (invite.limit && newUses >= invite.limit) {
@@ -81,6 +94,6 @@ export const increaseInviteUses = async (token) => {
     return true;
   }
 
-  await SQLite.client('invite').where({ token }).update({ uses: newUses });
+  await client('invite').where({ token }).update({ uses: newUses });
   return false;
 };

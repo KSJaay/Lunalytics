@@ -10,13 +10,21 @@ export const incidentTable = async (client) => {
       table.jsonb('messages').notNullable(); // Array of messages {message, status, createdAt, email}
       table.string('affect').notNullable(); // Operational, Maintenance, Incident, Outage
       table.string('status').notNullable(); //  Investigating, Identified, Monitoring, Resolved
-      table.datetime('createdAt');
       table.datetime('completedAt');
       table.boolean('isClosed').defaultTo(false);
+      table
+        .uuid('workspaceId')
+        .notNullable()
+        .references('id')
+        .inTable('workspace');
 
-      table.index('createdAt');
-      table.index('completedAt');
-      table.index('isClosed');
+      table.timestamps(true, true);
+
+      table.index('workspaceId');
+      table.index(['workspaceId', 'incidentId']);
+      table.index(['workspaceId', 'isClosed']);
+      table.index(['workspaceId', 'created_at']);
+      table.index(['workspaceId', 'completedAt']);
     });
   }
 };

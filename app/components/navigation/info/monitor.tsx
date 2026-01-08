@@ -178,7 +178,7 @@ const NavigationMonitorInfo = ({ monitor }: { monitor: MonitorProps }) => {
 
         <div className="navigation-info-item">
           <div>{t('home.info.created_at')}</div>
-          <div>{dayjs(monitor.createdAt).format('DD-MM-YYYY HH:mm:ss')}</div>
+          <div>{dayjs(monitor.created_at).format('DD-MM-YYYY HH:mm:ss')}</div>
         </div>
       </div>
 

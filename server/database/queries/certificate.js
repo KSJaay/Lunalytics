@@ -1,9 +1,10 @@
 import cleanCertificate from '../../class/certificate.js';
-import SQLite from '../sqlite/setup.js';
+import database from '../connection.js';
 
-export const fetchCertificate = async (monitorId) => {
-  const certificate = await SQLite.client('certificate')
-    .where({ monitorId })
+export const fetchCertificate = async (monitorId, workspaceId) => {
+  const client = await database.connect();
+  const certificate = await client('certificate')
+    .where({ monitorId, workspaceId })
     .first();
 
   if (!certificate) {
@@ -13,18 +14,32 @@ export const fetchCertificate = async (monitorId) => {
   return cleanCertificate(certificate);
 };
 
-export const updateCertificate = async (monitorId, certificate) => {
-  const cert = await SQLite.client('certificate').where({ monitorId }).first();
+export const updateCertificate = async (
+  monitorId,
+  workspaceId,
+  certificate
+) => {
+  const client = await database.connect();
+  const cert = await client('certificate')
+    .where({ monitorId, workspaceId })
+    .first();
 
   if (!cert) {
-    await SQLite.client('certificate').insert({ monitorId, ...certificate });
+    await client('certificate').insert({
+      monitorId,
+      workspaceId,
+      ...certificate,
+    });
   } else {
-    await SQLite.client('certificate').where({ monitorId }).update(certificate);
+    await client('certificate')
+      .where({ monitorId, workspaceId })
+      .update(certificate);
   }
 
   return true;
 };
 
-export const deleteCertificate = async (monitorId) => {
-  await SQLite.client('certificate').where({ monitorId }).del();
+export const deleteCertificate = async (monitorId, workspaceId) => {
+  const client = await database.connect();
+  await client('certificate').where({ monitorId, workspaceId }).del();
 };

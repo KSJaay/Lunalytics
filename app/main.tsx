@@ -12,6 +12,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // import local files
 import Loading from './components/ui/loading';
+import WorkspaceCreatePage from './pages/workspace/create';
+import WorkspaceJoinPage from './pages/workspace/join';
 
 const Home = React.lazy(() => import('./pages/home'));
 const Settings = React.lazy(() => import('./pages/settings'));
@@ -133,6 +135,22 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               element={
                 <React.Suspense fallback={<Loading />}>
                   <Verify />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/workspace/create"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <WorkspaceCreatePage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/workspace/join"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <WorkspaceJoinPage />
                 </React.Suspense>
               }
             />

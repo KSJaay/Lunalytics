@@ -10,11 +10,12 @@ import { loadJSON } from '../../../shared/parseJson.js';
 import { ownerExists, registerUser } from '../../database/queries/user.js';
 import { setServerSideCookie } from '../../../shared/utils/cookies.js';
 import { handleError } from '../../utils/errors.js';
-import client from '../../database/sqlite/setup.js';
+import database from '../../database/connection.js';
 import config from '../../utils/config.js';
 import { createUserSession } from '../../database/queries/session.js';
 import { parseUserAgent } from '../../utils/uaParser.js';
 import { oldPermsToFlags } from '../../../shared/permissions/oldPermsToFlags.js';
+import { SESSION_TOKEN } from '../../../shared/constants/cookies.js';
 
 const packageJson = loadJSON('package.json');
 
@@ -146,8 +147,8 @@ const setupMiddleware = async (request, response) => {
     }
 
     config.readConfigFile();
-    await client.connect();
-    await client.setup();
+    await database.connect();
+    await database.setup();
 
     const query = await ownerExists();
 
@@ -167,7 +168,7 @@ const setupMiddleware = async (request, response) => {
       permission: oldPermsToFlags[1],
       isVerified: true,
       isOwner: true,
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     };
 
     await registerUser(data);
@@ -183,7 +184,7 @@ const setupMiddleware = async (request, response) => {
 
     setServerSideCookie(
       response,
-      'session_token',
+      SESSION_TOKEN,
       sessionToken,
       request.protocol === 'https'
     );

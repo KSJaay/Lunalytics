@@ -83,7 +83,7 @@ describe('Register - Middleware', () => {
         displayName: 'KSJaay',
         password: 'testUser123',
         avatar: null,
-        createdAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
       });
     });
 

@@ -14,7 +14,11 @@ const NotificationToggleMiddleware = async (request, response) => {
       throw new UnprocessableError('isEnabled is not a boolean');
     }
 
-    await toggleNotification(notificationId, isEnabled === 'true');
+    await toggleNotification(
+      notificationId,
+      response.locals.user.workspaceId,
+      isEnabled === 'true'
+    );
     return response.sendStatus(200);
   } catch (error) {
     handleError(error, response);

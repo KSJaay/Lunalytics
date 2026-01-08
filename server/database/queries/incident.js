@@ -1,51 +1,45 @@
 import { cleanIncident } from '../../class/incident.js';
 import randomId from '../../utils/randomId.js';
-import SQLite from '../sqlite/setup.js';
+import database from '../connection.js';
 
-const getUniqueId = async () => {
-  let id = randomId();
-
-  let exists = await SQLite.client('incident').where({ id }).first();
-
-  while (exists) {
-    id = randomId();
-    exists = await SQLite.client('incident').where({ id }).first();
-  }
-
-  return id;
-};
-
-const fetchIncident = async (incidentId) => {
-  const incident = await SQLite.client('incident')
-    .where({ incidentId })
+const fetchIncident = async (incidentId, workspaceId) => {
+  const client = await database.connect();
+  const incident = await client('incident')
+    .where({ incidentId, workspaceId })
     .first();
 
   return cleanIncident(incident);
 };
 
-const fetchAllIncidents = async () => {
-  const incidents = await SQLite.client('incident')
-    .where({ isClosed: false })
+const fetchAllIncidents = async (workspaceId) => {
+  const client = await database.connect();
+  const incidents = await client('incident')
+    .where({ workspaceId, isClosed: false })
     .select();
 
   return incidents.map((incident) => cleanIncident(incident));
 };
 
-const createIncident = async (data) => {
-  const incidentId = await getUniqueId();
-  await SQLite.client('incident').insert({
+const createIncident = async (data, workspaceId) => {
+  const client = await database.connect();
+  const incidentId = randomId();
+
+  await client('incident').insert({
     ...data,
     incidentId,
+    workspaceId,
     messages: JSON.stringify(data.messages),
     monitorIds: JSON.stringify(data.monitorIds),
   });
 
-  return cleanIncident({ ...data, incidentId });
+  return cleanIncident({ ...data, incidentId, workspaceId });
 };
 
-const updateIncident = async (incidentId, data) => {
-  const query = await SQLite.client('incident')
-    .where({ incidentId })
+const updateIncident = async (incidentId, workspaceId, data) => {
+  const client = await database.connect();
+
+  const query = await client('incident')
+    .where({ incidentId, workspaceId })
     .update({
       ...data,
       messages: JSON.stringify(data.messages),
@@ -56,8 +50,9 @@ const updateIncident = async (incidentId, data) => {
   return cleanIncident(query[0]);
 };
 
-const deleteIncident = async (incidentId) => {
-  await SQLite.client('incident').where({ incidentId }).del();
+const deleteIncident = async (incidentId, workspaceId) => {
+  const client = await database.connect();
+  await client('incident').where({ incidentId, workspaceId }).del();
 
   return true;
 };

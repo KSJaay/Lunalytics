@@ -20,7 +20,7 @@ describe('Fetch Monitor Status - Middleware', () => {
   const heartbeat = {
     monitorId,
     latency: 20,
-    createdAt: 'date goes here',
+    created_at: 'date goes here',
   };
 
   beforeEach(() => {

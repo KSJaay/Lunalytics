@@ -7,6 +7,7 @@ export const clean = (
   includeCert = true
 ) => ({
   monitorId: monitor.monitorId,
+  workspaceId: monitor.workspaceId,
   parentId: monitor.parentId || null,
   name: monitor.name,
   url: monitor.url,
@@ -27,7 +28,7 @@ export const clean = (
   paused: monitor.paused == '1',
   ignoreTls: monitor.ignoreTls == '1',
   json_query: parseJsonOrArray(monitor.json_query, []),
-  createdAt: monitor.createdAt,
+  created_at: monitor.created_at,
   cert: includeCert ? cleanCertificate(cert) : undefined,
   heartbeats: includeHeartbeats ? heartbeats : undefined,
   statusChanged: includeHeartbeats ? monitor.statusChanged : undefined,

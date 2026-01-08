@@ -5,7 +5,7 @@ import tcpStatusCheck from '../tools/tcpPing.js';
 import Collection from '../../shared/utils/collection.js';
 import NotificationServices from '../notifications/index.js';
 import logger from '../utils/logger.js';
-import { fetchMonitor, fetchMonitors } from '../database/queries/monitor.js';
+import { fetchAllMonitors, fetchMonitor } from '../database/queries/monitor.js';
 import {
   createHeartbeat,
   deleteHeartbeats,
@@ -30,16 +30,20 @@ class Master {
   }
 
   async initialise() {
-    const monitors = await fetchMonitors();
+    const monitors = await fetchAllMonitors();
 
     for (const monitor of monitors) {
-      await this.checkStatus(monitor.monitorId);
+      await this.checkStatus(monitor.monitorId, monitor.workspaceId);
     }
   }
 
   async updateTimeout(monitor, heartbeat) {
     await createHeartbeat(heartbeat);
-    const isDown = await isMonitorDown(monitor.monitorId, monitor.retry);
+    const isDown = await isMonitorDown(
+      monitor.monitorId,
+      monitor.workspaceId,
+      monitor.retry
+    );
 
     if (isDown) {
       await this.sendNotification(monitor, heartbeat, isDown, false);
@@ -48,6 +52,7 @@ class Master {
     if (!isDown) {
       const hasRecovered = await isMonitorRecovered(
         monitor.monitorId,
+        monitor.workspaceId,
         monitor.retry
       );
 
@@ -60,18 +65,21 @@ class Master {
 
     this.timeouts.set(
       monitor.monitorId,
-      setTimeout(() => this.checkStatus(monitor.monitorId), timeout * 1000)
+      setTimeout(
+        () => this.checkStatus(monitor.monitorId, monitor.workspaceId),
+        timeout * 1000
+      )
     );
   }
 
-  async checkStatus(monitorId) {
-    const query = await fetchMonitor(monitorId).catch(() => false);
+  async checkStatus(monitorId, workspaceId) {
+    const query = await fetchMonitor(monitorId, workspaceId).catch(() => false);
 
     if (!query) {
       clearTimeout(this.timeouts.get(monitorId));
       this.timeouts.delete(monitorId);
-      await deleteCertificate(monitorId);
-      await deleteHeartbeats(monitorId);
+      await deleteCertificate(monitorId, workspaceId);
+      await deleteHeartbeats(monitorId, workspaceId);
       return;
     }
 
@@ -93,13 +101,13 @@ class Master {
       const heartbeat = await httpStatusCheck(monitor);
 
       if (monitor.url?.toLowerCase().startsWith('https')) {
-        const certificate = await fetchCertificate(monitorId);
+        const certificate = await fetchCertificate(monitorId, workspaceId);
 
         const certDate = new Date(certificate?.nextCheck);
         if (!certificate?.nextCheck || certDate.getTime() <= Date.now()) {
           const cert = await getCertInfo(monitor.url);
           cert.nextCheck = new Date(Date.now() + 600000).toISOString();
-          await updateCertificate(monitorId, cert);
+          await updateCertificate(monitorId, workspaceId, cert);
         }
       }
 
@@ -123,6 +131,7 @@ class Master {
       if (!heartbeat) {
         const hasRecovered = await isMonitorRecovered(
           monitor.monitorId,
+          monitor.workspaceId,
           monitor.retry
         );
 
@@ -131,6 +140,7 @@ class Master {
             monitor,
             {
               monitorId: monitor.monitorId,
+              workspaceId: monitor.workspaceId,
               status: 'RUNNING',
               latency: 0,
               message: 'PUSH notification received',
@@ -144,7 +154,7 @@ class Master {
         this.timeouts.set(
           monitor.monitorId,
           setTimeout(
-            () => this.checkStatus(monitor.monitorId),
+            () => this.checkStatus(monitor.monitorId, monitor.workspaceId),
             monitor.interval * 1000
           )
         );
@@ -164,13 +174,13 @@ class Master {
       const heartbeat = await jsonStatusCheck(monitor);
 
       if (monitor.url?.toLowerCase().startsWith('https')) {
-        const certificate = await fetchCertificate(monitorId);
+        const certificate = await fetchCertificate(monitorId, workspaceId);
 
         const certDate = new Date(certificate?.nextCheck);
         if (!certificate?.nextCheck || certDate.getTime() <= Date.now()) {
           const cert = await getCertInfo(monitor.url);
           cert.nextCheck = new Date(Date.now() + 600000).toISOString();
-          await updateCertificate(monitorId, cert);
+          await updateCertificate(monitorId, workspaceId, cert);
         }
       }
 
@@ -198,13 +208,15 @@ class Master {
       if (!monitor.notificationId) return;
 
       if (hasOutage && monitor.parentId) {
-        const parentMonitor = await fetchMonitor(monitor.parentId).catch(
-          () => false
-        );
+        const parentMonitor = await fetchMonitor(
+          monitor.parentId,
+          monitor.workspaceId
+        ).catch(() => false);
 
         if (parentMonitor) {
           const isDown = await isMonitorDown(
             parentMonitor.monitorId,
+            parentMonitor.workspaceId,
             parentMonitor.retry
           );
 
@@ -212,7 +224,10 @@ class Master {
         }
       }
 
-      const notification = await fetchNotificationById(monitor.notificationId);
+      const notification = await fetchNotificationById(
+        monitor.notificationId,
+        monitor.workspaceId
+      );
 
       if (
         !notification?.isEnabled ||

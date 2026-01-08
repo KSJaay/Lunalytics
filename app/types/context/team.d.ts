@@ -4,6 +4,6 @@ export interface ContextTeamProps {
   avatar: string;
   isVerified: boolean;
   permission: number;
-  createdAt: string;
+  created_at: string;
   isOwner: boolean;
 }
