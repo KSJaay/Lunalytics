@@ -45,21 +45,25 @@ const MonitorStatus = ({
           {monitor.uptimePercentage || 0}%
         </div>
       </div>
-      <div className="monitor-status-content">
-        <div className="monitor-status-title">
-          {t('home.monitor.headers.cert_expiry')}
+      {monitor.type === 'ping' ||
+      monitor.type === 'push' ||
+      monitor.type === 'docker' ? null : (
+        <div className="monitor-status-content">
+          <div className="monitor-status-title">
+            {t('home.monitor.headers.cert_expiry')}
+          </div>
+          <div className="monitor-status-subtitle">
+            ({t('home.monitor.headers.days_left')})
+          </div>
+          <div className="monitor-status-text">
+            {monitor.url?.startsWith('http://')
+              ? t('common.invalid')
+              : monitor.cert?.isValid
+              ? `${monitor.cert.daysRemaining}`
+              : t('common.expired')}
+          </div>
         </div>
-        <div className="monitor-status-subtitle">
-          ({t('home.monitor.headers.days_left')})
-        </div>
-        <div className="monitor-status-text">
-          {monitor.url?.startsWith('http://')
-            ? t('common.invalid')
-            : monitor.cert?.isValid
-            ? `${monitor.cert.daysRemaining}`
-            : t('common.expired')}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

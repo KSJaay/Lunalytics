@@ -144,7 +144,7 @@ const NavigationMonitorInfo = ({ monitor }: { monitor: MonitorProps }) => {
         <div className="navigation-info-item">
           <div>{t('home.info.url')}</div>
           <div>
-            {monitor.type === 'http'
+            {monitor.type !== 'tcp'
               ? monitor.url
               : `${monitor.url}:${monitor.port}`}
           </div>
