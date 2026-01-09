@@ -166,6 +166,7 @@ const setupMiddleware = async (request, response) => {
       avatar: null,
       permission: oldPermsToFlags[1],
       isVerified: true,
+      isOwner: true,
       createdAt: new Date().toISOString(),
     };
 

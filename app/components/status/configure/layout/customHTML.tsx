@@ -9,7 +9,7 @@ import { FaTrashCan } from '../../../icons';
 import useStatusPageContext from '../../../../context/status-page';
 
 const StatusConfigureLayoutCustomHTML = ({ componentId }) => {
-  const { getComponent, setComponentValue, removeComponent } =
+  const { getComponent, setComponentValue, removeComponent, layoutItems } =
     useStatusPageContext();
 
   const { isMinimized, data } = useMemo(

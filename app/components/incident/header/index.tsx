@@ -109,7 +109,7 @@ const HomeIncidentHeader = ({
         ) : null}
       </div>
       <div className="navigation-header-buttons">
-        {isEditor ? (
+        {isEditor && incident ? (
           <>
             <div
               onClick={() =>
