@@ -10,9 +10,6 @@ export const statusPageTable = async (client) => {
       table.json('layout').notNullable();
       table.string('email').notNullable();
       table.datetime('createdAt');
-
-      table.index('statusId');
-      table.index('statusUrl');
     });
   }
 };

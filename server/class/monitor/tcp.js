@@ -20,6 +20,7 @@ const clean = ({ heartbeats = [], ...monitor }, includeHeartbeats = true) => ({
   paused: monitor.paused == '1',
   createdAt: monitor.createdAt,
   heartbeats: includeHeartbeats ? heartbeats : undefined,
+  statusChanged: includeHeartbeats ? monitor.statusChanged : undefined,
   icon: parseJsonOrArray(monitor.icon),
 });
 

@@ -10,6 +10,27 @@ export const fetchHeartbeats = async (monitorId, limit = 168) => {
   return heartbeats;
 };
 
+export const fetchStatusChangeHeartbeats = async (monitorId, limit = 20) => {
+  const rawQuery = `
+    SELECT id, status, latency, date, isDown, message
+    FROM (
+      SELECT *, LAG(isDown) OVER (PARTITION BY monitorId ORDER BY date DESC) AS prevIsDown
+      FROM (
+        SELECT * FROM heartbeat
+        WHERE monitorId = ?
+        ORDER BY date DESC
+        LIMIT 1000
+      )
+    )
+    WHERE isDown != prevIsDown OR prevIsDown IS NULL
+    ORDER BY date DESC
+    LIMIT ?;
+  `;
+  const statusChanges = await SQLite.client.raw(rawQuery, [monitorId, limit]);
+
+  return statusChanges;
+};
+
 export const isMonitorDown = async (monitorId, limit = 1) => {
   const newLimit = limit || 1;
 

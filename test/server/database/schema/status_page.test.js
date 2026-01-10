@@ -61,7 +61,5 @@ describe('statusPageTable()', () => {
     expect(jsonMock).toHaveBeenCalledWith('layout');
     expect(stringMock).toHaveBeenCalledWith('email');
     expect(datetimeMock).toHaveBeenCalledWith('createdAt');
-    expect(indexMock).toHaveBeenCalledWith('statusId');
-    expect(indexMock).toHaveBeenCalledWith('statusUrl');
   });
 });

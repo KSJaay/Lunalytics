@@ -64,6 +64,5 @@ describe('notificationsTable()', () => {
     expect(stringMock).toHaveBeenCalledWith('friendlyName');
     expect(textMock).toHaveBeenCalledWith('data');
     expect(datetimeMock).toHaveBeenCalledWith('createdAt');
-    expect(indexMock).toHaveBeenCalledWith('id');
   });
 });

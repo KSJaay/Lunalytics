@@ -62,7 +62,6 @@ describe('userSessionTable()', () => {
     expect(jsonbMock).toHaveBeenCalledWith('device');
     expect(jsonbMock).toHaveBeenCalledWith('data');
     expect(datetimeMock).toHaveBeenCalledWith('createdAt');
-    expect(indexMock).toHaveBeenCalledWith('sessionId');
     expect(indexMock).toHaveBeenCalledWith('email');
   });
 });

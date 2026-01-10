@@ -9,7 +9,7 @@ describe('heartbeatTable()', () => {
       hasTable: vi.fn(),
       createTable: vi.fn((tableName, callback) => {}),
     };
-    mockClient = { schema: mockSchema };
+    mockClient = { schema: mockSchema, raw: vi.fn() };
   });
 
   it('should NOT create the table if it already exists', async () => {
@@ -28,6 +28,9 @@ describe('heartbeatTable()', () => {
     expect(createTableCall[0]).toBe('heartbeat');
     const callback = createTableCall[1];
     expect(typeof callback).toBe('function');
+    expect(mockClient.raw).toHaveBeenCalledWith(
+      'CREATE INDEX IF NOT EXISTS heartbeat_monitorid_date_index ON heartbeat (monitorId, date DESC);'
+    );
   });
 
   it('should define all columns and constraints correctly', async () => {
@@ -67,7 +70,5 @@ describe('heartbeatTable()', () => {
     expect(datetimeMock).toHaveBeenCalledWith('date');
     expect(booleanMock).toHaveBeenCalledWith('isDown');
     expect(textMock).toHaveBeenCalledWith('message');
-    expect(indexMock).toHaveBeenCalledWith('monitorId');
-    expect(indexMock).toHaveBeenCalledWith(['monitorId', 'date']);
   });
 });

@@ -13,7 +13,7 @@ export const providersTable = async (client) => {
       table.boolean('enabled').defaultTo(true);
       table.json('data').defaultTo({});
 
-      table.index(['provider']);
+      table.index('provider');
     });
   }
 };
