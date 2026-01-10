@@ -4,7 +4,7 @@ export const monitorTable = async (client) => {
   if (!monitorExists) {
     await client.schema.createTable('monitor', (table) => {
       table.increments('id');
-      table.string('monitorId').notNullable().primary();
+      table.string('monitorId').notNullable().primary().unique();
       table.string('parentId').defaultTo(null);
       table.string('name').notNullable();
       table.string('url').notNullable();
@@ -30,8 +30,6 @@ export const monitorTable = async (client) => {
         name: 'Lunalytics',
         url: 'https://cdn.jsdelivr.net/gh/selfhst/icons/svg/lunalytics.svg',
       });
-
-      table.index('monitorId');
     });
   }
 };

@@ -24,6 +24,7 @@ export interface MonitorProps {
   createdAt: string;
   cert: CertificateProps;
   heartbeats: HeartbeatProps[];
+  statusChanged: HeartbeatProps[];
   icon: { id: string; name: string; url: string };
   [key: string]: any;
 }

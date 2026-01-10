@@ -57,7 +57,6 @@ describe('apiTokenTable()', () => {
     expect(stringMock).toHaveBeenCalledWith('permission');
     expect(stringMock).toHaveBeenCalledWith('email');
     expect(datetimeMock).toHaveBeenCalledWith('createdAt');
-    expect(indexMock).toHaveBeenCalledWith('token');
     expect(indexMock).toHaveBeenCalledWith('email');
   });
 });

@@ -63,6 +63,5 @@ describe('inviteTable()', () => {
     expect(integerMock).toHaveBeenCalledWith('limit');
     expect(integerMock).toHaveBeenCalledWith('uses');
     expect(indexMock).toHaveBeenCalledWith('email');
-    expect(indexMock).toHaveBeenCalledWith('token');
   });
 });

@@ -30,6 +30,7 @@ export const clean = (
   createdAt: monitor.createdAt,
   cert: includeCert ? cleanCertificate(cert) : undefined,
   heartbeats: includeHeartbeats ? heartbeats : undefined,
+  statusChanged: includeHeartbeats ? monitor.statusChanged : undefined,
   icon: parseJsonOrArray(monitor.icon),
 });
 

@@ -3,7 +3,7 @@ export const notificationsTable = async (client) => {
 
   if (!notificationExists) {
     await client.schema.createTable('notifications', (table) => {
-      table.string('id').notNullable().primary();
+      table.string('id').notNullable().primary().unique();
       table.string('platform').notNullable();
       table.string('messageType').notNullable();
       table.text('token').notNullable();
@@ -13,8 +13,6 @@ export const notificationsTable = async (client) => {
       table.string('friendlyName');
       table.text('data');
       table.datetime('createdAt');
-
-      table.index('id');
     });
   }
 };

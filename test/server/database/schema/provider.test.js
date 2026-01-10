@@ -61,6 +61,6 @@ describe('providersTable()', () => {
     expect(stringMock).toHaveBeenCalledWith('clientSecret');
     expect(booleanMock).toHaveBeenCalledWith('enabled');
     expect(jsonMock).toHaveBeenCalledWith('data');
-    expect(indexMock).toHaveBeenCalledWith(['provider']);
+    expect(indexMock).toHaveBeenCalledWith('provider');
   });
 });

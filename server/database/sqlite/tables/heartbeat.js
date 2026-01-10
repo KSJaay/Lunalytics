@@ -17,9 +17,10 @@ export const heartbeatTable = async (client) => {
       table.datetime('date').notNullable();
       table.boolean('isDown').defaultTo(false);
       table.text('message').notNullable();
-
-      table.index('monitorId');
-      table.index(['monitorId', 'date']);
     });
+
+    client.raw(
+      `CREATE INDEX IF NOT EXISTS heartbeat_monitorid_date_index ON heartbeat (monitorId, date DESC);`
+    );
   }
 };

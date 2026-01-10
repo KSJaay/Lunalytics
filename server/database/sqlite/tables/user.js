@@ -16,7 +16,6 @@ export const userTable = async (client) => {
       table.datetime('createdAt');
       table.jsonb('settings').defaultTo(JSON.stringify({}));
 
-      table.index('email');
       table.index('isVerified');
     });
   }

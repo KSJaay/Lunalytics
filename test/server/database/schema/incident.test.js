@@ -66,7 +66,6 @@ describe('incidentTable()', () => {
     expect(datetimeMock).toHaveBeenCalledWith('createdAt');
     expect(datetimeMock).toHaveBeenCalledWith('completedAt');
     expect(booleanMock).toHaveBeenCalledWith('isClosed');
-    expect(indexMock).toHaveBeenCalledWith('incidentId');
     expect(indexMock).toHaveBeenCalledWith('createdAt');
     expect(indexMock).toHaveBeenCalledWith('completedAt');
     expect(indexMock).toHaveBeenCalledWith('isClosed');

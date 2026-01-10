@@ -10,7 +10,6 @@ export const userSessionTable = async (client) => {
       table.jsonb('data');
       table.datetime('createdAt');
 
-      table.index('sessionId');
       table.index('email');
     });
   }

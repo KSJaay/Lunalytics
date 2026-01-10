@@ -9,7 +9,6 @@ export const apiTokenTable = async (client) => {
       table.string('email').notNullable();
       table.datetime('createdAt');
 
-      table.index('token');
       table.index('email');
     });
   }

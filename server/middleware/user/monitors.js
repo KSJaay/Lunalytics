@@ -14,7 +14,13 @@ const userMonitorsMiddleware = async (request, response) => {
 
     for (const monitor of monitors) {
       const heartbeats = await fetchHeartbeats(monitor.monitorId, 12);
+      // const statusChanged = await fetchStatusChangeHeartbeats(
+      //   monitor.monitorId,
+      //   20
+      // );
+
       monitor.heartbeats = heartbeats;
+      // monitor.statusChanged = statusChanged;
 
       monitor.cert = { isValid: false };
 

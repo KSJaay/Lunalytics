@@ -9,7 +9,7 @@ describe('hourlyHeartbeatTable()', () => {
       hasTable: vi.fn(),
       createTable: vi.fn((tableName, callback) => {}),
     };
-    mockClient = { schema: mockSchema };
+    mockClient = { schema: mockSchema, raw: vi.fn() };
   });
 
   it('should NOT create the table if it already exists', async () => {
@@ -61,7 +61,5 @@ describe('hourlyHeartbeatTable()', () => {
     expect(integerMock).toHaveBeenCalledWith('status');
     expect(integerMock).toHaveBeenCalledWith('latency');
     expect(datetimeMock).toHaveBeenCalledWith('date');
-    expect(indexMock).toHaveBeenCalledWith('monitorId');
-    expect(indexMock).toHaveBeenCalledWith(['monitorId', 'date']);
   });
 });

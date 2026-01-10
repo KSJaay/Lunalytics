@@ -84,6 +84,9 @@ export class SQLite {
       // Need to enable this for foreign key to work
       await this.client.raw('PRAGMA foreign_keys = ON');
 
+      await this.client.raw('PRAGMA journal_mode = WAL'); // Better concurrency
+      await this.client.raw('PRAGMA cache_size = -12000'); // 12 MB cache
+
       logger.info('SQLite', {
         message: 'Connected to SQLite database',
       });

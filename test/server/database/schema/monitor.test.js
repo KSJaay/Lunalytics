@@ -83,6 +83,5 @@ describe('monitorTable()', () => {
     expect(jsonMock).toHaveBeenCalledWith('json_query');
     expect(datetimeMock).toHaveBeenCalledWith('createdAt');
     expect(jsonMock).toHaveBeenCalledWith('icon');
-    expect(indexMock).toHaveBeenCalledWith('monitorId');
   });
 });

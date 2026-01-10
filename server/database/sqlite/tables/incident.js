@@ -14,7 +14,6 @@ export const incidentTable = async (client) => {
       table.datetime('completedAt');
       table.boolean('isClosed').defaultTo(false);
 
-      table.index('incidentId');
       table.index('createdAt');
       table.index('completedAt');
       table.index('isClosed');

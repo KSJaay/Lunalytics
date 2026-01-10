@@ -13,7 +13,6 @@ export const inviteTable = async (client) => {
       table.integer('uses').defaultTo(0);
 
       table.index('email');
-      table.index('token');
     });
   }
 };

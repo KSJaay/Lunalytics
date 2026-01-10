@@ -68,7 +68,6 @@ describe('userTable()', () => {
     expect(integerMock).toHaveBeenCalledWith('permission');
     expect(datetimeMock).toHaveBeenCalledWith('createdAt');
     expect(jsonbMock).toHaveBeenCalledWith('settings');
-    expect(indexMock).toHaveBeenCalledWith('email');
     expect(indexMock).toHaveBeenCalledWith('isVerified');
   });
 });
