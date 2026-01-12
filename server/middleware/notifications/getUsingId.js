@@ -12,7 +12,7 @@ const NotificationGetUsingIdMiddleware = async (request, response) => {
 
     const notification = await fetchNotificationById(
       notificationId,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     if (!notification) {

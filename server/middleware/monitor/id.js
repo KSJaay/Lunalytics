@@ -13,10 +13,7 @@ const fetchMonitorUsingId = async (request, response) => {
       throw new UnprocessableError('No monitorId provided');
     }
 
-    const data = await fetchMonitor(
-      monitorId,
-      response.locals.user.workspaceId
-    );
+    const data = await fetchMonitor(monitorId, response.locals.workspaceId);
 
     if (!data) {
       return response.status(404).json({ error: 'Monitor not found' });
@@ -24,11 +21,11 @@ const fetchMonitorUsingId = async (request, response) => {
 
     const heartbeats = await fetchHeartbeats(
       data.monitorId,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
     const cert = await fetchCertificate(
       data.monitorId,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     const monitor = cleanMonitor({

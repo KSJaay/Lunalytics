@@ -11,3 +11,23 @@ export const PermissionsBits = {
   MANAGE_TEAM: 1 << 9,
   CREATE_INVITE: 1 << 10,
 };
+
+export const UserPermissionBits = {
+  ADMINISTRATOR: 1 << 0,
+  MANAGE_TEAM: 1 << 1,
+  MANAGE_WORKSPACES: 1 << 2,
+};
+
+export const MemberPermissionBits = {
+  ADMINISTRATOR: 1 << 0,
+  VIEW_MONITORS: 1 << 1,
+  MANAGE_MONITORS: 1 << 2,
+  VIEW_NOTIFICATIONS: 1 << 3,
+  MANAGE_NOTIFICATIONS: 1 << 4,
+  VIEW_STATUS_PAGES: 1 << 5,
+  MANAGE_STATUS_PAGES: 1 << 6,
+  VIEW_INCIDENTS: 1 << 7,
+  MANAGE_INCIDENTS: 1 << 8,
+  MANAGE_TEAM: 1 << 9,
+  CREATE_INVITE: 1 << 10,
+};

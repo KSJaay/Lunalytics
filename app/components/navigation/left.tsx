@@ -18,6 +18,7 @@ import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
 import { PermissionsBits } from '../../../shared/permissions/bitFlags';
 import { useTranslation } from 'react-i18next';
 import LeftUpdateButton from './left/update';
+import useMemberContext from '../../context/member';
 
 const actionTabs = [
   {
@@ -63,10 +64,12 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
   const {
     userStore: {
       user: { avatar, displayName },
-      hasPermission,
     },
     modalStore: { closeModal, openModal },
   } = useContextStore();
+
+  const { member } = useMemberContext();
+
   const { t } = useTranslation();
 
   const isUrl = isImageUrl(avatar);
@@ -75,7 +78,7 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
   const actions = actionTabs.map((action) => {
     const { key, url, logo, Preview, permissionRequired } = action;
 
-    if (!hasPermission(permissionRequired)) return null;
+    if (!member?.role.hasPermission(permissionRequired)) return null;
 
     const classes = classNames({
       'navigation-left-action': true,

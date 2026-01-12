@@ -16,12 +16,12 @@ const NotificationCreateMiddleware = async (request, response) => {
 
     const result = validator({ ...notification, ...notification.data });
 
-    const { user } = response.locals;
+    const { user, workspaceId } = response.locals;
 
     const uniqueId = randomId();
     const query = await createNotification({
       ...result,
-      workspaceId: user.workspaceId,
+      workspaceId: workspaceId,
       email: user.email,
       id: uniqueId,
       isEnabled: true,

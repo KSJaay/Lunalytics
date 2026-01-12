@@ -16,7 +16,7 @@ const NotificationToggleMiddleware = async (request, response) => {
 
     await toggleNotification(
       notificationId,
-      response.locals.user.workspaceId,
+      response.locals.workspaceId,
       isEnabled === 'true'
     );
     return response.sendStatus(200);

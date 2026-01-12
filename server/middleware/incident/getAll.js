@@ -3,7 +3,7 @@ import logger from '../../utils/logger.js';
 
 const getAllIncidents = async (request, response) => {
   try {
-    const incidents = await fetchAllIncidents(response.locals.user.workspaceId);
+    const incidents = await fetchAllIncidents(response.locals.workspaceId);
 
     return response.json(incidents);
   } catch (error) {

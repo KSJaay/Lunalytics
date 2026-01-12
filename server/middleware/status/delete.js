@@ -10,7 +10,7 @@ const deleteStatusPageMiddleware = async (request, response) => {
       throw new Error('Status page id is required.');
     }
 
-    await deleteStatusPage(statusPageId, response.locals.user.workspaceId);
+    await deleteStatusPage(statusPageId, response.locals.workspaceId);
     statusCache.deleteStatusPage(statusPageId);
 
     response.status(200).send({

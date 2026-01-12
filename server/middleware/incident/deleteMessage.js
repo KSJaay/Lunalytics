@@ -15,7 +15,7 @@ const deleteIncidentMessageMiddleware = async (request, response) => {
 
     const query = await fetchIncident(
       incidentId,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     if (!query) {
@@ -43,7 +43,7 @@ const deleteIncidentMessageMiddleware = async (request, response) => {
 
     const data = await updateIncident(
       incidentId,
-      response.locals.user.workspaceId,
+      response.locals.workspaceId,
       query
     );
 

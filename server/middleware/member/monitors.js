@@ -7,15 +7,15 @@ import {
 import { fetchMonitors } from '../../database/queries/monitor.js';
 import { handleError } from '../../utils/errors.js';
 
-const userMonitorsMiddleware = async (request, response) => {
+const memberMonitorsMiddleware = async (request, response) => {
   try {
-    const monitors = await fetchMonitors(response.locals.user.workspaceId);
+    const monitors = await fetchMonitors(response.locals.workspaceId);
     const query = [];
 
     for (const monitor of monitors) {
       const heartbeats = await fetchHeartbeats(
         monitor.monitorId,
-        response.locals.user.workspaceId,
+        response.locals.workspaceId,
         12
       );
       monitor.heartbeats = heartbeats;
@@ -32,14 +32,14 @@ const userMonitorsMiddleware = async (request, response) => {
       if (monitor.type === 'http') {
         const cert = await fetchCertificate(
           monitor.monitorId,
-          response.locals.user.workspaceId
+          response.locals.workspaceId
         );
         monitor.cert = cert;
       }
 
       const filters = await fetchHourlyHeartbeats(
         monitor.monitorId,
-        response.locals.user.workspaceId,
+        response.locals.workspaceId,
         2
       );
       monitor.showFilters = filters.length === 2;
@@ -53,4 +53,4 @@ const userMonitorsMiddleware = async (request, response) => {
   }
 };
 
-export default userMonitorsMiddleware;
+export default memberMonitorsMiddleware;

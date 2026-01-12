@@ -3,9 +3,7 @@ import { fetchNotifications } from '../../database/queries/notification.js';
 
 const NotificationGetAllMiddleware = async (request, response) => {
   try {
-    const notifications = await fetchNotifications(
-      response.locals.user.workspaceId
-    );
+    const notifications = await fetchNotifications(response.locals.workspaceId);
 
     return response.json(notifications);
   } catch (error) {

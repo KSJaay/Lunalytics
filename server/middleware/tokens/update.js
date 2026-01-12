@@ -23,7 +23,7 @@ const updateApiTokenMiddleware = async (request, response) => {
       token,
       name,
       permission,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     return response.status(200).send(query);

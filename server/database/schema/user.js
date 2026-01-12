@@ -7,8 +7,10 @@ export const userTable = async (client) => {
       table.string('displayName').notNullable();
       table.string('password').defaultTo(null);
       table.string('avatar');
+      table.boolean('isOwner').defaultTo(0);
       table.boolean('isVerified').defaultTo(0);
       table.boolean('sso').defaultTo(0);
+      table.integer('permission').defaultTo(0);
       table.datetime('created_at');
       table.jsonb('settings').defaultTo(JSON.stringify({}));
 

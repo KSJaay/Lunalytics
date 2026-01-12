@@ -3,7 +3,7 @@ import { handleError } from '../../utils/errors.js';
 
 const getAllApiTokensMiddleware = async (request, response) => {
   try {
-    const tokens = await getAllApiTokens(response.locals.user.workspaceId);
+    const tokens = await getAllApiTokens(response.locals.workspaceId);
 
     return response.status(200).json({ tokens });
   } catch (error) {

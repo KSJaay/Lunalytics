@@ -5,7 +5,7 @@ import getAllStatusPagesMiddleware from '../middleware/status/getAll.js';
 import editStatusPageMiddleware from '../middleware/status/edit.js';
 import deleteStatusPageMiddleware from '../middleware/status/delete.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
-import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
+import { hasRequiredPermission } from '../middleware/hasPermission.js';
 
 const router = express.Router();
 

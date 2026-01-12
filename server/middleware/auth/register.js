@@ -1,4 +1,5 @@
 // import local files
+import config from '../../utils/config.js';
 import { registerUser } from '../../database/queries/user.js';
 import {
   setClientSideCookie,
@@ -21,6 +22,10 @@ import { createMember } from '../../database/queries/member.js';
 
 const register = async (request, response) => {
   try {
+    if (!config.get('register')) {
+      return response.status(403).send('Registration is disabled.');
+    }
+
     const { email, username, password } = request.body;
     const invite = request?.query?.invite || request?.cookies?.invite;
 
