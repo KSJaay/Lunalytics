@@ -9,8 +9,8 @@ const deleteIncidentMiddleware = async (request, response) => {
       throw new Error('Incident id is required');
     }
 
-    await deleteIncident(incidentId, response.locals.user.workspaceId);
-    statusCache.deleteIncident(incidentId, response.locals.user.workspaceId);
+    await deleteIncident(incidentId, response.locals.workspaceId);
+    statusCache.deleteIncident(incidentId, response.locals.workspaceId);
 
     return response
       .status(200)

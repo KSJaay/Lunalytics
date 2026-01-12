@@ -29,7 +29,7 @@ const createStatusPageMiddleware = async (request, response) => {
     const { user } = response.locals;
 
     const query = await createStatusPage(
-      response.locals.user.workspaceId,
+      response.locals.workspaceId,
       settings,
       layout,
       user

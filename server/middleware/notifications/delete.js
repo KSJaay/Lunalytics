@@ -10,7 +10,7 @@ const NotificationDeleteMiddleware = async (request, response) => {
       throw new UnprocessableError('No notificationId provided');
     }
 
-    await deleteNotification(notificationId, response.locals.user.workspaceId);
+    await deleteNotification(notificationId, response.locals.workspaceId);
     return response.status(200).send('Notification deleted');
   } catch (error) {
     handleError(error, response);

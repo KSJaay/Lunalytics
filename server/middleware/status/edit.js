@@ -33,7 +33,7 @@ const editStatusPageMiddleware = async (request, response) => {
     const { user } = response.locals;
 
     const query = await updateStatusPage(
-      response.locals.user.workspaceId,
+      response.locals.workspaceId,
       statusId,
       settings,
       layout,

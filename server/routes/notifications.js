@@ -5,7 +5,7 @@ import NotificationGetAllMiddleware from '../middleware/notifications/getAll.js'
 import NotificationGetUsingIdMiddleware from '../middleware/notifications/getUsingId.js';
 import NotificationDeleteMiddleware from '../middleware/notifications/delete.js';
 import NotificationToggleMiddleware from '../middleware/notifications/disable.js';
-import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
+import { hasRequiredPermission } from '../middleware/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
 import NotificationTestMiddleware from '../middleware/notifications/test.js';
 

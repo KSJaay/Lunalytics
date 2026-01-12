@@ -14,7 +14,7 @@ import getConfigMiddleware from '../middleware/auth/config/getConfig.js';
 import updateConfigMiddleware from '../middleware/auth/config/update.js';
 import setupExistsMiddleware from '../middleware/setupExists.js';
 import redirectUsingProviderMiddleware from '../middleware/auth/platform.js';
-import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
+import { userHasPermission } from '../middleware/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
 import signInOrRegisterUsingAuth from '../middleware/auth/signInOrRegisterUsingAuth.js';
 
@@ -37,7 +37,7 @@ router.get('/config', getConfigMiddleware);
 router.post(
   '/config/update',
   authorization,
-  hasRequiredPermission(PermissionsBits.ADMINISTRATOR),
+  userHasPermission(PermissionsBits.ADMINISTRATOR),
   updateConfigMiddleware
 );
 

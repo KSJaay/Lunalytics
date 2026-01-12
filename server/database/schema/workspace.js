@@ -15,9 +15,6 @@ export const workspaceTable = async (client) => {
       table.string('apiToken').defaultTo(null);
 
       table.timestamps(true, true);
-
-      table.index('id');
-      table.index('ownerId');
     });
   }
 };

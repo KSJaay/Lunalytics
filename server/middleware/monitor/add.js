@@ -131,9 +131,9 @@ const monitorAdd = async (request, response) => {
       throw new UnprocessableError(isInvalidMonitor);
     }
 
-    const { user } = response.locals;
+    const { user, workspaceId } = response.locals;
 
-    const monitor_data = formatMonitorData(body, user.email, user.workspaceId);
+    const monitor_data = formatMonitorData(body, user.email, workspaceId);
     const data = await createMonitor(monitor_data);
 
     cache.checkStatus(data.monitorId, data.workspaceId)?.catch(() => false);

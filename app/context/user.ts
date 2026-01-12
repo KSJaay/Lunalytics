@@ -1,9 +1,10 @@
 import { action, makeObservable, observable } from 'mobx';
 import Role from '../../shared/permissions/role';
 import type { ContextUserProps } from '../types/context/user';
+import { PermissionsBits } from '../../shared/permissions/bitFlags';
 
 export default class UserStore {
-  user: ContextUserProps | Record<string, any>;
+  user: Record<string, any>;
   userRole: Role | null;
 
   constructor() {
@@ -39,5 +40,27 @@ export default class UserStore {
 
   hasPermission = (permission: number) => {
     return this.userRole?.hasPermission(permission);
+  };
+
+  getUserRoleRoute = () => {
+    if (this.userRole) {
+      if (this.userRole.hasPermission(PermissionsBits.VIEW_MONITORS)) {
+        return '/monitors';
+      }
+
+      if (this.userRole.hasPermission(PermissionsBits.VIEW_INCIDENTS)) {
+        return '/incidents';
+      }
+
+      if (this.userRole.hasPermission(PermissionsBits.VIEW_NOTIFICATIONS)) {
+        return '/notifications';
+      }
+
+      if (this.userRole.hasPermission(PermissionsBits.VIEW_STATUS_PAGES)) {
+        return '/status-pages';
+      }
+    }
+
+    return false;
   };
 }

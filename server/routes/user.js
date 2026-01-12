@@ -12,14 +12,14 @@ import userUpdateUsername from '../middleware/user/update/username.js';
 import userUpdatePassword from '../middleware/user/update/password.js';
 import transferOwnershipMiddleware from '../middleware/user/transferOwnership.js';
 import deleteAccountMiddleware from '../middleware/user/deleteAccount.js';
-import userMonitorsMiddleware from '../middleware/user/monitors.js';
 import userExistsMiddleware from '../middleware/user/exists.js';
 import fetchUserMiddleware from '../middleware/user/user.js';
-import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
+import { hasRequiredPermission } from '../middleware/hasPermission.js';
 import deleteConnectionMiddleware from '../middleware/user/connections/delete.js';
 import getAllConnectionMiddleware from '../middleware/user/connections/getAll.js';
 import createConnectionMiddleware from '../middleware/user/connections/create.js';
 import userUpdateSettings from '../middleware/user/update/settings.js';
+import { fetchUserWorkspaces } from '../database/queries/user.js';
 
 router.get('/', fetchUserMiddleware);
 
@@ -27,11 +27,11 @@ router.post('/exists', userExistsMiddleware);
 
 router.post('/delete/account', deleteAccountMiddleware);
 
-router.get(
-  '/monitors',
-  hasRequiredPermission(PermissionsBits.VIEW_MONITORS),
-  userMonitorsMiddleware
-);
+router.get('/workspaces', async (request, response) => {
+  const workspaces = await fetchUserWorkspaces(response.locals.user.email);
+
+  return response.status(200).json(workspaces);
+});
 
 router.post('/update/username', userUpdateUsername);
 

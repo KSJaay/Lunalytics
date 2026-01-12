@@ -21,7 +21,7 @@ const createInviteMiddleware = async (request, response) => {
       expiry,
       limit,
       permission,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     return response.status(200).send({ invite });

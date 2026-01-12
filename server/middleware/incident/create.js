@@ -37,7 +37,7 @@ const createIncidentMiddleware = async (request, response) => {
 
     const incident = await createIncident(
       data,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     statusCache.addIncident(incident);

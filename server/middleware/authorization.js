@@ -18,7 +18,7 @@ const authorization = async (request, response, next) => {
     const authorization =
       request.headers.authorization || request.headers.Authorization;
 
-    if (request.url.startsWith('/api') && session_token) {
+    if (session_token) {
       const userSession = await userSessionExists(session_token);
 
       if (!userSession) {
