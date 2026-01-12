@@ -12,7 +12,7 @@ const teamMembersListMiddleware = async (request, response) => {
 
     const members = await fetchMembers(
       userHasManageTeam,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     return response.send(members);

@@ -22,7 +22,7 @@ const updateIncidentMiddleware = async (request, response) => {
 
     const query = await updateIncident(
       incident.incidentId,
-      response.locals.user.workspaceId,
+      response.locals.workspaceId,
       incident
     );
 

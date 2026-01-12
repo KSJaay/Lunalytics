@@ -11,7 +11,7 @@ const deleteApiTokenMiddleware = async (request, response) => {
       });
     }
 
-    await apiTokenDelete(token, response.locals.user.workspaceId);
+    await apiTokenDelete(token, response.locals.workspaceId);
 
     return response.status(200).send({
       message: 'Token deleted successfully',

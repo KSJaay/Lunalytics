@@ -10,11 +10,11 @@ import { FaCog, FaPalette, FaRegEye } from 'react-icons/fa';
 
 // import local files
 import useContextStore from '../../../context';
-import Role from '../../../../shared/permissions/role';
 import useCurrentUrl from '../../../hooks/useCurrentUrl';
 import StatusDeleteModal from '../../modal/status/delete';
 import { createPostRequest } from '../../../services/axios';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import useMemberContext from '../../../context/member';
 
 const menuOptions = [
   { id: 'Appearance', Icon: FaPalette },
@@ -32,7 +32,6 @@ const HomeStatusPageHeader = ({
   isMobile = false,
 }) => {
   const {
-    userStore: { user },
     modalStore: { openModal, closeModal },
     statusStore: {
       deleteStatusPage,
@@ -44,8 +43,11 @@ const HomeStatusPageHeader = ({
 
   const baseUrl = useCurrentUrl();
 
-  const role = new Role('user', user.permission);
-  const isEditor = role.hasPermission(PermissionsBits.MANAGE_STATUS_PAGES);
+  const { member } = useMemberContext();
+
+  const isEditor = member?.role.hasPermission(
+    PermissionsBits.MANAGE_STATUS_PAGES
+  );
 
   const statusPageUrl =
     statusPage?.statusUrl === 'default'

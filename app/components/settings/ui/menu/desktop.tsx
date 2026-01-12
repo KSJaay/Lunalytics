@@ -9,19 +9,15 @@ import SettingsAbout from '../../about';
 import ManageInvites from '../../invite';
 import SettingsTab from '../tab/desktop';
 import SettingsAccount from '../../account';
-import useContextStore from '../../../../context';
-import Role from '../../../../../shared/permissions/role';
 import SettingsPersonalisation from '../../personalisation';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 import SettingsAuthentication from '../../authentication';
+import useMemberContext from '../../../../context/member';
 
 const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
-  const {
-    userStore: { user },
-  } = useContextStore();
+  const { member } = useMemberContext();
 
-  const role = new Role('user', user.permission);
-  const isAdmin = role.hasPermission(PermissionsBits.ADMINISTRATOR);
+  const isAdmin = member?.role.hasPermission(PermissionsBits.ADMINISTRATOR);
 
   return (
     <>

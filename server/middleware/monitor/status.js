@@ -22,7 +22,7 @@ const fetchMonitorStatus = async (request, response) => {
 
     const monitorExists = await fetchMonitor(
       monitorId,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     if (!monitorExists) {
@@ -36,20 +36,20 @@ const fetchMonitorStatus = async (request, response) => {
     if (type === 'latest') {
       heartbeats = await fetchHeartbeats(
         monitorId,
-        response.locals.user.workspaceId
+        response.locals.workspaceId
       );
     }
     if (type === 'day') {
       heartbeats = await fetchDailyHeartbeats(
         monitorId,
-        response.locals.user.workspaceId
+        response.locals.workspaceId
       );
     }
 
     if (type === 'week') {
       heartbeats = await fetchHourlyHeartbeats(
         monitorId,
-        response.locals.user.workspaceId,
+        response.locals.workspaceId,
         168
       );
     }
@@ -57,7 +57,7 @@ const fetchMonitorStatus = async (request, response) => {
     if (type === 'month') {
       heartbeats = await fetchHourlyHeartbeats(
         monitorId,
-        response.locals.user.workspaceId,
+        response.locals.workspaceId,
         720
       );
     }

@@ -1,27 +1,24 @@
 // import dependencies
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
 // import local files
 import useContextStore from '../context';
-import { fetchMonitorById } from '../services/monitor/fetch';
 import {
   LocalStorageStateProvider,
   useLocalStorageState,
 } from '../hooks/useLocalstorage';
 import Loading from '../components/ui/loading';
 import useFetch from '../hooks/useFetch';
-import type { LayoutGlobalProps } from '../types/layout';
+import useMemberContext from '../context/member';
 
-const GlobalLayout = ({ children }: LayoutGlobalProps) => {
+const GlobalLayout = () => {
   const {
     modalStore: { isOpen, content },
-    globalStore: { setMonitors, setTimeouts },
     userStore: { setUser },
-    notificationStore: { setNotifications },
-    statusStore: { setStatusPages },
-    incidentStore: { setIncidents },
   } = useContextStore();
+
+  const { setMember } = useMemberContext();
 
   const navigate = useNavigate();
 
@@ -55,48 +52,28 @@ const GlobalLayout = ({ children }: LayoutGlobalProps) => {
     onFailure,
   });
 
-  const { isLoading: isMonitorsLoading } = useFetch({
-    url: '/api/user/monitors',
+  const { isLoading: isMemberLoading } = useFetch({
+    url: '/api/member',
     onSuccess: (data) => {
-      setMonitors(data);
-      setTimeouts(data, fetchMonitorById);
+      setMember(data);
     },
-    onFailure,
+    onFailure: (error) => {
+      if (error.response?.status === 401) {
+        return navigate('/workspace/select');
+      }
+
+      navigate('/error');
+    },
   });
 
-  const { isLoading: isNotificationsLoading } = useFetch({
-    url: '/api/notifications',
-    onSuccess: (data) => setNotifications(data),
-    onFailure,
-  });
-
-  const { isLoading: isStatusPagesLoading } = useFetch({
-    url: '/api/status-pages',
-    onSuccess: (data) => setStatusPages(data),
-    onFailure,
-  });
-
-  const { isLoading: isIncidentsLoading } = useFetch({
-    url: '/api/incident/all',
-    onSuccess: (data) => setIncidents(data),
-    onFailure,
-  });
-
-  if (
-    isUserLoading ||
-    isMonitorsLoading ||
-    isNotificationsLoading ||
-    isStatusPagesLoading ||
-    isIncidentsLoading ||
-    isSetupLoading
-  ) {
+  if (isUserLoading || isSetupLoading || isMemberLoading) {
     return <Loading />;
   }
 
   return (
     <LocalStorageStateProvider value={localStorageState}>
       {isOpen ? content : null}
-      {children}
+      <Outlet />
     </LocalStorageStateProvider>
   );
 };

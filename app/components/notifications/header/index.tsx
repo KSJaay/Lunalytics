@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next';
 
 // import local files
 import useContextStore from '../../../context';
-import Role from '../../../../shared/permissions/role';
 import { createGetRequest, createPostRequest } from '../../../services/axios';
 import NotificationDeleteModal from '../../modal/notification/delete';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 import useScreenSize from '../../../hooks/useScreenSize';
 import { BsFillSendFill } from 'react-icons/bs';
+import useMemberContext from '../../../context/member';
 
 const HomeNotificationHeader = ({
   isMobile = false,
@@ -20,7 +20,6 @@ const HomeNotificationHeader = ({
   isMobile: boolean;
 }) => {
   const {
-    userStore: { user },
     modalStore: { openModal, closeModal },
     notificationStore: {
       deleteNotification,
@@ -28,6 +27,9 @@ const HomeNotificationHeader = ({
       setActiveNotification,
     },
   } = useContextStore();
+
+  const { member } = useMemberContext();
+
   const { t } = useTranslation();
 
   const screenSize = useScreenSize();
@@ -71,8 +73,7 @@ const HomeNotificationHeader = ({
     }
   };
 
-  const role = new Role('user', user.permission);
-  const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
+  const isEditor = member?.role.hasPermission(PermissionsBits.MANAGE_MONITORS);
 
   return (
     <div className="navigation-header-content">
@@ -101,7 +102,7 @@ const HomeNotificationHeader = ({
         {isEditor ? (
           <>
             <div
-              onClick={() => testNotification(notification)}
+              onClick={() => testNotification()}
               id="notification-header-test-button"
             >
               <BsFillSendFill />

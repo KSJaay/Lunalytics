@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next';
 // import local files
 import HomeMonitorHeaderMenu from './menu';
 import useContextStore from '../../../context';
-import Role from '../../../../shared/permissions/role';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 import type { MonitorType } from '../../../types/monitor';
+import useMemberContext from '../../../context/member';
 
 const typeToText = {
   docker: 'Docker Container',
@@ -62,13 +62,14 @@ const HomeMonitorHeader = ({
   isMobile = false,
 }: HomeMonitorHeaderProps) => {
   const {
-    userStore: { user },
     globalStore: { activeMonitor, setActiveMonitor },
   } = useContextStore();
+
+  const { member } = useMemberContext();
+
   const { t } = useTranslation();
 
-  const role = new Role('user', user.permission);
-  const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
+  const isEditor = member?.role.hasPermission(PermissionsBits.MANAGE_MONITORS);
 
   if (!activeMonitor) {
     return (

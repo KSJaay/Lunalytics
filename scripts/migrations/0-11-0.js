@@ -1,14 +1,13 @@
 // import local files
 import database from '../../server/database/connection.js';
 import { ownerExists } from '../../server/database/queries/user.js';
-import { createWorkspace } from '../../server/database/queries/workspace.js';
 import logger from '../../server/utils/logger.js';
 import randomId from '../../server/utils/randomId.js';
 
 const infomation = {
   title: 'Updates user table to support workspaces',
   description: 'Adds workspace table and updates all tables to support this',
-  version: '0.10.20',
+  version: '0.11.0',
 };
 
 const migrate = async () => {
@@ -29,14 +28,16 @@ const migrate = async () => {
     return;
   }
 
-  const workspace = await client('workspace')
+  const query = await client('workspace')
     .insert({
       id: randomId(),
       ownerId: owner.email,
       name: 'Default Workspace',
-      logo: '/logo.svg',
+      icon: '/logo.svg',
     })
-    .returning('*')?.[0];
+    .returning('*');
+
+  const workspace = query[0];
 
   await client.schema.alterTable('api_token', (table) => {
     table.uuid('workspaceId').references('id').inTable('workspace');
@@ -46,9 +47,6 @@ const migrate = async () => {
     table.index('workspaceId');
     table.index(['workspaceId', 'token']);
     table.index(['workspaceId', 'email']);
-
-    table.dropIndex('token');
-    table.dropIndex('email');
   });
 
   await client('api_token').update({ workspaceId: workspace.id });
@@ -58,8 +56,6 @@ const migrate = async () => {
 
     table.index('workspaceId');
     table.index(['workspaceId', 'monitorId']);
-
-    table.dropIndex('monitorId');
   });
 
   await client('certificate').update({ workspaceId: workspace.id });
@@ -71,9 +67,6 @@ const migrate = async () => {
     table.index('workspaceId');
     table.index(['workspaceId', 'monitorId']);
     table.index(['workspaceId', 'monitorId', 'date']);
-
-    table.dropIndex('monitorId');
-    table.dropIndex(['monitorId', 'date']);
   });
 
   await client('heartbeat').update({ workspaceId: workspace.id });
@@ -84,9 +77,6 @@ const migrate = async () => {
     table.index('workspaceId');
     table.index(['workspaceId', 'monitorId']);
     table.index(['workspaceId', 'monitorId', 'date']);
-
-    table.dropIndex('monitorId');
-    table.dropIndex(['monitorId', 'date']);
   });
 
   await client('hourly_heartbeat').update({ workspaceId: workspace.id });
@@ -103,7 +93,6 @@ const migrate = async () => {
     table.index(['workspaceId', 'created_at']);
     table.index(['workspaceId', 'completedAt']);
 
-    table.dropIndex('incidentId');
     table.dropIndex('createdAt');
     table.dropIndex('completedAt');
     table.dropIndex('isClosed');
@@ -122,7 +111,6 @@ const migrate = async () => {
     table.index(['workspaceId', 'email']);
 
     table.dropIndex('email');
-    table.dropIndex('token');
   });
 
   await client('invite').update({ workspaceId: workspace.id });
@@ -136,8 +124,6 @@ const migrate = async () => {
     table.index('workspaceId');
     table.index(['workspaceId', 'monitorId']);
     table.index(['workspaceId', 'parentId']);
-
-    table.dropIndex('monitorId');
   });
 
   await client('monitor').update({ workspaceId: workspace.id });

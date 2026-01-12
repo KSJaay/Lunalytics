@@ -5,7 +5,7 @@ import { editNotification } from '../../database/queries/notification.js';
 
 const NotificationEditMiddleware = async (request, response) => {
   const notification = request.body;
-  const { user } = response.locals;
+  const { workspaceId } = response.locals;
 
   try {
     const validator = NotificationValidators[notification?.platform];
@@ -18,7 +18,7 @@ const NotificationEditMiddleware = async (request, response) => {
 
     const query = await editNotification({
       ...result,
-      workspaceId: user.workspaceId,
+      workspaceId: workspaceId,
       id: notification.id,
       email: notification.email,
       isEnabled: notification.isEnabled,

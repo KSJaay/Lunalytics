@@ -2,7 +2,7 @@
 import express from 'express';
 
 // import local files
-import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
+import { hasRequiredPermission } from '../middleware/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
 import createIncidentMiddleware from '../middleware/incident/create.js';
 import getAllIncidents from '../middleware/incident/getAll.js';

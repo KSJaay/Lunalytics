@@ -274,3 +274,18 @@ export const transferOwnership = async (email, newOwner) => {
     .where({ email: newOwner })
     .update({ permission: oldPermsToFlags[1] });
 };
+
+export const fetchUserWorkspaces = async (email) => {
+  const client = await database.connect();
+  const memberWorkspaces = await client('member')
+    .where({ email })
+    .select('workspaceId');
+
+  const workspaceIds = memberWorkspaces.map((mw) => mw.workspaceId);
+
+  const workspaces = await client('workspace')
+    .whereIn('id', workspaceIds)
+    .select('id', 'name', 'icon');
+
+  return workspaces;
+};

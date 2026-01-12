@@ -27,9 +27,9 @@ const monitorEdit = async (request, response) => {
       throw new UnprocessableError(isInvalidMonitor);
     }
 
-    const { user } = response.locals;
+    const { user, workspaceId } = response.locals;
 
-    const monitor_data = formatMonitorData(body, user.email, user.workspaceId);
+    const monitor_data = formatMonitorData(body, user.email, workspaceId);
     const data = await updateMonitor(monitor_data);
 
     cache

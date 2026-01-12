@@ -9,14 +9,14 @@ import monitorDelete from '../middleware/monitor/delete.js';
 import fetchMonitorUsingId from '../middleware/monitor/id.js';
 import fetchMonitorStatus from '../middleware/monitor/status.js';
 import monitorPause from '../middleware/monitor/pause.js';
-import { hasRequiredPermission } from '../middleware/user/hasPermission.js';
+import { memberHasPermission } from '../middleware/hasPermission.js';
 import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
 
-router.use(hasRequiredPermission(PermissionsBits.VIEW_MONITORS));
+router.use(memberHasPermission(PermissionsBits.VIEW_MONITORS));
 router.get('/status', fetchMonitorStatus);
 router.get('/id', fetchMonitorUsingId);
 
-router.use(hasRequiredPermission(PermissionsBits.MANAGE_MONITORS));
+router.use(memberHasPermission(PermissionsBits.MANAGE_MONITORS));
 router.post('/add', monitorAdd);
 router.post('/edit', monitorEdit);
 router.get('/delete', monitorDelete);

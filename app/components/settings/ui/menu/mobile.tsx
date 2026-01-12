@@ -10,21 +10,16 @@ import ManageApiTokens from '../../api';
 import ManageInvites from '../../invite';
 import SettingsAccount from '../../account';
 import SettingsMobileTabs from '../tab/mobile';
-import useContextStore from '../../../../context';
-import Role from '../../../../../shared/permissions/role';
 import SettingsPersonalisation from '../../personalisation';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import useMemberContext from '../../../../context/member';
 
 const SettingsMobile = ({ handleKeydown }) => {
-  const {
-    userStore: { user },
-  } = useContextStore();
-
   const [page, setPage] = useState('homepage');
   const handleTabChange = (page) => setPage(page);
+  const { member } = useMemberContext();
 
-  const role = new Role('user', user.permission);
-  const isAdmin = role.hasPermission(PermissionsBits.ADMINISTRATOR);
+  const isAdmin = member?.role.hasPermission(PermissionsBits.ADMINISTRATOR);
 
   return (
     <div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>

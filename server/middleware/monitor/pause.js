@@ -18,23 +18,16 @@ const monitorPause = async (request, response) => {
       throw new Error('Pause should be a boolean value');
     }
 
-    await pauseMonitor(
-      monitorId,
-      response.locals.user.workspaceId,
-      isTruthy(pause)
-    );
+    await pauseMonitor(monitorId, response.locals.workspaceId, isTruthy(pause));
 
     if (isTruthy(pause)) {
-      cache.removeMonitor(monitorId, response.locals.user.workspaceId);
+      cache.removeMonitor(monitorId, response.locals.workspaceId);
     } else {
-      await cache.checkMonitorStatus(
-        monitorId,
-        response.locals.user.workspaceId
-      );
+      await cache.checkMonitorStatus(monitorId, response.locals.workspaceId);
     }
 
     statusCache
-      .reloadMonitor(monitorId, response.locals.user.workspaceId)
+      .reloadMonitor(monitorId, response.locals.workspaceId)
       .catch(() => false);
 
     return response.sendStatus(200);

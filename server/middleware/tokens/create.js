@@ -25,7 +25,7 @@ const createApiTokenMiddleware = async (request, response) => {
       email,
       permission,
       name,
-      response.locals.user.workspaceId
+      response.locals.workspaceId
     );
 
     return response.status(200).send(query);
