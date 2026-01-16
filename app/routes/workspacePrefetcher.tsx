@@ -5,6 +5,7 @@ import Loading from '../components/ui/loading';
 import useFetch from '../hooks/useFetch';
 import { fetchMonitorById } from '../services/monitor/fetch';
 import { observer } from 'mobx-react-lite';
+import { createGetRequest } from '../services/axios';
 
 const pageConfigs = [
   {
@@ -15,7 +16,7 @@ const pageConfigs = [
     loadingUrl: '/incidents',
   },
   {
-    path: '/monitors',
+    path: '/home',
     hasLoaded: (store: any) => store.globalStore.hasLoadedMonitors,
     setData: (store: any, data: any) => {
       store.globalStore.setMonitors(data);
@@ -66,6 +67,7 @@ const WorkspacePrefetcher = observer(
       },
       onFailure: () => {},
     });
+    3;
 
     useEffect(() => {
       if (!isLoading && !prefetchedRef.current) {
@@ -73,10 +75,9 @@ const WorkspacePrefetcher = observer(
         setPrefetched(true);
         pageConfigs.forEach((cfg) => {
           if (cfg !== currentConfig && !cfg.hasLoaded(store)) {
-            fetch(cfg.url)
-              .then((res) => (res.ok ? res.json() : null))
+            createGetRequest(cfg.url)
               .then((data) => {
-                if (data) cfg.setData(store, data);
+                cfg.setData(store, data?.data);
               })
               .catch(() => {});
           }

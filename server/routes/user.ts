@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 const router = express.Router();
 
 import { UserPermissionBits } from '../../shared/permissions/bitFlags.js';
@@ -27,7 +27,7 @@ router.post('/exists', userExistsMiddleware);
 
 router.post('/delete/account', deleteAccountMiddleware);
 
-router.get('/workspaces', async (request, response) => {
+router.get('/workspaces', async (request: Request, response: Response) => {
   const workspaces = await fetchUserWorkspaces(response.locals.user.email);
 
   return response.status(200).json(workspaces);

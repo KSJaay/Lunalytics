@@ -1,7 +1,12 @@
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
+// import local files
 import Role from '../../shared/permissions/role.js';
 
 export const hasRequiredPermission =
-  (requiredPermission) => (request, response, next) => {
+  (requiredPermission: number) =>
+  (request: Request, response: Response, next: NextFunction) => {
     const { user: { permission } = {} } = response.locals;
     if (!permission) return response.sendStatus(401);
 
@@ -15,7 +20,8 @@ export const hasRequiredPermission =
   };
 
 export const userHasPermission =
-  (requiredPermission) => (request, response, next) => {
+  (requiredPermission: number) =>
+  (request: Request, response: Response, next: NextFunction) => {
     const { user: { permission } = {} } = response.locals;
     if (!permission) return response.sendStatus(401);
 
@@ -29,7 +35,8 @@ export const userHasPermission =
   };
 
 export const memberHasPermission =
-  (requiredPermission) => (request, response, next) => {
+  (requiredPermission: number) =>
+  (request: Request, response: Response, next: NextFunction) => {
     const { member: { permission } = {} } = response.locals;
     if (!permission) return response.sendStatus(401);
 

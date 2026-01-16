@@ -1,8 +1,12 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import {
   SESSION_TOKEN,
   WORKSPACE_ID_COOKIE,
 } from '../../../shared/constants/cookies.js';
-import { setServerSideCookie } from '../../../shared/utils/cookies.js';
+import { setClientSideCookie, setServerSideCookie } from '../../../shared/utils/cookies.js';
 import { fetchConnectionByEmail } from '../../database/queries/connection.js';
 import {
   fetchInviteUsingId,
@@ -17,7 +21,10 @@ import {
 import { handleError } from '../../utils/errors.js';
 import { parseUserAgent } from '../../utils/uaParser.js';
 
-const signInOrRegisterUsingAuth = async (request, response) => {
+const signInOrRegisterUsingAuth = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { avatar, id, username, email, provider } =
       response.locals.authUser || {};

@@ -1,9 +1,13 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import config from '../utils/config.js';
 import { ownerExists } from '../database/queries/user.js';
 import logger from '../utils/logger.js';
 import { handleError } from '../utils/errors.js';
 
-const setupExistsMiddleware = async (request, response) => {
+const setupExistsMiddleware = async (request: Request, response: Response) => {
   try {
     const databaseName = config.get('database')?.name;
 
@@ -32,7 +36,7 @@ const setupExistsMiddleware = async (request, response) => {
       setupRequired: false,
       message: 'Setup has been completed',
     });
-  } catch (error) {
+  } catch (error: any) {
     logger.error('SETUP EXISTS', {
       message: 'Unable to check if setup exists.',
       error: error.message,

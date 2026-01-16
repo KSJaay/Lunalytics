@@ -1,3 +1,7 @@
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
+// import local files
 import { getUserByEmail } from '../database/queries/user.js';
 import { deleteCookie } from '../../shared/utils/cookies.js';
 import { handleError } from '../utils/errors.js';
@@ -12,7 +16,11 @@ import {
 
 const sixtyDaysInHours = timeToMs(60, 'days');
 
-const authorization = async (request, response, next) => {
+const authorization = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   try {
     const { [SESSION_TOKEN]: session_token } = request.cookies;
 

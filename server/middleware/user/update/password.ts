@@ -1,3 +1,7 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import {
   getUserPasswordUsingEmail,
   updateUserPassword,
@@ -6,7 +10,7 @@ import { handleError } from '../../../utils/errors.js';
 import { verifyPassword } from '../../../utils/hashPassword.js';
 import validators from '../../../../shared/validators/index.js';
 
-const userUpdatePassword = async (request, response) => {
+const userUpdatePassword = async (request: Request, response: Response) => {
   try {
     const { user } = response.locals;
 

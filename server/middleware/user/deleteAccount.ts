@@ -1,7 +1,14 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { declineAccess, emailIsOwner } from '../../database/queries/user.js';
 import { handleError } from '../../utils/errors.js';
 
-const deleteAccountMiddleware = async (request, response) => {
+const deleteAccountMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { user } = response.locals;
 

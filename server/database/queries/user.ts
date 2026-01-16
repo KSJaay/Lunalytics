@@ -158,10 +158,10 @@ export const updateUserAvatar = async (email, avatar) => {
   return client('user').where({ email }).update({ avatar });
 };
 
-export const fetchMembers = async (userHasManageTeam = false) => {
+export const fetchMembers = async (memberHasManageTeam = false, workspaceId: string) => {
   const client = await database.connect();
 
-  if (userHasManageTeam) {
+  if (memberHasManageTeam) {
     return client('user').select(
       'email',
       'displayName',
@@ -275,7 +275,7 @@ export const transferOwnership = async (email, newOwner) => {
     .update({ permission: oldPermsToFlags[1] });
 };
 
-export const fetchUserWorkspaces = async (email) => {
+export const fetchUserWorkspaces = async (email: string) => {
   const client = await database.connect();
   const memberWorkspaces = await client('member')
     .where({ email })

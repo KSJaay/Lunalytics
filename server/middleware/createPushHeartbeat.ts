@@ -1,8 +1,12 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { createHeartbeat } from '../database/queries/heartbeat.js';
 import { fetchUsingToken } from '../database/queries/monitor.js';
 import { handleError } from '../utils/errors.js';
 
-const createPushHeartbeat = async (request, response) => {
+const createPushHeartbeat = async (request: Request, response: Response) => {
   try {
     const { token, status, message, latency } = request.body;
 

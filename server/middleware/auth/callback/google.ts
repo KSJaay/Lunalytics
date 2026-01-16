@@ -1,3 +1,6 @@
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
 // import dependencies
 import axios from 'axios';
 
@@ -7,7 +10,11 @@ import { fetchProvider } from '../../../database/queries/provider.js';
 import config from '../../../utils/config.js';
 import { handleError } from '../../../utils/errors.js';
 
-const googleCallback = async (request, response, next) => {
+const googleCallback = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   try {
     const { code } = request.query;
 

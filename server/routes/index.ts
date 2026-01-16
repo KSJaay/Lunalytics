@@ -1,3 +1,7 @@
+// import type definitions
+import type { Application } from 'express';
+
+// import local files
 import authRoutes from './auth.js';
 import userRoutes from './user.js';
 import tokenRoutes from './tokens.js';
@@ -17,7 +21,7 @@ import authorizeWorkspace from '../middleware/authorizeWorkspace.js';
 
 // ! ALL ROUTES MUST START WITH /api PREFIX !
 
-const initialiseRoutes = async (app) => {
+const initialiseRoutes = async (app: Application) => {
   app.use('/api/auth', authRoutes);
   // Routes used for fetching public status pages
   app.use('/api/status', statusApiRoutes);

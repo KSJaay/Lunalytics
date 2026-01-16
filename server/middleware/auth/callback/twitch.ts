@@ -1,3 +1,6 @@
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
 // import dependencies
 import axios from 'axios';
 
@@ -7,7 +10,11 @@ import { fetchProvider } from '../../../database/queries/provider.js';
 import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
 import { handleError } from '../../../utils/errors.js';
 
-const twitchCallback = async (request, response, next) => {
+const twitchCallback = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   try {
     const { code } = request.query;
 

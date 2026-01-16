@@ -1,9 +1,13 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import config from '../../../utils/config.js';
 import { handleError } from '../../../utils/errors.js';
 import ConfigValidator from '../../../../shared/validators/config.js';
 import { fetchProviders } from '../../../database/queries/provider.js';
 
-const updateConfigMiddleware = async (request, response) => {
+const updateConfigMiddleware = async (request: Request, response: Response) => {
   try {
     const data = ConfigValidator(request.body);
 
