@@ -1,3 +1,6 @@
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
 // import dependencies
 import axios from 'axios';
 
@@ -7,7 +10,11 @@ import { fetchProvider } from '../../../database/queries/provider.js';
 import { handleError } from '../../../utils/errors.js';
 import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
 
-const customCallback = async (request, response, next) => {
+const customCallback = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   try {
     const { code } = request.query;
 
@@ -33,6 +40,12 @@ const customCallback = async (request, response, next) => {
       `${websiteUrl}/api/auth/callback/custom`
     );
 
+    if (!params) {
+      return response.redirect(
+        '/error?code=invalid_provider_configuration&provider=custom'
+      );
+    }
+
     const { data } = await axios.post(provider.data.tokenUrl, ...params);
 
     const { access_token } = data;
@@ -42,6 +55,7 @@ const customCallback = async (request, response, next) => {
     });
 
     const user = userInfoResponse.data;
+
     if (!user || !user.email) {
       return response.redirect('/error?code=unverified_user&provider=custom');
     }

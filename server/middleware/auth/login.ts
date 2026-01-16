@@ -1,3 +1,6 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
 // import local files
 import { signInUser } from '../../database/queries/user.js';
 import { setServerSideCookie } from '../../../shared/utils/cookies.js';
@@ -7,8 +10,9 @@ import validators from '../../../shared/validators/index.js';
 import { createUserSession } from '../../database/queries/session.js';
 import { parseUserAgent } from '../../utils/uaParser.js';
 import { SESSION_TOKEN } from '../../../shared/constants/cookies.js';
+import { USER_ERRORS } from '../../../shared/constants/errors/user.js';
 
-const login = async (request, response) => {
+const login = async (request: Request, response: Response) => {
   try {
     const { email, password } = request.body;
 
@@ -38,7 +42,7 @@ const login = async (request, response) => {
     );
 
     if (!user.isVerified) {
-      return response.sendStatus(418);
+      return response.status(400).send(USER_ERRORS.U006);
     }
 
     return response.sendStatus(200);

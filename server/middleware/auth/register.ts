@@ -1,5 +1,7 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
 // import local files
-import config from '../../utils/config.js';
 import { registerUser } from '../../database/queries/user.js';
 import {
   setClientSideCookie,
@@ -20,7 +22,7 @@ import {
 } from '../../../shared/constants/cookies.js';
 import { createMember } from '../../database/queries/member.js';
 
-const register = async (request, response) => {
+const register = async (request: Request, response: Response) => {
   try {
     const { email, username, password } = request.body;
     const invite = request?.query?.invite || request?.cookies?.invite;

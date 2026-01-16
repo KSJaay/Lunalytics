@@ -19,4 +19,8 @@ export const USER_ERRORS = {
     code: 'U005',
     message: 'User is inactive.',
   },
+  U006: {
+    code: 'U006',
+    message: 'User is not verified.',
+  },
 };

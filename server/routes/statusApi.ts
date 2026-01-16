@@ -1,4 +1,10 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import node modules
 import express from 'express';
+
+// import local files
 import {
   fetchStatusPageUsingDomain,
   fetchStatusPageUsingUrl,
@@ -9,7 +15,10 @@ import statusCache from '../cache/status.js';
 import { userSessionExists } from '../database/queries/session.js';
 import { getUserByEmail } from '../database/queries/user.js';
 
-export const fetchStatusPageUsingIdOrDomain = async (statusPageId, domain) => {
+export const fetchStatusPageUsingIdOrDomain = async (
+  statusPageId: string,
+  domain: string
+) => {
   let statusPage = await fetchStatusPageUsingUrl(statusPageId);
 
   if (!statusPage && domain) {
@@ -21,17 +30,17 @@ export const fetchStatusPageUsingIdOrDomain = async (statusPageId, domain) => {
 
 const router = express.Router();
 
-router.get('/', async (request, response) => {
+router.get('/', async (request: Request, response: Response) => {
   try {
     const { statusPageId } = request.query;
 
-    if (!statusPageId) {
+    if (!statusPageId || typeof statusPageId !== 'string') {
       return response.status(400).json({ message: 'statusPageId is required' });
     }
 
     const status = await fetchStatusPageUsingIdOrDomain(
       statusPageId,
-      request.headers.host
+      request.headers.host as string
     );
 
     if (!status) {

@@ -1,3 +1,6 @@
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
 // import dependencies
 import axios from 'axios';
 
@@ -7,7 +10,11 @@ import { handleError } from '../../../utils/errors.js';
 import { fetchProvider } from '../../../database/queries/provider.js';
 import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
 
-const discordCallback = async (request, response, next) => {
+const discordCallback = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   try {
     const { code } = request.query;
 
@@ -32,6 +39,12 @@ const discordCallback = async (request, response, next) => {
       code,
       `${websiteUrl}/api/auth/callback/discord`
     );
+
+    if (!params) {
+      return response.redirect(
+        '/error?code=invalid_provider_configuration&provider=discord'
+      );
+    }
 
     const { data } = await axios.post(...params);
 

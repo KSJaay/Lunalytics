@@ -1,8 +1,12 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { updateUserAvatar } from '../../../database/queries/user.js';
 import { handleError } from '../../../utils/errors.js';
 import validators from '../../../../shared/validators/index.js';
 
-const userUpdateAvatar = async (request, response) => {
+const userUpdateAvatar = async (request: Request, response: Response) => {
   try {
     const { user } = response.locals;
 

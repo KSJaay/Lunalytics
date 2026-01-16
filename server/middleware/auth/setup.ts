@@ -1,3 +1,5 @@
+import type { Request, Response } from 'express';
+
 // import dependencies
 import fs from 'fs';
 import path from 'path';
@@ -100,7 +102,7 @@ const createAdvancedSetup = ({
   logger.info('SETUP', { message: 'Config file created successfully' });
 };
 
-const setupMiddleware = async (request, response) => {
+const setupMiddleware = async (request: Request, response: Response) => {
   try {
     const { type = 'advanced', email, username, password } = request.body;
 
@@ -190,7 +192,7 @@ const setupMiddleware = async (request, response) => {
     );
 
     return response.sendStatus(200);
-  } catch (error) {
+  } catch (error: any) {
     logger.error('SETUP', {
       message: 'Unable to setup application. Please try again.',
       error: error.message,

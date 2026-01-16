@@ -36,7 +36,7 @@ class Apprise extends NotificationBase {
     }
   }
 
-  async sendRecovery(notification, monitor, heartbeat) {
+  async sendRecovery(notification: any, monitor: any, heartbeat: any) {
     try {
       const template = AppriseTemplateMessages.recovery;
 

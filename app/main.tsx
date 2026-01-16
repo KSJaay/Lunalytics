@@ -14,10 +14,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loading from './components/ui/loading';
 import WorkspaceCreatePage from './pages/workspace/create';
 import WorkspaceJoinPage from './pages/workspace/join';
-import MonitorRoute from './routes/monitor';
-import IncidentRoute from './routes/incident';
-import StatusPageRoute from './routes/status-page';
-import NotificationRoute from './routes/notification';
 import WorkspaceSelectPage from './pages/workspace/select';
 import WorkspacePrefetcher from './routes/workspacePrefetcher';
 
@@ -62,9 +58,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 path="/notifications"
                 element={
                   <React.Suspense fallback={<Loading />}>
-                    <NotificationRoute>
+                    <WorkspacePrefetcher>
                       <Notifications />
-                    </NotificationRoute>
+                    </WorkspacePrefetcher>
                   </React.Suspense>
                 }
               />
@@ -72,9 +68,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 path="/status-pages"
                 element={
                   <React.Suspense fallback={<Loading />}>
-                    <StatusPageRoute>
+                    <WorkspacePrefetcher>
                       <StatusConfigure />
-                    </StatusPageRoute>
+                    </WorkspacePrefetcher>
                   </React.Suspense>
                 }
               />
@@ -82,9 +78,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 path="/incidents"
                 element={
                   <React.Suspense fallback={<Loading />}>
-                    <IncidentRoute>
+                    <WorkspacePrefetcher>
                       <Incidents />
-                    </IncidentRoute>
+                    </WorkspacePrefetcher>
                   </React.Suspense>
                 }
               />
