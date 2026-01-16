@@ -20,7 +20,6 @@ const avatars = [
   'Panda',
   'Rabbit',
   'Rocket',
-  'Smart-Dog',
   'Tiger',
 ];
 

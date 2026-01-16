@@ -59,7 +59,7 @@ const isImageUrl = (url: string) => {
   return url.match(/^https?:\/\//gim);
 };
 
-const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
+const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
   const navigate = useNavigate();
   const {
     userStore: {
@@ -143,8 +143,8 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
       </div>
     </aside>
   );
-};
+});
 
 LeftNavigation.displayName = 'LeftNavigation';
 
-export default observer(LeftNavigation);
+export default LeftNavigation;

@@ -84,11 +84,11 @@ const ManageInvites = () => {
       </div>
 
       {!allInvites?.length ? (
-        <div className="notification-empty">
-          <div className="notification-empty-icon">
+        <div className="content-empty">
+          <div className="content-empty-icon">
             <MdGroupAdd style={{ width: '64px', height: '64px' }} />
           </div>
-          <div className="notification-empty-text">No invites found</div>
+          <div className="content-empty-text">No invites found</div>
         </div>
       ) : (
         <>

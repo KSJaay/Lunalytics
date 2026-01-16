@@ -1,13 +1,13 @@
 import express from 'express';
-import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
+import { MemberPermissionBits } from '../../shared/permissions/bitFlags.js';
 import deleteProviderMiddleware from '../middleware/provider/delete.js';
 import configureProviderMiddleware from '../middleware/provider/configure.js';
 import getAllProvidersMiddleware from '../middleware/provider/getAll.js';
-import { hasRequiredPermission } from '../middleware/hasPermission.js';
+import { memberHasPermission } from '../middleware/hasPermission.js';
 
 const router = express.Router();
 
-router.use(hasRequiredPermission(PermissionsBits.ADMINISTRATOR));
+router.use(memberHasPermission(MemberPermissionBits.ADMINISTRATOR));
 
 router.get('/', getAllProvidersMiddleware);
 router.post('/configure', configureProviderMiddleware);

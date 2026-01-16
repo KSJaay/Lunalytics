@@ -26,7 +26,7 @@ const handleMonitor = async (
   form: Partial<MonitorProps>,
   isEdit: boolean,
   closeModal: () => void,
-  setMonitor: (monitor: any) => void
+  setMonitor: (monitor: MonitorProps) => void
 ) => {
   try {
     const apiPath = isEdit ? '/api/monitor/edit' : '/api/monitor/add';
@@ -78,7 +78,9 @@ const handleMonitor = async (
       icon,
     });
 
-    setMonitor(query.data);
+    const data = query.data as MonitorProps;
+
+    setMonitor(data);
 
     toast.success(`Monitor been ${isEdit ? 'added' : 'edited'} successfully`);
     return closeModal();

@@ -5,10 +5,12 @@ import type { IncidentProps } from '../../types/incident';
 class IncidentStore {
   incidents: Map<string, Incident>;
   activeIncident: Incident | null | undefined;
+  hasLoadedIncidents: boolean;
 
   constructor() {
     this.incidents = observable.map();
     this.activeIncident = null;
+    this.hasLoadedIncidents = false;
 
     makeAutoObservable(this);
   }
@@ -17,6 +19,8 @@ class IncidentStore {
     for (const incident of incidents) {
       this.incidents.set(incident.incidentId, new Incident(incident));
     }
+
+    this.hasLoadedIncidents = true;
   };
 
   addIncident = (incident: IncidentProps) => {

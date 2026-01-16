@@ -11,6 +11,7 @@ import {
 import Loading from '../components/ui/loading';
 import useFetch from '../hooks/useFetch';
 import useMemberContext from '../context/member';
+import useConfigContext from '../context/config';
 
 const GlobalLayout = () => {
   const {
@@ -19,6 +20,8 @@ const GlobalLayout = () => {
   } = useContextStore();
 
   const { setMember } = useMemberContext();
+
+  const { setVersion } = useConfigContext();
 
   const navigate = useNavigate();
 
@@ -53,7 +56,7 @@ const GlobalLayout = () => {
   });
 
   const { isLoading: isMemberLoading } = useFetch({
-    url: '/api/member',
+    url: '/api/workspace/members/@me',
     onSuccess: (data) => {
       setMember(data);
     },
@@ -66,8 +69,15 @@ const GlobalLayout = () => {
     },
   });
 
-  if (isUserLoading || isSetupLoading || isMemberLoading) {
-    return <Loading />;
+  const { isLoading: isVersionLoading } = useFetch({
+    url: '/api/version',
+    onSuccess: (data) => {
+      setVersion({ ...data, hasLoaded: true });
+    },
+  });
+
+  if (isUserLoading || isSetupLoading || isMemberLoading || isVersionLoading) {
+    return <Loading activeUrl="/home" />;
   }
 
   return (
