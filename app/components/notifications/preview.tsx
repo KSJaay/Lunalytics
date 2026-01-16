@@ -8,7 +8,7 @@ import { Input, Preview } from '@lunalytics/ui';
 // import local files
 import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
-import type { NotificationProps } from '../../types/notifications';
+import type { NotificationProps } from '../../../shared/types/notifications';
 
 const NotificationPreview = ({ children }: { children: React.ReactNode }) => {
   const {

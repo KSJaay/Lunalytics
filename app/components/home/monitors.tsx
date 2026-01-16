@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
 import PillCircle from '../navigation/PillCircle';
 import HomeMonitorsListContext from './context';
-import type { ContextMonitorProps } from '../../types/context/global';
+import type { ContextMonitorProps } from '../../../shared/types/context/global';
 import { getMonitorsInOrder } from '../modal/navigation/reorder';
 
 const HomeMonitorsList = ({

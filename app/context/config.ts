@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import type { ContextVersionProps } from '../types/context/config';
+import type { ContextVersionProps } from '../../shared/types/context/config';
 
 class Config {
   version: ContextVersionProps;

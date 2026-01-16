@@ -4,7 +4,7 @@ import './status.scss';
 import { useTranslation } from 'react-i18next';
 
 // import local files
-import type { ContextMonitorProps } from '../../types/context/global';
+import type { ContextMonitorProps } from '../../../shared/types/context/global';
 
 const MonitorStatus = ({
   monitor,

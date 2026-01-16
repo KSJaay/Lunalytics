@@ -4,7 +4,7 @@ import { FaClock } from 'react-icons/fa';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { IoWarning } from 'react-icons/io5';
 import { RiIndeterminateCircleFill } from 'react-icons/ri';
-import type { ContextIncidentProps } from '../../types/context/incident';
+import type { ContextIncidentProps } from '../../../shared/types/context/incident';
 
 const incidentTypes = {
   Outage: <RiIndeterminateCircleFill size={24} color="var(--red-700)" />,

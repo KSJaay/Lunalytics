@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import HomeMonitorHeaderMenu from './menu';
 import useContextStore from '../../../context';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
-import type { MonitorType } from '../../../types/monitor';
+import type { MonitorType } from '../../../../shared/types/monitor';
 import useMemberContext from '../../../context/member';
 
 const typeToText = {

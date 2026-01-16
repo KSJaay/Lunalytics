@@ -11,7 +11,7 @@ import {
 } from '../hooks/useLocalstorage';
 import Loading from '../components/ui/loading';
 import useFetch from '../hooks/useFetch';
-import type { LayoutGlobalProps } from '../types/layout';
+import type { LayoutGlobalProps } from '../../shared/types/layout';
 
 const GlobalLayout = ({ children }: LayoutGlobalProps) => {
   const {

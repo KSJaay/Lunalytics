@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import useContextStore from '../../context';
-import type { MonitorProps } from '../../types/monitor';
+import type { MonitorProps } from '../../../shared/types/monitor';
 
 const StatusLogo = ({ size = 250 }: { size: number }) => {
   const {

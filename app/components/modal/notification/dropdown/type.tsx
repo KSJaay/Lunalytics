@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
-import type { NotificationProps } from '../../../../types/notifications';
+import type { NotificationProps } from '../../../../../shared/types/notifications';
 
 interface NotificationModalTypeProps {
   messageType: 'basic' | 'pretty' | 'nerdy';

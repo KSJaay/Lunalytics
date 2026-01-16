@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import type { ContextInviteProps } from '../types/context/invites';
+import type { ContextInviteProps } from '../../shared/types/context/invites';
 
 class Invites {
   invites: Map<string, ContextInviteProps>;

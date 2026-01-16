@@ -1,4 +1,4 @@
-import type { NotificationInputLayoutType } from '../../../types/constant/notifications';
+import type { NotificationInputLayoutType } from '../../../../shared/types/constant/notifications';
 
 export const HomeAssistantLayout: NotificationInputLayoutType[] = [
   {

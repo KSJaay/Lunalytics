@@ -5,7 +5,7 @@ import { createPostRequest } from '../services/axios';
 import type {
   NotificationErrorProps,
   NotificationProps,
-} from '../types/notifications';
+} from '../../shared/types/notifications';
 
 const defaultInputs = {
   platform: 'Discord',
