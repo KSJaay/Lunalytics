@@ -32,8 +32,8 @@ const pages = [
 
 interface ModalProps {
   closeModal: () => void;
-  monitor: MonitorProps;
-  handleMonitorSubmit: (monitor: Partial<MonitorProps>) => void;
+  handleMonitorSubmit: (monitor: MonitorProps) => void;
+  monitor?: MonitorProps;
   isEdit?: boolean;
 }
 

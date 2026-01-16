@@ -11,7 +11,7 @@ const StatusPageRoute = observer(
   ({ children }: { children: React.ReactNode }) => {
     const {
       userStore: { getUserRoleRoute },
-      statusStore: { setStatusPages },
+      statusStore: { setStatusPages, hasLoadedStatusPages },
     } = useContextStore();
     const navigate = useNavigate();
 
@@ -32,13 +32,14 @@ const StatusPageRoute = observer(
     };
 
     const { isLoading } = useFetch({
-      url: '/api/status-pages',
+      hasFetched: hasLoadedStatusPages,
+      url: '/api/workspace/status-pages',
       onSuccess: (data) => setStatusPages(data),
       onFailure,
     });
 
     if (isLoading) {
-      return <Loading />;
+      return <Loading asContainer activeUrl="/status-pages" />;
     }
 
     return children;

@@ -15,8 +15,8 @@ const incidentTypes = {
 
 interface NotificationsListProps {
   incidents: ContextIncidentProps[];
-  selectedIncidentId: string | null;
-  setActiveIncident: (incident: ContextIncidentProps) => void;
+  selectedIncidentId?: string;
+  setActiveIncident?: (incidentId: string) => void;
 }
 
 const NotificationsList = ({
@@ -39,7 +39,7 @@ const NotificationsList = ({
           <div
             className={classes}
             key={incident.incidentId}
-            onClick={() => setActiveIncident(incident)}
+            onClick={() => setActiveIncident?.(incident.incidentId)}
           >
             <div className="content">
               <div>{incident.title}</div>

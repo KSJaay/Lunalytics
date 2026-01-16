@@ -1,13 +1,11 @@
 import { RxUpdate } from 'react-icons/rx';
-import useFetch from '../../../hooks/useFetch';
 import NavigationUpdateModal from '../../modal/navigation/update';
+import useConfigContext from '../../../context/config';
 
 const LeftUpdateButton = ({ closeModal, openModal }: any) => {
-  const { isLoading, isError, data } = useFetch({
-    url: '/api/version',
-  });
+  const { version } = useConfigContext();
 
-  if (isLoading || isError || !data?.updateAvailable) return null;
+  if (version.hasLoaded === false || !version.updateAvailable) return null;
 
   return (
     <div
@@ -16,7 +14,7 @@ const LeftUpdateButton = ({ closeModal, openModal }: any) => {
         openModal(
           <NavigationUpdateModal
             closeModal={closeModal}
-            version={data?.latest}
+            version={version.latest}
           />
         )
       }

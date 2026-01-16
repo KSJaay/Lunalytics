@@ -4,6 +4,7 @@ export interface UseFetchProps {
   headers?: Record<string, string>;
   onSuccess?: (data: any) => void;
   onFailure?: (error: any) => void;
+  hasFetched?: boolean;
 }
 
 export interface UseFetchResponse<T> {

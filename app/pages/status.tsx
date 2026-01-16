@@ -1,5 +1,9 @@
 import '../components/status/configure/preview/styles.scss';
 
+// import types
+import type { MonitorProps } from '../types/monitor';
+import type { IncidentProps } from '../types/incident';
+
 // import dependencies
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,7 +18,7 @@ import StatusPageIncident from '../components/status/configure/preview/incident'
 import StatusPageMetrics from '../components/status/configure/preview/metrics';
 import StatusConfigureLayoutHistoryList from '../components/status/configure/layout/history/list';
 
-const getMonitorStatus = (incident, monitor) => {
+const getMonitorStatus = (incident: IncidentProps, monitor: MonitorProps) => {
   if (incident?.status && incident?.status !== 'Resolved') {
     return incident?.affect;
   }
@@ -26,7 +30,10 @@ const getMonitorStatus = (incident, monitor) => {
   return 'Operational';
 };
 
-const getOverallStatus = (incident, monitors) => {
+const getOverallStatus = (
+  incident: IncidentProps,
+  monitors: MonitorProps[]
+) => {
   if (incident?.status && incident?.status !== 'Resolved') {
     return incident?.affect;
   }
@@ -117,7 +124,7 @@ const StatusPage = ({ id }: { id?: string }) => {
   return (
     <div style={{ height: '100vh', overflowY: 'auto' }}>
       <div className="status-page-content">
-        {layout.map((item) => {
+        {layout.map((item: any) => {
           switch (item.type) {
             case 'header': {
               return (

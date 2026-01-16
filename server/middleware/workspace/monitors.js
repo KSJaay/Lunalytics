@@ -7,7 +7,7 @@ import {
 import { fetchMonitors } from '../../database/queries/monitor.js';
 import { handleError } from '../../utils/errors.js';
 
-const memberMonitorsMiddleware = async (request, response) => {
+const workspaceMonitorsMiddleware = async (request, response) => {
   try {
     const monitors = await fetchMonitors(response.locals.workspaceId);
     const query = [];
@@ -53,4 +53,4 @@ const memberMonitorsMiddleware = async (request, response) => {
   }
 };
 
-export default memberMonitorsMiddleware;
+export default workspaceMonitorsMiddleware;

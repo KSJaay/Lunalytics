@@ -2,17 +2,15 @@
 import express from 'express';
 
 // import local files
-import { hasRequiredPermission } from '../middleware/hasPermission.js';
-import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
-import getAllApiTokensMiddleware from '../middleware/tokens/getAll.js';
+import { memberHasPermission } from '../middleware/hasPermission.js';
+import { MemberPermissionBits } from '../../shared/permissions/bitFlags.js';
 import createApiTokenMiddleware from '../middleware/tokens/create.js';
 import updateApiTokenMiddleware from '../middleware/tokens/update.js';
 import deleteApiTokenMiddleware from '../middleware/tokens/delete.js';
 
 const router = express.Router();
 
-router.use(hasRequiredPermission(PermissionsBits.ADMINISTRATOR));
-router.get('/', getAllApiTokensMiddleware);
+router.use(memberHasPermission(MemberPermissionBits.ADMINISTRATOR));
 router.post('/create', createApiTokenMiddleware);
 router.post('/update', updateApiTokenMiddleware);
 router.post('/delete', deleteApiTokenMiddleware);

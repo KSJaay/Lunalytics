@@ -4,10 +4,12 @@ import type { NotificationProps } from '../types/notifications';
 class NotificationStore {
   notifications: Map<string, NotificationProps>;
   activeNotification: NotificationProps | null | undefined;
+  hasLoadedNotifications: boolean;
 
   constructor() {
     this.notifications = observable.map();
     this.activeNotification = null;
+    this.hasLoadedNotifications = false;
 
     makeObservable(this, {
       notifications: observable,
@@ -25,6 +27,8 @@ class NotificationStore {
     for (const notification of notifications) {
       this.notifications.set(notification.id, notification);
     }
+
+    this.hasLoadedNotifications = true;
   };
 
   addNotification = (notification: NotificationProps) => {

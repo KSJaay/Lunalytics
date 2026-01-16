@@ -6,11 +6,13 @@ class GlobalStore {
   monitors: Map<string, MonitorProps>;
   timeouts: Map<string, NodeJS.Timeout>;
   activeMonitor: MonitorProps | null | undefined;
+  hasLoadedMonitors: boolean;
 
   constructor() {
     this.monitors = observable.map();
     this.timeouts = observable.map();
     this.activeMonitor = null;
+    this.hasLoadedMonitors = false;
 
     makeObservable(this, {
       monitors: observable,
@@ -31,6 +33,7 @@ class GlobalStore {
     for (const monitor of monitors) {
       this.monitors.set(monitor.monitorId, monitor);
     }
+    this.hasLoadedMonitors = true;
   };
 
   setMonitor = (data: MonitorProps, func: (id: string, func: any) => void) => {

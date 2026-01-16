@@ -8,6 +8,7 @@ function useFetch({
   headers,
   onSuccess,
   onFailure,
+  hasFetched,
 }: UseFetchProps) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +16,10 @@ function useFetch({
 
   useEffect(() => {
     if (!url) return;
+
+    if (typeof hasFetched === 'boolean' && hasFetched) {
+      return;
+    }
 
     setIsLoading(true);
     setError(null);

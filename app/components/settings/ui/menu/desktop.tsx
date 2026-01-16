@@ -7,14 +7,22 @@ import ManageTeam from '../../manage';
 import ManageApiTokens from '../../api';
 import SettingsAbout from '../../about';
 import ManageInvites from '../../invite';
-import SettingsTab from '../tab/desktop';
+import SettingsTab, { type SettingsTabNames } from '../tab/desktop';
 import SettingsAccount from '../../account';
 import SettingsPersonalisation from '../../personalisation';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 import SettingsAuthentication from '../../authentication';
 import useMemberContext from '../../../../context/member';
 
-const SettingsDesktop = ({ tab, handleTabUpdate, handleKeydown }) => {
+const SettingsDesktop = ({
+  tab,
+  handleTabUpdate,
+  handleKeydown,
+}: {
+  tab: SettingsTabNames;
+  handleTabUpdate: (tab: SettingsTabNames) => void;
+  handleKeydown: (event: KeyboardEvent | null, isHandler?: boolean) => void;
+}) => {
   const { member } = useMemberContext();
 
   const isAdmin = member?.role.hasPermission(PermissionsBits.ADMINISTRATOR);

@@ -69,7 +69,7 @@ const Notifications = () => {
         <Button
           variant="flat"
           fullWidth
-          onClick={() => openModal(<IncidentCreateModal />, false)}
+          onClick={() => openModal(<IncidentCreateModal />)}
         >
           Add Incident
         </Button>

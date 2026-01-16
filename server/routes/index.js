@@ -1,7 +1,6 @@
 import authRoutes from './auth.js';
 import userRoutes from './user.js';
 import tokenRoutes from './tokens.js';
-import memberRoutes from './member.js';
 import monitorRoutes from './monitor.js';
 import invitesRoutes from './invites.js';
 import incidentRoutes from './incident.js';
@@ -24,12 +23,13 @@ const initialiseRoutes = async (app) => {
   app.use('/api/status', statusApiRoutes);
   app.post('/api/push', createPushHeartbeat);
   app.use(authorization);
-  app.use('/api/admin', memberRoutes);
+  app.use('/api/admin', (request, response, next) => {
+    return next();
+  });
   app.use('/api/user', userRoutes);
   app.use('/api/workspace', workspaceRoutes);
   app.use(authorizeWorkspace);
   app.use('/api/monitor', monitorRoutes);
-  app.use('/api/member', memberRoutes);
   app.use('/api/notifications', notificationRoutes);
   app.use('/api/incident', incidentRoutes);
   app.use('/api/tokens', tokenRoutes);

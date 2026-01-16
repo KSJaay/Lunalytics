@@ -11,7 +11,7 @@ const IncidentRoute = observer(
   ({ children }: { children: React.ReactNode }) => {
     const {
       userStore: { getUserRoleRoute },
-      incidentStore: { setIncidents },
+      incidentStore: { setIncidents, hasLoadedIncidents },
     } = useContextStore();
     const navigate = useNavigate();
 
@@ -32,7 +32,8 @@ const IncidentRoute = observer(
     };
 
     const { isLoading } = useFetch({
-      url: '/api/incident/all',
+      hasFetched: hasLoadedIncidents,
+      url: '/api/workspace/incidents',
       onSuccess: (data) => {
         setIncidents(data);
       },
@@ -40,7 +41,7 @@ const IncidentRoute = observer(
     });
 
     if (isLoading) {
-      return <Loading />;
+      return <Loading asContainer activeUrl="/incidents" />;
     }
 
     return children;

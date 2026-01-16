@@ -16,7 +16,11 @@ import LoginLayout from '../components/login/layout';
 import { createPostRequest } from '../services/axios';
 import RegisterChecklist from '../components/register/checklist';
 
-const EditEmail = ({ email, ...props }: { email: string }) => (
+interface EditEmailProps extends React.HTMLAttributes<HTMLDivElement> {
+  email: string;
+}
+
+const EditEmail = ({ email, ...props }: EditEmailProps) => (
   <div className="login-header-subtitle">
     {email}
     <div className="login-header-subtitle-link" {...props}>
@@ -130,6 +134,7 @@ const Login = () => {
               onClick={() => {
                 handleInputChange({ target: { id: 'password', value: '' } });
                 setPage('email');
+                return;
               }}
             />
             {errors['general'] && (
@@ -159,7 +164,7 @@ const Login = () => {
       title="Enter details"
       subtitle={
         <>
-          <div >Enter your details to register</div>
+          <div>Enter your details to register</div>
 
           <EditEmail
             email={inputs.email}

@@ -14,6 +14,17 @@ export const fetchAllStatusPages = async () => {
   });
 };
 
+export const fetchWorkspaceStatusPages = async (workspaceId) => {
+  const client = await database.connect();
+  const statusPages = await client('status_page')
+    .where({ workspaceId })
+    .select();
+
+  return statusPages.map((statusPage) => {
+    return cleanStatusPage(statusPage);
+  });
+};
+
 export const fetchStatusPageUsingId = async (statusId, workspaceId) => {
   const client = await database.connect();
   return client('status_page').where({ statusId, workspaceId }).first();
