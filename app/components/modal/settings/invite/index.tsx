@@ -82,9 +82,9 @@ const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
         <CreateInviteExpiry expiryId={expiryId} setExpiryId={setExpiryId} />
 
         <div>
-          <div className="input-label">Token Permissions</div>
+          <div className="input-label">User Permissions</div>
           <div className="input-short-description">
-            Permissions are used to restrict what the token can access.
+            Permissions granted to users who register using this invite.
           </div>
           <div className="settings-invite-permissions-container">
             {permissionsWithDescription.map((permission) => (

@@ -121,7 +121,7 @@ const MonitorNotification = observer(
   }
 );
 
-const NavigationMonitorInfo = ({ monitor }: { monitor: MonitorProps }) => {
+const NavigationMonitorInfo = ({ monitor }: { monitor?: MonitorProps }) => {
   const { t } = useTranslation();
 
   if (!monitor) return null;

@@ -15,8 +15,8 @@ import { IoArrowBack } from 'react-icons/io5';
 import useMemberContext from '../../../context/member';
 
 interface HomeIncidentHeaderProps {
-  isInfoOpen: boolean;
-  setIsInfoOpen: (isOpen: boolean) => void;
+  isInfoOpen?: boolean;
+  setIsInfoOpen?: (isOpen: boolean) => void;
   rightChildren?: React.ReactNode;
   isMobile?: boolean;
 }
@@ -137,7 +137,7 @@ const HomeIncidentHeader = ({
           </>
         ) : null}
         {rightChildren ? (
-          <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
+          <div onClick={() => setIsInfoOpen?.(!isInfoOpen)}>
             <LuInfo size={20} />
           </div>
         ) : null}

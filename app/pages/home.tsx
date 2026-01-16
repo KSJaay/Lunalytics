@@ -64,17 +64,18 @@ const Home = () => {
     );
   }
 
-  const content = isDesktop ? (
-    <div className="monitor-container">
-      <MonitorStatus monitor={activeMonitor} />
-      {activeMonitor?.type === 'push' ? (
-        <MonitorPush token={activeMonitor.url} />
-      ) : null}
-      <MonitorGraph monitor={activeMonitor} />
-      <MonitorUptime />
-      <Spacer size={18} />
-    </div>
-  ) : null;
+  const content =
+    isDesktop && activeMonitor ? (
+      <div className="monitor-container">
+        <MonitorStatus monitor={activeMonitor} />
+        {activeMonitor?.type === 'push' ? (
+          <MonitorPush token={activeMonitor.url} />
+        ) : null}
+        <MonitorGraph monitor={activeMonitor} />
+        <MonitorUptime />
+        <Spacer size={18} />
+      </div>
+    ) : null;
 
   return (
     <Navigation
@@ -101,7 +102,9 @@ const Home = () => {
         </div>
       }
       rightChildren={
-        isDesktop ? <NavigationMonitorInfo monitor={activeMonitor} /> : null
+        isDesktop && activeMonitor ? (
+          <NavigationMonitorInfo monitor={activeMonitor} />
+        ) : null
       }
       header={{ HeaderComponent: HomeMonitorHeader }}
     >

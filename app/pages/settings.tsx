@@ -7,15 +7,16 @@ import { useEffect, useState } from 'react';
 import useGoBack from '../hooks/useGoBack';
 import SetttingsDesktop from '../components/settings/ui/menu/desktop';
 import SettingsMobile from '../components/settings/ui/menu/mobile';
+import type { SettingsTabNames } from '../components/settings/ui/tab/desktop';
 
 const Settings = () => {
-  const [tab, setTab] = useState('Account');
-  const handleTabUpdate = (tab) => {
+  const [tab, setTab] = useState<SettingsTabNames>('Account');
+  const handleTabUpdate = (tab: SettingsTabNames) => {
     return setTab(tab);
   };
   const goBack = useGoBack();
 
-  const handleKeydown = (event, isHandler = false) => {
+  const handleKeydown = (event: KeyboardEvent | null, isHandler = false) => {
     if (event?.key === 'Escape' || event?.key === 'Esc' || isHandler) {
       goBack();
     }

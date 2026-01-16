@@ -23,14 +23,23 @@ const menuOptions = [
   { id: 'Preview', Icon: FaRegEye },
 ];
 
+interface HomeStatusPageHeaderProps {
+  isMobile?: boolean;
+  isInfoOpen?: boolean;
+  setIsInfoOpen?: (isOpen: boolean) => void;
+  rightChildren?: React.ReactNode;
+  activePage: string;
+  setActivePage: (page: string) => void;
+}
+
 const HomeStatusPageHeader = ({
-  isInfoOpen,
+  isInfoOpen = false,
   setIsInfoOpen,
   rightChildren,
   activePage,
   setActivePage,
   isMobile = false,
-}) => {
+}: HomeStatusPageHeaderProps) => {
   const {
     modalStore: { openModal, closeModal },
     statusStore: {
@@ -58,8 +67,11 @@ const HomeStatusPageHeader = ({
     try {
       const statusPageId = statusPage?.statusId;
 
+      if (!statusPageId) return;
+
       await createPostRequest('/api/status-pages/delete', { statusPageId });
       setActiveStatusPage(null);
+
       deleteStatusPage(statusPageId);
       toast.success('Status page deleted successfully!');
       navigate('/status-pages');
@@ -115,7 +127,7 @@ const HomeStatusPageHeader = ({
             </div>
           ) : null}
           {rightChildren ? (
-            <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
+            <div onClick={() => setIsInfoOpen?.(!isInfoOpen)}>
               <LuInfo size={20} />
             </div>
           ) : null}

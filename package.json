@@ -68,6 +68,7 @@
     "mobx-react-lite": "4.1.0",
     "nanoid": "5.1.5",
     "nodemailer": "7.0.12",
+    "octagonal-wheels": "^0.1.45",
     "pg": "8.16.0",
     "ping": "0.4.4",
     "react": "19.2.3",

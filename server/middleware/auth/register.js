@@ -22,10 +22,6 @@ import { createMember } from '../../database/queries/member.js';
 
 const register = async (request, response) => {
   try {
-    if (!config.get('register')) {
-      return response.status(403).send('Registration is disabled.');
-    }
-
     const { email, username, password } = request.body;
     const invite = request?.query?.invite || request?.cookies?.invite;
 

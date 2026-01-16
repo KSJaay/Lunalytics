@@ -4,10 +4,12 @@ import type { ContextStatusProps } from '../types/context/status';
 class StatusStore {
   statusPages: Map<string, ContextStatusProps>;
   activeStatusPage: ContextStatusProps | null | undefined;
+  hasLoadedStatusPages: boolean;
 
   constructor() {
     this.statusPages = observable.map();
     this.activeStatusPage = null;
+    this.hasLoadedStatusPages = false;
 
     makeObservable(this, {
       statusPages: observable,
@@ -26,6 +28,8 @@ class StatusStore {
     for (const statusPage of statusPages) {
       this.statusPages.set(statusPage.statusId, statusPage);
     }
+
+    this.hasLoadedStatusPages = true;
   };
 
   addStatusPage = (statusPage: ContextStatusProps) => {

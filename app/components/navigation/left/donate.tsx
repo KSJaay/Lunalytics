@@ -1,13 +1,9 @@
 import { BiSolidDonateHeart } from 'react-icons/bi';
-import useFetch from '../../../hooks/useFetch';
 import NavigationDonateModal from '../../modal/navigation/donate';
+// import useConfigContext from '../../../context/config';
 
 const LeftDonateButton = ({ closeModal, openModal }: any) => {
-  const { isLoading, isError, data } = useFetch({
-    url: '/api/version',
-  });
-
-  if (isLoading || isError || data?.updateAvailable) return null;
+  // const {} = useConfigContext();
 
   return (
     <div

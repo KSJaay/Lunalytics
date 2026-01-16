@@ -1,21 +1,18 @@
 import express from 'express';
 import createStatusPageMiddleware from '../middleware/status/create.js';
 import getUsingIdMiddleware from '../middleware/status/getUsingId.js';
-import getAllStatusPagesMiddleware from '../middleware/status/getAll.js';
 import editStatusPageMiddleware from '../middleware/status/edit.js';
 import deleteStatusPageMiddleware from '../middleware/status/delete.js';
-import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
-import { hasRequiredPermission } from '../middleware/hasPermission.js';
+import { MemberPermissionBits } from '../../shared/permissions/bitFlags.js';
+import { memberHasPermission } from '../middleware/hasPermission.js';
 
 const router = express.Router();
 
-router.use(hasRequiredPermission(PermissionsBits.VIEW_STATUS_PAGES));
-
-router.get('/', getAllStatusPagesMiddleware);
+router.use(memberHasPermission(MemberPermissionBits.VIEW_STATUS_PAGES));
 
 router.get('/id', getUsingIdMiddleware);
 
-router.use(hasRequiredPermission(PermissionsBits.MANAGE_STATUS_PAGES));
+router.use(memberHasPermission(MemberPermissionBits.MANAGE_STATUS_PAGES));
 
 router.post('/create', createStatusPageMiddleware);
 

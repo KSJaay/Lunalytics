@@ -8,7 +8,24 @@ const tabs = (isAdmin: boolean) => [
   },
 ];
 
-const SettingsTab = ({ tab, handleTabUpdate, isAdmin }) => {
+export type SettingsTabNames =
+  | 'Account'
+  | 'Appearance'
+  | 'API Token'
+  | 'Authentication'
+  | 'Invites'
+  | 'Manage Team'
+  | 'About';
+
+const SettingsTab = ({
+  tab,
+  handleTabUpdate,
+  isAdmin = false,
+}: {
+  tab: SettingsTabNames;
+  handleTabUpdate: (tab: SettingsTabNames) => void;
+  isAdmin?: boolean;
+}) => {
   const tabsList = tabs(isAdmin).map(({ title, items }) => {
     const itemsList = items.map((name) => {
       const active = name === tab;
@@ -16,7 +33,7 @@ const SettingsTab = ({ tab, handleTabUpdate, isAdmin }) => {
         <div
           key={name}
           className={`settings-tab-text ${active ? 'active' : ''}`}
-          onClick={() => handleTabUpdate(name)}
+          onClick={() => handleTabUpdate(name as SettingsTabNames)}
           id={name.replace(' ', '-')}
         >
           {name}

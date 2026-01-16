@@ -11,7 +11,7 @@ const NotificationRoute = observer(
   ({ children }: { children: React.ReactNode }) => {
     const {
       userStore: { getUserRoleRoute },
-      notificationStore: { setNotifications },
+      notificationStore: { setNotifications, hasLoadedNotifications },
     } = useContextStore();
     const navigate = useNavigate();
 
@@ -32,13 +32,14 @@ const NotificationRoute = observer(
     };
 
     const { isLoading } = useFetch({
-      url: '/api/notifications',
+      hasFetched: hasLoadedNotifications,
+      url: '/api/workspace/notifications',
       onSuccess: (data) => setNotifications(data),
       onFailure,
     });
 
     if (isLoading) {
-      return <Loading />;
+      return <Loading asContainer activeUrl="/notifications" />;
     }
 
     return children;

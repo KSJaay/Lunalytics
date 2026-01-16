@@ -11,7 +11,8 @@ import { fetchMonitorById } from '../services/monitor/fetch';
 const MonitorRoute = observer(({ children }: { children: React.ReactNode }) => {
   const {
     userStore: { getUserRoleRoute },
-    globalStore: { setMonitors, setTimeouts },
+    globalStore: { setMonitors, setTimeouts, hasLoadedMonitors },
+    incidentStore: { setIncidents, hasLoadedIncidents },
   } = useContextStore();
   const navigate = useNavigate();
 
@@ -32,7 +33,8 @@ const MonitorRoute = observer(({ children }: { children: React.ReactNode }) => {
   };
 
   const { isLoading } = useFetch({
-    url: '/api/member/monitors',
+    hasFetched: hasLoadedMonitors,
+    url: '/api/workspace/monitors',
     onSuccess: (data) => {
       setMonitors(data);
       setTimeouts(data, fetchMonitorById);
@@ -41,7 +43,7 @@ const MonitorRoute = observer(({ children }: { children: React.ReactNode }) => {
   });
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading asContainer activeUrl="/home" />;
   }
 
   return children;
