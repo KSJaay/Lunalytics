@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import type {
   ContextIncidentMessageProps,
   ContextIncidentProps,
-} from '../../types/context/incident';
+} from '../../../shared/types/context/incident';
 
 class Incident {
   title: string;

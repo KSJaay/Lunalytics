@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import type { ContextStatusProps } from '../types/context/status';
+import type { ContextStatusProps } from '../../shared/types/context/status';
 
 class StatusStore {
   statusPages: Map<string, ContextStatusProps>;

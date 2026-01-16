@@ -2,7 +2,7 @@ import { Trans } from 'react-i18next';
 import { Dropdown, Input, PasswordInput, Textarea } from '@lunalytics/ui';
 
 import SwitchWithText from '../../../ui/switch';
-import type { NotificationInputInputType } from '../../../../types/constant/notifications';
+import type { NotificationInputInputType } from '../../../../../shared/types/constant/notifications';
 
 export const getNotificationComponent = (
   component: NotificationInputInputType,

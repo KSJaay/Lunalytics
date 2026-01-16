@@ -2,7 +2,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 import type {
   ContextAuthenticationConfigProps,
   ContextAuthenticationProviderProps,
-} from '../types/context/authentication';
+} from '../../shared/types/context/authentication';
 
 class Authentication {
   providers: Map<string, ContextAuthenticationProviderProps>;

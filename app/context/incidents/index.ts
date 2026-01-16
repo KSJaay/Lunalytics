@@ -1,6 +1,6 @@
 import { makeAutoObservable, observable } from 'mobx';
 import Incident from './incident';
-import type { IncidentProps } from '../../types/incident';
+import type { IncidentProps } from '../../../shared/types/incident';
 
 class IncidentStore {
   incidents: Map<string, Incident>;

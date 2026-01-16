@@ -6,7 +6,7 @@ import notificationsIcons from '../../../../constant/notifications.json';
 import type {
   NotificationPlatforms,
   NotificationProps,
-} from '../../../../types/notifications';
+} from '../../../../../shared/types/notifications';
 
 interface NotificationModalPlatformProps {
   isEdit?: boolean;

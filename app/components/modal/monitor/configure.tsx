@@ -15,7 +15,7 @@ import MonitorConfigurePingModal from './configure/ping';
 import useMonitorForm from '../../../hooks/useMonitorForm';
 import MonitorConfigureDockerModal from './configure/docker';
 import MonitorConfigureJsonQueryModal from './configure/json';
-import type { MonitorProps } from '../../../types/monitor';
+import type { MonitorProps } from '../../../../shared/types/monitor';
 import MonitorConfigurePushModal from './configure/push';
 import classNames from 'classnames';
 

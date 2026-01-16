@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 // import local files
 import { createGetRequest } from '../services/axios';
-import type { HeartbeatProps, MonitorProps } from '../types/monitor';
+import type { HeartbeatProps, MonitorProps } from '../../shared/types/monitor';
 
 const useGraphStatus = (monitor: MonitorProps) => {
   const [statusType, setStatus] = useState('latest');

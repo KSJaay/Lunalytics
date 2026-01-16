@@ -21,7 +21,7 @@ import useLocalStorageContext from '../../../hooks/useLocalstorage';
 import GraphMenu from './menu';
 import useGraphStatus from '../../../hooks/useGraphStatus';
 import GraphPing from './ping';
-import type { MonitorProps } from '../../../types/monitor';
+import type { MonitorProps } from '../../../../shared/types/monitor';
 
 dayjs.extend(timezone);
 dayjs.extend(utc);

@@ -31,6 +31,7 @@ const WorkspaceSelectPage = () => {
   }
 
   const handleOnclick = (workspaceId: string) => {
+    console.log('Selected workspace ID:', workspaceId);
     setClientCookie(WORKSPACE_ID_COOKIE, workspaceId);
     navigate('/home');
   };
