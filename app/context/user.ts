@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 import Role from '../../shared/permissions/role';
-import type { ContextUserProps } from '../types/context/user';
+import type { ContextUserProps } from '../../shared/types/context/user';
 import { PermissionsBits } from '../../shared/permissions/bitFlags';
 
 export default class UserStore {

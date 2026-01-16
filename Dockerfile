@@ -30,8 +30,8 @@ WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/scripts ./scripts
-COPY --from=builder /app/server ./server
-COPY --from=builder /app/shared ./shared
+COPY --from=builder /app/dist/server ./server
+COPY --from=builder /app/dist/shared ./shared
 
 COPY --from=native /app/node_modules ./node_modules
 COPY --from=native /app/package*.json ./

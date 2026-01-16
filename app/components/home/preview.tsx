@@ -8,7 +8,7 @@ import { Input, Preview } from '@lunalytics/ui';
 // import local files
 import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
-import type { ContextMonitorProps } from '../../types/context/global';
+import type { ContextMonitorProps } from '../../../shared/types/context/global';
 
 const MonitorPreview = ({ children }: { children: React.ReactNode }) => {
   const {

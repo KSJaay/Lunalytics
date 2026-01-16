@@ -1,8 +1,8 @@
 import '../components/status/configure/preview/styles.scss';
 
 // import types
-import type { MonitorProps } from '../types/monitor';
-import type { IncidentProps } from '../types/incident';
+import type { MonitorProps } from '../../shared/types/monitor';
+import type { IncidentProps } from '../../shared/types/incident';
 
 // import dependencies
 import { useEffect, useState } from 'react';

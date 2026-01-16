@@ -19,6 +19,7 @@ import IncidentRoute from './routes/incident';
 import StatusPageRoute from './routes/status-page';
 import NotificationRoute from './routes/notification';
 import WorkspaceSelectPage from './pages/workspace/select';
+import WorkspacePrefetcher from './routes/workspacePrefetcher';
 
 const Home = React.lazy(() => import('./pages/home'));
 const Settings = React.lazy(() => import('./pages/settings'));
@@ -51,9 +52,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 path="/home"
                 element={
                   <React.Suspense fallback={<Loading />}>
-                    <MonitorRoute>
+                    <WorkspacePrefetcher>
                       <Home />
-                    </MonitorRoute>
+                    </WorkspacePrefetcher>
                   </React.Suspense>
                 }
               />

@@ -16,8 +16,15 @@ const submitSetup = async (
 
     let errors = false;
     for (let key of keys) {
-      const validator = setupValidators[key];
-      errors = validator(inputs[key], setErrors);
+      const validator =
+        typeof setupValidators[key as keyof typeof setupValidators] ===
+        'function'
+          ? setupValidators[key as keyof typeof setupValidators]
+          : null;
+      errors =
+        typeof validator === 'function'
+          ? validator(inputs[key], setErrors, inputs['password'])
+          : false;
 
       if (errors) break;
     }

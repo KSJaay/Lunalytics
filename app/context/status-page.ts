@@ -9,7 +9,7 @@ import type {
   ContextStatusPageLayoutProps,
   ContextStatusPageProps,
   ContextStatusPageSettingsProps,
-} from '../types/context/status-page';
+} from '../../shared/types/context/status-page';
 
 const getUniqueId = (values: Map<string, any>) => {
   let id = uuid();

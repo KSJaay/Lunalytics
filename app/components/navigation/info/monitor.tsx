@@ -5,7 +5,10 @@ import { observer } from 'mobx-react-lite';
 
 import useContextStore from '../../../context';
 import { useTranslation } from 'react-i18next';
-import type { CertificateProps, MonitorProps } from '../../../types/monitor';
+import type {
+  CertificateProps,
+  MonitorProps,
+} from '../../../../shared/types/monitor';
 
 const notificationText = {
   basic: 'Basic',

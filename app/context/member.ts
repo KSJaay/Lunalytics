@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import type { ContextMemberProps } from '../types/context/member';
+import type { ContextMemberProps } from '../../shared/types/context/member';
 import Role from '../../shared/permissions/role';
 
 class MemberStore {

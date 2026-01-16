@@ -1,0 +1,44 @@
+import { cleanMonitor } from '../../class/monitor/index.js';
+import { handleError } from '../../utils/errors.js';
+import { UnprocessableError } from '../../../shared/utils/errors.js';
+import { MONITOR_ERRORS } from '../../../shared/constants/errors/monitor.js';
+import { fetchMonitor } from '../../database/queries/monitor.js';
+import { fetchCertificate } from '../../database/queries/certificate.js';
+import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
+
+const fetchMonitorUsingId = async (request, response) => {
+  try {
+    const { monitorId } = request.query;
+
+    if (!monitorId) {
+      return response.status(400).json(MONITOR_ERRORS.M004);
+    }
+
+    const data = await fetchMonitor(monitorId, response.locals.workspaceId);
+
+    if (!data) {
+      return response.status(404).json(MONITOR_ERRORS.M001);
+    }
+
+    const heartbeats = await fetchHeartbeats(
+      data.monitorId,
+      response.locals.workspaceId
+    );
+    const cert = await fetchCertificate(
+      data.monitorId,
+      response.locals.workspaceId
+    );
+
+    const monitor = cleanMonitor({
+      ...data,
+      heartbeats,
+      cert,
+    });
+
+    return response.json(monitor);
+  } catch (error) {
+    handleError(error, response);
+  }
+};
+
+export default fetchMonitorUsingId;

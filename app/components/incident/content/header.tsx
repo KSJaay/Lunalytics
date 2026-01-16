@@ -1,6 +1,6 @@
 // import dependencies
 import dayjs from 'dayjs';
-import type { IncidentProps } from '../../../types/incident';
+import type { IncidentProps } from '../../../../shared/types/incident';
 
 const IncidentContentHeader = ({
   incident,

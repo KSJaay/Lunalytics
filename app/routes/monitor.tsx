@@ -12,7 +12,6 @@ const MonitorRoute = observer(({ children }: { children: React.ReactNode }) => {
   const {
     userStore: { getUserRoleRoute },
     globalStore: { setMonitors, setTimeouts, hasLoadedMonitors },
-    incidentStore: { setIncidents, hasLoadedIncidents },
   } = useContextStore();
   const navigate = useNavigate();
 

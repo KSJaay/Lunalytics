@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import handleMonitor from '../handlers/monitor';
 import monitorValidators from '../../shared/validators/monitor';
-import type { MonitorProps } from '../types/monitor';
+import type { MonitorProps } from '../../shared/types/monitor';
 
 const defaultInputs = {
   type: 'http' as MonitorProps['type'],

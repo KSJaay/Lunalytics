@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { fetchMonitorById } from '../services/monitor/fetch';
-import type { MonitorProps } from '../types/monitor';
+import type { MonitorProps } from '../../shared/types/monitor';
 
 class GlobalStore {
   monitors: Map<string, MonitorProps>;

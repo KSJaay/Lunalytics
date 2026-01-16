@@ -6,7 +6,7 @@ import { MdEdit } from 'react-icons/md';
 import { FaTrashCan } from 'react-icons/fa6';
 import MonitorConfigureModal from '../components/modal/monitor/configure';
 import MonitorModal from '../components/modal/monitor/delete';
-import type { MonitorProps } from '../types/monitor';
+import type { MonitorProps } from '../../shared/types/monitor';
 
 const useMonitorOptions = (
   Container: React.ComponentType<any>,

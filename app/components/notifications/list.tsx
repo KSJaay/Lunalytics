@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import useContextStore from '../../context';
-import type { NotificationProps } from '../../types/notifications';
+import type { NotificationProps } from '../../../shared/types/notifications';
 import notificationsIcons from '../../constant/notifications.json';
 
 const NotificationList = ({

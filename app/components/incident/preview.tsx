@@ -8,7 +8,7 @@ import { Input, Preview } from '@lunalytics/ui';
 // import local files
 import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
-import type { ContextIncidentProps } from '../../types/context/incident';
+import type { ContextIncidentProps } from '../../../shared/types/context/incident';
 
 const IncidentPreview = ({ children }: { children: React.ReactNode }) => {
   const {

@@ -10,7 +10,7 @@ import { createPostRequest } from '../../../services/axios';
 import NotificationModalPlatform from './dropdown/platform';
 import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationsTemplates from '../../../../shared/notifications';
-import type { NotificationProps } from '../../../types/notifications';
+import type { NotificationProps } from '../../../../shared/types/notifications';
 import NotificationRenderer from '../../notifications/content/renderer';
 import { EmailComponent } from '../../notifications/content';
 

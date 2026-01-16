@@ -3,8 +3,8 @@ import * as NotificationPlatformContent from '../../../../constant/notifications
 import type {
   NotificationErrorProps,
   NotificationProps,
-} from '../../../../types/notifications';
-import type { NotificationInputLayoutType } from '../../../../types/constant/notifications';
+} from '../../../../../shared/types/notifications';
+import type { NotificationInputLayoutType } from '../../../../../shared/types/constant/notifications';
 
 const NotificationRenderer = ({
   inputs,
