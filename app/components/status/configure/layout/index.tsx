@@ -37,7 +37,7 @@ const StatusConfigureLayout = () => {
     modalStore: { openModal, closeModal },
   } = useContextStore();
 
-  function injectStylesheet(id, content = '') {
+  function injectStylesheet(id: string, content = '') {
     let styleSheet = document.getElementById(id);
 
     if (!styleSheet) {

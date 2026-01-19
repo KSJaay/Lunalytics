@@ -1,9 +1,15 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../../utils/errors.js';
 import { NOTIFICATION_ERRORS } from '../../../shared/constants/errors/notification.js';
-import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { deleteNotification } from '../../database/queries/notification.js';
 
-const NotificationDeleteMiddleware = async (request, response) => {
+const NotificationDeleteMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { notificationId } = request.query;
 

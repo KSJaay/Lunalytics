@@ -228,7 +228,7 @@ class Status {
     this.incidents.delete(incidentId);
   }
 
-  removeMonitor(monitorId, workspaceId) {
+  removeMonitor(monitorId) {
     this.monitors.delete(monitorId);
     this.heartbeats.delete(monitorId);
   }

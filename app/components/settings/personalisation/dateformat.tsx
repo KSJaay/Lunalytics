@@ -6,7 +6,13 @@ import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
 import timeformats from '../../../constant/dateformats.json';
 
-const SettingsPersonalisationDateformat = ({ dateformat, setDateformat }) => {
+const SettingsPersonalisationDateformat = ({
+  dateformat,
+  setDateformat,
+}: {
+  dateformat: string;
+  setDateformat: (format: string) => void;
+}) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (

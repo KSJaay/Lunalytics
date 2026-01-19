@@ -13,8 +13,15 @@ import MemberDeclineModal from '../../../modal/settings/manage/decline';
 import MemberDeleteModal from '../../../modal/settings/manage/delete';
 import MemberPermissionsModal from '../../../modal/settings/manage/permissions';
 import useContextStore from '../../../../context';
+import { ContextTeamProps } from '../../../../../shared/types/context/team';
 
-const MemberRowActions = ({ member = {}, canManage = false }) => {
+const MemberRowActions = ({
+  member = {} as ContextTeamProps,
+  canManage = false,
+}: {
+  member?: ContextTeamProps;
+  canManage: boolean;
+}) => {
   const classes = classNames({
     'member-row-icon-disabled': !canManage,
   });
@@ -32,8 +39,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
           onClick={() => {
             if (canManage) {
               openModal(
-                <MemberDeclineModal member={member} onClose={closeModal} />,
-                false
+                <MemberDeclineModal member={member} onClose={closeModal} />
               );
             }
             MemberDeclineModal;
@@ -47,8 +53,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
           onClick={() => {
             if (canManage) {
               openModal(
-                <MemberApproveModal member={member} onClose={closeModal} />,
-                false
+                <MemberApproveModal member={member} onClose={closeModal} />
               );
             }
           }}
@@ -79,8 +84,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
         onClick={() => {
           if (canManage) {
             openModal(
-              <MemberDeleteModal member={member} onClose={closeModal} />,
-              false
+              <MemberDeleteModal member={member} onClose={closeModal} />
             );
           }
         }}

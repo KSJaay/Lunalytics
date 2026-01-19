@@ -22,6 +22,7 @@ import NavigationMonitorInfo from '../components/navigation/info/monitor';
 import useScreenSize from '../hooks/useScreenSize';
 import { filterData } from '../../shared/utils/search';
 import HomeMenu from '../components/home/menu';
+import type { ContextMonitorProps } from '../../shared/types/context/global';
 
 const Home = () => {
   const {
@@ -46,7 +47,10 @@ const Home = () => {
   const monitors = useMemo(() => {
     if (!search) return allMonitors;
 
-    return filterData(allMonitors, search, ['name', 'url']);
+    return filterData(allMonitors, search, [
+      'name',
+      'url',
+    ]) as ContextMonitorProps[];
   }, [search, JSON.stringify(allMonitors)]);
 
   if (!isDesktop && activeMonitor) {

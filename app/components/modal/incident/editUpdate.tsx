@@ -24,7 +24,7 @@ const IncidentEditMessageModal = ({
   const incident = getIncidentById(incidentId);
   const {
     monitorIds = [],
-    status = '',
+    status = 'Investigating',
     message = '',
   } = incident?.messages[incidentPosition] || {};
 

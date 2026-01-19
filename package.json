@@ -6,6 +6,8 @@
   "author": "KSJaay <ksjaay@gmail.com>",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
+  "main": "./server/index.ts",
+  "source": "./app/main.tsx",
   "repository": {
     "type": "git",
     "url": "https://github.com/ksjaay/lunalytics.git"
@@ -33,13 +35,14 @@
     "test:server": "npm run test:db && cross-env NODE_ENV=test tsx server/index.ts",
     "test:ui": "vitest run --coverage --watch --ui",
     "migrate": "tsx ./scripts/migrate_manual.ts",
-    "dev:prepare": "husky",
+    "prepare": "husky",
     "preview": "vite preview",
     "reset:password": "tsx ./scripts/reset.ts",
     "server:watch": "tsx watch server/index.ts --watch server --watch shared",
     "setup": "npm install && tsx ./scripts/setup.ts && npm run build",
     "start": "cross-env NODE_ENV=production node dist/server/index.js",
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "typecheck:server": "tsc -p tsconfig.server.json --noEmit",
     "unused": "npx unimported"
   },
   "dependencies": {

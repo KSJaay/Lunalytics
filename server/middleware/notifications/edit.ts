@@ -1,10 +1,16 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../../utils/errors.js';
 import { NOTIFICATION_ERRORS } from '../../../shared/constants/errors/notification.js';
-import { UnprocessableError } from '../../../shared/utils/errors.js';
 import NotificationValidators from '../../../shared/validators/notifications/index.js';
 import { editNotification } from '../../database/queries/notification.js';
 
-const NotificationEditMiddleware = async (request, response) => {
+const NotificationEditMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const notification = request.body;
   const { workspaceId } = response.locals;
 

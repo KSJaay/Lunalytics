@@ -13,10 +13,10 @@ import {
 interface IncidentMonitorsProps {
   values?: {
     monitorIds: string[];
-    affect: string;
+    affect?: string;
   };
   handleSelectedMonitor: (id: string) => void;
-  handleChange: (field: string, value: string) => void;
+  handleChange?: (field: string, value: string) => void;
 }
 
 const IncidentMonitors = ({

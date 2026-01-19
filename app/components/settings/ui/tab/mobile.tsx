@@ -1,3 +1,5 @@
+import type { SettingsTabNames } from './desktop';
+
 // import dependencies
 import {
   FaChevronRight,
@@ -52,14 +54,20 @@ const tabs = (isAdmin: boolean) => [
   },
 ];
 
-const SettingsMobileTabs = ({ handleTabChange, isAdmin }) => {
+const SettingsMobileTabs = ({
+  handleTabChange,
+  isAdmin = false,
+}: {
+  handleTabChange: (page: SettingsTabNames) => void;
+  isAdmin?: boolean;
+}) => {
   const tabsList = tabs(isAdmin).map(({ title, items }) => {
     const itemsList = items.map((item) => {
       return (
         <div
           key={item.name}
           className="settings-mobile-tab-text"
-          onClick={() => handleTabChange(item.name)}
+          onClick={() => handleTabChange(item.name as SettingsTabNames)}
         >
           {item.icon}
           <div style={{ flex: 1 }}>{item.name}</div>

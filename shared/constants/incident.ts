@@ -28,9 +28,11 @@ export const affectTextArray: AffectText[] = [
 ];
 
 export const getIncidentAffect = (
-  id: string,
+  id?: string,
   textOnly: boolean = false
 ): string | AffectText | undefined => {
+  if (!id) return undefined;
+
   const affect = affectTextArray.find((item) => item.id === id);
   if (!affect) return undefined;
   if (textOnly) {

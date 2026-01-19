@@ -51,7 +51,7 @@ const WorkspacePrefetcher = observer(
     const store = useContextStore();
     const location = useLocation();
 
-    const [prefetched, setPrefetched] = useState(false);
+    const [_, setPrefetched] = useState(false);
     const prefetchedRef = useRef(false);
 
     const currentConfig = useMemo(

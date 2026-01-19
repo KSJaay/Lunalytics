@@ -1,5 +1,5 @@
 // import dependencies
-import axios, { Axios, AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import https from 'https';
 import dns from 'dns';
 import { performance } from 'perf_hooks';

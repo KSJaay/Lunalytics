@@ -1,12 +1,15 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { cleanMonitor } from '../../class/monitor/index.js';
 import { handleError } from '../../utils/errors.js';
-import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { MONITOR_ERRORS } from '../../../shared/constants/errors/monitor.js';
 import { fetchMonitor } from '../../database/queries/monitor.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
 import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
 
-const fetchMonitorUsingId = async (request, response) => {
+const fetchMonitorUsingId = async (request: Request, response: Response) => {
   try {
     const { monitorId } = request.query;
 

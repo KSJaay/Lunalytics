@@ -48,6 +48,9 @@ const SettingsAuthentication = () => {
         ) : (
           config.providers.map((providerId) => {
             const provider = getProviderById(providerId);
+
+            if (!provider) return null;
+
             return <div key={provider.id}>{provider.name}</div>;
           })
         )}

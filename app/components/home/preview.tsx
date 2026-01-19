@@ -8,7 +8,6 @@ import { Input, Preview } from '@lunalytics/ui';
 // import local files
 import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
-import type { ContextMonitorProps } from '../../../shared/types/context/global';
 
 const MonitorPreview = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -21,25 +20,23 @@ const MonitorPreview = ({ children }: { children: React.ReactNode }) => {
   const items = useMemo(() => {
     if (!allMonitors?.length) return [];
 
-    return filterData(allMonitors, search, ['name', 'url']).map(
-      (monitor: ContextMonitorProps) => {
-        return (
-          <div
-            className="navigation-preview-content"
-            key={monitor.monitorId}
-            onClick={() => {
-              navigate('/home');
-              setActiveMonitor(monitor.monitorId);
-            }}
-          >
-            <div className="navigation-preview-item">
-              <div>{monitor.name}</div>
-              <div className="navigation-preview-url">{monitor.url}</div>
-            </div>
+    return filterData(allMonitors, search, ['name', 'url']).map((monitor) => {
+      return (
+        <div
+          className="navigation-preview-content"
+          key={monitor.monitorId}
+          onClick={() => {
+            navigate('/home');
+            setActiveMonitor(monitor.monitorId);
+          }}
+        >
+          <div className="navigation-preview-item">
+            <div>{monitor.name}</div>
+            <div className="navigation-preview-url">{monitor.url}</div>
           </div>
-        );
-      }
-    );
+        </div>
+      );
+    });
   }, [search, JSON.stringify(allMonitors)]);
 
   const input = (

@@ -12,7 +12,7 @@ import SettingsAccountAvatarModal from '../../modal/settings/account/avatar';
 
 const userPermissionNames = { 1: 'Owner', 2: 'Admin', 3: 'Editor', 4: 'Guest' };
 
-const isImageUrl = (url) => {
+const isImageUrl = (url: string) => {
   if (typeof url !== 'string') {
     return false;
   }
@@ -38,7 +38,7 @@ const SettingsAccountAvatar = () => {
     </div>
   );
 
-  const handleAvatarChange = async (selectedAvatar) => {
+  const handleAvatarChange = async (selectedAvatar: string | null) => {
     try {
       await createPostRequest('/api/user/update/avatar', {
         avatar: selectedAvatar,

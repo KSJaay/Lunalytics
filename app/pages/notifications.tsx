@@ -16,6 +16,7 @@ import NotificationList from '../components/notifications/list';
 import NotificationModal from '../components/modal/notification';
 import HomeNotificationHeader from '../components/notifications/header';
 import NotificationRender from '../components/notifications/content';
+import type { NotificationProps } from '../../shared/types/notifications';
 
 const Notifications = () => {
   const {
@@ -47,7 +48,10 @@ const Notifications = () => {
   const notifications = useMemo(() => {
     if (!search) return allNotifications;
 
-    return filterData(allNotifications, search, ['friendlyName', 'platform']);
+    return filterData(allNotifications, search, [
+      'friendlyName',
+      'platform',
+    ]) as NotificationProps[];
   }, [search, allNotifications]);
 
   if (!isDesktop && activeNotification) {

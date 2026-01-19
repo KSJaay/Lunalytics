@@ -2,6 +2,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 import type {
   ContextAuthenticationConfigProps,
   ContextAuthenticationProviderProps,
+  Providers,
 } from '../../shared/types/context/authentication';
 
 class Authentication {
@@ -52,7 +53,7 @@ class Authentication {
     this.providers.delete(providerId);
   };
 
-  pauseProvider = (providerId: string, paused: boolean) => {
+  pauseProvider = (providerId: Providers, paused: boolean) => {
     const provider = this.providers.get(providerId);
     if (provider) {
       provider.enabled = paused;

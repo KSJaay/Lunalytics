@@ -23,7 +23,7 @@ const SettingsProviderAuthentication = ({ integration }) => {
           src={integration.icon}
           style={{
             backgroundColor:
-              integration.name === 'GitHub' ? 'var(--white)' : null,
+              integration.name === 'GitHub' ? 'var(--white)' : undefined,
           }}
           className="settings-auth-provider-img"
         />
@@ -48,7 +48,10 @@ const SettingsProviderAuthentication = ({ integration }) => {
           Configure
         </Button>
         <Switch
-          onChange={() => pauseProvider(!provider?.enabled)}
+          onChange={() => {
+            if (!provider) return;
+            pauseProvider(provider?.provider, !provider?.enabled);
+          }}
           checked={provider?.enabled}
           disabled={!provider}
         />

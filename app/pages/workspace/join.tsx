@@ -33,7 +33,7 @@ const WorkspaceJoinPage = () => {
       });
 
       navigate('/home');
-    } catch (error) {
+    } catch {
       toast.error('Unable to create workspace. Please try again.');
     }
   };

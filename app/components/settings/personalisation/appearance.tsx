@@ -10,6 +10,10 @@ const SettingsPersonalisationAppearance = ({
   dateformat,
   timeformat,
   theme,
+}: {
+  dateformat: string;
+  timeformat: string;
+  theme: 'dark' | 'light' | 'system';
 }) => {
   const {
     userStore: {
@@ -21,8 +25,8 @@ const SettingsPersonalisationAppearance = ({
     theme === 'dark'
       ? 'Woow this looks so nice to my eyes'
       : theme === 'light'
-      ? 'Why is it so bright, I can barely look at this'
-      : 'I have no clue, might be dark, might be light';
+        ? 'Why is it so bright, I can barely look at this'
+        : 'I have no clue, might be dark, might be light';
 
   return (
     <>

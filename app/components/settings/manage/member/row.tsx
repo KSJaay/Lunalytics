@@ -9,15 +9,20 @@ import MemberRowActions from './actions';
 import useContextStore from '../../../../context';
 import Role from '../../../../../shared/permissions/role';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { ContextTeamProps } from '../../../../../shared/types/context/team';
 
-const isImageUrl = (url) => {
+const isImageUrl = (url: string) => {
   if (typeof url !== 'string') {
     return false;
   }
   return url.match(/^https?:\/\//gim) !== null;
 };
 
-const MemberTableRow = ({ member = {} }) => {
+const MemberTableRow = ({
+  member = {} as ContextTeamProps,
+}: {
+  member?: ContextTeamProps;
+}) => {
   const {
     userStore: { user },
   } = useContextStore();
@@ -32,8 +37,8 @@ const MemberTableRow = ({ member = {} }) => {
   const memberPermission = !member.isVerified
     ? 'Unverified'
     : member.isOwner
-    ? 'Owner'
-    : 'Member';
+      ? 'Owner'
+      : 'Member';
 
   const date = dayjs(member.created_at).format('MMM DD, YYYY');
   const time = dayjs(member.created_at).format('hh:mm A');

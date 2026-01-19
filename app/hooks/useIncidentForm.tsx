@@ -3,7 +3,9 @@ import { useReducer } from 'react';
 
 // import local files
 import { createPostRequest } from '../services/axios';
-import IncidentValidator from '../../shared/validators/incident';
+import IncidentValidator, {
+  IncidentValidatorInput,
+} from '../../shared/validators/incident';
 
 const defaultInputs = {
   monitorIds: [],
@@ -13,14 +15,17 @@ const defaultInputs = {
 };
 
 const inputReducer = (
-  state: typeof defaultInputs,
+  state: IncidentValidatorInput,
   action: { key: any; value: any }
 ) => {
   return { ...state, [action.key]: action.value };
 };
 
 const useIncidentForm = (userValues = defaultInputs) => {
-  const [values, dispatch] = useReducer(inputReducer, userValues);
+  const [values, dispatch] = useReducer(
+    inputReducer,
+    userValues as IncidentValidatorInput
+  );
 
   const handleSubmit = async () => {
     const result = IncidentValidator(values);

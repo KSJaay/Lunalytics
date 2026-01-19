@@ -10,9 +10,9 @@ export interface IncidentMessage {
 }
 
 const messagesValidator = (
-  messages: IncidentMessage[]
+  messages?: IncidentMessage[]
 ): string | false | undefined => {
-  if (!messages.length) {
+  if (!messages?.length) {
     return;
   }
 
@@ -50,12 +50,12 @@ const messagesValidator = (
 };
 
 export interface IncidentValidatorInput {
-  title: string;
-  affect: string;
+  title?: string;
+  affect: 'Outage' | 'Incident' | 'Maintenance' | 'Operational';
   monitorIds: string[];
-  status: string;
-  message: string;
-  messages: IncidentMessage[];
+  status: 'Investigating' | 'Identified' | 'Monitoring' | 'Resolved';
+  message?: string;
+  messages?: IncidentMessage[];
 }
 
 const IncidentValidator = ({
@@ -86,14 +86,16 @@ const IncidentValidator = ({
     return 'Please select a valid affect for the incident';
   }
 
-  if (!messages.length && !message) {
+  if (!messages?.length && !message) {
     return 'Please provides a message for the incident';
   }
 
-  const isMessagesInvalid = messagesValidator(messages);
+  if (!messages?.length) {
+    const isMessagesInvalid = messagesValidator(messages);
 
-  if (isMessagesInvalid) {
-    return isMessagesInvalid;
+    if (isMessagesInvalid) {
+      return isMessagesInvalid;
+    }
   }
 
   return false;

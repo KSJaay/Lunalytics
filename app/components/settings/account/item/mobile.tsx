@@ -12,7 +12,15 @@ import SettingsAccountPasswordModal from '../../../modal/settings/account/passwo
 import SettingsAccountTransferModal from '../../../modal/settings/account/transfer';
 import SettingsAccountEditModal from '../../../modal/settings/account/username';
 
-const selectModal = (id, props, closeModal) => {
+interface SettingsAccountMobileItemProps {
+  title: string;
+  id: string;
+  canEdit?: boolean;
+  fontColor?: string;
+  ownerOnly?: boolean;
+}
+
+const selectModal = (id: string, props: any, closeModal: () => void) => {
   switch (id) {
     case 'displayName':
       return <SettingsAccountEditModal closeModal={closeModal} {...props} />;
@@ -40,7 +48,7 @@ const SettingsAccountMobileItem = ({
   fontColor,
   ownerOnly,
   ...props
-}) => {
+}: SettingsAccountMobileItemProps) => {
   const {
     userStore: { user },
     modalStore: { openModal, closeModal },

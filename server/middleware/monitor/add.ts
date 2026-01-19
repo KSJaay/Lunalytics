@@ -1,6 +1,8 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
 // import local files
 import { handleError } from '../../utils/errors.js';
-import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { MONITOR_ERRORS } from '../../../shared/constants/errors/monitor.js';
 import validators from '../../../shared/validators/monitor.js';
 import cache from '../../cache/monitor/index.js';
@@ -116,7 +118,7 @@ export const formatMonitorData = (body, email, workspaceId) => {
   return monitor;
 };
 
-const monitorAdd = async (request, response) => {
+const monitorAdd = async (request: Request, response: Response) => {
   try {
     const { type } = request.body;
 

@@ -1,9 +1,15 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../../utils/errors.js';
-import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { NOTIFICATION_ERRORS } from '../../../shared/constants/errors/notification.js';
 import { toggleNotification } from '../../database/queries/notification.js';
 
-const NotificationToggleMiddleware = async (request, response) => {
+const NotificationToggleMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { notificationId, isEnabled } = request.query;
 
   try {
@@ -12,12 +18,10 @@ const NotificationToggleMiddleware = async (request, response) => {
     }
 
     if (isEnabled !== 'true' && isEnabled !== 'false') {
-      return response
-        .status(400)
-        .json({
-          ...NOTIFICATION_ERRORS.N003,
-          details: 'isEnabled is not a boolean',
-        });
+      return response.status(400).json({
+        ...NOTIFICATION_ERRORS.N003,
+        details: 'isEnabled is not a boolean',
+      });
     }
 
     await toggleNotification(
