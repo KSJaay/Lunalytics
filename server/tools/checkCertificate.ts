@@ -5,14 +5,14 @@ import { isEmpty } from '../../shared/utils/object.js';
 
 // Some of the following code is from https://github.com/johncrisostomo/get-ssl-certificate
 
-interface CertInfo {
-  isValid: boolean;
-  issuer?: string;
-  validFrom?: string;
-  validTill?: string;
-  validOn?: string;
-  daysRemaining?: number;
-}
+// interface CertInfo {
+//   isValid: boolean;
+//   issuer?: string;
+//   validFrom?: string;
+//   validTill?: string;
+//   validOn?: string;
+//   daysRemaining?: number;
+// }
 
 interface FetchOptions {
   hostname: string;
@@ -117,7 +117,7 @@ const getDaysRemaining = (validFrom: Date, validTo: Date) => {
   return daysRemaining;
 };
 
-const parseCert = (cert) => {
+const parseCert = (cert: any) => {
   const validOn = cert.subjectaltname
     ?.replace(/DNS:|IP Address:/g, '')
     .split(', ');

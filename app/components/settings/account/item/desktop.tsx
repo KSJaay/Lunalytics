@@ -14,7 +14,16 @@ import SettingsAccountPasswordModal from '../../../modal/settings/account/passwo
 import SettingsAccountTransferModal from '../../../modal/settings/account/transfer';
 import SettingsAccountUsernameModal from '../../../modal/settings/account/username';
 
-const selectModal = (id, props, closeModal) => {
+interface SettingsAccountDesktopItemProps {
+  title: string;
+  id: string;
+  canEdit?: boolean;
+  description?: string;
+  customButton?: React.ReactNode;
+  ownerOnly?: boolean;
+}
+
+const selectModal = (id: string, props: any, closeModal: () => void) => {
   switch (id) {
     case 'displayName':
       return (
@@ -45,7 +54,7 @@ const SettingsAccountDesktopItem = ({
   customButton,
   ownerOnly,
   ...props
-}) => {
+}: SettingsAccountDesktopItemProps) => {
   const classes = classNames({
     'settings-account-item': !description,
     'settings-account-item-vertical': description,

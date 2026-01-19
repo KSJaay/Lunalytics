@@ -1,13 +1,15 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
 // import local files
 import { handleError } from '../../utils/errors.js';
-import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { MONITOR_ERRORS } from '../../../shared/constants/errors/monitor.js';
 import { deleteCertificate } from '../../database/queries/certificate.js';
 import { deleteHeartbeats } from '../../database/queries/heartbeat.js';
 import { deleteMonitor } from '../../database/queries/monitor.js';
 import statusCache from '../../cache/status.js';
 
-const monitorDelete = async (request, response) => {
+const monitorDelete = async (request: Request, response: Response) => {
   try {
     const { monitorId } = request.query;
 

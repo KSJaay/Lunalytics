@@ -10,7 +10,7 @@ import type { MonitorProps } from '../../shared/types/monitor';
 
 const useMonitorOptions = (
   Container: React.ComponentType<any>,
-  monitor: MonitorProps,
+  monitor: MonitorProps | undefined,
   addMonitor: (monitor: MonitorProps) => void,
   editMonitor: (monitor: MonitorProps) => void,
   removeMonitor: (monitorId: string) => void,
@@ -86,7 +86,7 @@ const useMonitorOptions = (
   const handleDelete = () => {
     openModal(
       <MonitorModal
-        name={monitor.name}
+        name={monitor?.name}
         handleConfirm={handleConfirm}
         handleClose={closeModal}
       />

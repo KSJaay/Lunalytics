@@ -158,7 +158,8 @@ export const updateUserAvatar = async (email, avatar) => {
   return client('user').where({ email }).update({ avatar });
 };
 
-export const fetchMembers = async (memberHasManageTeam = false, workspaceId: string) => {
+// workspaceId: string
+export const fetchMembers = async (memberHasManageTeam = false) => {
   const client = await database.connect();
 
   if (memberHasManageTeam) {

@@ -114,7 +114,7 @@ const NotificationModal = ({
 
       <NotificationRenderer
         isEdit={false}
-        inputs={inputs}
+        inputs={inputs as NotificationProps}
         errors={errors}
         handleInput={handleInput}
       />

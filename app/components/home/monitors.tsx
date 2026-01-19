@@ -25,6 +25,8 @@ const HomeMonitorsList = ({
   ).map((item) => {
     const monitor = getMonitor(item.monitorId);
 
+    if (!monitor) return null;
+
     const classes = classNames('item', {
       'item-active': activeMonitor?.monitorId === monitor.monitorId,
     });

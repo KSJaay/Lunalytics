@@ -9,12 +9,21 @@ interface SetupDropdownProps {
   label?: string;
 }
 
+interface SetupDropdownItemProps {
+  title: string;
+  img: string;
+  value: string;
+  handleInput: (value: any) => void;
+  inputs: Record<string, any>;
+}
+
 const SetupDropdown = ({
   id,
   options,
   label = 'Dropdown',
 }: SetupDropdownProps) => {
-  const { handleInput, inputs } = useSetupFormContext();
+  const { handleInput, inputs } =
+    useSetupFormContext() as SetupDropdownItemProps;
   const { dropdownIsOpen, toggleDropdown } = useDropdown(false, 'Automatic');
   const value = inputs[id] || 'automatic';
 

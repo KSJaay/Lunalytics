@@ -1,3 +1,6 @@
+// import type definitions
+import type { SettingsTabNames } from '../tab/desktop';
+
 // import dependencies
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
@@ -14,9 +17,13 @@ import SettingsPersonalisation from '../../personalisation';
 import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
 import useMemberContext from '../../../../context/member';
 
-const SettingsMobile = ({ handleKeydown }) => {
+const SettingsMobile = ({
+  handleKeydown,
+}: {
+  handleKeydown: (event: KeyboardEvent | null, flag: boolean) => void;
+}) => {
   const [page, setPage] = useState('homepage');
-  const handleTabChange = (page) => setPage(page);
+  const handleTabChange = (page: SettingsTabNames) => setPage(page);
   const { member } = useMemberContext();
 
   const isAdmin = member?.role.hasPermission(PermissionsBits.ADMINISTRATOR);

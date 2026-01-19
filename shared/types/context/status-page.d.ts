@@ -102,6 +102,7 @@ export interface ContextStatusPageSettingsProps {
   highlight: string;
   url: string;
   logo: string;
+  favicon: string;
   title: string;
   homepageUrl: string;
   isPublic: boolean;

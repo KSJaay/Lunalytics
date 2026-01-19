@@ -1,11 +1,17 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../../utils/errors.js';
 import { NOTIFICATION_ERRORS } from '../../../shared/constants/errors/notification.js';
-import { UnprocessableError } from '../../../shared/utils/errors.js';
 import NotificationValidators from '../../../shared/validators/notifications/index.js';
 import { createNotification } from '../../database/queries/notification.js';
 import randomId from '../../utils/randomId.js';
 
-const NotificationCreateMiddleware = async (request, response) => {
+const NotificationCreateMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const notification = request.body;
 
   try {

@@ -12,7 +12,13 @@ const times = {
   'hh:mm A': '11:59 PM',
 };
 
-const SettingsPersonalisationTimeformat = ({ timeformat, setTimeformat }) => {
+const SettingsPersonalisationTimeformat = ({
+  timeformat,
+  setTimeformat,
+}: {
+  timeformat: string;
+  setTimeformat: (format: string) => void;
+}) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   return (
@@ -29,7 +35,7 @@ const SettingsPersonalisationTimeformat = ({ timeformat, setTimeformat }) => {
           toggleDropdown={toggleDropdown}
         >
           <Button fullWidth variant="outline">
-            {times[timeformat]}
+            {times[timeformat as keyof typeof times]}
           </Button>
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
@@ -40,7 +46,7 @@ const SettingsPersonalisationTimeformat = ({ timeformat, setTimeformat }) => {
               showDot
               isSelected={time === timeformat}
             >
-              {times[time]}
+              {times[time as keyof typeof times]}
             </Dropdown.Item>
           ))}
         </Dropdown.List>

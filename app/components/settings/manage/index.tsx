@@ -20,7 +20,7 @@ const ManageTeam = () => {
 
   const sortedMembers = teamMembers
     ?.sort((a, b) => a?.permission - b?.permission)
-    .sort((a, b) => b?.isVerified - a?.isVerified);
+    .sort((a, b) => +b?.isVerified - +a?.isVerified);
 
   const { isLoading } = useFetch({
     url: '/api/user/team',

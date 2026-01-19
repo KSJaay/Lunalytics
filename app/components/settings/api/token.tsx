@@ -13,7 +13,17 @@ import useClipboard from '../../../hooks/useClipboard';
 import SettingsApiCloseModal from '../../modal/settings/api/delete';
 import SettingsApiConfigureModal from '../../modal/settings/api/createOrEdit';
 
-const ManageApiToken = ({ tokenId, tokenName, tokenPermissions }) => {
+interface ManageApiTokenProps {
+  tokenId: string;
+  tokenName: string;
+  tokenPermissions: number;
+}
+
+const ManageApiToken = ({
+  tokenId,
+  tokenName,
+  tokenPermissions,
+}: ManageApiTokenProps) => {
   const {
     modalStore: { openModal, closeModal },
   } = useContextStore();

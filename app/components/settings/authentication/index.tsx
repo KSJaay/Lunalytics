@@ -10,6 +10,7 @@ import SettingsProviderAuthentication from './provider';
 import { providers } from '../../../../shared/constants/provider';
 import useAuthenticationContext from '../../../context/authentication';
 import { createPostRequest } from '../../../services/axios';
+import { ContextAuthenticationConfigProps } from '../../../../shared/types/context/authentication';
 
 const SettingsAuthentication = () => {
   const { setProviders, config, setConfig, setConfigUsingKey } =
@@ -35,7 +36,10 @@ const SettingsAuthentication = () => {
     },
   });
 
-  const handleSwitchChange = async (key, value) => {
+  const handleSwitchChange = async (
+    key: keyof ContextAuthenticationConfigProps,
+    value: boolean
+  ) => {
     try {
       if (!config.sso && key === 'nativeSignin') {
         return toast.error(
@@ -50,7 +54,7 @@ const SettingsAuthentication = () => {
       setConfigUsingKey(key, value);
 
       toast.success('Authentication configuration updated successfully');
-    } catch (error) {
+    } catch (error: any) {
       if (error?.response?.data?.error) {
         return toast.error(error.response.data.error);
       }

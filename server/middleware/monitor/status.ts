@@ -1,5 +1,8 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../../utils/errors.js';
-import { UnprocessableError } from '../../../shared/utils/errors.js';
 import { MONITOR_ERRORS } from '../../../shared/constants/errors/monitor.js';
 import { fetchMonitor } from '../../database/queries/monitor.js';
 import {
@@ -7,9 +10,10 @@ import {
   fetchHeartbeats,
   fetchHourlyHeartbeats,
 } from '../../database/queries/heartbeat.js';
+
 const validTypes = ['latest', 'day', 'week', 'month'];
 
-const fetchMonitorStatus = async (request, response) => {
+const fetchMonitorStatus = async (request: Request, response: Response) => {
   try {
     const { monitorId, type = 'latest' } = request.query;
 

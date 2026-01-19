@@ -5,11 +5,7 @@ import tcpStatusCheck from '../tools/tcpPing.js';
 import Collection from '../../shared/utils/collection.js';
 import NotificationServices from '../notifications/index.js';
 import logger from '../utils/logger.js';
-import {
-  fetchAllMonitors,
-  fetchMonitor,
-  fetchMonitors,
-} from '../database/queries/monitor.js';
+import { fetchAllMonitors, fetchMonitor } from '../database/queries/monitor.js';
 import {
   createHeartbeat,
   deleteHeartbeats,

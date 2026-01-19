@@ -94,7 +94,7 @@ export interface NotificationSlack {
   };
 }
 
-export interface NotificationSlack extends NotificationErrors {
+export interface NotificationSlackErrors extends NotificationErrors {
   channel?: string;
   textMessage?: string;
   username?: string;

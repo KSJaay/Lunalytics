@@ -8,7 +8,6 @@ import { Input, Preview } from '@lunalytics/ui';
 // import local files
 import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
-import type { ContextIncidentProps } from '../../../shared/types/context/incident';
 
 const IncidentPreview = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -22,7 +21,7 @@ const IncidentPreview = ({ children }: { children: React.ReactNode }) => {
     if (!allIncidents?.length) return [];
 
     return filterData(allIncidents, search, ['title', 'status', 'affect']).map(
-      (incident: ContextIncidentProps) => {
+      (incident) => {
         const handleOnClick = () => {
           navigate('/incidents');
           setActiveIncident(incident.incidentId);

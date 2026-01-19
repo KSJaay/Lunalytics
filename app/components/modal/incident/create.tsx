@@ -16,7 +16,7 @@ const IncidentCreateModal = () => {
   } = useContextStore();
   const { values, dispatch, handleSubmit } = useIncidentForm();
 
-  const handleSelectedMonitor = (monitorId: never) => {
+  const handleSelectedMonitor = (monitorId: string) => {
     const monitors = values.monitorIds;
 
     if (monitors.includes(monitorId)) {

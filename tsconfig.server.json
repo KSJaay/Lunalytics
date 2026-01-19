@@ -10,13 +10,11 @@
     "rootDir": ".",
     "outDir": "dist",
 
-    "declaration": false,
-    "declarationMap": false,
-    "sourceMap": false,
-    "noEmitOnError": false,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
 
-    "allowJs": true,
-    "verbatimModuleSyntax": false // ← change here
+    "allowJs": true
   },
   "include": ["server", "shared"],
   "exclude": ["app", "dist", "node_modules"]

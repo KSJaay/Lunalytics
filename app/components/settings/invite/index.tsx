@@ -33,7 +33,7 @@ const ManageInvites = () => {
     onFailure: () => toast.error("Couldn't fetch api tokens"),
   });
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     try {
       await createPostRequest('/api/invite/delete', { id });
       removeInvite(id);
@@ -44,7 +44,7 @@ const ManageInvites = () => {
     }
   };
 
-  const handlePause = async (id, paused) => {
+  const handlePause = async (id: string, paused: boolean) => {
     try {
       await createPostRequest('/api/invite/pause', { id, paused: !paused });
       pauseInvite(id, !paused);
