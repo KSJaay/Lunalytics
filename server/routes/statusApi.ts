@@ -76,7 +76,10 @@ router.get('/', async (request: Request, response: Response) => {
       }
     }
 
-    const payload = statusCache.fetchStatusPage(status.statusId);
+    const payload = statusCache.fetchStatusPage(
+      status.statusId,
+      status.workspaceId
+    );
 
     return response.json(cleanStatusApiResponse(payload));
   } catch (error) {

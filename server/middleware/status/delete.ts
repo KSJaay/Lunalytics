@@ -18,7 +18,7 @@ const deleteStatusPageMiddleware = async (
     }
 
     await deleteStatusPage(statusPageId, response.locals.workspaceId);
-    statusCache.deleteStatusPage(statusPageId);
+    statusCache.deleteStatusPage(statusPageId, response.locals.workspaceId);
 
     response.status(200).send({
       message: 'Status page deleted successfully!',

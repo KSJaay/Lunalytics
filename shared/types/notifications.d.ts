@@ -37,6 +37,37 @@ export interface NotificationDiscordErrors extends NotificationErrors {
   textMessage?: string;
 }
 
+export interface NotificationEmail {
+  id: string;
+  platform: NotificationPlatforms;
+  messageType: NotificationMessageType;
+  token: string;
+  email: string;
+  friendlyName: string;
+  isEnabled: boolean;
+  data: {
+    port?: number;
+    security?: boolean;
+    username?: string;
+    password?: string;
+    fromEmail?: string;
+    toEmail?: string;
+    ccEmail?: string;
+    bccEmail?: string;
+  };
+}
+
+export interface NotificationEmailErrors extends NotificationErrors {
+  port?: number;
+  security?: boolean;
+  username?: string;
+  password?: string;
+  fromEmail?: string;
+  toEmail?: string;
+  ccEmail?: string;
+  bccEmail?: string;
+}
+
 export interface NotificationHomeAssistant {
   id: string;
   platform: NotificationPlatforms;
@@ -142,6 +173,7 @@ export interface NotificationWebhookErrors extends NotificationErrors {
 
 export type NotificationProps =
   | NotificationDiscord
+  | NotificationEmail
   | NotificationHomeAssistant
   | NotificationPushover
   | NotificationSlack
@@ -150,6 +182,7 @@ export type NotificationProps =
 
 export type NotificationErrorProps =
   | NotificationDiscordErrors
+  | NotificationEmailErrors
   | NotificationHomeAssistantErrors
   | NotificationPushoverErrors
   | NotificationSlackErrors

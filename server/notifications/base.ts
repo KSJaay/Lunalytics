@@ -1,4 +1,7 @@
-const parseErrorData = (data) => {
+import { HeartbeatProps, MonitorProps } from '../../shared/types/monitor.js';
+import { NotificationProps } from '../../shared/types/notifications.js';
+
+const parseErrorData = (data: any) => {
   try {
     return JSON.stringify(data);
   } catch {
@@ -7,8 +10,8 @@ const parseErrorData = (data) => {
 };
 
 class NotificationBase {
-  name = undefined;
-  success = 'Sent Successfully!';
+  name?: string = undefined;
+  success: string = 'Sent Successfully!';
 
   /**
    * Send a notification
@@ -19,17 +22,29 @@ class NotificationBase {
    * @throws Throws error about you being a dummy :)
    */
 
-  // eslint-disable-next-line no-unused-vars
-  async send(notification, monitor, heartbeat) {
+  async send(
+    // eslint-disable-next-line no-unused-vars @ts-ignore
+    notification: NotificationProps,
+    // eslint-disable-next-line no-unused-vars @ts-ignore
+    monitor: MonitorProps,
+    // eslint-disable-next-line no-unused-vars @ts-ignore
+    heartbeat: HeartbeatProps
+  ): Promise<void | string> {
     throw new Error('Override this function dummy!');
   }
 
-  // eslint-disable-next-line no-unused-vars
-  async sendRecovery(notification, monitor, heartbeat) {
+  async sendRecovery(
+    // eslint-disable-next-line no-unused-vars @ts-ignore
+    notification: NotificationProps,
+    // eslint-disable-next-line no-unused-vars @ts-ignore
+    monitor: MonitorProps,
+    // eslint-disable-next-line no-unused-vars @ts-ignore
+    heartbeat: HeartbeatProps
+  ): Promise<void | string> {
     throw new Error('Override this function dummy!');
   }
 
-  handleError(error) {
+  handleError(error: any): void {
     const message =
       error?.message || (typeof error === 'string' ? error : 'Unknown error');
 
