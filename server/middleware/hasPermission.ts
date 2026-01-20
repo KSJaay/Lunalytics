@@ -6,7 +6,7 @@ import Role from '../../shared/permissions/role.js';
 
 export const hasRequiredPermission =
   (requiredPermission: number) =>
-  (request: Request, response: Response, next: NextFunction) => {
+  (_request: Request, response: Response, next: NextFunction) => {
     const { user: { permission } = {} } = response.locals;
     if (!permission) return response.sendStatus(401);
 
@@ -21,7 +21,7 @@ export const hasRequiredPermission =
 
 export const userHasPermission =
   (requiredPermission: number) =>
-  (request: Request, response: Response, next: NextFunction) => {
+  (_request: Request, response: Response, next: NextFunction) => {
     const { user: { permission } = {} } = response.locals;
     if (!permission) return response.sendStatus(401);
 
@@ -36,7 +36,7 @@ export const userHasPermission =
 
 export const memberHasPermission =
   (requiredPermission: number) =>
-  (request: Request, response: Response, next: NextFunction) => {
+  (_request: Request, response: Response, next: NextFunction) => {
     const { member: { permission } = {} } = response.locals;
     if (!permission) return response.sendStatus(401);
 

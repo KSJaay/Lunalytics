@@ -2,12 +2,16 @@ import { timeToMs } from '../../../shared/utils/ms.js';
 import database from '../connection.js';
 import { nanoid } from 'nanoid';
 
-export const createUserSession = async (email, device, data) => {
+export const createUserSession = async (
+  email: string,
+  device: any,
+  data: any
+) => {
   const sessionId = nanoid(92);
 
   const client = await database.connect();
 
-  await client('user_session').insert({
+  await client?.('user_session').insert({
     email,
     sessionId,
     device,
@@ -18,16 +22,16 @@ export const createUserSession = async (email, device, data) => {
   return sessionId;
 };
 
-export const userSessionExists = async (sessionId) => {
+export const userSessionExists = async (sessionId: string) => {
   const client = await database.connect();
 
-  return client('user_session').where({ sessionId }).first();
+  return client?.('user_session').where({ sessionId }).first();
 };
 
-export const deleteUserSession = async (sessionId) => {
+export const deleteUserSession = async (sessionId: string) => {
   const client = await database.connect();
 
-  return client('user_session').where({ sessionId }).del();
+  return client?.('user_session').where({ sessionId }).del();
 };
 
 export const cleanUserSessions = async () => {
@@ -36,5 +40,5 @@ export const cleanUserSessions = async () => {
   const retentionMs = timeToMs(60, 'days');
   const date = new Date(Date.now() - retentionMs).toISOString();
 
-  return client('user_session').where('created_at', '<', date).del();
+  return client?.('user_session').where('created_at', '<', date).del();
 };

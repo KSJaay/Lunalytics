@@ -1,8 +1,15 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import statusCache from '../../cache/status.js';
 import { deleteStatusPage } from '../../database/queries/status.js';
 import { handleError } from '../../utils/errors.js';
 
-const deleteStatusPageMiddleware = async (request, response) => {
+const deleteStatusPageMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { statusPageId } = request.body;
 
   try {

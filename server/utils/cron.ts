@@ -69,7 +69,7 @@ async function initialiseCronJobs() {
             lastHour
           );
 
-          if (query.length === 0) {
+          if (!query || query.length === 0) {
             continue;
           }
 

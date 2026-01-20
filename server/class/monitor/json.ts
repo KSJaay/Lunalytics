@@ -2,9 +2,9 @@ import { parseJsonOrArray } from '../../utils/parser.js';
 import cleanCertificate from '../certificate.js';
 
 export const clean = (
-  { heartbeats = [], cert, ...monitor },
-  includeHeartbeats = true,
-  includeCert = true
+  { heartbeats = [], cert, ...monitor }: any,
+  includeHeartbeats: boolean = true,
+  includeCert: boolean = true
 ) => ({
   monitorId: monitor.monitorId,
   workspaceId: monitor.workspaceId,

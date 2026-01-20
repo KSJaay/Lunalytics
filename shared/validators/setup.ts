@@ -43,7 +43,7 @@ const setupValidators = {
   confirmPassword: (
     confirmPassword: string,
     setErrors: SetErrorsFn,
-    password: string
+    password?: string
   ): boolean => {
     if (password !== confirmPassword) {
       setErrors({ confirmPassword: 'Passwords do not match' });

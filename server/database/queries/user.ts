@@ -7,9 +7,9 @@ import {
 import { createUserSession } from './session.js';
 import { oldPermsToFlags } from '../../../shared/permissions/oldPermsToFlags.js';
 
-export const signInUser = async (email, password) => {
+export const signInUser = async (email: string, password: string) => {
   const client = await database.connect();
-  const user = await client('user').where({ email }).first();
+  const user = await client?.('user').where({ email }).first();
 
   if (!user) {
     throw new AuthorizationError('User does not exist');
@@ -28,11 +28,11 @@ export const signInUser = async (email, password) => {
   return user;
 };
 
-export const registerUser = async (data) => {
+export const registerUser = async (data: any) => {
   const { email, password } = data;
 
   const client = await database.connect();
-  const userEmail = await client('user').where({ email }).first();
+  const userEmail = await client?.('user').where({ email }).first();
 
   if (userEmail) {
     throw new ConflictError('Another user already exists with this email');
@@ -48,11 +48,11 @@ export const registerUser = async (data) => {
     isVerified: data.isVerified || false,
   };
 
-  await client('user').insert(user);
+  await client?.('user').insert(user);
   return user;
 };
 
-export const registerSsoUser = async (data) => {
+export const registerSsoUser = async (data: any) => {
   const {
     avatar,
     displayName,
@@ -67,7 +67,7 @@ export const registerSsoUser = async (data) => {
 
   const client = await database.connect();
 
-  await client('user').insert({
+  await client?.('user').insert({
     email,
     displayName,
     avatar,
@@ -77,7 +77,7 @@ export const registerSsoUser = async (data) => {
     password: null,
   });
 
-  await client('connections').insert({
+  await client?.('connections').insert({
     accountId: id,
     email,
     provider,
@@ -87,9 +87,9 @@ export const registerSsoUser = async (data) => {
   return data;
 };
 
-export const getUserByEmail = async (email) => {
+export const getUserByEmail = async (email: string) => {
   const client = await database.connect();
-  let user = await client('user')
+  let user = await client?.('user')
     .where({ email })
     .select(
       'email',
@@ -113,16 +113,16 @@ export const getUserByEmail = async (email) => {
   return user;
 };
 
-export const emailIsOwner = async (email) => {
+export const emailIsOwner = async (email: string) => {
   const client = await database.connect();
 
-  return client('user').where({ email }).select('isOwner').first();
+  return client?.('user').where({ email }).select('isOwner').first();
 };
 
 export const ownerExists = async () => {
   const client = await database.connect();
 
-  let user = await client('user')
+  let user = await client?.('user')
     .select('email', 'displayName', 'avatar', 'isVerified', 'sso', 'settings')
     .first();
 
@@ -137,9 +137,9 @@ export const ownerExists = async () => {
   return user;
 };
 
-export const getUserPasswordUsingEmail = async (email) => {
+export const getUserPasswordUsingEmail = async (email: string) => {
   const client = await database.connect();
-  const user = await client('user').where({ email }).first();
+  const user = await client?.('user').where({ email }).first();
 
   if (!user) {
     throw new AuthorizationError('User does not exist');
@@ -148,95 +148,73 @@ export const getUserPasswordUsingEmail = async (email) => {
   return user.password;
 };
 
-export const updateUserDisplayname = async (email, displayName) => {
+export const updateUserDisplayname = async (
+  email: string,
+  displayName: string
+) => {
   const client = await database.connect();
-  return client('user').where({ email }).update({ displayName });
+  return client?.('user').where({ email }).update({ displayName });
 };
 
-export const updateUserAvatar = async (email, avatar) => {
+export const updateUserAvatar = async (email: string, avatar: string) => {
   const client = await database.connect();
-  return client('user').where({ email }).update({ avatar });
+  return client?.('user').where({ email }).update({ avatar });
 };
 
-// workspaceId: string
-export const fetchMembers = async (memberHasManageTeam = false) => {
+export const declineAccess = async (email: string) => {
   const client = await database.connect();
 
-  if (memberHasManageTeam) {
-    return client('user').select(
-      'email',
-      'displayName',
-      'avatar',
-      'isVerified',
-      'created_at',
-      'sso'
-    );
-  }
+  await client?.('user_session').where({ email }).del();
 
-  return client('user')
-    .where({ isVerified: true })
-    .select(
-      'email',
-      'displayName',
-      'avatar',
-      'isVerified',
-      'created_at',
-      'sso'
-    );
+  return client?.('user').where({ email }).del();
 };
 
-export const declineAccess = async (email) => {
-  const client = await database.connect();
-
-  await client('user_session').where({ email }).del();
-
-  return client('user').where({ email }).del();
-};
-
-export const approveAccess = async (email) => {
+export const approveAccess = async (email: string) => {
   // check user using email and update isVerified to true
 
   const client = await database.connect();
-  const userExists = await client('user').where({ email }).first();
-
+  const userExists = await client?.('user').where({ email }).first();
   if (!userExists) {
     throw new AuthorizationError('User does not exist');
   }
 
-  return client('user').where({ email }).update({ isVerified: true });
+  return client?.('user').where({ email }).update({ isVerified: true });
 };
 
-export const updateUserPermission = async (email, permission) => {
+export const updateUserPermission = async (
+  email: string,
+  permission: string
+) => {
   const client = await database.connect();
-  const userExists = await client('user').where({ email }).first();
+  const userExists = await client?.('user').where({ email }).first();
 
   if (!userExists) {
     throw new AuthorizationError('User does not exist');
   }
 
-  return client('user').where({ email }).update({ permission });
+  return client?.('user').where({ email }).update({ permission });
 };
 
-export const updateUserPassword = async (email, password) => {
+export const updateUserPassword = async (email: string, password: string) => {
   const client = await database.connect();
   const hashedPassword = generateHash(password);
 
-  return client('user').where({ email }).update({ password: hashedPassword });
+  return client?.('user').where({ email }).update({ password: hashedPassword });
 };
 
-export const updateUserSettings = async (email, settings) => {
+export const updateUserSettings = async (email: string, settings: any) => {
   const client = await database.connect();
-  return client('user')
+  return client?.('user')
     .where({ email })
     .update({ settings: JSON.stringify(settings) });
 };
 
 export const resetDemoUser = async () => {
   const client = await database.connect();
-  const demoUser = await client('user').where({ email: 'demo' }).first();
+  const demoUser = await client?.('user').where({ email: 'demo' }).first();
 
   if (demoUser) {
-    await client('user').where({ email: 'demo' }).update({
+    await client?.('user').where({ email: 'demo' }).update({
       email: 'demo',
       displayName: 'Demo User',
       password: 'demo',
@@ -249,10 +227,10 @@ export const resetDemoUser = async () => {
 
 export const getDemoUser = async () => {
   const client = await database.connect();
-  const demoUser = await client('user').where({ email: 'demo' }).first();
+  const demoUser = await client?.('user').where({ email: 'demo' }).first();
 
   if (!demoUser) {
-    await client('user').insert({
+    await client?.('user').insert({
       email: 'demo',
       displayName: 'Demo User',
       password: 'demo',
@@ -265,26 +243,27 @@ export const getDemoUser = async () => {
   return createUserSession('demo', 'demo', null);
 };
 
-export const transferOwnership = async (email, newOwner) => {
+export const transferOwnership = async (email: string, newOwner: string) => {
   const client = await database.connect();
-  await client('user')
+  await client?.('user')
     .where({ email })
     .update({ permission: oldPermsToFlags[4] });
 
-  return client('user')
+  return client?.('user')
     .where({ email: newOwner })
     .update({ permission: oldPermsToFlags[1] });
 };
 
 export const fetchUserWorkspaces = async (email: string) => {
   const client = await database.connect();
-  const memberWorkspaces = await client('member')
+  const memberWorkspaces = await client?.('member')
     .where({ email })
     .select('workspaceId');
 
-  const workspaceIds = memberWorkspaces.map((mw) => mw.workspaceId);
+  const workspaceIds =
+    (memberWorkspaces?.map((mw) => mw.workspaceId) as string[]) || [];
 
-  const workspaces = await client('workspace')
+  const workspaces = await client?.('workspace')
     .whereIn('id', workspaceIds)
     .select('id', 'name', 'icon');
 

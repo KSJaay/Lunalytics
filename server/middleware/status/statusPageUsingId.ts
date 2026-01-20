@@ -1,14 +1,25 @@
-import { deleteCookie } from '../../../shared/utils/cookies.js';
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
+// import local files
 import { cleanStatusPage } from '../../class/status.js';
-import { userSessionExists } from '../../database/queries/session.js';
 import { getUserByEmail } from '../../database/queries/user.js';
+import { deleteCookie } from '../../../shared/utils/cookies.js';
+import { userSessionExists } from '../../database/queries/session.js';
 import { fetchStatusPageUsingIdOrDomain } from '../../routes/statusApi.js';
 
-const getStatusPageUsingIdMiddleware = async (request, response, next) => {
+const getStatusPageUsingIdMiddleware = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   try {
-    const statusPageId = request.params.id?.toLowerCase();
+    const statusPageId =
+      typeof request.params.id === 'string'
+        ? request.params.id.toLowerCase()
+        : undefined;
 
-    if (statusPageId === 'default') {
+    if (statusPageId === 'default' || !statusPageId) {
       return response.redirect('/');
     }
 

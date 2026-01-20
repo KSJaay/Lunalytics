@@ -1,3 +1,7 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import {
   ObjectSchemaValidatorError,
   StatusPageValidatorError,
@@ -9,7 +13,10 @@ import validateStatusSettings from '../../../shared/validators/status/settings.j
 import { cleanStatusPage } from '../../class/status.js';
 import statusCache from '../../cache/status.js';
 
-const editStatusPageMiddleware = async (request, response) => {
+const editStatusPageMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { statusId, settings, layout } = request.body;
 
   try {
@@ -21,8 +28,8 @@ const editStatusPageMiddleware = async (request, response) => {
     }
 
     const monitors = layout
-      .filter((item) => item.type === 'uptime' || item.type === 'metrics')
-      .reduce((a, b) => [...a, ...b.monitors], []);
+      .filter((item: any) => item.type === 'uptime' || item.type === 'metrics')
+      .reduce((a: any, b: any) => [...a, ...b.monitors], []);
 
     if (monitors.length === 0) {
       throw new StatusPageValidatorError(

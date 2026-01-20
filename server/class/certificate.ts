@@ -1,6 +1,6 @@
 import { parseJsonOrArray } from '../utils/parser.js';
 
-const cleanCertificate = (certificate) => {
+const cleanCertificate = (certificate: any) => {
   if (!certificate) return { isValid: false };
 
   if (!certificate?.isValid) return { isValid: false };

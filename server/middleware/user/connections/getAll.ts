@@ -1,7 +1,14 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { fetchConnections } from '../../../database/queries/connection.js';
 import { handleError } from '../../../utils/errors.js';
 
-const getAllConnectionMiddleware = async (request, response) => {
+const getAllConnectionMiddleware = async (
+  _request: Request,
+  response: Response
+) => {
   try {
     const connections = await fetchConnections(response.locals.user.email);
 

@@ -14,6 +14,11 @@ import {
 import { getMonitorIds, hasAutoAdd } from '../utils/status.js';
 
 class Status {
+  statusPages: Collection;
+  monitors: Collection;
+  heartbeats: Collection;
+  incidents: Collection;
+
   constructor() {
     this.statusPages = new Collection();
     this.monitors = new Collection();
@@ -27,27 +32,33 @@ class Status {
     if (hasAutoAdd(statusPages)) {
       const monitors = await fetchAllMonitors();
 
-      for (const monitor of monitors) {
-        await this.loadMonitorData(
-          monitor.monitorId,
-          monitor.workspaceId,
-          monitor
-        );
+      if (monitors && monitors.length > 0) {
+        for (const monitor of monitors) {
+          await this.loadMonitorData(
+            monitor.monitorId,
+            monitor.workspaceId,
+            monitor
+          );
+        }
       }
     } else {
-      for (const statusPage of statusPages) {
-        const monitorIds = getMonitorIds(statusPage);
-        for (const monitorId of monitorIds) {
-          await this.loadMonitorData(monitorId, statusPage.workspaceId);
+      if (statusPages && statusPages.length > 0) {
+        for (const statusPage of statusPages) {
+          const monitorIds = getMonitorIds(statusPage);
+          for (const monitorId of monitorIds) {
+            await this.loadMonitorData(monitorId, statusPage.workspaceId);
+          }
         }
       }
     }
 
-    for (const statusPage of statusPages) {
-      this.statusPages.set(statusPage.statusId, {
-        ...statusPage,
-        lastUpdated: new Date().toISOString(),
-      });
+    if (statusPages && statusPages.length > 0) {
+      for (const statusPage of statusPages) {
+        this.statusPages.set(statusPage.statusId, {
+          ...statusPage,
+          lastUpdated: new Date().toISOString(),
+        });
+      }
     }
 
     if (isInitialLoad) {
@@ -55,7 +66,8 @@ class Status {
       const workspaceIds = this.monitors.map((monitor) => monitor.workspaceId);
       const uniqueWorkspaceIds = [...new Set(workspaceIds)];
 
-      const monitorIds = [];
+      const monitorIds = [] as string[];
+
       for (const workspaceId of uniqueWorkspaceIds) {
         this.monitors.forEach((monitor) => {
           if (monitor.workspaceId === workspaceId) {
@@ -68,14 +80,16 @@ class Status {
           workspaceId
         );
 
-        for (const incident of incidents) {
-          this.incidents.set(incident.incidentId, incident);
+        if (incidents && incidents.length > 0) {
+          for (const incident of incidents) {
+            this.incidents.set(incident.incidentId, incident);
+          }
         }
       }
     }
   }
 
-  async loadMonitorData(monitorId, workspaceId, monitor) {
+  async loadMonitorData(monitorId: string, workspaceId: string, monitor?: any) {
     if (!monitor) {
       const queryMonitor = await monitorExists(monitorId, workspaceId);
 
@@ -115,26 +129,30 @@ class Status {
     this.heartbeats.set(monitorId, heartbeats);
   }
 
-  async updateStatusPage(statusPage) {
+  async updateStatusPage(statusPage: any) {
     if (hasAutoAdd(statusPage)) {
       const allMonitors = await fetchAllMonitors();
 
-      for (const monitor of allMonitors) {
-        if (this.monitors.has(monitor.monitorId)) {
-          continue;
-        }
+      if (allMonitors && allMonitors.length > 0) {
+        for (const monitor of allMonitors) {
+          if (this.monitors.has(monitor.monitorId)) {
+            continue;
+          }
 
-        await this.loadMonitorData(monitor.monitorId, monitor);
+          await this.loadMonitorData(monitor.monitorId, monitor);
+        }
       }
     } else {
       const monitorIds = getMonitorIds(statusPage);
 
-      for (const monitorId of monitorIds) {
-        if (this.monitors.has(monitorId)) {
-          continue;
-        }
+      if (monitorIds && monitorIds.length > 0) {
+        for (const monitorId of monitorIds) {
+          if (this.monitors.has(monitorId)) {
+            continue;
+          }
 
-        await this.loadMonitorData(monitorId);
+          await this.loadMonitorData(monitorId, statusPage.workspaceId);
+        }
       }
     }
 
@@ -144,26 +162,30 @@ class Status {
     });
   }
 
-  async addNewStatusPage(statusPage) {
+  async addNewStatusPage(statusPage: any) {
     if (hasAutoAdd(statusPage)) {
       const allMonitors = await fetchAllMonitors();
 
-      for (const monitor of allMonitors) {
-        if (this.monitors.has(monitor.monitorId)) {
-          continue;
-        }
+      if (allMonitors && allMonitors.length > 0) {
+        for (const monitor of allMonitors) {
+          if (this.monitors.has(monitor.monitorId)) {
+            continue;
+          }
 
-        await this.loadMonitorData(monitor.monitorId, monitor);
+          await this.loadMonitorData(monitor.monitorId, monitor);
+        }
       }
     } else {
       const monitorIds = getMonitorIds(statusPage);
 
-      for (const monitorId of monitorIds) {
-        if (this.monitors.has(monitorId)) {
-          continue;
-        }
+      if (monitorIds && monitorIds.length > 0) {
+        for (const monitorId of monitorIds) {
+          if (this.monitors.has(monitorId)) {
+            continue;
+          }
 
-        await this.loadMonitorData(monitorId);
+          await this.loadMonitorData(monitorId, statusPage.workspaceId);
+        }
       }
     }
 
@@ -173,11 +195,11 @@ class Status {
     });
   }
 
-  deleteStatusPage(statusId) {
+  deleteStatusPage(statusId: string) {
     this.statusPages.delete(statusId);
   }
 
-  fetchStatusPage(statusId) {
+  fetchStatusPage(statusId: string) {
     const statusPage = this.statusPages.get(statusId);
 
     if (!statusPage) {
@@ -213,27 +235,27 @@ class Status {
         this.incidents
           ?.toJSONValues()
           ?.filter((incident) =>
-            incident.monitorIds.some((id) => monitorIds.includes(id))
+            incident.monitorIds.some((id: string) => monitorIds.includes(id))
           ) || [];
 
       return { ...statusPage, monitors, incidents, heartbeats };
     }
   }
 
-  addIncident(incident) {
+  addIncident(incident: any) {
     this.incidents.set(incident.incidentId, incident);
   }
 
-  deleteIncident(incidentId) {
+  deleteIncident(incidentId: string, workspaceId: string) {
     this.incidents.delete(incidentId);
   }
 
-  removeMonitor(monitorId) {
+  removeMonitor(monitorId: string, workspaceId: string) {
     this.monitors.delete(monitorId);
     this.heartbeats.delete(monitorId);
   }
 
-  async reloadMonitor(monitorId, workspaceId) {
+  async reloadMonitor(monitorId: string, workspaceId: string) {
     const monitor = await fetchMonitor(monitorId, workspaceId).catch(
       () => false
     );

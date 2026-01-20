@@ -1,11 +1,11 @@
 import logger from '../utils/logger.js';
 
-const cleanJson = (json) => {
+const cleanJson = (json: any) => {
   try {
     if (typeof json !== 'string') return json;
 
     return JSON.parse(json);
-  } catch (error) {
+  } catch (error: any) {
     logger.error('Error converting json', {
       message: error.message,
       stack: error.stack,
@@ -15,7 +15,7 @@ const cleanJson = (json) => {
   }
 };
 
-export const cleanIncident = (incident) => {
+export const cleanIncident = (incident: any) => {
   const {
     title,
     incidentId,

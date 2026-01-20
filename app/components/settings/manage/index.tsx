@@ -23,7 +23,7 @@ const ManageTeam = () => {
     .sort((a, b) => +b?.isVerified - +a?.isVerified);
 
   const { isLoading } = useFetch({
-    url: '/api/user/team',
+    url: '/api/workspace/members',
     onSuccess: (data) => setTeam(data),
     onFailure: () => toast.error("Couldn't fetch team members"),
   });

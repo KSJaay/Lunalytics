@@ -14,7 +14,7 @@ const layoutCheck = (
   );
 };
 
-export const hasAutoAdd = (content) => {
+export const hasAutoAdd = (content: any) => {
   if (Array.isArray(content)) {
     return content.some((statusPage) => {
       return statusPage.layout.some(layoutCheck);
@@ -31,22 +31,26 @@ export const getMonitorIds = (
 
   if (Array.isArray(content)) {
     for (const statusPage of content) {
-      statusPage.layout.forEach((item) => {
+      statusPage.layout.forEach((item: any) => {
         if (item.monitors) {
-          item.monitors.forEach((value) => {
+          item.monitors.forEach((value: any) => {
             monitorIds.push(value?.id || value);
           });
         }
       });
     }
   } else {
-    content.layout.forEach((item) => {
-      if (item.monitors) {
-        item.monitors.forEach((value) => {
-          monitorIds.push(value?.id || value);
-        });
-      }
-    });
+    // @ts-ignore
+    if (content.layout && Array.isArray(content.layout)) {
+      // @ts-ignore
+      content.layout.forEach((item: any) => {
+        if (item.monitors) {
+          item.monitors.forEach((value: any) => {
+            monitorIds.push(value?.id || value);
+          });
+        }
+      });
+    }
   }
 
   return monitorIds;

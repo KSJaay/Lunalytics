@@ -1,6 +1,6 @@
 import { defaultStatusValues } from '../../shared/constants/status.js';
 
-const parseJson = (obj, isArray = false) => {
+const parseJson = (obj: string, isArray: boolean = false) => {
   try {
     return JSON.parse(obj);
   } catch {
@@ -8,7 +8,7 @@ const parseJson = (obj, isArray = false) => {
   }
 };
 
-export const cleanStatusPage = (status) => ({
+export const cleanStatusPage = (status: any) => ({
   id: status.id,
   workspaceId: status.workspaceId,
   statusId: status.statusId,
@@ -20,12 +20,12 @@ export const cleanStatusPage = (status) => ({
   lastUpdated: status.lastUpdated,
 });
 
-export const cleanStatusPageWithMonitors = (status) => ({
+export const cleanStatusPageWithMonitors = (status: any) => ({
   settings: { ...defaultStatusValues, ...parseJson(status.settings) },
   layout: parseJson(status.layout, true),
 });
 
-export const cleanStatusApiResponse = (data) => ({
+export const cleanStatusApiResponse = (data: any) => ({
   id: data.id,
   workspaceId: data.workspaceId,
   statusId: data.statusId,

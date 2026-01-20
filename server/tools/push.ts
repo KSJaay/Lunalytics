@@ -8,7 +8,13 @@ const pushStatusCheck = async (monitor: MonitorProps) => {
   const startTime = Date.now();
 
   try {
-    const [query] = await fetchHeartbeats(monitor.monitorId, 1);
+    const fetchResponse = await fetchHeartbeats(
+      monitor.monitorId,
+      monitor.workspaceId,
+      1
+    );
+
+    const query = fetchResponse?.[0];
 
     const interval = monitor.interval || 0;
 

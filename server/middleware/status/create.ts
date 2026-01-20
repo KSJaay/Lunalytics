@@ -8,8 +8,12 @@ import validateStatusLayout from '../../../shared/validators/status/layout.js';
 import validateStatusSettings from '../../../shared/validators/status/settings.js';
 import { cleanStatusPage } from '../../class/status.js';
 import statusCache from '../../cache/status.js';
+import { Request, Response } from 'express';
 
-const createStatusPageMiddleware = async (request, response) => {
+const createStatusPageMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { settings, layout } = request.body;
 
   try {
@@ -17,8 +21,8 @@ const createStatusPageMiddleware = async (request, response) => {
     validateStatusLayout(layout);
 
     const monitors = layout
-      .filter((item) => item.type === 'uptime' || item.type === 'metrics')
-      .reduce((a, b) => [...a, ...b.monitors], []);
+      .filter((item: any) => item.type === 'uptime' || item.type === 'metrics')
+      .reduce((a: any, b: any) => [...a, ...b.monitors], []);
 
     if (monitors.length === 0) {
       throw new StatusPageValidatorError(

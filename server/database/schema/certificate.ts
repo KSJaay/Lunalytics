@@ -1,4 +1,7 @@
-export const certificateTable = async (client) => {
+// import type definitions
+import type { Knex } from 'knex';
+
+export const certificateTable = async (client: Knex) => {
   const certificateExists = await client.schema.hasTable('certificate');
 
   if (!certificateExists) {

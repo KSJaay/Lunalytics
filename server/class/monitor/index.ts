@@ -6,15 +6,15 @@ import { default as ping } from './ping.js';
 import { default as tcp } from './tcp.js';
 
 export const cleanMonitor = (
-  monitor,
-  includeHeartbeats = true,
-  includeCert = true
+  monitor: any,
+  includeHeartbeats: boolean = true,
+  includeCert: boolean = true
 ) => {
   const type = monitor?.type?.toLowerCase();
 
   switch (type) {
     case 'docker':
-      return docker(monitor, includeHeartbeats, includeCert);
+      return docker(monitor, includeHeartbeats);
     case 'http':
       return http(monitor, includeHeartbeats, includeCert);
     case 'json':

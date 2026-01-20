@@ -1,8 +1,15 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import TokenValidator from '../../../shared/validators/token.js';
 import { apiTokenUpdate } from '../../database/queries/tokens.js';
 import { handleError } from '../../utils/errors.js';
 
-const updateApiTokenMiddleware = async (request, response) => {
+const updateApiTokenMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { token, name, permission } = request.body;
 
   try {

@@ -6,7 +6,6 @@ import accessDeclineMiddleware from '../middleware/user/access/declineUser.js';
 import accessApproveMiddleware from '../middleware/user/access/approveUser.js';
 import accessRemoveMiddleware from '../middleware/user/access/removeUser.js';
 import permissionUpdateMiddleware from '../middleware/user/permission/update.js';
-import teamMembersListMiddleware from '../middleware/user/team/members.js';
 import userUpdateAvatar from '../middleware/user/update/avatar.js';
 import userUpdateUsername from '../middleware/user/update/username.js';
 import userUpdatePassword from '../middleware/user/update/password.js';
@@ -27,7 +26,7 @@ router.post('/exists', userExistsMiddleware);
 
 router.post('/delete/account', deleteAccountMiddleware);
 
-router.get('/workspaces', async (request: Request, response: Response) => {
+router.get('/workspaces', async (_request: Request, response: Response) => {
   const workspaces = await fetchUserWorkspaces(response.locals.user.email);
 
   return response.status(200).json(workspaces);
@@ -40,8 +39,6 @@ router.post('/update/password', userUpdatePassword);
 router.post('/update/avatar', userUpdateAvatar);
 
 router.post('/update/settings', userUpdateSettings);
-
-router.get('/team', teamMembersListMiddleware);
 
 router.get('/connections', getAllConnectionMiddleware);
 

@@ -1,3 +1,7 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { cleanMonitor } from '../../class/monitor/index.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
 import {
@@ -7,7 +11,10 @@ import {
 import { fetchMonitors } from '../../database/queries/monitor.js';
 import { handleError } from '../../utils/errors.js';
 
-const workspaceMonitorsMiddleware = async (request, response) => {
+const workspaceMonitorsMiddleware = async (
+  _request: Request,
+  response: Response
+) => {
   try {
     const monitors = await fetchMonitors(response.locals.workspaceId);
     const query = [];
@@ -42,7 +49,7 @@ const workspaceMonitorsMiddleware = async (request, response) => {
         response.locals.workspaceId,
         2
       );
-      monitor.showFilters = filters.length === 2;
+      monitor.showFilters = filters?.length === 2;
 
       query.push(cleanMonitor(monitor));
     }

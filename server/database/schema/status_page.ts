@@ -1,4 +1,7 @@
-export const statusPageTable = async (client) => {
+// import type definitions
+import type { Knex } from 'knex';
+
+export const statusPageTable = async (client: Knex) => {
   const statusPageExists = await client.schema.hasTable('status_page');
 
   if (!statusPageExists) {

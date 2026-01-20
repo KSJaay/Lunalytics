@@ -10,7 +10,7 @@ import {
   WORKSPACE_ID_COOKIE,
 } from '../../../shared/constants/cookies.js';
 
-const logout = (request: Request, response: Response) => {
+const logout = (_request: Request, response: Response) => {
   try {
     deleteCookie(response, SESSION_TOKEN);
     deleteCookie(response, WORKSPACE_ID_COOKIE);

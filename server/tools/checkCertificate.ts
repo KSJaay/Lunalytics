@@ -55,6 +55,7 @@ const handleRequest = (
   reject: (reason?: any) => void
 ) => {
   return https.get(options, function (res: IncomingMessage) {
+    // @ts-ignore
     let certificate = res.socket.getPeerCertificate(detailed);
 
     if (isEmpty(certificate) || certificate === null) {

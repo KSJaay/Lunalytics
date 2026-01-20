@@ -1,3 +1,7 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { incidentMessageValidator } from '../../../shared/validators/incident.js';
 import statusCache from '../../cache/status.js';
 import {
@@ -7,7 +11,10 @@ import {
 import { handleError } from '../../utils/errors.js';
 import { INCIDENT_ERRORS } from '../../../shared/constants/errors/incident.js';
 
-const createIncidentMessageMiddleware = async (request, response) => {
+const createIncidentMessageMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { message, status, monitorIds, incidentId } = request.body;
 
   try {
@@ -23,7 +30,9 @@ const createIncidentMessageMiddleware = async (request, response) => {
         .json({ ...INCIDENT_ERRORS.I003, details: isInvalid });
     }
 
-    const query = await fetchIncident(incidentId, response.locals.workspaceId);
+    const { workspaceId } = response.locals;
+
+    const query = await fetchIncident(incidentId, workspaceId);
 
     if (!query) {
       return response.status(404).json(INCIDENT_ERRORS.I001);
@@ -54,11 +63,7 @@ const createIncidentMessageMiddleware = async (request, response) => {
         new Date().toISOString();
     }
 
-    const data = await updateIncident(
-      incidentId,
-      response.locals.workspaceId,
-      incident
-    );
+    const data = await updateIncident(incidentId, workspaceId, incident);
 
     statusCache.addIncident(data);
 

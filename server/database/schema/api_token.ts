@@ -1,4 +1,7 @@
-export const apiTokenTable = async (client) => {
+// import type definitions
+import type { Knex } from 'knex';
+
+export const apiTokenTable = async (client: Knex) => {
   const apiTokenExists = await client.schema.hasTable('api_token');
 
   if (!apiTokenExists) {

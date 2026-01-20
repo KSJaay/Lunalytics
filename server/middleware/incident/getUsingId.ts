@@ -15,7 +15,7 @@ const fetchIncidentUsingId = async (request: Request, response: Response) => {
       return response.status(400).json(INCIDENT_ERRORS.I004);
     }
 
-    const data = await fetchIncident(incidentId, workspaceId);
+    const data = await fetchIncident(incidentId as string, workspaceId);
 
     if (!data) {
       return response.status(404).json(INCIDENT_ERRORS.I001);

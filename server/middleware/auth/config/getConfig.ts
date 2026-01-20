@@ -6,12 +6,13 @@ import config from '../../../utils/config.js';
 import { handleError } from '../../../utils/errors.js';
 import { fetchProviders } from '../../../database/queries/provider.js';
 
-const getConfigMiddleware = async (request: Request, response: Response) => {
+const getConfigMiddleware = async (_request: Request, response: Response) => {
   try {
     const query = await fetchProviders();
 
-    const providers = query.map(({ provider }) => provider);
-    const isSsoEnabled = query?.length > 0 && query?.some((p) => p.enabled);
+    const providers = query?.map(({ provider }) => provider);
+    const isSsoEnabled =
+      query && query.length > 0 && query.some((p) => p.enabled);
     const nativeSignin = !isSsoEnabled
       ? true
       : (config.get('nativeSignin') ?? true);

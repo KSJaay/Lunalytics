@@ -1,10 +1,17 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import Role from '../../../../shared/permissions/role.js';
 import { handleError } from '../../../utils/errors.js';
 import { updateUserPermission } from '../../../database/queries/user.js';
 import { PermissionsBits } from '../../../../shared/permissions/bitFlags.js';
 import { isValidBitFlags } from '../../../../shared/permissions/isValidBitFlags.js';
 
-const permissionUpdateMiddleware = async (request, response) => {
+const permissionUpdateMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { user } = response.locals;
     const { email, permission } = request.body;

@@ -1,3 +1,7 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../../utils/errors.js';
 import {
   createProvider,
@@ -6,7 +10,10 @@ import {
 } from '../../database/queries/provider.js';
 import ProviderValidator from '../../../shared/validators/provider.js';
 
-const configureProviderMiddleware = async (request, response) => {
+const configureProviderMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const {
     clientId,
     clientSecret,
@@ -20,7 +27,6 @@ const configureProviderMiddleware = async (request, response) => {
       clientId,
       clientSecret,
       provider,
-      enabled,
       data,
     });
 

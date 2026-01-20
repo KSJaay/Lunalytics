@@ -32,11 +32,18 @@ const githubCallback = async (
       'github',
       provider.clientId,
       provider.clientSecret,
-      code,
+      code as string,
       `${websiteUrl}/api/auth/callback/github`
     );
 
-    const { data } = await axios.post(...params);
+    if (!params) {
+      return response.redirect(
+        '/error?code=invalid_provider_configuration&provider=github'
+      );
+    }
+
+    const [url, postData, axiosConfig] = params;
+    const { data } = await axios.post(url, postData, axiosConfig);
 
     const { access_token } = data;
 
@@ -58,7 +65,7 @@ const githubCallback = async (
     });
 
     const primaryEmail = emailInfo.data.find(
-      (e) => e.primary && e.verified
+      (e: { primary: boolean; verified: boolean }) => e.primary && e.verified
     )?.email;
 
     if (!primaryEmail) {

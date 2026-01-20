@@ -17,7 +17,7 @@ import { getUserByEmail } from '../database/queries/user.js';
 
 export const fetchStatusPageUsingIdOrDomain = async (
   statusPageId: string,
-  domain: string
+  domain?: string
 ) => {
   let statusPage = await fetchStatusPageUsingUrl(statusPageId);
 

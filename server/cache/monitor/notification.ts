@@ -2,12 +2,13 @@ import { isMonitorDown } from '../../database/queries/heartbeat.js';
 import { fetchMonitor } from '../../database/queries/monitor.js';
 import { fetchNotificationById } from '../../database/queries/notification.js';
 import NotificationServices from '../../notifications/index.js';
+import logger from '../../utils/logger.js';
 
 const sendMonitorNotification = async (
-  monitor,
-  heartbeat,
-  isDown,
-  isRecovered
+  monitor: any,
+  heartbeat: any,
+  isDown: boolean,
+  isRecovered: boolean
 ) => {
   try {
     if (!isDown && !isRecovered) return;
@@ -49,14 +50,14 @@ const sendMonitorNotification = async (
       monitor.workspaceId
     );
 
-    if (
-      !notification?.isEnabled ||
-      !NotificationServices[notification.platform]
-    ) {
+    const platform =
+      notification?.platform as keyof typeof NotificationServices;
+
+    if (!notification?.isEnabled || !NotificationServices[platform]) {
       return;
     }
 
-    const ServiceClass = NotificationServices[notification.platform];
+    const ServiceClass = NotificationServices[platform];
 
     if (!ServiceClass) return;
 
@@ -69,7 +70,7 @@ const sendMonitorNotification = async (
     if (hasRecovered) {
       await service.sendRecovery(notification, monitor, heartbeat);
     }
-  } catch (error) {
+  } catch (error: any) {
     logger.error('Notification - sendNotification', {
       error: error.message,
       stack: error.stack,

@@ -20,7 +20,7 @@ const updateConfigMiddleware = async (request: Request, response: Response) => {
       data.nativeSignin === false
     ) {
       const query = await fetchProviders();
-      const isSsoEnabled = query.some((provider) => provider.enabled);
+      const isSsoEnabled = query?.some((provider) => provider.enabled);
 
       if (!isSsoEnabled) {
         return response.status(400).json({

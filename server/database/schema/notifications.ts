@@ -1,4 +1,7 @@
-export const notificationsTable = async (client) => {
+// import type definitions
+import type { Knex } from 'knex';
+
+export const notificationsTable = async (client: Knex) => {
   const notificationExists = await client.schema.hasTable('notifications');
 
   if (!notificationExists) {

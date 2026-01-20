@@ -6,7 +6,7 @@ import { declineAccess, emailIsOwner } from '../../database/queries/user.js';
 import { handleError } from '../../utils/errors.js';
 
 const deleteAccountMiddleware = async (
-  request: Request,
+  _request: Request,
   response: Response
 ) => {
   try {

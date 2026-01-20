@@ -51,6 +51,12 @@ const createBasicSetup = ({
   websiteUrl,
   migrationType,
   retentionPeriod = '6m',
+}: {
+  databaseType: 'better-sqlite3' | 'pg';
+  databaseName: string;
+  websiteUrl: string;
+  migrationType: string;
+  retentionPeriod?: string;
 }) => {
   const config = {
     port: 2308,
@@ -77,6 +83,16 @@ const createAdvancedSetup = ({
   postgresUser = 'postgres',
   postgresPassword,
   retentionPeriod = '6m',
+}: {
+  databaseType: 'better-sqlite3' | 'pg';
+  databaseName: string;
+  websiteUrl: string;
+  migrationType: string;
+  postgresHost?: string;
+  postgresPort?: string | number;
+  postgresUser?: string;
+  postgresPassword?: string;
+  retentionPeriod?: string;
 }) => {
   const config = {
     port: 2308,
@@ -125,14 +141,15 @@ const setupMiddleware = async (request: Request, response: Response) => {
     const keys = getSetupKeys(type, request.body.databaseType);
     let errors = {};
 
-    const setErrors = (error) => {
+    const setErrors = (error: any) => {
       const [value] = Object.values(error);
       if (!value) return;
       errors = { ...errors, ...error };
     };
 
     for (const key of keys) {
-      const validator = setupValidators[key];
+      const platformKey = key as keyof typeof setupValidators;
+      const validator = setupValidators[platformKey];
       validator(request.body[key], setErrors);
     }
 

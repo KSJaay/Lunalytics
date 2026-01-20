@@ -1,9 +1,17 @@
-import IncidentValidator from '../../../shared/validators/incident.js';
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import statusCache from '../../cache/status.js';
+import { handleError } from '../../utils/errors.js';
+import IncidentValidator from '../../../shared/validators/incident.js';
 import { updateIncident } from '../../database/queries/incident.js';
 import { INCIDENT_ERRORS } from '../../../shared/constants/errors/incident.js';
 
-const updateIncidentMiddleware = async (request, response) => {
+const updateIncidentMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { incident } = request.body;
 
   try {
@@ -32,11 +40,8 @@ const updateIncidentMiddleware = async (request, response) => {
     statusCache.addIncident(query);
 
     return response.json(query);
-  } catch (error) {
-    console.log(error);
-    return response
-      .status(400)
-      .json({ ...INCIDENT_ERRORS.I003, details: error.message });
+  } catch (error: any) {
+    handleError(error, response);
   }
 };
 

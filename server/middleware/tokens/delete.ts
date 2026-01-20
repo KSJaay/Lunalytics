@@ -1,7 +1,14 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { apiTokenDelete } from '../../database/queries/tokens.js';
 import { handleError } from '../../utils/errors.js';
 
-const deleteApiTokenMiddleware = async (request, response) => {
+const deleteApiTokenMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { token } = request.body;
 
   try {
