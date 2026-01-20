@@ -1,3 +1,7 @@
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
+// import local files
 import {
   WORKSPACE_ID_COOKIE,
   WORKSPACE_ID_HEADER,
@@ -8,7 +12,11 @@ import { fetchMember } from '../database/queries/member.js';
 import { fetchWorkspace } from '../database/queries/workspace.js';
 import { WORKSPACE_ERRORS } from '../../shared/constants/errors/workspace.js';
 
-const authorizeWorkspace = async (request, response, next) => {
+const authorizeWorkspace = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   const workspaceId =
     request.headers[WORKSPACE_ID_HEADER] ||
     request.cookies[WORKSPACE_ID_COOKIE];

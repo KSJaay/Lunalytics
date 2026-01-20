@@ -6,7 +6,10 @@ import {
   SESSION_TOKEN,
   WORKSPACE_ID_COOKIE,
 } from '../../../shared/constants/cookies.js';
-import { setClientSideCookie, setServerSideCookie } from '../../../shared/utils/cookies.js';
+import {
+  setClientSideCookie,
+  setServerSideCookie,
+} from '../../../shared/utils/cookies.js';
 import { fetchConnectionByEmail } from '../../database/queries/connection.js';
 import {
   fetchInviteUsingId,
@@ -32,7 +35,7 @@ const signInOrRegisterUsingAuth = async (
 
     const connectionExists = await fetchConnectionByEmail(provider, id);
 
-    const data = {
+    const data: any = {
       email: email.toLowerCase(),
       displayName: username,
       avatar,

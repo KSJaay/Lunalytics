@@ -36,7 +36,7 @@ const customCallback = async (
       'custom',
       provider.clientId,
       provider.clientSecret,
-      code,
+      code as string,
       `${websiteUrl}/api/auth/callback/custom`
     );
 

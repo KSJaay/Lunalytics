@@ -1,7 +1,14 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { createConnection } from '../../../database/queries/connection.js';
 import { handleError } from '../../../utils/errors.js';
 
-const createConnectionMiddleware = async (request, response) => {
+const createConnectionMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const data = request.body;
 
   try {

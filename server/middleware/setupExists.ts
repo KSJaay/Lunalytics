@@ -7,7 +7,7 @@ import { ownerExists } from '../database/queries/user.js';
 import logger from '../utils/logger.js';
 import { handleError } from '../utils/errors.js';
 
-const setupExistsMiddleware = async (request: Request, response: Response) => {
+const setupExistsMiddleware = async (_request: Request, response: Response) => {
   try {
     const databaseName = config.get('database')?.name;
 

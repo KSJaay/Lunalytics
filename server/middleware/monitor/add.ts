@@ -12,7 +12,7 @@ import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
 import statusCache from '../../cache/status.js';
 
-const stringifyJson = (obj, asArray = false) => {
+const stringifyJson = (obj: any, asArray: boolean = false) => {
   try {
     if (typeof obj === 'string') {
       return obj;
@@ -24,7 +24,7 @@ const stringifyJson = (obj, asArray = false) => {
   }
 };
 
-export const defaultMonitorData = (body) => ({
+export const defaultMonitorData = (body: any) => ({
   name: body.name ?? 'Lunalytics',
   url: body.url,
   interval: body.interval ?? 60,
@@ -50,8 +50,12 @@ export const defaultMonitorData = (body) => ({
   type: body.type ?? 'http',
 });
 
-export const formatMonitorData = (body, email, workspaceId) => {
-  let monitor = {
+export const formatMonitorData = (
+  body: any,
+  email: string,
+  workspaceId: string
+) => {
+  let monitor: any = {
     name: body.name,
     url: body.url,
     interval: body.interval,
@@ -122,7 +126,7 @@ const monitorAdd = async (request: Request, response: Response) => {
   try {
     const { type } = request.body;
 
-    const validator = validators[type];
+    const validator = validators[type as keyof typeof validators];
 
     if (!validator) {
       return response.status(400).json(MONITOR_ERRORS.M004);
@@ -142,7 +146,9 @@ const monitorAdd = async (request: Request, response: Response) => {
     const monitor_data = formatMonitorData(body, user.email, workspaceId);
     const data = await createMonitor(monitor_data);
 
-    cache.checkStatus(data.monitorId, data.workspaceId)?.catch(() => false);
+    cache
+      .checkMonitorStatus(data.monitorId, data.workspaceId)
+      ?.catch(() => false);
 
     const heartbeats = await fetchHeartbeats(data.monitorId, data.workspaceId);
     const cert = await fetchCertificate(data.monitorId, data.workspaceId);

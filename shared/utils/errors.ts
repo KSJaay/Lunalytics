@@ -1,19 +1,19 @@
 class AuthorizationError extends Error {
-  constructor(error: string) {
+  constructor(error: any) {
     super(error);
     this.name = 'AuthorizationError';
   }
 }
 
 class UnprocessableError extends Error {
-  constructor(error: string) {
+  constructor(error: any) {
     super(error);
     this.name = 'UnprocessableError';
   }
 }
 
 class ConflictError extends Error {
-  constructor(error: string) {
+  constructor(error: any) {
     super(error);
     this.name = 'ConflictError';
   }
@@ -21,7 +21,7 @@ class ConflictError extends Error {
 
 class NotificationValidatorError extends Error {
   key: string;
-  constructor(key: string, error: string) {
+  constructor(key: string, error: any) {
     super(error);
     this.name = 'NotificationValidatorError';
     this.key = key;
@@ -29,14 +29,14 @@ class NotificationValidatorError extends Error {
 }
 
 class StatusPageValidatorError extends Error {
-  constructor(error: string) {
+  constructor(error: any) {
     super(error);
     this.name = 'StatusPageValidatorError';
   }
 }
 
 class ObjectSchemaValidatorError extends Error {
-  constructor(error: string) {
+  constructor(error: any) {
     super(error);
     this.name = 'ObjectSchemaValidatorError';
   }

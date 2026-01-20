@@ -36,7 +36,7 @@ const discordCallback = async (
       'discord',
       provider.clientId,
       provider.clientSecret,
-      code,
+      code as string,
       `${websiteUrl}/api/auth/callback/discord`
     );
 
@@ -46,7 +46,8 @@ const discordCallback = async (
       );
     }
 
-    const { data } = await axios.post(...params);
+    const [url, postData, axiosConfig] = params;
+    const { data } = await axios.post(url, postData, axiosConfig);
 
     const { access_token } = data;
 

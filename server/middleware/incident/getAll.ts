@@ -1,20 +1,17 @@
-import { fetchAllIncidents } from '../../database/queries/incident.js';
-import logger from '../../utils/logger.js';
+// import type definitions
+import type { Request, Response } from 'express';
 
-const getAllIncidents = async (request, response) => {
+// import local files
+import { handleError } from '../../utils/errors.js';
+import { fetchAllIncidents } from '../../database/queries/incident.js';
+
+const getAllIncidents = async (_request: Request, response: Response) => {
   try {
     const incidents = await fetchAllIncidents(response.locals.workspaceId);
 
     return response.json(incidents);
-  } catch (error) {
-    logger.error('Error fetching all incidents', {
-      message: error.message,
-      stack: error.stack,
-    });
-
-    return response.status(500).send({
-      message: 'Something went wrong',
-    });
+  } catch (error: any) {
+    handleError(error, response);
   }
 };
 

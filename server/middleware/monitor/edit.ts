@@ -17,7 +17,7 @@ const monitorEdit = async (request: Request, response: Response) => {
   try {
     const { type } = request.body;
 
-    const validator = validators[type];
+    const validator = validators[type as keyof typeof validators];
 
     if (!validator) {
       return response.status(400).json(MONITOR_ERRORS.M004);

@@ -1,8 +1,15 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../../utils/errors.js';
 import { fetchNotificationById } from '../../database/queries/notification.js';
 import logger from '../../utils/logger.js';
 
-const NotificationGetUsingIdMiddleware = async (request, response) => {
+const NotificationGetUsingIdMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { notificationId } = request.query;
 
   try {
@@ -11,7 +18,7 @@ const NotificationGetUsingIdMiddleware = async (request, response) => {
     }
 
     const notification = await fetchNotificationById(
-      notificationId,
+      notificationId as string,
       response.locals.workspaceId
     );
 

@@ -35,11 +35,18 @@ const twitchCallback = async (
       'twitch',
       provider.clientId,
       provider.clientSecret,
-      code,
+      code as string,
       `${websiteUrl}/api/auth/callback/twitch`
     );
 
-    const { data } = await axios.post(...params);
+    if (!params) {
+      return response.redirect(
+        '/error?code=invalid_provider_configuration&provider=twitch'
+      );
+    }
+
+    const [url, postData, axiosConfig] = params;
+    const { data } = await axios.post(url, postData, axiosConfig);
 
     const { access_token } = data;
 

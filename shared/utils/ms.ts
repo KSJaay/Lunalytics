@@ -4,7 +4,8 @@ const w = d * 7;
 const m = d * 30;
 const y = d * 365.25;
 
-type TimeType = 'months' | 'days' | 'hours' | 'minutes' | 'seconds';
+export type TimeType = 'months' | 'days' | 'hours' | 'minutes' | 'seconds';
+
 const timeToMs = (duration: number, type: TimeType = 'hours'): number => {
   const types: Record<TimeType, number> = {
     months: 2592000000,

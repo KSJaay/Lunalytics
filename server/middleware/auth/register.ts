@@ -36,7 +36,7 @@ const register = async (request: Request, response: Response) => {
       throw new UnprocessableError(isInvalidAuth);
     }
 
-    const data = {
+    const data: any = {
       email: email.toLowerCase(),
       displayName: username,
       password,

@@ -1,3 +1,7 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import {
   emailIsOwner,
   getUserByEmail,
@@ -5,7 +9,10 @@ import {
 } from '../../database/queries/user.js';
 import { handleError } from '../../utils/errors.js';
 
-const transferOwnershipMiddleware = async (request, response) => {
+const transferOwnershipMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { email } = request.body;
 

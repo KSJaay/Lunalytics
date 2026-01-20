@@ -1,31 +1,31 @@
 import database from '../connection.js';
 import randomId from '../../utils/randomId.js';
-import { timeToMs } from '../../../shared/utils/ms.js';
+import { timeToMs, TimeType } from '../../../shared/utils/ms.js';
 import { UnprocessableError } from '../../../shared/utils/errors.js';
 
-const monitorExists = async (monitorId, workspaceId) => {
+const monitorExists = async (monitorId: string, workspaceId: string) => {
   const client = await database.connect();
-  return client('monitor').where({ monitorId, workspaceId }).first();
+  return client?.('monitor').where({ monitorId, workspaceId }).first();
 };
 
-const createMonitor = async (monitor) => {
+const createMonitor = async (monitor: any) => {
   const monitorId = randomId();
 
   const created_at = new Date().toISOString();
   const client = await database.connect();
 
   // insert and return row
-  const data = await client('monitor')
+  const data = await client?.('monitor')
     .insert({ ...monitor, created_at, monitorId })
     .returning('*');
 
-  return data[0];
+  return data?.[0];
 };
 
-const updateMonitor = async (monitor) => {
+const updateMonitor = async (monitor: any) => {
   const client = await database.connect();
 
-  await client('monitor')
+  await client?.('monitor')
     .where({ monitorId: monitor.monitorId, workspaceId: monitor.workspaceId })
     .update(monitor);
 
@@ -33,25 +33,25 @@ const updateMonitor = async (monitor) => {
 };
 
 const fetchUptimePercentage = async (
-  monitorId,
-  workspaceId,
-  duration = 24,
-  type
+  monitorId: string,
+  workspaceId: string,
+  duration: number = 24,
+  type: TimeType = 'hours'
 ) => {
   const time = new Date(Date.now() - timeToMs(duration, type)).toISOString();
   const client = await database.connect();
 
-  const heartbeats = await client('heartbeat')
+  const heartbeats = await client?.('heartbeat')
     .select()
     .where({ monitorId, workspaceId })
     .andWhere('date', '>', time);
 
-  const totalHeartbeats = heartbeats.length;
-  const downHeartbeats = heartbeats.filter((h) => h.isDown).length;
+  const totalHeartbeats = heartbeats?.length || 0;
+  const downHeartbeats = heartbeats?.filter((h) => h.isDown).length || 0;
 
   const averageHeartbeatLatency =
     Math.round(
-      heartbeats.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats
+      heartbeats?.reduce((acc, curr) => acc + curr.latency, 0) / totalHeartbeats
     ) || 0;
 
   const uptimePercentage =
@@ -61,9 +61,9 @@ const fetchUptimePercentage = async (
   return { uptimePercentage, averageHeartbeatLatency };
 };
 
-const fetchMonitorUptime = async (monitorId, workspaceId) => {
+const fetchMonitorUptime = async (monitorId: string, workspaceId: string) => {
   const client = await database.connect();
-  const lastDownHeartbeat = await client('heartbeat')
+  const lastDownHeartbeat = await client?.('heartbeat')
     .select()
     .where({ monitorId, workspaceId })
     .andWhere('isDown', true)
@@ -71,7 +71,7 @@ const fetchMonitorUptime = async (monitorId, workspaceId) => {
     .first();
 
   if (!lastDownHeartbeat) {
-    const firstEverHeartbeat = await client('heartbeat')
+    const firstEverHeartbeat = await client?.('heartbeat')
       .select()
       .where({ monitorId, workspaceId })
       .orderBy('date', 'asc')
@@ -82,7 +82,7 @@ const fetchMonitorUptime = async (monitorId, workspaceId) => {
       : new Date(firstEverHeartbeat.date).getTime();
   }
 
-  const newestUptimeHeartbeat = await client('heartbeat')
+  const newestUptimeHeartbeat = await client?.('heartbeat')
     .select()
     .where({ monitorId, workspaceId })
     .andWhere('isDown', false)
@@ -97,7 +97,7 @@ const fetchMonitorUptime = async (monitorId, workspaceId) => {
 
 const fetchAllMonitors = async () => {
   const client = await database.connect();
-  const mointors = await client('monitor').select();
+  const mointors = (await client?.('monitor').select()) || [];
 
   const monitorWithHeartbeats = [];
 
@@ -113,9 +113,10 @@ const fetchAllMonitors = async () => {
   return monitorWithHeartbeats;
 };
 
-const fetchMonitors = async (workspaceId) => {
+const fetchMonitors = async (workspaceId: string) => {
   const client = await database.connect();
-  const mointors = await client('monitor').where({ workspaceId }).select();
+  const mointors =
+    (await client?.('monitor').where({ workspaceId }).select()) || [];
 
   const monitorWithHeartbeats = [];
 
@@ -131,9 +132,9 @@ const fetchMonitors = async (workspaceId) => {
   return monitorWithHeartbeats;
 };
 
-const fetchMonitor = async (monitorId, workspaceId) => {
+const fetchMonitor = async (monitorId: string, workspaceId: string) => {
   const client = await database.connect();
-  const monitor = await client('monitor')
+  const monitor = await client?.('monitor')
     .where({ monitorId, workspaceId })
     .first();
 
@@ -146,16 +147,20 @@ const fetchMonitor = async (monitorId, workspaceId) => {
   return { ...monitor, ...uptime };
 };
 
-const deleteMonitor = async (monitorId, workspaceId) => {
+const deleteMonitor = async (monitorId: string, workspaceId: string) => {
   const client = await database.connect();
-  await client('monitor').where({ monitorId, workspaceId }).del();
+  await client?.('monitor').where({ monitorId, workspaceId }).del();
 
   return true;
 };
 
-const pauseMonitor = async (monitorId, workspaceId, paused) => {
+const pauseMonitor = async (
+  monitorId: string,
+  workspaceId: string,
+  paused: boolean
+) => {
   const client = await database.connect();
-  const monitor = await client('monitor')
+  const monitor = await client?.('monitor')
     .where({ monitorId, workspaceId })
     .first();
 
@@ -163,12 +168,14 @@ const pauseMonitor = async (monitorId, workspaceId, paused) => {
     throw new UnprocessableError('Monitor does not exist');
   }
 
-  await client('monitor').where({ monitorId, workspaceId }).update({ paused });
+  await client?.('monitor')
+    .where({ monitorId, workspaceId })
+    .update({ paused });
 };
 
-const fetchUsingToken = async (token) => {
+const fetchUsingToken = async (token: string) => {
   const client = await database.connect();
-  const monitor = await client('monitor').where({ url: token }).first();
+  const monitor = await client?.('monitor').where({ url: token }).first();
 
   if (!monitor) {
     throw new UnprocessableError('Monitor does not exist');

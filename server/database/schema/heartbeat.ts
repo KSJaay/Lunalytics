@@ -1,4 +1,7 @@
-export const heartbeatTable = async (client) => {
+// import type definitions
+import type { Knex } from 'knex';
+
+export const heartbeatTable = async (client: Knex) => {
   const heartbeatExists = await client.schema.hasTable('heartbeat');
 
   if (!heartbeatExists) {

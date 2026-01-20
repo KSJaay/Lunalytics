@@ -17,7 +17,10 @@ const fetchMonitorUsingId = async (request: Request, response: Response) => {
       return response.status(400).json(MONITOR_ERRORS.M004);
     }
 
-    const data = await fetchMonitor(monitorId, response.locals.workspaceId);
+    const data = await fetchMonitor(
+      monitorId as string,
+      response.locals.workspaceId
+    );
 
     if (!data) {
       return response.status(404).json(MONITOR_ERRORS.M001);

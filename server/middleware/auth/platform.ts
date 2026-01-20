@@ -12,7 +12,11 @@ const redirectUsingProviderMiddleware = async (
   response: Response
 ) => {
   try {
-    const providerId = request.params?.provider?.toLowerCase();
+    const providerId =
+      typeof request.params?.provider === 'string'
+        ? request.params.provider.toLowerCase()
+        : undefined;
+
     if (!providerId) return response.status(400).send('No provider provided');
 
     const provider = await fetchProvider(providerId);

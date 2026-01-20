@@ -17,11 +17,11 @@ const monitorDelete = async (request: Request, response: Response) => {
       return response.status(400).json(MONITOR_ERRORS.M004);
     }
 
-    await deleteMonitor(monitorId, response.locals.workspaceId);
-    await deleteHeartbeats(monitorId, response.locals.workspaceId);
-    await deleteCertificate(monitorId, response.locals.workspaceId);
+    await deleteMonitor(monitorId as string, response.locals.workspaceId);
+    await deleteHeartbeats(monitorId as string, response.locals.workspaceId);
+    await deleteCertificate(monitorId as string, response.locals.workspaceId);
 
-    statusCache.removeMonitor(monitorId, response.locals.workspaceId);
+    statusCache.removeMonitor(monitorId as string, response.locals.workspaceId);
     return response.sendStatus(200);
   } catch (error) {
     return handleError(error, response);

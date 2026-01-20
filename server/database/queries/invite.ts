@@ -1,5 +1,11 @@
+// import type definitions
+import { Knex } from 'knex';
+
+// import node modules
 import { customAlphabet } from 'nanoid';
-import { timeToMs } from '../../../shared/utils/ms.js';
+
+// import local files
+import { timeToMs, TimeType } from '../../../shared/utils/ms.js';
 import database from '../connection.js';
 
 const nanoid = customAlphabet(
@@ -7,48 +13,48 @@ const nanoid = customAlphabet(
   12
 );
 
-const getUniqueToken = async (client) => {
+const getUniqueToken = async (client?: Knex) => {
   let token = nanoid(12);
 
-  while (await client('invite').where({ token }).first()) {
+  while (await client?.('invite').where({ token }).first()) {
     token = nanoid(12);
   }
 
   return token;
 };
 
-const getExpiryDate = (expiry) => {
+const getExpiryDate = (expiry: string) => {
   const [duration, type] = expiry.split(' ');
 
   if (!duration || !type) return null;
 
-  const time = timeToMs(parseInt(duration), type);
+  const time = timeToMs(parseInt(duration), type as TimeType);
 
   if (!time) return null;
 
   return new Date(Date.now() + time).toISOString();
 };
 
-export const fetchInviteUsingId = async (token) => {
+export const fetchInviteUsingId = async (token: string) => {
   const client = await database.connect();
-  const invite = await client('invite').where({ token }).first();
+  const invite = await client?.('invite').where({ token }).first();
 
   return invite;
 };
 
-export const fetchAllInvites = async (workspaceId) => {
+export const fetchAllInvites = async (workspaceId: string) => {
   const client = await database.connect();
-  const invites = await client('invite').where({ workspaceId }).select();
+  const invites = await client?.('invite').where({ workspaceId }).select();
 
   return invites;
 };
 
 export const createInvite = async (
-  email,
-  expiry,
-  limit,
-  permission,
-  workspaceId
+  email: string,
+  expiry: string,
+  limit: string,
+  permission: number,
+  workspaceId: string
 ) => {
   const client = await database.connect();
   const token = await getUniqueToken(client);
@@ -67,26 +73,26 @@ export const createInvite = async (
     workspaceId,
   };
 
-  await client('invite').insert(invite);
+  await client?.('invite').insert(invite);
 
   return invite;
 };
 
-export const pauseInvite = async (token, paused) => {
+export const pauseInvite = async (token: string, paused: boolean) => {
   const client = await database.connect();
-  await client('invite').where({ token }).update({ paused });
+  await client?.('invite').where({ token }).update({ paused });
 
   return true;
 };
 
-export const deleteInvite = async (token) => {
+export const deleteInvite = async (token: string) => {
   const client = await database.connect();
-  return client('invite').where({ token }).del();
+  return client?.('invite').where({ token }).del();
 };
 
-export const increaseInviteUses = async (token) => {
+export const increaseInviteUses = async (token: string) => {
   const client = await database.connect();
-  const invite = await client('invite').where({ token }).first();
+  const invite = await client?.('invite').where({ token }).first();
   const newUses = invite.uses ? invite.uses + 1 : 1;
 
   if (invite.limit && newUses >= invite.limit) {
@@ -94,6 +100,6 @@ export const increaseInviteUses = async (token) => {
     return true;
   }
 
-  await client('invite').where({ token }).update({ uses: newUses });
+  await client?.('invite').where({ token }).update({ uses: newUses });
   return false;
 };

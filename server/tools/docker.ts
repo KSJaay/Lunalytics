@@ -3,7 +3,7 @@ import type { MonitorProps } from '../../shared/types/monitor.d.js';
 import http from 'http';
 import logger from '../utils/logger.js';
 
-interface DockerContainerProps {
+export interface DockerContainerProps {
   Id: string;
   Names: string[];
   Image: string;
@@ -135,7 +135,7 @@ const dockerStatusCheck = async (monitor: MonitorProps) => {
   }
 };
 
-export const getListOfDockerContainers = async (socketUrl: string) => {
+export const getListOfDockerContainers = async (socketUrl?: string) => {
   try {
     const containers = await dockerRequest(
       '/containers/json?all=true',

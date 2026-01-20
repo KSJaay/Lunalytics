@@ -7,36 +7,41 @@ import randomId from '../../utils/randomId.js';
 
 export const fetchAllStatusPages = async () => {
   const client = await database.connect();
-  const statusPages = await client('status_page').select();
+  const statusPages = await client?.('status_page').select();
 
-  return statusPages.map((statusPage) => {
+  return statusPages?.map((statusPage) => {
     return cleanStatusPage(statusPage);
   });
 };
 
-export const fetchWorkspaceStatusPages = async (workspaceId) => {
+export const fetchWorkspaceStatusPages = async (workspaceId: string) => {
   const client = await database.connect();
-  const statusPages = await client('status_page')
+  const statusPages = await client?.('status_page')
     .where({ workspaceId })
     .select();
 
-  return statusPages.map((statusPage) => {
+  return statusPages?.map((statusPage) => {
     return cleanStatusPage(statusPage);
   });
 };
 
-export const fetchStatusPageUsingId = async (statusId, workspaceId) => {
+export const fetchStatusPageUsingId = async (
+  statusId: string,
+  workspaceId: string
+) => {
   const client = await database.connect();
-  return client('status_page').where({ statusId, workspaceId }).first();
+  return client?.('status_page').where({ statusId, workspaceId }).first();
 };
 
-export const fetchStatusPageUsingUrl = async (url) => {
+export const fetchStatusPageUsingUrl = async (url: string) => {
   const client = await database.connect();
-  return client('status_page').where({ statusUrl: url }).first();
+  return client?.('status_page').where({ statusUrl: url }).first();
 };
 
-export const fetchStatusPageUsingDomain = async (domain) => {
-  const statusPage = await SQLite.client('status_page')
+export const fetchStatusPageUsingDomain = async (domain: string) => {
+  const client = await database.connect();
+
+  const statusPage = await client?.('status_page')
     .whereRaw(
       "EXISTS (SELECT 1 FROM json_each(settings, '$.customDomains') WHERE value = ?)",
       [domain]
@@ -46,14 +51,19 @@ export const fetchStatusPageUsingDomain = async (domain) => {
   return statusPage;
 };
 
-export const createStatusPage = async (workspaceId, settings, layout, user) => {
+export const createStatusPage = async (
+  workspaceId: string,
+  settings: any,
+  layout: any,
+  user: any
+) => {
   const statusExists = await fetchStatusPageUsingUrl(settings.url);
 
   if (statusExists) {
     throw new ConflictError('Status page already exists with this URL.');
   }
 
-  const filteredComponents = layout.filter((item) => {
+  const filteredComponents = layout.filter((item: any) => {
     if (item.type === 'uptime' || item.type === 'metrics') {
       return item.monitors.length > 0 || item.autoAdd;
     }
@@ -77,7 +87,7 @@ export const createStatusPage = async (workspaceId, settings, layout, user) => {
   const uniqueId = randomId();
   const client = await database.connect();
 
-  await client('status_page').insert({
+  await client?.('status_page').insert({
     statusId: uniqueId,
     workspaceId,
     statusUrl: settings.url,
@@ -87,17 +97,17 @@ export const createStatusPage = async (workspaceId, settings, layout, user) => {
     created_at: new Date().toISOString(),
   });
 
-  return client('status_page')
+  return client?.('status_page')
     .where({ statusId: uniqueId, workspaceId })
     .first();
 };
 
 export const updateStatusPage = async (
-  workspaceId,
-  statusId,
-  settings,
-  layout,
-  user
+  workspaceId: string,
+  statusId: string,
+  settings: any,
+  layout: any,
+  user: any
 ) => {
   const statusExists = await fetchStatusPageUsingId(statusId, workspaceId);
 
@@ -105,7 +115,7 @@ export const updateStatusPage = async (
     throw new ConflictError('Status page does not exist.');
   }
 
-  const filteredComponents = layout.filter((item) => {
+  const filteredComponents = layout.filter((item: any) => {
     if (item.type === 'uptime' || item.type === 'metrics') {
       return item.monitors?.length > 0 || item.autoAdd;
     }
@@ -128,7 +138,7 @@ export const updateStatusPage = async (
 
   const client = await database.connect();
 
-  await client('status_page')
+  await client?.('status_page')
     .where({ statusId, workspaceId })
     .update({
       statusUrl: settings.url,
@@ -137,10 +147,13 @@ export const updateStatusPage = async (
       email: user.email,
     });
 
-  return client('status_page').where({ statusId, workspaceId }).first();
+  return client?.('status_page').where({ statusId, workspaceId }).first();
 };
 
-export const deleteStatusPage = async (statusId, workspaceId) => {
+export const deleteStatusPage = async (
+  statusId: string,
+  workspaceId: string
+) => {
   const statusExists = await fetchStatusPageUsingId(statusId, workspaceId);
 
   if (!statusExists) {
@@ -149,27 +162,30 @@ export const deleteStatusPage = async (statusId, workspaceId) => {
 
   const client = await database.connect();
 
-  await client('status_page').where({ statusId, workspaceId }).delete();
+  await client?.('status_page').where({ statusId, workspaceId }).delete();
 };
 
-export const fetchMonitorsUsingIdArray = async (monitorIds, workspaceId) => {
+export const fetchMonitorsUsingIdArray = async (
+  monitorIds: string[],
+  workspaceId: string
+) => {
   const client = await database.connect();
 
-  return client('monitor')
+  return client?.('monitor')
     .whereIn('monitorId', monitorIds)
     .andWhere({ workspaceId })
     .select();
 };
 
-export const fetchAllMonitors = async (workspaceId) => {
+export const fetchAllMonitors = async (workspaceId?: string) => {
   const client = await database.connect();
 
-  return client('monitor').where({ workspaceId }).select();
+  return client?.('monitor').where({ workspaceId }).select();
 };
 
 export const fetchIncidentsUsingIdArray = async (
-  monitorIds,
-  workspaceId,
+  monitorIds: string[],
+  workspaceId: string,
   days = 90
 ) => {
   const ninetyDaysAgo = new Date(
@@ -178,7 +194,7 @@ export const fetchIncidentsUsingIdArray = async (
 
   const client = await database.connect();
 
-  const query = await client('incident')
+  const query = await client?.('incident')
     .whereRaw(
       `EXISTS (
         SELECT 1 FROM json_each(monitorIds)
@@ -190,5 +206,5 @@ export const fetchIncidentsUsingIdArray = async (
     .andWhere({ workspaceId })
     .select();
 
-  return query.map((incident) => cleanIncident(incident));
+  return query?.map((incident: any) => cleanIncident(incident));
 };

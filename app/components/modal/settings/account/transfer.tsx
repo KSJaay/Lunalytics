@@ -30,7 +30,7 @@ const SettingsAccountTransferModal = ({
     .filter((member) => member.isVerified);
 
   const { isLoading } = useFetch({
-    url: '/api/user/team',
+    url: '/api/workspace/members',
     onSuccess: (data) => {
       const filteredMembers = data?.filter(
         (member: any) => member.email !== user.email

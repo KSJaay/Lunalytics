@@ -1,4 +1,7 @@
-export const workspaceTable = async (client) => {
+// import type definitions
+import type { Knex } from 'knex';
+
+export const workspaceTable = async (client: Knex) => {
   const workspaceExists = await client.schema.hasTable('workspace');
 
   if (!workspaceExists) {

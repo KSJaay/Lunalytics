@@ -4,7 +4,7 @@ import type { Request, Response } from 'express';
 // import local files
 import { handleError } from '../../utils/errors.js';
 
-const fetchUserMiddleware = async (request: Request, response: Response) => {
+const fetchUserMiddleware = async (_request: Request, response: Response) => {
   try {
     const { user } = response.locals;
 

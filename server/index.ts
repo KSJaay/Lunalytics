@@ -1,5 +1,5 @@
 // import dependencies
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -91,11 +91,11 @@ const init = async () => {
     });
   }
 
-  app.get('/api/ping', (req, res) => {
+  app.get('/api/ping', (_req: Request, res: Response) => {
     return res.status(200).send('Everything looks good :D');
   });
 
-  app.get('/api/version', (req, res) => {
+  app.get('/api/version', (_req: Request, res: Response) => {
     return res.status(200).json(getVersionInfo());
   });
 

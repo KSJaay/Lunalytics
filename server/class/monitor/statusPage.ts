@@ -1,6 +1,6 @@
 import { parseJsonOrArray } from '../../utils/parser.js';
 
-export const cleanMonitorForStatusPage = (monitor) => ({
+export const cleanMonitorForStatusPage = (monitor: any) => ({
   monitorId: monitor.monitorId,
   workspaceId: monitor.workspaceId,
   name: monitor.name,

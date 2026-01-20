@@ -1,13 +1,17 @@
-import cache from '../../cache/monitor/index.js';
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import statusCache from '../../cache/status.js';
-import { pauseMonitor } from '../../database/queries/monitor.js';
+import cache from '../../cache/monitor/index.js';
 import { handleError } from '../../utils/errors.js';
+import { pauseMonitor } from '../../database/queries/monitor.js';
 import { MONITOR_ERRORS } from '../../../shared/constants/errors/monitor.js';
 
-const isTruthy = (value) => value == true || value == 'true';
-const isFalsy = (value) => value == false || value == 'false';
+const isTruthy = (value: any) => value == true || value == 'true';
+const isFalsy = (value: any) => value == false || value == 'false';
 
-const monitorPause = async (request, response) => {
+const monitorPause = async (request: Request, response: Response) => {
   try {
     const { monitorId, pause } = request.body;
 
@@ -16,12 +20,10 @@ const monitorPause = async (request, response) => {
     }
 
     if (!isTruthy(pause) && !isFalsy(pause)) {
-      return response
-        .status(400)
-        .json({
-          ...MONITOR_ERRORS.M003,
-          details: 'Pause should be a boolean value',
-        });
+      return response.status(400).json({
+        ...MONITOR_ERRORS.M003,
+        details: 'Pause should be a boolean value',
+      });
     }
 
     await pauseMonitor(monitorId, response.locals.workspaceId, isTruthy(pause));

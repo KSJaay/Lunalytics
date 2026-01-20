@@ -98,7 +98,9 @@ class Collection extends Map {
     if (typeof fn !== 'function')
       throw new TypeError(`${fn} is not a function`);
     if (thisArg !== undefined) fn = fn.bind(thisArg);
-    const results = new (this.constructor as typeof Collection)[Symbol.species]() as this;
+    const results = new (this.constructor as typeof Collection)[
+      Symbol.species
+    ]() as this;
     for (const [key, val] of this) {
       if (fn(val, key, this)) results.set(key, val);
     }

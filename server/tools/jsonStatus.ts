@@ -1,11 +1,17 @@
 // import dependencies
-import axios from 'axios';
+import https from 'https';
 import jsonata from 'jsonata';
+import axios, { AxiosRequestConfig } from 'axios';
 
 // import local files
 import logger from '../utils/logger.js';
 import { isEmpty } from '../../shared/utils/object.js';
-const createJsonQuery = (jsonKey, jsonOperator, expectedValue) => {
+
+const createJsonQuery = (
+  jsonKey: string,
+  jsonOperator: string,
+  expectedValue: string
+) => {
   if (!jsonKey || !jsonOperator || expectedValue === undefined) return false;
 
   const valueExpr = `$eval("${jsonKey}")`;
@@ -32,7 +38,12 @@ const createJsonQuery = (jsonKey, jsonOperator, expectedValue) => {
   }
 };
 
-const jsonataCheck = async (data, jsonKey, jsonOperator, expectedValue) => {
+const jsonataCheck = async (
+  data: any,
+  jsonKey: string,
+  jsonOperator: string,
+  expectedValue: string
+) => {
   if (!data) return true;
 
   const query = createJsonQuery(jsonKey, jsonOperator, expectedValue);
@@ -55,10 +66,10 @@ const jsonataCheck = async (data, jsonKey, jsonOperator, expectedValue) => {
   }
 };
 
-const jsonStatusCheck = async (monitor) => {
+const jsonStatusCheck = async (monitor: any) => {
   const timeout = monitor.requestTimeout || 5;
 
-  const options = {
+  const options: AxiosRequestConfig = {
     method: monitor.method,
     url: monitor.url,
     timeout: timeout * 1000,
@@ -121,7 +132,7 @@ const jsonStatusCheck = async (monitor) => {
 
       const jsonQuery = monitor.json_query?.[0];
 
-      const isDown = await jsonStatusCheck(
+      const isDown = await jsonataCheck(
         data,
         jsonQuery?.key,
         jsonQuery?.operator,

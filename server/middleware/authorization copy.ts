@@ -1,10 +1,14 @@
-import { getUserByEmail } from '../database/queries/user.js';
-import { deleteCookie } from '../../shared/utils/cookies.js';
+// import type definitions
+import type { NextFunction, Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../utils/errors.js';
-import { userSessionExists } from '../database/queries/session.js';
-import { apiTokenExists } from '../database/queries/tokens.js';
 import { timeToMs } from '../../shared/utils/ms.js';
 import { fetchMember } from '../database/queries/member.js';
+import { getUserByEmail } from '../database/queries/user.js';
+import { deleteCookie } from '../../shared/utils/cookies.js';
+import { apiTokenExists } from '../database/queries/tokens.js';
+import { userSessionExists } from '../database/queries/session.js';
 import {
   SESSION_TOKEN,
   WORKSPACE_ID_COOKIE,
@@ -12,7 +16,11 @@ import {
 
 const sixtyDaysInHours = timeToMs(60, 'days');
 
-const authorization = async (request, response, next) => {
+const authorization = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   try {
     const {
       [SESSION_TOKEN]: session_token,
@@ -84,14 +92,16 @@ const authorization = async (request, response, next) => {
     }
 
     if (request.url.startsWith('/api') && authorization) {
-      const authorizationTokenExists = await apiTokenExists(authorization);
+      const authorizationTokenExists = await apiTokenExists(
+        authorization as string
+      );
 
       if (!authorizationTokenExists) {
         return response.sendStatus(401);
       }
 
       const member = await fetchMember(
-        userExistsInDatabase.email,
+        authorizationTokenExists.email,
         authorizationTokenExists.workspaceId
       );
 

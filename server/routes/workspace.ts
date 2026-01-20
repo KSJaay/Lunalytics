@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 
 import { createWorkspace } from '../database/queries/workspace.js';
 import { createMember, fetchMember } from '../database/queries/member.js';
@@ -12,8 +12,8 @@ import workspaceNotificationsMiddleware from '../middleware/workspace/notificati
 import workspaceMonitorsMiddleware from '../middleware/workspace/monitors.js';
 import getAllIncidents from '../middleware/incident/getAll.js';
 import workspaceApiTokensMiddleware from '../middleware/workspace/api_tokens.js';
-import teamMembersListMiddleware from '../middleware/user/team/members.js';
 import getAllStatusPagesMiddleware from '../middleware/workspace/status-pages.js';
+import workspaceMembersMiddleware from '../middleware/workspace/members.js';
 
 const router = express.Router();
 
@@ -50,12 +50,18 @@ router.post('/create', async (request, response) => {
   }
 });
 
-router.get('/members/@me', authorizeWorkspace, async (request, response) => {
-  const { workspaceId, user } = response.locals;
-  const member = await fetchMember(user.email, workspaceId);
+router.get(
+  '/members/@me',
+  authorizeWorkspace,
+  async (_request: Request, response: Response) => {
+    const { workspaceId, user } = response.locals;
+    const member = await fetchMember(user.email, workspaceId);
 
-  return response.status(200).json(member);
-});
+    return response.status(200).json(member);
+  }
+);
+
+router.get('/members', authorizeWorkspace, workspaceMembersMiddleware);
 
 router.get(
   '/monitors',
@@ -90,7 +96,5 @@ router.get(
   memberHasPermission(MemberPermissionBits.ADMINISTRATOR),
   workspaceApiTokensMiddleware
 );
-
-router.get('/members', authorizeWorkspace, teamMembersListMiddleware);
 
 export default router;

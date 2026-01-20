@@ -15,7 +15,10 @@ const NotificationEditMiddleware = async (
   const { workspaceId } = response.locals;
 
   try {
-    const validator = NotificationValidators[notification?.platform];
+    const platform =
+      notification?.platform as keyof typeof NotificationValidators;
+
+    const validator = NotificationValidators[platform];
 
     if (!validator) {
       return response.status(400).json(NOTIFICATION_ERRORS.N003);

@@ -25,8 +25,11 @@ import pushStatusCheck from '../../tools/push.js';
 import tcpStatusCheck from '../../tools/tcpPing.js';
 import sendMonitorNotification from './notification.js';
 import Collection from '../../../shared/utils/collection.js';
+import { MonitorProps } from '../../../shared/types/monitor.js';
 
 class MonitorCache {
+  timeouts: any;
+
   constructor() {
     this.timeouts = new Collection();
   }
@@ -39,7 +42,7 @@ class MonitorCache {
     }
   }
 
-  async updateTimeout(monitor, heartbeat) {
+  async updateTimeout(monitor: any, heartbeat: any) {
     await createHeartbeat(heartbeat);
 
     const isDown = await isMonitorDown(
@@ -75,7 +78,7 @@ class MonitorCache {
     );
   }
 
-  async checkCertificate(monitor) {
+  async checkCertificate(monitor: any) {
     try {
       if (monitor.url?.toLowerCase().startsWith('https')) {
         const certificate = await fetchCertificate(
@@ -83,21 +86,32 @@ class MonitorCache {
           monitor.workspaceId
         );
 
-        const certDate = new Date(certificate?.nextCheck);
+        // @ts-ignore
+        const certDate = new Date(certificate?.nextCheck || 0);
+        // @ts-ignore
         if (!certificate?.nextCheck || certDate.getTime() <= Date.now()) {
           const cert = await getCertInfo(monitor.url);
-          cert.nextCheck = new Date(Date.now() + 600000).toISOString();
-          await updateCertificate(monitor.monitorId, monitor.workspaceId, cert);
+          const certWithNextCheck = {
+            ...cert,
+            nextCheck: new Date(Date.now() + 600000).toISOString(),
+          };
+
+          await updateCertificate(
+            monitor.monitorId,
+            monitor.workspaceId,
+            certWithNextCheck
+          );
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       logger.error('Check Certificate', {
         message: `Issue checking certificate for monitor ${monitor.monitorId}: ${error.message}`,
+        stack: error.stack,
       });
     }
   }
 
-  async checkMonitorStatus(monitorId, workspaceId) {
+  async checkMonitorStatus(monitorId: any, workspaceId: any) {
     const query = await fetchMonitor(monitorId, workspaceId).catch(() => false);
 
     if (!query) {
@@ -108,7 +122,7 @@ class MonitorCache {
       return;
     }
 
-    const monitor = cleanMonitor(query, false, false);
+    const monitor = cleanMonitor(query, false, false) as MonitorProps;
 
     if (monitor.paused) {
       if (this.timeouts.has(monitorId)) {
@@ -155,6 +169,7 @@ class MonitorCache {
         if (!heartbeat) {
           const hasRecovered = await isMonitorRecovered(
             monitor.monitorId,
+            monitor.workspaceId,
             monitor.retry
           );
 
@@ -170,10 +185,10 @@ class MonitorCache {
               {
                 monitorId: monitor.monitorId,
                 workspaceId: monitor.workspaceId,
-                status: lastHeartbeat[0]?.status || 'RUNNING',
-                latency: lastHeartbeat[0]?.latency || 0,
+                status: lastHeartbeat?.[0]?.status || 'RUNNING',
+                latency: lastHeartbeat?.[0]?.latency || 0,
                 message:
-                  lastHeartbeat[0]?.message || 'PUSH notification received',
+                  lastHeartbeat?.[0]?.message || 'PUSH notification received',
                 isDown: false,
               },
               false,
@@ -198,7 +213,7 @@ class MonitorCache {
       }
 
       case 'tcp': {
-        const updateHeartbeat = (monitor, heartbeat) =>
+        const updateHeartbeat = (monitor: any, heartbeat: any) =>
           this.updateTimeout(monitor, heartbeat);
         await tcpStatusCheck(monitor, updateHeartbeat);
         break;
@@ -207,6 +222,13 @@ class MonitorCache {
       default: {
         break;
       }
+    }
+  }
+
+  removeMonitor(monitorId: string, _workspaceId: string) {
+    if (this.timeouts.has(monitorId)) {
+      clearTimeout(this.timeouts.get(monitorId));
+      this.timeouts.delete(monitorId);
     }
   }
 }

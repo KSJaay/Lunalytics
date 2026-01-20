@@ -1,3 +1,7 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import statusCache from '../../cache/status.js';
 import {
   fetchIncident,
@@ -6,7 +10,10 @@ import {
 import { handleError } from '../../utils/errors.js';
 import { INCIDENT_ERRORS } from '../../../shared/constants/errors/incident.js';
 
-const deleteIncidentMessageMiddleware = async (request, response) => {
+const deleteIncidentMessageMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { incidentId, position } = request.body;
 
   try {
@@ -33,22 +40,18 @@ const deleteIncidentMessageMiddleware = async (request, response) => {
     }
 
     if (query.messages.length === 1) {
-      return response
-        .status(400)
-        .json({
-          ...INCIDENT_ERRORS.I003,
-          details: 'Need to have at least one message',
-        });
+      return response.status(400).json({
+        ...INCIDENT_ERRORS.I003,
+        details: 'Need to have at least one message',
+      });
     }
 
     query.messages.splice(parsedPosition, 1);
     query.status = query.messages[query.messages.length - 1].status;
 
-    const data = await updateIncident(
-      incidentId,
-      response.locals.workspaceId,
-      query
-    );
+    const { workspaceId } = response.locals;
+
+    const data = await updateIncident(incidentId, workspaceId, query);
 
     statusCache.addIncident(data);
 

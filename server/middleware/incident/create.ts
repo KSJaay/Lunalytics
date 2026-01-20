@@ -1,10 +1,17 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { handleError } from '../../utils/errors.js';
 import { INCIDENT_ERRORS } from '../../../shared/constants/errors/incident.js';
 import { createIncident } from '../../database/queries/incident.js';
 import IncidentValidator from '../../../shared/validators/incident.js';
 import statusCache from '../../cache/status.js';
 
-const createIncidentMiddleware = async (request, response) => {
+const createIncidentMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const { body } = request;
 
@@ -21,7 +28,14 @@ const createIncidentMiddleware = async (request, response) => {
       monitorIds: body.monitorIds,
       affect: body.affect,
       status: body.status,
-      messages: [],
+      messages: [] as Array<{
+        message: any;
+        status: any;
+        email: any;
+        created_at: string;
+        endedAt: null;
+        monitorIds: any;
+      }>,
       created_at: new Date().toISOString(),
       completedAt: null,
       isClosed: false,
@@ -38,7 +52,9 @@ const createIncidentMiddleware = async (request, response) => {
 
     data.messages.push(msg);
 
-    const incident = await createIncident(data, response.locals.workspaceId);
+    const { workspaceId } = response.locals;
+
+    const incident = await createIncident(data, workspaceId);
 
     statusCache.addIncident(incident);
 

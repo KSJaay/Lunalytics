@@ -1,7 +1,9 @@
-export const hourlyHeartbeatTable = async (client) => {
-  const hourlyHeartbeatExists = await client.schema.hasTable(
-    'hourly_heartbeat'
-  );
+// import type definitions
+import type { Knex } from 'knex';
+
+export const hourlyHeartbeatTable = async (client: Knex) => {
+  const hourlyHeartbeatExists =
+    await client.schema.hasTable('hourly_heartbeat');
 
   if (!hourlyHeartbeatExists) {
     await client.schema.createTable('hourly_heartbeat', (table) => {

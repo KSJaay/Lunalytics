@@ -1,5 +1,5 @@
 // import type definitions
-import type { Application } from 'express';
+import type { Application, NextFunction, Request, Response } from 'express';
 
 // import local files
 import authRoutes from './auth.js';
@@ -27,9 +27,12 @@ const initialiseRoutes = async (app: Application) => {
   app.use('/api/status', statusApiRoutes);
   app.post('/api/push', createPushHeartbeat);
   app.use(authorization);
-  app.use('/api/admin', (request, response, next) => {
-    return next();
-  });
+  app.use(
+    '/api/admin',
+    (_request: Request, _response: Response, next: NextFunction) => {
+      return next();
+    }
+  );
   app.use('/api/user', userRoutes);
   app.use('/api/workspace', workspaceRoutes);
   app.use(authorizeWorkspace);

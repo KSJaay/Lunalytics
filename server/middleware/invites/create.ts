@@ -1,9 +1,13 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { isValidBitFlags } from '../../../shared/permissions/isValidBitFlags.js';
 import { createInvite } from '../../database/queries/invite.js';
 import { handleError } from '../../utils/errors.js';
 import { INVITE_ERRORS } from '../../../shared/constants/errors/invite.js';
 
-const createInviteMiddleware = async (request, response) => {
+const createInviteMiddleware = async (request: Request, response: Response) => {
   try {
     const { expiry, limit, permission } = request.body;
 

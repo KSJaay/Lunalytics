@@ -1,4 +1,7 @@
-export const connectionsTable = async (client) => {
+// import type definitions
+import type { Knex } from 'knex';
+
+export const connectionsTable = async (client: Knex) => {
   const connectionsExists = await client.schema.hasTable('connections');
 
   if (!connectionsExists) {

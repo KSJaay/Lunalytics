@@ -17,7 +17,10 @@ const NotificationDeleteMiddleware = async (
       return response.status(400).json(NOTIFICATION_ERRORS.N001);
     }
 
-    await deleteNotification(notificationId, response.locals.workspaceId);
+    await deleteNotification(
+      notificationId as string,
+      response.locals.workspaceId
+    );
     return response.status(200).send('Notification deleted');
   } catch (error) {
     handleError(error, response);

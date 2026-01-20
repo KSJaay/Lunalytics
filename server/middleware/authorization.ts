@@ -78,7 +78,11 @@ const authorization = async (
       }
     }
 
-    if (request.url.startsWith('/api') && authorization) {
+    if (
+      request.url.startsWith('/api') &&
+      authorization &&
+      typeof authorization === 'string'
+    ) {
       const authorizationTokenExists = await apiTokenExists(authorization);
 
       if (!authorizationTokenExists) {

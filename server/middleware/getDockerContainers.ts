@@ -1,8 +1,12 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { getListOfDockerContainers } from '../tools/docker.js';
 import { handleError } from '../utils/errors.js';
 import logger from '../utils/logger.js';
 
-const getPlatform = (info) => {
+const getPlatform = (info: any) => {
   let platform = '';
 
   if (info.ImageManifestDescriptor?.platform?.architecture) {
@@ -16,11 +20,19 @@ const getPlatform = (info) => {
   return platform || 'unknown';
 };
 
-const getAllDockerContainers = async (request, response) => {
+const getAllDockerContainers = async (
+  _request: Request,
+  response: Response
+) => {
   try {
     const containers = await getListOfDockerContainers();
+
+    if (!containers || !Array.isArray(containers) || containers.length === 0) {
+      return response.status(200).json([]);
+    }
+
     response.json(
-      containers.map((info) => {
+      containers.map((info: any) => {
         return {
           id: info.Id,
           name: info.Names?.[0]?.replace(/^\//, ''),
@@ -29,7 +41,7 @@ const getAllDockerContainers = async (request, response) => {
         };
       })
     );
-  } catch (error) {
+  } catch (error: any) {
     logger.error('Error getting Docker containers', {
       message: error.message,
       stack: error.stack,

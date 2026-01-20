@@ -1,7 +1,14 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
 import { deleteConnection } from '../../../database/queries/connection.js';
 import { handleError } from '../../../utils/errors.js';
 
-const deleteConnectionMiddleware = async (request, response) => {
+const deleteConnectionMiddleware = async (
+  request: Request,
+  response: Response
+) => {
   const { provider } = request.body;
 
   try {

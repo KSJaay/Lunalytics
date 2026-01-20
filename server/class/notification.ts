@@ -1,4 +1,4 @@
-const parseJson = (str) => {
+const parseJson = (str: string) => {
   try {
     return JSON.parse(str);
   } catch {
@@ -6,7 +6,7 @@ const parseJson = (str) => {
   }
 };
 
-const stringifyJson = (obj) => {
+const stringifyJson = (obj: object | Array<any>) => {
   try {
     return JSON.stringify(obj);
   } catch {
@@ -14,7 +14,7 @@ const stringifyJson = (obj) => {
   }
 };
 
-export const cleanNotification = (notification) => ({
+export const cleanNotification = (notification: any) => ({
   id: notification.id,
   workspaceId: notification.workspaceId,
   platform: notification.platform,
@@ -29,7 +29,7 @@ export const cleanNotification = (notification) => ({
       : notification.data,
 });
 
-export const stringifyNotification = (notification) => ({
+export const stringifyNotification = (notification: any) => ({
   id: notification.id,
   workspaceId: notification.workspaceId,
   platform: notification.platform,
