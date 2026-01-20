@@ -114,9 +114,11 @@ class MonitorCache {
   async checkMonitorStatus(monitorId: any, workspaceId: any) {
     const query = await fetchMonitor(monitorId, workspaceId).catch(() => false);
 
+    const monitorCacheId = `${monitorId}:${workspaceId}`;
+
     if (!query) {
-      clearTimeout(this.timeouts.get(monitorId));
-      this.timeouts.delete(monitorId);
+      clearTimeout(this.timeouts.get(monitorCacheId));
+      this.timeouts.delete(monitorCacheId);
       await deleteCertificate(monitorId, workspaceId);
       await deleteHeartbeats(monitorId, workspaceId);
       return;
@@ -125,15 +127,15 @@ class MonitorCache {
     const monitor = cleanMonitor(query, false, false) as MonitorProps;
 
     if (monitor.paused) {
-      if (this.timeouts.has(monitorId)) {
-        clearTimeout(this.timeouts.get(monitorId));
+      if (this.timeouts.has(monitorCacheId)) {
+        clearTimeout(this.timeouts.get(monitorCacheId));
       }
 
       return;
     }
 
-    if (this.timeouts.has(monitorId)) {
-      clearTimeout(this.timeouts.get(monitorId));
+    if (this.timeouts.has(monitorCacheId)) {
+      clearTimeout(this.timeouts.get(monitorCacheId));
     }
 
     switch (monitor.type) {
@@ -225,10 +227,12 @@ class MonitorCache {
     }
   }
 
-  removeMonitor(monitorId: string, _workspaceId: string) {
-    if (this.timeouts.has(monitorId)) {
-      clearTimeout(this.timeouts.get(monitorId));
-      this.timeouts.delete(monitorId);
+  removeMonitor(monitorId: string, workspaceId: string) {
+    const monitorCacheId = `${monitorId}:${workspaceId}`;
+
+    if (this.timeouts.has(monitorCacheId)) {
+      clearTimeout(this.timeouts.get(monitorCacheId));
+      this.timeouts.delete(monitorCacheId);
     }
   }
 }

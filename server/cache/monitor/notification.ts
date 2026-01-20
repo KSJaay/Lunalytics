@@ -64,10 +64,12 @@ const sendMonitorNotification = async (
     const service = new ServiceClass();
 
     if (hasOutage) {
+      // @ts-ignore
       await service.send(notification, monitor, heartbeat);
     }
 
     if (hasRecovered) {
+      // @ts-ignore
       await service.sendRecovery(notification, monitor, heartbeat);
     }
   } catch (error: any) {

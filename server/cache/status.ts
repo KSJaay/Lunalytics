@@ -54,7 +54,8 @@ class Status {
 
     if (statusPages && statusPages.length > 0) {
       for (const statusPage of statusPages) {
-        this.statusPages.set(statusPage.statusId, {
+        const statusPageId = `${statusPage.statusId}:${statusPage.workspaceId}`;
+        this.statusPages.set(statusPageId, {
           ...statusPage,
           lastUpdated: new Date().toISOString(),
         });
@@ -82,7 +83,8 @@ class Status {
 
         if (incidents && incidents.length > 0) {
           for (const incident of incidents) {
-            this.incidents.set(incident.incidentId, incident);
+            const incidentCacheId = `${incident.incidentId}:${workspaceId}`;
+            this.incidents.set(incidentCacheId, incident);
           }
         }
       }
@@ -90,6 +92,8 @@ class Status {
   }
 
   async loadMonitorData(monitorId: string, workspaceId: string, monitor?: any) {
+    const monitorCacheId = `${monitorId}:${workspaceId}`;
+
     if (!monitor) {
       const queryMonitor = await monitorExists(monitorId, workspaceId);
 
@@ -104,7 +108,7 @@ class Status {
       );
 
       this.monitors.set(
-        monitorId,
+        monitorCacheId,
         cleanMonitorForStatusPage({ ...queryMonitor, isDown })
       );
 
@@ -117,16 +121,16 @@ class Status {
       );
 
       this.monitors.set(
-        monitorId,
+        monitorCacheId,
         cleanMonitorForStatusPage({ ...monitor, isDown })
       );
     }
 
     const heartbeats = await fetchDailyHeartbeats(
-      monitorId,
+      monitorCacheId,
       monitor.workspaceId
     );
-    this.heartbeats.set(monitorId, heartbeats);
+    this.heartbeats.set(monitorCacheId, heartbeats);
   }
 
   async updateStatusPage(statusPage: any) {
@@ -135,11 +139,16 @@ class Status {
 
       if (allMonitors && allMonitors.length > 0) {
         for (const monitor of allMonitors) {
-          if (this.monitors.has(monitor.monitorId)) {
+          const monitorCacheId = `${monitor.monitorId}:${monitor.workspaceId}`;
+          if (this.monitors.has(monitorCacheId)) {
             continue;
           }
 
-          await this.loadMonitorData(monitor.monitorId, monitor);
+          await this.loadMonitorData(
+            monitor.monitorId,
+            monitor.workspaceId,
+            monitor
+          );
         }
       }
     } else {
@@ -147,7 +156,8 @@ class Status {
 
       if (monitorIds && monitorIds.length > 0) {
         for (const monitorId of monitorIds) {
-          if (this.monitors.has(monitorId)) {
+          const monitorCacheId = `${monitorId}:${statusPage.workspaceId}`;
+          if (this.monitors.has(monitorCacheId)) {
             continue;
           }
 
@@ -156,7 +166,9 @@ class Status {
       }
     }
 
-    this.statusPages.set(statusPage.statusId, {
+    const statusPageId = `${statusPage.statusId}:${statusPage.workspaceId}`;
+
+    this.statusPages.set(statusPageId, {
       ...statusPage,
       lastUpdated: new Date().toISOString(),
     });
@@ -168,11 +180,16 @@ class Status {
 
       if (allMonitors && allMonitors.length > 0) {
         for (const monitor of allMonitors) {
-          if (this.monitors.has(monitor.monitorId)) {
+          const monitorCacheId = `${monitor.monitorId}:${monitor.workspaceId}`;
+          if (this.monitors.has(monitorCacheId)) {
             continue;
           }
 
-          await this.loadMonitorData(monitor.monitorId, monitor);
+          await this.loadMonitorData(
+            monitor.monitorId,
+            monitor.workspaceId,
+            monitor
+          );
         }
       }
     } else {
@@ -180,7 +197,8 @@ class Status {
 
       if (monitorIds && monitorIds.length > 0) {
         for (const monitorId of monitorIds) {
-          if (this.monitors.has(monitorId)) {
+          const monitorCacheId = `${monitorId}:${statusPage.workspaceId}`;
+          if (this.monitors.has(monitorCacheId)) {
             continue;
           }
 
@@ -189,18 +207,22 @@ class Status {
       }
     }
 
-    this.statusPages.set(statusPage.statusId, {
+    const statusPageId = `${statusPage.statusId}:${statusPage.workspaceId}`;
+
+    this.statusPages.set(statusPageId, {
       ...statusPage,
       lastUpdated: new Date().toISOString(),
     });
   }
 
-  deleteStatusPage(statusId: string) {
-    this.statusPages.delete(statusId);
+  deleteStatusPage(statusId: string, workspaceId: string) {
+    const statusPageId = `${statusId}:${workspaceId}`;
+    this.statusPages.delete(statusPageId);
   }
 
-  fetchStatusPage(statusId: string) {
-    const statusPage = this.statusPages.get(statusId);
+  fetchStatusPage(statusId: string, workspaceId: string) {
+    const statusPageId = `${statusId}:${workspaceId}`;
+    const statusPage = this.statusPages.get(statusPageId);
 
     if (!statusPage) {
       return null;
@@ -216,16 +238,19 @@ class Status {
       const monitorIds = getMonitorIds(statusPage);
 
       const monitors = monitorIds.reduce((acc, monitorId) => {
-        if (this.monitors.has(monitorId)) {
-          return { ...acc, [monitorId]: this.monitors.get(monitorId) };
+        const monitorCacheId = `${monitorId}:${statusPage.workspaceId}`;
+
+        if (this.monitors.has(monitorCacheId)) {
+          return { ...acc, [monitorId]: this.monitors.get(monitorCacheId) };
         }
 
         return acc;
       }, {});
 
       const heartbeats = monitorIds.reduce((acc, monitorId) => {
-        if (this.heartbeats.has(monitorId)) {
-          return { ...acc, [monitorId]: this.heartbeats.get(monitorId) };
+        const monitorCacheId = `${monitorId}:${statusPage.workspaceId}`;
+        if (this.heartbeats.has(monitorCacheId)) {
+          return { ...acc, [monitorId]: this.heartbeats.get(monitorCacheId) };
         }
 
         return acc;
@@ -243,16 +268,19 @@ class Status {
   }
 
   addIncident(incident: any) {
-    this.incidents.set(incident.incidentId, incident);
+    const incidentCacheId = `${incident.incidentId}:${incident.workspaceId}`;
+    this.incidents.set(incidentCacheId, incident);
   }
 
   deleteIncident(incidentId: string, workspaceId: string) {
-    this.incidents.delete(incidentId);
+    const incidentCacheId = `${incidentId}:${workspaceId}`;
+    this.incidents.delete(incidentCacheId);
   }
 
   removeMonitor(monitorId: string, workspaceId: string) {
-    this.monitors.delete(monitorId);
-    this.heartbeats.delete(monitorId);
+    const monitorCacheId = `${monitorId}:${workspaceId}`;
+    this.monitors.delete(monitorCacheId);
+    this.heartbeats.delete(monitorCacheId);
   }
 
   async reloadMonitor(monitorId: string, workspaceId: string) {
@@ -264,7 +292,8 @@ class Status {
       return;
     }
 
-    this.monitors.set(monitorId, cleanMonitorForStatusPage(monitor));
+    const monitorCacheId = `${monitorId}:${workspaceId}`;
+    this.monitors.set(monitorCacheId, cleanMonitorForStatusPage(monitor));
   }
 }
 

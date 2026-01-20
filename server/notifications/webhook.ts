@@ -2,22 +2,38 @@ import axios from 'axios';
 import NotificationReplacers from '../../shared/notifications/replacers/notification.js';
 import NotificationBase from './base.js';
 import { WebhookTemplateMessages } from '../../shared/notifications/webhook.js';
+import type { NotificationProps } from '../../shared/types/notifications.js';
+import type {
+  MonitorProps,
+  HeartbeatProps,
+} from '../../shared/types/monitor.js';
 
 class Webhook extends NotificationBase {
-  name = 'Webhook';
+  name: string = 'Webhook';
 
-  async send(notification, monitor, heartbeat) {
+  async send(
+    notification: NotificationProps & {
+      requestType?: string;
+      customHeaders?: Record<string, string>;
+      payload?: any;
+    },
+    monitor: MonitorProps,
+    heartbeat: HeartbeatProps
+  ): Promise<void | string> {
     try {
       const message =
         WebhookTemplateMessages[notification.messageType] ||
         notification.payload;
 
-      let content = NotificationReplacers(message, monitor, heartbeat);
-      let headers = {};
+      let content: any = NotificationReplacers(
+        message,
+        monitor as any,
+        heartbeat as any
+      );
+      let headers: Record<string, any> = {};
 
       if (notification.requestType === 'form-data') {
-        // Change to form data from json
-        const form = new FormData();
+        const form = new (global as any).FormData();
         form.append('data', JSON.stringify(content));
         headers = form.getHeaders();
         content = form;
@@ -34,7 +50,7 @@ class Webhook extends NotificationBase {
     }
   }
 
-  async test(notification) {
+  async test(notification: NotificationProps): Promise<void | string> {
     try {
       await axios.post(notification.token, {
         message: 'This is a test message from Lunalytics',
@@ -45,17 +61,27 @@ class Webhook extends NotificationBase {
     }
   }
 
-  async sendRecovery(notification, monitor, heartbeat) {
+  async sendRecovery(
+    notification: NotificationProps & {
+      requestType?: string;
+      customHeaders?: Record<string, string>;
+      payload?: any;
+    },
+    monitor: MonitorProps,
+    heartbeat: HeartbeatProps
+  ): Promise<void | string> {
     try {
       const template = WebhookTemplateMessages.recovery;
 
-      let content = NotificationReplacers(template, monitor, heartbeat);
-
-      let headers = {};
+      let content: any = NotificationReplacers(
+        template,
+        monitor as any,
+        heartbeat as any
+      );
+      let headers: Record<string, any> = {};
 
       if (notification.requestType === 'form-data') {
-        // Change to form data from json
-        const form = new FormData();
+        const form = new (global as any).FormData();
         form.append('data', JSON.stringify(content));
         headers = form.getHeaders();
         content = form;

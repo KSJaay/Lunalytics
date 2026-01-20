@@ -2,30 +2,69 @@ import axios from 'axios';
 import NotificationReplacers from '../../shared/notifications/replacers/notification.js';
 import NotificationBase from './base.js';
 import { HomeAssistantTemplateMessages } from '../../shared/notifications/homeAssistant.js';
+import type { NotificationProps } from '../../shared/types/notifications.js';
+import type {
+  MonitorProps,
+  HeartbeatProps,
+} from '../../shared/types/monitor.js';
+
+type HomeAssistantNotificationProps = NotificationProps & {
+  payload?: any;
+  data: {
+    homeAssistantUrl: string;
+    homeAssistantNotificationService: string;
+    [key: string]: any;
+  };
+};
 
 class HomeAssistant extends NotificationBase {
   name = 'HomeAssistant';
 
-  async send(notification, monitor, heartbeat) {
+  async send(
+    notification: HomeAssistantNotificationProps,
+    monitor: MonitorProps,
+    heartbeat: HeartbeatProps
+  ): Promise<void | string> {
     const template =
       HomeAssistantTemplateMessages[notification.messageType] ||
       notification.payload;
+    await this.sendNotification(notification, monitor, heartbeat, template);
 
-    this.sendNotification(notification, monitor, heartbeat, template);
+    return this.success;
   }
 
-  async sendRecovery(notification, monitor, heartbeat) {
-    this.sendNotification(
+  async sendRecovery(
+    notification: HomeAssistantNotificationProps,
+    monitor: MonitorProps,
+    heartbeat: HeartbeatProps
+  ): Promise<void | string> {
+    await this.sendNotification(
       notification,
       monitor,
       heartbeat,
       HomeAssistantTemplateMessages.recovery
     );
+
+    return this.success;
   }
 
-  async sendNotification(notification, monitor, heartbeat, template) {
+  async sendNotification(
+    notification: HomeAssistantNotificationProps,
+    monitor: MonitorProps,
+    heartbeat: HeartbeatProps,
+    template: any
+  ): Promise<void | string> {
     try {
-      const embed = NotificationReplacers(template, monitor, heartbeat);
+      const embed = NotificationReplacers(
+        template,
+        monitor as any,
+        heartbeat as any
+      );
+
+      const data =
+        typeof embed === 'object' && embed !== null
+          ? embed
+          : { message: embed };
 
       await axios.post(
         `${notification.data.homeAssistantUrl
@@ -33,7 +72,7 @@ class HomeAssistant extends NotificationBase {
           .replace(/\/*$/, '')}/api/services/notify/${
           notification.data.homeAssistantNotificationService
         }`,
-        { ...embed },
+        data,
         {
           headers: {
             Authorization: `Bearer ${notification.token}`,
@@ -48,7 +87,9 @@ class HomeAssistant extends NotificationBase {
     }
   }
 
-  async test(notification) {
+  async test(
+    notification: HomeAssistantNotificationProps
+  ): Promise<void | string> {
     try {
       await axios.post(
         `${notification.data.homeAssistantUrl

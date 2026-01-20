@@ -3,12 +3,28 @@ import NotificationReplacers from '../../shared/notifications/replacers/notifica
 import NotificationBase from './base.js';
 import { PushoverTemplateMessages } from '../../shared/notifications/pushover.js';
 import config from '../utils/config.js';
+import type { NotificationProps } from '../../shared/types/notifications.js';
+import type {
+  MonitorProps,
+  HeartbeatProps,
+} from '../../shared/types/monitor.js';
+
+type PushoverNotificationProps = NotificationProps & {
+  payload?: any;
+  data: {
+    userKey: string;
+    device?: string;
+    priority?: string | number;
+    ttl?: string | number;
+    [key: string]: any;
+  };
+};
 
 class Pushover extends NotificationBase {
   name = 'Pushover';
 
-  getConfig(notification) {
-    const data = {
+  getConfig(notification: PushoverNotificationProps): Record<string, any> {
+    const data: Record<string, any> = {
       token: notification.token,
       user: notification.data.userKey,
       retry: '30',
@@ -35,18 +51,29 @@ class Pushover extends NotificationBase {
     return data;
   }
 
-  async send(notification, monitor, heartbeat) {
+  async send(
+    notification: PushoverNotificationProps,
+    monitor: MonitorProps,
+    heartbeat: HeartbeatProps
+  ): Promise<void | string> {
     try {
       const template =
         PushoverTemplateMessages[notification.messageType] ||
         notification.payload;
 
-      const message = NotificationReplacers(template, monitor, heartbeat);
+      const message = NotificationReplacers(
+        template,
+        monitor as any,
+        heartbeat as any
+      );
       const data = this.getConfig(notification);
+
+      const content =
+        typeof message === 'object' && message !== null ? message : { message };
 
       await axios.post('https://api.pushover.net/1/messages.json', {
         ...data,
-        ...message,
+        ...content,
       });
       return this.success;
     } catch (error) {
@@ -54,16 +81,27 @@ class Pushover extends NotificationBase {
     }
   }
 
-  async sendRecovery(notification, monitor, heartbeat) {
+  async sendRecovery(
+    notification: PushoverNotificationProps,
+    monitor: MonitorProps,
+    heartbeat: HeartbeatProps
+  ): Promise<void | string> {
     try {
       const template = PushoverTemplateMessages.recovery;
 
-      const message = NotificationReplacers(template, monitor, heartbeat);
+      const message = NotificationReplacers(
+        template,
+        monitor as any,
+        heartbeat as any
+      );
       const data = this.getConfig(notification);
+
+      const content =
+        typeof message === 'object' && message !== null ? message : { message };
 
       await axios.post('https://api.pushover.net/1/messages.json', {
         ...data,
-        ...message,
+        ...content,
       });
       return this.success;
     } catch (error) {
@@ -71,7 +109,7 @@ class Pushover extends NotificationBase {
     }
   }
 
-  async test(notification) {
+  async test(notification: PushoverNotificationProps): Promise<void | string> {
     try {
       const data = this.getConfig(notification);
 
