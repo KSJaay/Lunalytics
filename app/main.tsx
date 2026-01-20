@@ -16,6 +16,7 @@ import WorkspaceCreatePage from './pages/workspace/create';
 import WorkspaceJoinPage from './pages/workspace/join';
 import WorkspaceSelectPage from './pages/workspace/select';
 import WorkspacePrefetcher from './routes/workspacePrefetcher';
+import SetupImport from './pages/setupImport';
 
 const Home = React.lazy(() => import('./pages/home'));
 const Settings = React.lazy(() => import('./pages/settings'));
@@ -128,6 +129,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               element={
                 <React.Suspense fallback={<Loading />}>
                   <Setup />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/setup/import"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <SetupImport />
                 </React.Suspense>
               }
             />
