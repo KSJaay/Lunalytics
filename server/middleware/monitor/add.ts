@@ -48,6 +48,9 @@ export const defaultMonitorData = (body: any) => ({
   port: body.port,
   json_query: body.json_query ?? [{ key: '', operator: '==', value: '' }],
   type: body.type ?? 'http',
+  dnsRecordType: body.dnsRecordType ?? 'A',
+  dnsResolver: body.dnsResolver ?? '1.1.1.1',
+  dnsPort: body.dnsPort ?? 53,
 });
 
 export const formatMonitorData = (
@@ -72,7 +75,16 @@ export const formatMonitorData = (
     icon: stringifyJson(body.icon),
   };
 
-  if (body.type === 'docker') {
+  if (body.type === 'dns') {
+    monitor = {
+      ...monitor,
+      dnsRecordType: body.dnsRecordType,
+      dnsResolver: body.dnsResolver,
+      dnsPort: body.dnsPort,
+      valid_status_codes: '',
+      type: 'dns',
+    };
+  } else if (body.type === 'docker') {
     monitor = {
       ...monitor,
       valid_status_codes: '',

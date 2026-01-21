@@ -3,6 +3,7 @@ import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
 
 const textInputTypes = {
+  dns: 'DNS',
   docker: 'Docker Container',
   http: 'HTTP',
   json: 'JSON Query',
@@ -12,7 +13,7 @@ const textInputTypes = {
 };
 
 interface InputProps {
-  type: 'docker' | 'http' | 'json' | 'ping' | 'push' | 'tcp';
+  type: 'dns' | 'docker' | 'http' | 'json' | 'ping' | 'push' | 'tcp';
   [key: string]: any;
 }
 
@@ -48,6 +49,16 @@ const MonitorInitialDropdown = ({
           {textInputTypes[inputs.type] || 'Select Monitor Type'}
         </Dropdown.Trigger>
         <Dropdown.List fullWidth isOpen={dropdownIsOpen}>
+          <Dropdown.Item
+            id="type-dns"
+            onClick={() => {
+              handleInput('type', 'dns');
+              toggleDropdown();
+            }}
+          >
+            {textInputTypes.dns}
+          </Dropdown.Item>
+
           <Dropdown.Item
             id="type-docker"
             onClick={() => {

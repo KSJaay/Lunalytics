@@ -1,4 +1,5 @@
 export * from './statusPage.js';
+import { default as dns } from './dns.js';
 import { default as docker } from './docker.js';
 import { default as http } from './http.js';
 import { default as json } from './json.js';
@@ -13,6 +14,8 @@ export const cleanMonitor = (
   const type = monitor?.type?.toLowerCase();
 
   switch (type) {
+    case 'dns':
+      return dns(monitor, includeHeartbeats, includeCert);
     case 'docker':
       return docker(monitor, includeHeartbeats);
     case 'http':
