@@ -1,6 +1,9 @@
 // import type definitions
 import type { Application, NextFunction, Request, Response } from 'express';
 
+// import node modules
+import { games } from 'gamedig';
+
 // import local files
 import authRoutes from './auth.js';
 import userRoutes from './user.js';
@@ -18,6 +21,14 @@ import authorization from '../middleware/authorization.js';
 import getAllDockerContainers from '../middleware/getDockerContainers.js';
 import createPushHeartbeat from '../middleware/createPushHeartbeat.js';
 import authorizeWorkspace from '../middleware/authorizeWorkspace.js';
+
+const gamesList = Object.entries(games)
+  .map(([key, value]) => ({
+    id: key,
+    n: `${value.name} (${value.release_year})`,
+    p: value.options?.port,
+  }))
+  .sort((a, b) => a.n.localeCompare(b.n));
 
 // ! ALL ROUTES MUST START WITH /api PREFIX !
 
@@ -46,6 +57,9 @@ const initialiseRoutes = async (app: Application) => {
   app.use('/api/status-pages', statusPagesRoutes);
   app.get('/api/icons', fetchIcons);
   app.get('/api/docker/containers', getAllDockerContainers);
+  app.get('/api/games', async (_request: Request, response: Response) => {
+    return response.status(200).json(gamesList);
+  });
 };
 
 export default initialiseRoutes;

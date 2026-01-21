@@ -1,6 +1,7 @@
 export type MonitorType =
   | 'dns'
   | 'docker'
+  | 'gamedig'
   | 'http'
   | 'json'
   | 'ping'

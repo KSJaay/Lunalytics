@@ -120,6 +120,7 @@ const migrate = async () => {
     table.string('dnsRecordType').defaultTo('A');
     table.string('dnsResolver').defaultTo('1.1.1.1');
     table.integer('dnsPort').defaultTo(53);
+    table.string('game').defaultTo(null);
 
     table.renameColumn('createdAt', 'created_at');
     table.datetime('updated_at');

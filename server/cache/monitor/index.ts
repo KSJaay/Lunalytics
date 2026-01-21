@@ -27,6 +27,7 @@ import tcpStatusCheck from '../../tools/tcpPing.js';
 import sendMonitorNotification from './notification.js';
 import Collection from '../../../shared/utils/collection.js';
 import { MonitorProps } from '../../../shared/types/monitor.js';
+import gamedigStatusCheck from '../../tools/gamedig.js';
 
 class MonitorCache {
   timeouts: any;
@@ -145,8 +146,15 @@ class MonitorCache {
         await this.updateTimeout(monitor, heartbeat);
         break;
       }
+
       case 'docker': {
         const heartbeat = await dockerStatusCheck(monitor);
+        await this.updateTimeout(monitor, heartbeat);
+        break;
+      }
+
+      case 'gamedig': {
+        const heartbeat = await gamedigStatusCheck(monitor);
         await this.updateTimeout(monitor, heartbeat);
         break;
       }

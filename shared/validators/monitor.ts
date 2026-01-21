@@ -30,11 +30,22 @@ const jsonOperators = [
   'not_contains',
 ];
 
-const validTypes = ['dns', 'docker', 'http', 'json', 'tcp', 'ping', 'push'];
+const validTypes = [
+  'dns',
+  'docker',
+  'gamedig',
+  'http',
+  'json',
+  'tcp',
+  'ping',
+  'push',
+];
 const notificationTypes = ['All', 'Outage', 'Recovery'];
 const urlRegex = /^https?:\/\//;
 const dnsRegex =
   /^(?=.{1,253}$)(?!-)[a-z0-9-]{1,63}(?<!-)(\.(?!-)[a-z0-9-]{1,63}(?<!-))*$/i;
+
+const ipRegex = /^(([0-9]{1,3}\.){3}[0-9]{1,3})$/;
 
 export const type = (type: string) => {
   if (!type || !validTypes.includes(type)) {
@@ -250,6 +261,18 @@ export const dnsPort = (port: string | number) => {
   }
 };
 
+export const game = (game: string) => {
+  if (!game) {
+    return 'Please enter a valid game.';
+  }
+};
+
+export const gameUrl = (url: string) => {
+  if (!url || (!ipRegex.test(url) && !dnsRegex.test(url))) {
+    return 'Please enter a valid IP/Hostname.';
+  }
+};
+
 export interface Validators {
   [key: string]: (...args: any[]) => string | undefined;
 }
@@ -267,6 +290,8 @@ const validators: Validators = {
   dnsPort,
   dnsResolver,
   dnsUrl,
+  game,
+  gameUrl,
   interval,
   retry,
   retryInterval,
@@ -300,6 +325,20 @@ const dnsValidators = [
   ['dnsRecordType', 'dnsRecordType'],
   ['dnsResolver', 'dnsResolver'],
   ['port', 'dnsPort'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
+];
+
+const gamedigValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'gameUrl'],
+  ['game', 'game'],
+  ['port', 'tcpPort'],
   ['interval', 'interval'],
   ['retry', 'retry'],
   ['retryInterval', 'retryInterval'],
@@ -415,6 +454,23 @@ const docker = (data: MonitorData) => {
   return false;
 };
 
+const gamedig = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  gamedigValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key]);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
 const json = (data: MonitorData) => {
   const errors: Record<string, string> = {};
 
@@ -482,4 +538,14 @@ const tcp = (data: MonitorData) => {
   return false;
 };
 
-export default { ...validators, dns, docker, http, json, tcp, ping, push };
+export default {
+  ...validators,
+  dns,
+  docker,
+  gamedig,
+  http,
+  json,
+  tcp,
+  ping,
+  push,
+};

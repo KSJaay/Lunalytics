@@ -1,10 +1,12 @@
 // import local files
+import { MonitorType } from '../../../../../../shared/types/monitor';
 import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
 
 const textInputTypes = {
   dns: 'DNS',
   docker: 'Docker Container',
+  gamedig: 'GameDig',
   http: 'HTTP',
   json: 'JSON Query',
   ping: 'Ping',
@@ -13,7 +15,7 @@ const textInputTypes = {
 };
 
 interface InputProps {
-  type: 'dns' | 'docker' | 'http' | 'json' | 'ping' | 'push' | 'tcp';
+  type: MonitorType;
   [key: string]: any;
 }
 
@@ -68,6 +70,17 @@ const MonitorInitialDropdown = ({
           >
             {textInputTypes.docker}
           </Dropdown.Item>
+
+          <Dropdown.Item
+            id="type-gamedig"
+            onClick={() => {
+              handleInput('type', 'gamedig');
+              toggleDropdown();
+            }}
+          >
+            {textInputTypes.gamedig}
+          </Dropdown.Item>
+
           <Dropdown.Item
             id="type-http"
             onClick={() => {
