@@ -51,6 +51,7 @@ export const defaultMonitorData = (body: any) => ({
   dnsRecordType: body.dnsRecordType ?? 'A',
   dnsResolver: body.dnsResolver ?? '1.1.1.1',
   dnsPort: body.dnsPort ?? 53,
+  game: body.game ?? null,
 });
 
 export const formatMonitorData = (
@@ -89,6 +90,13 @@ export const formatMonitorData = (
       ...monitor,
       valid_status_codes: '',
       type: 'docker',
+    };
+  } else if (body.type === 'gamedig') {
+    monitor = {
+      ...monitor,
+      valid_status_codes: '',
+      game: body.game,
+      type: 'gamedig',
     };
   } else if (body.type === 'push') {
     monitor = {

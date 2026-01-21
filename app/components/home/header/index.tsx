@@ -15,7 +15,9 @@ import useMemberContext from '../../../context/member';
 
 const typeToText = {
   docker: 'Docker Container',
+  dns: 'DNS',
   email: 'Email (SMTP)',
+  gamedig: 'Game Server',
   http: 'HTTP/S',
   json: 'JSON Query',
   ping: 'Ping',

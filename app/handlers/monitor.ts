@@ -31,51 +31,15 @@ const handleMonitor = async (
   try {
     const apiPath = isEdit ? '/api/monitor/edit' : '/api/monitor/add';
 
-    const {
-      name,
-      parentId,
-      type,
-      url,
-      method,
-      port,
-      valid_status_codes,
-      interval,
-      retry,
-      retryInterval,
-      requestTimeout,
-      monitorId,
-      notificationId,
-      notificationType,
-      headers,
-      body,
-      ignoreTls,
-      json_query,
-      icon,
-    } = form;
+    const { headers, body, ...rest } = form;
 
     const parsedHeaders = parseJson(headers);
     const parsedBody = parseJson(body);
 
     const query = await createPostRequest(apiPath, {
-      name,
-      parentId,
-      type,
-      url,
-      method,
-      port,
-      valid_status_codes,
-      interval,
-      retry,
-      retryInterval,
-      requestTimeout,
-      monitorId,
-      notificationId,
-      notificationType,
-      ignoreTls,
       headers: parsedHeaders,
       body: parsedBody,
-      json_query,
-      icon,
+      ...rest,
     });
 
     const data = query.data as MonitorProps;

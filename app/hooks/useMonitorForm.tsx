@@ -78,8 +78,6 @@ const useMonitorForm = (
 
         const errorsObj = validator(inputs) as Record<string, string> | false;
 
-        console.log('Validation Errors:', inputs);
-
         if (errorsObj !== false) {
           const pagesWithErrors = getPagesWithErrors(errorsObj);
           setErrorPages(pagesWithErrors);

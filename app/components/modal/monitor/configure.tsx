@@ -19,6 +19,7 @@ import MonitorConfigureJsonQueryModal from './configure/json';
 import type { MonitorProps } from '../../../../shared/types/monitor';
 import MonitorConfigurePushModal from './configure/push';
 import MonitorConfigureDnsModal from './configure/dns';
+import MonitorConfigureGamedigModal from './configure/gamedig';
 
 const pages = [
   { id: 'basic', title: 'Basic', icon: <FaCog size={20} /> },
@@ -144,6 +145,15 @@ const MonitorConfigureModal = ({
 
             {inputs.type === 'docker' ? (
               <MonitorConfigureDockerModal
+                inputs={inputs}
+                errors={errors}
+                handleInput={handleInput}
+                pageId={pageId}
+              />
+            ) : null}
+
+            {inputs.type === 'gamedig' ? (
+              <MonitorConfigureGamedigModal
                 inputs={inputs}
                 errors={errors}
                 handleInput={handleInput}

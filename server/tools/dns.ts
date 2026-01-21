@@ -19,6 +19,13 @@ const dnsStatusCheck = async (monitor: MonitorProps) => {
 
     let dnsMessage = '';
 
+    if (
+      !dnsResponse ||
+      (Array.isArray(dnsResponse) && dnsResponse.length === 0)
+    ) {
+      throw new Error('No DNS records found');
+    }
+
     switch (monitor.dnsRecordType) {
       case 'A':
       case 'AAAA':
