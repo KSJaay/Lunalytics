@@ -17,6 +17,7 @@ import {
 } from '../../database/queries/monitor.js';
 import logger from '../../utils/logger.js';
 import getCertInfo from '../../tools/checkCertificate.js';
+import dnsStatusCheck from '../../tools/dns.js';
 import dockerStatusCheck from '../../tools/docker.js';
 import httpStatusCheck from '../../tools/httpStatus.js';
 import pingStatusCheck from '../../tools/icmpPing.js';
@@ -139,6 +140,11 @@ class MonitorCache {
     }
 
     switch (monitor.type) {
+      case 'dns': {
+        const heartbeat = await dnsStatusCheck(monitor);
+        await this.updateTimeout(monitor, heartbeat);
+        break;
+      }
       case 'docker': {
         const heartbeat = await dockerStatusCheck(monitor);
         await this.updateTimeout(monitor, heartbeat);

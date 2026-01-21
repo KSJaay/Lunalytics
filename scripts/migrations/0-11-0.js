@@ -117,6 +117,9 @@ const migrate = async () => {
 
   await client.schema.alterTable('monitor', (table) => {
     table.uuid('workspaceId').references('id').inTable('workspace');
+    table.string('dnsRecordType').defaultTo('A');
+    table.string('dnsResolver').defaultTo('1.1.1.1');
+    table.integer('dnsPort').defaultTo(53);
 
     table.renameColumn('createdAt', 'created_at');
     table.datetime('updated_at');

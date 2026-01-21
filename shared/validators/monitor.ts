@@ -30,9 +30,11 @@ const jsonOperators = [
   'not_contains',
 ];
 
-const validTypes = ['docker', 'http', 'json', 'tcp', 'ping', 'push'];
+const validTypes = ['dns', 'docker', 'http', 'json', 'tcp', 'ping', 'push'];
 const notificationTypes = ['All', 'Outage', 'Recovery'];
 const urlRegex = /^https?:\/\//;
+const dnsRegex =
+  /^(?=.{1,253}$)(?!-)[a-z0-9-]{1,63}(?<!-)(\.(?!-)[a-z0-9-]{1,63}(?<!-))*$/i;
 
 export const type = (type: string) => {
   if (!type || !validTypes.includes(type)) {
@@ -158,7 +160,7 @@ export const headers = (headers: Record<string, any> | string = {}) => {
   }
 };
 
-const body = (body: Record<string, any> | string = {}) => {
+export const body = (body: Record<string, any> | string = {}) => {
   if (typeof body === 'string') {
     try {
       JSON.parse(body);
@@ -170,7 +172,7 @@ const body = (body: Record<string, any> | string = {}) => {
   }
 };
 
-const jsonQuery = (value: any[] | undefined) => {
+export const jsonQuery = (value: any[] | undefined) => {
   if (!value || !Array.isArray(value)) {
     return 'Please provide a valid JSON query.';
   }
@@ -190,7 +192,7 @@ const jsonQuery = (value: any[] | undefined) => {
   }
 };
 
-const icon = (value: { id?: string; name?: string; url?: string }) => {
+export const icon = (value: { id?: string; name?: string; url?: string }) => {
   if (!value.id) {
     return 'Please provide a valid icon ID.';
   }
@@ -201,6 +203,50 @@ const icon = (value: { id?: string; name?: string; url?: string }) => {
 
   if (!value.url) {
     return 'Please provide a valid icon URL.';
+  }
+};
+
+export const dnsRecordType = (value: string) => {
+  const validRecordTypes = [
+    'A',
+    'AAAA',
+    'CNAME',
+    'MX',
+    'TXT',
+    'SRV',
+    'NS',
+    'PTR',
+    'SOA',
+  ];
+
+  if (!value || !validRecordTypes.includes(value)) {
+    return 'Please select a valid DNS record type.';
+  }
+};
+
+export const dnsResolver = (value: string) => {
+  const dnsRegex = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
+
+  if (value && !dnsRegex.test(value)) {
+    return 'Please enter a valid DNS resolver (Only IPv4 is valid).';
+  }
+};
+
+export const dnsUrl = (url: string) => {
+  if (!url || !dnsRegex.test(url)) {
+    return 'Please enter a valid domain name.';
+  }
+};
+
+export const dnsPort = (port: string | number) => {
+  if (!port) {
+    return;
+  }
+
+  const portNumber = Number(port);
+
+  if (isNaN(portNumber) || portNumber < 1 || portNumber > 65535) {
+    return 'Please enter a valid port.';
   }
 };
 
@@ -217,6 +263,10 @@ const validators: Validators = {
   pushUrl,
   tcpHost,
   tcpPort,
+  dnsRecordType,
+  dnsPort,
+  dnsResolver,
+  dnsUrl,
   interval,
   retry,
   retryInterval,
@@ -240,6 +290,21 @@ const httpValidators = [
   ['notificationType', 'notificationType'],
   ['headers', 'headers'],
   ['body', 'body'],
+  ['icon', 'icon'],
+];
+
+const dnsValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'dnsUrl'],
+  ['dnsRecordType', 'dnsRecordType'],
+  ['dnsResolver', 'dnsResolver'],
+  ['port', 'dnsPort'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
   ['icon', 'icon'],
 ];
 
@@ -303,6 +368,23 @@ const http = (data: MonitorData) => {
   const errors: Record<string, string> = {};
 
   httpValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key]);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const dns = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  dnsValidators.forEach(([key, fn]) => {
     const error = validators[fn](data[key]);
     if (error) {
       errors[key] = error;
@@ -400,4 +482,4 @@ const tcp = (data: MonitorData) => {
   return false;
 };
 
-export default { ...validators, docker, http, json, tcp, ping, push };
+export default { ...validators, dns, docker, http, json, tcp, ping, push };

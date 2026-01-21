@@ -1,4 +1,11 @@
-export type MonitorType = 'docker' | 'http' | 'json' | 'ping' | 'push' | 'tcp';
+export type MonitorType =
+  | 'dns'
+  | 'docker'
+  | 'http'
+  | 'json'
+  | 'ping'
+  | 'push'
+  | 'tcp';
 
 export interface MonitorProps {
   monitorId: string;

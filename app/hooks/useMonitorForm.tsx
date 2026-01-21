@@ -6,6 +6,8 @@ import type { MonitorProps } from '../../shared/types/monitor';
 const defaultInputs = {
   type: 'http' as MonitorProps['type'],
   method: 'HEAD',
+  dnsRecordType: 'A',
+  dnsResolver: '1.1.1.1',
   retry: 1,
   interval: 60,
   retryInterval: 60,
@@ -46,6 +48,7 @@ const useMonitorForm = (
       port: 'basic',
       icon: 'basic',
       method: 'basic',
+      resolver: 'basic',
       json_query: 'basic',
       interval: 'interval',
       retry: 'interval',
@@ -74,6 +77,8 @@ const useMonitorForm = (
         if (!validator) return console.log("Validator doesn't exist");
 
         const errorsObj = validator(inputs) as Record<string, string> | false;
+
+        console.log('Validation Errors:', inputs);
 
         if (errorsObj !== false) {
           const pagesWithErrors = getPagesWithErrors(errorsObj);
