@@ -9,7 +9,7 @@ import SwitchWithText from '../../../ui/switch';
 import useContextStore from '../../../../context';
 import useTeamContext from '../../../../context/team';
 import { createPostRequest } from '../../../../services/axios';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
 
 const MemberPermissionsModal = ({
@@ -109,8 +109,8 @@ const MemberPermissionsModal = ({
                   }
                   checked={
                     perms & permission.permission ||
-                    perms === PermissionsBits.ADMINISTRATOR ||
-                    perms & PermissionsBits.ADMINISTRATOR
+                    perms === MemberPermissionBits.ADMINISTRATOR ||
+                    perms & MemberPermissionBits.ADMINISTRATOR
                   }
                   disabled={!hasPermission(permission.permission)}
                 />

@@ -1,15 +1,20 @@
-import { v7 as uuid } from 'uuid';
-import { action, makeObservable, observable, toJS } from 'mobx';
-import {
-  defaultStatusValues,
-  statusComponents,
-} from '../../shared/constants/status';
-import { defaultStatusComponents } from '../constant/status';
+// import type definitions
 import type {
   ContextStatusPageLayoutProps,
   ContextStatusPageProps,
   ContextStatusPageSettingsProps,
 } from '../../shared/types/context/status-page';
+
+// import node modules
+import { v7 as uuid } from 'uuid';
+import { action, makeObservable, observable, toJS } from 'mobx';
+
+// import local files
+import {
+  defaultStatusValues,
+  statusComponents,
+} from '../../shared/constants/status';
+import { defaultStatusComponents } from '../constant/status';
 
 const getUniqueId = (values: Map<string, any>) => {
   let id = uuid();

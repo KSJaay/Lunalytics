@@ -5,7 +5,7 @@ import type { Request, Response } from 'express';
 import Role from '../../../../shared/permissions/role.js';
 import { handleError } from '../../../utils/errors.js';
 import { updateUserPermission } from '../../../database/queries/user.js';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags.js';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags.js';
 import { isValidBitFlags } from '../../../../shared/permissions/isValidBitFlags.js';
 
 const permissionUpdateMiddleware = async (
@@ -28,7 +28,10 @@ const permissionUpdateMiddleware = async (
 
     const role = new Role('user', permission);
 
-    if (role.hasPermission(PermissionsBits.ADMINISTRATOR) && !user.isOwner) {
+    if (
+      role.hasPermission(MemberPermissionBits.ADMINISTRATOR) &&
+      !user.isOwner
+    ) {
       return response
         .status(400)
         .send({ message: 'Only owner can give administrator permission' });

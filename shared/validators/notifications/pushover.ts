@@ -91,7 +91,7 @@ const Pushover = ({
     friendlyName,
     data: {
       device: data.device,
-      userKey: data.userKey!,
+      userKey: data.userKey,
       priority: data.priority ? parseInt(data.priority) : undefined,
       ttl: data.ttl ? parseInt(data.ttl) : undefined,
     },

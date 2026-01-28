@@ -1,12 +1,17 @@
+// import type definitions
+import type { MonitorProps } from '../../shared/types/monitor';
+
+// import node modules
 import { useMemo } from 'react';
-import { createGetRequest, createPostRequest } from '../services/axios';
 import { toast } from 'react-toastify';
-import { FaClone, FaPause, FaPlay } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { FaTrashCan } from 'react-icons/fa6';
-import MonitorConfigureModal from '../components/modal/monitor/configure';
+import { FaClone, FaPause, FaPlay } from 'react-icons/fa';
+
+// import local files
 import MonitorModal from '../components/modal/monitor/delete';
-import type { MonitorProps } from '../../shared/types/monitor';
+import { createGetRequest, createPostRequest } from '../services/axios';
+import MonitorConfigureModal from '../components/modal/monitor/configure';
 
 const useMonitorOptions = (
   Container: React.ComponentType<any>,

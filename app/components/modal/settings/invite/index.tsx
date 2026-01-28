@@ -12,7 +12,7 @@ import useClipboard from '../../../../hooks/useClipboard';
 import useInvitesContext from '../../../../context/invites';
 import useCurrentUrl from '../../../../hooks/useCurrentUrl';
 import { createPostRequest } from '../../../../services/axios';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
 
 const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
@@ -101,8 +101,8 @@ const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
                   }
                   checked={
                     perms & permission.permission ||
-                    perms === PermissionsBits.ADMINISTRATOR ||
-                    perms & PermissionsBits.ADMINISTRATOR
+                    perms === MemberPermissionBits.ADMINISTRATOR ||
+                    perms & MemberPermissionBits.ADMINISTRATOR
                   }
                 />
               </div>

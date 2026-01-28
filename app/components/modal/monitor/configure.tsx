@@ -1,5 +1,8 @@
 import './styles.scss';
 
+// import type definitions
+import type { MonitorProps } from '../../../../shared/types/monitor';
+
 // import dependencies
 import { useState } from 'react';
 import classNames from 'classnames';
@@ -16,7 +19,6 @@ import MonitorConfigurePingModal from './configure/ping';
 import useMonitorForm from '../../../hooks/useMonitorForm';
 import MonitorConfigureDockerModal from './configure/docker';
 import MonitorConfigureJsonQueryModal from './configure/json';
-import type { MonitorProps } from '../../../../shared/types/monitor';
 import MonitorConfigurePushModal from './configure/push';
 import MonitorConfigureDnsModal from './configure/dns';
 import MonitorConfigureGamedigModal from './configure/gamedig';

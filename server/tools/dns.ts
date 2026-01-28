@@ -14,7 +14,7 @@ const dnsStatusCheck = async (monitor: MonitorProps) => {
       monitor.url,
       monitor.dnsResolver,
       monitor.dnsRecordType,
-      monitor.dnsPort
+      monitor.port
     );
 
     let dnsMessage = '';
@@ -107,10 +107,10 @@ const resolveDns = async (
   url: string,
   dnsResolver: string,
   dnsRecordType: string,
-  dnsPort: number | string = 53
+  port: number | string = 53
 ) => {
   const resolver = new Resolver();
-  resolver.setServers([`[${dnsResolver}]:${dnsPort}`]);
+  resolver.setServers([`[${dnsResolver}]:${port}`]);
 
   if (dnsRecordType === 'PTR') {
     return resolver.reverse(url);

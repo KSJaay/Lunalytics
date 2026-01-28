@@ -13,7 +13,7 @@ import useContextStore from '../../../context';
 import useCurrentUrl from '../../../hooks/useCurrentUrl';
 import StatusDeleteModal from '../../modal/status/delete';
 import { createPostRequest } from '../../../services/axios';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 import useMemberContext from '../../../context/member';
 
 const menuOptions = [
@@ -55,7 +55,7 @@ const HomeStatusPageHeader = ({
   const { member } = useMemberContext();
 
   const isEditor = member?.role.hasPermission(
-    PermissionsBits.MANAGE_STATUS_PAGES
+    MemberPermissionBits.MANAGE_STATUS_PAGES
   );
 
   const statusPageUrl =

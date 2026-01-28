@@ -1,5 +1,8 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+// import type definitions
 import type { ContextStatusProps } from '../../shared/types/context/status';
+
+// import node modules
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class StatusStore {
   statusPages: Map<string, ContextStatusProps>;

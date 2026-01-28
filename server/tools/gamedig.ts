@@ -39,6 +39,4 @@ const gamedigStatusCheck = async (monitor: MonitorProps) => {
   }
 };
 
-const resolveDns = async () => {};
-
 export default gamedigStatusCheck;

@@ -1,5 +1,8 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+// import type definitions
 import type { ContextTokenProps } from '../../shared/types/context/tokens';
+
+// import node modules
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class ApiTokens {
   tokens: Map<string, ContextTokenProps>;

@@ -1,14 +1,18 @@
 import './index.scss';
 
-import dayjs from 'dayjs';
-import { observer } from 'mobx-react-lite';
-
-import useContextStore from '../../../context';
-import { useTranslation } from 'react-i18next';
+// import type definitions
 import type {
   CertificateProps,
   MonitorProps,
 } from '../../../../shared/types/monitor';
+
+// import node modules
+import dayjs from 'dayjs';
+import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
+
+// import local files
+import useContextStore from '../../../context';
 
 const notificationText = {
   basic: 'Basic',

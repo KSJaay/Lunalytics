@@ -2,18 +2,20 @@
 import './style.scss';
 import './row.scss';
 
+// import type definitions
+import type { ContextTeamProps } from '../../../../../shared/types/context/team';
+
 // import dependencies
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { FaTrashCan, MdEdit, FaCheck, IoMdClose } from '../../../icons';
 
 // import local files
+import useContextStore from '../../../../context';
+import MemberDeleteModal from '../../../modal/settings/manage/delete';
 import MemberApproveModal from '../../../modal/settings/manage/approve';
 import MemberDeclineModal from '../../../modal/settings/manage/decline';
-import MemberDeleteModal from '../../../modal/settings/manage/delete';
 import MemberPermissionsModal from '../../../modal/settings/manage/permissions';
-import useContextStore from '../../../../context';
-import { ContextTeamProps } from '../../../../../shared/types/context/team';
 
 const MemberRowActions = ({
   member = {} as ContextTeamProps,

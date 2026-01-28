@@ -14,8 +14,8 @@ export const workspaceTable = async (client: Knex) => {
         .references('email')
         .inTable('user');
       table.string('icon').defaultTo(null);
-      table.string('apiUrl').defaultTo(null);
-      table.string('apiToken').defaultTo(null);
+      // table.string('apiUrl').defaultTo(null);
+      // table.string('apiToken').defaultTo(null);
 
       table.timestamps(true, true);
     });

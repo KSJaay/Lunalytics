@@ -1,7 +1,12 @@
-import { action, makeObservable, observable } from 'mobx';
-import Role from '../../shared/permissions/role';
+// import type definitions
 import type { ContextUserProps } from '../../shared/types/context/user';
-import { PermissionsBits } from '../../shared/permissions/bitFlags';
+
+// import node modules
+import { action, makeObservable, observable } from 'mobx';
+
+// import local files
+import Role from '../../shared/permissions/role';
+import { MemberPermissionBits } from '../../shared/permissions/bitFlags';
 
 export default class UserStore {
   user: Record<string, any>;
@@ -44,19 +49,21 @@ export default class UserStore {
 
   getUserRoleRoute = () => {
     if (this.userRole) {
-      if (this.userRole.hasPermission(PermissionsBits.VIEW_MONITORS)) {
+      if (this.userRole.hasPermission(MemberPermissionBits.VIEW_MONITORS)) {
         return '/monitors';
       }
 
-      if (this.userRole.hasPermission(PermissionsBits.VIEW_INCIDENTS)) {
+      if (this.userRole.hasPermission(MemberPermissionBits.VIEW_INCIDENTS)) {
         return '/incidents';
       }
 
-      if (this.userRole.hasPermission(PermissionsBits.VIEW_NOTIFICATIONS)) {
+      if (
+        this.userRole.hasPermission(MemberPermissionBits.VIEW_NOTIFICATIONS)
+      ) {
         return '/notifications';
       }
 
-      if (this.userRole.hasPermission(PermissionsBits.VIEW_STATUS_PAGES)) {
+      if (this.userRole.hasPermission(MemberPermissionBits.VIEW_STATUS_PAGES)) {
         return '/status-pages';
       }
     }

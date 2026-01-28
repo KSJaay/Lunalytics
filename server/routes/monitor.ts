@@ -10,13 +10,13 @@ import fetchMonitorUsingId from '../middleware/monitor/id.js';
 import fetchMonitorStatus from '../middleware/monitor/status.js';
 import monitorPause from '../middleware/monitor/pause.js';
 import { memberHasPermission } from '../middleware/hasPermission.js';
-import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
+import { MemberPermissionBits } from '../../shared/permissions/bitFlags.js';
 
-router.use(memberHasPermission(PermissionsBits.VIEW_MONITORS));
+router.use(memberHasPermission(MemberPermissionBits.VIEW_MONITORS));
 router.get('/status', fetchMonitorStatus);
 router.get('/id', fetchMonitorUsingId);
 
-router.use(memberHasPermission(PermissionsBits.MANAGE_MONITORS));
+router.use(memberHasPermission(MemberPermissionBits.MANAGE_MONITORS));
 router.post('/add', monitorAdd);
 router.post('/edit', monitorEdit);
 router.get('/delete', monitorDelete);

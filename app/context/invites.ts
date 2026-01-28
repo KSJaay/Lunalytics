@@ -1,5 +1,8 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+// import type definitions
 import type { ContextInviteProps } from '../../shared/types/context/invites';
+
+// import node modules
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class Invites {
   invites: Map<string, ContextInviteProps>;

@@ -6,7 +6,7 @@ import SetupImportSQLite from '../components/setup/import/sqlite';
 type SourceType = 'json' | 'sqlite' | 'mariadb';
 
 const SetupImport = () => {
-  const [source, setSource] = useState<SourceType>('json');
+  const [source, setSource] = useState<SourceType>('sqlite');
   const [file, setFile] = useState<File | null>(null);
   const [hasContinued, setHasContinued] = useState(false);
 
@@ -44,10 +44,10 @@ const SetupImport = () => {
   return (
     <div className="import-wrapper">
       <div className="import-card">
-        <h2>Import Monitoring Data</h2>
+        <h2>Import Uptime Kuma data</h2>
 
         <div className="source-switch">
-          {['json', 'sqlite', 'mariadb'].map((type) => (
+          {['sqlite', 'mariadb'].map((type) => (
             <button
               key={type}
               className={source === type ? 'active' : ''}
@@ -61,16 +61,16 @@ const SetupImport = () => {
           ))}
         </div>
 
-        {(source === 'json' || source === 'sqlite') && (
+        {source === 'sqlite' && (
           <label className={`file-input ${file ? 'has-file' : ''}`}>
             <input
               type="file"
-              accept={source === 'json' ? '.json' : '.db,.sqlite,.sqlite3'}
+              accept=".db,.sqlite,.sqlite3"
               onChange={onFileChange}
             />
 
             {!file ? (
-              <span>Upload {source === 'json' ? 'JSON' : 'SQLite'} file</span>
+              <span>Upload SQLite file</span>
             ) : (
               <div className="file-info">
                 <strong>{file.name}</strong>

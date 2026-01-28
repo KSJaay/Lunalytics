@@ -8,7 +8,7 @@ import { FaTrashCan } from 'react-icons/fa6';
 import useContextStore from '../../../context';
 import { createPostRequest } from '../../../services/axios';
 import DeleteIncidentModal from '../../modal/incident/delete';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 import { MdArchive } from 'react-icons/md';
 import ArchiveIncidentModal from '../../modal/incident/archive';
 import { IoArrowBack } from 'react-icons/io5';
@@ -38,7 +38,9 @@ const HomeIncidentHeader = ({
   } = useContextStore();
   const { member } = useMemberContext();
 
-  const isEditor = member?.role.hasPermission(PermissionsBits.MANAGE_INCIDENTS);
+  const isEditor = member?.role.hasPermission(
+    MemberPermissionBits.MANAGE_INCIDENTS
+  );
 
   const handleDelete = async () => {
     try {

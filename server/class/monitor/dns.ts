@@ -13,7 +13,7 @@ const clean = (
   url: monitor.url,
   dnsResolver: monitor.dnsResolver,
   dnsRecordType: monitor.dnsRecordType,
-  dnsPort: parseInt(monitor.dnsPort),
+  port: parseInt(monitor.port),
   retry: parseInt(monitor.retry),
   interval: parseInt(monitor.interval),
   retryInterval: parseInt(monitor.retryInterval),
