@@ -1,11 +1,16 @@
-import { useEffect, useReducer } from 'react';
-import NotificationValidators from '../../shared/validators/notifications';
-import { NotificationValidatorError } from '../../shared/utils/errors';
-import { createPostRequest } from '../services/axios';
+// import type definitions
 import type {
   NotificationErrorProps,
   NotificationProps,
 } from '../../shared/types/notifications';
+
+// import node modules
+import { useEffect, useReducer } from 'react';
+
+// import local files
+import NotificationValidators from '../../shared/validators/notifications';
+import { NotificationValidatorError } from '../../shared/utils/errors';
+import { createPostRequest } from '../services/axios';
 
 const defaultInputs = {
   platform: 'Discord',

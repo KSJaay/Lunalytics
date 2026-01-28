@@ -1,8 +1,12 @@
+// import type definitions
+import type { NotificationInputInputType } from '../../../../../shared/types/constant/notifications';
+
+// import node modules
 import { Trans } from 'react-i18next';
 import { Dropdown, Input, PasswordInput, Textarea } from '@lunalytics/ui';
 
+// import local files
 import SwitchWithText from '../../../ui/switch';
-import type { NotificationInputInputType } from '../../../../../shared/types/constant/notifications';
 
 export const getNotificationComponent = (
   component: NotificationInputInputType,

@@ -1,7 +1,10 @@
+// import type definitions
+import type { HeartbeatProps } from '../../../../shared/types/monitor';
+
+// import node modules
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbDownload, TbUpload, TbActivityHeartbeat } from 'react-icons/tb';
-import type { HeartbeatProps } from '../../../../shared/types/monitor';
 
 const GraphPing = ({ data }: { data: HeartbeatProps[] }) => {
   const { t } = useTranslation();

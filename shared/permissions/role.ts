@@ -1,4 +1,4 @@
-import { PermissionsBits } from './bitFlags.js';
+import { MemberPermissionBits } from './bitFlags.js';
 
 class Role {
   name: string;
@@ -10,7 +10,7 @@ class Role {
   }
 
   hasPermission(permission: number): boolean {
-    if (this.permissionFlags === PermissionsBits.ADMINISTRATOR) {
+    if (this.permissionFlags === MemberPermissionBits.ADMINISTRATOR) {
       return true;
     }
     return (this.permissionFlags & permission) === permission;

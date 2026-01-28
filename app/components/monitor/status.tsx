@@ -1,10 +1,10 @@
 import './status.scss';
 
+// import type definitions
+import type { ContextMonitorProps } from '../../../shared/types/context/global';
+
 // import dependencies
 import { useTranslation } from 'react-i18next';
-
-// import local files
-import type { ContextMonitorProps } from '../../../shared/types/context/global';
 
 const MonitorStatus = ({
   monitor,
@@ -15,6 +15,8 @@ const MonitorStatus = ({
   const { t } = useTranslation();
 
   if (!monitor) return null;
+
+  const shouldShowCertStatus = ['http', 'json'].includes(monitor.type);
 
   return (
     <div className="monitor-status-container">
@@ -45,9 +47,7 @@ const MonitorStatus = ({
           {monitor.uptimePercentage || 0}%
         </div>
       </div>
-      {monitor.type === 'ping' ||
-      monitor.type === 'push' ||
-      monitor.type === 'docker' ? null : (
+      {shouldShowCertStatus ? (
         <div className="monitor-status-content">
           <div className="monitor-status-title">
             {t('home.monitor.headers.cert_expiry')}
@@ -59,11 +59,11 @@ const MonitorStatus = ({
             {monitor.url?.startsWith('http://')
               ? t('common.invalid')
               : monitor.cert?.isValid
-              ? `${monitor.cert.daysRemaining}`
-              : t('common.expired')}
+                ? `${monitor.cert.daysRemaining}`
+                : t('common.expired')}
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

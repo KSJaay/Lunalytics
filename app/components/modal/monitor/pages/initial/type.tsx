@@ -1,5 +1,7 @@
+// import type definitions
+import type { MonitorType } from '../../../../../../shared/types/monitor';
+
 // import local files
-import { MonitorType } from '../../../../../../shared/types/monitor';
 import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
 

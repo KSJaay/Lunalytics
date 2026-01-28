@@ -1,10 +1,12 @@
+// import type definitions
+import type { HeartbeatProps, MonitorProps } from '../../shared/types/monitor';
+
 // import dependencies
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 // import local files
 import { createGetRequest } from '../services/axios';
-import type { HeartbeatProps, MonitorProps } from '../../shared/types/monitor';
 
 const useGraphStatus = (monitor: MonitorProps) => {
   const [statusType, setStatus] = useState('latest');

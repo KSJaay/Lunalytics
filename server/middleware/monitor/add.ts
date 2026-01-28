@@ -50,7 +50,6 @@ export const defaultMonitorData = (body: any) => ({
   type: body.type ?? 'http',
   dnsRecordType: body.dnsRecordType ?? 'A',
   dnsResolver: body.dnsResolver ?? '1.1.1.1',
-  dnsPort: body.dnsPort ?? 53,
   game: body.game ?? null,
 });
 
@@ -81,7 +80,7 @@ export const formatMonitorData = (
       ...monitor,
       dnsRecordType: body.dnsRecordType,
       dnsResolver: body.dnsResolver,
-      dnsPort: body.dnsPort,
+      port: body.port ?? 53,
       valid_status_codes: '',
       type: 'dns',
     };

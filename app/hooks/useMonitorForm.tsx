@@ -1,7 +1,12 @@
+// import type definitions
+import type { MonitorProps } from '../../shared/types/monitor';
+
+// import node modules
 import { useState } from 'react';
+
+// import local files
 import handleMonitor from '../handlers/monitor';
 import monitorValidators from '../../shared/validators/monitor';
-import type { MonitorProps } from '../../shared/types/monitor';
 
 const defaultInputs = {
   type: 'http' as MonitorProps['type'],
@@ -37,6 +42,11 @@ const useMonitorForm = (
   const [errorPages, setErrorPages] = useState<Set<string>>(new Set());
 
   const handleInput = (name: string, value: any) => {
+    if (name === 'type') {
+      setInput({ ...defaultInputs, type: value });
+      return;
+    }
+
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -48,7 +58,8 @@ const useMonitorForm = (
       port: 'basic',
       icon: 'basic',
       method: 'basic',
-      resolver: 'basic',
+      dnsRecordType: 'basic',
+      dnsResolver: 'basic',
       json_query: 'basic',
       interval: 'interval',
       retry: 'interval',

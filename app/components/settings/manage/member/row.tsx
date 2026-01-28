@@ -1,5 +1,8 @@
 import './row.scss';
 
+// import type definitions
+import type { ContextTeamProps } from '../../../../../shared/types/context/team';
+
 // import dependencies
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
@@ -8,8 +11,7 @@ import { observer } from 'mobx-react-lite';
 import MemberRowActions from './actions';
 import useContextStore from '../../../../context';
 import Role from '../../../../../shared/permissions/role';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
-import { ContextTeamProps } from '../../../../../shared/types/context/team';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 
 const isImageUrl = (url: string) => {
   if (typeof url !== 'string') {
@@ -32,7 +34,7 @@ const MemberTableRow = ({
   const canManage =
     !member.isOwner &&
     user.email !== member.email &&
-    role.hasPermission(PermissionsBits.MANAGE_TEAM);
+    role.hasPermission(MemberPermissionBits.MANAGE_TEAM);
 
   const memberPermission = !member.isVerified
     ? 'Unverified'

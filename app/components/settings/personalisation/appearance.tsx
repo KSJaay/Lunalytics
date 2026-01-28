@@ -1,3 +1,6 @@
+// import type definitions
+import type { ThemeProps } from '../../../../shared/types/context/user';
+
 // import dependencies
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
@@ -13,7 +16,7 @@ const SettingsPersonalisationAppearance = ({
 }: {
   dateformat: string;
   timeformat: string;
-  theme: 'dark' | 'light' | 'system';
+  theme: ThemeProps;
 }) => {
   const {
     userStore: {

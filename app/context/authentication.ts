@@ -1,9 +1,12 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+// import type definitions
 import type {
   ContextAuthenticationConfigProps,
   ContextAuthenticationProviderProps,
   Providers,
 } from '../../shared/types/context/authentication';
+
+// import node modules
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class Authentication {
   providers: Map<string, ContextAuthenticationProviderProps>;

@@ -1,6 +1,11 @@
-import { useState, useEffect } from 'react';
-import { createGetRequest } from '../services/axios';
+// import type definitions
 import type { UseFetchProps, UseFetchResponse } from '../../shared/types/hooks';
+
+// import node modules
+import { useState, useEffect } from 'react';
+
+// import local files
+import { createGetRequest } from '../services/axios';
 
 function useFetch({
   url,

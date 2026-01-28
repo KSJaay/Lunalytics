@@ -1,20 +1,20 @@
-import { PermissionsBits } from './bitFlags.js';
+import { MemberPermissionBits } from './bitFlags.js';
 
 export const oldPermsToFlags = {
-  1: PermissionsBits.ADMINISTRATOR,
-  2: PermissionsBits.ADMINISTRATOR,
+  1: MemberPermissionBits.ADMINISTRATOR,
+  2: MemberPermissionBits.ADMINISTRATOR,
   3:
-    PermissionsBits.VIEW_MONITORS |
-    PermissionsBits.MANAGE_MONITORS |
-    PermissionsBits.VIEW_NOTIFICATIONS |
-    PermissionsBits.MANAGE_NOTIFICATIONS |
-    PermissionsBits.VIEW_INCIDENTS |
-    PermissionsBits.MANAGE_INCIDENTS |
-    PermissionsBits.VIEW_STATUS_PAGES |
-    PermissionsBits.MANAGE_STATUS_PAGES,
+    MemberPermissionBits.VIEW_MONITORS |
+    MemberPermissionBits.MANAGE_MONITORS |
+    MemberPermissionBits.VIEW_NOTIFICATIONS |
+    MemberPermissionBits.MANAGE_NOTIFICATIONS |
+    MemberPermissionBits.VIEW_INCIDENTS |
+    MemberPermissionBits.MANAGE_INCIDENTS |
+    MemberPermissionBits.VIEW_STATUS_PAGES |
+    MemberPermissionBits.MANAGE_STATUS_PAGES,
   4:
-    PermissionsBits.VIEW_MONITORS |
-    PermissionsBits.VIEW_NOTIFICATIONS |
-    PermissionsBits.VIEW_INCIDENTS |
-    PermissionsBits.VIEW_STATUS_PAGES,
+    MemberPermissionBits.VIEW_MONITORS |
+    MemberPermissionBits.VIEW_NOTIFICATIONS |
+    MemberPermissionBits.VIEW_INCIDENTS |
+    MemberPermissionBits.VIEW_STATUS_PAGES,
 };

@@ -1,3 +1,6 @@
+// import type definitions
+import type { ContextAuthenticationConfigProps } from '../../../../shared/types/context/authentication';
+
 // import dependencies
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
@@ -7,10 +10,9 @@ import Loading from '../../ui/loading';
 import SwitchWithText from '../../ui/switch';
 import useFetch from '../../../hooks/useFetch';
 import SettingsProviderAuthentication from './provider';
+import { createPostRequest } from '../../../services/axios';
 import { providers } from '../../../../shared/constants/provider';
 import useAuthenticationContext from '../../../context/authentication';
-import { createPostRequest } from '../../../services/axios';
-import { ContextAuthenticationConfigProps } from '../../../../shared/types/context/authentication';
 
 const SettingsAuthentication = () => {
   const { setProviders, config, setConfig, setConfigUsingKey } =

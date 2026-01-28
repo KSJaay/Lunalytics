@@ -14,7 +14,7 @@ import ManageInvites from '../../invite';
 import SettingsAccount from '../../account';
 import SettingsMobileTabs from '../tab/mobile';
 import SettingsPersonalisation from '../../personalisation';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 import useMemberContext from '../../../../context/member';
 
 const SettingsMobile = ({
@@ -26,7 +26,9 @@ const SettingsMobile = ({
   const handleTabChange = (page: SettingsTabNames) => setPage(page);
   const { member } = useMemberContext();
 
-  const isAdmin = member?.role.hasPermission(PermissionsBits.ADMINISTRATOR);
+  const isAdmin = member?.role.hasPermission(
+    MemberPermissionBits.ADMINISTRATOR
+  );
 
   return (
     <div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>

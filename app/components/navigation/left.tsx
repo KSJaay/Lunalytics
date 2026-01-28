@@ -15,7 +15,7 @@ import IncidentPreview from '../incident/preview';
 import StatusPagePreview from '../status/preview';
 import NotificationPreview from '../notifications/preview';
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
-import { PermissionsBits } from '../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../shared/permissions/bitFlags';
 import { useTranslation } from 'react-i18next';
 import LeftUpdateButton from './left/update';
 import useMemberContext from '../../context/member';
@@ -26,28 +26,28 @@ const actionTabs = [
     url: '/home',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
     Preview: MonitorPreview,
-    permissionRequired: PermissionsBits.VIEW_MONITORS,
+    permissionRequired: MemberPermissionBits.VIEW_MONITORS,
   },
   {
     key: 'common.notifications',
     url: '/notifications',
     logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
     Preview: NotificationPreview,
-    permissionRequired: PermissionsBits.VIEW_NOTIFICATIONS,
+    permissionRequired: MemberPermissionBits.VIEW_NOTIFICATIONS,
   },
   {
     key: 'common.status',
     url: '/status-pages',
     logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
     Preview: StatusPagePreview,
-    permissionRequired: PermissionsBits.VIEW_STATUS_PAGES,
+    permissionRequired: MemberPermissionBits.VIEW_STATUS_PAGES,
   },
   {
     key: 'common.incidents',
     url: '/incidents',
     logo: <BsFillShieldLockFill style={{ width: '25px', height: '25px' }} />,
     Preview: IncidentPreview,
-    permissionRequired: PermissionsBits.VIEW_INCIDENTS,
+    permissionRequired: MemberPermissionBits.VIEW_INCIDENTS,
   },
 ];
 

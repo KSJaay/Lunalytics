@@ -4,14 +4,14 @@ import { observer } from 'mobx-react-lite';
 import { FaTrashCan } from 'react-icons/fa6';
 import { IoArrowBack } from 'react-icons/io5';
 import { useTranslation } from 'react-i18next';
+import { BsFillSendFill } from 'react-icons/bs';
 
 // import local files
 import useContextStore from '../../../context';
 import { createGetRequest, createPostRequest } from '../../../services/axios';
 import NotificationDeleteModal from '../../modal/notification/delete';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 import useScreenSize from '../../../hooks/useScreenSize';
-import { BsFillSendFill } from 'react-icons/bs';
 import useMemberContext from '../../../context/member';
 
 const HomeNotificationHeader = ({
@@ -73,7 +73,9 @@ const HomeNotificationHeader = ({
     }
   };
 
-  const isEditor = member?.role.hasPermission(PermissionsBits.MANAGE_MONITORS);
+  const isEditor = member?.role.hasPermission(
+    MemberPermissionBits.MANAGE_MONITORS
+  );
 
   return (
     <div className="navigation-header-content">

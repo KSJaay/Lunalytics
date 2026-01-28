@@ -9,14 +9,13 @@ import { useTranslation } from 'react-i18next';
 // import local files
 import HomeMonitorHeaderMenu from './menu';
 import useContextStore from '../../../context';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 import type { MonitorType } from '../../../../shared/types/monitor';
 import useMemberContext from '../../../context/member';
 
-const typeToText = {
+export const typeToText = {
   docker: 'Docker Container',
   dns: 'DNS',
-  email: 'Email (SMTP)',
   gamedig: 'Game Server',
   http: 'HTTP/S',
   json: 'JSON Query',
@@ -71,7 +70,9 @@ const HomeMonitorHeader = ({
 
   const { t } = useTranslation();
 
-  const isEditor = member?.role.hasPermission(PermissionsBits.MANAGE_MONITORS);
+  const isEditor = member?.role.hasPermission(
+    MemberPermissionBits.MANAGE_MONITORS
+  );
 
   if (!activeMonitor) {
     return (

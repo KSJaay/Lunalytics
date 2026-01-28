@@ -1,5 +1,8 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+// import type definitions
 import type { NotificationProps } from '../../shared/types/notifications';
+
+// import node modules
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class NotificationStore {
   notifications: Map<string, NotificationProps>;

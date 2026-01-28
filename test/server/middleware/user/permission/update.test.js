@@ -2,7 +2,7 @@ import { createRequest, createResponse } from 'node-mocks-http';
 import { updateUserPermission } from '../../../../../server/database/queries/user';
 import permissionUpdateMiddleware from '../../../../../server/middleware/user/permission/update';
 import { AuthorizationError } from '../../../../../shared/utils/errors';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 
 vi.mock('../../../../../server/database/queries/user');
 
@@ -16,7 +16,7 @@ describe('permissionUpdateMiddleware - Middleware', () => {
     const user = {
       email: 'KSJaay@lunalytics.xyz',
       displayName: 'KSJaay',
-      permission: PermissionsBits.ADMINISTRATOR,
+      permission: MemberPermissionBits.ADMINISTRATOR,
       isOwner: true,
     };
 

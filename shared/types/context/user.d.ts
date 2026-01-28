@@ -16,3 +16,5 @@ export interface ContextUserProps {
   isOwner: boolean;
   settings: UserSettings;
 }
+
+export type ThemeProps = 'light' | 'dark' | 'system';

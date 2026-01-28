@@ -1,3 +1,6 @@
+// import type definitions
+import type { ThemeProps } from '../../../../shared/types/context/user';
+
 // import dependencies
 import { Tooltip } from '@lunalytics/ui';
 
@@ -8,8 +11,8 @@ const SettingsPersonalisationTheme = ({
   theme,
   setTheme,
 }: {
-  theme: 'dark' | 'light' | 'system';
-  setTheme: (theme: 'dark' | 'light' | 'system') => void;
+  theme: ThemeProps;
+  setTheme: (theme: ThemeProps) => void;
 }) => {
   return (
     <>

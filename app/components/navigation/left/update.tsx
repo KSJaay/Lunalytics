@@ -1,4 +1,7 @@
+// import node modules
 import { RxUpdate } from 'react-icons/rx';
+
+// import local files
 import NavigationUpdateModal from '../../modal/navigation/update';
 import useConfigContext from '../../../context/config';
 

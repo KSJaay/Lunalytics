@@ -15,7 +15,7 @@ import updateConfigMiddleware from '../middleware/auth/config/update.js';
 import setupExistsMiddleware from '../middleware/setupExists.js';
 import redirectUsingProviderMiddleware from '../middleware/auth/platform.js';
 import { userHasPermission } from '../middleware/hasPermission.js';
-import { PermissionsBits } from '../../shared/permissions/bitFlags.js';
+import { UserPermissionBits } from '../../shared/permissions/bitFlags.js';
 import signInOrRegisterUsingAuth from '../middleware/auth/signInOrRegisterUsingAuth.js';
 
 router.post('/user/exists', emailExistsMiddleware);
@@ -37,7 +37,7 @@ router.get('/config', getConfigMiddleware);
 router.post(
   '/config/update',
   authorization,
-  userHasPermission(PermissionsBits.ADMINISTRATOR),
+  userHasPermission(UserPermissionBits.ADMINISTRATOR),
   updateConfigMiddleware
 );
 

@@ -15,6 +15,7 @@ const updateIncidentMessageMiddleware = async (
   response: Response
 ) => {
   const { message, status, monitorIds, incidentId, position } = request.body;
+  const { workspaceId } = response.locals;
 
   try {
     if (!incidentId || typeof position === 'undefined') {
@@ -27,7 +28,7 @@ const updateIncidentMessageMiddleware = async (
       return response.status(400).json({ message: isInvalid });
     }
 
-    const query = await fetchIncident(incidentId, response.locals.workspaceId);
+    const query = await fetchIncident(incidentId, workspaceId);
 
     if (!query) {
       return response.status(404).json({ message: 'Incident not found' });
@@ -36,8 +37,6 @@ const updateIncidentMessageMiddleware = async (
     if (!query.messages[position]) {
       return response.status(404).json({ message: 'Message not found' });
     }
-
-    const { workspaceId } = response.locals;
 
     const incident = {
       ...query,

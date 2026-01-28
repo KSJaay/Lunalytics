@@ -9,7 +9,7 @@ import useFetch from '../../../hooks/useFetch';
 import useContextStore from '../../../context';
 import useTeamContext from '../../../context/team';
 import CreateInviteModal from '../../modal/settings/invite';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 
 const ManageTeam = () => {
   const {
@@ -53,7 +53,7 @@ const ManageTeam = () => {
             Manage your team members and their permissions.
           </div>
         </div>
-        {hasPermission(PermissionsBits.CREATE_INVITE) ? (
+        {hasPermission(MemberPermissionBits.CREATE_INVITE) ? (
           <div className="sat-create-btn">
             <Button
               variant="flat"

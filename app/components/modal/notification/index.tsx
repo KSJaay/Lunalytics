@@ -1,3 +1,6 @@
+// import type definitions
+import type { NotificationProps } from '../../../../shared/types/notifications';
+
 // import dependencies
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -10,7 +13,6 @@ import { createPostRequest } from '../../../services/axios';
 import NotificationModalPlatform from './dropdown/platform';
 import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationsTemplates from '../../../../shared/notifications';
-import type { NotificationProps } from '../../../../shared/types/notifications';
 import NotificationRenderer from '../../notifications/content/renderer';
 import { EmailComponent } from '../../notifications/content';
 

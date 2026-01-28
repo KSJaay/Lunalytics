@@ -10,7 +10,7 @@ import ManageInvites from '../../invite';
 import SettingsTab, { type SettingsTabNames } from '../tab/desktop';
 import SettingsAccount from '../../account';
 import SettingsPersonalisation from '../../personalisation';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 import SettingsAuthentication from '../../authentication';
 import useMemberContext from '../../../../context/member';
 
@@ -25,7 +25,9 @@ const SettingsDesktop = ({
 }) => {
   const { member } = useMemberContext();
 
-  const isAdmin = member?.role.hasPermission(PermissionsBits.ADMINISTRATOR);
+  const isAdmin = member?.role.hasPermission(
+    MemberPermissionBits.ADMINISTRATOR
+  );
 
   return (
     <>

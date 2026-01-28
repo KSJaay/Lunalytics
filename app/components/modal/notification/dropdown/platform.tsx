@@ -1,12 +1,14 @@
+// import type definitions
+import type {
+  NotificationPlatforms,
+  NotificationProps,
+} from '../../../../../shared/types/notifications';
+
 // import local files
 import NotificationIcon from './icon';
 import Dropdown from '../../../ui/dropdown';
 import useDropdown from '../../../../hooks/useDropdown';
 import notificationsIcons from '../../../../constant/notifications.json';
-import type {
-  NotificationPlatforms,
-  NotificationProps,
-} from '../../../../../shared/types/notifications';
 
 interface NotificationModalPlatformProps {
   isEdit?: boolean;
