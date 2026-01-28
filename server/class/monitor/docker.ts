@@ -12,6 +12,7 @@ const clean = ({ heartbeats = [], ...monitor }, includeHeartbeats = true) => ({
   requestTimeout: parseInt(monitor.requestTimeout),
   email: monitor.email,
   type: monitor.type,
+  socketPath: monitor.socketPath,
   notificationId: monitor.notificationId,
   notificationType: monitor.notificationType,
   uptimePercentage: monitor.uptimePercentage,

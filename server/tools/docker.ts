@@ -99,7 +99,8 @@ const dockerStatusCheck = async (monitor: MonitorProps) => {
 
   try {
     const container = (await dockerRequest(
-      `/containers/${monitor.url}/json`
+      `/containers/${monitor.url}/json`,
+      monitor.socketPath
     )) as DockerContainerProps;
 
     if (!container) {

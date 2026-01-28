@@ -20,12 +20,11 @@ const getPlatform = (info: any) => {
   return platform || 'unknown';
 };
 
-const getAllDockerContainers = async (
-  _request: Request,
-  response: Response
-) => {
+const getAllDockerContainers = async (request: Request, response: Response) => {
+  const { socketPath } = request.query;
+
   try {
-    const containers = await getListOfDockerContainers();
+    const containers = await getListOfDockerContainers(socketPath as string);
 
     if (!containers || !Array.isArray(containers) || containers.length === 0) {
       return response.status(200).json([]);

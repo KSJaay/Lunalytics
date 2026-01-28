@@ -35,6 +35,8 @@ export const monitorTable = async (client: Knex) => {
       table.string('dnsRecordType').defaultTo('A');
       table.string('dnsResolver').defaultTo('1.1.1.1');
       table.string('game').defaultTo(null);
+      table.string('socketPath').defaultTo('/var/run/docker.sock');
+
       table
         .uuid('workspaceId')
         .notNullable()

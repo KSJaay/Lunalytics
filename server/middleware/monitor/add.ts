@@ -33,6 +33,7 @@ export const defaultMonitorData = (body: any) => ({
   retry: body.retry ?? 1,
   retryInterval: body.retryInterval ?? 60,
   requestTimeout: body.requestTimeout ?? 60,
+  socketPath: body.socketPath ?? '/var/run/docker.sock',
   notificationId: body.notificationId,
   notificationType: body.notificationType,
   ignoreTls: body.ignoreTls ?? false,
@@ -89,6 +90,7 @@ export const formatMonitorData = (
       ...monitor,
       valid_status_codes: '',
       type: 'docker',
+      socketPath: body.socketPath,
     };
   } else if (body.type === 'gamedig') {
     monitor = {
