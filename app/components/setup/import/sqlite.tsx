@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import initSqlJs, { QueryExecResult } from 'sql.js';
 import { typeToText } from '../../home/header';
+import Loading from '../../ui/loading';
 
 function sqlJsResultToObjects<T = Record<string, any>>(
   result: QueryExecResult[]
@@ -275,7 +276,11 @@ const SetupImportSQLite = ({ file }: { file: File }) => {
   }, [file]);
 
   if (!fileContent) {
-    return <div>Loading file...</div>;
+    return (
+      <div style={{ padding: '80px 0' }}>
+        <Loading maxWidth={false} />
+      </div>
+    );
   }
 
   return (
