@@ -50,3 +50,5 @@ next-env.d.ts
 *.sw?
 *_copy*
 _temp*
+
+openapi.json
