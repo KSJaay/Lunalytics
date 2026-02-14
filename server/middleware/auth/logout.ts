@@ -17,7 +17,7 @@ const logout = (_request: Request, response: Response) => {
 
     return response.redirect(createURL('/login'));
   } catch (error) {
-    return handleError(error, response);
+    handleError(error, response);
   }
 };
 

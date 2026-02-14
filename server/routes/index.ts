@@ -5,17 +5,17 @@ import type { Application, NextFunction, Request, Response } from 'express';
 import { games } from 'gamedig';
 
 // import local files
-import authRoutes from './auth.js';
-import userRoutes from './user.js';
-import tokenRoutes from './tokens.js';
-import monitorRoutes from './monitor.js';
-import invitesRoutes from './invites.js';
-import incidentRoutes from './incident.js';
-import providerRoutes from './provider.js';
+import authRoutes from './auth/index.js';
+import userRoutes from './user/index.js';
+import tokenRoutes from './tokens/index.js';
+import monitorRoutes from './monitor/index.js';
+import invitesRoutes from './invites/index.js';
+import incidentRoutes from './incident/index.js';
+import providerRoutes from './provider/index.js';
 import statusApiRoutes from './statusApi.js';
-import workspaceRoutes from './workspace.js';
-import statusPagesRoutes from './statusPages.js';
-import notificationRoutes from './notifications.js';
+import workspaceRoutes from './workspace/index.js';
+import statusPagesRoutes from './status-pages/index.js';
+import notificationRoutes from './notification/index.js';
 import fetchIcons from '../middleware/fetchIcons.js';
 import authorization from '../middleware/authorization.js';
 import getAllDockerContainers from '../middleware/getDockerContainers.js';
@@ -33,7 +33,7 @@ const gamesList = Object.entries(games)
 // ! ALL ROUTES MUST START WITH /api PREFIX !
 
 const initialiseRoutes = async (app: Application) => {
-  app.use('/api/auth', authRoutes);
+  app.use(authRoutes);
   // Routes used for fetching public status pages
   app.use('/api/status', statusApiRoutes);
   app.post('/api/push', createPushHeartbeat);
@@ -44,17 +44,17 @@ const initialiseRoutes = async (app: Application) => {
       return next();
     }
   );
-  app.use('/api/user', userRoutes);
-  app.use('/api/workspace', workspaceRoutes);
+  app.use(userRoutes);
+  app.use(workspaceRoutes);
   app.use(authorizeWorkspace);
-  app.use('/api/monitor', monitorRoutes);
-  app.use('/api/notifications', notificationRoutes);
-  app.use('/api/incident', incidentRoutes);
-  app.use('/api/tokens', tokenRoutes);
-  app.use('/api/invite', invitesRoutes);
-  app.use('/api/providers', providerRoutes);
+  app.use(monitorRoutes);
+  app.use(notificationRoutes);
+  app.use(incidentRoutes);
+  app.use(tokenRoutes);
+  app.use(invitesRoutes);
+  app.use(providerRoutes);
   // Routes used for configuring status pages
-  app.use('/api/status-pages', statusPagesRoutes);
+  app.use(statusPagesRoutes);
   app.get('/api/icons', fetchIcons);
   app.get('/api/docker/containers', getAllDockerContainers);
   app.get('/api/games', async (_request: Request, response: Response) => {
