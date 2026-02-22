@@ -24,8 +24,6 @@ describe('createIncidentMiddleware', () => {
       message: 'msg',
     };
 
-    fakeRequest.locals = { user: { email: 'e' } };
-
     fakeResponse.locals = { user: { email: 'e' } };
 
     fakeResponse.status = vi.fn().mockReturnThis();

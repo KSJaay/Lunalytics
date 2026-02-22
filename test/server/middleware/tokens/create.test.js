@@ -14,7 +14,10 @@ describe('createApiTokenMiddleware', () => {
   beforeEach(() => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
-    fakeResponse.locals = { user: { email: 'test@example.com' } };
+    fakeResponse.locals = {
+      user: { email: 'test@example.com' },
+      workspaceId: 'Hua Hua',
+    };
 
     apiTokenCreate = vi.fn(() => Promise.resolve({ id: 'id' }));
     TokenValidator = vi.fn(() => false);
@@ -42,7 +45,12 @@ describe('createApiTokenMiddleware', () => {
 
     await createApiTokenMiddleware(fakeRequest, fakeResponse);
 
-    expect(apiTokenCreate).toHaveBeenCalledWith('test@example.com', 'p', 'n');
+    expect(apiTokenCreate).toHaveBeenCalledWith(
+      'test@example.com',
+      'p',
+      'n',
+      'Hua Hua'
+    );
     expect(fakeResponse._getStatusCode()).toBe(200);
     expect(fakeResponse._getData()).toEqual(
       expect.objectContaining({ id: 'id' })

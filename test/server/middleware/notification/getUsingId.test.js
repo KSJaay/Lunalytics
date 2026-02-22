@@ -14,11 +14,15 @@ describe('NotificationGetUsingIdMiddleware', () => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
 
-    fetchNotificationById = vi.fn(function (id) {
-      return id === 'exists' ? { id: 'exists' } : null;
+    fetchNotificationById = vi.fn(function (id, workspaceId) {
+      return id === 'exists' && workspaceId === 'Hua Hua'
+        ? { id: 'exists' }
+        : null;
     });
 
     logger.error = vi.fn();
+
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   beforeEach(() => {
@@ -30,7 +34,7 @@ describe('NotificationGetUsingIdMiddleware', () => {
 
     await NotificationGetUsingIdMiddleware(fakeRequest, fakeResponse);
 
-    expect(fetchNotificationById).toHaveBeenCalledWith('exists');
+    expect(fetchNotificationById).toHaveBeenCalledWith('exists', 'Hua Hua');
     expect(fakeResponse._getStatusCode()).toBe(200);
     expect(fakeResponse._getData()).toEqual({ id: 'exists' });
     expect(logger.error).not.toHaveBeenCalled();
@@ -41,7 +45,7 @@ describe('NotificationGetUsingIdMiddleware', () => {
     fakeRequest.query = { notificationId: 'notfound' };
     await NotificationGetUsingIdMiddleware(fakeRequest, fakeResponse);
 
-    expect(fetchNotificationById).toHaveBeenCalledWith('notfound');
+    expect(fetchNotificationById).toHaveBeenCalledWith('notfound', 'Hua Hua');
     expect(fakeResponse._getStatusCode()).toBe(404);
     expect(fakeResponse._getData()).toEqual({
       message: 'Notification not found',

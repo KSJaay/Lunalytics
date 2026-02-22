@@ -22,6 +22,7 @@ describe('Delete Monitor - Middleware', () => {
     fakeRequest.query = {
       monitorId,
     };
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -42,19 +43,19 @@ describe('Delete Monitor - Middleware', () => {
     it('should call deleteMonitor with monitorId', async () => {
       await monitorDelete(fakeRequest, fakeResponse);
 
-      expect(deleteMonitor).toHaveBeenCalledWith(monitorId);
+      expect(deleteMonitor).toHaveBeenCalledWith(monitorId, 'Hua Hua');
     });
 
     it('should call deleteHeartbeats with monitorId', async () => {
       await monitorDelete(fakeRequest, fakeResponse);
 
-      expect(deleteHeartbeats).toHaveBeenCalledWith(monitorId);
+      expect(deleteHeartbeats).toHaveBeenCalledWith(monitorId, 'Hua Hua');
     });
 
     it('should call deleteCertificate with monitorId', async () => {
       await monitorDelete(fakeRequest, fakeResponse);
 
-      expect(deleteCertificate).toHaveBeenCalledWith(monitorId);
+      expect(deleteCertificate).toHaveBeenCalledWith(monitorId, 'Hua Hua');
     });
   });
 });

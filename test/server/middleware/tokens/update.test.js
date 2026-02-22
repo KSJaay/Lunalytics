@@ -17,6 +17,8 @@ describe('updateApiTokenMiddleware', () => {
 
     apiTokenUpdate = vi.fn(() => Promise.resolve({ id: 'id' }));
     TokenValidator = vi.fn(() => false);
+
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -41,7 +43,7 @@ describe('updateApiTokenMiddleware', () => {
 
     await updateApiTokenMiddleware(fakeRequest, fakeResponse);
 
-    expect(apiTokenUpdate).toHaveBeenCalledWith('t', 'n', 'p');
+    expect(apiTokenUpdate).toHaveBeenCalledWith('t', 'n', 'p', 'Hua Hua');
     expect(fakeResponse._getStatusCode()).toBe(200);
     expect(fakeResponse._getData()).toEqual(
       expect.objectContaining({ id: 'id' })

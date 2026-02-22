@@ -21,6 +21,8 @@ describe('monitorPause middleware', () => {
     statusCache.reloadMonitor = vi
       .fn()
       .mockImplementation(() => Promise.resolve(true));
+
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -54,7 +56,7 @@ describe('monitorPause middleware', () => {
 
     await monitorPause(fakeRequest, fakeResponse);
 
-    expect(pauseMonitor).toHaveBeenCalledWith('abc', true);
+    expect(pauseMonitor).toHaveBeenCalledWith('abc', 'Hua Hua', true);
     expect(cache.removeMonitor).toHaveBeenCalledWith('abc');
     expect(cache.checkStatus).not.toHaveBeenCalled();
     expect(statusCache.reloadMonitor).toHaveBeenCalledWith('abc');
@@ -67,7 +69,7 @@ describe('monitorPause middleware', () => {
 
     await monitorPause(fakeRequest, fakeResponse);
 
-    expect(pauseMonitor).toHaveBeenCalledWith('abc', false);
+    expect(pauseMonitor).toHaveBeenCalledWith('abc', 'Hua Hua', false);
     expect(cache.removeMonitor).not.toHaveBeenCalled();
     expect(cache.checkStatus).toHaveBeenCalledWith('abc');
     expect(statusCache.reloadMonitor).toHaveBeenCalledWith('abc');
@@ -80,13 +82,13 @@ describe('monitorPause middleware', () => {
 
     await monitorPause(fakeRequest, fakeResponse);
 
-    expect(pauseMonitor).toHaveBeenCalledWith('abc', true);
+    expect(pauseMonitor).toHaveBeenCalledWith('abc', 'Hua Hua', true);
     expect(cache.removeMonitor).toHaveBeenCalledWith('abc');
 
     fakeRequest.body = { monitorId: 'abc', pause: 'false' };
     await monitorPause(fakeRequest, fakeResponse);
 
-    expect(pauseMonitor).toHaveBeenCalledWith('abc', false);
+    expect(pauseMonitor).toHaveBeenCalledWith('abc', 'Hua Hua', false);
     expect(cache.checkStatus).toHaveBeenCalledWith('abc');
   });
 

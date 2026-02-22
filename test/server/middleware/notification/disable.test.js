@@ -13,6 +13,8 @@ describe('NotificationToggleMiddleware', () => {
   beforeEach(() => {
     fakeRequest = createRequest();
     fakeResponse = createResponse();
+
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -48,7 +50,7 @@ describe('NotificationToggleMiddleware', () => {
       fakeResponse
     );
 
-    expect(toggleNotification).toHaveBeenCalledWith('id', true);
+    expect(toggleNotification).toHaveBeenCalledWith('id', 'Hua Hua', true);
     expect(response._getStatusCode()).toBe(200);
     expect(handleError).not.toHaveBeenCalled();
   });

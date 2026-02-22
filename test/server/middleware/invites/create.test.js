@@ -15,11 +15,10 @@ describe('createInviteMiddleware', () => {
     fakeResponse = createResponse();
 
     fakeRequest.body = { expiry: 'e', limit: 1, permission: 1 };
-    fakeRequest.locals = { user: { email: 'e' } };
 
     fakeResponse.status = vi.fn().mockReturnThis();
     fakeResponse.send = vi.fn();
-    fakeResponse.locals = { user: { email: 'e' } };
+    fakeResponse.locals = { user: { email: 'e' }, workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -43,7 +42,7 @@ describe('createInviteMiddleware', () => {
 
     await createInviteMiddleware(fakeRequest, fakeResponse);
 
-    expect(createInvite).toHaveBeenCalledWith('e', 'e', 1, 1);
+    expect(createInvite).toHaveBeenCalledWith('e', 'e', 1, 1, 'Hua Hua');
     expect(fakeResponse.status).toHaveBeenCalledWith(200);
     expect(fakeResponse.send).toHaveBeenCalledWith({ invite: 'invite' });
   });

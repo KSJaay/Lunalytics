@@ -18,6 +18,8 @@ describe('deleteStatusPageMiddleware', () => {
       return Promise.resolve();
     });
     statusCache.deleteStatusPage = vi.fn();
+
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -34,8 +36,8 @@ describe('deleteStatusPageMiddleware', () => {
   it('should delete status page and return 200', async () => {
     fakeRequest.body = { statusPageId: 'id' };
     await deleteStatusPageMiddleware(fakeRequest, fakeResponse);
-    expect(deleteStatusPage).toHaveBeenCalledWith('id');
-    expect(statusCache.deleteStatusPage).toHaveBeenCalledWith('id');
+    expect(deleteStatusPage).toHaveBeenCalledWith('id', 'Hua Hua');
+    expect(statusCache.deleteStatusPage).toHaveBeenCalledWith('id', 'Hua Hua');
     expect(fakeResponse._getStatusCode()).toBe(200);
     expect(fakeResponse._getData()).toHaveProperty('message');
   });
