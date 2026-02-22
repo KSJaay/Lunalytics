@@ -51,4 +51,4 @@ next-env.d.ts
 *_copy*
 _temp*
 
-openapi.json
+openapi.*

@@ -46,7 +46,7 @@ describe('Fetch Monitor Using Id - Middleware', () => {
     it('should call fetchMonitor with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
-      expect(fetchMonitor).toHaveBeenCalledWith(monitorId);
+      expect(fetchMonitor).toHaveBeenCalledWith(monitorId, 'Hua Hua');
     });
 
     it('should return 404 when monitor is not found', async () => {
@@ -60,13 +60,13 @@ describe('Fetch Monitor Using Id - Middleware', () => {
     it('should call fetchHeartbeats with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
-      expect(fetchHeartbeats).toHaveBeenCalledWith(monitorId);
+      expect(fetchHeartbeats).toHaveBeenCalledWith(monitorId, 'Hua Hua');
     });
 
     it('should call fetchCertificate with monitorId', async () => {
       await fetchMonitorUsingId(fakeRequest, fakeResponse);
 
-      expect(fetchCertificate).toHaveBeenCalledWith(monitorId);
+      expect(fetchCertificate).toHaveBeenCalledWith(monitorId, 'Hua Hua');
     });
 
     it('should return 200 when data is valid', async () => {

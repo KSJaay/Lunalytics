@@ -14,6 +14,8 @@ describe('deleteApiTokenMiddleware', () => {
     fakeResponse = createResponse();
 
     apiTokenDelete = vi.fn(() => Promise.resolve());
+
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -33,7 +35,7 @@ describe('deleteApiTokenMiddleware', () => {
   it('should delete token and return 200', async () => {
     fakeRequest.body = { token: 't' };
     await deleteApiTokenMiddleware(fakeRequest, fakeResponse);
-    expect(apiTokenDelete).toHaveBeenCalledWith('t');
+    expect(apiTokenDelete).toHaveBeenCalledWith('t', 'Hua Hua');
     expect(fakeResponse._getStatusCode()).toBe(200);
     expect(fakeResponse._getData()).toEqual(
       expect.objectContaining({ message: 'Token deleted successfully' })

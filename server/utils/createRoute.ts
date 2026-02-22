@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { ZodType } from 'zod';
 import { Router, Request, Response, NextFunction } from 'express';
+import logger from './logger.js';
 
 const openAPIJsonPath = path.join(process.cwd(), 'openapi.json');
 
@@ -78,6 +79,8 @@ export function createRoute<
     const openApiPath = path.replace(/:([a-zA-Z0-9_]+)/g, '{$1}');
 
     if (!fs.existsSync(openAPIJsonPath)) {
+      logger.info('Creating openapi.json file for the first time');
+
       fs.writeFileSync(
         openAPIJsonPath,
         JSON.stringify(
@@ -95,7 +98,15 @@ export function createRoute<
       );
     }
 
+    logger.info('Updating openapi.json file with new route information', {
+      method,
+      path,
+    });
+
     const openApiDoc = JSON.parse(fs.readFileSync(openAPIJsonPath, 'utf-8'));
+    const camelCaseTags = tags?.map(
+      (tag) => tag.charAt(0).toUpperCase() + tag.slice(1)
+    );
 
     openApiDoc.paths[openApiPath] = openApiDoc.paths[openApiPath] || {};
     openApiDoc.paths[openApiPath][method] = {
@@ -103,7 +114,7 @@ export function createRoute<
       path: openApiPath,
       summary,
       description,
-      tags,
+      tags: camelCaseTags,
       deprecated,
       security: security ? [{ permission: security }] : undefined,
       validations,

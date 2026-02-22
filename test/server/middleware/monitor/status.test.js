@@ -7,6 +7,7 @@ import {
   fetchHeartbeats,
   fetchHourlyHeartbeats,
 } from '../../../../server/database/queries/heartbeat';
+import { MONITOR_ERRORS } from '../../../../shared/constants/errors/monitor';
 
 vi.mock('../../../../server/database/queries/monitor');
 vi.mock('../../../../server/database/queries/heartbeat');
@@ -39,6 +40,7 @@ describe('Fetch Monitor Status - Middleware', () => {
     };
 
     fakeResponse.json = vi.fn();
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -46,20 +48,25 @@ describe('Fetch Monitor Status - Middleware', () => {
   });
 
   describe('when monitorId is invalid', () => {
-    it('should return 422 when monitorId is invalid', async () => {
+    it('should return 400 when monitorId is invalid', async () => {
       fakeRequest.query.monitorId = null;
 
       await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-      expect(fakeResponse.statusCode).toEqual(422);
+      expect(fakeResponse.statusCode).toEqual(400);
+      expect(fakeResponse.json).toHaveBeenCalledWith(MONITOR_ERRORS.M004);
     });
 
-    it('should return 422 when type is invalid', async () => {
+    it('should return 400 when type is invalid', async () => {
       fakeRequest.query.type = null;
 
       await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-      expect(fakeResponse.statusCode).toEqual(422);
+      expect(fakeResponse.statusCode).toEqual(400);
+      expect(fakeResponse.json).toHaveBeenCalledWith({
+        ...MONITOR_ERRORS.M003,
+        details: 'Invalid type',
+      });
     });
   });
 
@@ -67,13 +74,22 @@ describe('Fetch Monitor Status - Middleware', () => {
     it('should call fetchMonitor with monitorId', async () => {
       await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-      expect(fetchMonitor).toHaveBeenCalledWith(monitorId);
+      expect(fetchMonitor).toHaveBeenCalledWith(monitorId, 'Hua Hua');
+    });
+
+    it('should return 404 when monitor is not found', async () => {
+      fetchMonitor = vi.fn().mockReturnValue(null);
+
+      await fetchMonitorStatus(fakeRequest, fakeResponse);
+
+      expect(fakeResponse.statusCode).toEqual(404);
+      expect(fakeResponse.json).toHaveBeenCalledWith(MONITOR_ERRORS.M001);
     });
 
     it('should call fetchHeartbeats with monitorId', async () => {
       await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-      expect(fetchHeartbeats).toHaveBeenCalledWith(monitorId);
+      expect(fetchHeartbeats).toHaveBeenCalledWith(monitorId, 'Hua Hua');
     });
 
     it('should return 200 when data is valid', async () => {
@@ -96,7 +112,7 @@ describe('Fetch Monitor Status - Middleware', () => {
       it(`should call fetchDailyHeartbeats with monitorId`, async () => {
         await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-        expect(fetchDailyHeartbeats).toHaveBeenCalledWith(monitorId);
+        expect(fetchDailyHeartbeats).toHaveBeenCalledWith(monitorId, 'Hua Hua');
       });
 
       it('should return 416 when heartbeats are less than two', async () => {
@@ -130,7 +146,11 @@ describe('Fetch Monitor Status - Middleware', () => {
       it(`should call fetchHourlyHeartbeats with monitorId`, async () => {
         await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-        expect(fetchHourlyHeartbeats).toHaveBeenCalledWith(monitorId, 168);
+        expect(fetchHourlyHeartbeats).toHaveBeenCalledWith(
+          monitorId,
+          'Hua Hua',
+          168
+        );
       });
 
       it('should return 416 when heartbeats are less than two', async () => {
@@ -164,7 +184,11 @@ describe('Fetch Monitor Status - Middleware', () => {
       it(`should call fetchHourlyHeartbeats with monitorId`, async () => {
         await fetchMonitorStatus(fakeRequest, fakeResponse);
 
-        expect(fetchHourlyHeartbeats).toHaveBeenCalledWith(monitorId, 720);
+        expect(fetchHourlyHeartbeats).toHaveBeenCalledWith(
+          monitorId,
+          'Hua Hua',
+          720
+        );
       });
 
       it('should return 416 when heartbeats are less than two', async () => {

@@ -16,6 +16,7 @@ describe('NotificationDeleteMiddleware', () => {
     fakeResponse = createResponse();
 
     fakeRequest.query = { notificationId: 'id' };
+    fakeResponse.locals = { workspaceId: 'Hua Hua' };
   });
 
   afterEach(() => {
@@ -39,7 +40,7 @@ describe('NotificationDeleteMiddleware', () => {
       fakeResponse
     );
 
-    expect(deleteNotification).toHaveBeenCalledWith('id');
+    expect(deleteNotification).toHaveBeenCalledWith('id', 'Hua Hua');
 
     expect(response._getStatusCode()).toBe(200);
     expect(response._getData()).toBe('Notification deleted');
