@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/monitor/status',
-    summary: 'Get the status of a specific monitor',
-    description: 'Get the status of a specific monitor',
+    summary: 'Monitor Status',
+    description:
+      'Retrieves the status of a specific monitor. Useful for checking uptime, performance, or alerts.',
     tags: ['monitor'],
     security: '0',
     deprecated: false,

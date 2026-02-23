@@ -7,8 +7,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/callback/google',
-    summary: 'Endpoint to verify users connecting using Google',
-    description: 'Endpoint to verify users connecting using Google',
+    summary: 'Google OAuth callback',
+    description: 'Endpoint to handle Google OAuth provider callback',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

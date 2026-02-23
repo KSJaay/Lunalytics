@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/user/workspaces',
-    summary: 'Get all the workspaces for current user',
-    description: 'Get all the workspaces for current user',
+    summary: 'Get Workspaces',
+    description:
+      'Fetches all workspaces associated with the current user. Useful for workspace management and navigation.',
     tags: ['user'],
     security: 'false',
     deprecated: false,

@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/notification/test',
-    summary: 'Test notification',
-    description: 'Test notification',
+    summary: 'Test Notification',
+    description:
+      'Tests a notification to ensure it works correctly. Useful for verifying alert delivery and configuration.',
     tags: ['notification'],
     security: '24',
     deprecated: false,

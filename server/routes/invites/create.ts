@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/invites/create',
-    summary: 'Create a new invite for the given workspace',
-    description: 'Create a new invite for the given workspace',
+    summary: 'Create Invite',
+    description:
+      'Creates a new invite for a workspace. Useful for onboarding new members or collaborators.',
     tags: ['invites'],
     security: '1024',
     deprecated: false,

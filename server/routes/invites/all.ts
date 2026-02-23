@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/invites/all',
-    summary: 'Get all invites for the given workspace',
-    description: 'Get all invites for the given workspace',
+    summary: 'Get All Invites',
+    description:
+      'Retrieves all invites for a workspace. Useful for tracking pending, accepted, or declined invitations.',
     tags: ['invites'],
     security: '1024',
     deprecated: false,

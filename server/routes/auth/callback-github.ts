@@ -7,8 +7,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/callback/github',
-    summary: 'Endpoint to verify users connecting using GitHub',
-    description: 'Endpoint to verify users connecting using GitHub',
+    summary: 'GitHub OAuth callback',
+    description: 'Endpoint to handle GitHub OAuth provider callback',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

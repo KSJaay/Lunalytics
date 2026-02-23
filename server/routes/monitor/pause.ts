@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/monitor/pause',
-    summary: 'Pause monitor checks',
-    description: 'Pause monitor checks',
+    summary: 'Pause Monitor',
+    description:
+      'Pauses monitoring checks for a workspace. Useful for maintenance windows or troubleshooting.',
     tags: ['monitor'],
     security: '6',
     deprecated: false,

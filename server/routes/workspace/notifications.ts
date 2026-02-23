@@ -9,8 +9,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/workspace/notifications',
-    summary: 'Get a list of notifications for the given workspace',
-    description: 'Get a list of notifications for the given workspace',
+    summary: 'Get Workspace Notifications',
+    description:
+      'Retrieves all notifications for a workspace. Useful for alerting teams about important events or updates.',
     tags: ['workspace'],
     security: 'false',
     deprecated: false,

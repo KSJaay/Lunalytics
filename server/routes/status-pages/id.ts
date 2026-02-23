@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/status-pages/id',
-    summary: 'Get information about a status page using an ID',
-    description: 'Get information about a status page using an ID',
+    summary: 'Get Status Page By ID',
+    description:
+      'Retrieves a status page by its ID. Useful for viewing details and history of a specific public page.',
     tags: ['status-pages'],
     security: '32',
     deprecated: false,

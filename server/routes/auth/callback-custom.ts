@@ -7,8 +7,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/callback/custom',
-    summary: 'Endpoint to verify custom OAuth provider',
-    description: 'Endpoint to verify custom OAuth provider',
+    summary: 'Custom OAuth callback',
+    description: 'Endpoint to handle custom OAuth provider callback',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/monitor/add',
-    summary: 'Add a new monitor for workspace',
-    description: 'Add a new monitor for workspace',
+    summary: 'Add Monitor',
+    description:
+      'Adds a new monitor to a workspace. Useful for tracking uptime, performance, or service health.',
     tags: ['monitor'],
     security: '6',
     deprecated: false,

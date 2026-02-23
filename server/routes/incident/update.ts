@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/incident/update',
-    summary: 'Update an existing incident',
-    description: 'Update an existing incident',
+    summary: 'Update Incident',
+    description:
+      'Updates an existing incident record. Useful for modifying status, details, or resolution information.',
     tags: ['incident'],
     security: '256',
     deprecated: false,

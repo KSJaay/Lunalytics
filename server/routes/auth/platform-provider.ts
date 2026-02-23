@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/platform/:provider',
-    summary: 'Redirect user to the oauth platform selected',
-    description: 'Redirect user to the oauth platform selected',
+    summary: 'Redirect to OAuth provider',
+    description: 'Endpoint to handle redirection to the selected OAuth provider',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

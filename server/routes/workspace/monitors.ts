@@ -9,8 +9,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/workspace/monitors',
-    summary: 'Get a list of monitors for the given workspace',
-    description: 'Get a list of monitors for the given workspace',
+    summary: 'Get Workspace Monitors',
+    description:
+      'Retrieves all monitors for a workspace. Useful for tracking uptime, performance, or service health.',
     tags: ['workspace'],
     security: '0',
     deprecated: false,

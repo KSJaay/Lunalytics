@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/notification/id',
-    summary: 'Get information about a specific notification using id',
-    description: 'Get information about a specific notification using id',
+    summary: 'Get Notification By ID',
+    description:
+      'Retrieves a notification by its ID. Useful for viewing specific alert details.',
     tags: ['notification'],
     security: '8',
     deprecated: false,

@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/notification/toggle',
-    summary: 'Enable/disable notification',
-    description: 'Enable/disable notification',
+    summary: 'Toggle Notification',
+    description:
+      'Enables or disables a notification. Useful for managing alert status and user preferences.',
     tags: ['notification'],
     security: '24',
     deprecated: false,

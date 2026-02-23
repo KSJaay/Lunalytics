@@ -9,8 +9,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/workspace/status-pages',
-    summary: 'Get a list of status pages for the given workspace',
-    description: 'Get a list of status pages for the given workspace',
+    summary: 'Get Workspace Status Pages',
+    description:
+      'Retrieves all status pages for a workspace. Useful for public communication of system health and incidents.',
     tags: ['workspace'],
     security: 'false',
     deprecated: false,

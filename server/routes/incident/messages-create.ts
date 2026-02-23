@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/incident/messages/create',
-    summary: 'Create a new incident message',
-    description: 'Create a new incident message',
+    summary: 'Create Incident Message',
+    description:
+      'Creates a new message for an incident. Useful for communication and updates during incident resolution.',
     tags: ['incident'],
     security: '256',
     deprecated: false,

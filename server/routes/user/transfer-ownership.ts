@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/transfer/ownership',
-    summary: 'Transfer ownership to another user',
-    description: 'Transfer ownership to another user',
+    summary: 'Transfer Ownership',
+    description:
+      'Allows administrators to transfer account or workspace ownership to another user. Useful for changing responsibility or leadership.',
     tags: ['user'],
     security: '1',
     deprecated: false,

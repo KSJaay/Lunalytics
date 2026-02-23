@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/tokens/update',
-    summary: 'Update configuration for API token',
-    description: 'Update configuration for API token',
+    summary: 'Update token',
+    description: 'Handle updating of an API token',
     tags: ['tokens'],
     security: '1',
     deprecated: false,

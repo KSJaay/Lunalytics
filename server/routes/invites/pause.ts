@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/invites/pause',
-    summary: 'Pause an invite for the given workspace',
-    description: 'Pause an invite for the given workspace',
+    summary: 'Pause Invite',
+    description:
+      'Pauses an invite for a workspace. Useful for temporarily disabling access without deleting the invitation.',
     tags: ['invites'],
     security: '1024',
     deprecated: false,

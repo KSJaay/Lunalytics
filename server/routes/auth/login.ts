@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/auth/login',
-    summary: 'Login user credentials',
-    description: 'Login user credentials',
+    summary: 'Login with credentials',
+    description: 'Endpoint to handle user login with credentials',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

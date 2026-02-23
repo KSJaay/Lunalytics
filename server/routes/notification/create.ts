@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/notification/create',
-    summary: 'Create a new notification',
-    description: 'Create a new notification',
+    summary: 'Create Notification',
+    description:
+      'Creates a new notification. Useful for alerting users or teams about important events or updates.',
     tags: ['notification'],
     security: '24',
     deprecated: false,

@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/access/approve',
-    summary: 'Approve user access to application',
-    description: 'Approve user access to application',
+    summary: 'Approve Access',
+    description:
+      'Allows admins to approve user access requests, granting permissions to join the application. Useful for onboarding and managing team membership.',
     tags: ['user'],
     security: '512',
     deprecated: false,

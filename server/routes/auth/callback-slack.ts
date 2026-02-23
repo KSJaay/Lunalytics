@@ -7,8 +7,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/callback/slack',
-    summary: 'Endpoint to verify users connecting using Slack',
-    description: 'Endpoint to verify users connecting using Slack',
+    summary: 'Slack OAuth callback',
+    description: 'Endpoint to handle Slack OAuth provider callback',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

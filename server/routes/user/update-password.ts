@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/update/password',
-    summary: 'Update user password',
-    description: 'Update user password',
+    summary: 'Update Password',
+    description:
+      'Allows users to change their account password. Useful for security and password management.',
     tags: ['user'],
     security: 'false',
     deprecated: false,

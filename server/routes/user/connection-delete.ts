@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/connection/delete',
-    summary: 'Delete a connection for the user',
-    description: 'Delete a connection for the user',
+    summary: 'Delete Connection',
+    description:
+      'Allows users to remove a connection to external services or accounts. Useful for managing integrations and privacy.',
     tags: ['user'],
     security: 'false',
     deprecated: false,

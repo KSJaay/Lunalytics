@@ -9,8 +9,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/workspace/api-tokens',
-    summary: 'Get a list of API Tokens for the given workspace',
-    description: 'Get a list of API Tokens for the given workspace',
+    summary: 'Get Workspace API Tokens',
+    description:
+      'Retrieves all API tokens for a workspace. Useful for integration, automation, and access control.',
     tags: ['workspace'],
     security: 'false',
     deprecated: false,

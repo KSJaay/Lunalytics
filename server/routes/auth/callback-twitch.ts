@@ -7,8 +7,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/callback/twitch',
-    summary: 'Endpoint to verify users connecting using Twitch',
-    description: 'Endpoint to verify users connecting using Twitch',
+    summary: 'Twitch OAuth callback',
+    description: 'Endpoint to handle Twitch OAuth provider callback',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

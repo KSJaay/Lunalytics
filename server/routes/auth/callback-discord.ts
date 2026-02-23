@@ -7,8 +7,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/callback/discord',
-    summary: 'Endpoint to verify users connecting using Discord',
-    description: 'Endpoint to verify users connecting using Discord',
+    summary: 'Discord OAuth callback',
+    description: 'Endpoint to handle Discord OAuth provider callback',
     tags: ['auth'],
     security: 'false',
     deprecated: false,
