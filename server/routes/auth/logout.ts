@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/logout',
-    summary: 'Logout the current user',
-    description: 'Logout the current user',
+    summary: 'Logout current user',
+    description: 'Endpoint to handle user logout',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

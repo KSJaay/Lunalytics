@@ -9,8 +9,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/auth/config/update',
-    summary: 'Endpoint to update authentication configuration',
-    description: 'Endpoint to update authentication configuration',
+    summary: 'Update authentication configuration',
+    description: 'Endpoint to handle updating authentication configuration',
     tags: ['auth'],
     security: '1',
     deprecated: false,

@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/tokens/delete',
-    summary: 'Delete API token',
-    description: 'Delete API token',
+    summary: 'Delete token',
+    description: 'Handle deletion of an API token',
     tags: ['tokens'],
     security: '1',
     deprecated: false,

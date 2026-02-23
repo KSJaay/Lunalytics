@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/connection/create',
-    summary: 'Create a new connection for a user',
-    description: 'Create a new connection for a user',
+    summary: 'Create Connection',
+    description:
+      'Allows users to create a new connection to external services or accounts. Useful for integrations and expanding functionality.',
     tags: ['user'],
     security: 'false',
     deprecated: false,

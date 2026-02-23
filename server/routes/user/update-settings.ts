@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/update/settings',
-    summary: 'Update user preference settings',
-    description: 'Update user preference settings',
+    summary: 'Update Settings',
+    description:
+      'Allows users to update their account preferences and settings. Useful for customizing user experience.',
     tags: ['user'],
     security: 'false',
     deprecated: false,

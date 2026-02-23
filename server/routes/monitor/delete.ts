@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/monitor/delete',
-    summary: 'Delete monitor from workspace',
-    description: 'Delete monitor from workspace',
+    summary: 'Delete Monitor',
+    description:
+      'Deletes a monitor from a workspace. Useful for removing unused or obsolete monitoring checks.',
     tags: ['monitor'],
     security: '6',
     deprecated: false,

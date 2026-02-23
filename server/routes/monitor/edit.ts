@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/monitor/edit',
-    summary: 'Edit monitor for workspace',
-    description: 'Edit monitor for workspace',
+    summary: 'Edit Monitor',
+    description:
+      'Edits an existing monitor. Useful for updating monitoring parameters or settings.',
     tags: ['monitor'],
     security: '6',
     deprecated: false,

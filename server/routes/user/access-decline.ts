@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/access/decline',
-    summary: 'Decline user access to application',
-    description: 'Decline user access to application',
+    summary: 'Decline Access',
+    description:
+      'Allows admins to decline user access requests, preventing them from joining the application. Useful for controlling who can become a member.',
     tags: ['user'],
     security: '512',
     deprecated: false,

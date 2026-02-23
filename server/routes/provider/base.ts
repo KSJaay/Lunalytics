@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/provider',
-    summary: 'Get all current providers',
-    description: 'Get all current providers',
+    summary: 'Get providers',
+    description: 'Endpoint to handle the retrieval of all current providers',
     tags: ['provider'],
     security: '1',
     deprecated: false,

@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/provider/configure',
-    summary: 'Configure settings for OAuth providers',
-    description: 'Configure settings for OAuth providers',
+    summary: 'Configure OAuth providers',
+    description: 'Endpoint to handle the configuration of OAuth providers',
     tags: ['provider'],
     security: '1',
     deprecated: false,

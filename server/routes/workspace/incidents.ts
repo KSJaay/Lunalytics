@@ -9,8 +9,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/workspace/incidents',
-    summary: 'Get a list of incidents for the given workspace',
-    description: 'Get a list of incidents for the given workspace',
+    summary: 'Get Workspace Incidents',
+    description:
+      'Retrieves all incidents for a workspace. Useful for monitoring issues, outages, or events.',
     tags: ['workspace'],
     security: 'false',
     deprecated: false,

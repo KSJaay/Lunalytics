@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/user',
-    summary: 'Get current user',
-    description: 'Get the current session user',
+    summary: 'Get User',
+    description:
+      'Fetches the current session user details. Useful for authentication and user profile display.',
     tags: ['user'],
     security: 'false',
     deprecated: false,

@@ -7,7 +7,7 @@ const initialiseRoute = (router: Router) => {
     method: 'post',
     path: '/api/provider/delete',
     summary: 'Delete OAuth provider',
-    description: 'Delete OAuth provider',
+    description: 'Endpoint to handle the deletion of an OAuth provider',
     tags: ['provider'],
     security: '1',
     deprecated: false,

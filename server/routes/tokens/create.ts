@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/tokens/create',
-    summary: 'Create a new API token',
-    description: 'Create a new API token',
+    summary: 'Create token',
+    description: 'Handle creation of a new API token',
     tags: ['tokens'],
     security: '1',
     deprecated: false,

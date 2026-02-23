@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/notification/delete',
-    summary: 'Delete a notification',
-    description: 'Delete a notification',
+    summary: 'Delete Notification',
+    description:
+      'Deletes a notification. Useful for removing outdated or irrelevant alerts from the system.',
     tags: ['notification'],
     security: '24',
     deprecated: false,

@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/permission/update',
-    summary: 'Update permissions for a specific user',
-    description: 'Update permissions for a specific user',
+    summary: 'Update Permissions',
+    description:
+      'Allows administrators to modify user permissions, granting or restricting access to features. Useful for managing roles and security.',
     tags: ['user'],
     security: '1',
     deprecated: false,

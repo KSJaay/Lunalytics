@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/auth/user/exists',
-    summary: 'Checks if the user exists',
-    description: 'Checks if the user exists',
+    summary: 'User exists',
+    description: 'Endpoint to check if the user exists',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

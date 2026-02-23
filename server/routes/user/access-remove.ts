@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/user/access/remove',
-    summary: 'Remove a user from the application',
-    description: 'Remove a user from the application',
+    summary: 'Remove User',
+    description:
+      'Allows admins to remove a user from the application, revoking their access and permissions. Useful for managing team membership and security.',
     tags: ['user'],
     security: '512',
     deprecated: false,

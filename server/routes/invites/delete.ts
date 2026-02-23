@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/invites/delete',
-    summary: 'Delete an invite for the given workspace',
-    description: 'Delete an invite for the given workspace',
+    summary: 'Delete Invite',
+    description:
+      'Deletes an invite from a workspace. Useful for managing access and removing unused invitations.',
     tags: ['invites'],
     security: '1024',
     deprecated: false,

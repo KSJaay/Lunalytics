@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/auth/config',
-    summary: 'Endpoint to retrieve authentication configuration',
-    description: 'Endpoint to retrieve authentication configuration',
+    summary: 'Retrieve authentication configuration',
+    description: 'Endpoint for retrieving authentication configuration',
     tags: ['auth'],
     security: 'false',
     deprecated: false,

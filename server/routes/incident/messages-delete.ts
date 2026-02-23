@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/incident/messages/delete',
-    summary: 'Delete an existing incident message',
-    description: 'Delete an existing incident message',
+    summary: 'Delete Incident Message',
+    description:
+      'Deletes a message from an incident. Useful for removing outdated or incorrect communications.',
     tags: ['incident'],
     security: '256',
     deprecated: false,

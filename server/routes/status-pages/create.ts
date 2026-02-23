@@ -8,8 +8,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/status-pages/create',
-    summary: 'Create a new status page',
-    description: 'Create a new status page',
+    summary: 'Create Status Page',
+    description:
+      'Creates a new status page. Useful for public communication of system health, incidents, or maintenance.',
     tags: ['status-pages'],
     security: '96',
     deprecated: false,

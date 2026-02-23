@@ -5,8 +5,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'get',
     path: '/api/status/',
-    summary: 'Get information about a status page',
-    description: 'Get information about a status page',
+    summary: 'Find status page',
+    description: 'Find information about a status page',
     tags: ['status'],
     security: 'false',
     deprecated: false,

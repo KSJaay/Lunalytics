@@ -6,8 +6,9 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/workspace/create',
-    summary: 'Create a new workspace',
-    description: 'Create a new workspace',
+    summary: 'Create Workspace',
+    description:
+      'Creates a new workspace. Useful for organizing projects, teams, or environments.',
     tags: ['workspace'],
     security: 'false',
     deprecated: false,

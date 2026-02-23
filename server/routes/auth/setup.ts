@@ -6,8 +6,8 @@ const initialiseRoute = (router: Router) => {
   createRoute(router, {
     method: 'post',
     path: '/api/auth/setup',
-    summary: 'Setup initial Lunalytics settings',
-    description: 'Setup initial Lunalytics settings',
+    summary: 'Setup Lunalytics',
+    description: 'Endpoint to handle initial Lunalytics setup',
     tags: ['auth'],
     security: 'false',
     deprecated: false,
