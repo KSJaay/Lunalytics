@@ -1,3 +1,7 @@
+import * as zod from 'zod';
+import { is } from 'zod/v4/locales';
+import { checkWithZod } from './zod';
+
 export interface ConfigValidatorInput {
   nativeSignin?: boolean;
   register?: boolean;
@@ -8,25 +12,21 @@ export interface ConfigValidatorOutput {
   register?: boolean;
 }
 
+const zodConfigValidator = zod.object({
+  nativeSignin: zod
+    .boolean('common.error.configNativeSigninInvalid')
+    .optional()
+    .default(false),
+  register: zod
+    .boolean('common.error.configRegisterInvalid')
+    .optional()
+    .default(false),
+});
+
 const ConfigValidator = ({
   nativeSignin,
   register,
-}: ConfigValidatorInput): ConfigValidatorOutput | string => {
-  const data: ConfigValidatorOutput = {};
-
-  if (nativeSignin !== undefined && typeof nativeSignin !== 'boolean') {
-    return 'Invalid value for nativeSignin';
-  } else {
-    data.nativeSignin = nativeSignin;
-  }
-
-  if (register !== undefined && typeof register !== 'boolean') {
-    return 'Invalid value for register';
-  } else {
-    data.register = register;
-  }
-
-  return data;
-};
+}: ConfigValidatorInput): ConfigValidatorOutput | string =>
+  checkWithZod(zodConfigValidator, { nativeSignin, register });
 
 export default ConfigValidator;

@@ -3,10 +3,10 @@
 // token: url for discord webhook
 // username: username for discord webhook (optional)
 
-import { NotificationValidatorError } from '../../utils/errors.js';
+import * as zod from 'zod';
+import { checkNotificationWithZod } from '../zod.js';
 
 const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
-const messageTypes = ['basic', 'pretty', 'nerdy'];
 const tokenRegex =
   /^https:\/\/(?:discord\.com|discordapp\.com)\/api\/webhooks\/[0-9]+\/[0-9a-zA-Z_.-]+(\?thread_id=[0-9]+)?$/;
 const usernameRegex = /^[a-zA-Z0-9_]{1,32}$/;
@@ -32,48 +32,88 @@ export interface DiscordOutput {
   };
 }
 
+// const Discord = ({
+//   messageType,
+//   friendlyName,
+//   token,
+//   data = {},
+// }: DiscordInput): DiscordOutput => {
+//   const { textMessage, username } = data;
+//   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
+//     throw new NotificationValidatorError(
+//       'friendlyName',
+//       'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
+//     );
+//   }
+
+//   if (!messageTypes.includes(messageType)) {
+//     throw new NotificationValidatorError('messageType', 'Invalid Message Type');
+//   }
+
+//   if (!tokenRegex.test(token)) {
+//     throw new NotificationValidatorError(
+//       'token',
+//       'Invalid Discord Webhook URL'
+//     );
+//   }
+
+//   if (username && !usernameRegex.test(username)) {
+//     throw new NotificationValidatorError(
+//       'username',
+//       'Invalid Discord Webhook Username'
+//     );
+//   }
+
+//   return {
+//     platform: 'Discord',
+//     messageType,
+//     token,
+//     friendlyName,
+//     data: {
+//       textMessage,
+//       username,
+//     },
+//   };
+// };
+
+const zodDiscord = zod
+  .object({
+    messageType: zod.enum(['basic', 'pretty', 'nerdy']),
+    friendlyName: zod.string().regex(friendlyNameRegex, {
+      message:
+        'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.',
+    }),
+    token: zod.string().regex(tokenRegex, {
+      message: 'Invalid Discord Webhook URL',
+    }),
+    data: zod
+      .object({
+        textMessage: zod.string().optional(),
+        username: zod
+          .string()
+          .regex(usernameRegex, {
+            message: 'Invalid Discord Webhook Username',
+          })
+          .optional(),
+      })
+      .optional(),
+  })
+  .transform((input) => ({
+    platform: 'Discord',
+    ...input,
+  }));
+
 const Discord = ({
   messageType,
   friendlyName,
   token,
   data = {},
-}: DiscordInput): DiscordOutput => {
-  const { textMessage, username } = data;
-  if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
-    throw new NotificationValidatorError(
-      'friendlyName',
-      'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
-    );
-  }
-
-  if (!messageTypes.includes(messageType)) {
-    throw new NotificationValidatorError('messageType', 'Invalid Message Type');
-  }
-
-  if (!tokenRegex.test(token)) {
-    throw new NotificationValidatorError(
-      'token',
-      'Invalid Discord Webhook URL'
-    );
-  }
-
-  if (username && !usernameRegex.test(username)) {
-    throw new NotificationValidatorError(
-      'username',
-      'Invalid Discord Webhook Username'
-    );
-  }
-
-  return {
-    platform: 'Discord',
+}: DiscordInput) =>
+  checkNotificationWithZod(zodDiscord, {
     messageType,
-    token,
     friendlyName,
-    data: {
-      textMessage,
-      username,
-    },
-  };
-};
+    token,
+    data,
+  });
 
 export default Discord;

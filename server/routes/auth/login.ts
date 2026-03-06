@@ -1,3 +1,4 @@
+import * as zod from 'zod';
 import { Router } from 'express';
 import { createRoute } from '../../utils/createRoute.js';
 import login from '../../middleware/auth/login.js';
@@ -11,7 +12,18 @@ const initialiseRoute = (router: Router) => {
     tags: ['auth'],
     security: 'false',
     deprecated: false,
-    validations: {},
+    validations: {
+      body: zod.object({
+        email: zod.string().email(),
+        password: zod.string().min(8),
+      }),
+      query: zod.object({
+        redirect: zod.string().url().optional(),
+      }),
+      headers: zod.object({
+        'user-agent': zod.string().optional(),
+      }),
+    },
     responses: [],
     middlewares: [login],
   });

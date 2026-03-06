@@ -5,7 +5,8 @@
 // showAdditionalHeaders: show additional headers for webhook
 // token: url for webhook (Needs to be a http or https url)
 
-import { NotificationValidatorError } from '../../utils/errors.js';
+import * as zod from 'zod';
+import { checkNotificationWithZod } from '../zod.js';
 
 const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];
@@ -46,53 +47,90 @@ export interface WebhookOutput {
   };
 }
 
-const Webhook = ({
-  friendlyName,
-  messageType,
-  token,
-  data = {},
-}: WebhookInput): WebhookOutput => {
-  const {
-    additionalHeaders,
-    showAdditionalHeaders = false,
-    requestType = 'application/json',
-  } = data;
-  if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
-    throw new NotificationValidatorError(
-      'friendlyName',
-      'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
-    );
-  }
+// const Webhook = ({
+//   friendlyName,
+//   messageType,
+//   token,
+//   data = {},
+// }: WebhookInput): WebhookOutput => {
+//   const {
+//     additionalHeaders,
+//     showAdditionalHeaders = false,
+//     requestType = 'application/json',
+//   } = data;
+//   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
+//     throw new NotificationValidatorError(
+//       'friendlyName',
+//       'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
+//     );
+//   }
 
-  if (showAdditionalHeaders && !isJson(additionalHeaders || '')) {
-    throw new NotificationValidatorError(
-      'additionalHeaders',
-      'Invalid Additional Headers Format'
-    );
-  }
+//   if (showAdditionalHeaders && !isJson(additionalHeaders || '')) {
+//     throw new NotificationValidatorError(
+//       'additionalHeaders',
+//       'Invalid Additional Headers Format'
+//     );
+//   }
 
-  if (!messageTypes.includes(messageType)) {
-    throw new NotificationValidatorError('messageType', 'Invalid Message Type');
-  }
+//   if (!messageTypes.includes(messageType)) {
+//     throw new NotificationValidatorError('messageType', 'Invalid Message Type');
+//   }
 
-  if (!tokenRegex.test(token)) {
-    throw new NotificationValidatorError('token', 'Invalid Webhook URL');
-  }
+//   if (!tokenRegex.test(token)) {
+//     throw new NotificationValidatorError('token', 'Invalid Webhook URL');
+//   }
 
-  if (!requestTypes.includes(requestType)) {
-    throw new NotificationValidatorError('requestType', 'Invalid Request Type');
-  }
+//   if (!requestTypes.includes(requestType)) {
+//     throw new NotificationValidatorError('requestType', 'Invalid Request Type');
+//   }
 
-  return {
+//   return {
+//     platform: 'Webhook',
+//     messageType,
+//     token,
+//     friendlyName,
+//     data: {
+//       additionalHeaders: showAdditionalHeaders ? additionalHeaders : undefined,
+//       requestType,
+//     },
+//   };
+// };
+
+const zodWebhook = zod
+  .object({
+    friendlyName: zod.string().regex(friendlyNameRegex, {
+      message: 'common.error.invalidFriendlyNameWebhook',
+    }),
+    messageType: zod.string().refine((val) => messageTypes.includes(val), {
+      message: 'common.error.invalidMessageType',
+    }),
+    token: zod.string().regex(tokenRegex, {
+      message: 'common.error.invalidWebhookUrl',
+    }),
+    data: zod.object({
+      additionalHeaders: zod.string().optional(),
+      showAdditionalHeaders: zod.boolean().optional(),
+      requestType: zod
+        .string()
+        .refine((val) => requestTypes.includes(val), {
+          message: 'common.error.invalidRequestType',
+        })
+        .optional(),
+    }),
+  })
+  .transform((values) => ({
     platform: 'Webhook',
-    messageType,
-    token,
-    friendlyName,
+    ...values,
     data: {
-      additionalHeaders: showAdditionalHeaders ? additionalHeaders : undefined,
-      requestType,
+      ...values.data,
+      additionalHeaders: values.data?.showAdditionalHeaders
+        ? values.data.additionalHeaders
+        : undefined,
+      requestType: values.data?.requestType || 'application/json',
     },
-  };
-};
+  }));
+
+const Webhook = (input: WebhookInput): WebhookOutput =>
+  checkNotificationWithZod(input, zodWebhook);
 
 export default Webhook;

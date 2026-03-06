@@ -15,6 +15,7 @@ import handleRegister from '../handlers/register';
 import LoginLayout from '../components/login/layout';
 import { createPostRequest } from '../services/axios';
 import RegisterChecklist from '../components/register/checklist';
+import validators from '../../shared/validators';
 
 interface EditEmailProps extends React.HTMLAttributes<HTMLDivElement> {
   email: string;
@@ -61,6 +62,12 @@ const Login = () => {
 
     try {
       if (page === 'email') {
+        const isInvalid = validators.auth.email(inputs.email);
+
+        if (isInvalid) {
+          return setErrors({ email: isInvalid });
+        }
+
         const userExists = await createPostRequest('/api/auth/user/exists', {
           email: inputs.email,
         }).catch((error) => ({ status: error?.response?.status || 500 }));

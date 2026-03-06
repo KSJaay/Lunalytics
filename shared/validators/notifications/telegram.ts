@@ -5,7 +5,8 @@
 // protectContent: protect content for telegram webhook (boolean)
 // token: url for telegram webhook
 
-import { NotificationValidatorError } from '../../utils/errors.js';
+import * as zod from 'zod';
+import { checkNotificationWithZod } from '../zod.js';
 
 const chatIdRegex = /^-?[0-9]+$/;
 const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
@@ -34,63 +35,96 @@ export interface TelegramOutput {
   data: TelegramData;
 }
 
-const Telegram = ({
-  friendlyName,
-  messageType,
-  token,
-  data = {},
-}: TelegramInput): TelegramOutput => {
-  const {
-    chatId,
-    disableNotification = false,
-    protectContent = false,
-    username,
-  } = data;
-  if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
-    throw new NotificationValidatorError(
-      'friendlyName',
-      'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
-    );
-  }
+// const Telegram = ({
+//   friendlyName,
+//   messageType,
+//   token,
+//   data = {},
+// }: TelegramInput): TelegramOutput => {
+//   const {
+//     chatId,
+//     disableNotification = false,
+//     protectContent = false,
+//     username,
+//   } = data;
+//   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
+//     throw new NotificationValidatorError(
+//       'friendlyName',
+//       'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
+//     );
+//   }
 
-  if (chatId && !chatIdRegex.test(chatId)) {
-    throw new NotificationValidatorError('chatId', 'Invalid Chat ID');
-  }
+//   if (chatId && !chatIdRegex.test(chatId)) {
+//     throw new NotificationValidatorError('chatId', 'Invalid Chat ID');
+//   }
 
-  if (typeof disableNotification !== 'boolean') {
-    throw new NotificationValidatorError(
-      'disableNotification',
-      'Invalid Disable Notification'
-    );
-  }
+//   if (typeof disableNotification !== 'boolean') {
+//     throw new NotificationValidatorError(
+//       'disableNotification',
+//       'Invalid Disable Notification'
+//     );
+//   }
 
-  if (!messageTypes.includes(messageType)) {
-    throw new NotificationValidatorError('messageType', 'Invalid Message Type');
-  }
+//   if (!messageTypes.includes(messageType)) {
+//     throw new NotificationValidatorError('messageType', 'Invalid Message Type');
+//   }
 
-  if (typeof protectContent !== 'boolean') {
-    throw new NotificationValidatorError(
-      'protectContent',
-      'Invalid Protect Content'
-    );
-  }
+//   if (typeof protectContent !== 'boolean') {
+//     throw new NotificationValidatorError(
+//       'protectContent',
+//       'Invalid Protect Content'
+//     );
+//   }
 
-  if (!tokenRegex.test(token)) {
-    throw new NotificationValidatorError('token', 'Invalid Telegram Bot Token');
-  }
+//   if (!tokenRegex.test(token)) {
+//     throw new NotificationValidatorError('token', 'Invalid Telegram Bot Token');
+//   }
 
-  return {
+//   return {
+//     platform: 'Telegram',
+//     messageType,
+//     token,
+//     friendlyName,
+//     data: {
+//       chatId,
+//       disableNotification,
+//       protectContent,
+//       username,
+//     },
+//   };
+// };
+
+const zodTelegram = zod
+  .object({
+    friendlyName: zod.string().regex(friendlyNameRegex, {
+      message: 'common.error.invalidFriendlyNameTelegram',
+    }),
+    messageType: zod.string().refine((val) => messageTypes.includes(val), {
+      message: 'common.error.invalidMessageType',
+    }),
+    token: zod.string().regex(tokenRegex, {
+      message: 'common.error.invalidTelegramBotToken',
+    }),
+    data: zod
+      .object({
+        chatId: zod
+          .string()
+          .regex(chatIdRegex, {
+            message: 'common.error.invalidChatId',
+          })
+          .optional(),
+        disableNotification: zod.boolean().optional(),
+        protectContent: zod.boolean().optional(),
+        username: zod.string().optional(),
+      })
+      .optional(),
+  })
+  .transform((val) => ({
     platform: 'Telegram',
-    messageType,
-    token,
-    friendlyName,
-    data: {
-      chatId,
-      disableNotification,
-      protectContent,
-      username,
-    },
-  };
-};
+    ...val,
+  }));
+
+const Telegram = (input: TelegramInput): TelegramOutput =>
+  checkNotificationWithZod(input, zodTelegram);
 
 export default Telegram;

@@ -5,7 +5,8 @@
 // token: url for discord webhook
 // username: username for discord webhook (optional)
 
-import { NotificationValidatorError } from '../../utils/errors.js';
+import * as zod from 'zod';
+import { checkNotificationWithZod } from '../zod.js';
 
 const channelRegex = /^[a-z0-9][a-z0-9_-]{0,79}$/;
 const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
@@ -35,50 +36,81 @@ export interface SlackOutput {
   data: SlackData;
 }
 
-const Slack = ({
-  friendlyName,
-  messageType,
-  token,
-  data = {},
-}: SlackInput): SlackOutput => {
-  const { channel, username, textMessage } = data;
-  if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
-    throw new NotificationValidatorError(
-      'friendlyName',
-      'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
-    );
-  }
+// const Slack = ({
+//   friendlyName,
+//   messageType,
+//   token,
+//   data = {},
+// }: SlackInput): SlackOutput => {
+//   const { channel, username, textMessage } = data;
+//   if (friendlyNameRegex && !friendlyNameRegex.test(friendlyName)) {
+//     throw new NotificationValidatorError(
+//       'friendlyName',
+//       'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.'
+//     );
+//   }
 
-  if (channel && !channelRegex.test(channel)) {
-    throw new NotificationValidatorError('channel', 'Invalid Channel Name');
-  }
+//   if (channel && !channelRegex.test(channel)) {
+//     throw new NotificationValidatorError('channel', 'Invalid Channel Name');
+//   }
 
-  if (!messageTypes.includes(messageType)) {
-    throw new NotificationValidatorError('messageType', 'Invalid Message Type');
-  }
+//   if (!messageTypes.includes(messageType)) {
+//     throw new NotificationValidatorError('messageType', 'Invalid Message Type');
+//   }
 
-  if (!tokenRegex.test(token)) {
-    throw new NotificationValidatorError('token', 'Invalid Slack Webhook URL');
-  }
+//   if (!tokenRegex.test(token)) {
+//     throw new NotificationValidatorError('token', 'Invalid Slack Webhook URL');
+//   }
 
-  if (username && !usernameRegex.test(username)) {
-    throw new NotificationValidatorError(
-      'username',
-      'Invalid Slack Webhook Username'
-    );
-  }
+//   if (username && !usernameRegex.test(username)) {
+//     throw new NotificationValidatorError(
+//       'username',
+//       'Invalid Slack Webhook Username'
+//     );
+//   }
 
-  return {
+//   return {
+//     platform: 'Slack',
+//     messageType,
+//     token,
+//     friendlyName,
+//     data: {
+//       channel,
+//       textMessage,
+//       username,
+//     },
+//   };
+// };
+
+const zodSlack = zod
+  .object({
+    friendlyName: zod.string().regex(friendlyNameRegex, {
+      message: 'common.error.invalidFriendlyNameSlack',
+    }),
+    messageType: zod.string().refine((val) => messageTypes.includes(val), {
+      message: 'common.error.invalidMessageType',
+    }),
+    token: zod.string().regex(tokenRegex, {
+      message: 'common.error.invalidSlackWebhookUrl',
+    }),
+    data: zod
+      .object({
+        channel: zod.string().regex(channelRegex, {
+          message: 'common.error.invalidChannelName',
+        }),
+        username: zod.string().regex(usernameRegex, {
+          message: 'common.error.invalidSlackWebhookUsername',
+        }),
+        textMessage: zod.string().optional(),
+      })
+      .optional(),
+  })
+  .transform((val) => ({
     platform: 'Slack',
-    messageType,
-    token,
-    friendlyName,
-    data: {
-      channel,
-      textMessage,
-      username,
-    },
-  };
-};
+    ...val,
+  }));
+
+const Slack = (input: SlackInput): SlackOutput =>
+  checkNotificationWithZod(input, zodSlack);
 
 export default Slack;

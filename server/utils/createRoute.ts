@@ -1,13 +1,13 @@
 import fs from 'fs';
-import path from 'path';
-import { ZodType } from 'zod';
+import * as zod from 'zod';
+import * as pathModule from 'path';
+import { createDocument } from 'zod-openapi';
 import { Router, Request, Response, NextFunction } from 'express';
 import logger from './logger.js';
 
-const openAPIJsonPath = path.join(process.cwd(), 'openapi.json');
+const openAPIJsonPath = pathModule.join(process.cwd(), 'openapi.json');
 
-type ZodSchema<T = any> = ZodType<T>;
-
+type ZodSchema<T = any> = zod.ZodType<T>;
 type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 interface RouteConfig<
@@ -23,24 +23,19 @@ interface RouteConfig<
   tags?: string[];
   security?: string;
   deprecated?: boolean;
-
   validations?: {
     params?: TParams;
     query?: TQuery;
     body?: TBody;
     headers?: ZodSchema;
   };
-
-  responses: Array<{
-    status: number;
-    description: string;
-    content: {
-      'application/json': {
-        schema: TResponse;
-      };
-    };
-  }>;
-
+  responses: Record<
+    number,
+    {
+      description: string;
+      content?: { 'application/json': { schema: TResponse } };
+    }
+  >;
   middlewares?: Array<
     (
       req: Request<
@@ -68,7 +63,7 @@ export function createRoute<
     summary,
     description,
     tags,
-    security,
+    // security,
     deprecated,
     validations,
     responses,
@@ -103,25 +98,48 @@ export function createRoute<
       path,
     });
 
-    const openApiDoc = JSON.parse(fs.readFileSync(openAPIJsonPath, 'utf-8'));
     const camelCaseTags = tags?.map(
-      (tag) => tag.charAt(0).toUpperCase() + tag.slice(1)
+      (t) => t.charAt(0).toUpperCase() + t.slice(1)
     );
 
-    openApiDoc.paths[openApiPath] = openApiDoc.paths[openApiPath] || {};
-    openApiDoc.paths[openApiPath][method] = {
-      method,
-      path: openApiPath,
-      summary,
-      description,
-      tags: camelCaseTags,
-      deprecated,
-      security: security ? [{ permission: security }] : undefined,
-      validations,
-      responses,
+    const existingDoc = JSON.parse(fs.readFileSync(openAPIJsonPath, 'utf-8'));
+
+    const singleRouteRawDoc: any = {
+      openapi: '3.1.0',
+      info: {
+        title: existingDoc.info.title,
+        version: existingDoc.info.version,
+      },
+      paths: {
+        [openApiPath]: {
+          [method]: {
+            summary,
+            description,
+            tags: camelCaseTags,
+            deprecated,
+            parameters: validations?.params,
+            ...(validations?.body
+              ? {
+                  requestBody: {
+                    content: {
+                      'application/json': { schema: validations?.body },
+                    },
+                  },
+                }
+              : {}),
+            query: validations?.query,
+            header: validations?.headers,
+            responses,
+          },
+        },
+      },
     };
 
-    fs.writeFileSync(openAPIJsonPath, JSON.stringify(openApiDoc, null, 2));
+    const singleRouteDoc = createDocument(singleRouteRawDoc);
+
+    existingDoc.paths = { ...existingDoc.paths, ...singleRouteDoc.paths };
+
+    fs.writeFileSync(openAPIJsonPath, JSON.stringify(existingDoc, null, 2));
   }
 
   const validationMiddleware =
