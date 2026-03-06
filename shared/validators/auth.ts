@@ -1,3 +1,6 @@
+import * as zod from 'zod';
+import { checkWithZod } from './zod';
+
 // regex to check user has only letters, numbers, underscore, dash, spaces and should be 3-24 characters long
 const usernameRegex = /^[a-zA-Z0-9_\- ]{3,32}$/;
 // regex to check if email is valid
@@ -5,44 +8,53 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,254}$/;
 // regex to check if one letter, one number or special character, atleast 8 characters long and max of 48 characters long
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9!@#$%^&*~_\-+=]).{8,48}$/;
 
-const email = (email = '') => {
-  if (email.length < 3 || email.length > 254) {
-    return { email: 'Email must be between 3 and 254 characters.' };
-  }
+// const email = zod
+//   .string()
+//   .min(3, 'Email must be at least 3 characters long.')
+//   .max(254, 'Email must be at most 254 characters long.')
+//   .regex(emailRegex, 'Email is not valid.');
 
-  if (!emailRegex.test(email)) {
-    return { email: 'Email is not valid' };
-  }
+// const username = zod
+//   .string()
+//   .min(3, 'Username must be at least 3 characters long.')
+//   .max(32, 'Username must be at most 32 characters long.')
+//   .regex(
+//     usernameRegex,
+//     'Username can only contain letters, numbers, underscores, dashes and spaces.'
+//   );
 
-  return false;
-};
+// const password = zod
+//   .string()
+//   .min(8, 'Password must be at least 8 characters long.')
+//   .max(48, 'Password must be at most 48 characters long.')
+//   .regex(
+//     passwordRegex,
+//     'Password must contain at least one letter and one number or special character.'
+//   );
 
-const username = (username = '') => {
-  if (username.length < 3 || username.length > 32) {
-    return { username: 'Username must be between 3 and 32 characters.' };
-  }
+const zodEmail = zod
+  .string()
+  .min(3, 'common.error.emailTooShort')
+  .max(254, 'common.error.emailTooLong')
+  .regex(emailRegex, 'common.error.emailInvalid');
 
-  if (!usernameRegex.test(username)) {
-    return {
-      username:
-        'Username can only contain letters, numbers, underscores, and dashes.',
-    };
-  }
+const email = (email?: string) => checkWithZod(zodEmail, email);
 
-  return false;
-};
+const zodUsername = zod
+  .string()
+  .min(3, 'common.error.usernameTooShort')
+  .max(32, 'common.error.usernameTooLong')
+  .regex(usernameRegex, 'common.error.usernameInvalid');
 
-const password = (password = '') => {
-  if (password.length < 8 || password.length > 48) {
-    return { password: 'Password must be between 8 and 48 characters.' };
-  }
+const username = (username?: string) => checkWithZod(zodUsername, username);
 
-  if (!passwordRegex.test(password)) {
-    return { password: 'Password is not valid' };
-  }
+const zodPassword = zod
+  .string()
+  .min(8, 'common.error.passwordTooShort')
+  .max(48, 'common.error.passwordTooLong')
+  .regex(passwordRegex, 'common.error.passwordInvalid');
 
-  return false;
-};
+const password = (password?: string) => checkWithZod(zodPassword, password);
 
 const auth = { email, username, password };
 
