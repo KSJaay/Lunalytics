@@ -64,7 +64,7 @@ const Login = () => {
       if (page === 'email') {
         const isInvalid = validators.auth.email(inputs.email);
 
-        if (isInvalid) {
+        if (isInvalid && isInvalid.isValidationError) {
           return setErrors({ email: isInvalid });
         }
 

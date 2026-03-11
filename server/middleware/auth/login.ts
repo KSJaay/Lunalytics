@@ -19,7 +19,7 @@ const login = async (request: Request, response: Response) => {
     const isInvalidAuth =
       validators.auth.email(email) || validators.auth.password(password);
 
-    if (isInvalidAuth) {
+    if (isInvalidAuth && isInvalidAuth.isValidationError) {
       throw new UnprocessableError(isInvalidAuth);
     }
 

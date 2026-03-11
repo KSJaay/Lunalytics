@@ -5,6 +5,7 @@ import type { MonitorProps } from '../../shared/types/monitor';
 import type { IncidentProps } from '../../shared/types/incident';
 
 // import dependencies
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -87,7 +88,13 @@ const StatusPage = ({ id }: { id?: string }) => {
         });
 
         setStatusPage(statusPages?.data);
-      } catch (error) {
+      } catch (error: any) {
+        if (error?.response?.status === 404) {
+          toast.error('Status page not found!');
+          navigate('/404');
+          return;
+        }
+
         console.log(error);
         navigate('/error');
       }
