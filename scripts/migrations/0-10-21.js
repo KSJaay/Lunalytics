@@ -36,7 +36,11 @@ const migrate = async () => {
   ];
 
   for (const indexName of redundantIndexes) {
-    await client.raw(`DROP INDEX IF EXISTS ${indexName};`);
+    await client.raw(`DROP INDEX IF EXISTS ${indexName};`).catch((err) => {
+      logger.error('Migrations', {
+        message: `Error dropping index ${indexName}: ${err.message}`,
+      });
+    });
   }
 
   logger.info('Migrations', { message: '0.10.21 has been applied' });
