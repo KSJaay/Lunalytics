@@ -1,5 +1,5 @@
 import * as zod from 'zod';
-import { checkWithZod } from './zod';
+import { checkWithZod } from './zod.js';
 
 // regex to check user has only letters, numbers, underscore, dash, spaces and should be 3-24 characters long
 const usernameRegex = /^[a-zA-Z0-9_\- ]{3,32}$/;

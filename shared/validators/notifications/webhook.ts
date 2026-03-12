@@ -14,14 +14,14 @@ const requestTypes = ['application/json', 'form-data'];
 const tokenRegex =
   /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})+$/;
 
-const isJson = (value: string) => {
-  try {
-    JSON.parse(value);
-  } catch (e) {
-    return false;
-  }
-  return true;
-};
+// const isJson = (value: string) => {
+//   try {
+//     JSON.parse(value);
+//   } catch (e) {
+//     return false;
+//   }
+//   return true;
+// };
 
 export interface WebhookData {
   additionalHeaders?: string;
@@ -108,7 +108,7 @@ const zodWebhook = zod
       message: 'common.error.invalidWebhookUrl',
     }),
     data: zod.object({
-      additionalHeaders: zod.string().optional(),
+      additionalHeaders: zod.json().optional(),
       showAdditionalHeaders: zod.boolean().optional(),
       requestType: zod
         .string()
@@ -131,6 +131,6 @@ const zodWebhook = zod
   }));
 
 const Webhook = (input: WebhookInput): WebhookOutput =>
-  checkNotificationWithZod(input, zodWebhook);
+  checkNotificationWithZod(zodWebhook, input);
 
 export default Webhook;

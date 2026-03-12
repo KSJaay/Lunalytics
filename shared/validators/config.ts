@@ -1,6 +1,5 @@
 import * as zod from 'zod';
-import { is } from 'zod/v4/locales';
-import { checkWithZod } from './zod';
+import { checkWithZod } from './zod.js';
 
 export interface ConfigValidatorInput {
   nativeSignin?: boolean;
