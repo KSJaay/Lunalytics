@@ -1,4 +1,4 @@
-import { NotificationValidatorError } from '../utils/errors';
+import { NotificationValidatorError } from '../utils/errors.js';
 
 export const checkWithZod = (schema: any, value: unknown) => {
   try {

@@ -1,6 +1,6 @@
 import * as zod from 'zod';
-import { NotificationValidatorError } from '../../utils/errors.js';
-import { checkNotificationWithZod, checkWithZod } from '../zod.js';
+// import { NotificationValidatorError } from '../../utils/errors.js';
+import { checkNotificationWithZod } from '../zod.js';
 
 const friendlyNameRegex = /^[a-zA-Z0-9_-]+$/;
 const messageTypes = ['basic', 'pretty', 'nerdy'];

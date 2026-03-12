@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "concurrently \"npm run watch\" \"npm run server:watch\"",
     "watch": "vite --port 3000",
-    "build": "npm run build:server && npm run build:app",
+    "build": "npm run build:app && npm run build:server",
     "build:server": "tsc -p tsconfig.server.json",
     "build:app": "vite build",
     "build:emails": "node ./scripts/transpile-emails.cjs",
@@ -34,7 +34,7 @@
     "test:server": "npm run test:db && cross-env NODE_ENV=test tsx server/index.ts",
     "test:ui": "vitest run --coverage --watch --ui",
     "migrate": "tsx ./scripts/migrate_manual.ts",
-    "prepare": "husky",
+    "dev:prepare": "husky",
     "preview": "vite preview",
     "reset:password": "tsx ./scripts/reset.ts",
     "server:watch": "tsx watch server/index.ts --watch server --watch shared",
