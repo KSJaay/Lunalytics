@@ -1,7 +1,7 @@
 const layoutCheck = (layout) => {
   return (
     (layout.type === 'metrics' && layout.autoAdd) ||
-    (layout.type === 'uptime' && layout.graphType !== 'Basic' && layout.autoAdd)
+    (layout.type === 'uptime' && layout.autoAdd)
   );
 };
 
