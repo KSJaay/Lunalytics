@@ -43,13 +43,17 @@ export const isMonitorDown = async (monitorId, limit = 1) => {
   const limitHeartbeats = heartbeats.slice(0, newLimit);
   const allDown = limitHeartbeats.every((heartbeat) => heartbeat.isDown);
 
-  if (oldestHeartbeat.isDown && allDown) {
+  if (!oldestHeartbeat) {
+    return false;
+  }
+
+  if (oldestHeartbeat?.isDown && allDown) {
     return false;
   }
 
   if (
     limitHeartbeats.every((heartbeat) => heartbeat.isDown) &&
-    !oldestHeartbeat.isDown
+    !oldestHeartbeat?.isDown
   ) {
     return limitHeartbeats[0];
   }

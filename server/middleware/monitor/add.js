@@ -7,6 +7,7 @@ import { cleanMonitor } from '../../class/monitor/index.js';
 import { createMonitor } from '../../database/queries/monitor.js';
 import { fetchHeartbeats } from '../../database/queries/heartbeat.js';
 import { fetchCertificate } from '../../database/queries/certificate.js';
+import statusCache from '../../cache/status.js';
 
 const stringifyJson = (obj, asArray = false) => {
   try {
@@ -145,6 +146,8 @@ const monitorAdd = async (request, response) => {
       heartbeats,
       cert,
     });
+
+    await statusCache.loadMonitorData(monitor.monitorId).catch(() => false);
 
     return response.json(monitor);
   } catch (error) {
