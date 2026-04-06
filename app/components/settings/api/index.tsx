@@ -33,7 +33,7 @@ const ManageApiTokens = () => {
       className="settings-account-container"
       id="manage"
     >
-      <div className="sat-header">
+      {/* <div className="sat-header">
         <div style={{ flex: 1 }}>
           <div className="settings-subtitle" style={{ margin: '0px' }}>
             API Tokens
@@ -53,6 +53,18 @@ const ManageApiTokens = () => {
             Create Token
           </Button>
         </div>
+      </div> */}
+
+      <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '15px' }}>
+        <Button
+          variant="flat"
+          color="primary"
+          onClick={() =>
+            openModal(<SettingsApiCreateModal closeModal={closeModal} />)
+          }
+        >
+          Create Token
+        </Button>
       </div>
 
       {!allTokens?.length ? (

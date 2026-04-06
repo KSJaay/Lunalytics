@@ -44,7 +44,7 @@ const ManageTeam = () => {
       className="settings-account-container"
       id="manage"
     >
-      <div className="sat-header">
+      {/* <div className="sat-header">
         <div style={{ flex: 1 }}>
           <div className="settings-subtitle" style={{ margin: '0px' }}>
             Manage Team
@@ -66,7 +66,28 @@ const ManageTeam = () => {
             </Button>
           </div>
         ) : null}
-      </div>
+      </div> */}
+
+      {hasPermission(MemberPermissionBits.CREATE_INVITE) ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingBottom: '15px',
+          }}
+        >
+          <Button
+            variant="flat"
+            color="primary"
+            onClick={() =>
+              openModal(<CreateInviteModal closeModal={closeModal} />)
+            }
+          >
+            Invite Member
+          </Button>
+        </div>
+      ) : null}
 
       <MembersTable members={sortedMembers} />
     </div>

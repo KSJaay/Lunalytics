@@ -33,7 +33,7 @@ const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
 
   const handleCreate = async () => {
     try {
-      const response = await createPostRequest('/api/invite/create', {
+      const response = await createPostRequest('/api/invites/create', {
         expiry: expiryId,
         limit: maxUses,
         permission: perms,

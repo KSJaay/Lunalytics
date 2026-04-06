@@ -26,16 +26,16 @@ const ManageInvites = () => {
   const currentUrl = useCurrentUrl();
 
   useFetch({
-    url: '/api/invite/all',
+    url: '/api/invites/all',
     onSuccess: (data) => {
       setInvites(data?.invites || []);
     },
-    onFailure: () => toast.error("Couldn't fetch api tokens"),
+    onFailure: () => toast.error("Couldn't fetch invites"),
   });
 
   const handleDelete = async (id: string) => {
     try {
-      await createPostRequest('/api/invite/delete', { id });
+      await createPostRequest('/api/invites/delete', { id });
       removeInvite(id);
       toast.success('Invite deleted successfully');
     } catch (error) {
@@ -46,7 +46,7 @@ const ManageInvites = () => {
 
   const handlePause = async (id: string, paused: boolean) => {
     try {
-      await createPostRequest('/api/invite/pause', { id, paused: !paused });
+      await createPostRequest('/api/invites/pause', { id, paused: !paused });
       pauseInvite(id, !paused);
       toast.success('Invite paused successfully');
     } catch (error) {
@@ -61,7 +61,7 @@ const ManageInvites = () => {
       className="settings-account-container"
       id="invite"
     >
-      <div className="sat-header">
+      {/* <div className="sat-header">
         <div style={{ flex: 1 }}>
           <div className="settings-subtitle" style={{ margin: '0px' }}>
             Invites
@@ -81,6 +81,24 @@ const ManageInvites = () => {
             Create Invite
           </Button>
         </div>
+      </div> */}
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          paddingBottom: '15px',
+        }}
+      >
+        <Button
+          variant="flat"
+          color="primary"
+          onClick={() =>
+            openModal(<CreateInviteModal closeModal={closeModal} />)
+          }
+        >
+          Create Invite
+        </Button>
       </div>
 
       {!allInvites?.length ? (

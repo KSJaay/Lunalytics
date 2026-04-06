@@ -75,7 +75,7 @@ const SettingsAuthentication = () => {
       className="settings-account-container"
       id="manage"
     >
-      <div className="sat-header">
+      {/* <div className="sat-header">
         <div style={{ flex: 1 }}>
           <div className="settings-subtitle" style={{ margin: '0px' }}>
             Authentication
@@ -84,7 +84,7 @@ const SettingsAuthentication = () => {
             Configure authentication options for Lunalytics.
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="settings-auth-switches">
         <SwitchWithText

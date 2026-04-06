@@ -33,7 +33,6 @@ const SettingsPersonalisationAppearance = ({
 
   return (
     <>
-      <div className="settings-subtitle">Appearance</div>
       <div className="settings-appearance-container">
         <div>
           <div style={{ display: 'flex', gap: '10px' }}>
