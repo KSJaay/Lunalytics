@@ -1,3 +1,4 @@
+import * as zod from 'zod';
 import { Router } from 'express';
 import { createRoute } from '../../utils/createRoute.js';
 import slackCallback from '../../middleware/auth/callback/slack.js';
@@ -12,7 +13,12 @@ const initialiseRoute = (router: Router) => {
     tags: ['auth'],
     security: 'false',
     deprecated: false,
-    validations: {},
+    validations: {
+      query: zod.object({
+        code: zod.string(),
+        invite: zod.string().optional(),
+      }),
+    },
     responses: [],
     middlewares: [slackCallback, signInOrRegisterUsingAuth],
   });

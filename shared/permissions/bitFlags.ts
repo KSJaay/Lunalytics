@@ -16,6 +16,7 @@ export const UserPermissionBits = {
   ADMINISTRATOR: 1 << 0,
   MANAGE_TEAM: 1 << 1,
   MANAGE_WORKSPACES: 1 << 2,
+  MANAGE_INVITES: 1 << 3,
 };
 
 export const MemberPermissionBits = {

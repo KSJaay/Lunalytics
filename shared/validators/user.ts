@@ -45,6 +45,10 @@ const isAvatarValidator = zod.union([
       new URL(url);
       return true;
     } catch {
+      if (url === null) {
+        return true;
+      }
+
       return false;
     }
   }, 'common.error.invalidAvatarUrl'),

@@ -14,11 +14,11 @@ const initialiseRoute = (router: Router) => {
     deprecated: false,
     validations: {
       body: zod.object({
-        email: zod.string().email(),
+        email: zod.email(),
         password: zod.string().min(8),
       }),
       query: zod.object({
-        redirect: zod.string().url().optional(),
+        redirect: zod.url().optional(),
       }),
       headers: zod.object({
         'user-agent': zod.string().optional(),
