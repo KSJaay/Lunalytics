@@ -18,7 +18,7 @@ const userUpdateAvatar = async (request: Request, response: Response) => {
 
     const isInvalidAvatar = validators.user.isAvatar(avatar);
 
-    if (isInvalidAvatar) {
+    if (!isInvalidAvatar) {
       return response.status(400).send(isInvalidAvatar);
     }
 

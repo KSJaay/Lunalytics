@@ -1,3 +1,4 @@
+import * as zod from 'zod';
 import { Router } from 'express';
 import { createRoute } from '../../utils/createRoute.js';
 import getConfigMiddleware from '../../middleware/auth/config/getConfig.js';

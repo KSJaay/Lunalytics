@@ -1,3 +1,4 @@
+import * as zod from 'zod';
 import { Router } from 'express';
 import { createRoute } from '../../utils/createRoute.js';
 import logout from '../../middleware/auth/logout.js';

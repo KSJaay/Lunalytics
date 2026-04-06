@@ -1,3 +1,4 @@
+import * as zod from 'zod';
 import { Router } from 'express';
 import { createRoute } from '../../utils/createRoute.js';
 import authorization from '../../middleware/authorization.js';
@@ -14,7 +15,11 @@ const initialiseRoute = (router: Router) => {
     tags: ['auth'],
     security: '1',
     deprecated: false,
-    validations: {},
+    validations: {
+      headers: zod.object({
+        Authorization: zod.string(),
+      }),
+    },
     responses: [],
     middlewares: [
       authorization,
