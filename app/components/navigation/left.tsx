@@ -66,7 +66,7 @@ const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
     userStore: {
       user: { avatar, displayName },
     },
-    modalStore: { closeModal, openModal },
+    modalStore: { closeModal, openModal, openSettings },
   } = useContextStore();
 
   const { member } = useMemberContext();
@@ -131,7 +131,7 @@ const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
               text: 'Admin Panel',
               type: 'item',
               onClick: () => {
-                openModal(<LeftNavigationSettings />);
+                openSettings(<LeftNavigationSettings />);
               },
             },
             {

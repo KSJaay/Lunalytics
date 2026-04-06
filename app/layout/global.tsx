@@ -15,7 +15,7 @@ import useConfigContext from '../context/config';
 
 const GlobalLayout = () => {
   const {
-    modalStore: { isOpen, content },
+    modalStore: { isOpen, content, isSettingsOpen, settings },
     userStore: { setUser },
   } = useContextStore();
 
@@ -83,6 +83,7 @@ const GlobalLayout = () => {
   return (
     <LocalStorageStateProvider value={localStorageState}>
       {isOpen ? content : null}
+      {isSettingsOpen ? settings : null}
       <Outlet />
     </LocalStorageStateProvider>
   );
