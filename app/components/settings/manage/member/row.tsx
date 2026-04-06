@@ -36,11 +36,7 @@ const MemberTableRow = ({
     user.email !== member.email &&
     role.hasPermission(MemberPermissionBits.MANAGE_TEAM);
 
-  const memberPermission = !member.isVerified
-    ? 'Unverified'
-    : member.isOwner
-      ? 'Owner'
-      : 'Member';
+  const memberPermission = 'Member';
 
   const date = dayjs(member.created_at).format('MMM DD, YYYY');
   const time = dayjs(member.created_at).format('hh:mm A');
@@ -53,7 +49,7 @@ const MemberTableRow = ({
     <img src={avatarUrl} className="member-row-image" />
   ) : (
     <div className="member-row-image-default">
-      {member.displayName?.charAt(0)}
+      {member.email?.charAt(0).toUpperCase() || 'U'}
     </div>
   );
 

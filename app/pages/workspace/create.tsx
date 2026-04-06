@@ -66,9 +66,20 @@ const WorkspaceCreatePage = () => {
           Join Workspace
         </div>
 
-        <Button variant="flat" fullWidth onClick={handleSubmit}>
-          Create Workspace
-        </Button>
+        <div style={{ display: 'flex', gap: '12px', flexDirection: 'column' }}>
+          <Button
+            variant="flat"
+            color="gray"
+            fullWidth
+            onClick={() => navigate('/workspace/select')}
+          >
+            My workspaces
+          </Button>
+
+          <Button variant="flat" fullWidth onClick={handleSubmit}>
+            Create Workspace
+          </Button>
+        </div>
       </div>
     </div>
   );

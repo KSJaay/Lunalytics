@@ -11,7 +11,7 @@ import SettingsTab, { type SettingsTabNames } from '../tab/desktop';
 import SettingsAccount from '../../account';
 import SettingsPersonalisation from '../../personalisation';
 import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
-import SettingsAuthentication from '../../authentication';
+import SettingsAuthentication from '../../../settings/authentication';
 import useMemberContext from '../../../../context/member';
 
 const SettingsDesktop = ({

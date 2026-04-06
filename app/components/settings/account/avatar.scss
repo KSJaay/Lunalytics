@@ -12,8 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: pxToRem(150);
-  height: pxToRem(150);
+  width: pxToRem(100);
+  height: pxToRem(100);
   border-radius: var(--radius-pill);
   border: 3px solid var(--gray-600);
   background-color: var(--primary-700);
@@ -23,8 +23,8 @@
 
 .settings-account-avatar-image {
   display: flex;
-  width: pxToRem(150);
-  height: pxToRem(150);
+  width: pxToRem(100);
+  height: pxToRem(100);
   border-radius: var(--radius-pill);
   border: 3px solid var(--gray-600);
 }

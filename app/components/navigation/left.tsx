@@ -5,20 +5,21 @@ import './left.scss';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Dropdown, Tooltip } from '@lunalytics/ui';
+import { useTranslation } from 'react-i18next';
 import { BsFillShieldLockFill } from 'react-icons/bs';
+import { Avatar, Dropdown, Tooltip } from '@lunalytics/ui';
 
 // import local files
 import useContextStore from '../../context';
+import LeftUpdateButton from './left/update';
 import MonitorPreview from '../home/preview';
 import IncidentPreview from '../incident/preview';
 import StatusPagePreview from '../status/preview';
+import useMemberContext from '../../context/member';
+import LeftNavigationSettings from './left/settings';
 import NotificationPreview from '../notifications/preview';
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
 import { MemberPermissionBits } from '../../../shared/permissions/bitFlags';
-import { useTranslation } from 'react-i18next';
-import LeftUpdateButton from './left/update';
-import useMemberContext from '../../context/member';
 
 const actionTabs = [
   {
@@ -125,6 +126,14 @@ const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
         </div>
         <Dropdown
           items={[
+            {
+              id: 'admin',
+              text: 'Admin Panel',
+              type: 'item',
+              onClick: () => {
+                openModal(<LeftNavigationSettings />);
+              },
+            },
             {
               id: 'logout',
               text: 'Logout',

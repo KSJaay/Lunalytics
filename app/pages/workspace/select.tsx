@@ -31,7 +31,6 @@ const WorkspaceSelectPage = () => {
   }
 
   const handleOnclick = (workspaceId: string) => {
-    console.log('Selected workspace ID:', workspaceId);
     setClientCookie(WORKSPACE_ID_COOKIE, workspaceId);
     navigate('/home');
   };
@@ -57,13 +56,7 @@ const WorkspaceSelectPage = () => {
                 padding: '0 10px',
               }}
             >
-              {[
-                ...data,
-                { id: '1', name: 'Bahpu', icon: '/icons/Ape.png' },
-                { id: '2', name: 'KhanRyan', icon: '/icons/Bear.png' },
-                { id: '3', name: 'Overwatch', icon: '/icons/Cat.png' },
-                { id: '4', name: 'Potatoes', icon: '/icons/Dog.png' },
-              ].map((workspace: any) => (
+              {data.map((workspace: any) => (
                 <li
                   key={workspace.id}
                   style={{
@@ -78,7 +71,7 @@ const WorkspaceSelectPage = () => {
                   onClick={() => handleOnclick(workspace.id)}
                 >
                   <img
-                    src={workspace.icon}
+                    src={workspace.icon || '/logo.svg'}
                     alt={`${workspace.name} avatar`}
                     style={{
                       width: '40px',
@@ -117,6 +110,7 @@ const WorkspaceSelectPage = () => {
               height: '65px',
               color: 'var(--font-light-color)',
             }}
+            onClick={() => navigate('/workspace/create')}
           >
             <div
               style={{
