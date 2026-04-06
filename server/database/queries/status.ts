@@ -177,10 +177,10 @@ export const fetchMonitorsUsingIdArray = async (
     .select();
 };
 
-export const fetchAllMonitors = async (workspaceId?: string) => {
+export const fetchAllMonitors = async () => {
   const client = await database.connect();
 
-  return client?.('monitor').where({ workspaceId }).select();
+  return client?.('monitor').select();
 };
 
 export const fetchIncidentsUsingIdArray = async (

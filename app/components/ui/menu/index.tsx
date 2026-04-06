@@ -23,7 +23,7 @@ const Menu = observer(
     }>;
   }) => {
     const {
-      modalStore: { closeModal },
+      modalStore: { closeSettings },
     } = useContextStore();
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
     const [isMobileWindow, setIsMobileWindow] = useState<boolean>(false);
@@ -52,7 +52,6 @@ const Menu = observer(
       }
 
       const flatItems = items.flatMap((section) => section.items);
-      console.log('First one');
       return flatItems.find((i) => i.id === activeItemId) || flatItems[0];
     }, [activeItemId, items, isMobileWindow]);
 
@@ -70,7 +69,7 @@ const Menu = observer(
                 onItemClick={(id) => setActiveItemId(id)}
                 isMobile={isMobileWindow}
                 activeItemTitle={activeItem?.title}
-                closeModal={closeModal}
+                closeSettings={closeSettings}
               />
             )}
             <div
@@ -95,7 +94,7 @@ const Menu = observer(
                   </div>
                 ) : null}
                 {activeItem?.title || 'Select an item'}
-                <div onClick={closeModal} style={{ cursor: 'pointer' }}>
+                <div onClick={closeSettings} style={{ cursor: 'pointer' }}>
                   <IoMdClose size={20} />
                 </div>
               </div>

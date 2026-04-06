@@ -47,7 +47,7 @@ const MenuSidePanel = ({
   onItemClick,
   isMobile,
   activeItemTitle,
-  closeModal,
+  closeSettings,
 }: {
   items: Array<{
     title: string;
@@ -57,7 +57,7 @@ const MenuSidePanel = ({
   onItemClick: (id: string) => void;
   isMobile?: boolean;
   activeItemTitle?: string;
-  closeModal?: () => void;
+  closeSettings?: () => void;
 }) => {
   return (
     <div
@@ -80,7 +80,7 @@ const MenuSidePanel = ({
           }}
         >
           {activeItemTitle || 'Settings'}
-          <div onClick={closeModal} style={{ cursor: 'pointer' }}>
+          <div onClick={closeSettings} style={{ cursor: 'pointer' }}>
             <IoMdClose size={20} />
           </div>
         </div>
