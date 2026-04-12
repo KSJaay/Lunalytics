@@ -14,6 +14,7 @@ import { cleanStatusApiResponse, cleanStatusPage } from '../class/status.js';
 import statusCache from '../cache/status.js';
 import { userSessionExists } from '../database/queries/session.js';
 import { getUserByEmail } from '../database/queries/user.js';
+import { apiTokenExists } from '../database/queries/tokens.js';
 
 export const fetchStatusPageUsingIdOrDomain = async (
   statusPageId: string,
@@ -67,8 +68,8 @@ router.get('/', async (request: Request, response: Response) => {
       }
 
       if (authorization) {
-        const session = await userSessionExists(session_token);
-        const user = await getUserByEmail(session.email);
+        const token = await apiTokenExists(authorization);
+        const user = await getUserByEmail(token.email);
 
         if (!user) {
           return response.sendStatus(401);

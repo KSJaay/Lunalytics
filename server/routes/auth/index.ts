@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { authRateLimiter } from '../../middleware/rateLimiter.js';
 import initialiseLoginRoute from './login.js';
 import initialiseSetupRoute from './setup.js';
 import initialiseConfigRoute from './config.js';
@@ -17,6 +18,10 @@ import initialisePlatformProviderRoute from './platform-provider.js';
 
 const authRouter = Router();
 
+initialiseSetupExistsRoute(authRouter);
+
+authRouter.use('/api/auth', authRateLimiter);
+
 initialiseConfigUpdateRoute(authRouter);
 initialiseConfigRoute(authRouter);
 initialiseCallbackTwitchRoute(authRouter);
@@ -31,6 +36,5 @@ initialiseSetupRoute(authRouter);
 initialiseLoginRoute(authRouter);
 initialiseLogoutRoute(authRouter);
 initialisePlatformProviderRoute(authRouter);
-initialiseSetupExistsRoute(authRouter);
 
 export default authRouter;

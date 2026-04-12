@@ -1,4 +1,4 @@
-const nintyDaysInMilliseconds = 2592000000 * 3;
+const thirtyDaysInMilliseconds = 2592000000;
 
 const isProduction = process.env?.NODE_ENV === 'production';
 
@@ -10,8 +10,8 @@ const setClientSideCookie = (
   value: string
 ): Response => {
   return res.cookie(name, value, {
-    expires: new Date(Date.now() + nintyDaysInMilliseconds),
-    maxAge: nintyDaysInMilliseconds,
+    expires: new Date(Date.now() + thirtyDaysInMilliseconds),
+    maxAge: thirtyDaysInMilliseconds,
     secure: isProduction,
     sameSite: 'strict',
   });
@@ -26,16 +26,16 @@ const setServerSideCookie = (
 ): Response => {
   if (!isHttps) {
     return res.cookie(name, value, {
-      expires: new Date(Date.now() + nintyDaysInMilliseconds),
-      maxAge: nintyDaysInMilliseconds,
+      expires: new Date(Date.now() + thirtyDaysInMilliseconds),
+      maxAge: thirtyDaysInMilliseconds,
       httpOnly: true,
       sameSite,
     });
   }
 
   return res.cookie(name, value, {
-    expires: new Date(Date.now() + nintyDaysInMilliseconds),
-    maxAge: nintyDaysInMilliseconds,
+    expires: new Date(Date.now() + thirtyDaysInMilliseconds),
+    maxAge: thirtyDaysInMilliseconds,
     secure: isProduction,
     httpOnly: true,
     sameSite,

@@ -1,4 +1,5 @@
 // import dependencies
+import crypto from 'crypto';
 import inquirer from 'inquirer';
 
 // import local files
@@ -10,16 +11,36 @@ const questions = [
   { type: 'input', name: 'email', message: 'Enter email added:' },
 ];
 
-const generatePassword = () => {
-  const alphaNumeric =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-  const charLength = alphaNumeric.length;
+const getRandomChar = (str) => {
+  const index = crypto.randomInt(0, str.length);
+  return str[index];
+};
 
-  return (
-    Array.from({ length: 12 })
-      .map(() => alphaNumeric.charAt(Math.floor(Math.random() * charLength)))
-      .join('') + `23`
-  );
+const shuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = crypto.randomInt(0, i + 1);
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+const generatePassword = () => {
+  const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numbers = '0123456789';
+  const allChars = letters + numbers;
+
+  const passwordLength = 12;
+  const password = [];
+
+  password.push(getRandomChar(letters));
+
+  password.push(getRandomChar(numbers));
+
+  for (let i = password.length; i < passwordLength; i++) {
+    password.push(getRandomChar(allChars));
+  }
+
+  return shuffle(password).join('');
 };
 
 inquirer

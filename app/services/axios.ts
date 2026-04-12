@@ -1,5 +1,12 @@
 import axios from 'axios';
 
+const getCsrfToken = (): string | null => {
+  const match = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith('csrf_token='));
+  return match ? match.split('=')[1] : null;
+};
+
 axios.interceptors.response.use(function (response) {
   if (response.headers['content-type']?.includes('application/json')) {
     if (
@@ -62,12 +69,17 @@ const createPostRequest = async (
   const currentParams = Object.fromEntries(urlParams.entries());
   const mergedParams = { ...currentParams, ...params };
 
+  const csrfToken = getCsrfToken();
+
   return axios({
     method: 'POST',
     url: createURL(path),
     params: mergedParams,
     data,
-    headers,
+    headers: {
+      ...headers,
+      ...(csrfToken ? { 'x-csrf-token': csrfToken } : {}),
+    },
     withCredentials: true,
     timeout: 5000,
     signal: AbortSignal.timeout(5000),

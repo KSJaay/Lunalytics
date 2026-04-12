@@ -9,9 +9,14 @@ import {
   SESSION_TOKEN,
   WORKSPACE_ID_COOKIE,
 } from '../../../shared/constants/cookies.js';
+import { deleteUserSession } from '../../database/queries/session.js';
 
-const logout = (_request: Request, response: Response) => {
+const logout = async (_request: Request, response: Response) => {
   try {
+    const { [SESSION_TOKEN]: sessionToken } = _request.cookies || {};
+
+    await deleteUserSession(sessionToken);
+
     deleteCookie(response, SESSION_TOKEN);
     deleteCookie(response, WORKSPACE_ID_COOKIE);
 

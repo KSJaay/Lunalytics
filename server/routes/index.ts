@@ -18,6 +18,7 @@ import statusPagesRoutes from './status-pages/index.js';
 import notificationRoutes from './notification/index.js';
 import fetchIcons from '../middleware/fetchIcons.js';
 import authorization from '../middleware/authorization.js';
+import { csrfProtection } from '../middleware/csrf.js';
 import getAllDockerContainers from '../middleware/getDockerContainers.js';
 import createPushHeartbeat from '../middleware/createPushHeartbeat.js';
 import authorizeWorkspace from '../middleware/authorizeWorkspace.js';
@@ -38,6 +39,7 @@ const initialiseRoutes = async (app: Application) => {
   app.use('/api/status', statusApiRoutes);
   app.post('/api/push', createPushHeartbeat);
   app.use(authorization);
+  app.use(csrfProtection);
   app.use(
     '/api/admin',
     (_request: Request, _response: Response, next: NextFunction) => {

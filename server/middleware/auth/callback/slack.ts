@@ -3,12 +3,14 @@ import type { NextFunction, Request, Response } from 'express';
 
 // import dependencies
 import axios from 'axios';
+import crypto from 'crypto';
 
 // import local files
 import config from '../../../utils/config.js';
 import { handleError } from '../../../utils/errors.js';
 import { fetchProvider } from '../../../database/queries/provider.js';
 import { getAuthCallbackUrl } from '../../../../shared/utils/authenication.js';
+import { deleteCookie } from '../../../../shared/utils/cookies.js';
 
 const slackCallback = async (
   request: Request,
@@ -16,7 +18,21 @@ const slackCallback = async (
   next: NextFunction
 ) => {
   try {
-    const { code } = request.query;
+    const { code, state } = request.query;
+    const storedState = request.cookies?.oauth_state;
+
+    deleteCookie(response, 'oauth_state');
+
+    if (
+      !state ||
+      !storedState ||
+      !crypto.timingSafeEqual(
+        Buffer.from(state as string),
+        Buffer.from(storedState)
+      )
+    ) {
+      return response.redirect('/error?code=invalid_state&provider=slack');
+    }
 
     if (!code) return response.status(400).send('No code provided');
 

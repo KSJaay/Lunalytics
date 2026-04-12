@@ -3,6 +3,7 @@ import './styles.scss';
 // import dependencies
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import DOMPurify from 'dompurify';
 
 // import local files
 import StatusFooter from './footer';
@@ -162,7 +163,9 @@ const StatusConfigurePreview = () => {
             return (
               <div
                 key={item.id}
-                dangerouslySetInnerHTML={{ __html: item.content }}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(item.content),
+                }}
               ></div>
             );
           case 'customCSS':

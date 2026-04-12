@@ -7,6 +7,7 @@ import type { IncidentProps } from '../../shared/types/incident';
 // import dependencies
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 
 // import local files
 import { createGetRequest } from '../services/axios';
@@ -277,7 +278,9 @@ const StatusPage = ({ id }: { id?: string }) => {
               return (
                 <div
                   key={item.id}
-                  dangerouslySetInnerHTML={{ __html: item.content }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(item.content),
+                  }}
                 ></div>
               );
             case 'customCSS':
