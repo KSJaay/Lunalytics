@@ -6,17 +6,16 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useContextStore from '../../context';
 import notificationsIcons from '../../constant/notifications.json';
+import useNotificationContext from '../../context/notifications';
 
 const NotificationList = ({
   notifications,
 }: {
   notifications: NotificationProps[];
 }) => {
-  const {
-    notificationStore: { activeNotification, setActiveNotification },
-  } = useContextStore();
+  const { activeNotification, setActiveNotification } =
+    useNotificationContext();
 
   if (!notifications || !notifications?.length) {
     return <div style={{ flex: 1 }}></div>;

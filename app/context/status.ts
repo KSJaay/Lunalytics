@@ -77,4 +77,8 @@ class StatusStore {
   };
 }
 
-export default StatusStore;
+const statusStore = new StatusStore();
+
+const useStatusContext = () => statusStore;
+
+export default useStatusContext;

@@ -12,6 +12,14 @@ const useGraphStatus = (monitor: MonitorProps) => {
   const [statusType, setStatus] = useState('latest');
   const [statusHeartbeats, setHeartbeats] = useState(monitor.heartbeats || []);
 
+  const setStatusType = (statusType: string) => {
+    setStatus(statusType);
+  };
+
+  const setStatusHeartbeats = (statusHeartbeats: HeartbeatProps[]) => {
+    setHeartbeats(statusHeartbeats);
+  };
+
   useEffect(() => {
     const fetchMonitorHeartbeats = async () => {
       try {
@@ -31,14 +39,6 @@ const useGraphStatus = (monitor: MonitorProps) => {
 
     fetchMonitorHeartbeats();
   }, [statusType, monitor]);
-
-  const setStatusType = (statusType: string) => {
-    setStatus(statusType);
-  };
-
-  const setStatusHeartbeats = (statusHeartbeats: HeartbeatProps[]) => {
-    setHeartbeats(statusHeartbeats);
-  };
 
   return {
     statusType: statusType,

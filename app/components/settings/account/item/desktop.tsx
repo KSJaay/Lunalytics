@@ -6,8 +6,8 @@ import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useContextStore from '../../../../context';
-
+import useUserContext from '../../../../context/user';
+import useModalContext from '../../../../context/modal';
 import SettingsAccountAvatarModal from '../../../modal/settings/account/avatar';
 import SettingsAccountDeleteModal from '../../../modal/settings/account/delete';
 import SettingsAccountPasswordModal from '../../../modal/settings/account/password';
@@ -60,10 +60,9 @@ const SettingsAccountDesktopItem = ({
     'settings-account-item-vertical': description,
   });
 
-  const {
-    userStore: { user },
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
+
+  const { user } = useUserContext();
 
   if (ownerOnly && !user.isOwner) return null;
 

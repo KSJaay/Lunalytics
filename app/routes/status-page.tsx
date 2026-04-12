@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 // import local files
 import useFetch from '../hooks/useFetch';
-import useContextStore from '../context';
 import Loading from '../components/ui/loading';
+import useUserContext from '../context/user';
+import useStatusContext from '../context/status';
 
 const StatusPageRoute = observer(
   ({ children }: { children: React.ReactNode }) => {
-    const {
-      userStore: { getUserRoleRoute },
-      statusStore: { setStatusPages, hasLoadedStatusPages },
-    } = useContextStore();
+    const { setStatusPages, hasLoadedStatusPages } = useStatusContext();
+    const { getUserRoleRoute } = useUserContext();
     const navigate = useNavigate();
 
     const onFailure = (error: any) => {

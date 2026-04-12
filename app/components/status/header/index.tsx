@@ -9,12 +9,13 @@ import { TbLayoutFilled } from 'react-icons/tb';
 import { FaCog, FaPalette, FaRegEye } from 'react-icons/fa';
 
 // import local files
-import useContextStore from '../../../context';
 import useCurrentUrl from '../../../hooks/useCurrentUrl';
 import StatusDeleteModal from '../../modal/status/delete';
 import { createPostRequest } from '../../../services/axios';
 import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 import useMemberContext from '../../../context/member';
+import useStatusContext from '../../../context/status';
+import useModalContext from '../../../context/modal';
 
 const menuOptions = [
   { id: 'Appearance', Icon: FaPalette },
@@ -40,14 +41,14 @@ const HomeStatusPageHeader = ({
   setActivePage,
   isMobile = false,
 }: HomeStatusPageHeaderProps) => {
+  const { openModal, closeModal } = useModalContext();
+
   const {
-    modalStore: { openModal, closeModal },
-    statusStore: {
-      deleteStatusPage,
-      activeStatusPage: statusPage,
-      setActiveStatusPage,
-    },
-  } = useContextStore();
+    deleteStatusPage,
+    activeStatusPage: statusPage,
+    setActiveStatusPage,
+  } = useStatusContext();
+
   const navigate = useNavigate();
 
   const baseUrl = useCurrentUrl();

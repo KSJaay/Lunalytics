@@ -8,19 +8,17 @@ import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 import { IoReloadSharp } from 'react-icons/io5';
 
-import StatusConfigureAppearance from './configure/appearance';
-import StatusConfigureLayout from './configure/layout';
-import StatusConfigureSettings from './configure/settings';
-import StatusConfigurePreview from './configure/preview';
 import ActionBar from '../ui/actionBar';
-import useContextStore from '../../context';
-import handleCreateOrEditStatusPage from '../../handlers/status/configure/create';
+import useStatusContext from '../../context/status';
+import StatusConfigureLayout from './configure/layout';
+import StatusConfigurePreview from './configure/preview';
+import StatusConfigureSettings from './configure/settings';
 import useStatusPageContext from '../../context/status-page';
+import StatusConfigureAppearance from './configure/appearance';
+import handleCreateOrEditStatusPage from '../../handlers/status/configure/create';
 
 const StatusConfigureContent = ({ currentTab, showActionBar = true }) => {
-  const {
-    statusStore: { addStatusPage, activeStatusPage: statusPage },
-  } = useContextStore();
+  const { addStatusPage, activeStatusPage: statusPage } = useStatusContext();
 
   const { resetStatusPage, settings, layoutItems } = useStatusPageContext();
 

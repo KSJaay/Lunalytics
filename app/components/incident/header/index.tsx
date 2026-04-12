@@ -2,17 +2,18 @@
 import { toast } from 'react-toastify';
 import { LuInfo } from 'react-icons/lu';
 import { observer } from 'mobx-react-lite';
+import { MdArchive } from 'react-icons/md';
 import { FaTrashCan } from 'react-icons/fa6';
+import { IoArrowBack } from 'react-icons/io5';
 
 // import local files
-import useContextStore from '../../../context';
+import useModalContext from '../../../context/modal';
+import useMemberContext from '../../../context/member';
+import useIncidentContext from '../../../context/incidents';
 import { createPostRequest } from '../../../services/axios';
 import DeleteIncidentModal from '../../modal/incident/delete';
-import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
-import { MdArchive } from 'react-icons/md';
 import ArchiveIncidentModal from '../../modal/incident/archive';
-import { IoArrowBack } from 'react-icons/io5';
-import useMemberContext from '../../../context/member';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 
 interface HomeIncidentHeaderProps {
   isInfoOpen?: boolean;
@@ -27,15 +28,13 @@ const HomeIncidentHeader = ({
   rightChildren,
   isMobile = false,
 }: HomeIncidentHeaderProps) => {
+  const { openModal, closeModal } = useModalContext();
   const {
-    modalStore: { openModal, closeModal },
-    incidentStore: {
-      addIncident,
-      deleteIncident,
-      activeIncident: incident,
-      setActiveIncident,
-    },
-  } = useContextStore();
+    addIncident,
+    deleteIncident,
+    activeIncident: incident,
+    setActiveIncident,
+  } = useIncidentContext();
   const { member } = useMemberContext();
 
   const isEditor = member?.role.hasPermission(

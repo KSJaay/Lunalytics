@@ -6,7 +6,8 @@ import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useContextStore from '../../../context';
+import useUserContext from '../../../context/user';
+import useModalContext from '../../../context/modal';
 import { createPostRequest } from '../../../services/axios';
 import SettingsAccountAvatarModal from '../../modal/settings/account/avatar';
 
@@ -20,13 +21,12 @@ const isImageUrl = (url: string) => {
 };
 
 const SettingsAccountAvatar = () => {
+  const { openModal, closeModal } = useModalContext();
+
   const {
-    userStore: {
-      user: { avatar, displayName, permission },
-      updateUsingKey,
-    },
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+    user: { avatar, displayName, permission },
+    updateUsingKey,
+  } = useUserContext();
 
   const avatarUrl = isImageUrl(avatar) ? avatar : `/icons/${avatar}.png`;
 

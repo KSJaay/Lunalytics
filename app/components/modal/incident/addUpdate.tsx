@@ -5,15 +5,14 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import Tabs from '../../ui/tabs';
-import useContextStore from '../../../context';
 import IncidentMonitors from '../../incident/monitors';
 import useIncidentMessage from '../../../hooks/useIncidentMessage';
+import useIncidentContext from '../../../context/incidents';
+import useModalContext from '../../../context/modal';
 
 const IncidentAddUpdateModal = ({ incidentId }: { incidentId: string }) => {
-  const {
-    incidentStore: { getIncidentById, addIncident },
-    modalStore: { closeModal },
-  } = useContextStore();
+  const { closeModal } = useModalContext();
+  const { getIncidentById, addIncident } = useIncidentContext();
 
   const incident = getIncidentById(incidentId);
 

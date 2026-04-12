@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import { useNavigate, Outlet } from 'react-router-dom';
 
 // import local files
-import useContextStore from '../context';
 import {
   LocalStorageStateProvider,
   useLocalStorageState,
@@ -12,12 +11,13 @@ import Loading from '../components/ui/loading';
 import useFetch from '../hooks/useFetch';
 import useMemberContext from '../context/member';
 import useConfigContext from '../context/config';
+import useUserContext from '../context/user';
+import useModalContext from '../context/modal';
 
 const GlobalLayout = () => {
-  const {
-    modalStore: { isOpen, content, isSettingsOpen, settings },
-    userStore: { setUser },
-  } = useContextStore();
+  const { isOpen, content, isSettingsOpen, settings } = useModalContext();
+
+  const { setUser } = useUserContext();
 
   const { setMember } = useMemberContext();
 

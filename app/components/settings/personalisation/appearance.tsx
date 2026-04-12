@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { Button, Input } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../../context';
+import useUserContext from '../../../context/user';
 
 const SettingsPersonalisationAppearance = ({
   dateformat,
@@ -19,10 +19,8 @@ const SettingsPersonalisationAppearance = ({
   theme: ThemeProps;
 }) => {
   const {
-    userStore: {
-      user: { displayName },
-    },
-  } = useContextStore();
+    user: { displayName },
+  } = useUserContext();
 
   const message =
     theme === 'dark'

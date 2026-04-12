@@ -6,13 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
+import useNotificationContext from '../../context/notifications';
 
 const NotificationPreview = ({ children }: { children: React.ReactNode }) => {
-  const {
-    notificationStore: { allNotifications = [], setActiveNotification },
-  } = useContextStore();
+  const { allNotifications = [], setActiveNotification } =
+    useNotificationContext();
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();

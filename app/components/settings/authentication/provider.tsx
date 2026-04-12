@@ -3,14 +3,12 @@ import { observer } from 'mobx-react-lite';
 import { Button, Switch } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../../context';
 import useAuthenticationContext from '../../../context/authentication';
 import SettingsAuthenticationConfigureModal from '../../modal/settings/authentication/configure';
+import useModalContext from '../../../context/modal';
 
 const SettingsProviderAuthentication = ({ integration }) => {
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
 
   const { getProvider, pauseProvider } = useAuthenticationContext();
 

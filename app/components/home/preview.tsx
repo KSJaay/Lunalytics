@@ -6,13 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../context';
+import useGlobalContext from '../../context/global';
 import { filterData } from '../../../shared/utils/search';
 
 const MonitorPreview = ({ children }: { children: React.ReactNode }) => {
-  const {
-    globalStore: { allMonitors = [], setActiveMonitor },
-  } = useContextStore();
+  const { allMonitors = [], setActiveMonitor } = useGlobalContext();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();

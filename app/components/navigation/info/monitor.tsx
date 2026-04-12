@@ -12,7 +12,7 @@ import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 
 // import local files
-import useContextStore from '../../../context';
+import useNotificationContext from '../../../context/notifications';
 
 const notificationText = {
   basic: 'Basic',
@@ -79,9 +79,7 @@ const MonitorNotification = observer(
     notificationId: string;
     notificationType: string;
   }) => {
-    const {
-      notificationStore: { getNotifciationById },
-    } = useContextStore();
+    const { getNotifciationById } = useNotificationContext();
 
     const { t } = useTranslation();
 

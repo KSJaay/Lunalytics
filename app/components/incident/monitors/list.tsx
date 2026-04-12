@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import useContextStore from '../../../context';
+import useGlobalContext from '../../../context/global';
 
 const IncidentMonitorsList = ({
   selectedMonitors,
@@ -8,9 +8,7 @@ const IncidentMonitorsList = ({
   selectedMonitors: string[];
   handleSelected: (id: string) => void;
 }) => {
-  const {
-    globalStore: { allMonitors },
-  } = useContextStore();
+  const { allMonitors } = useGlobalContext();
 
   return (
     <div className="icml-container">

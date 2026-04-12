@@ -10,12 +10,12 @@ import Tabs from '../../../../ui/tabs';
 import Switch from '../../../../ui/switch';
 import { FaTrashCan } from '../../../../icons';
 import StatusConfigureMonitor from '../../monitor';
-import useContextStore from '../../../../../context';
 import StatusConfigureLayoutMetricsOptions from './options';
 import StatusConfigureLayoutMetricsDropdown from './dropdown';
 import useStatusPageContext from '../../../../../context/status-page';
 import { statusGraphTypes } from '../../../../../../shared/constants/status';
 import { useMemo } from 'react';
+import useGlobalContext from '../../../../../context/global';
 
 const defaultMonitorObject = { graphType: 'Basic', showPing: true };
 
@@ -47,9 +47,7 @@ const getGraphWithType = (type, monitors, componentId) => {
 };
 
 const StatusConfigureLayoutMetrics = ({ componentId }) => {
-  const {
-    globalStore: { allMonitors, getMonitor },
-  } = useContextStore();
+  const { allMonitors, getMonitor } = useGlobalContext();
   const { setComponentValue, getComponent, removeComponent, layoutItems } =
     useStatusPageContext();
 

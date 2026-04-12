@@ -4,9 +4,9 @@ import { observer } from 'mobx-react-lite';
 // import local files
 import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
-import useContextStore from '../../../../../context';
 import NotificationIcon from '../../../notification/dropdown/icon';
 import notificationsIcons from '../../../../../constant/notifications.json';
+import useNotificationContext from '../../../../../context/notifications';
 
 interface MonitorNotificationListProps {
   inputs: any;
@@ -21,9 +21,7 @@ const MonitorNotificationList = ({
 }: MonitorNotificationListProps) => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
-  const {
-    notificationStore: { allNotifications, getNotifciationById },
-  } = useContextStore();
+  const { allNotifications, getNotifciationById } = useNotificationContext();
 
   const selectedNotification = getNotifciationById(inputs.notificationId);
 

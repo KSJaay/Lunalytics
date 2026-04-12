@@ -10,14 +10,12 @@ import { IoKey } from 'react-icons/io5';
 import useTokensContext from '../../../context/tokens';
 import SettingsApiCreateModal from '../../modal/settings/api/createOrEdit';
 import ManageApiToken from './token';
-import useContextStore from '../../../context';
 import useFetch from '../../../hooks/useFetch';
+import useModalContext from '../../../context/modal';
 
 const ManageApiTokens = () => {
   const { allTokens, setTokens } = useTokensContext();
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
 
   useFetch({
     url: '/api/workspace/api-tokens',
@@ -55,7 +53,13 @@ const ManageApiTokens = () => {
         </div>
       </div> */}
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '15px' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          paddingBottom: '15px',
+        }}
+      >
         <Button
           variant="flat"
           color="primary"

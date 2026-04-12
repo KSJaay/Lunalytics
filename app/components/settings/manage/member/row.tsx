@@ -9,9 +9,9 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import MemberRowActions from './actions';
-import useContextStore from '../../../../context';
 import Role from '../../../../../shared/permissions/role';
 import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
+import useUserContext from '../../../../context/user';
 
 const isImageUrl = (url: string) => {
   if (typeof url !== 'string') {
@@ -25,9 +25,7 @@ const MemberTableRow = ({
 }: {
   member?: ContextTeamProps;
 }) => {
-  const {
-    userStore: { user },
-  } = useContextStore();
+  const { user } = useUserContext();
 
   const role = new Role('user', user.permission);
 

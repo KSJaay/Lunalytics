@@ -8,10 +8,10 @@ import { TbLayoutFilled } from 'react-icons/tb';
 import { FaCog, FaPalette, FaRegEye } from 'react-icons/fa';
 
 // import local files
+import useStatusContext from '../../../../context/status';
 import StatusConfigureContent from '../../../status/content';
-import handleCreateOrEditStatusPage from '../../../../handlers/status/configure/create';
-import useContextStore from '../../../../context';
 import useStatusPageContext from '../../../../context/status-page';
+import handleCreateOrEditStatusPage from '../../../../handlers/status/configure/create';
 
 const menuOptions = [
   { id: 'Appearance', Icon: FaPalette },
@@ -26,9 +26,7 @@ const StatusConfigurCreateModal = ({
   closeModal: () => void;
 }) => {
   const [activePage, setActivePage] = useState('Appearance');
-  const {
-    statusStore: { addStatusPage },
-  } = useContextStore();
+  const { addStatusPage } = useStatusContext();
 
   const { settings, layoutItems, resetFullStatusPage } = useStatusPageContext();
 

@@ -8,13 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../context';
+import useStatusContext from '../../context/status';
 import { filterData } from '../../../shared/utils/search';
 
 const StatusPagePreview = ({ children }) => {
-  const {
-    statusStore: { allStatusPages = [], setActiveStatusPage },
-  } = useContextStore();
+  const { allStatusPages = [], setActiveStatusPage } = useStatusContext();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();

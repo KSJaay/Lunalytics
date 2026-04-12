@@ -7,26 +7,26 @@ import { useTranslation } from 'react-i18next';
 import { BsFillSendFill } from 'react-icons/bs';
 
 // import local files
-import useContextStore from '../../../context';
 import { createGetRequest, createPostRequest } from '../../../services/axios';
 import NotificationDeleteModal from '../../modal/notification/delete';
 import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 import useScreenSize from '../../../hooks/useScreenSize';
 import useMemberContext from '../../../context/member';
+import useNotificationContext from '../../../context/notifications';
+import useModalContext from '../../../context/modal';
 
 const HomeNotificationHeader = ({
   isMobile = false,
 }: {
   isMobile: boolean;
 }) => {
+  const { openModal, closeModal } = useModalContext();
+
   const {
-    modalStore: { openModal, closeModal },
-    notificationStore: {
-      deleteNotification,
-      activeNotification: notification,
-      setActiveNotification,
-    },
-  } = useContextStore();
+    deleteNotification,
+    activeNotification: notification,
+    setActiveNotification,
+  } = useNotificationContext();
 
   const { member } = useMemberContext();
 

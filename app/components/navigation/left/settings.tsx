@@ -1,5 +1,8 @@
 // import node_modules
 import { observer } from 'mobx-react-lite';
+import { IoMdHelpCircle } from 'react-icons/io';
+import { IoColorPalette, IoKey } from 'react-icons/io5';
+import { FaPaperPlane, FaUserCircle, FaUsers } from 'react-icons/fa';
 
 // import local files
 import Menu from '../../ui/menu';
@@ -8,14 +11,9 @@ import SettingAbout from '../../settings/about';
 import ManageApiTokens from '../../settings/api';
 import ManageInvites from '../../settings/invite';
 import SettingsAccount from '../../settings/account';
-import SettingsAuthentication from '../../settings/authentication';
+import useMemberContext from '../../../context/member';
 import SettingsPersonalisation from '../../settings/personalisation';
 import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
-import useMemberContext from '../../../context/member';
-import { FaPaperPlane, FaUserCircle, FaUsers } from 'react-icons/fa';
-import { IoColorPalette, IoKey } from 'react-icons/io5';
-import { IoMdHelpCircle } from 'react-icons/io';
-import { BsShieldLockFill } from 'react-icons/bs';
 
 const settingTabs = [
   {
@@ -46,13 +44,6 @@ const settingTabs = [
         permission: MemberPermissionBits.ADMINISTRATOR,
         component: ManageApiTokens,
         icon: <IoKey />,
-      },
-      {
-        id: 'authentication',
-        title: 'Authentication',
-        permission: MemberPermissionBits.ADMINISTRATOR,
-        component: SettingsAuthentication,
-        icon: <BsShieldLockFill />,
       },
       {
         id: 'invites',

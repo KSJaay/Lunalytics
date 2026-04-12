@@ -6,17 +6,16 @@ import { Button } from '@lunalytics/ui';
 // import local files
 import MembersTable from './member';
 import useFetch from '../../../hooks/useFetch';
-import useContextStore from '../../../context';
 import useTeamContext from '../../../context/team';
 import CreateInviteModal from '../../modal/settings/invite';
 import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
+import useUserContext from '../../../context/user';
+import useModalContext from '../../../context/modal';
 
 const ManageTeam = () => {
-  const {
-    modalStore: { openModal, closeModal },
-    userStore: { hasPermission },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
   const { teamMembers, setTeam } = useTeamContext();
+  const { hasPermission } = useUserContext();
 
   const sortedMembers = teamMembers
     ?.sort((a, b) => a?.permission - b?.permission)

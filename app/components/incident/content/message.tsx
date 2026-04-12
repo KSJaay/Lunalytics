@@ -1,12 +1,10 @@
 // import local files
 import { observer } from 'mobx-react-lite';
 import IncidentIdMessage from '../id/message';
-import useContextStore from '../../../context';
+import useIncidentContext from '../../../context/incidents';
 
 const IncidentContentMessages = ({ incidentId }: { incidentId: string }) => {
-  const {
-    incidentStore: { getIncidentById },
-  } = useContextStore();
+  const { getIncidentById } = useIncidentContext();
 
   const incident = getIncidentById(incidentId);
 
