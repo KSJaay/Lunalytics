@@ -6,13 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../context';
 import { filterData } from '../../../shared/utils/search';
+import useIncidentContext from '../../context/incidents';
 
 const IncidentPreview = ({ children }: { children: React.ReactNode }) => {
-  const {
-    incidentStore: { allIncidents = [], setActiveIncident },
-  } = useContextStore();
+  const { allIncidents = [], setActiveIncident } = useIncidentContext();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();

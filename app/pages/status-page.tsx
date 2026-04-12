@@ -7,7 +7,6 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo, useState } from 'react';
 
 // import local files
-import useContextStore from '../context';
 import Navigation from '../components/navigation';
 import HomeStatusPageHeader from '../components/status/header';
 import StatusConfigureContent from '../components/status/content';
@@ -17,12 +16,13 @@ import useStatusPageContext from '../context/status-page';
 import { toJS } from 'mobx';
 import { filterData } from '../../shared/utils/search';
 import useScreenSize from '../hooks/useScreenSize';
+import useStatusContext from '../context/status';
+import useModalContext from '../context/modal';
 
 const Notifications = () => {
-  const {
-    modalStore: { openModal, closeModal },
-    statusStore: { allStatusPages, activeStatusPage, setActiveStatusPage },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
+  const { allStatusPages, activeStatusPage, setActiveStatusPage } =
+    useStatusContext();
   const { setData } = useStatusPageContext();
 
   const [search, setSearch] = useState<string | null>(null);

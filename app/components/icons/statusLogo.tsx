@@ -2,13 +2,11 @@
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useContextStore from '../../context';
+import useGlobalContext from '../../context/global';
 import type { MonitorProps } from '../../../shared/types/monitor';
 
 const StatusLogo = ({ size = 250 }: { size: number }) => {
-  const {
-    globalStore: { allMonitors },
-  } = useContextStore();
+  const { allMonitors } = useGlobalContext();
 
   const totalMonitors = allMonitors.length;
   const offlineMonitors = allMonitors.filter(
@@ -18,8 +16,8 @@ const StatusLogo = ({ size = 250 }: { size: number }) => {
   const color = !offlineMonitors
     ? 'var(--primary-700)'
     : offlineMonitors === totalMonitors
-    ? 'var(--red-700)'
-    : 'var(--yellow-700)';
+      ? 'var(--red-700)'
+      : 'var(--yellow-700)';
 
   return (
     <svg

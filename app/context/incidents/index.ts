@@ -71,4 +71,7 @@ class IncidentStore {
   };
 }
 
-export default IncidentStore;
+const incidentStore = new IncidentStore();
+const useIncidentContext = () => incidentStore;
+
+export default useIncidentContext;

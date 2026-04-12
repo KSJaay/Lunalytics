@@ -145,4 +145,8 @@ class GlobalStore {
   };
 }
 
-export default GlobalStore;
+const gloablStore = new GlobalStore();
+
+const useGlobalContext = () => gloablStore;
+
+export default useGlobalContext;

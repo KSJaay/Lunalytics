@@ -11,11 +11,11 @@ import { observer } from 'mobx-react-lite';
 import { FaTrashCan, MdEdit, FaCheck, IoMdClose } from '../../../icons';
 
 // import local files
-import useContextStore from '../../../../context';
 import MemberDeleteModal from '../../../modal/settings/manage/delete';
 import MemberApproveModal from '../../../modal/settings/manage/approve';
 import MemberDeclineModal from '../../../modal/settings/manage/decline';
 import MemberPermissionsModal from '../../../modal/settings/manage/permissions';
+import useModalContext from '../../../../context/modal';
 
 const MemberRowActions = ({
   member = {} as ContextTeamProps,
@@ -28,9 +28,7 @@ const MemberRowActions = ({
     'member-row-icon-disabled': !canManage,
   });
 
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
 
   if (!member.isVerified && canManage) {
     return (

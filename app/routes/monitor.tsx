@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 // import local files
 import useFetch from '../hooks/useFetch';
-import useContextStore from '../context';
 import Loading from '../components/ui/loading';
 import { fetchMonitorById } from '../services/monitor/fetch';
+import useUserContext from '../context/user';
+import useGlobalContext from '../context/global';
 
 const MonitorRoute = observer(({ children }: { children: React.ReactNode }) => {
-  const {
-    userStore: { getUserRoleRoute },
-    globalStore: { setMonitors, setTimeouts, hasLoadedMonitors },
-  } = useContextStore();
+  const { setMonitors, setTimeouts, hasLoadedMonitors } = useGlobalContext();
+  const { getUserRoleRoute } = useUserContext();
   const navigate = useNavigate();
 
   const onFailure = (error: any) => {

@@ -6,11 +6,11 @@ import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
 import SwitchWithText from '../../../ui/switch';
-import useContextStore from '../../../../context';
 import useTeamContext from '../../../../context/team';
 import { createPostRequest } from '../../../../services/axios';
 import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
+import useUserContext from '../../../../context/user';
 
 const MemberPermissionsModal = ({
   member,
@@ -21,9 +21,7 @@ const MemberPermissionsModal = ({
 }) => {
   const [perms, setPermission] = useState(member?.permission);
   const { updateUserPermission } = useTeamContext();
-  const {
-    userStore: { hasPermission },
-  } = useContextStore();
+  const { hasPermission } = useUserContext();
 
   const handleConfirm = async () => {
     try {

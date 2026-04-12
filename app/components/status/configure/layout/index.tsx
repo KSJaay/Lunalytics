@@ -14,10 +14,10 @@ import StatusConfigureLayoutHistory from './history';
 import StatusConfigureLayoutIncidents from './incidents';
 import StatusConfigureLayoutCustomHTML from './customHTML';
 import StatusConfigureLayoutCustomCSS from './customCSS';
-import useContextStore from '../../../../context';
 import StatusConfigureAddModal from '../../../modal/status/configure/add';
 import StatusConfigureReorderModal from '../../../modal/status/configure/reorder';
 import useStatusPageContext from '../../../../context/status-page';
+import useModalContext from '../../../../context/modal';
 
 const StatusConfigureLayout = () => {
   const {
@@ -33,9 +33,7 @@ const StatusConfigureLayout = () => {
     createComponent,
     reorderBlocks,
   } = useStatusPageContext();
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
 
   function injectStylesheet(id: string, content = '') {
     let styleSheet = document.getElementById(id);

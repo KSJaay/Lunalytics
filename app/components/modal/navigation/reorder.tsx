@@ -7,7 +7,8 @@ import { Button, Modal } from '@lunalytics/ui';
 import { PiDotsSixVerticalBold } from 'react-icons/pi';
 
 // import local files
-import useContextStore from '../../../context';
+import useUserContext from '../../../context/user';
+import useGlobalContext from '../../../context/global';
 import { createPostRequest } from '../../../services/axios';
 
 interface NavigationReorderModalProps {
@@ -40,10 +41,9 @@ export const getMonitorsInOrder = (
 const NavigationReorderModal = ({
   closeModal,
 }: NavigationReorderModalProps) => {
-  const {
-    globalStore: { allMonitors },
-    userStore: { user, updateUsingKey },
-  } = useContextStore();
+  const { allMonitors } = useGlobalContext();
+
+  const { user, updateUsingKey } = useUserContext();
 
   const swapy = useRef<any>(null);
   const container = useRef<HTMLDivElement | null>(null);

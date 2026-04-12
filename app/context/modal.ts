@@ -41,4 +41,8 @@ class ModalStore {
   };
 }
 
-export default ModalStore;
+const modalStore = new ModalStore();
+
+const useModalContext = () => modalStore;
+
+export default useModalContext;

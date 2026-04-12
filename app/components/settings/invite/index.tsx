@@ -9,19 +9,17 @@ import { Button, Tooltip } from '@lunalytics/ui';
 
 // import local files
 import useFetch from '../../../hooks/useFetch';
-import useContextStore from '../../../context';
 import useClipboard from '../../../hooks/useClipboard';
 import useInvitesContext from '../../../context/invites';
 import useCurrentUrl from '../../../hooks/useCurrentUrl';
 import CreateInviteModal from '../../modal/settings/invite';
 import { createPostRequest } from '../../../services/axios';
+import useModalContext from '../../../context/modal';
 
 const ManageInvites = () => {
   const { allInvites, setInvites, removeInvite, pauseInvite } =
     useInvitesContext();
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
   const clipboard = useClipboard();
   const currentUrl = useCurrentUrl();
 

@@ -3,21 +3,20 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useContextStore from '../../context';
 import PillCircle from '../navigation/PillCircle';
 import HomeMonitorsListContext from './context';
 import type { ContextMonitorProps } from '../../../shared/types/context/global';
 import { getMonitorsInOrder } from '../modal/navigation/reorder';
+import useUserContext from '../../context/user';
+import useGlobalContext from '../../context/global';
 
 const HomeMonitorsList = ({
   monitors = [],
 }: {
   monitors: ContextMonitorProps[];
 }) => {
-  const {
-    userStore: { user },
-    globalStore: { activeMonitor, setActiveMonitor, getMonitor },
-  } = useContextStore();
+  const { activeMonitor, setActiveMonitor, getMonitor } = useGlobalContext();
+  const { user } = useUserContext();
 
   const monitorsList = getMonitorsInOrder(
     monitors,

@@ -10,9 +10,10 @@ import { BsFillShieldLockFill } from 'react-icons/bs';
 import { Avatar, Dropdown, Tooltip } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../context';
 import LeftUpdateButton from './left/update';
 import MonitorPreview from '../home/preview';
+import useUserContext from '../../context/user';
+import useModalContext from '../../context/modal';
 import IncidentPreview from '../incident/preview';
 import StatusPagePreview from '../status/preview';
 import useMemberContext from '../../context/member';
@@ -20,6 +21,7 @@ import LeftNavigationSettings from './left/settings';
 import NotificationPreview from '../notifications/preview';
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
 import { MemberPermissionBits } from '../../../shared/permissions/bitFlags';
+import LeftNavigationAdminPanel from './left/adminPanel';
 
 const actionTabs = [
   {
@@ -62,12 +64,11 @@ const isImageUrl = (url: string) => {
 
 const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
   const navigate = useNavigate();
+  const { closeModal, openModal, openSettings } = useModalContext();
+
   const {
-    userStore: {
-      user: { avatar, displayName },
-    },
-    modalStore: { closeModal, openModal, openSettings },
-  } = useContextStore();
+    user: { avatar, displayName },
+  } = useUserContext();
 
   const { member } = useMemberContext();
 
@@ -120,7 +121,7 @@ const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
 
         <div
           className="navigation-left-action"
-          onClick={() => navigate('/settings')}
+          onClick={() => openSettings(<LeftNavigationSettings />)}
         >
           <FaCog size={28} />
         </div>
@@ -131,7 +132,7 @@ const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
               text: 'Admin Panel',
               type: 'item',
               onClick: () => {
-                openSettings(<LeftNavigationSettings />);
+                openSettings(<LeftNavigationAdminPanel />);
               },
             },
             {

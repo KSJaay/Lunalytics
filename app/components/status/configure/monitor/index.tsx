@@ -7,8 +7,8 @@ import { observer } from 'mobx-react-lite';
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import StatusConfigureMonitorItem from './item';
-import useContextStore from '../../../../context';
 import useDropdown from '../../../../hooks/useDropdown';
+import useGlobalContext from '../../../../context/global';
 
 const StatusConfigureMonitor = ({
   componentId,
@@ -18,9 +18,7 @@ const StatusConfigureMonitor = ({
   addAllMonitors,
   removeMonitor,
 }) => {
-  const {
-    globalStore: { allMonitors, getMonitor },
-  } = useContextStore();
+  const { allMonitors, getMonitor } = useGlobalContext();
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const { autoAdd, monitors } = getValues(componentId);

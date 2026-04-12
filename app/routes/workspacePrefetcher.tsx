@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import useContextStore from '../context';
 import Loading from '../components/ui/loading';
 import useFetch from '../hooks/useFetch';
 import { fetchMonitorById } from '../services/monitor/fetch';
 import { observer } from 'mobx-react-lite';
 import { createGetRequest } from '../services/axios';
+import useNotificationContext from '../context/notifications';
+import useUserContext from '../context/user';
+import useGlobalContext from '../context/global';
+import useIncidentContext from '../context/incidents';
+import useStatusContext from '../context/status';
+import useModalContext from '../context/modal';
 
 const pageConfigs = [
   {
@@ -48,8 +53,16 @@ function getPageConfig(pathname: string) {
 
 const WorkspacePrefetcher = observer(
   ({ children }: { children: React.ReactNode }) => {
-    const store = useContextStore();
     const location = useLocation();
+
+    const contextStore = {
+      notificationStore: useNotificationContext(),
+      userStore: useUserContext(),
+      globalStore: useGlobalContext(),
+      incidentStore: useIncidentContext(),
+      statusStore: useStatusContext(),
+      modalStore: useModalContext(),
+    };
 
     const [_, setPrefetched] = useState(false);
     const prefetchedRef = useRef(false);
@@ -60,10 +73,10 @@ const WorkspacePrefetcher = observer(
     );
 
     const { isLoading } = useFetch({
-      hasFetched: currentConfig.hasLoaded(store),
+      hasFetched: currentConfig.hasLoaded(contextStore),
       url: currentConfig.url,
       onSuccess: (data) => {
-        currentConfig.setData(store, data);
+        currentConfig.setData(contextStore, data);
       },
       onFailure: () => {},
     });
@@ -74,16 +87,16 @@ const WorkspacePrefetcher = observer(
         prefetchedRef.current = true;
         setPrefetched(true);
         pageConfigs.forEach((cfg) => {
-          if (cfg !== currentConfig && !cfg.hasLoaded(store)) {
+          if (cfg !== currentConfig && !cfg.hasLoaded(contextStore)) {
             createGetRequest(cfg.url)
               .then((data) => {
-                cfg.setData(store, data?.data);
+                cfg.setData(contextStore, data?.data);
               })
               .catch(() => {});
           }
         });
       }
-    }, [isLoading, currentConfig, store]);
+    }, [isLoading, currentConfig, contextStore]);
 
     if (isLoading) {
       return <Loading asContainer activeUrl={currentConfig.loadingUrl} />;

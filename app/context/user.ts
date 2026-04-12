@@ -8,7 +8,7 @@ import { action, makeObservable, observable } from 'mobx';
 import Role from '../../shared/permissions/role';
 import { MemberPermissionBits } from '../../shared/permissions/bitFlags';
 
-export default class UserStore {
+class UserStore {
   user: Record<string, any>;
   userRole: Role | null;
 
@@ -71,3 +71,8 @@ export default class UserStore {
     return false;
   };
 }
+
+const user = new UserStore();
+const useUserContext = () => user;
+
+export default useUserContext;

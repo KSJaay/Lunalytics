@@ -5,12 +5,13 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import { FaChevronRight } from '../../../icons';
-import useContextStore from '../../../../context';
 import SettingsAccountAvatarModal from '../../../modal/settings/account/avatar';
 import SettingsAccountDeleteModal from '../../../modal/settings/account/delete';
 import SettingsAccountPasswordModal from '../../../modal/settings/account/password';
 import SettingsAccountTransferModal from '../../../modal/settings/account/transfer';
 import SettingsAccountEditModal from '../../../modal/settings/account/username';
+import useUserContext from '../../../../context/user';
+import useModalContext from '../../../../context/modal';
 
 interface SettingsAccountMobileItemProps {
   title: string;
@@ -49,10 +50,8 @@ const SettingsAccountMobileItem = ({
   ownerOnly,
   ...props
 }: SettingsAccountMobileItemProps) => {
-  const {
-    userStore: { user },
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
+  const { user } = useUserContext();
 
   if (ownerOnly && !user.isOwner) return null;
 

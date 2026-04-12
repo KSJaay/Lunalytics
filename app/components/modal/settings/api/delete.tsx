@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 
-import useContextStore from '../../../../context';
 import useTokensContext from '../../../../context/tokens';
 import { createPostRequest } from '../../../../services/axios';
 import { Button, Modal } from '@lunalytics/ui';
+import useModalContext from '../../../../context/modal';
 
 const SettingsApiCloseModal = ({
   tokenId = '',
@@ -14,9 +14,7 @@ const SettingsApiCloseModal = ({
   tokenName?: string;
 }) => {
   const { removeToken } = useTokensContext();
-  const {
-    modalStore: { closeModal },
-  } = useContextStore();
+  const { closeModal } = useModalContext();
 
   const handleDelete = async () => {
     try {

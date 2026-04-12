@@ -4,15 +4,15 @@ import { useNavigate } from 'react-router-dom';
 
 // import local files
 import useFetch from '../hooks/useFetch';
-import useContextStore from '../context';
 import Loading from '../components/ui/loading';
+import useUserContext from '../context/user';
+import useNotificationContext from '../context/notifications';
 
 const NotificationRoute = observer(
   ({ children }: { children: React.ReactNode }) => {
-    const {
-      userStore: { getUserRoleRoute },
-      notificationStore: { setNotifications, hasLoadedNotifications },
-    } = useContextStore();
+    const { setNotifications, hasLoadedNotifications } =
+      useNotificationContext();
+    const { getUserRoleRoute } = useUserContext();
     const navigate = useNavigate();
 
     const onFailure = (error: any) => {

@@ -6,8 +6,8 @@ import { IoMdClose } from 'react-icons/io';
 import { observer } from 'mobx-react-lite';
 
 import MenuSidePanel from './sidePanel';
-import useContextStore from '../../../context';
 import { IoArrowBack } from 'react-icons/io5';
+import useModalContext from '../../../context/modal';
 
 const Menu = observer(
   ({
@@ -22,9 +22,7 @@ const Menu = observer(
       }>;
     }>;
   }) => {
-    const {
-      modalStore: { closeSettings },
-    } = useContextStore();
+    const { closeSettings } = useModalContext();
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
     const [isMobileWindow, setIsMobileWindow] = useState<boolean>(false);
 

@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next';
 
 // import local files
 import HomeMonitorHeaderMenu from './menu';
-import useContextStore from '../../../context';
-import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
-import type { MonitorType } from '../../../../shared/types/monitor';
+import useGlobalContext from '../../../context/global';
 import useMemberContext from '../../../context/member';
+import type { MonitorType } from '../../../../shared/types/monitor';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 
 export const typeToText = {
   docker: 'Docker Container',
@@ -62,9 +62,7 @@ const HomeMonitorHeader = ({
   rightChildren,
   isMobile = false,
 }: HomeMonitorHeaderProps) => {
-  const {
-    globalStore: { activeMonitor, setActiveMonitor },
-  } = useContextStore();
+  const { activeMonitor, setActiveMonitor } = useGlobalContext();
 
   const { member } = useMemberContext();
 

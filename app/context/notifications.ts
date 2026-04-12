@@ -79,4 +79,8 @@ class NotificationStore {
   };
 }
 
-export default NotificationStore;
+const notificationStore = new NotificationStore();
+
+const useNotificationContext = () => notificationStore;
+
+export default useNotificationContext;
