@@ -2,10 +2,12 @@
 import type { Request, Response } from 'express';
 
 // import local files
+import crypto from 'crypto';
 import config from '../../utils/config.js';
 import { handleError } from '../../utils/errors.js';
 import { fetchProvider } from '../../database/queries/provider.js';
 import { getAuthRedirectUrl } from '../../../shared/utils/authenication.js';
+import { setServerSideCookie } from '../../../shared/utils/cookies.js';
 
 const redirectUsingProviderMiddleware = async (
   request: Request,
@@ -27,11 +29,22 @@ const redirectUsingProviderMiddleware = async (
 
     const websiteUrl = config.get('websiteUrl');
 
+    const state = crypto.randomBytes(32).toString('hex');
+
+    setServerSideCookie(
+      response,
+      'oauth_state',
+      state,
+      request.protocol === 'https',
+      'lax'
+    );
+
     const redirectUrl = getAuthRedirectUrl(
       provider.provider,
       provider.clientId,
       `${websiteUrl}/api/auth/callback/${provider.provider}`,
-      provider.data?.authUrl
+      provider.data?.authUrl,
+      state
     );
 
     if (!redirectUrl) {

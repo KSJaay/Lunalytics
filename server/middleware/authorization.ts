@@ -7,14 +7,19 @@ import { deleteCookie } from '../../shared/utils/cookies.js';
 import { handleError } from '../utils/errors.js';
 import { AUTH_ERRORS } from '../../shared/constants/errors/auth.js';
 import { userSessionExists } from '../database/queries/session.js';
+import { rotateUserSession } from '../database/queries/session.js';
 import { apiTokenExists } from '../database/queries/tokens.js';
 import { timeToMs } from '../../shared/utils/ms.js';
 import {
   SESSION_TOKEN,
   WORKSPACE_ID_COOKIE,
 } from '../../shared/constants/cookies.js';
+import {
+  setServerSideCookie,
+} from '../../shared/utils/cookies.js';
 
-const sixtyDaysInHours = timeToMs(60, 'days');
+const thirtyDaysInMs = timeToMs(30, 'days');
+const oneDayInMs = timeToMs(1, 'days');
 
 const authorization = async (
   request: Request,
@@ -37,12 +42,24 @@ const authorization = async (
       }
 
       const createdAt =
-        new Date(userSession.created_at).getTime() + sixtyDaysInHours;
+        new Date(userSession.created_at).getTime() + thirtyDaysInMs;
 
       if (createdAt < Date.now()) {
         deleteCookie(response, SESSION_TOKEN);
         deleteCookie(response, WORKSPACE_ID_COOKIE);
         return response.status(401).json(AUTH_ERRORS.A003);
+      }
+
+      // Rotate session token if older than 24 hours
+      const sessionAge = Date.now() - new Date(userSession.created_at).getTime();
+      if (sessionAge > oneDayInMs) {
+        const newToken = await rotateUserSession(session_token);
+        setServerSideCookie(
+          response,
+          SESSION_TOKEN,
+          newToken,
+          request.protocol === 'https'
+        );
       }
 
       const userExistsInDatabase = await getUserByEmail(userSession.email);

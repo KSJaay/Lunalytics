@@ -4,6 +4,7 @@ import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import helmet from 'helmet';
 
 // import local files
 import cache from './cache/monitor/index.js';
@@ -27,6 +28,7 @@ const isProductionOrTest =
   process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
 const corsList = config.get('cors');
 const port = config.get('port');
+const trustProxy = config.get('trustProxy');
 
 const init = async () => {
   // connect to database and setup database tables
@@ -45,10 +47,16 @@ const init = async () => {
 
   app
     .use(compression())
+    .use(
+      helmet({
+        contentSecurityPolicy: false,
+        crossOriginEmbedderPolicy: false,
+      })
+    )
     .use(express.json())
     .use(express.urlencoded({ extended: true }))
     .disable('x-powered-by')
-    .set('trust proxy', 1)
+    .set('trust proxy', trustProxy ?? false)
     .use(cookieParser())
     .use(isDemo)
     .use(addInviteToCookie);

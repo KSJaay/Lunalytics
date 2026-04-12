@@ -34,10 +34,21 @@ export const deleteUserSession = async (sessionId: string) => {
   return client?.('user_session').where({ sessionId }).del();
 };
 
+export const rotateUserSession = async (oldSessionId: string) => {
+  const client = await database.connect();
+  const newSessionId = nanoid(92);
+
+  await client?.('user_session')
+    .where({ sessionId: oldSessionId })
+    .update({ sessionId: newSessionId, created_at: new Date().toISOString() });
+
+  return newSessionId;
+};
+
 export const cleanUserSessions = async () => {
   const client = await database.connect();
 
-  const retentionMs = timeToMs(60, 'days');
+  const retentionMs = timeToMs(30, 'days');
   const date = new Date(Date.now() - retentionMs).toISOString();
 
   return client?.('user_session').where('created_at', '<', date).del();

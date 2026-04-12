@@ -62,7 +62,7 @@ const signInOrRegisterUsingAuth = async (
           const expiry =
             inviteData.expiresAt && new Date(inviteData.expiresAt).getTime();
 
-          if (!expiry || expiry < Date.now()) {
+          if (!expiry || expiry > Date.now()) {
             await increaseInviteUses(invite);
             data.isVerified = true;
           }

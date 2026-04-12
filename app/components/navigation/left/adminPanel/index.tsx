@@ -5,7 +5,6 @@ import { BsShieldLockFill } from 'react-icons/bs';
 // import local files
 import Menu from '../../../ui/menu';
 import ManageTeam from '../../../settings/manage';
-import ManageInvites from '../../../settings/invite';
 import useMemberContext from '../../../../context/member';
 import SettingsAuthentication from '../../../settings/authentication';
 import { UserPermissionBits } from '../../../../../shared/permissions/bitFlags';

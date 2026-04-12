@@ -15,12 +15,17 @@ export const getAuthRedirectUrl = (
   provider: OAuthProvider,
   clientId: string,
   redirectUri: string,
-  authUrl?: string
+  authUrl?: string,
+  state?: string
 ): string | null => {
   const queryParams: Record<string, any> = {
     client_id: clientId,
     redirect_uri: redirectUri,
   };
+
+  if (state) {
+    queryParams.state = state;
+  }
 
   if (provider === 'discord') {
     queryParams.response_type = 'code';
