@@ -58,10 +58,20 @@ const IncidentAddUpdateModal = ({ incidentId }: { incidentId: string }) => {
       title="Add an update"
       actions={
         <>
-          <Button onClick={closeModal} color="red" variant="flat">
+          <Button
+            id="incident-addupdate-modal-cancel-button"
+            onClick={closeModal}
+            color="red"
+            variant="flat"
+          >
             Cancel
           </Button>
-          <Button color="green" variant="flat" onClick={updateIncidentStatus}>
+          <Button
+            id="incident-addupdate-modal-add-button"
+            color="green"
+            variant="flat"
+            onClick={updateIncidentStatus}
+          >
             Add Update
           </Button>
         </>

@@ -37,6 +37,7 @@ const NotificationsList = ({
 
         return (
           <div
+            id={`incident-list-item-${incident.incidentId}`}
             className={classes}
             key={incident.incidentId}
             onClick={() => setActiveIncident?.(incident.incidentId)}

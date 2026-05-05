@@ -14,6 +14,7 @@ const IncidentMonitorsList = ({
     <div className="icml-container">
       {allMonitors.map((monitor) => (
         <div
+          id={`incident-monitors-list-item-${monitor.monitorId}`}
           className="icml-item"
           key={monitor.monitorId}
           onClick={() => handleSelected(monitor.monitorId)}
@@ -23,6 +24,7 @@ const IncidentMonitorsList = ({
             <div className="icml-item-url">{monitor.url}</div>
           </div>
           <input
+            id={`incident-monitors-list-checkbox-${monitor.monitorId}`}
             className="icml-item-input"
             type="checkbox"
             checked={selectedMonitors?.includes(monitor.monitorId)}

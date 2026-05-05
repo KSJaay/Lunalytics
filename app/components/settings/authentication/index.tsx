@@ -88,6 +88,7 @@ const SettingsAuthentication = () => {
 
       <div className="settings-auth-switches">
         <SwitchWithText
+          id="settings-auth-allow-registration-switch"
           label="Allow Registration"
           name="allowRegistration"
           shortDescription="Allow new users to register for an account"
@@ -98,6 +99,7 @@ const SettingsAuthentication = () => {
         />
 
         <SwitchWithText
+          id="settings-auth-allow-native-login-switch"
           label="Allow Native Login"
           name="allowNativeLogin"
           shortDescription="Disable internal authentication and only allow SSO login"

@@ -22,6 +22,7 @@ const StatusPageList = ({ statusPages }) => {
 
         return (
           <div
+            id={`status-page-list-item-${statusPage.statusId}`}
             key={statusPage.statusId}
             className={classes}
             onClick={() => setActiveStatusPage(statusPage.statusId)}

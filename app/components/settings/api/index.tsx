@@ -61,6 +61,7 @@ const ManageApiTokens = () => {
         }}
       >
         <Button
+          id="settings-api-create-token-button"
           variant="flat"
           color="primary"
           onClick={() =>

@@ -60,6 +60,7 @@ export function Table<T extends Record<string, any>>({
           <div key={String(col.key)} className="monitor-uptime-header">
             {col.sortable ? (
               <button
+                id={`monitor-table-header-sort-${String(col.key)}`}
                 type="button"
                 style={{
                   background: 'none',
@@ -86,7 +87,11 @@ export function Table<T extends Record<string, any>>({
         ))}
       </div>
       {sortedData.map((row, rowIdx) => (
-        <div className="monitor-uptime-content" key={rowIdx}>
+        <div
+          id={`monitor-table-row-${rowIdx}`}
+          className="monitor-uptime-content"
+          key={rowIdx}
+        >
           {columns.map((col) =>
             col.render ? (
               col.render(row[col.key], row)

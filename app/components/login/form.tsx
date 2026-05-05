@@ -25,6 +25,7 @@ const LoginForm = ({
 
       {showForgottenPasswordCta ? (
         <div
+          id="auth-forgot-password-link"
           className="login-text-forgot-password"
           onClick={() => navigate('/forgot-password')}
         >

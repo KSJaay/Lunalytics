@@ -66,6 +66,7 @@ const SettingsMobileTabs = ({
       return (
         <div
           key={item.name}
+          id={`${item.name.toLowerCase().replace(/\s+/g, '-')}-tab`}
           className="settings-mobile-tab-text"
           onClick={() => handleTabChange(item.name as SettingsTabNames)}
         >

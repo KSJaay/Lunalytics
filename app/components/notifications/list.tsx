@@ -30,6 +30,7 @@ const NotificationList = ({
 
         return (
           <div
+            id={`notification-list-item-${notification.id}`}
             key={notification.id}
             className={classes}
             onClick={() => setActiveNotification(notification.id)}

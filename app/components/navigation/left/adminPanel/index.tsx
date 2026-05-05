@@ -1,19 +1,27 @@
 // import node_modules
 import { observer } from 'mobx-react-lite';
-import { BsShieldLockFill } from 'react-icons/bs';
+import { FaUsers } from 'react-icons/fa';
+import { BsRocketTakeoffFill, BsShieldLockFill } from 'react-icons/bs';
 
 // import local files
 import Menu from '../../../ui/menu';
-import ManageTeam from '../../../settings/manage';
+import ManageWorkspaces from './workspaces';
 import useMemberContext from '../../../../context/member';
 import SettingsAuthentication from '../../../settings/authentication';
 import { UserPermissionBits } from '../../../../../shared/permissions/bitFlags';
-import { FaUsers } from 'react-icons/fa';
+import ManageUsers from './users';
 
 const adminTabs = [
   {
     title: 'Workspaces',
     items: [
+      {
+        id: 'manage-workspaces',
+        title: 'Manage Workspaces',
+        permission: UserPermissionBits.MANAGE_WORKSPACES,
+        component: ManageWorkspaces,
+        icon: <BsRocketTakeoffFill />,
+      },
       {
         id: 'authentication',
         title: 'Authentication',
@@ -29,9 +37,9 @@ const adminTabs = [
       // },
       {
         id: 'manage-team',
-        title: 'Manage Team',
+        title: 'Manage Users',
         permission: UserPermissionBits.MANAGE_TEAM,
-        component: ManageTeam,
+        component: ManageUsers,
         icon: <FaUsers />,
       },
     ],

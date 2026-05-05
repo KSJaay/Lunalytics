@@ -39,6 +39,7 @@ const RegisterEmailForm = ({
         />
       </div>
       <button
+        id="register-email-continue-button"
         className="auth-button"
         onClick={() => handlePageChange('password')}
       >
@@ -53,6 +54,7 @@ const RegisterEmailForm = ({
             textDecoration: 'underline',
           }}
           href="/login"
+          id="register-email-login-link"
         >
           Login
         </a>

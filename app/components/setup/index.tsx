@@ -54,7 +54,11 @@ const SetupForm = () => {
   return (
     <>
       {page.prev && (
-        <div className="auth-setup-back-button" onClick={handleBack}>
+        <div
+          id="setup-back-button"
+          className="auth-setup-back-button"
+          onClick={handleBack}
+        >
           <FaChevronLeft />
           Back
         </div>
@@ -101,7 +105,11 @@ const SetupForm = () => {
       {page.name === 'database' && <SetupDatabaseForm />}
 
       {page.hideButton ? null : (
-        <button className="auth-button" onClick={changePage}>
+        <button
+          id={page.submit ? 'setup-complete-button' : 'setup-continue-button'}
+          className="auth-button"
+          onClick={changePage}
+        >
           {page.submit ? 'Complete' : 'Continue'}
         </button>
       )}

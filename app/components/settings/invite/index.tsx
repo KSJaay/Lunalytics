@@ -6,6 +6,8 @@ import { observer } from 'mobx-react-lite';
 import { MdGroupAdd } from 'react-icons/md';
 import { FaTrashCan } from 'react-icons/fa6';
 import { Button, Tooltip } from '@lunalytics/ui';
+import LocalizedDayjs from 'dayjs/plugin/localizedFormat';
+dayjs.extend(LocalizedDayjs);
 
 // import local files
 import useFetch from '../../../hooks/useFetch';
@@ -89,6 +91,7 @@ const ManageInvites = () => {
         }}
       >
         <Button
+          id="settings-invite-create-button"
           variant="flat"
           color="primary"
           onClick={() =>
@@ -115,13 +118,18 @@ const ManageInvites = () => {
           </div>
 
           {allInvites.map((invite) => (
-            <div className="settings-manage-invites-item" key={invite.token}>
+            <div
+              id={`settings-invite-item-${invite.token}`}
+              className="settings-manage-invites-item"
+              key={invite.token}
+            >
               <Tooltip text={'Copy invite code'}>
                 <div
+                  id={`settings-invite-item-copy-${invite.token}`}
                   className="settings-invites-item-title"
                   onClick={() =>
                     clipboard(
-                      `${currentUrl}/register/?invite=${invite.token}`,
+                      `${currentUrl}/workspace/join?inviteCode=${invite.token}`,
                       'Invite code has been copied to clipboard!'
                     )
                   }
@@ -139,12 +147,14 @@ const ManageInvites = () => {
               </div>
               <div className="settings-invites-buttons-container">
                 <div
+                  id={`settings-invite-item-toggle-pause-${invite.token}`}
                   className="settings-invites-button"
                   onClick={() => handlePause(invite.token, invite.paused)}
                 >
                   {invite.paused ? <FaPlay size={18} /> : <FaPause size={18} />}
                 </div>
                 <div
+                  id={`settings-invite-item-delete-${invite.token}`}
                   className="settings-invites-button"
                   onClick={() => handleDelete(invite.token)}
                 >

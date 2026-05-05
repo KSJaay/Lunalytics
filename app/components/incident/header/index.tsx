@@ -112,6 +112,7 @@ const HomeIncidentHeader = ({
         {isEditor && incident ? (
           <>
             <div
+              id="incident-header-archive-button"
               onClick={() =>
                 openModal(
                   <ArchiveIncidentModal
@@ -124,6 +125,7 @@ const HomeIncidentHeader = ({
               <MdArchive style={{ width: '20px', height: '20px' }} />
             </div>
             <div
+              id="incident-header-delete-button"
               onClick={() =>
                 openModal(
                   <DeleteIncidentModal
@@ -138,7 +140,10 @@ const HomeIncidentHeader = ({
           </>
         ) : null}
         {rightChildren ? (
-          <div onClick={() => setIsInfoOpen?.(!isInfoOpen)}>
+          <div
+            id="incident-header-info-button"
+            onClick={() => setIsInfoOpen?.(!isInfoOpen)}
+          >
             <LuInfo size={20} />
           </div>
         ) : null}

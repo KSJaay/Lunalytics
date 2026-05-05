@@ -114,6 +114,7 @@ const HomeStatusPageHeader = ({
         <div className="navigation-header-buttons">
           {isEditor ? (
             <div
+              id="status-page-header-delete-button"
               onClick={() =>
                 openModal(
                   <StatusDeleteModal
@@ -128,7 +129,10 @@ const HomeStatusPageHeader = ({
             </div>
           ) : null}
           {rightChildren ? (
-            <div onClick={() => setIsInfoOpen?.(!isInfoOpen)}>
+            <div
+              id="status-page-header-info-button"
+              onClick={() => setIsInfoOpen?.(!isInfoOpen)}
+            >
               <LuInfo size={20} />
             </div>
           ) : null}
@@ -141,6 +145,7 @@ const HomeStatusPageHeader = ({
 
           return (
             <div
+              id={`status-page-menu-${id.toLowerCase()}-tab`}
               key={id}
               style={{
                 borderBottom: isActive
