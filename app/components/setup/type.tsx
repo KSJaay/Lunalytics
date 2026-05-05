@@ -32,13 +32,18 @@ const SetupTypeForm = () => {
   return (
     <>
       <div className="auth-setup-type-container">
-        <div className="auth-setup-type-content" onClick={handleSubmit}>
+        <div
+          id="setup-type-basic-selector"
+          className="auth-setup-type-content"
+          onClick={handleSubmit}
+        >
           <div className="auth-setup-type-title">Basic Setup</div>
           <div className="auth-setup-type-subtitle">
             Continue with default settings. This will use SQLite for database
           </div>
         </div>
         <div
+          id="setup-type-advanced-selector"
           className="auth-setup-type-content"
           onClick={() => handlePageChange(page.next)}
         >

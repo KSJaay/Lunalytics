@@ -13,10 +13,20 @@ const ArchiveIncidentModal = ({
       size="xs"
       actions={
         <>
-          <Button color="green" variant="flat" onClick={closeModal}>
+          <Button
+            id="incident-archive-modal-cancel-button"
+            color="green"
+            variant="flat"
+            onClick={closeModal}
+          >
             Cancel
           </Button>
-          <Button color="red" variant="flat" onClick={handleArchive}>
+          <Button
+            id="incident-archive-modal-confirm-button"
+            color="red"
+            variant="flat"
+            onClick={handleArchive}
+          >
             Archive
           </Button>
         </>

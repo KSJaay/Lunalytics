@@ -58,6 +58,7 @@ const HomeMonitorsList = ({
         key={monitor.monitorId}
       >
         <div
+          id={`home-monitors-list-item-${monitor.monitorId}`}
           className={classes}
           onClick={() => setActiveMonitor(monitor.monitorId)}
         >

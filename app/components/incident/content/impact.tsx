@@ -61,6 +61,7 @@ const IncidentContentImpact = () => {
         toggleDropdown={toggleDropdown}
       >
         <Dropdown.Trigger
+          id="incident-content-impact-dropdown-trigger"
           asInput
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
@@ -72,6 +73,7 @@ const IncidentContentImpact = () => {
         <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
           {impactTypes.map((type) => (
             <Dropdown.Item
+              id={`incident-content-impact-${type.id.toLowerCase()}-item`}
               key={type.id}
               style={{ color: type.color }}
               onClick={() => updateIncidentImpact(type.id)}

@@ -80,6 +80,7 @@ const SettingsAccountDesktopItem = ({
         )}
       </div>
       <span
+        id={`settings-account-${id}-edit-button`}
         onClick={() => {
           const content = selectModal(
             id,

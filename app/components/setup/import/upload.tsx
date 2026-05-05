@@ -27,6 +27,7 @@ const SetupImportUpload = () => {
         <div className="source-switch">
           {['json', 'sqlite', 'mariadb'].map((type) => (
             <button
+              id={`setup-import-source-${type}-tab`}
               key={type}
               className={source === type ? 'active' : ''}
               onClick={() => {
@@ -42,6 +43,7 @@ const SetupImportUpload = () => {
         {(source === 'json' || source === 'sqlite') && (
           <label className={`file-input ${file ? 'has-file' : ''}`}>
             <input
+              id="setup-import-file-input"
               type="file"
               accept={source === 'json' ? '.json' : '.db,.sqlite,.sqlite3'}
               onChange={onFileChange}
@@ -70,6 +72,7 @@ const SetupImportUpload = () => {
         )}
 
         <Button
+          id="setup-import-continue-button"
           fullWidth
           disabled={!file && source !== 'mariadb'}
           variant="flat"

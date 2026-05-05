@@ -34,7 +34,7 @@ const SettingsTab = ({
           key={name}
           className={`settings-tab-text ${active ? 'active' : ''}`}
           onClick={() => handleTabUpdate(name as SettingsTabNames)}
-          id={name.replace(' ', '-')}
+          id={`${name.toLowerCase().replace(/\s+/g, '-')}-tab`}
         >
           {name}
         </div>

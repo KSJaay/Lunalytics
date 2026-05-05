@@ -125,6 +125,7 @@ const StatusConfigureLayout = () => {
 
       <div style={{ display: 'flex', gap: '12px', marginTop: 'auto' }}>
         <Button
+          id="status-configure-layout-reorder-button"
           fullWidth
           color="gray"
           onClick={() => {
@@ -141,6 +142,7 @@ const StatusConfigureLayout = () => {
         </Button>
 
         <Button
+          id="status-configure-layout-add-component-button"
           fullWidth
           outline="primary"
           onClick={() => {
