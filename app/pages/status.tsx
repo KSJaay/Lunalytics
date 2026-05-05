@@ -219,6 +219,23 @@ const StatusPage = ({ id }: { id?: string }) => {
                 .map((monitorId) => {
                   const monitor = statusPage?.monitors[monitorId];
                   if (!monitor || monitor.paused) return null;
+                  const monitorSettings = item.monitors.find(
+                    (m) => m.id === monitorId
+                  );
+
+                  const monitorIncidents = statusPage.incidents.filter(
+                    (incident) => incident?.monitorIds?.includes(monitorId)
+                  );
+
+                  monitor.incidentCount = monitorIncidents.length;
+
+                  if (monitorSettings) {
+                    monitor.graphType = monitorSettings?.graphType;
+                    monitor.showPing = monitorSettings?.showPing;
+                  } else {
+                    monitor.graphType = 'Basic';
+                    monitor.showPing = false;
+                  }
                   return monitor;
                 })
                 .filter(Boolean);

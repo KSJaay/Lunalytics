@@ -37,6 +37,7 @@ const StatusPageMetricsSeparate = ({
                 title={monitor.title || monitor.name}
                 showPing={monitor.showPing}
                 heartbeats={heartbeatsList}
+                incidentCount={monitor.incidentCount}
               />
             );
           }

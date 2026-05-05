@@ -57,12 +57,12 @@ const signInOrRegisterUsingAuth = async (request, response) => {
       await registerSsoUser(data);
     }
 
-    userExists = await getUserByEmail(email);
+    userExists = await getUserByEmail(data.email);
 
     const userAgent = request.headers['user-agent'];
     const agentData = parseUserAgent(userAgent);
 
-    const sessionToken = await createUserSession(email, agentData.device, {
+    const sessionToken = await createUserSession(data.email, agentData.device, {
       ...agentData.data,
       provider,
       accountId: id,
