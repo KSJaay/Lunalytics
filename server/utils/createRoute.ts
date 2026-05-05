@@ -70,7 +70,10 @@ export function createRoute<
     middlewares,
   }: RouteConfig<TParams, TQuery, TBody, TResponse>
 ) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    process.env.NODE_ENV !== 'test'
+  ) {
     const openApiPath = path.replace(/:([a-zA-Z0-9_]+)/g, '{$1}');
 
     if (!fs.existsSync(openAPIJsonPath)) {

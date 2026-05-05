@@ -7,16 +7,18 @@ import initialiseMonitorsRoute from './monitors.js';
 import initialiseMembersRoute from './members.js';
 import initialiseMembersMeRoute from './members-@me.js';
 import initialiseCreateRoute from './create.js';
+import initialiseJoinRoute from './join.js';
 
 const workspaceRouter = Router();
 
+initialiseApiTokensRoute(workspaceRouter);
 initialiseCreateRoute(workspaceRouter);
+initialiseIncidentsRoute(workspaceRouter);
 initialiseMembersMeRoute(workspaceRouter);
 initialiseMembersRoute(workspaceRouter);
 initialiseMonitorsRoute(workspaceRouter);
 initialiseNotificationsRoute(workspaceRouter);
-initialiseIncidentsRoute(workspaceRouter);
 initialiseStatusPagesRoute(workspaceRouter);
-initialiseApiTokensRoute(workspaceRouter);
+initialiseJoinRoute(workspaceRouter);
 
 export default workspaceRouter;

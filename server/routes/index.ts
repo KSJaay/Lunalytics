@@ -22,6 +22,7 @@ import { csrfProtection } from '../middleware/csrf.js';
 import getAllDockerContainers from '../middleware/getDockerContainers.js';
 import createPushHeartbeat from '../middleware/createPushHeartbeat.js';
 import authorizeWorkspace from '../middleware/authorizeWorkspace.js';
+import adminRouter from './admin/index.js';
 
 const gamesList = Object.entries(games)
   .map(([key, value]) => ({
@@ -39,13 +40,8 @@ const initialiseRoutes = async (app: Application) => {
   app.use('/api/status', statusApiRoutes);
   app.post('/api/push', createPushHeartbeat);
   app.use(authorization);
-  app.use(csrfProtection);
-  app.use(
-    '/api/admin',
-    (_request: Request, _response: Response, next: NextFunction) => {
-      return next();
-    }
-  );
+  // app.use(csrfProtection);
+  app.use(adminRouter);
   app.use(userRoutes);
   app.use(workspaceRoutes);
   app.use(authorizeWorkspace);
