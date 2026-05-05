@@ -19,22 +19,22 @@ import initialisePlatformProviderRoute from './platform-provider.js';
 const authRouter = Router();
 
 initialiseSetupExistsRoute(authRouter);
+initialiseConfigRoute(authRouter);
+initialiseConfigUpdateRoute(authRouter);
+initialiseUserExistsRoute(authRouter);
+initialiseLogoutRoute(authRouter);
 
 authRouter.use('/api/auth', authRateLimiter);
 
-initialiseConfigUpdateRoute(authRouter);
-initialiseConfigRoute(authRouter);
 initialiseCallbackTwitchRoute(authRouter);
 initialiseCallbackSlackRoute(authRouter);
 initialiseCallbackGoogleRoute(authRouter);
 initialiseCallbackGithubRoute(authRouter);
 initialiseCallbackDiscordRoute(authRouter);
 initialiseCallbackCustomRoute(authRouter);
-initialiseUserExistsRoute(authRouter);
 initialiseRegisterRoute(authRouter);
 initialiseSetupRoute(authRouter);
 initialiseLoginRoute(authRouter);
-initialiseLogoutRoute(authRouter);
 initialisePlatformProviderRoute(authRouter);
 
 export default authRouter;

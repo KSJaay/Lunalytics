@@ -86,4 +86,31 @@ const createPostRequest = async (
   });
 };
 
-export { createGetRequest, createPostRequest };
+const createPutRequest = async (
+  path: string,
+  data: Partial<Record<string, any>> = {},
+  headers: Partial<Record<string, string>> = {},
+  params: Partial<Record<string, string>> = {}
+) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentParams = Object.fromEntries(urlParams.entries());
+  const mergedParams = { ...currentParams, ...params };
+
+  const csrfToken = getCsrfToken();
+
+  return axios({
+    method: 'PUT',
+    url: createURL(path),
+    params: mergedParams,
+    data,
+    headers: {
+      ...headers,
+      ...(csrfToken ? { 'x-csrf-token': csrfToken } : {}),
+    },
+    withCredentials: true,
+    timeout: 5000,
+    signal: AbortSignal.timeout(5000),
+  });
+};
+
+export { createGetRequest, createPostRequest, createPutRequest };

@@ -21,6 +21,7 @@ import { loadIcons } from './utils/icons.js';
 import { getVersionInfo, startVersionCheck } from './utils/checkVersion.js';
 import defaultPageMiddleware from './middleware/status/defaultPage.js';
 import getStatusPageUsingIdMiddleware from './middleware/status/statusPageUsingId.js';
+import { calculateMemberCountForWorkspaces } from './database/queries/user.js';
 
 const app = express();
 
@@ -40,6 +41,7 @@ const init = async () => {
     await cache.initialise();
     await statusCache.loadAllStatusPages(true);
     await initialiseCronJobs();
+    await calculateMemberCountForWorkspaces();
   }
 
   await loadIcons();

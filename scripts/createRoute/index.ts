@@ -12,6 +12,7 @@ const getUserInput = async () => {
       name: 'routeType',
       message: 'Select the type of route to create:',
       choices: [
+        { name: '/api/admin', value: 'admin' },
         { name: '/api/auth', value: 'auth' },
         { name: '/api/incident', value: 'incident' },
         { name: '/api/invites', value: 'invites' },

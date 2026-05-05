@@ -6,6 +6,41 @@ import {
 } from '../../../shared/utils/errors.js';
 import { createUserSession } from './session.js';
 import { oldPermsToFlags } from '../../../shared/permissions/oldPermsToFlags.js';
+import logger from '../../utils/logger.js';
+
+export const calculateMemberCountForWorkspaces = async () => {
+  try {
+    const client = await database.connect();
+
+    if (!client) {
+      logger.error('Workspace Member Count', {
+        message: 'No database connection available',
+      });
+      return;
+    }
+
+    const workspaces = await client('workspace').select('id');
+    for (const workspace of workspaces) {
+      const memberCount = await client('member')
+        .where({ workspaceId: workspace.id })
+        .count('email as count')
+        .first();
+
+      await client('workspace')
+        .where({ id: workspace.id })
+        .update({ memberCount: memberCount?.count || 0 });
+    }
+
+    logger.info('Workspace Member Count', {
+      message: 'Successfully calculated member counts for workspaces',
+    });
+  } catch (error: any) {
+    logger.error('Workspace Member Count', {
+      message: 'Error calculating member counts',
+      error: error?.message,
+    });
+  }
+};
 
 export const signInUser = async (email: string, password: string) => {
   const client = await database.connect();
@@ -47,6 +82,8 @@ export const registerUser = async (data: any) => {
     avatar: data.avatar,
     isVerified: data.isVerified || false,
   };
+
+  calculateMemberCountForWorkspaces();
 
   await client?.('user').insert(user);
   return user;

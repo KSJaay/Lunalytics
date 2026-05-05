@@ -26,7 +26,7 @@ const csrfProtection = (
     return next();
   }
 
-  if (request.headers.authorization) {
+  if (response.locals?.user?.isApiToken) {
     return next();
   }
 
