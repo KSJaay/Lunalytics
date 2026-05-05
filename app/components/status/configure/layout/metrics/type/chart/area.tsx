@@ -27,6 +27,8 @@ const StatusLayoutAreaChart = ({ heartbeats = defaultHeartbeats }) => {
           tickFormatter={(value) => {
             return dayjs(value).format('HH:mm');
           }}
+          interval="preserveStartEnd"
+          minTickGap={30}
         />
         <YAxis
           label={{
