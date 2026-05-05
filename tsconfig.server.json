@@ -16,6 +16,6 @@
 
     "allowJs": true
   },
-  "include": ["server", "shared"],
+  "include": ["server", "shared", "scripts"],
   "exclude": ["app", "dist", "node_modules"]
 }

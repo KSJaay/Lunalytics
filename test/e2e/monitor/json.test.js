@@ -6,8 +6,7 @@ describe('Monitor JSON', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
+      cy.apiLogin(email, password);
       cy.visit('/home');
     });
 
@@ -20,8 +19,7 @@ describe('Monitor JSON', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
+      cy.apiLogin(email, password);
       cy.visit('/home');
     });
 
@@ -45,8 +43,7 @@ describe('Monitor JSON', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
+      cy.apiLogin(email, password);
       cy.visit('/home');
     });
 
