@@ -36,7 +36,8 @@ const StatusLayoutLineChart = ({ heartbeats = defaultHeartbeats }) => {
           tickFormatter={(value) => {
             return dayjs(value).format('HH:mm');
           }}
-          interval={8}
+          interval="preserveStartEnd"
+          minTickGap={16}
         />
         <YAxis
           style={{ fill: 'var(--accent-200)' }}
