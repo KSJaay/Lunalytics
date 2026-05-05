@@ -105,7 +105,10 @@ class Status {
       }
     }
 
-    this.statusPages.set(statusPage.statusId, statusPage);
+    this.statusPages.set(statusPage.statusId, {
+      ...statusPage,
+      lastUpdated: new Date().toISOString(),
+    });
   }
 
   async addNewStatusPage(statusPage) {
@@ -131,7 +134,10 @@ class Status {
       }
     }
 
-    this.statusPages.set(statusPage.statusId, statusPage);
+    this.statusPages.set(statusPage.statusId, {
+      ...statusPage,
+      lastUpdated: new Date().toISOString(),
+    });
   }
 
   deleteStatusPage(statusId) {

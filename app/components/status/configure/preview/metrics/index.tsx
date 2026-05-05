@@ -44,6 +44,4 @@ const StatusPageMetrics = ({
 
 StatusPageMetrics.displayName = 'StatusPageMetrics';
 
-
-
 export default observer(StatusPageMetrics);

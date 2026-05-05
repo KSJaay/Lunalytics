@@ -49,3 +49,4 @@ next-env.d.ts
 *.sln
 *.sw?
 *_copy*
+_temp*
