@@ -1,40 +1,34 @@
 import '../../styles/pages/login.scss';
 
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Input } from '@lunalytics/ui';
 
-import { createPostRequest } from '../../services/axios';
+import { createPutRequest } from '../../services/axios';
 
 const WorkspaceJoinPage = () => {
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
+  const inviteCode = searchParams.get('inviteCode');
+
   const handleSubmit = async () => {
     try {
-      const workspaceName = (
-        document.getElementById('workspaceName') as HTMLInputElement
+      const inviteCode = (
+        document.getElementById('inviteCode') as HTMLInputElement
       ).value?.trim();
 
-      const workspaceIcon = (
-        document.getElementById('workspaceIcon') as HTMLInputElement
-      ).value?.trim();
-
-      if (!workspaceName) {
-        return toast.error('Please enter a workspace name.');
+      if (!inviteCode) {
+        return toast.error('Please enter an invite code.');
       }
 
-      if (workspaceName.length > 32) {
-        return toast.error('Workspace name must be less than 32 characters.');
-      }
-
-      await createPostRequest('/api/workspace/create', {
-        name: workspaceName,
-        icon: workspaceIcon,
+      await createPutRequest('/api/workspace/join', {
+        inviteCode,
       });
 
       navigate('/home');
     } catch {
-      toast.error('Unable to create workspace. Please try again.');
+      toast.error('Unable to join workspace. Please try again.');
     }
   };
 
@@ -46,7 +40,12 @@ const WorkspaceJoinPage = () => {
           Enter your workspace invite code to join an existing workspace.
         </div>
 
-        <Input id="workspaceName" title="Invite Code" isRequired />
+        <Input
+          id="inviteCode"
+          title="Invite Code"
+          defaultValue={inviteCode || ''}
+          isRequired
+        />
 
         <div
           className="login-text-forgot-password"

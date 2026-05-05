@@ -43,7 +43,7 @@ const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
 
       if (invite?.token) {
         await clipboard(
-          `${currentUrl}/register/?invite=${invite.token}`,
+          `${currentUrl}/workspace/join?inviteCode=${invite.token}`,
           'Invite code has been copied to clipboard!'
         );
       } else {
