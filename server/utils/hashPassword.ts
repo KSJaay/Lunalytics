@@ -1,5 +1,5 @@
 import { hashSync, compareSync } from 'bcryptjs';
-const saltRounds = 10;
+const saltRounds = process.env.NODE_ENV === 'test' ? 1 : 10;
 
 /**
  * Hash a password

@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import MenuSidePanel from './sidePanel';
 import { IoArrowBack } from 'react-icons/io5';
 import useModalContext from '../../../context/modal';
+import SettingsLogout from '../../navigation/left/settings/logout';
 
 const Menu = observer(
   ({
@@ -19,10 +20,11 @@ const Menu = observer(
         id: string;
         title: string;
         component?: React.FC;
+        isModal: boolean;
       }>;
     }>;
   }) => {
-    const { closeSettings } = useModalContext();
+    const { closeSettings, openModal } = useModalContext();
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
     const [isMobileWindow, setIsMobileWindow] = useState<boolean>(false);
 
@@ -55,6 +57,10 @@ const Menu = observer(
 
     const ActiveComponent =
       activeItem?.component || (() => <div>Select an item</div>);
+
+    if (activeItem && activeItem.isModal) {
+      return openModal(<SettingsLogout />);
+    }
 
     return (
       <div className="menu">

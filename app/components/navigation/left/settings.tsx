@@ -1,6 +1,7 @@
 // import node_modules
 import { observer } from 'mobx-react-lite';
 import { IoMdHelpCircle } from 'react-icons/io';
+import { IoLogOut } from 'react-icons/io5';
 import { IoColorPalette, IoKey } from 'react-icons/io5';
 import { FaPaperPlane, FaUserCircle, FaUsers } from 'react-icons/fa';
 
@@ -12,6 +13,7 @@ import ManageApiTokens from '../../settings/api';
 import ManageInvites from '../../settings/invite';
 import SettingsAccount from '../../settings/account';
 import useMemberContext from '../../../context/member';
+import SettingsLogout from '../../navigation/left/settings/logout';
 import SettingsPersonalisation from '../../settings/personalisation';
 import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 
@@ -70,6 +72,14 @@ const settingTabs = [
         permission: null,
         component: SettingAbout,
         icon: <IoMdHelpCircle />,
+      },
+      {
+        id: 'sign-out',
+        title: 'Log Out',
+        permission: null,
+        component: SettingsLogout,
+        icon: <IoLogOut />,
+        isModal: true,
       },
     ],
   },
