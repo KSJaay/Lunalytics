@@ -1,5 +1,5 @@
 // import type definitions
-import type { Application, NextFunction, Request, Response } from 'express';
+import type { Application, Request, Response } from 'express';
 
 // import node modules
 import { games } from 'gamedig';
@@ -18,7 +18,7 @@ import statusPagesRoutes from './status-pages/index.js';
 import notificationRoutes from './notification/index.js';
 import fetchIcons from '../middleware/fetchIcons.js';
 import authorization from '../middleware/authorization.js';
-import { csrfProtection } from '../middleware/csrf.js';
+// import { csrfProtection } from '../middleware/csrf.js';
 import getAllDockerContainers from '../middleware/getDockerContainers.js';
 import createPushHeartbeat from '../middleware/createPushHeartbeat.js';
 import authorizeWorkspace from '../middleware/authorizeWorkspace.js';

@@ -13,6 +13,10 @@ function checkObjectAgainstSchema(
   schema: Record<string, SchemaRequirement>,
   fullKey: string = ''
 ): boolean {
+  if (!object || typeof object !== 'object' || Array.isArray(object)) {
+    throw new ObjectSchemaValidatorError('Invalid object provided: ' + fullKey);
+  }
+
   for (const key in object) {
     // If key doesn't exist then throw an error
 

@@ -53,6 +53,7 @@ const initialiseRoute = (router: Router) => {
         await createMember({
           email,
           workspaceId: inviteExists.workspaceId,
+          permission: inviteExists.permission,
         });
 
         await increaseInviteUses(inviteCode);

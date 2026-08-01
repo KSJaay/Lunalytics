@@ -7,6 +7,7 @@ import { createMember } from '../../database/queries/member.js';
 import { createWorkspace } from '../../database/queries/workspace.js';
 import { setClientSideCookie } from '../../../shared/utils/cookies.js';
 import { WORKSPACE_ID_COOKIE } from '../../../shared/constants/cookies.js';
+import { MemberPermissionBits } from '../../../shared/permissions/bitFlags.js';
 
 const createWorkspaceMiddleware = async (
   request: Request,
@@ -34,6 +35,7 @@ const createWorkspaceMiddleware = async (
     await createMember({
       email: response.locals.user.email,
       workspaceId: workspace.id,
+      permission: MemberPermissionBits.ADMINISTRATOR,
     });
 
     setClientSideCookie(response, WORKSPACE_ID_COOKIE, workspace.id);

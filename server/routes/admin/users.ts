@@ -14,7 +14,7 @@ const initialiseRoute = (router: Router) => {
     validations: {},
     responses: [],
     middlewares: [
-      async (request, response, next) => {
+      async (_request, response) => {
         const users = await fetchApplicationUsers();
 
         return response.status(200).json({ users });

@@ -18,7 +18,7 @@ const createApiTokenMiddleware = async (
       permission,
     });
 
-    if (isInvalid) {
+    if (isInvalid.isValidationError) {
       return response.status(400).send({
         message: isInvalid,
       });

@@ -1,105 +1,117 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Loading from '../components/ui/loading';
-import useFetch from '../hooks/useFetch';
-import { fetchMonitorById } from '../services/monitor/fetch';
 import { observer } from 'mobx-react-lite';
+import Loading from '../components/ui/loading';
+import { fetchMonitorById } from '../services/monitor/fetch';
 import { createGetRequest } from '../services/axios';
 import useNotificationContext from '../context/notifications';
-import useUserContext from '../context/user';
 import useGlobalContext from '../context/global';
 import useIncidentContext from '../context/incidents';
 import useStatusContext from '../context/status';
-import useModalContext from '../context/modal';
 
-const pageConfigs = [
+type Stores = {
+  notificationStore: ReturnType<typeof useNotificationContext>;
+  globalStore: ReturnType<typeof useGlobalContext>;
+  incidentStore: ReturnType<typeof useIncidentContext>;
+  statusStore: ReturnType<typeof useStatusContext>;
+};
+
+type PageConfig = {
+  path: string;
+  url: string;
+  hasLoaded: (s: Stores) => boolean;
+  setData: (s: Stores, data: any) => void;
+};
+
+const pageConfigs: PageConfig[] = [
   {
     path: '/incidents',
-    hasLoaded: (store: any) => store.incidentStore.hasLoadedIncidents,
-    setData: (store: any, data: any) => store.incidentStore.setIncidents(data),
     url: '/api/workspace/incidents',
-    loadingUrl: '/incidents',
+    hasLoaded: (s) => s.incidentStore.hasLoadedIncidents,
+    setData: (s, data) => s.incidentStore.setIncidents(data),
   },
   {
     path: '/home',
-    hasLoaded: (store: any) => store.globalStore.hasLoadedMonitors,
-    setData: (store: any, data: any) => {
-      store.globalStore.setMonitors(data);
-      store.globalStore.setTimeouts(data, fetchMonitorById);
-    },
     url: '/api/workspace/monitors',
-    loadingUrl: '/home',
+    hasLoaded: (s) => s.globalStore.hasLoadedMonitors,
+    setData: (s, data) => {
+      s.globalStore.setMonitors(data);
+      s.globalStore.setTimeouts(data, fetchMonitorById);
+    },
   },
   {
     path: '/notifications',
-    hasLoaded: (store: any) => store.notificationStore.hasLoadedNotifications,
-    setData: (store: any, data: any) =>
-      store.notificationStore.setNotifications(data),
     url: '/api/workspace/notifications',
-    loadingUrl: '/notifications',
+    hasLoaded: (s) => s.notificationStore.hasLoadedNotifications,
+    setData: (s, data) => s.notificationStore.setNotifications(data),
   },
   {
     path: '/status-pages',
-    hasLoaded: (store: any) => store.statusStore.hasLoadedStatusPages,
-    setData: (store: any, data: any) => store.statusStore.setStatusPages(data),
     url: '/api/workspace/status-pages',
-    loadingUrl: '/status-pages',
+    hasLoaded: (s) => s.statusStore.hasLoadedStatusPages,
+    setData: (s, data) => s.statusStore.setStatusPages(data),
   },
 ];
 
-function getPageConfig(pathname: string) {
-  return pageConfigs.find((cfg) => pathname.startsWith(cfg.path));
-}
+const getPageConfig = (pathname: string): PageConfig =>
+  pageConfigs.find((cfg) => pathname.startsWith(cfg.path)) ?? pageConfigs[0];
 
 const WorkspacePrefetcher = observer(
   ({ children }: { children: React.ReactNode }) => {
     const location = useLocation();
-
-    const contextStore = {
+    const stores: Stores = {
       notificationStore: useNotificationContext(),
-      userStore: useUserContext(),
       globalStore: useGlobalContext(),
       incidentStore: useIncidentContext(),
       statusStore: useStatusContext(),
-      modalStore: useModalContext(),
     };
 
-    const [_, setPrefetched] = useState(false);
-    const prefetchedRef = useRef(false);
+    const storesRef = useRef(stores);
+    storesRef.current = stores;
 
-    const currentConfig = useMemo(
-      () => getPageConfig(location.pathname) || pageConfigs[0],
-      [location.pathname]
-    );
+    const inFlight = useRef(new Map<string, Promise<void>>());
+    const [, forceRender] = useState(0);
 
-    const { isLoading } = useFetch({
-      hasFetched: currentConfig.hasLoaded(contextStore),
-      url: currentConfig.url,
-      onSuccess: (data) => {
-        currentConfig.setData(contextStore, data);
-      },
-      onFailure: () => {},
-    });
-    3;
+    const ensureFetched = (cfg: PageConfig): Promise<void> => {
+      if (cfg.hasLoaded(storesRef.current)) return Promise.resolve();
+      const existing = inFlight.current.get(cfg.url);
+      if (existing) return existing;
+
+      const promise = createGetRequest(cfg.url)
+        .then((res) => {
+          cfg.setData(storesRef.current, res?.data);
+        })
+        .catch(() => {})
+        .finally(() => {
+          inFlight.current.delete(cfg.url);
+        });
+
+      inFlight.current.set(cfg.url, promise);
+      return promise;
+    };
+
+    const currentConfig = getPageConfig(location.pathname);
+    const currentLoaded = currentConfig.hasLoaded(stores);
 
     useEffect(() => {
-      if (!isLoading && !prefetchedRef.current) {
-        prefetchedRef.current = true;
-        setPrefetched(true);
-        pageConfigs.forEach((cfg) => {
-          if (cfg !== currentConfig && !cfg.hasLoaded(contextStore)) {
-            createGetRequest(cfg.url)
-              .then((data) => {
-                cfg.setData(contextStore, data?.data);
-              })
-              .catch(() => {});
-          }
-        });
-      }
-    }, [isLoading, currentConfig, contextStore]);
+      pageConfigs.forEach((cfg) => {
+        ensureFetched(cfg);
+      });
+    }, []);
 
-    if (isLoading) {
-      return <Loading asContainer activeUrl={currentConfig.loadingUrl} />;
+    useEffect(() => {
+      if (currentLoaded) return;
+      let cancelled = false;
+      ensureFetched(currentConfig).then(() => {
+        if (!cancelled) forceRender((n) => n + 1);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, [currentConfig, currentLoaded]);
+
+    if (!currentLoaded) {
+      return <Loading asContainer activeUrl={currentConfig.path} />;
     }
 
     return children;

@@ -80,7 +80,10 @@ export const registerUser = async (data: any) => {
     displayName: data.displayName,
     password: hashedPassword,
     avatar: data.avatar,
+    permission: data.permission || 0,
     isVerified: data.isVerified || false,
+    isOwner: data.isOwner || false,
+    created_at: data.created_at || new Date().toISOString(),
   };
 
   calculateMemberCountForWorkspaces();
@@ -135,7 +138,8 @@ export const getUserByEmail = async (email: string) => {
       'isVerified',
       'created_at',
       'sso',
-      'settings'
+      'settings',
+      'permission'
     )
     .first();
 

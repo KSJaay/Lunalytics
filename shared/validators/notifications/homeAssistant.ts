@@ -86,21 +86,31 @@ export interface HomeAssistantOutput {
 
 const zodHomeAssistant = zod
   .object({
-    friendlyName: zod.string().regex(friendlyNameRegex, {
-      message: 'common.error.invalidFriendlyNameHomeAssistant',
-    }),
-    messageType: zod.string().refine((val) => messageTypes.includes(val), {
-      message: 'common.error.invalidMessageType',
-    }),
-    token: zod.string().regex(tokenRegex, {
-      message: 'common.error.invalidAccessToken',
-    }),
-    data: zod.object({
-      homeAssistantUrl: zod.string().regex(homeAssistantUrlRegex, {
-        message: 'common.error.invalidHomeAssistantUrl',
+    friendlyName: zod
+      .string({ error: 'common.error.missingFriendlyNameHomeAssistant' })
+      .regex(friendlyNameRegex, {
+        message: 'common.error.invalidFriendlyNameHomeAssistant',
       }),
+    messageType: zod
+      .string({ error: 'common.error.missingMessageType' })
+      .refine((val) => messageTypes.includes(val), {
+        message: 'common.error.invalidMessageType',
+      }),
+    token: zod
+      .string({ error: 'common.error.missingAccessToken' })
+      .regex(tokenRegex, {
+        message: 'common.error.invalidAccessToken',
+      }),
+    data: zod.object({
+      homeAssistantUrl: zod
+        .string({ error: 'common.error.missingHomeAssistantUrl' })
+        .regex(homeAssistantUrlRegex, {
+          message: 'common.error.invalidHomeAssistantUrl',
+        }),
       homeAssistantNotificationService: zod
-        .string()
+        .string({
+          error: 'common.error.missingHomeAssistantNotificationService',
+        })
         .regex(homeAssistantNotificationServiceRegex, {
           message: 'common.error.invalidHomeAssistantNotificationService',
         }),

@@ -44,8 +44,8 @@ const SettingsAccountPasswordModal = ({
   const handleOnBlur = (key: string, value: any) => {
     const isInvalidPassword = validators.auth.password(value);
 
-    if (isInvalidPassword && isInvalidPassword.password) {
-      handleErrors(key, isInvalidPassword.password || null);
+    if (isInvalidPassword.isValidationError) {
+      handleErrors(key, isInvalidPassword.message || null);
     }
   };
 

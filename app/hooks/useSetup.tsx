@@ -92,7 +92,7 @@ export const useSetup = (
           values.inputs.password
         );
 
-        if (isInvalid) {
+        if (isInvalid?.isValidationError) {
           error = true;
           break;
         }

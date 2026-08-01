@@ -48,7 +48,7 @@ const HomeNotificationHeader = ({
   const handleDelete = async () => {
     try {
       const { id } = notification;
-      await createGetRequest('/api/notifications/delete', {
+      await createGetRequest('/api/notification/delete', {
         notificationId: id,
       });
 
@@ -65,7 +65,7 @@ const HomeNotificationHeader = ({
 
   const testNotification = async () => {
     try {
-      await createPostRequest('/api/notifications/test', notification);
+      await createPostRequest('/api/notification/test', notification);
       toast.success('Test notification sent successfully');
     } catch (error) {
       console.error('Error sending test notification:', error);

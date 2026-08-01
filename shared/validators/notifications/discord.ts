@@ -78,21 +78,28 @@ export interface DiscordOutput {
 
 const zodDiscord = zod
   .object({
-    messageType: zod.enum(['basic', 'pretty', 'nerdy']),
-    friendlyName: zod.string().regex(friendlyNameRegex, {
-      message:
-        'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.',
-    }),
-    token: zod.string().regex(tokenRegex, {
-      message: 'Invalid Discord Webhook URL',
-    }),
+    messageType: zod
+      .string({ error: 'common.error.missingMessageType' })
+      .refine((val) => ['basic', 'pretty', 'nerdy'].includes(val), {
+        message: 'common.error.invalidMessageType',
+      }),
+    friendlyName: zod
+      .string({ error: 'common.error.missingFriendlyNameDiscord' })
+      .regex(friendlyNameRegex, {
+        message: 'common.error.invalidFriendlyNameDiscord',
+      }),
+    token: zod
+      .string({ error: 'common.error.missingDiscordWebhookUrl' })
+      .regex(tokenRegex, {
+        message: 'common.error.invalidDiscordWebhookUrl',
+      }),
     data: zod
       .object({
         textMessage: zod.string().optional(),
         username: zod
           .string()
           .regex(usernameRegex, {
-            message: 'Invalid Discord Webhook Username',
+            message: 'common.error.invalidDiscordWebhookUsername',
           })
           .optional(),
       })

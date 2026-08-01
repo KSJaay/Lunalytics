@@ -67,7 +67,7 @@ const TokenValidator = ({
   name,
   permission,
   isEdit = false,
-}: TokenValidatorInput): string | false =>
+}: TokenValidatorInput) =>
   checkWithZod(zodTokenValidator, {
     token,
     name,

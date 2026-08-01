@@ -180,7 +180,9 @@ const monitorAdd = async (request: Request, response: Response) => {
       cert,
     });
 
-    await statusCache.loadMonitorData(monitor.monitorId).catch(() => false);
+    await statusCache
+      .loadMonitorData(monitor.monitorId, monitor.workspaceId, monitor)
+      .catch(() => false);
 
     return response.json(monitor);
   } catch (error) {

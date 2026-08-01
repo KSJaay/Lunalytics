@@ -7,7 +7,7 @@ const setupValidators = {
   email: (value: string = '', setErrors: SetErrorsFn): boolean => {
     const isInvalid = validators.auth.email(value);
 
-    if (isInvalid) {
+    if (isInvalid?.isValidationError) {
       setErrors(isInvalid);
       return true;
     }
@@ -19,7 +19,7 @@ const setupValidators = {
   username: (value: string = '', setErrors: SetErrorsFn): boolean => {
     const isInvalid = validators.auth.username(value);
 
-    if (isInvalid) {
+    if (isInvalid?.isValidationError) {
       setErrors(isInvalid);
       return true;
     }
@@ -31,7 +31,7 @@ const setupValidators = {
   password: (value: string = '', setErrors: SetErrorsFn): boolean => {
     const isInvalid = validators.auth.password(value);
 
-    if (isInvalid) {
+    if (isInvalid?.isValidationError) {
       setErrors(isInvalid);
       return true;
     }

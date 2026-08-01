@@ -11,6 +11,12 @@ const handleChangePassword = async ({
   repeatPassword,
   handleErrors,
   closeModal,
+}: {
+  currentPassword: string;
+  newPassword: string;
+  repeatPassword: string;
+  handleErrors: (key: string, error: string) => void;
+  closeModal: () => void;
 }) => {
   try {
     if (newPassword !== repeatPassword) {
@@ -19,8 +25,8 @@ const handleChangePassword = async ({
 
     const isInvalid = validators.auth.password(newPassword);
 
-    if (isInvalid) {
-      return handleErrors('new', isInvalid.password);
+    if (isInvalid.isValidationError) {
+      return handleErrors('new', isInvalid.message);
     }
 
     const query = await createPostRequest('/api/user/update/password', {

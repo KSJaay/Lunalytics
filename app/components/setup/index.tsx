@@ -39,6 +39,11 @@ const SetupForm = () => {
           if (error?.response?.data?.errorType === 'ownerExists') {
             return navigate('/login');
           }
+
+          if (error?.response?.data?.general) {
+            toast.error(error?.response?.data?.general);
+          }
+
           return setErrors(error?.response?.data);
         }
 

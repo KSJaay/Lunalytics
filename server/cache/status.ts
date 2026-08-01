@@ -127,7 +127,7 @@ class Status {
     }
 
     const heartbeats = await fetchDailyHeartbeats(
-      monitorCacheId,
+      monitor.monitorId,
       monitor.workspaceId
     );
     this.heartbeats.set(monitorCacheId, heartbeats);

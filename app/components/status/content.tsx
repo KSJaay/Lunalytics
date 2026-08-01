@@ -24,7 +24,13 @@ const StatusConfigureContent = ({ currentTab, showActionBar = true }) => {
 
   const showSaveActionBar = useMemo(() => {
     return (
-      JSON.stringify({ settings, layout: layoutItems }) !==
+      JSON.stringify({
+        settings,
+        layout: layoutItems.map((item) => {
+          delete item.isMinimized;
+          return item;
+        }),
+      }) !==
       JSON.stringify({
         settings: statusPage?.settings,
         layout: statusPage?.layout,

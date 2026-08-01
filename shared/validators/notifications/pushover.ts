@@ -101,19 +101,27 @@ export interface PushoverOutput {
 
 const zodPushover = zod
   .object({
-    friendlyName: zod.string().regex(friendlyNameRegex, {
-      message: 'common.error.invalidFriendlyNamePushover',
-    }),
-    messageType: zod.string().refine((val) => messageTypes.includes(val), {
-      message: 'common.error.invalidMessageType',
-    }),
-    token: zod.string().min(1, {
-      message: 'common.error.invalidPushoverApiToken',
-    }),
-    data: zod.object({
-      userKey: zod.string().min(1, {
-        message: 'common.error.invalidPushoverUserKey',
+    friendlyName: zod
+      .string({ error: 'common.error.missingFriendlyNamePushover' })
+      .regex(friendlyNameRegex, {
+        message: 'common.error.invalidFriendlyNamePushover',
       }),
+    messageType: zod
+      .string({ error: 'common.error.missingMessageType' })
+      .refine((val) => messageTypes.includes(val), {
+        message: 'common.error.invalidMessageType',
+      }),
+    token: zod
+      .string({ error: 'common.error.missingPushoverApiToken' })
+      .min(1, {
+        message: 'common.error.invalidPushoverApiToken',
+      }),
+    data: zod.object({
+      userKey: zod
+        .string({ error: 'common.error.missingPushoverUserKey' })
+        .min(1, {
+          message: 'common.error.invalidPushoverUserKey',
+        }),
       device: zod.string().optional(),
       priority: zod
         .string()
@@ -142,6 +150,6 @@ const zodPushover = zod
   }));
 
 const Pushover = (input: PushoverInput): PushoverOutput =>
-  checkNotificationWithZod(input, zodPushover);
+  checkNotificationWithZod(zodPushover, input);
 
 export default Pushover;

@@ -28,8 +28,8 @@ const userUpdatePassword = async (request: Request, response: Response) => {
 
     const isInvalidPassword = validators.auth.password(newPassword);
 
-    if (isInvalidPassword) {
-      return response.status(400).send(isInvalidPassword);
+    if (isInvalidPassword.isValidationError) {
+      return response.status(400).send(isInvalidPassword.message);
     }
 
     await updateUserPassword(user.email, newPassword);

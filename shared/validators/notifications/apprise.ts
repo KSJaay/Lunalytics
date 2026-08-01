@@ -66,15 +66,23 @@ export interface AppriseOutput {
 
 const zodApprise = zod
   .object({
-    messageType: zod.string().refine((value) => messageTypes.includes(value), {
-      message: 'common.error.invalidMessageType',
-    }),
-    friendlyName: zod.string().regex(friendlyNameRegex, {
-      message: 'common.error.invalidFriendlyName',
-    }),
-    token: zod.string().min(1, 'common.error.invalidAppriseWebhookURL'),
+    messageType: zod
+      .string({ error: 'common.error.missingMessageType' })
+      .refine((value) => messageTypes.includes(value), {
+        message: 'common.error.invalidMessageType',
+      }),
+    friendlyName: zod
+      .string({ error: 'common.error.missingFriendlyNameApprise' })
+      .regex(friendlyNameRegex, {
+        message: 'common.error.invalidFriendlyName',
+      }),
+    token: zod
+      .string({ error: 'common.error.missingAppriseWebhookURL' })
+      .min(1, 'common.error.invalidAppriseWebhookURL'),
     data: zod.object({
-      urls: zod.string().min(1, 'common.error.invalidAppriseURLs'),
+      urls: zod
+        .string({ error: 'common.error.missingAppriseURLs' })
+        .min(1, 'common.error.invalidAppriseURLs'),
     }),
   })
   .transform((value) => ({

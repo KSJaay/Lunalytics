@@ -105,12 +105,6 @@ const setupData = {
         placeholder: 'https://lunalytics.xyz',
       },
       {
-        id: 'migrationType',
-        label: 'Migration Type',
-        type: 'dropdown',
-        options: ['automatic', 'manual'],
-      },
-      {
         id: 'retentionPeriod',
         title: 'Database Rentention (12h, 1d, 1w, 1m, 1y)',
         type: 'text',
