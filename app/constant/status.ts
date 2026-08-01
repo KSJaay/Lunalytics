@@ -10,17 +10,17 @@ export const defaultHeartbeats = Array.from({ length: 100 })
 export const defaultIncidents = [
   {
     message: "I've set my server on fire. Going to take 2 hours to fix it.",
-    createdAt: Date.now(),
+    created_at: Date.now(),
     status: 'Maintenance',
   },
   {
     message: 'Something is broken, but not sure where 🤷🏽',
-    createdAt: Date.now(),
+    created_at: Date.now(),
     status: 'Incident',
   },
   {
     message: "IT'S ALL GONE!! We're working on fixing it.",
-    createdAt: Date.now(),
+    created_at: Date.now(),
     status: 'Outage',
   },
 ];

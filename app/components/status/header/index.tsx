@@ -9,12 +9,13 @@ import { TbLayoutFilled } from 'react-icons/tb';
 import { FaCog, FaPalette, FaRegEye } from 'react-icons/fa';
 
 // import local files
-import useContextStore from '../../../context';
-import Role from '../../../../shared/permissions/role';
 import useCurrentUrl from '../../../hooks/useCurrentUrl';
 import StatusDeleteModal from '../../modal/status/delete';
 import { createPostRequest } from '../../../services/axios';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
+import useMemberContext from '../../../context/member';
+import useStatusContext from '../../../context/status';
+import useModalContext from '../../../context/modal';
 
 const menuOptions = [
   { id: 'Appearance', Icon: FaPalette },
@@ -23,29 +24,40 @@ const menuOptions = [
   { id: 'Preview', Icon: FaRegEye },
 ];
 
+interface HomeStatusPageHeaderProps {
+  isMobile?: boolean;
+  isInfoOpen?: boolean;
+  setIsInfoOpen?: (isOpen: boolean) => void;
+  rightChildren?: React.ReactNode;
+  activePage: string;
+  setActivePage: (page: string) => void;
+}
+
 const HomeStatusPageHeader = ({
-  isInfoOpen,
+  isInfoOpen = false,
   setIsInfoOpen,
   rightChildren,
   activePage,
   setActivePage,
   isMobile = false,
-}) => {
+}: HomeStatusPageHeaderProps) => {
+  const { openModal, closeModal } = useModalContext();
+
   const {
-    userStore: { user },
-    modalStore: { openModal, closeModal },
-    statusStore: {
-      deleteStatusPage,
-      activeStatusPage: statusPage,
-      setActiveStatusPage,
-    },
-  } = useContextStore();
+    deleteStatusPage,
+    activeStatusPage: statusPage,
+    setActiveStatusPage,
+  } = useStatusContext();
+
   const navigate = useNavigate();
 
   const baseUrl = useCurrentUrl();
 
-  const role = new Role('user', user.permission);
-  const isEditor = role.hasPermission(PermissionsBits.MANAGE_STATUS_PAGES);
+  const { member } = useMemberContext();
+
+  const isEditor = member?.role.hasPermission(
+    MemberPermissionBits.MANAGE_STATUS_PAGES
+  );
 
   const statusPageUrl =
     statusPage?.statusUrl === 'default'
@@ -56,8 +68,11 @@ const HomeStatusPageHeader = ({
     try {
       const statusPageId = statusPage?.statusId;
 
+      if (!statusPageId) return;
+
       await createPostRequest('/api/status-pages/delete', { statusPageId });
       setActiveStatusPage(null);
+
       deleteStatusPage(statusPageId);
       toast.success('Status page deleted successfully!');
       navigate('/status-pages');
@@ -99,6 +114,7 @@ const HomeStatusPageHeader = ({
         <div className="navigation-header-buttons">
           {isEditor ? (
             <div
+              id="status-page-header-delete-button"
               onClick={() =>
                 openModal(
                   <StatusDeleteModal
@@ -113,7 +129,10 @@ const HomeStatusPageHeader = ({
             </div>
           ) : null}
           {rightChildren ? (
-            <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
+            <div
+              id="status-page-header-info-button"
+              onClick={() => setIsInfoOpen?.(!isInfoOpen)}
+            >
               <LuInfo size={20} />
             </div>
           ) : null}
@@ -126,6 +145,7 @@ const HomeStatusPageHeader = ({
 
           return (
             <div
+              id={`status-page-menu-${id.toLowerCase()}-tab`}
               key={id}
               style={{
                 borderBottom: isActive

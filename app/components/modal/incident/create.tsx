@@ -4,19 +4,18 @@ import { Textarea, Input, Button, Modal } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useIncidentForm from '../../../hooks/useIncidentForm';
 import Tabs from '../../ui/tabs';
+import useModalContext from '../../../context/modal';
 import IncidentMonitors from '../../incident/monitors';
-import useContextStore from '../../../context';
+import useIncidentContext from '../../../context/incidents';
+import useIncidentForm from '../../../hooks/useIncidentForm';
 
 const IncidentCreateModal = () => {
-  const {
-    modalStore: { closeModal },
-    incidentStore: { addIncident },
-  } = useContextStore();
+  const { closeModal } = useModalContext();
+  const { addIncident } = useIncidentContext();
   const { values, dispatch, handleSubmit } = useIncidentForm();
 
-  const handleSelectedMonitor = (monitorId: never) => {
+  const handleSelectedMonitor = (monitorId: string) => {
     const monitors = values.monitorIds;
 
     if (monitors.includes(monitorId)) {

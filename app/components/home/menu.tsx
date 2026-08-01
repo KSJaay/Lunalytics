@@ -1,13 +1,11 @@
 import { Dropdown } from '@lunalytics/ui';
-import { FaEllipsisVertical, FaSort } from 'react-icons/fa6';
-import NavigationReorderModal from '../modal/navigation/reorder';
-import useContextStore from '../../context';
 import { observer } from 'mobx-react-lite';
+import { FaEllipsisVertical, FaSort } from 'react-icons/fa6';
+import useModalContext from '../../context/modal';
+import NavigationReorderModal from '../modal/navigation/reorder';
 
 const HomeMenu = () => {
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
 
   return (
     <Dropdown

@@ -2,26 +2,33 @@
 import './style.scss';
 import './row.scss';
 
+// import type definitions
+import type { ContextTeamProps } from '../../../../../shared/types/context/team';
+
 // import dependencies
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { FaTrashCan, MdEdit, FaCheck, IoMdClose } from '../../../icons';
 
 // import local files
+import MemberDeleteModal from '../../../modal/settings/manage/delete';
 import MemberApproveModal from '../../../modal/settings/manage/approve';
 import MemberDeclineModal from '../../../modal/settings/manage/decline';
-import MemberDeleteModal from '../../../modal/settings/manage/delete';
 import MemberPermissionsModal from '../../../modal/settings/manage/permissions';
-import useContextStore from '../../../../context';
+import useModalContext from '../../../../context/modal';
 
-const MemberRowActions = ({ member = {}, canManage = false }) => {
+const MemberRowActions = ({
+  member = {} as ContextTeamProps,
+  canManage = false,
+}: {
+  member?: ContextTeamProps;
+  canManage: boolean;
+}) => {
   const classes = classNames({
     'member-row-icon-disabled': !canManage,
   });
 
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
 
   if (!member.isVerified && canManage) {
     return (
@@ -32,8 +39,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
           onClick={() => {
             if (canManage) {
               openModal(
-                <MemberDeclineModal member={member} onClose={closeModal} />,
-                false
+                <MemberDeclineModal member={member} onClose={closeModal} />
               );
             }
             MemberDeclineModal;
@@ -47,8 +53,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
           onClick={() => {
             if (canManage) {
               openModal(
-                <MemberApproveModal member={member} onClose={closeModal} />,
-                false
+                <MemberApproveModal member={member} onClose={closeModal} />
               );
             }
           }}
@@ -79,8 +84,7 @@ const MemberRowActions = ({ member = {}, canManage = false }) => {
         onClick={() => {
           if (canManage) {
             openModal(
-              <MemberDeleteModal member={member} onClose={closeModal} />,
-              false
+              <MemberDeleteModal member={member} onClose={closeModal} />
             );
           }
         }}

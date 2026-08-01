@@ -14,18 +14,16 @@ import {
   StatusUptimePrettyGraph,
 } from './graph';
 import StatusConfigureMonitor from '../../monitor';
-import useContextStore from '../../../../../context';
 import {
   statusGraphDesigns,
   statusIndicators,
 } from '../../../../../../shared/constants/status';
 import { affectTextIds } from '../../../../../../shared/constants/incident';
 import useStatusPageContext from '../../../../../context/status-page';
+import useGlobalContext from '../../../../../context/global';
 
 const StatusConfigureLayoutUptime = ({ componentId }) => {
-  const {
-    globalStore: { getMonitor, allMonitors },
-  } = useContextStore();
+  const { getMonitor, allMonitors } = useGlobalContext();
 
   const { getComponent, setComponentValue, removeComponent, layoutItems } =
     useStatusPageContext();

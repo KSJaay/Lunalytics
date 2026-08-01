@@ -6,15 +6,24 @@ import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useContextStore from '../../../../context';
-
+import useUserContext from '../../../../context/user';
+import useModalContext from '../../../../context/modal';
 import SettingsAccountAvatarModal from '../../../modal/settings/account/avatar';
 import SettingsAccountDeleteModal from '../../../modal/settings/account/delete';
 import SettingsAccountPasswordModal from '../../../modal/settings/account/password';
 import SettingsAccountTransferModal from '../../../modal/settings/account/transfer';
 import SettingsAccountUsernameModal from '../../../modal/settings/account/username';
 
-const selectModal = (id, props, closeModal) => {
+interface SettingsAccountDesktopItemProps {
+  title: string;
+  id: string;
+  canEdit?: boolean;
+  description?: string;
+  customButton?: React.ReactNode;
+  ownerOnly?: boolean;
+}
+
+const selectModal = (id: string, props: any, closeModal: () => void) => {
   switch (id) {
     case 'displayName':
       return (
@@ -45,16 +54,15 @@ const SettingsAccountDesktopItem = ({
   customButton,
   ownerOnly,
   ...props
-}) => {
+}: SettingsAccountDesktopItemProps) => {
   const classes = classNames({
     'settings-account-item': !description,
     'settings-account-item-vertical': description,
   });
 
-  const {
-    userStore: { user },
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
+
+  const { user } = useUserContext();
 
   if (ownerOnly && !user.isOwner) return null;
 
@@ -72,6 +80,7 @@ const SettingsAccountDesktopItem = ({
         )}
       </div>
       <span
+        id={`settings-account-${id}-edit-button`}
         onClick={() => {
           const content = selectModal(
             id,

@@ -1,7 +1,8 @@
 import './about.scss';
 
-const SetttingAbout = () => {
+const SettingAbout = () => {
   // eslint-disable-next-line no-undef
+  // @ts-ignore
   const version = __APP_VERSION__ || '0.6.0';
 
   return (
@@ -26,4 +27,4 @@ const SetttingAbout = () => {
   );
 };
 
-export default SetttingAbout;
+export default SettingAbout;

@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 import ActionBar from '../../ui/actionBar';
 import SwitchWithText from '../../ui/switch';
-import useContextStore from '../../../context';
 import useNotificationForm from '../../../hooks/useNotificationForm';
 import NotificationsTemplates from '../../../../shared/notifications';
 import NotificationModalPayload from '../../modal/notification/payload';
@@ -17,6 +16,7 @@ import {
   NotificationNerdyEmailTemplate,
   NotificationPrettyEmailTemplate,
 } from '../emails';
+import useNotificationContext from '../../../context/notifications';
 
 export const EmailComponent = ({ type }: { type: string }) => {
   if (type === 'basic') {
@@ -61,9 +61,8 @@ export const EmailComponent = ({ type }: { type: string }) => {
 };
 
 const NotificationRender = ({ isEdit = false }: { isEdit: boolean }) => {
-  const {
-    notificationStore: { addNotification, activeNotification: notification },
-  } = useContextStore();
+  const { addNotification, activeNotification: notification } =
+    useNotificationContext();
 
   const { t } = useTranslation();
 

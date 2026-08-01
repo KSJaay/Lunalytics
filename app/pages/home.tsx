@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
 
 // import local files
-import useContextStore from '../context';
 import Spacer from '../components/ui/spacer';
 import Navigation from '../components/navigation';
 import MonitorPush from '../components/monitor/push';
@@ -22,12 +21,14 @@ import NavigationMonitorInfo from '../components/navigation/info/monitor';
 import useScreenSize from '../hooks/useScreenSize';
 import { filterData } from '../../shared/utils/search';
 import HomeMenu from '../components/home/menu';
+import type { ContextMonitorProps } from '../../shared/types/context/global';
+import useGlobalContext from '../context/global';
+import useModalContext from '../context/modal';
 
 const Home = () => {
-  const {
-    globalStore: { allMonitors, addMonitor, activeMonitor, setActiveMonitor },
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
+  const { allMonitors, addMonitor, activeMonitor, setActiveMonitor } =
+    useGlobalContext();
   const [search, setSearch] = useState<string | null>(null);
   const { t } = useTranslation();
   const screenSize = useScreenSize();
@@ -46,7 +47,10 @@ const Home = () => {
   const monitors = useMemo(() => {
     if (!search) return allMonitors;
 
-    return filterData(allMonitors, search, ['name', 'url']);
+    return filterData(allMonitors, search, [
+      'name',
+      'url',
+    ]) as ContextMonitorProps[];
   }, [search, JSON.stringify(allMonitors)]);
 
   if (!isDesktop && activeMonitor) {
@@ -64,17 +68,18 @@ const Home = () => {
     );
   }
 
-  const content = isDesktop ? (
-    <div className="monitor-container">
-      <MonitorStatus monitor={activeMonitor} />
-      {activeMonitor?.type === 'push' ? (
-        <MonitorPush token={activeMonitor.url} />
-      ) : null}
-      <MonitorGraph monitor={activeMonitor} />
-      <MonitorUptime />
-      <Spacer size={18} />
-    </div>
-  ) : null;
+  const content =
+    isDesktop && activeMonitor ? (
+      <div className="monitor-container">
+        <MonitorStatus monitor={activeMonitor} />
+        {activeMonitor?.type === 'push' ? (
+          <MonitorPush token={activeMonitor.url} />
+        ) : null}
+        <MonitorGraph monitor={activeMonitor} />
+        <MonitorUptime />
+        <Spacer size={18} />
+      </div>
+    ) : null;
 
   return (
     <Navigation
@@ -101,7 +106,9 @@ const Home = () => {
         </div>
       }
       rightChildren={
-        isDesktop ? <NavigationMonitorInfo monitor={activeMonitor} /> : null
+        isDesktop && activeMonitor ? (
+          <NavigationMonitorInfo monitor={activeMonitor} />
+        ) : null
       }
       header={{ HeaderComponent: HomeMonitorHeader }}
     >

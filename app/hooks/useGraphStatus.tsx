@@ -1,14 +1,24 @@
+// import type definitions
+import type { HeartbeatProps, MonitorProps } from '../../shared/types/monitor';
+
 // import dependencies
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 // import local files
 import { createGetRequest } from '../services/axios';
-import type { HeartbeatProps, MonitorProps } from '../types/monitor';
 
 const useGraphStatus = (monitor: MonitorProps) => {
   const [statusType, setStatus] = useState('latest');
   const [statusHeartbeats, setHeartbeats] = useState(monitor.heartbeats || []);
+
+  const setStatusType = (statusType: string) => {
+    setStatus(statusType);
+  };
+
+  const setStatusHeartbeats = (statusHeartbeats: HeartbeatProps[]) => {
+    setHeartbeats(statusHeartbeats);
+  };
 
   useEffect(() => {
     const fetchMonitorHeartbeats = async () => {
@@ -29,14 +39,6 @@ const useGraphStatus = (monitor: MonitorProps) => {
 
     fetchMonitorHeartbeats();
   }, [statusType, monitor]);
-
-  const setStatusType = (statusType: string) => {
-    setStatus(statusType);
-  };
-
-  const setStatusHeartbeats = (statusHeartbeats: HeartbeatProps[]) => {
-    setHeartbeats(statusHeartbeats);
-  };
 
   return {
     statusType: statusType,

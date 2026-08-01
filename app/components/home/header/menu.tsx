@@ -6,8 +6,9 @@ import { LuEllipsis } from 'react-icons/lu';
 // import local files
 import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
-import useContextStore from '../../../context';
+import useGlobalContext from '../../../context/global';
 import useMonitorOptions from '../../../hooks/useMonitorOptions';
+import useModalContext from '../../../context/modal';
 
 interface DropdownItemProps {
   id: string;
@@ -29,17 +30,15 @@ const DropdownItem = ({ id, text, icon: Icon, onClick }: DropdownItemProps) => (
 );
 
 const HomeMonitorHeaderMenu = () => {
+  const { closeModal, openModal } = useModalContext();
   const {
-    globalStore: {
-      getMonitor,
-      allMonitors,
-      activeMonitor,
-      addMonitor,
-      editMonitor,
-      removeMonitor,
-    },
-    modalStore: { closeModal, openModal },
-  } = useContextStore();
+    getMonitor,
+    allMonitors,
+    activeMonitor,
+    addMonitor,
+    editMonitor,
+    removeMonitor,
+  } = useGlobalContext();
 
   const { toggleDropdown, dropdownIsOpen } = useDropdown(true);
 

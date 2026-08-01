@@ -4,30 +4,32 @@ import { observer } from 'mobx-react-lite';
 import { FaTrashCan } from 'react-icons/fa6';
 import { IoArrowBack } from 'react-icons/io5';
 import { useTranslation } from 'react-i18next';
+import { BsFillSendFill } from 'react-icons/bs';
 
 // import local files
-import useContextStore from '../../../context';
-import Role from '../../../../shared/permissions/role';
 import { createGetRequest, createPostRequest } from '../../../services/axios';
 import NotificationDeleteModal from '../../modal/notification/delete';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 import useScreenSize from '../../../hooks/useScreenSize';
-import { BsFillSendFill } from 'react-icons/bs';
+import useMemberContext from '../../../context/member';
+import useNotificationContext from '../../../context/notifications';
+import useModalContext from '../../../context/modal';
 
 const HomeNotificationHeader = ({
   isMobile = false,
 }: {
   isMobile: boolean;
 }) => {
+  const { openModal, closeModal } = useModalContext();
+
   const {
-    userStore: { user },
-    modalStore: { openModal, closeModal },
-    notificationStore: {
-      deleteNotification,
-      activeNotification: notification,
-      setActiveNotification,
-    },
-  } = useContextStore();
+    deleteNotification,
+    activeNotification: notification,
+    setActiveNotification,
+  } = useNotificationContext();
+
+  const { member } = useMemberContext();
+
   const { t } = useTranslation();
 
   const screenSize = useScreenSize();
@@ -46,7 +48,7 @@ const HomeNotificationHeader = ({
   const handleDelete = async () => {
     try {
       const { id } = notification;
-      await createGetRequest('/api/notifications/delete', {
+      await createGetRequest('/api/notification/delete', {
         notificationId: id,
       });
 
@@ -63,7 +65,7 @@ const HomeNotificationHeader = ({
 
   const testNotification = async () => {
     try {
-      await createPostRequest('/api/notifications/test', notification);
+      await createPostRequest('/api/notification/test', notification);
       toast.success('Test notification sent successfully');
     } catch (error) {
       console.error('Error sending test notification:', error);
@@ -71,8 +73,9 @@ const HomeNotificationHeader = ({
     }
   };
 
-  const role = new Role('user', user.permission);
-  const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
+  const isEditor = member?.role.hasPermission(
+    MemberPermissionBits.MANAGE_MONITORS
+  );
 
   return (
     <div className="navigation-header-content">
@@ -101,7 +104,7 @@ const HomeNotificationHeader = ({
         {isEditor ? (
           <>
             <div
-              onClick={() => testNotification(notification)}
+              onClick={() => testNotification()}
               id="notification-header-test-button"
             >
               <BsFillSendFill />

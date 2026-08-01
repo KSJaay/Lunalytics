@@ -149,9 +149,9 @@ pm2 monit
 
 ## 📖 Backstory
 
-There's a lot of monitoring applications out there and I personally love using uptime-kuma. But, one of the main issues with Uptime-kuma is the ability to share with my friends/colleagues. And for the services that do allow me to share with others, they either have an outdated UI from the 90s or are so expensive I can't justify paying for it.
+When I first started self hosting, I wanted to be able to monitor all my applications and servers. So, I spent a while testing various different paid and self hosted monitoring services, but always felt like something was missing. The application that came closest to all my requirements was Uptime-Kuma, but it still lacked a lot of things I wanted. The UI felt super unfriendly/cluttered, especially on mobile, customisation at the time was pretty much none existent for status pages, and I wanted an application that would support multiple users with custom permissions.
 
-So I've decided to create my own application that's focused on a developer first experience with support for multiple users.
+So, I thought why not spend a little bit of time to create my own application. Initially I wanted to spend around a month, but some how 2+ years later I'm still here developing new features. I spent countless hours adding various features, that have gone way above the original plan because I wanted to create something that's actually useful for users and not just a half baked application.
 
 ## Contributors
 

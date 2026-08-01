@@ -7,8 +7,8 @@ import { observer } from 'mobx-react-lite';
 // import local files
 import Dropdown from '../../../ui/dropdown';
 import StatusConfigureMonitorItem from './item';
-import useContextStore from '../../../../context';
 import useDropdown from '../../../../hooks/useDropdown';
+import useGlobalContext from '../../../../context/global';
 
 const StatusConfigureMonitor = ({
   componentId,
@@ -18,9 +18,7 @@ const StatusConfigureMonitor = ({
   addAllMonitors,
   removeMonitor,
 }) => {
-  const {
-    globalStore: { allMonitors, getMonitor },
-  } = useContextStore();
+  const { allMonitors, getMonitor } = useGlobalContext();
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
   const { autoAdd, monitors } = getValues(componentId);
@@ -41,6 +39,7 @@ const StatusConfigureMonitor = ({
           isOpen={dropdownIsOpen}
         >
           <Dropdown.Trigger
+            id="status-configure-monitor-dropdown-trigger"
             asInput
             toggleDropdown={toggleDropdown}
             isOpen={dropdownIsOpen}
@@ -51,6 +50,7 @@ const StatusConfigureMonitor = ({
           <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
             {dropdownOptions.map((monitor) => (
               <Dropdown.Item
+                id={`status-configure-monitor-dropdown-item-${monitor.monitorId}`}
                 key={monitor.monitorId}
                 onClick={() => {
                   addSelectedMonitor(monitor.monitorId);
@@ -82,10 +82,18 @@ const StatusConfigureMonitor = ({
             Select monitors to display on the status page.
           </div>
           <div className="scmo-buttons">
-            <Button color="green" onClick={addAllMonitors}>
+            <Button
+              id="status-configure-monitor-add-all-button"
+              color="green"
+              onClick={addAllMonitors}
+            >
               Add all monitors
             </Button>
-            <Button color="green" onClick={() => updateAutoAdd(true)}>
+            <Button
+              id="status-configure-monitor-auto-add-button"
+              color="green"
+              onClick={() => updateAutoAdd(true)}
+            >
               Auto add monitors
             </Button>
           </div>
@@ -105,7 +113,10 @@ const StatusConfigureMonitor = ({
             </div>
           </div>
           <div>
-            <Button onClick={() => updateAutoAdd(false)}>
+            <Button
+              id="status-configure-monitor-disable-auto-add-button"
+              onClick={() => updateAutoAdd(false)}
+            >
               Disable auto add
             </Button>
           </div>

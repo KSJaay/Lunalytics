@@ -1,17 +1,21 @@
+// import type definitions
+import type { NotificationProps } from '../../../shared/types/notifications';
+
+// import node modules
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
-import useContextStore from '../../context';
-import type { NotificationProps } from '../../types/notifications';
+
+// import local files
 import notificationsIcons from '../../constant/notifications.json';
+import useNotificationContext from '../../context/notifications';
 
 const NotificationList = ({
   notifications,
 }: {
   notifications: NotificationProps[];
 }) => {
-  const {
-    notificationStore: { activeNotification, setActiveNotification },
-  } = useContextStore();
+  const { activeNotification, setActiveNotification } =
+    useNotificationContext();
 
   if (!notifications || !notifications?.length) {
     return <div style={{ flex: 1 }}></div>;
@@ -26,6 +30,7 @@ const NotificationList = ({
 
         return (
           <div
+            id={`notification-list-item-${notification.id}`}
             key={notification.id}
             className={classes}
             onClick={() => setActiveNotification(notification.id)}

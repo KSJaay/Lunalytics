@@ -3,7 +3,11 @@ import MonitorPageInterval from '../pages/interval';
 import MonitorPageNotification from '../pages/notification';
 import useFetch from '../../../../hooks/useFetch';
 import Loading from '../../../ui/loading';
-import { Alert, Button } from '@lunalytics/ui';
+import { Alert, Button, Input } from '@lunalytics/ui';
+import { MdSearch } from 'react-icons/md';
+import { useState } from 'react';
+import { createGetRequest } from '../../../../services/axios';
+import { toast } from 'react-toastify';
 
 interface ModalProps {
   errors: Record<string, string>;
@@ -18,20 +22,72 @@ const MonitorConfigureDockerModal = ({
   handleInput,
   pageId,
 }: ModalProps) => {
-  const { isError, isLoading, data } = useFetch({
+  const [containers, setContainers] = useState<Array<any>>([]);
+
+  const { isError, isLoading } = useFetch({
     url: '/api/docker/containers',
+    onSuccess: (data) => setContainers(data),
   });
+
+  const onSearch = async () => {
+    try {
+      const response = await createGetRequest('/api/docker/containers', {
+        socketPath: inputs.socketPath,
+      });
+      setContainers(response.data);
+    } catch {
+      setContainers([]);
+      toast.error(
+        'Error fetching Docker containers. Please check the socket path and try again.'
+      );
+    }
+  };
 
   return (
     <>
       {pageId === 'basic' ? (
         <div>
+          <div
+            style={{
+              display: 'grid',
+              gap: '16px',
+              gridTemplateColumns: '1fr auto',
+            }}
+          >
+            <Input
+              id="input-socket-path"
+              title={'Socket Path'}
+              value={inputs.socketPath}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                handleInput('socketPath', event.target.value);
+              }}
+              error={errors.socketPath}
+              color="var(--lunaui-accent-900)"
+              placeholder="/var/run/docker.sock"
+              subtitle="The socket path to the Docker daemon. For example: /var/run/docker.sock"
+            />
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+                height: '100%',
+                paddingBottom: '4px',
+              }}
+            >
+              <Button onClick={onSearch}>
+                <MdSearch size={20} />
+                <div>Search</div>
+              </Button>
+            </div>
+          </div>
+
           {isLoading ? (
             <Loading
               style={{ width: '100%', height: '100%', margin: '50px 0' }}
             />
           ) : null}
-          {isError || !data?.length ? (
+          {isError || !containers?.length ? (
             <div style={{ margin: '25px 0' }}>
               <Alert
                 status="error"
@@ -42,7 +98,7 @@ const MonitorConfigureDockerModal = ({
               />
             </div>
           ) : null}
-          {data?.length ? (
+          {containers?.length ? (
             <div>
               <div className="monitor-configure-docker-header">
                 <div>Container Name</div>
@@ -52,7 +108,7 @@ const MonitorConfigureDockerModal = ({
                 </div>
               </div>
 
-              {data.map(
+              {containers.map(
                 (container: {
                   id: string;
                   name: string;

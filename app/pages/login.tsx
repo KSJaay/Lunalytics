@@ -15,8 +15,13 @@ import handleRegister from '../handlers/register';
 import LoginLayout from '../components/login/layout';
 import { createPostRequest } from '../services/axios';
 import RegisterChecklist from '../components/register/checklist';
+import validators from '../../shared/validators';
 
-const EditEmail = ({ email, ...props }: { email: string }) => (
+interface EditEmailProps extends React.HTMLAttributes<HTMLDivElement> {
+  email: string;
+}
+
+const EditEmail = ({ email, ...props }: EditEmailProps) => (
   <div className="login-header-subtitle">
     {email}
     <div className="login-header-subtitle-link" {...props}>
@@ -57,6 +62,12 @@ const Login = () => {
 
     try {
       if (page === 'email') {
+        const isInvalid = validators.auth.email(inputs.email);
+
+        if (isInvalid && isInvalid.isValidationError) {
+          return setErrors({ email: isInvalid });
+        }
+
         const userExists = await createPostRequest('/api/auth/user/exists', {
           email: inputs.email,
         }).catch((error) => ({ status: error?.response?.status || 500 }));
@@ -130,6 +141,7 @@ const Login = () => {
               onClick={() => {
                 handleInputChange({ target: { id: 'password', value: '' } });
                 setPage('email');
+                return;
               }}
             />
             {errors['general'] && (
@@ -159,7 +171,7 @@ const Login = () => {
       title="Enter details"
       subtitle={
         <>
-          <div >Enter your details to register</div>
+          <div>Enter your details to register</div>
 
           <EditEmail
             email={inputs.email}

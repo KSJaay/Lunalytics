@@ -5,9 +5,10 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import Tabs from '../../ui/tabs';
-import useContextStore from '../../../context';
 import IncidentMonitors from '../../incident/monitors';
 import useIncidentMessage from '../../../hooks/useIncidentMessage';
+import useIncidentContext from '../../../context/incidents';
+import useModalContext from '../../../context/modal';
 
 const IncidentEditMessageModal = ({
   incidentId,
@@ -16,15 +17,13 @@ const IncidentEditMessageModal = ({
   incidentId: string;
   incidentPosition: number;
 }) => {
-  const {
-    incidentStore: { getIncidentById, addIncident },
-    modalStore: { closeModal },
-  } = useContextStore();
+  const { closeModal } = useModalContext();
+  const { getIncidentById, addIncident } = useIncidentContext();
 
   const incident = getIncidentById(incidentId);
   const {
     monitorIds = [],
-    status = '',
+    status = 'Investigating',
     message = '',
   } = incident?.messages[incidentPosition] || {};
 

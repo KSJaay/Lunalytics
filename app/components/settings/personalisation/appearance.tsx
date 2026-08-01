@@ -1,32 +1,36 @@
+// import type definitions
+import type { ThemeProps } from '../../../../shared/types/context/user';
+
 // import dependencies
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
 import { Button, Input } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../../context';
+import useUserContext from '../../../context/user';
 
 const SettingsPersonalisationAppearance = ({
   dateformat,
   timeformat,
   theme,
+}: {
+  dateformat: string;
+  timeformat: string;
+  theme: ThemeProps;
 }) => {
   const {
-    userStore: {
-      user: { displayName },
-    },
-  } = useContextStore();
+    user: { displayName },
+  } = useUserContext();
 
   const message =
     theme === 'dark'
       ? 'Woow this looks so nice to my eyes'
       : theme === 'light'
-      ? 'Why is it so bright, I can barely look at this'
-      : 'I have no clue, might be dark, might be light';
+        ? 'Why is it so bright, I can barely look at this'
+        : 'I have no clue, might be dark, might be light';
 
   return (
     <>
-      <div className="settings-subtitle">Appearance</div>
       <div className="settings-appearance-container">
         <div>
           <div style={{ display: 'flex', gap: '10px' }}>

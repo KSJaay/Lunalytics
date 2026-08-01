@@ -8,7 +8,7 @@ import SwitchWithText from '../../../ui/switch';
 import useTokensContext from '../../../../context/tokens';
 import { createPostRequest } from '../../../../services/axios';
 import TokenValidator from '../../../../../shared/validators/token';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
 
 interface SettingsApiConfigureModalProps {
@@ -50,8 +50,8 @@ const SettingsApiConfigureModal = ({
         isEdit,
       });
 
-      if (isInvalid) {
-        return toast.error(isInvalid);
+      if (isInvalid.isValidationError) {
+        return toast.error(isInvalid.message);
       }
 
       const response = await createPostRequest(path, {
@@ -160,8 +160,8 @@ const SettingsApiConfigureModal = ({
                   }
                   checked={
                     perms & permission.permission ||
-                    perms === PermissionsBits.ADMINISTRATOR ||
-                    perms & PermissionsBits.ADMINISTRATOR
+                    perms === MemberPermissionBits.ADMINISTRATOR ||
+                    perms & MemberPermissionBits.ADMINISTRATOR
                   }
                 />
               </div>

@@ -1,13 +1,18 @@
+// import type definitions
+import type { NotificationProps } from '../../shared/types/notifications';
+
+// import node modules
 import { action, computed, makeObservable, observable } from 'mobx';
-import type { NotificationProps } from '../types/notifications';
 
 class NotificationStore {
   notifications: Map<string, NotificationProps>;
   activeNotification: NotificationProps | null | undefined;
+  hasLoadedNotifications: boolean;
 
   constructor() {
     this.notifications = observable.map();
     this.activeNotification = null;
+    this.hasLoadedNotifications = false;
 
     makeObservable(this, {
       notifications: observable,
@@ -25,6 +30,8 @@ class NotificationStore {
     for (const notification of notifications) {
       this.notifications.set(notification.id, notification);
     }
+
+    this.hasLoadedNotifications = true;
   };
 
   addNotification = (notification: NotificationProps) => {
@@ -72,4 +79,8 @@ class NotificationStore {
   };
 }
 
-export default NotificationStore;
+const notificationStore = new NotificationStore();
+
+const useNotificationContext = () => notificationStore;
+
+export default useNotificationContext;

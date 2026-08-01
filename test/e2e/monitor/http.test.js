@@ -6,8 +6,7 @@ describe('Monitor HTTP', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
+      cy.apiLogin(email, password);
       cy.visit('/home');
     });
 
@@ -20,8 +19,7 @@ describe('Monitor HTTP', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
+      cy.apiLogin(email, password);
       cy.visit('/home');
     });
 
@@ -32,7 +30,9 @@ describe('Monitor HTTP', () => {
 
       cy.typeText(httpMonitorDetails.name.id, '-Edited');
 
+      cy.interceptApi('POST', '/monitor/edit', 'editMonitor');
       cy.get('[id="monitor-configure-submit-button"]').click();
+      cy.wait('@editMonitor');
 
       cy.equals(
         '[id="monitor-view-menu-name"]',
@@ -45,8 +45,7 @@ describe('Monitor HTTP', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
+      cy.apiLogin(email, password);
       cy.visit('/home');
     });
 
@@ -55,7 +54,9 @@ describe('Monitor HTTP', () => {
 
       cy.get('[id="monitor-delete-button"]').click();
 
+      cy.interceptApi('POST', '/monitor/delete', 'deleteMonitor');
       cy.get('[id="monitor-delete-confirm-button"]').click();
+      cy.wait('@deleteMonitor');
 
       cy.get(`[id="monitor-view-menu-name"]`).should('not.exist');
 

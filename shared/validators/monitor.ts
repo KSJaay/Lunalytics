@@ -1,0 +1,551 @@
+const dockerValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'dockerUrl'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
+];
+const validMethods = [
+  'DELETE',
+  'GET',
+  'HEAD',
+  'OPTIONS',
+  'PATCH',
+  'POST',
+  'PUT',
+];
+
+const jsonOperators = [
+  '==',
+  '!=',
+  '>',
+  '>=',
+  '<',
+  '<=',
+  'contains',
+  'not_contains',
+];
+
+const validTypes = [
+  'dns',
+  'docker',
+  'gamedig',
+  'http',
+  'json',
+  'tcp',
+  'ping',
+  'push',
+];
+const notificationTypes = ['All', 'Outage', 'Recovery'];
+const urlRegex = /^https?:\/\//;
+const dnsRegex =
+  /^(?=.{1,253}$)(?!-)[a-z0-9-]{1,63}(?<!-)(\.(?!-)[a-z0-9-]{1,63}(?<!-))*$/i;
+
+const ipRegex = /^(([0-9]{1,3}\.){3}[0-9]{1,3})$/;
+
+export const type = (type: string) => {
+  if (!type || !validTypes.includes(type)) {
+    return 'Please select a valid monitor type.';
+  }
+};
+
+export const name = (name: string) => {
+  if (!name || name.length > 64) {
+    return 'Please enter a valid name. Maximum length is 64 characters.';
+  }
+};
+
+export const httpUrl = (url: string, type: string) => {
+  if (type === 'ping') {
+    if (!url) {
+      return 'Please enter a valid URL/IP.';
+    }
+
+    return;
+  }
+
+  if (!url || !urlRegex.test(url)) {
+    return 'Please enter a valid URL. Only http:// or https:// is allowed.';
+  }
+};
+
+export const httpMethod = (method: string) => {
+  if (!method || !validMethods.includes(method)) {
+    return 'Please select a valid method.';
+  }
+};
+
+export const httpStatusCodes = (codes: string) => {
+  if (!codes || !codes.length) {
+    return 'Please select at least one status code.';
+  }
+};
+
+export const tcpHost = (host: string) => {
+  const isIpv4 = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
+
+  if (!host || !isIpv4.test(host)) {
+    return 'Please enter a valid host (Only IPv4 is valid).';
+  }
+};
+
+export const tcpPort = (port: string | number) => {
+  const portNumber = Number(port);
+
+  if (!portNumber || portNumber < 1 || portNumber > 65535) {
+    return 'Please enter a valid port.';
+  }
+};
+
+export const dockerUrl = (url: string) => {
+  if (!url) {
+    return 'Please enter a valid Docker Container ID.';
+  }
+};
+
+export const pushUrl = (token: string) => {
+  if (!token) {
+    return 'Please enter a valid push token.';
+  }
+};
+
+export const interval = (interval: string | number) => {
+  const num = typeof interval === 'string' ? parseInt(interval, 10) : interval;
+  if (!num || isNaN(num)) {
+    return 'Please enter a valid interval.';
+  }
+  if (num < 20 || num > 600) {
+    return 'Please enter a valid interval. Interval should be between 20 and 600 seconds.';
+  }
+};
+
+const retry = (retry: number) => {
+  if (!retry) {
+    return 'Please enter a valid retry.';
+  }
+
+  if (retry < 1 || retry > 30) {
+    return 'Please enter a valid retry. Retry should be between 1 and 30 times.';
+  }
+};
+
+export const retryInterval = (retryInterval: number) => {
+  if (!retryInterval) {
+    return 'Please enter a valid retry interval.';
+  }
+
+  if (retryInterval < 20 || retryInterval > 600) {
+    return 'Please enter a valid retry interval. Retry interval should be between 20 and 600 seconds.';
+  }
+};
+
+export const requestTimeout = (requestTimeout: number) => {
+  if (!requestTimeout) {
+    return 'Please enter a valid request timeout.';
+  }
+
+  if (requestTimeout < 20 || requestTimeout > 600) {
+    return 'Please enter a valid request timeout. Request timeout should be between 20 and 600 seconds.';
+  }
+};
+
+export const notificationType = (notification: string) => {
+  if (!notificationTypes.includes(notification)) {
+    return 'Please select a valid notification type.';
+  }
+};
+
+export const headers = (headers: Record<string, any> | string = {}) => {
+  if (typeof headers === 'string') {
+    try {
+      JSON.parse(headers);
+    } catch (error) {
+      return 'Please enter valid headers. Make sure to follow JSON key/value format.';
+    }
+  } else if (typeof headers !== 'object' || Array.isArray(headers)) {
+    return 'Please enter valid headers. Make sure to follow JSON key/value format.';
+  }
+};
+
+export const body = (body: Record<string, any> | string = {}) => {
+  if (typeof body === 'string') {
+    try {
+      JSON.parse(body);
+    } catch (error) {
+      return 'Please enter valid body. Make sure to follow JSON key/value format.';
+    }
+  } else if (typeof body !== 'object' || Array.isArray(body)) {
+    return 'Please enter valid body. Make sure to follow JSON key/value format.';
+  }
+};
+
+export const jsonQuery = (value: any[] | undefined) => {
+  if (!value || !Array.isArray(value)) {
+    return 'Please provide a valid JSON query.';
+  }
+
+  const { key, operator, value: jsonValue } = value?.[0] || {};
+
+  if (!key) {
+    return 'Please provide a valid JSON key.';
+  }
+
+  if (!operator || !jsonOperators.includes(operator)) {
+    return 'Please provide a valid operator.';
+  }
+
+  if (!jsonValue) {
+    return 'Please provide a valid value.';
+  }
+};
+
+export const icon = (value: { id?: string; name?: string; url?: string }) => {
+  if (!value.id) {
+    return 'Please provide a valid icon ID.';
+  }
+
+  if (!value.name) {
+    return 'Please provide a valid icon name.';
+  }
+
+  if (!value.url) {
+    return 'Please provide a valid icon URL.';
+  }
+};
+
+export const dnsRecordType = (value: string) => {
+  const validRecordTypes = [
+    'A',
+    'AAAA',
+    'CNAME',
+    'MX',
+    'TXT',
+    'SRV',
+    'NS',
+    'PTR',
+    'SOA',
+  ];
+
+  if (!value || !validRecordTypes.includes(value)) {
+    return 'Please select a valid DNS record type.';
+  }
+};
+
+export const dnsResolver = (value: string) => {
+  const dnsRegex = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
+
+  if (value && !dnsRegex.test(value)) {
+    return 'Please enter a valid DNS resolver (Only IPv4 is valid).';
+  }
+};
+
+export const dnsUrl = (url: string) => {
+  if (!url || !dnsRegex.test(url)) {
+    return 'Please enter a valid domain name.';
+  }
+};
+
+export const dnsPort = (port: string | number) => {
+  if (!port) {
+    return;
+  }
+
+  const portNumber = Number(port);
+
+  if (isNaN(portNumber) || portNumber < 1 || portNumber > 65535) {
+    return 'Please enter a valid port.';
+  }
+};
+
+export const game = (game: string) => {
+  if (!game) {
+    return 'Please enter a valid game.';
+  }
+};
+
+export const gameUrl = (url: string) => {
+  if (!url || (!ipRegex.test(url) && !dnsRegex.test(url))) {
+    return 'Please enter a valid IP/Hostname.';
+  }
+};
+
+export interface Validators {
+  [key: string]: (...args: any[]) => string | undefined;
+}
+const validators: Validators = {
+  type,
+  name,
+  dockerUrl,
+  httpUrl,
+  httpMethod,
+  httpStatusCodes,
+  pushUrl,
+  tcpHost,
+  tcpPort,
+  dnsRecordType,
+  dnsPort,
+  dnsResolver,
+  dnsUrl,
+  game,
+  gameUrl,
+  interval,
+  retry,
+  retryInterval,
+  requestTimeout,
+  notificationType,
+  headers,
+  body,
+  jsonQuery,
+  icon,
+};
+const httpValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'httpUrl'],
+  ['method', 'httpMethod'],
+  ['valid_status_codes', 'httpStatusCodes'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['headers', 'headers'],
+  ['body', 'body'],
+  ['icon', 'icon'],
+];
+
+const dnsValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'dnsUrl'],
+  ['dnsRecordType', 'dnsRecordType'],
+  ['dnsResolver', 'dnsResolver'],
+  ['port', 'dnsPort'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
+];
+
+const gamedigValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'gameUrl'],
+  ['game', 'game'],
+  ['port', 'tcpPort'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
+];
+
+const jsonValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'httpUrl'],
+  ['method', 'httpMethod'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['headers', 'headers'],
+  ['body', 'body'],
+  ['json_query', 'jsonQuery'],
+  ['icon', 'icon'],
+];
+
+const pingValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'httpUrl'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
+];
+
+const pushValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'pushUrl'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
+];
+
+const tcpValidators = [
+  ['name', 'name'],
+  ['type', 'type'],
+  ['url', 'tcpHost'],
+  ['port', 'tcpPort'],
+  ['interval', 'interval'],
+  ['retry', 'retry'],
+  ['retryInterval', 'retryInterval'],
+  ['requestTimeout', 'requestTimeout'],
+  ['notificationType', 'notificationType'],
+  ['icon', 'icon'],
+];
+
+export interface MonitorData {
+  [key: string]: any;
+}
+const http = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  httpValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key]);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const dns = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  dnsValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key]);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const docker = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  dockerValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key]);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const gamedig = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  gamedigValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key]);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const json = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  jsonValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key]);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const ping = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  pingValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key], data.type);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const push = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+
+  pushValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key], data.type);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+const tcp = (data: MonitorData) => {
+  const errors: Record<string, string> = {};
+  tcpValidators.forEach(([key, fn]) => {
+    const error = validators[fn](data[key]);
+    if (error) {
+      errors[key] = error;
+    }
+  });
+
+  if (Object.keys(errors).length) {
+    return errors;
+  }
+
+  return false;
+};
+
+export default {
+  ...validators,
+  dns,
+  docker,
+  gamedig,
+  http,
+  json,
+  tcp,
+  ping,
+  push,
+};

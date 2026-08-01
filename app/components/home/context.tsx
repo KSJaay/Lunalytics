@@ -1,8 +1,9 @@
 // import dependencies
 import { useMemo } from 'react';
 import { ContextMenu } from '@lunalytics/ui';
-import useContextStore from '../../context';
 import useMonitorOptions from '../../hooks/useMonitorOptions';
+import useGlobalContext from '../../context/global';
+import useModalContext from '../../context/modal';
 
 interface ItemContainerProps {
   text: string;
@@ -27,16 +28,9 @@ const HomeMonitorsListContext = ({
   children,
   monitorId,
 }: HomeMonitorsListContextProps) => {
-  const {
-    globalStore: {
-      allMonitors,
-      getMonitor,
-      addMonitor,
-      editMonitor,
-      removeMonitor,
-    },
-    modalStore: { closeModal, openModal },
-  } = useContextStore();
+  const { closeModal, openModal } = useModalContext();
+  const { allMonitors, getMonitor, addMonitor, editMonitor, removeMonitor } =
+    useGlobalContext();
 
   const monitor = useMemo(() => {
     return getMonitor(monitorId);

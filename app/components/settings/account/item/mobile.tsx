@@ -5,14 +5,23 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import { FaChevronRight } from '../../../icons';
-import useContextStore from '../../../../context';
 import SettingsAccountAvatarModal from '../../../modal/settings/account/avatar';
 import SettingsAccountDeleteModal from '../../../modal/settings/account/delete';
 import SettingsAccountPasswordModal from '../../../modal/settings/account/password';
 import SettingsAccountTransferModal from '../../../modal/settings/account/transfer';
 import SettingsAccountEditModal from '../../../modal/settings/account/username';
+import useUserContext from '../../../../context/user';
+import useModalContext from '../../../../context/modal';
 
-const selectModal = (id, props, closeModal) => {
+interface SettingsAccountMobileItemProps {
+  title: string;
+  id: string;
+  canEdit?: boolean;
+  fontColor?: string;
+  ownerOnly?: boolean;
+}
+
+const selectModal = (id: string, props: any, closeModal: () => void) => {
   switch (id) {
     case 'displayName':
       return <SettingsAccountEditModal closeModal={closeModal} {...props} />;
@@ -40,11 +49,9 @@ const SettingsAccountMobileItem = ({
   fontColor,
   ownerOnly,
   ...props
-}) => {
-  const {
-    userStore: { user },
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+}: SettingsAccountMobileItemProps) => {
+  const { openModal, closeModal } = useModalContext();
+  const { user } = useUserContext();
 
   if (ownerOnly && !user.isOwner) return null;
 

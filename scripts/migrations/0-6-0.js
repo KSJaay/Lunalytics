@@ -1,5 +1,5 @@
 // import local files
-import SQLite from '../../server/database/sqlite/setup.js';
+import database from '../../server/database/connection.js';
 import logger from '../../server/utils/logger.js';
 
 const infomation = {
@@ -11,7 +11,7 @@ const infomation = {
 };
 
 const migrate = async () => {
-  const client = await SQLite.connect();
+  const client = await database.connect();
 
   // Add notifications object field to monitors table
   await client.schema.alterTable('monitor', (table) => {

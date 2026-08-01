@@ -7,11 +7,11 @@ import { Alert, Button, Input, Modal } from '@lunalytics/ui';
 
 // import local files
 import Dropdown from '../../../ui/dropdown';
-import useContextStore from '../../../../context';
 import useFetch from '../../../../hooks/useFetch';
 import useTeamContext from '../../../../context/team';
 import useDropdown from '../../../../hooks/useDropdown';
 import handleTransferAccount from '../../../../handlers/settings/account/transfer';
+import useUserContext from '../../../../context/user';
 
 const SettingsAccountTransferModal = ({
   closeModal,
@@ -19,9 +19,8 @@ const SettingsAccountTransferModal = ({
   closeModal: () => void;
 }) => {
   const { teamMembers, setTeam } = useTeamContext();
-  const {
-    userStore: { user },
-  } = useContextStore();
+  const { user } = useUserContext();
+
   const { dropdownIsOpen, selectedId, toggleDropdown, handleDropdownSelect } =
     useDropdown();
 
@@ -30,7 +29,7 @@ const SettingsAccountTransferModal = ({
     .filter((member) => member.isVerified);
 
   const { isLoading } = useFetch({
-    url: '/api/user/team',
+    url: '/api/workspace/members',
     onSuccess: (data) => {
       const filteredMembers = data?.filter(
         (member: any) => member.email !== user.email
@@ -70,9 +69,11 @@ const SettingsAccountTransferModal = ({
             color="green"
             variant="flat"
             onClick={() => {
-              const transferConfirm = (document.getElementById(
-                'settings-transfer-confirm'
-              ) as HTMLInputElement).value;
+              const transferConfirm = (
+                document.getElementById(
+                  'settings-transfer-confirm'
+                ) as HTMLInputElement
+              ).value;
 
               if (
                 transferConfirm.toLowerCase().trim() !== 'transfer ownership'

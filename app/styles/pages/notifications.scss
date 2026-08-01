@@ -1,29 +1,6 @@
 @use '../pxToRem.scss' as *;
 @use '../breakpoints.scss' as *;
 
-.notification-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  gap: 10px;
-  flex: 1;
-
-  &-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--accent-200);
-  }
-
-  &-text {
-    font-size: 1.5rem;
-    color: var(--primary-500);
-  }
-}
-
 .navigation-notification-items {
   flex: 1;
   display: flex;

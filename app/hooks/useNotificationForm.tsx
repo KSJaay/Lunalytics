@@ -1,11 +1,16 @@
-import { useEffect, useReducer } from 'react';
-import NotificationValidators from '../../shared/validators/notifications';
-import { NotificationValidatorError } from '../../shared/utils/errors';
-import { createPostRequest } from '../services/axios';
+// import type definitions
 import type {
   NotificationErrorProps,
   NotificationProps,
-} from '../types/notifications';
+} from '../../shared/types/notifications';
+
+// import node modules
+import { useEffect, useReducer } from 'react';
+
+// import local files
+import NotificationValidators from '../../shared/validators/notifications';
+import { NotificationValidatorError } from '../../shared/utils/errors';
+import { createPostRequest } from '../services/axios';
 
 const defaultInputs = {
   platform: 'Discord',
@@ -56,8 +61,8 @@ const useNotificationForm = (
       const result = validator(inputs);
 
       const path = isEdit
-        ? '/api/notifications/edit'
-        : '/api/notifications/create';
+        ? '/api/notification/edit'
+        : '/api/notification/create';
 
       const response = await createPostRequest(path, isEdit ? inputs : result);
 

@@ -5,7 +5,7 @@ interface LoginLayoutProps {
   showProviders?: boolean;
   providers?: Array<string>;
   title?: string;
-  subtitle?: string;
+  subtitle?: string | React.ReactNode;
   children?: React.ReactNode;
 }
 

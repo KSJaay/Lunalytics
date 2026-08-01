@@ -1,10 +1,13 @@
-import { getNotificationComponent } from './components';
-import * as NotificationPlatformContent from '../../../../constant/notifications/layout';
+// import type definitions
 import type {
   NotificationErrorProps,
   NotificationProps,
-} from '../../../../types/notifications';
-import type { NotificationInputLayoutType } from '../../../../types/constant/notifications';
+} from '../../../../../shared/types/notifications';
+import type { NotificationInputLayoutType } from '../../../../../shared/types/constant/notifications';
+
+// import local files
+import { getNotificationComponent } from './components';
+import * as NotificationPlatformContent from '../../../../constant/notifications/layout';
 
 const NotificationRenderer = ({
   inputs,

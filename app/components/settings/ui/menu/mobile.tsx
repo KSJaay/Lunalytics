@@ -1,3 +1,6 @@
+// import type definitions
+import type { SettingsTabNames } from '../tab/desktop';
+
 // import dependencies
 import { useState } from 'react';
 import { observer } from 'mobx-react-lite';
@@ -10,21 +13,22 @@ import ManageApiTokens from '../../api';
 import ManageInvites from '../../invite';
 import SettingsAccount from '../../account';
 import SettingsMobileTabs from '../tab/mobile';
-import useContextStore from '../../../../context';
-import Role from '../../../../../shared/permissions/role';
 import SettingsPersonalisation from '../../personalisation';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
+import useMemberContext from '../../../../context/member';
 
-const SettingsMobile = ({ handleKeydown }) => {
-  const {
-    userStore: { user },
-  } = useContextStore();
-
+const SettingsMobile = ({
+  handleKeydown,
+}: {
+  handleKeydown: (event: KeyboardEvent | null, flag: boolean) => void;
+}) => {
   const [page, setPage] = useState('homepage');
-  const handleTabChange = (page) => setPage(page);
+  const handleTabChange = (page: SettingsTabNames) => setPage(page);
+  const { member } = useMemberContext();
 
-  const role = new Role('user', user.permission);
-  const isAdmin = role.hasPermission(PermissionsBits.ADMINISTRATOR);
+  const isAdmin = member?.role.hasPermission(
+    MemberPermissionBits.ADMINISTRATOR
+  );
 
   return (
     <div style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>

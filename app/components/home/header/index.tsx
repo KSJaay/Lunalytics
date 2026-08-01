@@ -8,14 +8,15 @@ import { useTranslation } from 'react-i18next';
 
 // import local files
 import HomeMonitorHeaderMenu from './menu';
-import useContextStore from '../../../context';
-import Role from '../../../../shared/permissions/role';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
-import type { MonitorType } from '../../../types/monitor';
+import useGlobalContext from '../../../context/global';
+import useMemberContext from '../../../context/member';
+import type { MonitorType } from '../../../../shared/types/monitor';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
 
-const typeToText = {
+export const typeToText = {
   docker: 'Docker Container',
-  email: 'Email (SMTP)',
+  dns: 'DNS',
+  gamedig: 'Game Server',
   http: 'HTTP/S',
   json: 'JSON Query',
   ping: 'Ping',
@@ -61,14 +62,15 @@ const HomeMonitorHeader = ({
   rightChildren,
   isMobile = false,
 }: HomeMonitorHeaderProps) => {
-  const {
-    userStore: { user },
-    globalStore: { activeMonitor, setActiveMonitor },
-  } = useContextStore();
+  const { activeMonitor, setActiveMonitor } = useGlobalContext();
+
+  const { member } = useMemberContext();
+
   const { t } = useTranslation();
 
-  const role = new Role('user', user.permission);
-  const isEditor = role.hasPermission(PermissionsBits.MANAGE_MONITORS);
+  const isEditor = member?.role.hasPermission(
+    MemberPermissionBits.MANAGE_MONITORS
+  );
 
   if (!activeMonitor) {
     return (

@@ -1,0 +1,48 @@
+@use '../../../styles/pxToRem.scss' as *;
+@use '../../../styles/breakpoints.scss' as *;
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00000080;
+}
+
+.menu-container {
+  background-color: var(--accent-800);
+  border-radius: pxToRem(12);
+  width: 90vw;
+  max-width: pxToRem(1440);
+  height: 80vh;
+  overflow: hidden;
+}
+
+.menu-content {
+  display: grid;
+  grid-template-columns: pxToRem(300) 1fr;
+  height: 100%;
+}
+
+.menu-main-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: pxToRem(12);
+  gap: pxToRem(10);
+}
+
+@include tablet {
+  .menu-content {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-main-content {
+    display: none;
+  }
+}

@@ -45,7 +45,12 @@ const RegisterPasswordForm = ({
           onBlur={handleInput}
         />
       </div>
-      <button type="submit" className="auth-button" onClick={handleSubmit}>
+      <button
+        id="register-password-submit-button"
+        type="submit"
+        className="auth-button"
+        onClick={handleSubmit}
+      >
         Register
       </button>
       <div className="auth-form-footer">

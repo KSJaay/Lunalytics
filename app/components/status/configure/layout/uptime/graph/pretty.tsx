@@ -48,7 +48,7 @@ const StatusUptimePrettyGraph = ({
           // const dateString = date.toISOString().split('T')[0];
 
           const statusColor =
-            date.getTime() < new Date(monitor.createdAt).getTime()
+            date.getTime() < new Date(monitor.created_at).getTime()
               ? 'gray'
               : 'Operational';
 

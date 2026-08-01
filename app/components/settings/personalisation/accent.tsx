@@ -4,7 +4,13 @@ import classNames from 'classnames';
 
 const colors = ['Blue', 'Purple', 'Green', 'Yellow', 'Red', 'Cyan', 'Pink'];
 
-const SettingsPersonalisationAccent = ({ color, setColor }) => {
+const SettingsPersonalisationAccent = ({
+  color,
+  setColor,
+}: {
+  color: string;
+  setColor: (color: string) => void;
+}) => {
   return (
     <>
       <div className="settings-subtitle">Accent</div>

@@ -8,15 +8,23 @@ import { FaTrashCan } from 'react-icons/fa6';
 import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 // import local files
-import useContextStore from '../../../context';
 import useClipboard from '../../../hooks/useClipboard';
 import SettingsApiCloseModal from '../../modal/settings/api/delete';
 import SettingsApiConfigureModal from '../../modal/settings/api/createOrEdit';
+import useModalContext from '../../../context/modal';
 
-const ManageApiToken = ({ tokenId, tokenName, tokenPermissions }) => {
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+interface ManageApiTokenProps {
+  tokenId: string;
+  tokenName: string;
+  tokenPermissions: number;
+}
+
+const ManageApiToken = ({
+  tokenId,
+  tokenName,
+  tokenPermissions,
+}: ManageApiTokenProps) => {
+  const { openModal, closeModal } = useModalContext();
   const [isHidden, setIsHidden] = useState(true);
   const clipboard = useClipboard();
 

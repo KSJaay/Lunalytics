@@ -1,0 +1,39 @@
+// import type definitions
+import type { Request, Response } from 'express';
+
+// import local files
+import statusCache from '../../cache/status.js';
+import { deleteStatusPage } from '../../database/queries/status.js';
+import { handleError } from '../../utils/errors.js';
+
+const deleteStatusPageMiddleware = async (
+  request: Request,
+  response: Response
+) => {
+  const { statusPageId } = request.body;
+
+  try {
+    if (!statusPageId) {
+      throw new Error('Status page id is required.');
+    }
+
+    await deleteStatusPage(statusPageId, response.locals.workspaceId);
+    statusCache.deleteStatusPage(statusPageId, response.locals.workspaceId);
+
+    response.status(200).send({
+      message: 'Status page deleted successfully!',
+    });
+  } catch (error) {
+    if (!response.headersSent) {
+      if (error instanceof Error) {
+        response.status(400).send({
+          message: error.message,
+        });
+      }
+    }
+
+    handleError(error, response);
+  }
+};
+
+export default deleteStatusPageMiddleware;

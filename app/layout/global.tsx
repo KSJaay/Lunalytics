@@ -1,102 +1,77 @@
 // import dependencies
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
 // import local files
-import useContextStore from '../context';
-import { fetchMonitorById } from '../services/monitor/fetch';
 import {
   LocalStorageStateProvider,
   useLocalStorageState,
 } from '../hooks/useLocalstorage';
 import Loading from '../components/ui/loading';
-import useFetch from '../hooks/useFetch';
-import type { LayoutGlobalProps } from '../types/layout';
+import useSequentialFetch from '../hooks/useSequentialFetch';
+import useMemberContext from '../context/member';
+import useConfigContext from '../context/config';
+import useUserContext from '../context/user';
+import useModalContext from '../context/modal';
 
-const GlobalLayout = ({ children }: LayoutGlobalProps) => {
-  const {
-    modalStore: { isOpen, content },
-    globalStore: { setMonitors, setTimeouts },
-    userStore: { setUser },
-    notificationStore: { setNotifications },
-    statusStore: { setStatusPages },
-    incidentStore: { setIncidents },
-  } = useContextStore();
+const GlobalLayout = () => {
+  const { isOpen, content, isSettingsOpen, settings } = useModalContext();
+
+  const { setUser } = useUserContext();
+
+  const { setMember } = useMemberContext();
+
+  const { setVersion } = useConfigContext();
 
   const navigate = useNavigate();
 
   const localStorageState = useLocalStorageState();
 
-  const onFailure = (error: any) => {
-    if (error.response?.status === 401) {
-      return navigate('/login');
-    }
-
-    if (error.response?.status === 403) {
-      return navigate('/verify');
-    }
-
-    navigate('/error');
-  };
-
-  const { isLoading: isSetupLoading } = useFetch({
-    url: '/api/auth/setup/exists',
-    onSuccess: (data) => {
-      if (data.setupRequired) {
-        navigate('/setup');
-      }
+  const { isLoading } = useSequentialFetch({
+    requests: [
+      {
+        url: '/api/auth/setup/exists',
+        onSuccess: (data) => {
+          if (data.setupRequired) navigate('/setup');
+        },
+      },
+      {
+        url: '/api/user',
+        onSuccess: (data) => setUser(data),
+      },
+      {
+        url: '/api/workspace/members/@me',
+        onSuccess: (data) => setMember(data),
+        onFailure: (error) => {
+          if (error.response?.status === 401) {
+            navigate('/workspace/select');
+            return true;
+          }
+          return false;
+        },
+      },
+      {
+        url: '/api/version',
+        onSuccess: (data) => setVersion({ ...data, hasLoaded: true }),
+        onFailure: () => true,
+      },
+    ],
+    onFailure: (error) => {
+      if (error.response?.status === 401) return navigate('/login');
+      if (error.response?.status === 403) return navigate('/verify');
+      navigate('/error');
     },
-    onFailure,
   });
 
-  const { isLoading: isUserLoading } = useFetch({
-    url: '/api/user',
-    onSuccess: (data) => setUser(data),
-    onFailure,
-  });
-
-  const { isLoading: isMonitorsLoading } = useFetch({
-    url: '/api/user/monitors',
-    onSuccess: (data) => {
-      setMonitors(data);
-      setTimeouts(data, fetchMonitorById);
-    },
-    onFailure,
-  });
-
-  const { isLoading: isNotificationsLoading } = useFetch({
-    url: '/api/notifications',
-    onSuccess: (data) => setNotifications(data),
-    onFailure,
-  });
-
-  const { isLoading: isStatusPagesLoading } = useFetch({
-    url: '/api/status-pages',
-    onSuccess: (data) => setStatusPages(data),
-    onFailure,
-  });
-
-  const { isLoading: isIncidentsLoading } = useFetch({
-    url: '/api/incident/all',
-    onSuccess: (data) => setIncidents(data),
-    onFailure,
-  });
-
-  if (
-    isUserLoading ||
-    isMonitorsLoading ||
-    isNotificationsLoading ||
-    isStatusPagesLoading ||
-    isIncidentsLoading ||
-    isSetupLoading
-  ) {
-    return <Loading />;
+  if (isLoading) {
+    return <Loading activeUrl="/home" />;
   }
 
   return (
     <LocalStorageStateProvider value={localStorageState}>
       {isOpen ? content : null}
-      {children}
+      {isSettingsOpen ? settings : null}
+      <Outlet />
     </LocalStorageStateProvider>
   );
 };

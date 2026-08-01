@@ -32,13 +32,18 @@ const SetupForm = () => {
       try {
         await submitSetup(setErrors, 'advanced', inputs);
 
-        return navigate('/home');
+        return navigate('/workspace/create');
       } catch (error: any) {
         console.log(error);
         if (error?.response?.data) {
           if (error?.response?.data?.errorType === 'ownerExists') {
             return navigate('/login');
           }
+
+          if (error?.response?.data?.general) {
+            toast.error(error?.response?.data?.general);
+          }
+
           return setErrors(error?.response?.data);
         }
 
@@ -54,7 +59,11 @@ const SetupForm = () => {
   return (
     <>
       {page.prev && (
-        <div className="auth-setup-back-button" onClick={handleBack}>
+        <div
+          id="setup-back-button"
+          className="auth-setup-back-button"
+          onClick={handleBack}
+        >
           <FaChevronLeft />
           Back
         </div>
@@ -101,7 +110,11 @@ const SetupForm = () => {
       {page.name === 'database' && <SetupDatabaseForm />}
 
       {page.hideButton ? null : (
-        <button className="auth-button" onClick={changePage}>
+        <button
+          id={page.submit ? 'setup-complete-button' : 'setup-continue-button'}
+          className="auth-button"
+          onClick={changePage}
+        >
           {page.submit ? 'Complete' : 'Continue'}
         </button>
       )}

@@ -23,7 +23,7 @@ const CodeDisplayer = ({
     const lines = highlighted.split('\n');
     return lines.map((line, idx) => ({
       key: idx,
-      html: line.length ? line : '\u00A0',
+      text: line.length ? line : '\u00A0',
     }));
   }, [code]);
 
@@ -43,11 +43,9 @@ const CodeDisplayer = ({
           <pre className={`cd-pre ${showLineNumbers ? 'with-lines' : ''}`}>
             <code>
               {htmlLines.map((line) => (
-                <span
-                  key={line.key}
-                  className="cd-line"
-                  dangerouslySetInnerHTML={{ __html: line.html }}
-                />
+                <span key={line.key} className="cd-line">
+                  {line.text}
+                </span>
               ))}
             </code>
           </pre>

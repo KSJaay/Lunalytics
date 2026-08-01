@@ -6,14 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { Input, Preview } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../context';
+import useGlobalContext from '../../context/global';
 import { filterData } from '../../../shared/utils/search';
-import type { ContextMonitorProps } from '../../types/context/global';
 
 const MonitorPreview = ({ children }: { children: React.ReactNode }) => {
-  const {
-    globalStore: { allMonitors = [], setActiveMonitor },
-  } = useContextStore();
+  const { allMonitors = [], setActiveMonitor } = useGlobalContext();
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -21,25 +18,23 @@ const MonitorPreview = ({ children }: { children: React.ReactNode }) => {
   const items = useMemo(() => {
     if (!allMonitors?.length) return [];
 
-    return filterData(allMonitors, search, ['name', 'url']).map(
-      (monitor: ContextMonitorProps) => {
-        return (
-          <div
-            className="navigation-preview-content"
-            key={monitor.monitorId}
-            onClick={() => {
-              navigate('/home');
-              setActiveMonitor(monitor.monitorId);
-            }}
-          >
-            <div className="navigation-preview-item">
-              <div>{monitor.name}</div>
-              <div className="navigation-preview-url">{monitor.url}</div>
-            </div>
+    return filterData(allMonitors, search, ['name', 'url']).map((monitor) => {
+      return (
+        <div
+          className="navigation-preview-content"
+          key={monitor.monitorId}
+          onClick={() => {
+            navigate('/home');
+            setActiveMonitor(monitor.monitorId);
+          }}
+        >
+          <div className="navigation-preview-item">
+            <div>{monitor.name}</div>
+            <div className="navigation-preview-url">{monitor.url}</div>
           </div>
-        );
-      }
-    );
+        </div>
+      );
+    });
   }, [search, JSON.stringify(allMonitors)]);
 
   const input = (

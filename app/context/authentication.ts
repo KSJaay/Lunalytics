@@ -1,8 +1,12 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+// import type definitions
 import type {
   ContextAuthenticationConfigProps,
   ContextAuthenticationProviderProps,
-} from '../types/context/authentication';
+  Providers,
+} from '../../shared/types/context/authentication';
+
+// import node modules
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class Authentication {
   providers: Map<string, ContextAuthenticationProviderProps>;
@@ -52,7 +56,7 @@ class Authentication {
     this.providers.delete(providerId);
   };
 
-  pauseProvider = (providerId: string, paused: boolean) => {
+  pauseProvider = (providerId: Providers, paused: boolean) => {
     const provider = this.providers.get(providerId);
     if (provider) {
       provider.enabled = paused;

@@ -7,9 +7,9 @@ import { MdEdit } from 'react-icons/md';
 import { FaTrashCan } from 'react-icons/fa6';
 
 // import local files
-import useContextStore from '../../../context';
 import IncidentEditMessageModal from '../../modal/incident/editUpdate';
 import IncidentDeleteMessageModal from '../../modal/incident/deleteMessage';
+import useModalContext from '../../../context/modal';
 
 interface IncidentIdMessageProps {
   incidentId: string;
@@ -26,9 +26,7 @@ const IncidentIdMessage = ({
   createdAt = null,
   incidentPosition,
 }: IncidentIdMessageProps) => {
-  const {
-    modalStore: { openModal },
-  } = useContextStore();
+  const { openModal } = useModalContext();
 
   const classes = classNames('iid-content', status);
 

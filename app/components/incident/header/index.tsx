@@ -2,21 +2,22 @@
 import { toast } from 'react-toastify';
 import { LuInfo } from 'react-icons/lu';
 import { observer } from 'mobx-react-lite';
-import { FaTrashCan } from 'react-icons/fa6';
-
-// import local files
-import useContextStore from '../../../context';
-import Role from '../../../../shared/permissions/role';
-import { createPostRequest } from '../../../services/axios';
-import DeleteIncidentModal from '../../modal/incident/delete';
-import { PermissionsBits } from '../../../../shared/permissions/bitFlags';
 import { MdArchive } from 'react-icons/md';
-import ArchiveIncidentModal from '../../modal/incident/archive';
+import { FaTrashCan } from 'react-icons/fa6';
 import { IoArrowBack } from 'react-icons/io5';
 
+// import local files
+import useModalContext from '../../../context/modal';
+import useMemberContext from '../../../context/member';
+import useIncidentContext from '../../../context/incidents';
+import { createPostRequest } from '../../../services/axios';
+import DeleteIncidentModal from '../../modal/incident/delete';
+import ArchiveIncidentModal from '../../modal/incident/archive';
+import { MemberPermissionBits } from '../../../../shared/permissions/bitFlags';
+
 interface HomeIncidentHeaderProps {
-  isInfoOpen: boolean;
-  setIsInfoOpen: (isOpen: boolean) => void;
+  isInfoOpen?: boolean;
+  setIsInfoOpen?: (isOpen: boolean) => void;
   rightChildren?: React.ReactNode;
   isMobile?: boolean;
 }
@@ -27,19 +28,18 @@ const HomeIncidentHeader = ({
   rightChildren,
   isMobile = false,
 }: HomeIncidentHeaderProps) => {
+  const { openModal, closeModal } = useModalContext();
   const {
-    userStore: { user },
-    modalStore: { openModal, closeModal },
-    incidentStore: {
-      addIncident,
-      deleteIncident,
-      activeIncident: incident,
-      setActiveIncident,
-    },
-  } = useContextStore();
+    addIncident,
+    deleteIncident,
+    activeIncident: incident,
+    setActiveIncident,
+  } = useIncidentContext();
+  const { member } = useMemberContext();
 
-  const role = new Role('user', user.permission);
-  const isEditor = role.hasPermission(PermissionsBits.MANAGE_INCIDENTS);
+  const isEditor = member?.role.hasPermission(
+    MemberPermissionBits.MANAGE_INCIDENTS
+  );
 
   const handleDelete = async () => {
     try {
@@ -112,6 +112,7 @@ const HomeIncidentHeader = ({
         {isEditor && incident ? (
           <>
             <div
+              id="incident-header-archive-button"
               onClick={() =>
                 openModal(
                   <ArchiveIncidentModal
@@ -124,6 +125,7 @@ const HomeIncidentHeader = ({
               <MdArchive style={{ width: '20px', height: '20px' }} />
             </div>
             <div
+              id="incident-header-delete-button"
               onClick={() =>
                 openModal(
                   <DeleteIncidentModal
@@ -138,7 +140,10 @@ const HomeIncidentHeader = ({
           </>
         ) : null}
         {rightChildren ? (
-          <div onClick={() => setIsInfoOpen(!isInfoOpen)}>
+          <div
+            id="incident-header-info-button"
+            onClick={() => setIsInfoOpen?.(!isInfoOpen)}
+          >
             <LuInfo size={20} />
           </div>
         ) : null}

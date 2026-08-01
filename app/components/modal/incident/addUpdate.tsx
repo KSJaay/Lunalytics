@@ -5,15 +5,14 @@ import { observer } from 'mobx-react-lite';
 
 // import local files
 import Tabs from '../../ui/tabs';
-import useContextStore from '../../../context';
 import IncidentMonitors from '../../incident/monitors';
 import useIncidentMessage from '../../../hooks/useIncidentMessage';
+import useIncidentContext from '../../../context/incidents';
+import useModalContext from '../../../context/modal';
 
 const IncidentAddUpdateModal = ({ incidentId }: { incidentId: string }) => {
-  const {
-    incidentStore: { getIncidentById, addIncident },
-    modalStore: { closeModal },
-  } = useContextStore();
+  const { closeModal } = useModalContext();
+  const { getIncidentById, addIncident } = useIncidentContext();
 
   const incident = getIncidentById(incidentId);
 
@@ -59,10 +58,20 @@ const IncidentAddUpdateModal = ({ incidentId }: { incidentId: string }) => {
       title="Add an update"
       actions={
         <>
-          <Button onClick={closeModal} color="red" variant="flat">
+          <Button
+            id="incident-addupdate-modal-cancel-button"
+            onClick={closeModal}
+            color="red"
+            variant="flat"
+          >
             Cancel
           </Button>
-          <Button color="green" variant="flat" onClick={updateIncidentStatus}>
+          <Button
+            id="incident-addupdate-modal-add-button"
+            color="green"
+            variant="flat"
+            onClick={updateIncidentStatus}
+          >
             Add Update
           </Button>
         </>

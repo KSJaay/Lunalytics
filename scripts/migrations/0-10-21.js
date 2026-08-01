@@ -1,5 +1,5 @@
 // import local files
-import SQLite from '../../server/database/sqlite/setup.js';
+import database from '../../server/database/connection.js';
 import logger from '../../server/utils/logger.js';
 
 const infomation = {
@@ -10,7 +10,7 @@ const infomation = {
 };
 
 const migrate = async () => {
-  const client = await SQLite.connect();
+  const client = await database.connect();
 
   await client.raw(`DROP INDEX IF EXISTS heartbeat_monitorid_index;`);
   await client.raw(`DROP INDEX IF EXISTS hourly_heartbeat_monitorid_index;`);
@@ -36,7 +36,11 @@ const migrate = async () => {
   ];
 
   for (const indexName of redundantIndexes) {
-    await client.raw(`DROP INDEX IF EXISTS ${indexName};`);
+    await client.raw(`DROP INDEX IF EXISTS ${indexName};`).catch((err) => {
+      logger.error('Migrations', {
+        message: `Error dropping index ${indexName}: ${err.message}`,
+      });
+    });
   }
 
   logger.info('Migrations', { message: '0.10.21 has been applied' });

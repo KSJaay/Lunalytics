@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
-import useDropdown from '../../../../../hooks/useDropdown';
 import Dropdown from '../../../../ui/dropdown';
-import useContextStore from '../../../../../context';
+import useDropdown from '../../../../../hooks/useDropdown';
+import useGlobalContext from '../../../../../context/global';
 
 const MonitorParentSelect = ({
   inputs,
@@ -10,9 +10,7 @@ const MonitorParentSelect = ({
   inputs: any;
   handleInput: (key: string, value: any) => void;
 }) => {
-  const {
-    globalStore: { allMonitors },
-  } = useContextStore();
+  const { allMonitors } = useGlobalContext();
   const { toggleDropdown, dropdownIsOpen } = useDropdown(true);
 
   const onSelect = (monitorId: string | null) => {

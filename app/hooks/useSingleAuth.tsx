@@ -4,15 +4,27 @@ import { useState } from 'react';
 // import local files
 import validators from '../../shared/validators';
 
+interface UseSingleAuthValues {
+  inputs: Record<string, any>;
+  errors: Record<string, string>;
+}
+
+type SingleAuthPage = 'email' | 'password' | 'register';
+
+type InputChangeEvent =
+  | React.ChangeEvent<HTMLInputElement>
+  | React.ChangeEvent<HTMLTextAreaElement>
+  | { target: { id: string; value: any } };
+
 const useSingleAuth = () => {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<UseSingleAuthValues>({
     inputs: {},
     errors: {},
   });
 
-  const [page, setPage] = useState('email');
+  const [page, setPage] = useState<SingleAuthPage>('email');
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: InputChangeEvent) => {
     const { id, value } = event.target;
 
     setValues((prev) => ({
@@ -21,7 +33,7 @@ const useSingleAuth = () => {
     }));
   };
 
-  const handleInput = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = async (event: InputChangeEvent) => {
     const { id, value } = event.target;
 
     if (validators.auth[id]) {

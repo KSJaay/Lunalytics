@@ -6,13 +6,14 @@ import { Button } from '@lunalytics/ui';
 import { observer } from 'mobx-react-lite';
 
 // import local files
-import useContextStore from '../../../context';
+import useUserContext from '../../../context/user';
+import useModalContext from '../../../context/modal';
 import { createPostRequest } from '../../../services/axios';
 import SettingsAccountAvatarModal from '../../modal/settings/account/avatar';
 
 const userPermissionNames = { 1: 'Owner', 2: 'Admin', 3: 'Editor', 4: 'Guest' };
 
-const isImageUrl = (url) => {
+const isImageUrl = (url: string) => {
   if (typeof url !== 'string') {
     return false;
   }
@@ -20,13 +21,12 @@ const isImageUrl = (url) => {
 };
 
 const SettingsAccountAvatar = () => {
+  const { openModal, closeModal } = useModalContext();
+
   const {
-    userStore: {
-      user: { avatar, displayName, permission },
-      updateUsingKey,
-    },
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+    user: { avatar, displayName, permission },
+    updateUsingKey,
+  } = useUserContext();
 
   const avatarUrl = isImageUrl(avatar) ? avatar : `/icons/${avatar}.png`;
 
@@ -38,7 +38,7 @@ const SettingsAccountAvatar = () => {
     </div>
   );
 
-  const handleAvatarChange = async (selectedAvatar) => {
+  const handleAvatarChange = async (selectedAvatar: string | null) => {
     try {
       await createPostRequest('/api/user/update/avatar', {
         avatar: selectedAvatar,

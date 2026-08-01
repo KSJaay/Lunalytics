@@ -1,0 +1,119 @@
+.import-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    circle at top,
+    var(--accent-900),
+    var(--accent-800)
+  );
+}
+
+.import-card {
+  width: 420px;
+  padding: 32px;
+  background: var(--accent-900);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  color: #fff;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+}
+
+.source-switch {
+  display: flex;
+  background: var(--accent-800);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+
+  button {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--font-light-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.active {
+      background: var(--primary-700);
+      color: var(--font-color);
+    }
+
+    &:hover:not(.active) {
+      color: var(--font-light-color);
+    }
+  }
+}
+
+.file-input {
+  display: block;
+  margin-bottom: 20px;
+
+  input {
+    display: none;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 225px;
+    border: 2px dashed var(--accent-500);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--font-color);
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: var(--accent-400);
+      color: var(--font-color);
+    }
+  }
+
+  .file-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 225px;
+    border-radius: 12px;
+    border: 2px solid var(--primary-700);
+    text-align: center;
+    background: var(--accent-800);
+    cursor: pointer;
+
+    strong {
+      font-size: var(--font-md);
+      color: var(--font-color);
+      word-break: break-all;
+    }
+
+    small {
+      font-size: var(--font-sm);
+      color: var(--font-light-color);
+    }
+
+    em {
+      font-size: var(--font-xs);
+      font-style: normal;
+      color: var(--font-light-color);
+    }
+  }
+}
+
+.db-form {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}

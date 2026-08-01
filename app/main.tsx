@@ -12,6 +12,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // import local files
 import Loading from './components/ui/loading';
+import WorkspaceCreatePage from './pages/workspace/create';
+import WorkspaceJoinPage from './pages/workspace/join';
+import WorkspaceSelectPage from './pages/workspace/select';
+import WorkspacePrefetcher from './routes/workspacePrefetcher';
+import SetupImport from './pages/setupImport';
 
 const Home = React.lazy(() => import('./pages/home'));
 const Settings = React.lazy(() => import('./pages/settings'));
@@ -21,7 +26,6 @@ const StatusPage = React.lazy(() => import('./pages/status'));
 const Incidents = React.lazy(() => import('./pages/incidents'));
 const GlobalLayout = React.lazy(() => import('./layout/global'));
 const Login = React.lazy(() => import('./pages/login'));
-const Register = React.lazy(() => import('./pages/register'));
 const Setup = React.lazy(() => import('./pages/setup'));
 const Verify = React.lazy(() => import('./pages/verify'));
 const ErrorPage = React.lazy(() => import('./pages/error'));
@@ -33,6 +37,64 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ToastContainer position="top-right" theme="dark" closeOnClick stacked />
       <GlobalProvider>
         <BrowserRouter>
+          <Routes>
+            <Route
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <GlobalLayout />
+                </React.Suspense>
+              }
+            >
+              <Route
+                path="/home"
+                element={
+                  <React.Suspense fallback={<Loading />}>
+                    <WorkspacePrefetcher>
+                      <Home />
+                    </WorkspacePrefetcher>
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/notifications"
+                element={
+                  <React.Suspense fallback={<Loading />}>
+                    <WorkspacePrefetcher>
+                      <Notifications />
+                    </WorkspacePrefetcher>
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/status-pages"
+                element={
+                  <React.Suspense fallback={<Loading />}>
+                    <WorkspacePrefetcher>
+                      <StatusConfigure />
+                    </WorkspacePrefetcher>
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/incidents"
+                element={
+                  <React.Suspense fallback={<Loading />}>
+                    <WorkspacePrefetcher>
+                      <Incidents />
+                    </WorkspacePrefetcher>
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <React.Suspense fallback={<Loading />}>
+                    <Settings />
+                  </React.Suspense>
+                }
+              />
+            </Route>
+          </Routes>
           <Routes>
             <Route
               path="/"
@@ -55,68 +117,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               }
             />
             <Route
-              path="/home"
-              element={
-                <React.Suspense fallback={<Loading />}>
-                  <GlobalLayout>
-                    <Home />
-                  </GlobalLayout>
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/notifications"
-              element={
-                <React.Suspense fallback={<Loading />}>
-                  <GlobalLayout>
-                    <Notifications />
-                  </GlobalLayout>
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/status-pages"
-              element={
-                <React.Suspense fallback={<Loading />}>
-                  <GlobalLayout>
-                    <StatusConfigure />
-                  </GlobalLayout>
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/incidents"
-              element={
-                <React.Suspense fallback={<Loading />}>
-                  <GlobalLayout>
-                    <Incidents />
-                  </GlobalLayout>
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <React.Suspense fallback={<Loading />}>
-                  <GlobalLayout>
-                    <Settings />
-                  </GlobalLayout>
-                </React.Suspense>
-              }
-            />
-            <Route
               path="/login"
               element={
                 <React.Suspense fallback={<Loading />}>
                   <Login />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <React.Suspense fallback={<Loading />}>
-                  <Register />
                 </React.Suspense>
               }
             />
@@ -129,10 +133,42 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               }
             />
             <Route
+              path="/setup/import"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <SetupImport />
+                </React.Suspense>
+              }
+            />
+            <Route
               path="/verify"
               element={
                 <React.Suspense fallback={<Loading />}>
                   <Verify />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/workspace/create"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <WorkspaceCreatePage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/workspace/join"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <WorkspaceJoinPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/workspace/select"
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <WorkspaceSelectPage />
                 </React.Suspense>
               }
             />
