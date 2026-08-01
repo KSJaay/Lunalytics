@@ -13,11 +13,11 @@ import { checkObjectAgainstSchema } from '../../utils/schema.js';
 
 const validateStatusLayout = (layout: ContextStatusPageLayoutProps[] = []) => {
   const filteredLayout = layout.map((item: ContextStatusPageLayoutProps) => {
-    if (item.isMinimized) {
-      delete item.isMinimized;
-    }
+    delete item.isMinimized;
     return item;
   });
+
+  console.log(filteredLayout);
 
   filteredLayout.forEach((item) => {
     const { type } = item;

@@ -14,12 +14,8 @@ export interface ConfigValidatorOutput {
 const zodConfigValidator = zod.object({
   nativeSignin: zod
     .boolean('common.error.configNativeSigninInvalid')
-    .optional()
-    .default(false),
-  register: zod
-    .boolean('common.error.configRegisterInvalid')
-    .optional()
-    .default(false),
+    .optional(),
+  register: zod.boolean('common.error.configRegisterInvalid').optional(),
 });
 
 const ConfigValidator = ({

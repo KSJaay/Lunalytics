@@ -59,7 +59,7 @@ const NotificationModal = ({
 
   const testNotification = async () => {
     try {
-      await createPostRequest('/api/notifications/test', inputs);
+      await createPostRequest('/api/notification/test', inputs);
       toast.success('Test notification sent successfully');
       return;
     } catch (error) {

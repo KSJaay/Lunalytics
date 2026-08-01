@@ -14,9 +14,7 @@ import {
   SESSION_TOKEN,
   WORKSPACE_ID_COOKIE,
 } from '../../shared/constants/cookies.js';
-import {
-  setServerSideCookie,
-} from '../../shared/utils/cookies.js';
+import { setServerSideCookie } from '../../shared/utils/cookies.js';
 
 const thirtyDaysInMs = timeToMs(30, 'days');
 const oneDayInMs = timeToMs(1, 'days');
@@ -51,7 +49,8 @@ const authorization = async (
       }
 
       // Rotate session token if older than 24 hours
-      const sessionAge = Date.now() - new Date(userSession.created_at).getTime();
+      const sessionAge =
+        Date.now() - new Date(userSession.created_at).getTime();
       if (sessionAge > oneDayInMs) {
         const newToken = await rotateUserSession(session_token);
         setServerSideCookie(

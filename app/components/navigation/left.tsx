@@ -2,7 +2,6 @@
 import './left.scss';
 
 // import dependencies
-import { useEffect } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
@@ -110,10 +109,6 @@ const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
 
     return <Preview key={key}>{content}</Preview>;
   });
-
-  useEffect(() => {
-    openSettings(<LeftNavigationAdminPanel />);
-  }, []);
 
   return (
     <aside className="left-navigation-container">

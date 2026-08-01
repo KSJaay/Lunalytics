@@ -23,22 +23,22 @@ class NotificationBase {
    */
 
   async send(
-    // @ts-ignore eslint-disable-next-line no-unused-vars
+    // oxlint-disable-next-line no-unused-vars
     notification: NotificationProps,
-    // @ts-ignore eslint-disable-next-line no-unused-vars
+    // oxlint-disable-next-line no-unused-vars
     monitor: MonitorProps,
-    // @ts-ignore eslint-disable-next-line no-unused-vars
+    // oxlint-disable-next-line no-unused-vars
     heartbeat: HeartbeatProps
   ): Promise<void | string> {
     throw new Error('Override this function dummy!');
   }
 
   async sendRecovery(
-    // @ts-ignore eslint-disable-next-line no-unused-vars
+    // oxlint-disable-next-line no-unused-vars
     notification: NotificationProps,
-    // @ts-ignore eslint-disable-next-line no-unused-vars
+    // oxlint-disable-next-line no-unused-vars
     monitor: MonitorProps,
-    // @ts-ignore eslint-disable-next-line no-unused-vars
+    // oxlint-disable-next-line no-unused-vars
     heartbeat: HeartbeatProps
   ): Promise<void | string> {
     throw new Error('Override this function dummy!');

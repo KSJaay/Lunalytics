@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@lunalytics/ui';
 import { IoKey } from 'react-icons/io5';
+import { API_TOKEN_ERRORS } from '../../../../shared/constants/errors/apiToken';
 
 // import local files
 import useTokensContext from '../../../context/tokens';
@@ -22,7 +23,11 @@ const ManageApiTokens = () => {
     onSuccess: (data) => {
       setTokens(data || []);
     },
-    onFailure: () => toast.error("Couldn't fetch api tokens"),
+    onFailure: (error) => {
+      if (error.response.data.code === API_TOKEN_ERRORS['AT003'].code) return;
+
+      toast.error("Couldn't fetch api tokens");
+    },
   });
 
   return (

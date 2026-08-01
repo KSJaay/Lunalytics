@@ -121,6 +121,8 @@ export const fetchDailyHeartbeats = async (
   const date = new Date(Date.now() - 86400000).toISOString();
   const client = await database.connect();
 
+  console.log(monitorId, workspaceId, date);
+
   const heartbeats = await client?.('heartbeat')
     .where({ monitorId, workspaceId, isDown: false })
     .andWhere('date', '>', date)

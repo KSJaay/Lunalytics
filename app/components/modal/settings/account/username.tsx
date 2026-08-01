@@ -38,7 +38,9 @@ const SettingsAccountUsernameModal = ({
       setError('Error finding user input.');
       return;
     }
+
     const value = inputElement.value;
+    console.log('value', value);
     const query = await handleChangeUsername(value, handleError, closeModal);
 
     if (query === true) {

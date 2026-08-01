@@ -23,7 +23,11 @@ export const userHasPermission =
   (requiredPermission: number) =>
   (_request: Request, response: Response, next: NextFunction) => {
     const { user: { permission } = {} } = response.locals;
-    if (!permission) return response.sendStatus(401);
+    if (!permission) {
+      return response
+        .status(401)
+        .json({ error: 'User permission does not exist' });
+    }
 
     const role = new Role('user', permission);
 
@@ -38,12 +42,17 @@ export const memberHasPermission =
   (requiredPermission: number) =>
   (_request: Request, response: Response, next: NextFunction) => {
     const { member: { permission } = {} } = response.locals;
-    if (!permission) return response.sendStatus(401);
+    if (!permission)
+      return response
+        .status(401)
+        .json({ error: 'Member does not permission exist' });
 
     const role = new Role('user', permission);
 
     if (!role.hasPermission(requiredPermission)) {
-      return response.sendStatus(401);
+      return response
+        .status(401)
+        .json({ error: 'Member does not have required permission' });
     }
 
     return next();

@@ -16,7 +16,7 @@ import database from '../../database/connection.js';
 import config from '../../utils/config.js';
 import { createUserSession } from '../../database/queries/session.js';
 import { parseUserAgent } from '../../utils/uaParser.js';
-import { oldPermsToFlags } from '../../../shared/permissions/oldPermsToFlags.js';
+import { UserPermissionBits } from '../../../shared/permissions/bitFlags.js';
 import { SESSION_TOKEN } from '../../../shared/constants/cookies.js';
 
 const packageJson = loadJSON('package.json');
@@ -46,21 +46,19 @@ const writeConfigFile = (config = {}) => {
 };
 
 const createBasicSetup = ({
-  databaseType,
   databaseName,
   websiteUrl,
-  migrationType,
+  migrationType = 'automatic',
   retentionPeriod = '6m',
 }: {
-  databaseType: 'better-sqlite3' | 'pg';
   databaseName: string;
   websiteUrl: string;
-  migrationType: string;
+  migrationType?: string;
   retentionPeriod?: string;
 }) => {
   const config = {
     port: 2308,
-    database: { name: databaseName, type: databaseType, config: {} },
+    database: { name: databaseName, type: 'better-sqlite3', config: {} },
     migrationType,
     version: packageJson.version,
     websiteUrl,
@@ -77,7 +75,7 @@ const createAdvancedSetup = ({
   databaseType,
   databaseName,
   websiteUrl,
-  migrationType,
+  migrationType = 'automatic',
   postgresHost = 'localhost',
   postgresPort = '5432',
   postgresUser = 'postgres',
@@ -87,7 +85,7 @@ const createAdvancedSetup = ({
   databaseType: 'better-sqlite3' | 'pg';
   databaseName: string;
   websiteUrl: string;
-  migrationType: string;
+  migrationType?: string;
   postgresHost?: string;
   postgresPort?: string | number;
   postgresUser?: string;
@@ -184,7 +182,7 @@ const setupMiddleware = async (request: Request, response: Response) => {
       displayName: username,
       password,
       avatar: null,
-      permission: oldPermsToFlags[1],
+      permission: UserPermissionBits.ADMINISTRATOR,
       isVerified: true,
       isOwner: true,
       created_at: new Date().toISOString(),
@@ -210,7 +208,7 @@ const setupMiddleware = async (request: Request, response: Response) => {
 
     return response.sendStatus(200);
   } catch (error: any) {
-    logger.error('SETUP', {
+    logger.error('SETUP Middleware', {
       message: 'Unable to setup application. Please try again.',
       error: error.message,
       stack: error.stack,

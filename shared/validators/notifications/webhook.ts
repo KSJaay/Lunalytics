@@ -98,25 +98,34 @@ export interface WebhookOutput {
 
 const zodWebhook = zod
   .object({
-    friendlyName: zod.string().regex(friendlyNameRegex, {
-      message: 'common.error.invalidFriendlyNameWebhook',
-    }),
-    messageType: zod.string().refine((val) => messageTypes.includes(val), {
-      message: 'common.error.invalidMessageType',
-    }),
-    token: zod.string().regex(tokenRegex, {
-      message: 'common.error.invalidWebhookUrl',
-    }),
-    data: zod.object({
-      additionalHeaders: zod.json().optional(),
-      showAdditionalHeaders: zod.boolean().optional(),
-      requestType: zod
-        .string()
-        .refine((val) => requestTypes.includes(val), {
-          message: 'common.error.invalidRequestType',
-        })
-        .optional(),
-    }),
+    friendlyName: zod
+      .string({ error: 'common.error.missingFriendlyNameWebhook' })
+      .regex(friendlyNameRegex, {
+        message: 'common.error.invalidFriendlyNameWebhook',
+      }),
+    messageType: zod
+      .string({ error: 'common.error.missingMessageType' })
+      .refine((val) => messageTypes.includes(val), {
+        message: 'common.error.invalidMessageType',
+      }),
+    token: zod
+      .string({ error: 'common.error.missingWebhookUrl' })
+      .regex(tokenRegex, {
+        message: 'common.error.invalidWebhookUrl',
+      }),
+    data: zod
+      .object({
+        additionalHeaders: zod.json().optional(),
+        showAdditionalHeaders: zod.boolean().optional(),
+        requestType: zod
+          .string()
+          .refine((val) => requestTypes.includes(val), {
+            message: 'common.error.invalidRequestType',
+          })
+          .optional(),
+      })
+      .optional()
+      .default({}),
   })
   .transform((values) => ({
     platform: 'Webhook',

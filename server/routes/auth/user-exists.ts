@@ -1,4 +1,4 @@
-import * as zod from 'zod';
+// import * as zod from 'zod';
 import { Router } from 'express';
 import { createRoute } from '../../utils/createRoute.js';
 import emailExistsMiddleware from '../../middleware/auth/emailExists.js';

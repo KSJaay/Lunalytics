@@ -61,8 +61,8 @@ const useNotificationForm = (
       const result = validator(inputs);
 
       const path = isEdit
-        ? '/api/notifications/edit'
-        : '/api/notifications/create';
+        ? '/api/notification/edit'
+        : '/api/notification/create';
 
       const response = await createPostRequest(path, isEdit ? inputs : result);
 

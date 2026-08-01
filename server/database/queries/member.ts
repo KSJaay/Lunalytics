@@ -8,11 +8,13 @@ export const fetchMember = async (email: string, workspaceId: string) => {
 export const createMember = async (data: {
   email: string;
   workspaceId: string;
+  permission?: number;
 }) => {
   const client = await database.connect();
 
   await client?.('member').insert({
     email: data.email,
     workspaceId: data.workspaceId,
+    permission: data.permission || 0,
   });
 };

@@ -50,8 +50,8 @@ const SettingsApiConfigureModal = ({
         isEdit,
       });
 
-      if (isInvalid) {
-        return toast.error(isInvalid);
+      if (isInvalid.isValidationError) {
+        return toast.error(isInvalid.message);
       }
 
       const response = await createPostRequest(path, {

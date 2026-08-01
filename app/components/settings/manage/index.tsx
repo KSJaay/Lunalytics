@@ -71,7 +71,7 @@ const ManageTeam = () => {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             alignItems: 'center',
             paddingBottom: '15px',
           }}

@@ -1,4 +1,4 @@
-import * as zod from 'zod';
+// import * as zod from 'zod';
 import { Router } from 'express';
 import { createRoute } from '../../utils/createRoute.js';
 import register from '../../middleware/auth/register.js';

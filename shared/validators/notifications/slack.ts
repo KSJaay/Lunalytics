@@ -84,23 +84,35 @@ export interface SlackOutput {
 
 const zodSlack = zod
   .object({
-    friendlyName: zod.string().regex(friendlyNameRegex, {
-      message: 'common.error.invalidFriendlyNameSlack',
-    }),
-    messageType: zod.string().refine((val) => messageTypes.includes(val), {
-      message: 'common.error.invalidMessageType',
-    }),
-    token: zod.string().regex(tokenRegex, {
-      message: 'common.error.invalidSlackWebhookUrl',
-    }),
+    friendlyName: zod
+      .string({ error: 'common.error.missingFriendlyNameSlack' })
+      .regex(friendlyNameRegex, {
+        message: 'common.error.invalidFriendlyNameSlack',
+      }),
+    messageType: zod
+      .string({ error: 'common.error.missingMessageType' })
+      .refine((val) => messageTypes.includes(val), {
+        message: 'common.error.invalidMessageType',
+      }),
+    token: zod
+      .string({ error: 'common.error.missingSlackWebhookUrl' })
+      .regex(tokenRegex, {
+        message: 'common.error.invalidSlackWebhookUrl',
+      }),
     data: zod
       .object({
-        channel: zod.string().regex(channelRegex, {
-          message: 'common.error.invalidChannelName',
-        }),
-        username: zod.string().regex(usernameRegex, {
-          message: 'common.error.invalidSlackWebhookUsername',
-        }),
+        channel: zod
+          .string()
+          .regex(channelRegex, {
+            message: 'common.error.invalidChannelName',
+          })
+          .optional(),
+        username: zod
+          .string()
+          .regex(usernameRegex, {
+            message: 'common.error.invalidSlackWebhookUsername',
+          })
+          .optional(),
         textMessage: zod.string().optional(),
       })
       .optional(),
@@ -111,6 +123,6 @@ const zodSlack = zod
   }));
 
 const Slack = (input: SlackInput): SlackOutput =>
-  checkNotificationWithZod(input, zodSlack);
+  checkNotificationWithZod(zodSlack, input);
 
 export default Slack;

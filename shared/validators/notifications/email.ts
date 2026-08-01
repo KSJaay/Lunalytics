@@ -109,19 +109,28 @@ export interface EmailOutput {
 
 const zodEmail = zod
   .object({
-    friendlyName: zod.string().regex(friendlyNameRegex, {
-      message:
-        'Invalid Friendly Name. Must be alphanumeric, dashes, and underscores only.',
-    }),
-    token: zod.string().min(1, { message: 'Invalid Email Webhook URL' }),
-    messageType: zod.enum(messageTypes, {
-      message: 'Invalid Message Type',
-    }),
+    friendlyName: zod
+      .string({ error: 'common.error.missingFriendlyNameEmail' })
+      .regex(friendlyNameRegex, {
+        message: 'common.error.invalidFriendlyNameEmail',
+      }),
+    token: zod
+      .string({ error: 'common.error.missingEmailWebhookUrl' })
+      .min(1, { message: 'common.error.invalidEmailWebhookUrl' }),
+    messageType: zod
+      .string({ error: 'common.error.missingMessageType' })
+      .refine((val) => messageTypes.includes(val), {
+        message: 'common.error.invalidMessageType',
+      }),
     data: zod.object({
       port: zod.number().default(587),
       security: zod.boolean().default(true),
-      username: zod.string().min(1, { message: 'Invalid Username' }),
-      password: zod.string().min(1, { message: 'Invalid Password' }),
+      username: zod
+        .string({ error: 'common.error.missingUsername' })
+        .min(1, { message: 'common.error.invalidUsername' }),
+      password: zod
+        .string({ error: 'common.error.missingPassword' })
+        .min(1, { message: 'common.error.invalidPassword' }),
       fromEmail: zod
         .string()
         .min(3, 'common.error.emailTooShort')

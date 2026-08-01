@@ -96,15 +96,21 @@ export interface TelegramOutput {
 
 const zodTelegram = zod
   .object({
-    friendlyName: zod.string().regex(friendlyNameRegex, {
-      message: 'common.error.invalidFriendlyNameTelegram',
-    }),
-    messageType: zod.string().refine((val) => messageTypes.includes(val), {
-      message: 'common.error.invalidMessageType',
-    }),
-    token: zod.string().regex(tokenRegex, {
-      message: 'common.error.invalidTelegramBotToken',
-    }),
+    friendlyName: zod
+      .string({ error: 'common.error.missingFriendlyNameTelegram' })
+      .regex(friendlyNameRegex, {
+        message: 'common.error.invalidFriendlyNameTelegram',
+      }),
+    messageType: zod
+      .string({ error: 'common.error.missingMessageType' })
+      .refine((val) => messageTypes.includes(val), {
+        message: 'common.error.invalidMessageType',
+      }),
+    token: zod
+      .string({ error: 'common.error.missingTelegramBotToken' })
+      .regex(tokenRegex, {
+        message: 'common.error.invalidTelegramBotToken',
+      }),
     data: zod
       .object({
         chatId: zod
@@ -125,6 +131,6 @@ const zodTelegram = zod
   }));
 
 const Telegram = (input: TelegramInput): TelegramOutput =>
-  checkNotificationWithZod(input, zodTelegram);
+  checkNotificationWithZod(zodTelegram, input);
 
 export default Telegram;
