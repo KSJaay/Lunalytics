@@ -61,7 +61,7 @@
     "i18next-browser-languagedetector": "8.2.0",
     "i18next-http-backend": "3.0.2",
     "inquirer": "12.6.3",
-    "jsonata": "2.0.6",
+    "jsonata": "2.2.1",
     "jsonwebtoken": "9.0.2",
     "knex": "3.1.0",
     "mobx": "6.13.7",
