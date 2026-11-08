@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useMemo, useState } from 'react';
 
 // import local files
-import useContextStore from '../context';
 import Navigation from '../components/navigation';
 import useScreenSize from '../hooks/useScreenSize';
 import { filterData } from '../../shared/utils/search';
@@ -16,17 +15,18 @@ import NotificationList from '../components/notifications/list';
 import NotificationModal from '../components/modal/notification';
 import HomeNotificationHeader from '../components/notifications/header';
 import NotificationRender from '../components/notifications/content';
+import type { NotificationProps } from '../../shared/types/notifications';
+import useNotificationContext from '../context/notifications';
+import useModalContext from '../context/modal';
 
 const Notifications = () => {
+  const { openModal, closeModal } = useModalContext();
   const {
-    modalStore: { openModal, closeModal },
-    notificationStore: {
-      allNotifications,
-      addNotification,
-      activeNotification,
-      setActiveNotification,
-    },
-  } = useContextStore();
+    allNotifications,
+    addNotification,
+    activeNotification,
+    setActiveNotification,
+  } = useNotificationContext();
   const { t } = useTranslation();
 
   const [search, setSearch] = useState<string | null>(null);
@@ -47,7 +47,10 @@ const Notifications = () => {
   const notifications = useMemo(() => {
     if (!search) return allNotifications;
 
-    return filterData(allNotifications, search, ['friendlyName', 'platform']);
+    return filterData(allNotifications, search, [
+      'friendlyName',
+      'platform',
+    ]) as NotificationProps[];
   }, [search, allNotifications]);
 
   if (!isDesktop && activeNotification) {

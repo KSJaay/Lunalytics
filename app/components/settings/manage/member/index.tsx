@@ -1,9 +1,12 @@
 import './style.scss';
 
+// import type definitions
+import type { ContextTeamProps } from '../../../../../shared/types/context/team';
+
 // import local files
 import MemberTableRow from './row';
 
-const MembersTable = ({ members = [] }) => {
+const MembersTable = ({ members = [] }: { members: ContextTeamProps[] }) => {
   const membersList = members.map((member, index) => (
     <MemberTableRow key={index} member={member} />
   ));

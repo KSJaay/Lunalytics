@@ -1,0 +1,64 @@
+import {
+  ObjectSchemaValidatorError,
+  StatusPageValidatorError,
+} from '../../../shared/utils/errors.js';
+import { handleError } from '../../utils/errors.js';
+import { createStatusPage } from '../../database/queries/status.js';
+import validateStatusLayout from '../../../shared/validators/status/layout.js';
+import validateStatusSettings from '../../../shared/validators/status/settings.js';
+import { cleanStatusPage } from '../../class/status.js';
+import statusCache from '../../cache/status.js';
+import { Request, Response } from 'express';
+
+const createStatusPageMiddleware = async (
+  request: Request,
+  response: Response
+) => {
+  const { settings, layout } = request.body;
+
+  try {
+    validateStatusSettings(settings);
+    validateStatusLayout(layout);
+
+    const monitors = layout
+      .filter((item: any) => item.type === 'uptime' || item.type === 'metrics')
+      .reduce((a: any, b: any) => [...a, ...b.monitors], []);
+
+    if (monitors.length === 0) {
+      throw new StatusPageValidatorError(
+        'No monitors found. Please add at least one monitor to uptime graph or uptime metrics.'
+      );
+    }
+
+    const { user } = response.locals;
+
+    const query = await createStatusPage(
+      response.locals.workspaceId,
+      settings,
+      layout,
+      user
+    );
+
+    await statusCache.addNewStatusPage(cleanStatusPage(query));
+
+    response.status(200).send({
+      message: 'Status page created successfully!',
+      data: cleanStatusPage(query),
+    });
+  } catch (error) {
+    if (!response.headersSent) {
+      if (
+        error instanceof ObjectSchemaValidatorError ||
+        error instanceof StatusPageValidatorError
+      ) {
+        response.status(400).send({
+          message: error.message,
+        });
+      }
+    }
+
+    handleError(error, response);
+  }
+};
+
+export default createStatusPageMiddleware;

@@ -1,10 +1,19 @@
+// import type definitions
+import type { ThemeProps } from '../../../../shared/types/context/user';
+
 // import dependencies
 import { Tooltip } from '@lunalytics/ui';
 
 // import local files
 import { FaCircleCheck, LiaSyncSolid } from '../../icons';
 
-const SettingsPersonalisationTheme = ({ theme, setTheme }) => {
+const SettingsPersonalisationTheme = ({
+  theme,
+  setTheme,
+}: {
+  theme: ThemeProps;
+  setTheme: (theme: ThemeProps) => void;
+}) => {
   return (
     <>
       <div className="settings-subtitle">Theme</div>

@@ -3,14 +3,12 @@ import { observer } from 'mobx-react-lite';
 import { Button, Switch } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../../context';
 import useAuthenticationContext from '../../../context/authentication';
 import SettingsAuthenticationConfigureModal from '../../modal/settings/authentication/configure';
+import useModalContext from '../../../context/modal';
 
 const SettingsProviderAuthentication = ({ integration }) => {
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
 
   const { getProvider, pauseProvider } = useAuthenticationContext();
 
@@ -23,7 +21,7 @@ const SettingsProviderAuthentication = ({ integration }) => {
           src={integration.icon}
           style={{
             backgroundColor:
-              integration.name === 'GitHub' ? 'var(--white)' : null,
+              integration.name === 'GitHub' ? 'var(--white)' : undefined,
           }}
           className="settings-auth-provider-img"
         />
@@ -48,7 +46,10 @@ const SettingsProviderAuthentication = ({ integration }) => {
           Configure
         </Button>
         <Switch
-          onChange={() => pauseProvider(!provider?.enabled)}
+          onChange={() => {
+            if (!provider) return;
+            pauseProvider(provider?.provider, !provider?.enabled);
+          }}
           checked={provider?.enabled}
           disabled={!provider}
         />

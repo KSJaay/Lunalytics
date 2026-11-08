@@ -40,6 +40,7 @@ const pgInputs = [
 ];
 
 interface DropdownItemProps {
+  id?: string;
   title: string;
   img: string;
   value: string;
@@ -48,6 +49,7 @@ interface DropdownItemProps {
 }
 
 const DropdownItem = ({
+  id,
   title,
   img,
   value,
@@ -56,6 +58,7 @@ const DropdownItem = ({
 }: DropdownItemProps) => {
   return (
     <Dropdown.Item
+      id={id}
       showDot
       dotColor="primary"
       onClick={() => handleInput(value)}
@@ -92,6 +95,7 @@ const SetupDatabaseForm = () => {
         id="setup-database-status"
       >
         <Dropdown.Trigger
+          id="setup-database-type-dropdown-trigger"
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
           asInput
@@ -112,7 +116,7 @@ const SetupDatabaseForm = () => {
         <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
           {Object.values(databaseTypes).map((type) => (
             <DropdownItem
-              id="databaseType"
+              id={`setup-database-${type.img}-item`}
               key={type.value}
               title={type.title}
               img={type.img}

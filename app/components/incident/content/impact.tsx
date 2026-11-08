@@ -1,12 +1,12 @@
+import { useMemo } from 'react';
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import Dropdown from '../../ui/dropdown';
 import useDropdown from '../../../hooks/useDropdown';
-import { useMemo } from 'react';
-import useContextStore from '../../../context';
 import { createPostRequest } from '../../../services/axios';
+import useIncidentContext from '../../../context/incidents';
 
 const impactTypes = [
   { id: 'Outage', text: 'Major Outage', color: 'var(--red-700)' },
@@ -26,9 +26,7 @@ const impactTypes = [
 const IncidentContentImpact = () => {
   const { dropdownIsOpen, toggleDropdown } = useDropdown();
 
-  const {
-    incidentStore: { addIncident, activeIncident: incident },
-  } = useContextStore();
+  const { addIncident, activeIncident: incident } = useIncidentContext();
 
   const updateIncidentImpact = async (id: string) => {
     try {
@@ -63,6 +61,7 @@ const IncidentContentImpact = () => {
         toggleDropdown={toggleDropdown}
       >
         <Dropdown.Trigger
+          id="incident-content-impact-dropdown-trigger"
           asInput
           isOpen={dropdownIsOpen}
           toggleDropdown={toggleDropdown}
@@ -74,6 +73,7 @@ const IncidentContentImpact = () => {
         <Dropdown.List isOpen={dropdownIsOpen} fullWidth>
           {impactTypes.map((type) => (
             <Dropdown.Item
+              id={`incident-content-impact-${type.id.toLowerCase()}-item`}
               key={type.id}
               style={{ color: type.color }}
               onClick={() => updateIncidentImpact(type.id)}

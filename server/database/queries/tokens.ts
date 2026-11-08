@@ -1,0 +1,63 @@
+import { nanoid } from 'nanoid';
+import database from '../connection.js';
+import { generateRandomAnimalName } from '../../../shared/utils/animal.js';
+
+export const apiTokenExists = async (token: string) => {
+  const client = await database.connect();
+
+  return client?.('api_token').where({ token }).first();
+};
+
+export const getAllApiTokens = async (workspaceId: string) => {
+  const client = await database.connect();
+
+  return client?.('api_token').where({ workspaceId }).select();
+};
+
+export const apiTokenCreate = async (
+  email: string,
+  permission: number,
+  name: string,
+  workspaceId: string
+) => {
+  const client = await database.connect();
+  const token = nanoid(92);
+
+  const query = await client?.('api_token')
+    .insert({
+      token,
+      workspaceId,
+      name: name || generateRandomAnimalName(),
+      permission,
+      email,
+      created_at: new Date().toISOString(),
+    })
+    .returning('*');
+
+  return query?.[0];
+};
+
+export const apiTokenUpdate = async (
+  token: string,
+  name: string,
+  permission: number,
+  workspaceId: string
+) => {
+  const client = await database.connect();
+
+  const query = await client?.('api_token')
+    .where({ token, workspaceId })
+    .update({
+      name: name || generateRandomAnimalName(),
+      permission,
+    })
+    .returning('*');
+
+  return query?.[0];
+};
+
+export const apiTokenDelete = async (token: string, workspaceId: string) => {
+  const client = await database.connect();
+
+  return client?.('api_token').where({ token, workspaceId }).delete();
+};

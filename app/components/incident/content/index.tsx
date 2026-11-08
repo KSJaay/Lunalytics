@@ -7,16 +7,16 @@ import { Button, Input } from '@lunalytics/ui';
 // import local files
 import IncidentContentImpact from './impact';
 import IncidentContentHeader from './header';
-import useContextStore from '../../../context';
 import IncidentContentMessages from './message';
 import { createPostRequest } from '../../../services/axios';
 import IncidentAddUpdateModal from '../../modal/incident/addUpdate';
+import useIncidentContext from '../../../context/incidents';
+import useModalContext from '../../../context/modal';
 
 const IncidentContent = () => {
-  const {
-    modalStore: { openModal },
-    incidentStore: { addIncident, activeIncident: incident },
-  } = useContextStore();
+  const { openModal } = useModalContext();
+
+  const { addIncident, activeIncident: incident } = useIncidentContext();
 
   const [title, setTitle] = useState(incident?.title);
 

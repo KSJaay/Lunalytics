@@ -1,14 +1,21 @@
+// import type definitions
+import type { IncidentProps } from '../../../shared/types/incident';
+
+// import node modules
 import { makeAutoObservable, observable } from 'mobx';
+
+// import local files
 import Incident from './incident';
-import type { IncidentProps } from '../../types/incident';
 
 class IncidentStore {
   incidents: Map<string, Incident>;
   activeIncident: Incident | null | undefined;
+  hasLoadedIncidents: boolean;
 
   constructor() {
     this.incidents = observable.map();
     this.activeIncident = null;
+    this.hasLoadedIncidents = false;
 
     makeAutoObservable(this);
   }
@@ -17,6 +24,8 @@ class IncidentStore {
     for (const incident of incidents) {
       this.incidents.set(incident.incidentId, new Incident(incident));
     }
+
+    this.hasLoadedIncidents = true;
   };
 
   addIncident = (incident: IncidentProps) => {
@@ -42,7 +51,7 @@ class IncidentStore {
   get allIncidents() {
     return (
       Array.from(this.incidents.values()).sort((a, b) =>
-        a.createdAt > b.createdAt ? -1 : 1
+        a.created_at > b.created_at ? -1 : 1
       ) || []
     );
   }
@@ -62,4 +71,7 @@ class IncidentStore {
   };
 }
 
-export default IncidentStore;
+const incidentStore = new IncidentStore();
+const useIncidentContext = () => incidentStore;
+
+export default useIncidentContext;

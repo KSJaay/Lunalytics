@@ -10,14 +10,12 @@ import { useTranslation } from 'react-i18next';
 
 // import local files
 import { Table } from './table';
-import useContextStore from '../../context';
+import useGlobalContext from '../../context/global';
 
 const MonitorUptime = () => {
   const { t } = useTranslation();
 
-  const {
-    globalStore: { activeMonitor },
-  } = useContextStore();
+  const { activeMonitor } = useGlobalContext();
 
   const highestLatency = useMemo(() => {
     return (

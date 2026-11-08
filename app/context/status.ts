@@ -1,13 +1,18 @@
+// import type definitions
+import type { ContextStatusProps } from '../../shared/types/context/status';
+
+// import node modules
 import { action, computed, makeObservable, observable } from 'mobx';
-import type { ContextStatusProps } from '../types/context/status';
 
 class StatusStore {
   statusPages: Map<string, ContextStatusProps>;
   activeStatusPage: ContextStatusProps | null | undefined;
+  hasLoadedStatusPages: boolean;
 
   constructor() {
     this.statusPages = observable.map();
     this.activeStatusPage = null;
+    this.hasLoadedStatusPages = false;
 
     makeObservable(this, {
       statusPages: observable,
@@ -26,6 +31,8 @@ class StatusStore {
     for (const statusPage of statusPages) {
       this.statusPages.set(statusPage.statusId, statusPage);
     }
+
+    this.hasLoadedStatusPages = true;
   };
 
   addStatusPage = (statusPage: ContextStatusProps) => {
@@ -70,4 +77,8 @@ class StatusStore {
   };
 }
 
-export default StatusStore;
+const statusStore = new StatusStore();
+
+const useStatusContext = () => statusStore;
+
+export default useStatusContext;

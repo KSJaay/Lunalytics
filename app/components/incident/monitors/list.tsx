@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import useContextStore from '../../../context';
+import useGlobalContext from '../../../context/global';
 
 const IncidentMonitorsList = ({
   selectedMonitors,
@@ -8,14 +8,13 @@ const IncidentMonitorsList = ({
   selectedMonitors: string[];
   handleSelected: (id: string) => void;
 }) => {
-  const {
-    globalStore: { allMonitors },
-  } = useContextStore();
+  const { allMonitors } = useGlobalContext();
 
   return (
     <div className="icml-container">
       {allMonitors.map((monitor) => (
         <div
+          id={`incident-monitors-list-item-${monitor.monitorId}`}
           className="icml-item"
           key={monitor.monitorId}
           onClick={() => handleSelected(monitor.monitorId)}
@@ -25,6 +24,7 @@ const IncidentMonitorsList = ({
             <div className="icml-item-url">{monitor.url}</div>
           </div>
           <input
+            id={`incident-monitors-list-checkbox-${monitor.monitorId}`}
             className="icml-item-input"
             type="checkbox"
             checked={selectedMonitors?.includes(monitor.monitorId)}

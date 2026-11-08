@@ -6,36 +6,36 @@ import { observer } from 'mobx-react-lite';
 import { MdGroupAdd } from 'react-icons/md';
 import { FaTrashCan } from 'react-icons/fa6';
 import { Button, Tooltip } from '@lunalytics/ui';
+import LocalizedDayjs from 'dayjs/plugin/localizedFormat';
+dayjs.extend(LocalizedDayjs);
 
 // import local files
 import useFetch from '../../../hooks/useFetch';
-import useContextStore from '../../../context';
 import useClipboard from '../../../hooks/useClipboard';
 import useInvitesContext from '../../../context/invites';
 import useCurrentUrl from '../../../hooks/useCurrentUrl';
 import CreateInviteModal from '../../modal/settings/invite';
 import { createPostRequest } from '../../../services/axios';
+import useModalContext from '../../../context/modal';
 
 const ManageInvites = () => {
   const { allInvites, setInvites, removeInvite, pauseInvite } =
     useInvitesContext();
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
   const clipboard = useClipboard();
   const currentUrl = useCurrentUrl();
 
   useFetch({
-    url: '/api/invite/all',
+    url: '/api/invites/all',
     onSuccess: (data) => {
       setInvites(data?.invites || []);
     },
-    onFailure: () => toast.error("Couldn't fetch api tokens"),
+    onFailure: () => toast.error("Couldn't fetch invites"),
   });
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     try {
-      await createPostRequest('/api/invite/delete', { id });
+      await createPostRequest('/api/invites/delete', { id });
       removeInvite(id);
       toast.success('Invite deleted successfully');
     } catch (error) {
@@ -44,9 +44,9 @@ const ManageInvites = () => {
     }
   };
 
-  const handlePause = async (id, paused) => {
+  const handlePause = async (id: string, paused: boolean) => {
     try {
-      await createPostRequest('/api/invite/pause', { id, paused: !paused });
+      await createPostRequest('/api/invites/pause', { id, paused: !paused });
       pauseInvite(id, !paused);
       toast.success('Invite paused successfully');
     } catch (error) {
@@ -61,7 +61,7 @@ const ManageInvites = () => {
       className="settings-account-container"
       id="invite"
     >
-      <div className="sat-header">
+      {/* <div className="sat-header">
         <div style={{ flex: 1 }}>
           <div className="settings-subtitle" style={{ margin: '0px' }}>
             Invites
@@ -81,14 +81,33 @@ const ManageInvites = () => {
             Create Invite
           </Button>
         </div>
+      </div> */}
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          paddingBottom: '15px',
+        }}
+      >
+        <Button
+          id="settings-invite-create-button"
+          variant="flat"
+          color="primary"
+          onClick={() =>
+            openModal(<CreateInviteModal closeModal={closeModal} />)
+          }
+        >
+          Create Invite
+        </Button>
       </div>
 
       {!allInvites?.length ? (
-        <div className="notification-empty">
-          <div className="notification-empty-icon">
+        <div className="content-empty">
+          <div className="content-empty-icon">
             <MdGroupAdd style={{ width: '64px', height: '64px' }} />
           </div>
-          <div className="notification-empty-text">No invites found</div>
+          <div className="content-empty-text">No invites found</div>
         </div>
       ) : (
         <>
@@ -99,13 +118,18 @@ const ManageInvites = () => {
           </div>
 
           {allInvites.map((invite) => (
-            <div className="settings-manage-invites-item" key={invite.token}>
+            <div
+              id={`settings-invite-item-${invite.token}`}
+              className="settings-manage-invites-item"
+              key={invite.token}
+            >
               <Tooltip text={'Copy invite code'}>
                 <div
+                  id={`settings-invite-item-copy-${invite.token}`}
                   className="settings-invites-item-title"
                   onClick={() =>
                     clipboard(
-                      `${currentUrl}/register/?invite=${invite.token}`,
+                      `${currentUrl}/workspace/join?inviteCode=${invite.token}`,
                       'Invite code has been copied to clipboard!'
                     )
                   }
@@ -123,12 +147,14 @@ const ManageInvites = () => {
               </div>
               <div className="settings-invites-buttons-container">
                 <div
+                  id={`settings-invite-item-toggle-pause-${invite.token}`}
                   className="settings-invites-button"
                   onClick={() => handlePause(invite.token, invite.paused)}
                 >
                   {invite.paused ? <FaPlay size={18} /> : <FaPause size={18} />}
                 </div>
                 <div
+                  id={`settings-invite-item-delete-${invite.token}`}
                   className="settings-invites-button"
                   onClick={() => handleDelete(invite.token)}
                 >

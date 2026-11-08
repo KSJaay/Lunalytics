@@ -1,6 +1,11 @@
+// import type definitions
+import type { UseFetchProps, UseFetchResponse } from '../../shared/types/hooks';
+
+// import node modules
 import { useState, useEffect } from 'react';
+
+// import local files
 import { createGetRequest } from '../services/axios';
-import type { UseFetchProps, UseFetchResponse } from '../types/hooks';
 
 function useFetch({
   url,
@@ -8,6 +13,7 @@ function useFetch({
   headers,
   onSuccess,
   onFailure,
+  hasFetched,
 }: UseFetchProps) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +21,10 @@ function useFetch({
 
   useEffect(() => {
     if (!url) return;
+
+    if (typeof hasFetched === 'boolean' && hasFetched) {
+      return;
+    }
 
     setIsLoading(true);
     setError(null);

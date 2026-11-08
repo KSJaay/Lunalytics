@@ -34,7 +34,11 @@ const RegisterVerify = () => {
         account. Once your account has been verified, you can continue to the
         dashboard.
       </div>
-      <button className="auth-button" onClick={checkIsVerified}>
+      <button
+        id="register-verify-continue-button"
+        className="auth-button"
+        onClick={checkIsVerified}
+      >
         Continue
       </button>
 

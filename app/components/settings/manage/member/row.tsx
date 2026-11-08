@@ -1,42 +1,43 @@
 import './row.scss';
 
+// import type definitions
+import type { ContextTeamProps } from '../../../../../shared/types/context/team';
+
 // import dependencies
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
 
 // import local files
 import MemberRowActions from './actions';
-import useContextStore from '../../../../context';
 import Role from '../../../../../shared/permissions/role';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
+import useUserContext from '../../../../context/user';
 
-const isImageUrl = (url) => {
+const isImageUrl = (url: string) => {
   if (typeof url !== 'string') {
     return false;
   }
   return url.match(/^https?:\/\//gim) !== null;
 };
 
-const MemberTableRow = ({ member = {} }) => {
-  const {
-    userStore: { user },
-  } = useContextStore();
+const MemberTableRow = ({
+  member = {} as ContextTeamProps,
+}: {
+  member?: ContextTeamProps;
+}) => {
+  const { user } = useUserContext();
 
   const role = new Role('user', user.permission);
 
   const canManage =
     !member.isOwner &&
     user.email !== member.email &&
-    role.hasPermission(PermissionsBits.MANAGE_TEAM);
+    role.hasPermission(MemberPermissionBits.MANAGE_TEAM);
 
-  const memberPermission = !member.isVerified
-    ? 'Unverified'
-    : member.isOwner
-    ? 'Owner'
-    : 'Member';
+  const memberPermission = 'Member';
 
-  const date = dayjs(member.createdAt).format('MMM DD, YYYY');
-  const time = dayjs(member.createdAt).format('hh:mm A');
+  const date = dayjs(member.created_at).format('MMM DD, YYYY');
+  const time = dayjs(member.created_at).format('hh:mm A');
 
   const avatarUrl = isImageUrl(member.avatar)
     ? member.avatar
@@ -46,7 +47,7 @@ const MemberTableRow = ({ member = {} }) => {
     <img src={avatarUrl} className="member-row-image" />
   ) : (
     <div className="member-row-image-default">
-      {member.displayName?.charAt(0)}
+      {member.email?.charAt(0).toUpperCase() || 'U'}
     </div>
   );
 

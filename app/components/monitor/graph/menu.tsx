@@ -25,12 +25,14 @@ const GraphMenu = ({
     <>
       <div className="monitor-chart-buttons-container">
         <Button
+          id="monitor-graph-filter-latest-button"
           color={statusType === 'latest' ? 'primary' : 'gray'}
           onClick={() => setStatusType('latest')}
         >
           {t('home.monitor.graph.latest')}
         </Button>
         <Button
+          id="monitor-graph-filter-day-button"
           color={statusType === 'day' ? 'primary' : 'gray'}
           onClick={() => setStatusType('day')}
         >
@@ -39,12 +41,14 @@ const GraphMenu = ({
         {showFilters ? (
           <>
             <Button
+              id="monitor-graph-filter-week-button"
               color={statusType === 'week' ? 'primary' : 'gray'}
               onClick={() => setStatusType('week')}
             >
               1 {t('common.week')}
             </Button>
             <Button
+              id="monitor-graph-filter-month-button"
               color={statusType === 'month' ? 'primary' : 'gray'}
               onClick={() => setStatusType('month')}
             >

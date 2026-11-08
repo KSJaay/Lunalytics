@@ -1,4 +1,4 @@
-import type { ContextTeamProps } from '../types/context/team';
+import type { ContextTeamProps } from '../../shared/types/context/team';
 
 import { action, computed, makeObservable, observable } from 'mobx';
 

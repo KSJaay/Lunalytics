@@ -5,19 +5,23 @@ import './left.scss';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Dropdown, Tooltip } from '@lunalytics/ui';
+import { useTranslation } from 'react-i18next';
 import { BsFillShieldLockFill } from 'react-icons/bs';
+import { Avatar, Dropdown, Tooltip } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../context';
+import LeftUpdateButton from './left/update';
 import MonitorPreview from '../home/preview';
+import useUserContext from '../../context/user';
+import useModalContext from '../../context/modal';
 import IncidentPreview from '../incident/preview';
 import StatusPagePreview from '../status/preview';
+import useMemberContext from '../../context/member';
+import LeftNavigationSettings from './left/settings';
 import NotificationPreview from '../notifications/preview';
 import { FaCog, FaHome, MdNotifications, PiBroadcast } from '../icons';
-import { PermissionsBits } from '../../../shared/permissions/bitFlags';
-import { useTranslation } from 'react-i18next';
-import LeftUpdateButton from './left/update';
+import { MemberPermissionBits } from '../../../shared/permissions/bitFlags';
+import LeftNavigationAdminPanel from './left/adminPanel';
 
 const actionTabs = [
   {
@@ -25,28 +29,28 @@ const actionTabs = [
     url: '/home',
     logo: <FaHome style={{ width: '28px', height: '28px' }} />,
     Preview: MonitorPreview,
-    permissionRequired: PermissionsBits.VIEW_MONITORS,
+    permissionRequired: MemberPermissionBits.VIEW_MONITORS,
   },
   {
     key: 'common.notifications',
     url: '/notifications',
     logo: <MdNotifications style={{ width: '28px', height: '28px' }} />,
     Preview: NotificationPreview,
-    permissionRequired: PermissionsBits.VIEW_NOTIFICATIONS,
+    permissionRequired: MemberPermissionBits.VIEW_NOTIFICATIONS,
   },
   {
     key: 'common.status',
     url: '/status-pages',
     logo: <PiBroadcast style={{ width: '28px', height: '28px' }} />,
     Preview: StatusPagePreview,
-    permissionRequired: PermissionsBits.VIEW_STATUS_PAGES,
+    permissionRequired: MemberPermissionBits.VIEW_STATUS_PAGES,
   },
   {
     key: 'common.incidents',
     url: '/incidents',
     logo: <BsFillShieldLockFill style={{ width: '25px', height: '25px' }} />,
     Preview: IncidentPreview,
-    permissionRequired: PermissionsBits.VIEW_INCIDENTS,
+    permissionRequired: MemberPermissionBits.VIEW_INCIDENTS,
   },
 ];
 
@@ -58,15 +62,16 @@ const isImageUrl = (url: string) => {
   return url.match(/^https?:\/\//gim);
 };
 
-const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
+const LeftNavigation = observer(({ activeUrl }: { activeUrl: string }) => {
   const navigate = useNavigate();
+  const { closeModal, openModal, openSettings } = useModalContext();
+
   const {
-    userStore: {
-      user: { avatar, displayName },
-      hasPermission,
-    },
-    modalStore: { closeModal, openModal },
-  } = useContextStore();
+    user: { avatar, displayName },
+  } = useUserContext();
+
+  const { member } = useMemberContext();
+
   const { t } = useTranslation();
 
   const isUrl = isImageUrl(avatar);
@@ -75,7 +80,7 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
   const actions = actionTabs.map((action) => {
     const { key, url, logo, Preview, permissionRequired } = action;
 
-    if (!hasPermission(permissionRequired)) return null;
+    if (!member?.role.hasPermission(permissionRequired)) return null;
 
     const classes = classNames({
       'navigation-left-action': true,
@@ -84,6 +89,7 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
 
     const content = (
       <div
+        id={`nav-left-action-${url.replace(/^\//, '').replace(/\//g, '-')}`}
         className={classes}
         key={key}
         tabIndex={1}
@@ -115,13 +121,22 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
         <LeftUpdateButton closeModal={closeModal} openModal={openModal} />
 
         <div
+          id="nav-left-settings-button"
           className="navigation-left-action"
-          onClick={() => navigate('/settings')}
+          onClick={() => openSettings(<LeftNavigationSettings />)}
         >
           <FaCog size={28} />
         </div>
         <Dropdown
           items={[
+            {
+              id: 'admin',
+              text: 'Admin Panel',
+              type: 'item',
+              onClick: () => {
+                openSettings(<LeftNavigationAdminPanel />);
+              },
+            },
             {
               id: 'logout',
               text: 'Logout',
@@ -140,8 +155,8 @@ const LeftNavigation = ({ activeUrl }: { activeUrl: string }) => {
       </div>
     </aside>
   );
-};
+});
 
 LeftNavigation.displayName = 'LeftNavigation';
 
-export default observer(LeftNavigation);
+export default LeftNavigation;

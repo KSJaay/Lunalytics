@@ -1,5 +1,8 @@
 import './graph.scss';
 
+// import type definitions
+import type { MonitorProps } from '../../../../shared/types/monitor';
+
 // import dependencies
 import {
   AreaChart,
@@ -21,7 +24,6 @@ import useLocalStorageContext from '../../../hooks/useLocalstorage';
 import GraphMenu from './menu';
 import useGraphStatus from '../../../hooks/useGraphStatus';
 import GraphPing from './ping';
-import type { MonitorProps } from '../../../types/monitor';
 
 dayjs.extend(timezone);
 dayjs.extend(utc);
@@ -70,7 +72,7 @@ const MonitorGraph = ({ monitor }: { monitor: MonitorProps }) => {
                 return dayjs(value).tz(timezone).format('HH:mm');
               }}
               interval="preserveStartEnd"
-              minTickGap={30}
+              minTickGap={data?.length < 10 ? 5 : 30}
             />
             <YAxis
               label={{

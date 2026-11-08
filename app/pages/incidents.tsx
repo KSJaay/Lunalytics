@@ -8,7 +8,6 @@ import { Button } from '@lunalytics/ui';
 import { useEffect, useMemo, useState } from 'react';
 
 // import local files
-import useContextStore from '../context';
 import Navigation from '../components/navigation';
 import NotificationsList from '../components/incident/list';
 import HomeIncidentHeader from '../components/incident/header';
@@ -16,12 +15,13 @@ import IncidentContent from '../components/incident/content';
 import IncidentCreateModal from '../components/modal/incident/create';
 import { filterData } from '../../shared/utils/search';
 import useScreenSize from '../hooks/useScreenSize';
+import useIncidentContext from '../context/incidents';
+import useModalContext from '../context/modal';
 
 const Notifications = () => {
-  const {
-    modalStore: { openModal },
-    incidentStore: { allIncidents, activeIncident, setActiveIncident },
-  } = useContextStore();
+  const { openModal } = useModalContext();
+  const { allIncidents, activeIncident, setActiveIncident } =
+    useIncidentContext();
 
   const [search, setSearch] = useState<string | null>(null);
   const screenSize = useScreenSize();
@@ -69,7 +69,7 @@ const Notifications = () => {
         <Button
           variant="flat"
           fullWidth
-          onClick={() => openModal(<IncidentCreateModal />, false)}
+          onClick={() => openModal(<IncidentCreateModal />)}
         >
           Add Incident
         </Button>

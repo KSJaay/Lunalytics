@@ -12,7 +12,7 @@ import useClipboard from '../../../../hooks/useClipboard';
 import useInvitesContext from '../../../../context/invites';
 import useCurrentUrl from '../../../../hooks/useCurrentUrl';
 import { createPostRequest } from '../../../../services/axios';
-import { PermissionsBits } from '../../../../../shared/permissions/bitFlags';
+import { MemberPermissionBits } from '../../../../../shared/permissions/bitFlags';
 import { permissionsWithDescription } from '../../../../constant/permissions';
 
 const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
@@ -33,7 +33,7 @@ const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
 
   const handleCreate = async () => {
     try {
-      const response = await createPostRequest('/api/invite/create', {
+      const response = await createPostRequest('/api/invites/create', {
         expiry: expiryId,
         limit: maxUses,
         permission: perms,
@@ -43,7 +43,7 @@ const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
 
       if (invite?.token) {
         await clipboard(
-          `${currentUrl}/register/?invite=${invite.token}`,
+          `${currentUrl}/workspace/join?inviteCode=${invite.token}`,
           'Invite code has been copied to clipboard!'
         );
       } else {
@@ -82,9 +82,9 @@ const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
         <CreateInviteExpiry expiryId={expiryId} setExpiryId={setExpiryId} />
 
         <div>
-          <div className="input-label">Token Permissions</div>
+          <div className="input-label">User Permissions</div>
           <div className="input-short-description">
-            Permissions are used to restrict what the token can access.
+            Permissions granted to users who register using this invite.
           </div>
           <div className="settings-invite-permissions-container">
             {permissionsWithDescription.map((permission) => (
@@ -101,8 +101,8 @@ const CreateInviteModal = ({ closeModal }: { closeModal: () => void }) => {
                   }
                   checked={
                     perms & permission.permission ||
-                    perms === PermissionsBits.ADMINISTRATOR ||
-                    perms & PermissionsBits.ADMINISTRATOR
+                    perms === MemberPermissionBits.ADMINISTRATOR ||
+                    perms & MemberPermissionBits.ADMINISTRATOR
                   }
                 />
               </div>

@@ -31,7 +31,7 @@ describe('Verify User', () => {
       );
 
       cy.visit('/settings');
-      cy.contains('[id="Manage-Team"]', 'Manage Team').click();
+      cy.contains('[id="manage-team-tab"]', 'Manage Team').click();
 
       cy.get(`[id="accept-${username}"]`).click();
 
@@ -58,11 +58,12 @@ describe('Verify User', () => {
 
       cy.visit('/settings');
 
-      cy.get('[id="Manage-Team"]').click();
+      cy.get('[id="manage-team-tab"]').click();
       cy.get(`[id="decline-${secondUsername}"]`).click();
-      cy.get('[id="manage-decline-button"]').click();
 
-      cy.wait(1000);
+      cy.interceptApi('POST', '/user/access/decline', 'declineUser');
+      cy.get('[id="manage-decline-button"]').click();
+      cy.wait('@declineUser');
 
       cy.clearCookies();
 

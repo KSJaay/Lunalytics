@@ -3,18 +3,19 @@ import './styles.scss';
 // import dependencies
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import DOMPurify from 'dompurify';
 
 // import local files
+import StatusFooter from './footer';
 import StatusPageHeader from './header';
 import StatusPageStatus from './status';
 import StatusPageUptime from './uptime';
 import StatusPageMetrics from './metrics';
 import StatusPageIncident from './incident';
-import useContextStore from '../../../../context';
+import useGlobalContext from '../../../../context/global';
 import { defaultIncidents } from '../../../../constant/status';
-import StatusConfigureLayoutHistoryList from '../layout/history/list';
-import StatusFooter from './footer';
 import useStatusPageContext from '../../../../context/status-page';
+import StatusConfigureLayoutHistoryList from '../layout/history/list';
 
 const StatusConfigurePreview = () => {
   const {
@@ -33,9 +34,7 @@ const StatusConfigurePreview = () => {
     getComponent,
   } = useStatusPageContext();
 
-  const {
-    globalStore: { allMonitors, getMonitor },
-  } = useContextStore();
+  const { allMonitors, getMonitor } = useGlobalContext();
 
   function injectStylesheet(id, content = '') {
     let styleSheet = document.getElementById(id);
@@ -164,7 +163,9 @@ const StatusConfigurePreview = () => {
             return (
               <div
                 key={item.id}
-                dangerouslySetInnerHTML={{ __html: item.content }}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(item.content),
+                }}
               ></div>
             );
           case 'customCSS':

@@ -1,7 +1,11 @@
 import './styles.scss';
 
+// import type definitions
+import type { MonitorProps } from '../../../../shared/types/monitor';
+
 // import dependencies
 import { useState } from 'react';
+import classNames from 'classnames';
 import { CgWebsite } from 'react-icons/cg';
 import { Button, Modal } from '@lunalytics/ui';
 import { MdNotifications } from 'react-icons/md';
@@ -15,9 +19,9 @@ import MonitorConfigurePingModal from './configure/ping';
 import useMonitorForm from '../../../hooks/useMonitorForm';
 import MonitorConfigureDockerModal from './configure/docker';
 import MonitorConfigureJsonQueryModal from './configure/json';
-import type { MonitorProps } from '../../../types/monitor';
 import MonitorConfigurePushModal from './configure/push';
-import classNames from 'classnames';
+import MonitorConfigureDnsModal from './configure/dns';
+import MonitorConfigureGamedigModal from './configure/gamedig';
 
 const pages = [
   { id: 'basic', title: 'Basic', icon: <FaCog size={20} /> },
@@ -32,8 +36,8 @@ const pages = [
 
 interface ModalProps {
   closeModal: () => void;
-  monitor: MonitorProps;
-  handleMonitorSubmit: (monitor: Partial<MonitorProps>) => void;
+  handleMonitorSubmit: (monitor: MonitorProps) => void;
+  monitor?: MonitorProps;
   isEdit?: boolean;
 }
 
@@ -132,8 +136,26 @@ const MonitorConfigureModal = ({
               />
             ) : null}
 
+            {inputs.type === 'dns' ? (
+              <MonitorConfigureDnsModal
+                inputs={inputs}
+                errors={errors}
+                handleInput={handleInput}
+                pageId={pageId}
+              />
+            ) : null}
+
             {inputs.type === 'docker' ? (
               <MonitorConfigureDockerModal
+                inputs={inputs}
+                errors={errors}
+                handleInput={handleInput}
+                pageId={pageId}
+              />
+            ) : null}
+
+            {inputs.type === 'gamedig' ? (
+              <MonitorConfigureGamedigModal
                 inputs={inputs}
                 errors={errors}
                 handleInput={handleInput}

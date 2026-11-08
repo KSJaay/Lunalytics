@@ -1,16 +1,23 @@
+// import type definitions
+import type { MonitorProps } from '../../shared/types/monitor';
+
+// import node modules
 import { action, computed, makeObservable, observable } from 'mobx';
+
+// import local files
 import { fetchMonitorById } from '../services/monitor/fetch';
-import type { MonitorProps } from '../types/monitor';
 
 class GlobalStore {
   monitors: Map<string, MonitorProps>;
   timeouts: Map<string, NodeJS.Timeout>;
   activeMonitor: MonitorProps | null | undefined;
+  hasLoadedMonitors: boolean;
 
   constructor() {
     this.monitors = observable.map();
     this.timeouts = observable.map();
     this.activeMonitor = null;
+    this.hasLoadedMonitors = false;
 
     makeObservable(this, {
       monitors: observable,
@@ -31,6 +38,7 @@ class GlobalStore {
     for (const monitor of monitors) {
       this.monitors.set(monitor.monitorId, monitor);
     }
+    this.hasLoadedMonitors = true;
   };
 
   setMonitor = (data: MonitorProps, func: (id: string, func: any) => void) => {
@@ -137,4 +145,8 @@ class GlobalStore {
   };
 }
 
-export default GlobalStore;
+const gloablStore = new GlobalStore();
+
+const useGlobalContext = () => gloablStore;
+
+export default useGlobalContext;

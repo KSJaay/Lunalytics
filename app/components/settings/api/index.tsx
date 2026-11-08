@@ -5,26 +5,29 @@ import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@lunalytics/ui';
 import { IoKey } from 'react-icons/io5';
+import { API_TOKEN_ERRORS } from '../../../../shared/constants/errors/apiToken';
 
 // import local files
 import useTokensContext from '../../../context/tokens';
 import SettingsApiCreateModal from '../../modal/settings/api/createOrEdit';
 import ManageApiToken from './token';
-import useContextStore from '../../../context';
 import useFetch from '../../../hooks/useFetch';
+import useModalContext from '../../../context/modal';
 
 const ManageApiTokens = () => {
   const { allTokens, setTokens } = useTokensContext();
-  const {
-    modalStore: { openModal, closeModal },
-  } = useContextStore();
+  const { openModal, closeModal } = useModalContext();
 
   useFetch({
-    url: '/api/tokens',
+    url: '/api/workspace/api-tokens',
     onSuccess: (data) => {
-      setTokens(data?.tokens || []);
+      setTokens(data || []);
     },
-    onFailure: () => toast.error("Couldn't fetch api tokens"),
+    onFailure: (error) => {
+      if (error.response.data.code === API_TOKEN_ERRORS['AT003'].code) return;
+
+      toast.error("Couldn't fetch api tokens");
+    },
   });
 
   return (
@@ -33,7 +36,7 @@ const ManageApiTokens = () => {
       className="settings-account-container"
       id="manage"
     >
-      <div className="sat-header">
+      {/* <div className="sat-header">
         <div style={{ flex: 1 }}>
           <div className="settings-subtitle" style={{ margin: '0px' }}>
             API Tokens
@@ -53,14 +56,33 @@ const ManageApiTokens = () => {
             Create Token
           </Button>
         </div>
+      </div> */}
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          paddingBottom: '15px',
+        }}
+      >
+        <Button
+          id="settings-api-create-token-button"
+          variant="flat"
+          color="primary"
+          onClick={() =>
+            openModal(<SettingsApiCreateModal closeModal={closeModal} />)
+          }
+        >
+          Create Token
+        </Button>
       </div>
 
       {!allTokens?.length ? (
-        <div className="notification-empty">
-          <div className="notification-empty-icon">
+        <div className="content-empty">
+          <div className="content-empty-icon">
             <IoKey style={{ width: '64px', height: '64px' }} />
           </div>
-          <div className="notification-empty-text">No tokens found</div>
+          <div className="content-empty-text">No tokens found</div>
         </div>
       ) : null}
 

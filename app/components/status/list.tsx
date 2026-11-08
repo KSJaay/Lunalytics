@@ -1,14 +1,13 @@
-import { FaLock, FaLockOpen } from 'react-icons/fa';
 import './styles.scss';
 
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
-import useContextStore from '../../context';
+import { FaLock, FaLockOpen } from 'react-icons/fa';
+
+import useStatusContext from '../../context/status';
 
 const StatusPageList = ({ statusPages }) => {
-  const {
-    statusStore: { activeStatusPage, setActiveStatusPage },
-  } = useContextStore();
+  const { activeStatusPage, setActiveStatusPage } = useStatusContext();
 
   if (!statusPages || statusPages.length === 0) {
     return <div style={{ flex: 1 }}></div>;
@@ -23,6 +22,7 @@ const StatusPageList = ({ statusPages }) => {
 
         return (
           <div
+            id={`status-page-list-item-${statusPage.statusId}`}
             key={statusPage.statusId}
             className={classes}
             onClick={() => setActiveStatusPage(statusPage.statusId)}

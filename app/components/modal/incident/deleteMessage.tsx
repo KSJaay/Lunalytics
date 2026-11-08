@@ -4,8 +4,9 @@ import { observer } from 'mobx-react-lite';
 import { Button, Modal } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../../context';
 import { createPostRequest } from '../../../services/axios';
+import useIncidentContext from '../../../context/incidents';
+import useModalContext from '../../../context/modal';
 
 const IncidentDeleteMessageModal = ({
   incidentId,
@@ -14,10 +15,8 @@ const IncidentDeleteMessageModal = ({
   incidentId: string;
   incidentPosition: number;
 }) => {
-  const {
-    incidentStore: { addIncident },
-    modalStore: { closeModal },
-  } = useContextStore();
+  const { closeModal } = useModalContext();
+  const { addIncident } = useIncidentContext();
 
   const deleteIncidentMessage = async () => {
     try {

@@ -12,10 +12,19 @@ const DeleteIncidentModal = ({
       title="Delete Incident"
       actions={
         <>
-          <Button color="gray" onClick={closeModal}>
+          <Button
+            id="incident-delete-modal-cancel-button"
+            color="gray"
+            onClick={closeModal}
+          >
             Cancel
           </Button>
-          <Button color="red" variant="flat" onClick={handleDelete}>
+          <Button
+            id="incident-delete-modal-confirm-button"
+            color="red"
+            variant="flat"
+            onClick={handleDelete}
+          >
             Delete
           </Button>
         </>

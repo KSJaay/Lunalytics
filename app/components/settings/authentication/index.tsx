@@ -1,3 +1,6 @@
+// import type definitions
+import type { ContextAuthenticationConfigProps } from '../../../../shared/types/context/authentication';
+
 // import dependencies
 import { toast } from 'react-toastify';
 import { observer } from 'mobx-react-lite';
@@ -7,9 +10,9 @@ import Loading from '../../ui/loading';
 import SwitchWithText from '../../ui/switch';
 import useFetch from '../../../hooks/useFetch';
 import SettingsProviderAuthentication from './provider';
+import { createPostRequest } from '../../../services/axios';
 import { providers } from '../../../../shared/constants/provider';
 import useAuthenticationContext from '../../../context/authentication';
-import { createPostRequest } from '../../../services/axios';
 
 const SettingsAuthentication = () => {
   const { setProviders, config, setConfig, setConfigUsingKey } =
@@ -35,7 +38,10 @@ const SettingsAuthentication = () => {
     },
   });
 
-  const handleSwitchChange = async (key, value) => {
+  const handleSwitchChange = async (
+    key: keyof ContextAuthenticationConfigProps,
+    value: boolean
+  ) => {
     try {
       if (!config.sso && key === 'nativeSignin') {
         return toast.error(
@@ -50,7 +56,7 @@ const SettingsAuthentication = () => {
       setConfigUsingKey(key, value);
 
       toast.success('Authentication configuration updated successfully');
-    } catch (error) {
+    } catch (error: any) {
       if (error?.response?.data?.error) {
         return toast.error(error.response.data.error);
       }
@@ -69,7 +75,7 @@ const SettingsAuthentication = () => {
       className="settings-account-container"
       id="manage"
     >
-      <div className="sat-header">
+      {/* <div className="sat-header">
         <div style={{ flex: 1 }}>
           <div className="settings-subtitle" style={{ margin: '0px' }}>
             Authentication
@@ -78,10 +84,11 @@ const SettingsAuthentication = () => {
             Configure authentication options for Lunalytics.
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="settings-auth-switches">
         <SwitchWithText
+          id="settings-auth-allow-registration-switch"
           label="Allow Registration"
           name="allowRegistration"
           shortDescription="Allow new users to register for an account"
@@ -92,6 +99,7 @@ const SettingsAuthentication = () => {
         />
 
         <SwitchWithText
+          id="settings-auth-allow-native-login-switch"
           label="Allow Native Login"
           name="allowNativeLogin"
           shortDescription="Disable internal authentication and only allow SSO login"

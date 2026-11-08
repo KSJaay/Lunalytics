@@ -33,8 +33,6 @@ const MonitorConfigurePushModal = ({
   };
 
   useEffect(() => {
-    console.log('isEdit: ', isEdit);
-
     if (!isEdit) {
       generateToken();
     }

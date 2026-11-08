@@ -16,8 +16,9 @@ const handleLogin = async (
     const hasInvalidData =
       validators.auth.email(email) || validators.auth.password(password);
 
-    if (hasInvalidData) {
-      return setErrors(hasInvalidData);
+    if (hasInvalidData && hasInvalidData.isValidationError) {
+      const { key, message } = hasInvalidData;
+      return setErrors({ [key]: message });
     }
 
     const query = await createPostRequest('/api/auth/login', {
@@ -26,7 +27,7 @@ const handleLogin = async (
     });
 
     if (query.status === 200) {
-      return navigate('/home');
+      return navigate('/workspace/select');
     }
   } catch (error: any) {
     if (error?.response?.status === 418) {

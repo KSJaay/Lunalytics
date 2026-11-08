@@ -3,7 +3,7 @@ import { Button, Modal } from '@lunalytics/ui';
 
 interface NavigationUpdateModalProps {
   closeModal: () => void;
-  version?: string;
+  version: string | null;
 }
 
 const NavigationUpdateModal = ({

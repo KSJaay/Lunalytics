@@ -1,11 +1,18 @@
+// import type definitions
+import type { MonitorProps } from '../../shared/types/monitor';
+
+// import node modules
 import { useState } from 'react';
+
+// import local files
 import handleMonitor from '../handlers/monitor';
 import monitorValidators from '../../shared/validators/monitor';
-import type { MonitorProps } from '../types/monitor';
 
 const defaultInputs = {
   type: 'http' as MonitorProps['type'],
   method: 'HEAD',
+  dnsRecordType: 'A',
+  dnsResolver: '1.1.1.1',
   retry: 1,
   interval: 60,
   retryInterval: 60,
@@ -24,7 +31,7 @@ const useMonitorForm = (
   values: Partial<MonitorProps> = defaultInputs,
   isEdit: boolean = false,
   closeModal: () => void,
-  setMonitor: (monitor: Partial<MonitorProps>) => void,
+  setMonitor: (monitor: MonitorProps) => void,
   setPageId: (id: string) => void
 ) => {
   const [inputs, setInput] = useState<Partial<MonitorProps>>({
@@ -35,6 +42,11 @@ const useMonitorForm = (
   const [errorPages, setErrorPages] = useState<Set<string>>(new Set());
 
   const handleInput = (name: string, value: any) => {
+    if (name === 'type') {
+      setInput({ ...defaultInputs, type: value });
+      return;
+    }
+
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -46,6 +58,8 @@ const useMonitorForm = (
       port: 'basic',
       icon: 'basic',
       method: 'basic',
+      dnsRecordType: 'basic',
+      dnsResolver: 'basic',
       json_query: 'basic',
       interval: 'interval',
       retry: 'interval',

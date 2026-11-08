@@ -7,8 +7,7 @@ describe('Notification - Slack', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
+      cy.apiLogin(email, password);
       cy.visit('/notifications');
     });
 
@@ -21,8 +20,7 @@ describe('Notification - Slack', () => {
     beforeEach(() => {
       const { email, password } = loginDetails.ownerUser;
 
-      cy.clearCookies();
-      cy.loginUser(email, password);
+      cy.apiLogin(email, password);
       cy.visit('/notifications');
     });
 

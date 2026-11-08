@@ -4,8 +4,8 @@ import { observer } from 'mobx-react-lite';
 import { Button, Input, Modal } from '@lunalytics/ui';
 
 // import local files
-import useContextStore from '../../../../context';
 import handleChangeUsername from '../../../../handlers/settings/account/username';
+import useUserContext from '../../../../context/user';
 
 interface SettingsAccountUsernameModalProps {
   title: string;
@@ -23,10 +23,7 @@ const SettingsAccountUsernameModal = ({
   closeModal,
 }: SettingsAccountUsernameModalProps) => {
   const [error, setError] = useState<string | null>(null);
-
-  const {
-    userStore: { updateUsingKey },
-  } = useContextStore();
+  const { updateUsingKey } = useUserContext();
 
   const handleError = (error: string) => {
     setError(error);
@@ -41,7 +38,9 @@ const SettingsAccountUsernameModal = ({
       setError('Error finding user input.');
       return;
     }
+
     const value = inputElement.value;
+    console.log('value', value);
     const query = await handleChangeUsername(value, handleError, closeModal);
 
     if (query === true) {

@@ -5,13 +5,26 @@ import { useReducer } from 'react';
 import { createPostRequest } from '../services/axios';
 import { incidentMessageValidator } from '../../shared/validators/incident';
 
-const defaultInputs = { monitorIds: [], status: 'Investigating', message: '' };
+interface IncidentMessageInputs {
+  monitorIds: string[];
+  status: 'Investigating' | 'Identified' | 'Monitoring' | 'Resolved';
+  message: string;
+}
+
+const defaultInputs: IncidentMessageInputs = {
+  monitorIds: [],
+  status: 'Investigating',
+  message: '',
+};
 
 const inputReducer = (state: any, action: { key: any; value: any }) => {
   return { ...state, [action.key]: action.value };
 };
 
-const useIncidentMessage = (userValues = defaultInputs, incidentId: string) => {
+const useIncidentMessage = (
+  userValues: IncidentMessageInputs = defaultInputs,
+  incidentId: string
+) => {
   const [values, dispatch] = useReducer(inputReducer, userValues);
 
   const handleSubmit = async (position?: number) => {
