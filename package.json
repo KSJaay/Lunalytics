@@ -146,5 +146,6 @@
     "vite-plugin-compression2": "2.2.0",
     "vitest": "4.0.4",
     "zod-openapi": "5.4.6"
-  }
+  },
+  "packageManager": "yarn@4.18.1"
 }

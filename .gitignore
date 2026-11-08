@@ -52,3 +52,5 @@ next-env.d.ts
 _temp*
 
 openapi.*
+
+.yarnrc.yml
