@@ -6,8 +6,8 @@ import {
 import { handleError } from '../utils/errors.js';
 import { cleanStatusApiResponse, cleanStatusPage } from '../class/status.js';
 import statusCache from '../cache/status.js';
-import { userSessionExists } from '../database/queries/session.js';
-import { getUserByEmail } from '../database/queries/user.js';
+import { apiTokenExists } from '../database/queries/tokens.js';
+import { getVerifiedSessionUser } from '../utils/session.js';
 
 export const fetchStatusPageUsingIdOrDomain = async (statusPageId, domain) => {
   let statusPage = await fetchStatusPageUsingUrl(statusPageId);
@@ -44,26 +44,12 @@ router.get('/', async (request, response) => {
       const { session_token } = request.cookies;
       const { authorization } = request.headers;
 
-      if (!session_token && !authorization) {
+      const user = await getVerifiedSessionUser(session_token);
+      const apiToken =
+        !user && authorization ? await apiTokenExists(authorization) : null;
+
+      if (!user && !apiToken) {
         return response.sendStatus(401);
-      }
-
-      if (session_token) {
-        const session = await userSessionExists(session_token);
-        const user = await getUserByEmail(session.email);
-
-        if (!user) {
-          return response.sendStatus(401);
-        }
-      }
-
-      if (authorization) {
-        const session = await userSessionExists(session_token);
-        const user = await getUserByEmail(session.email);
-
-        if (!user) {
-          return response.sendStatus(401);
-        }
       }
     }
 
